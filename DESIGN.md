@@ -37,6 +37,9 @@ colors:
   emerald-sacred: "#10b981"
   sapphire-royal: "#3b82f6"
   purple-royal: "#a855f7"
+  amber-fleet: "#fbbf24"
+  whatsapp-green: "#25D366"
+  whatsapp-green-hover: "#20bd5a"
 typography:
   display:
     fontFamily: "'Cinzel', serif"
@@ -53,6 +56,7 @@ rounded:
   md: "14px"
   lg: "20px"
   full: "9999px"
+  pill: "100px"
 spacing:
   xs: "4px"
   sm: "8px"
@@ -65,6 +69,12 @@ components:
     textColor: "{colors.primary-base-dark}"
     rounded: "{rounded.sm}"
     padding: "12px 24px"
+  stage-reset-btn:
+    backgroundColor: "{colors.surface-dark}"
+    borderColor: "{colors.gold-antique}"
+    textColor: "{colors.gold-bright}"
+    rounded: "{rounded.pill}"
+    padding: "6px 14px"
 ---
 
 # Sree Krushna Dual-Theme Design System
@@ -133,4 +143,16 @@ To eliminate the 200–800ms "black flash" while Google Identity resolves, the a
 ### 5. PWA & Service Worker Cache Lifecycle
 - **Cache Strategy:** Stale-While-Revalidate for app shell assets (`/`, `/index.html`, `/manifest.json`, `/js/config.js`, `/js/auth.js`).
 - **Cache Invalidation:** Versioned cache names (`sree-krushna-os-v1.1.0`) with automatic pruning of legacy cache buckets during the `activate` event.
+
+### 6. UG-Farmhouse 3-Zone Swimlane Matrix Engine
+- **Zone 1 (Global Health Strip):** Obsidian surface with gold pill badge, real-time counters (Total, Completed, Active, Gates `4/4 Ready`, Lagna `21:30 IST`).
+- **Zone 2 (Interactive Stage Pipeline):** Stepped horizontal card strip (`STAGE 01` to `STAGE 06`) with percentage progress meters and active gold glow (`box-shadow: 0 0 0 1px var(--gold-primary)`).
+- **Zone 3 (Multi-Track Grid):** Responsive track filter pills with dynamic task counters, active stage breadcrumb indicator, gold-bordered reset CTA (`.stage-reset-btn`), and sticky track row headers with ceremonial color borders (`border-left: 4px solid <trackColor>`).
+
+### 7. Slide-Over Console Drawer (`#console-drawer`)
+- **Interaction Model:** Slide-in right sheet on desktop; smooth bottom-sheet modal on mobile ($< 480\text{px}$) with `85vh` height.
+- **Lead Coordinator Direct Dial:** Contact chip with direct phone dial (`tel:`) and pre-filled WhatsApp green action (`#25D366`, `wa.me`).
+- **Real-Time Checklists:** Custom checkbox controls with live state persistence and instantaneous progress recalculation across Zones 1 and 2.
+- **Status Controls:** High-contrast 3-way segmented control (`Planned`, `In-Progress`, `Completed ✓`).
+
 
