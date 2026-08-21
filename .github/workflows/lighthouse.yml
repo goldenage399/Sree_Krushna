@@ -1,0 +1,51 @@
+﻿# ══════════════════════════════════════════════════════════════════════════════
+# Lighthouse CI — Sree Krushna Marriage OS
+# Pillar 3: Core Web Vitals gate against live Firebase Hosting URL
+# Thresholds defined in lighthouserc.json:
+#   LCP ≤ 2500ms · INP ≤ 200ms · CLS ≤ 0.1
+#   Performance ≥ 0.90 · Accessibility ≥ 0.95
+# Triggers: push to main only (post-deploy gate)
+# ══════════════════════════════════════════════════════════════════════════════
+name: Lighthouse CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "public/**"
+      - "index.html"
+      - "lighthouserc.json"
+  workflow_dispatch:      # manual trigger from GitHub UI
+
+jobs:
+  lighthouse:
+    name: Lighthouse Audit — Mobile Preset
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install LHCI
+        run: npm install -g @lhci/cli@0.14.x
+
+      - name: Run Lighthouse CI
+        run: lhci autorun
+        env:
+          # Audit the live Firebase URL — no local server needed
+          LHCI_BUILD_CONTEXT__CURRENT_BRANCH: ${{ github.ref_name }}
+          LHCI_BUILD_CONTEXT__COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+
+      - name: Upload LHCI results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lhci-results
+          path: .lighthouseci/
+          retention-days: 14

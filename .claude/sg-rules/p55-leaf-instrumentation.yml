@@ -1,0 +1,31 @@
+id: arch-inv-007-p55-leaf-instrumentation
+language: JavaScript
+files:
+  - "src/**/*.jsx"
+rule:
+  # Relational match: a leaf element (span/p/label/h1-6) that carries a data-testid
+  # attribute in ANY position. Replaces the old positional patterns, which only
+  # matched data-testid as the FIRST attribute and silently missed
+  # `<span className="x" data-testid="y">` (the common real-world case).
+  any:
+    - kind: jsx_opening_element
+      all:
+        - has: { field: name, regex: "^(span|p|label|h[1-6])$" }
+        - has:
+            kind: jsx_attribute
+            has: { kind: property_identifier, regex: "^data-testid$" }
+            stopBy: end
+    - kind: jsx_self_closing_element
+      all:
+        - has: { field: name, regex: "^(span|p|label|h[1-6])$" }
+        - has:
+            kind: jsx_attribute
+            has: { kind: property_identifier, regex: "^data-testid$" }
+            stopBy: end
+message: |
+  ARCH-INV-007 (P55): data-testid on a static leaf element.
+  Place data-testid on the nearest container wrapper (div, section, ul, table)
+  and query children via :nth-child(), hasText(), or .contains() instead.
+  Exempt: add @compliance-ignore P55 comment if intentional.
+  Ref: GEMINI.md Protocol #64, .agent/violation-patterns.json → P55_CONTAINER_INSTRUMENTATION
+severity: warning

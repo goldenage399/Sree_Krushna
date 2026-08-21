@@ -1,0 +1,74 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-08-21",
+  "metadata": {
+    "projectName": "Sree_Krushna",
+    "owner": "goldenage399",
+    "targetEnvironment": "Multi-Repo SAP Spoke",
+    "governanceModel": "AI-Driven Development (Antigravity Agent)",
+    "sourceOfTruth": "GEMINI.md",
+    "totalStandards": 4,
+    "lastUpdated": "2026-08-21"
+  },
+  "categories": {
+    "governance": "Process and workflow controls",
+    "data-integrity": "Schema validity and entity relations",
+    "documentation": "SSOT, hubs, and schema specifications",
+    "memory": "Persistent context and session telemetry"
+  },
+  "standards": [
+    {
+      "id": "P-SSOT-DOCS",
+      "category": "documentation",
+      "name": "Spoke & Wheel Single Source of Truth",
+      "description": "Hub documents contain only indices (max 150 lines). Spoke documents own detailed specifications and declare parent hub in frontmatter.",
+      "severity": "MEDIUM",
+      "enforcement": {
+        "checkpoints": [
+          "pre-commit"
+        ],
+        "manualOnly": false,
+        "automatedGate": "npm run verify:governance-wiring"
+      },
+      "references": [
+        ".agent/workflows/portable/spoke-and-wheel-docs.md"
+      ]
+    },
+    {
+      "id": "P82",
+      "category": "governance",
+      "name": "Governance Artifact Wiring Completeness",
+      "description": "All new workflows, skills, and patterns must be wired into skill-router.yaml and CLAUDE.md/GEMINI.md.",
+      "severity": "CRITICAL",
+      "enforcement": {
+        "checkpoints": [
+          "pre-commit",
+          "CI"
+        ],
+        "manualOnly": false,
+        "automatedGate": "npm run verify:governance-wiring"
+      },
+      "references": [
+        "scripts/verify-governance-wiring.cjs"
+      ]
+    },
+    {
+      "id": "P-4PPSD",
+      "category": "governance",
+      "name": "4-Phase Problem-Solving Discipline",
+      "description": "Strict adherence to Ground Truth -> Research Benchmarks -> Objective Rules -> Evidence-Based Execution.",
+      "severity": "HIGH",
+      "enforcement": {
+        "checkpoints": [
+          "session-start",
+          "planning"
+        ],
+        "manualOnly": true
+      },
+      "references": [
+        "GEMINI.md",
+        "CLAUDE.md"
+      ]
+    }
+  ]
+}

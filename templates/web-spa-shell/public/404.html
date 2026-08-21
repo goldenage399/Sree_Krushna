@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Sacred Node Not Found | Sree Krushna</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #080b11;
+      --bg-surface: #0f1624;
+      --gold-primary: #f5c518;
+      --gold-bright: #ffd15c;
+      --border-subtle: rgba(212, 168, 67, 0.25);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-base);
+      background-image: 
+        radial-gradient(circle at 50% 20%, rgba(212, 168, 67, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 80% 80%, rgba(230, 57, 70, 0.04) 0%, transparent 50%);
+      color: var(--text-main);
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+      text-align: center;
+    }
+    .error-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px;
+      padding: 48px 32px;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.7), 0 4px 12px -2px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    .error-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #ffe082, #f5c518, #c69214);
+    }
+    .crest-icon {
+      font-size: 4rem;
+      margin-bottom: 16px;
+      display: inline-block;
+      filter: drop-shadow(0 4px 12px rgba(245, 197, 24, 0.3));
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .error-code {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--gold-bright);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    .btn-return {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #ffe082 0%, #f5c518 50%, #c69214 100%);
+      color: #080b11;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 14px 28px;
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(245, 197, 24, 0.25);
+      transition: all 0.2s ease;
+      min-height: 48px;
+    }
+    .btn-return:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(245, 197, 24, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="error-card">
+    <div class="crest-icon">👑</div>
+    <div class="error-code">Error 404</div>
+    <h1>Sacred Node Not Found</h1>
+    <p>The operational protocol, liturgy spec, or planning sheet you requested does not exist in the Sree Krushna Marriage OS registry.</p>
+    <a href="/" class="btn-return">← Return to Command Center</a>
+  </div>
+</body>
+</html>

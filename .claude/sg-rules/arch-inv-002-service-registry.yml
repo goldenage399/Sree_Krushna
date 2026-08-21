@@ -1,0 +1,18 @@
+id: arch-inv-002-service-to-service-import
+language: JavaScript
+files:
+  - "src/services/**"
+ignores:
+  - "src/services/ServiceRegistry.js"
+  - "src/services/bootstrap.js"
+rule:
+  kind: import_statement
+  has:
+    kind: string_fragment
+    regex: "\\.\\./services/"
+message: |
+  ARCH-INV-002: Service file imports another service directly.
+  Use ServiceRegistry.get('ServiceName') inside the method body instead.
+  Only ServiceRegistry.js may import services at the module level.
+  Ref: .cache/architectural-invariants.jsonl → ARCH-INV-002
+severity: error

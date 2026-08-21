@@ -1,0 +1,44 @@
+id: arch-inv-011-z-index-governance
+language: JavaScript
+files:
+  - "src/components/Topbar.jsx"
+  - "src/components/SideDrawer.jsx"
+  - "src/components/ResponsiveModal.jsx"
+  - "src/components/NotificationCenter.jsx"
+  - "src/components/MobileBottomNavigation.jsx"
+rule:
+  any:
+    - kind: string
+      all:
+        - regex: "(^|\\s)z-([1-9]\\d*|\\[[1-9]\\d*\\])"
+        - inside:
+            kind: jsx_attribute
+            has:
+              kind: property_identifier
+              regex: "^className$"
+            stopBy: end
+    - kind: template_string
+      all:
+        - regex: "(^|\\s)z-([1-9]\\d*|\\[[1-9]\\d*\\])"
+        - inside:
+            kind: jsx_attribute
+            has:
+              kind: property_identifier
+              regex: "^className$"
+            stopBy: end
+    - kind: pair
+      all:
+        - has: { field: key, regex: "^zIndex$" }
+        - not:
+            has:
+              field: value
+              any:
+                - regex: "^(0|-1|'0'|'\\-1'|\"0\"|\"\\-1\"|'auto'|\"auto\"|auto)$"
+                - regex: "^(var\\(|'var\\(|\"var\\(|`var\\()"
+message: |
+  ARCH-INV-011: Hardcoded raw z-index detected in JS/JSX.
+  All elements must use the centralized semantic Z-index scale.
+  - In JSX classes: Use `.tc-z-sticky`, `.tc-z-modal`, etc. instead of `z-[...]` or `z-50`.
+  - In inline styles: Use `style={{ zIndex: 'var(--z-sticky)' }}` instead of raw numeric values.
+  Allowed exceptions: 0, -1, and 'auto'.
+severity: error

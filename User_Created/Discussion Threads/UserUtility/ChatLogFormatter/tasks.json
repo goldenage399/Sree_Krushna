@@ -1,0 +1,47 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Format Chat Log (Selection)",
+      "detail": "Highlight a section first, then run this task.",
+      "type": "shell",
+      "command": "python",
+      "args": ["${workspaceFolder}/User_Created/Discussion Threads/UserUtility/ChatLogFormatter/format_chat_log.py"],
+      "options": {
+        "env": {
+          "SELECTED_TEXT": "${selectedText}",
+          "SOURCE_FILE": "${file}",
+          "CURSOR_LINE": "${lineNumber}"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Format Chat Log (Full File)",
+      "detail": "Runs on the entire active file. No selection needed.",
+      "type": "shell",
+      "command": "python",
+      "args": ["${workspaceFolder}/User_Created/Discussion Threads/UserUtility/ChatLogFormatter/format_chat_log.py"],
+      "options": {
+        "env": {
+          "SELECTED_TEXT": "",
+          "SOURCE_FILE": "${file}",
+          "CURSOR_LINE": "${lineNumber}"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}

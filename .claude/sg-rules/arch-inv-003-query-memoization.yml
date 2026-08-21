@@ -1,0 +1,16 @@
+id: arch-inv-003-query-in-useeffect
+language: JavaScript
+rule:
+  pattern: |
+    useEffect(() => {
+      $$$BEFORE
+      const $VAR = query($$$ARGS)
+      $$$AFTER
+    }, $DEPS)
+message: |
+  ARCH-INV-003: Firestore query() inside useEffect re-creates the query object on every effect run,
+  causing the subscription to re-initialize → infinite loop + quota exhaustion.
+  Fix: move query() outside useEffect and wrap in useMemo():
+    const $VAR = useMemo(() => query($$$ARGS), [...deps])
+  Ref: QMP-001, docs/protocols/FIREBASE-SUBSCRIPTION-INFINITE-LOOP-PREVENTION.md
+severity: warning

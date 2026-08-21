@@ -1,0 +1,108 @@
+# 📐 Architecture Specification: Sree Krushna Marriage OS
+
+**Specification Code:** `SPEC-MARRIAGE-ARCH-002`  
+**Version:** `2.0.0` (Production-Grade Control Plane Baseline)  
+**Status:** CANONICAL ARCHITECTURAL SPECIFICATION & SSOT  
+
+---
+
+## 1. Domain Entities & Identifier Registry
+
+Every entity within the repository is identified by a standardized, padded 3-digit ID prefix.
+
+| Entity Type | Prefix | Schema / Canonical Directory | Description |
+| :--- | :--- | :--- | :--- |
+| **Event** | `EVT-###` | `01_TIMELINE_EVENTS/` | A discrete temporal gathering / milestone |
+| **Ritual** | `RIT-###` | `02_RITUALS_CULTURE/specs/` | A cultural, religious, or ceremonial liturgy |
+| **Person** | `PER-###` | `03_PEOPLE_GUESTS/directory/` | A unique human entity (guest, family, coordinator, VIP) |
+| **Family Unit** | `FAM-###` | `03_PEOPLE_GUESTS/families/` | A household invitation & accommodation grouping |
+| **Venue** | `VEN-###` | `05_OPERATIONS_LOGISTICS/venues/` | A physical location, hall, or accommodation property |
+| **Vendor** | `VDR-###` | `04_PROCUREMENT_VENDORS/vendors/` | A commercial service provider or supplier |
+| **Contract** | `CTR-###` | `04_PROCUREMENT_VENDORS/contracts/` | A formal service agreement with scope & milestones |
+| **Task** | `TSK-###` | `00_GOVERNANCE/tasks/` | An atomic, actionable work item with an owner |
+| **Decision** | `DEC-###` | `00_GOVERNANCE/decisions/` | A major architectural, financial, or family choice |
+| **Payment** | `PAY-###` | `06_FINANCE_COMMERCIALS/ledger/` | A monetary transaction record with receipt reference |
+| **Risk** | `RSK-###` | `00_GOVERNANCE/risks/` | An identified vulnerability and mitigation plan |
+| **Precious Asset**| `AST-###`| `04_PROCUREMENT_VENDORS/attire_and_jewellery/` | Gold/Jewellery custody record & locker transfer |
+| **Change Event**| `CHG-###` | `00_GOVERNANCE/` | Formal change impact propagation record |
+| **Operational Gate**| `GATE-##`| `05_OPERATIONS_LOGISTICS/day_of_run_sheets/` | Disruption-resistant synchronization gate |
+| **Contingency Playbook**| `CP-###`| `00_GOVERNANCE/contingency_playbooks/` | Pre-approved SOP for event disruptions |
+
+---
+
+## 2. The Cross-Cutting Control Plane Architecture
+
+```mermaid
+flowchart TD
+    M["💍 MARRIAGE OS"]
+
+    M --> CP["CONTROL PLANE"]
+
+    CP --> IAM["Identity & Access (RBAC + SoD)"]
+    CP --> SSOT["Attribute Ownership Matrix"]
+    CP --> DEC["Formal Decisions (DEC)"]
+    CP --> CHG["Change Control & Propagation (CHG)"]
+    CP --> DEP["Dependency Graph"]
+    CP --> RSK["Risk & Contingency Playbooks (CP-001..013)"]
+    CP --> AST["Precious Asset Custody (AST)"]
+    CP --> AUD["Audit / Immutable History"]
+    CP --> CMD["Operational Command & Gates (GATE-01..04)"]
+
+    M --> DOM["9 DOMAIN PILLARS"]
+
+    DOM --> GOV["00_GOVERNANCE"]
+    DOM --> EVT["01_TIMELINE_EVENTS"]
+    DOM --> RIT["02_RITUALS_CULTURE"]
+    DOM --> PER["03_PEOPLE_GUESTS"]
+    DOM --> VDR["04_PROCUREMENT_VENDORS"]
+    DOM --> OPS["05_OPERATIONS_LOGISTICS"]
+    DOM --> FIN["06_FINANCE_COMMERCIALS"]
+    DOM --> DOC["07_DOCUMENTS_ARCHIVE"]
+    DOM --> REF["08_RESEARCH_REFERENCE"]
+
+    EVT --> GATE["Operational Gates"]
+
+    GATE --> TRK["6 Multi-Track Execution Swimlanes"]
+    TRK --> B["Bride Team"]
+    TRK --> G["Groom Team"]
+    TRK --> P["Vedic Purohits"]
+    TRK --> H["Hospitality & Food"]
+    TRK --> M2["Photo & Media"]
+    TRK --> F["Fleet & Custody"]
+
+    CP --> VIEWS["Presentation & Derived Views"]
+    VIEWS --> DASH["Executive 1-Page Summary (BMS)"]
+    VIEWS --> CON["Interactive Standalone Swimlanes (UG-Farmhouse)"]
+    VIEWS --> RUN["Role-Scoped Run Sheets & Pocket Cards"]
+```
+
+---
+
+## 3. Single Source of Truth (SSOT) & Attribute Ownership
+
+Authoritative attribute mapping is governed by [`00_GOVERNANCE/attribute_ownership_matrix.md`](file:///d:/GitHub_Repo/Sree_Krushna/00_GOVERNANCE/attribute_ownership_matrix.md):
+- **Vendor Cost & Terms:** Authored strictly in `04_PROCUREMENT_VENDORS/contracts/CTR-xxx.md`.
+- **Payment Outflow:** Authored strictly in `06_FINANCE_COMMERCIALS/ledger/PAY-xxx.md`.
+- **Master Date & Muhurat:** Authored strictly in `01_TIMELINE_EVENTS/master_timeline.md`.
+- **Guest Contact & RSVP:** Authored strictly in `03_PEOPLE_GUESTS/directory/PER-xxx.md`.
+- **Liturgical Sequence & Samagri:** Authored strictly in `02_RITUALS_CULTURE/specs/RIT-xxx.md`.
+
+---
+
+## 4. Fine-Grained Role-Based Access Control (RBAC) & Separation of Duty
+
+Permissions are evaluated across **Role $\times$ Domain $\times$ Action $\times$ Object $\times$ Sensitivity**, governed by [`00_GOVERNANCE/authority_and_access_matrix.md`](file:///d:/GitHub_Repo/Sree_Krushna/00_GOVERNANCE/authority_and_access_matrix.md):
+- **Tier 1 (Core Couple):** Full Master Control, Unrestricted Ledger, Gold Custody, Decision Freezing.
+- **Tier 2 (Parents & Planning Council):** Milestone Roadmaps, Category Budgets, Co-Decision Sign-off.
+- **Tier 3 (Functional Leads & Coordinators):** Scoped Run-Sheets, Assigned Tasks, Samagri Custody (No overall financial visibility).
+- **Tier 4 (Guests & Relatives):** Personal Itinerary, Venue Maps, Attire Themes, Room Allocation.
+
+---
+
+## 5. Operational Gates & Disruption Recovery
+
+Live event handshakes are modeled as **Operational Gates** (`GATE-01` to `GATE-04`) with defined:
+1. **Planned vs Earliest vs Drop-Dead Timestamps**
+2. **Preconditions & Required Witnesses**
+3. **Go / No-Go Decision Authority**
+4. **Delay Thresholds & Automatic Activation of Playbooks (`CP-001` through `CP-013`)**

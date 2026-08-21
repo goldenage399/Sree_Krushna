@@ -1,0 +1,16 @@
+id: P84_HOOK_CALLBACK_DECOUPLING
+language: JavaScript
+rule:
+  all:
+    - pattern: useEffect($EFFECT, $DEPS)
+    - has:
+        regex: \b(on[A-Z]\w*|\w*(Fn|Callback|Handler|Query|Filter|Submit|Fetch|Subscribe|Update|Resolver)|subscribe|fetchInitial|fetch|search|submit|confirm)\b
+message: |
+  P84: Hook callback dependency detected inside useEffect dependency array.
+  Always decouple hook effects from function references by storing the callbacks in a mutable React ref (useRef) and updating the ref on each render.
+  Example:
+    const searchFnRef = useRef(searchFn);
+    useEffect(() => { searchFnRef.current = searchFn; });
+    useEffect(() => { ... use searchFnRef.current ... }, [dep1, dep2]); // exclude searchFn from deps array
+  Ref: Hook Callback Reference Decoupling Invariant
+severity: warning

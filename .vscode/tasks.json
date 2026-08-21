@@ -1,0 +1,265 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Adjust Markdown Headers (Selection)",
+      "detail": "Highlight a section first, then run this task. Opens VS Code GUI diff.",
+      "type": "shell",
+      "command": "py",
+      "args": ["${workspaceFolder}/adjust_headers.py"],
+      "options": {
+        "env": {
+          "SELECTED_TEXT": "${selectedText}",
+          "SOURCE_FILE": "${file}",
+          "CURSOR_LINE": "${lineNumber}"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Adjust Markdown Headers (Full File)",
+      "detail": "Runs on the entire active file. Opens VS Code GUI diff.",
+      "type": "shell",
+      "command": "py",
+      "args": ["${workspaceFolder}/adjust_headers.py"],
+      "options": {
+        "env": {
+          "SELECTED_TEXT": "",
+          "SOURCE_FILE": "${file}",
+          "CURSOR_LINE": "${lineNumber}"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Adjust Markdown Headers (Terminal Preview - Selection)",
+      "detail": "Highlight a section first. Renders diff directly in terminal with prompt confirmation.",
+      "type": "shell",
+      "command": "py",
+      "args": ["${workspaceFolder}/adjust_headers.py"],
+      "options": {
+        "env": {
+          "SELECTED_TEXT": "${selectedText}",
+          "SOURCE_FILE": "${file}",
+          "CURSOR_LINE": "${lineNumber}",
+          "SKIP_CODE_DIFF": "1"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Adjust Markdown Headers (Terminal Preview - Full File)",
+      "detail": "Runs on the entire active file. Renders diff directly in terminal with prompt confirmation.",
+      "type": "shell",
+      "command": "py",
+      "args": ["${workspaceFolder}/adjust_headers.py"],
+      "options": {
+        "env": {
+          "SELECTED_TEXT": "",
+          "SOURCE_FILE": "${file}",
+          "CURSOR_LINE": "${lineNumber}",
+          "SKIP_CODE_DIFF": "1"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Adjust Markdown Headers (Bypassed - Selection)",
+      "detail": "Highlight a section first. Automatically applies changes without GUI diff or prompt.",
+      "type": "shell",
+      "command": "py",
+      "args": ["${workspaceFolder}/adjust_headers.py"],
+      "options": {
+        "env": {
+          "SELECTED_TEXT": "${selectedText}",
+          "SOURCE_FILE": "${file}",
+          "CURSOR_LINE": "${lineNumber}",
+          "BYPASS_ALL": "1"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Adjust Markdown Headers (Bypassed - Full File)",
+      "detail": "Runs on the entire active file. Automatically applies changes without GUI diff or prompt.",
+      "type": "shell",
+      "command": "py",
+      "args": ["${workspaceFolder}/adjust_headers.py"],
+      "options": {
+        "env": {
+          "SELECTED_TEXT": "",
+          "SOURCE_FILE": "${file}",
+          "CURSOR_LINE": "${lineNumber}",
+          "BYPASS_ALL": "1"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Format Chat Log (Selection)",
+      "detail": "Highlight a section first, then run this task. Formats raw chat headers into Query/Response format with GUI diff.",
+      "type": "shell",
+      "command": "py",
+      "args": ["${workspaceFolder}/User_Created/Discussion Threads/UserUtility/ChatLogFormatter/format_chat_log.py"],
+      "options": {
+        "env": {
+          "SELECTED_TEXT": "${selectedText}",
+          "SOURCE_FILE": "${file}",
+          "CURSOR_LINE": "${lineNumber}"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Format Chat Log (Full File)",
+      "detail": "Runs on the entire active file. Formats raw chat headers into Query/Response format with GUI diff.",
+      "type": "shell",
+      "command": "py",
+      "args": ["${workspaceFolder}/User_Created/Discussion Threads/UserUtility/ChatLogFormatter/format_chat_log.py"],
+      "options": {
+        "env": {
+          "SELECTED_TEXT": "",
+          "SOURCE_FILE": "${file}",
+          "CURSOR_LINE": "${lineNumber}"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Format Chat Log (Terminal Preview - Selection)",
+      "detail": "Highlight a section first. Renders terminal diff preview with prompt confirmation.",
+      "type": "shell",
+      "command": "py",
+      "args": ["${workspaceFolder}/User_Created/Discussion Threads/UserUtility/ChatLogFormatter/format_chat_log.py"],
+      "options": {
+        "env": {
+          "SELECTED_TEXT": "${selectedText}",
+          "SOURCE_FILE": "${file}",
+          "CURSOR_LINE": "${lineNumber}",
+          "SKIP_CODE_DIFF": "1"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Format Chat Log (Terminal Preview - Full File)",
+      "detail": "Runs on the entire active file. Renders terminal diff preview with prompt confirmation.",
+      "type": "shell",
+      "command": "py",
+      "args": ["${workspaceFolder}/User_Created/Discussion Threads/UserUtility/ChatLogFormatter/format_chat_log.py"],
+      "options": {
+        "env": {
+          "SELECTED_TEXT": "",
+          "SOURCE_FILE": "${file}",
+          "CURSOR_LINE": "${lineNumber}",
+          "SKIP_CODE_DIFF": "1"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Format Chat Log (Bypassed - Selection)",
+      "detail": "Highlight a section first. Automatically applies Query/Response formatting without GUI diff or prompt.",
+      "type": "shell",
+      "command": "py",
+      "args": ["${workspaceFolder}/User_Created/Discussion Threads/UserUtility/ChatLogFormatter/format_chat_log.py"],
+      "options": {
+        "env": {
+          "SELECTED_TEXT": "${selectedText}",
+          "SOURCE_FILE": "${file}",
+          "CURSOR_LINE": "${lineNumber}",
+          "BYPASS_ALL": "1"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Format Chat Log (Bypassed - Full File)",
+      "detail": "Runs on the entire active file. Automatically applies Query/Response formatting without GUI diff or prompt.",
+      "type": "shell",
+      "command": "py",
+      "args": ["${workspaceFolder}/User_Created/Discussion Threads/UserUtility/ChatLogFormatter/format_chat_log.py"],
+      "options": {
+        "env": {
+          "SELECTED_TEXT": "",
+          "SOURCE_FILE": "${file}",
+          "CURSOR_LINE": "${lineNumber}",
+          "BYPASS_ALL": "1"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}

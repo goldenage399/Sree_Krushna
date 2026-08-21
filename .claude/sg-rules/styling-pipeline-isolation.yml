@@ -1,0 +1,10 @@
+id: styling-pipeline-isolation
+language: JavaScript
+rule:
+  kind: import_statement
+  regex: \/tokens\/(primitives|semantic|palette)\.css
+message: |
+  STYLING-ISOLATION: Do not import compile-only token CSS templates directly into JS/JSX components.
+  These CSS templates are compile-only and resolved by the build pipeline/index.css.
+  Components must only use semantic CSS class names or reference the dynamic runtime theme context variables.
+severity: error

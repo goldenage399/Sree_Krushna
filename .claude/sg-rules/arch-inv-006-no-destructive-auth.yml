@@ -1,0 +1,17 @@
+id: arch-inv-006-destructive-auth-write
+language: JavaScript
+files:
+  - "src/contexts/AuthContext.jsx"
+  - "src/contexts/ProfileContext.jsx"
+rule:
+  pattern: deleteField()
+message: |
+  ARCH-INV-006: deleteField() in auth-critical file is PROHIBITED without first
+  verifying that level, role, and status exist independently on the target document.
+  INC-001 (2026-05-17): deleteField() on profileId removed the only role/level source
+  for the super admin → next login defaulted to level 4 (associate) → full lockout.
+  Use a standalone repair script instead:
+    scripts/repair-*.cjs --dry-run
+  Never mutate auth-critical fields during the login flow.
+  Ref: ARCH-INV-006, docs/incidents/INC-001-super-admin-access-revoked.md
+severity: error

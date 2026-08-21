@@ -1,0 +1,23 @@
+id: arch-inv-004-semantic-tokens-only
+language: JavaScript
+files:
+  - "src/components/**/*.jsx"
+  - "src/pages/**/*.jsx"
+rule:
+  kind: string
+  regex: "^['\"]#[0-9a-fA-F]{3,8}['\"]$"
+  inside:
+    kind: pair
+    inside:
+      kind: object
+      inside:
+        kind: jsx_attribute
+        has:
+          kind: property_identifier
+          regex: "^style$"
+        stopBy: end
+message: |
+  ARCH-INV-004: Hardcoded hex color detected in a JSX inline `style={{ ... }}` prop.
+  Use a semantic token instead: `var(--theme-*)`, `var(--cic-*)`, or a Tailwind/semantic class.
+  See docs/ssot/ui-design/spokes/THEME-SYSTEM.md for the current token vocabularies (TASK-218/TAP-001).
+severity: warning

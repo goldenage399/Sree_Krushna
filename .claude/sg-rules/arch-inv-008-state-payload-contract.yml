@@ -1,0 +1,22 @@
+id: arch-inv-008-state-payload-contract
+language: JavaScript
+files:
+  - "src/**/*.jsx"
+  - "src/**/*.js"
+rule:
+  pattern: "setEditModal($VAL)"
+  not:
+    any:
+      - pattern: "setEditModal(null)"
+      - pattern: "setEditModal(false)"
+      - pattern: "setEditModal({user: $U, assignment: $A})"
+      - pattern: "setEditModal({assignment: $A, user: $U})"
+      - pattern: "setEditModal({user: $U, assignment: $A, $$$})"
+      - pattern: "setEditModal({assignment: $A, user: $U, $$$})"
+message: |
+  ARCH-INV-008: Mismatched object payload format passed to setEditModal state setter.
+  All active modal launchers triggering EditAssignmentModal must pass a compound { user, assignment } structure.
+  Passing raw assignment object (or other structures) will trigger a runtime TypeError at mount time.
+  Fix: change `setEditModal(assignment)` to `setEditModal({ user, assignment })`.
+  Ref: Case Study 5.7, docs/ssot/testing-hub/DEBUGGING_HANDBOOK.md
+severity: error

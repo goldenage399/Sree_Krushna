@@ -1,0 +1,20 @@
+id: arch-inv-004b-raw-dark-text-classes
+language: JavaScript
+files:
+  - "src/components/**/*.jsx"
+  - "src/pages/**/*.jsx"
+rule:
+  kind: string
+  regex: "\\btext-(black|gray-900|slate-900|neutral-900|zinc-900)\\b"
+  inside:
+    kind: jsx_attribute
+    has:
+      kind: property_identifier
+      regex: "^className$"
+    stopBy: end
+message: |
+  ARCH-INV-004b: Raw dark text class detected in a JSX className prop.
+  Use a semantic token instead: `text-primary`, `text-secondary`, or `text-muted`.
+  Hardcoded text colors break theme switching across the 7-theme matrix.
+  See docs/ssot/ui-design/spokes/THEME-SYSTEM.md for guidance.
+severity: warning

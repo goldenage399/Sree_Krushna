@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💍 Sree Krushna — Marriage OS Console</title>
+  <style>
+    :root {
+      --bg-main: #0d1117;
+      --bg-card: #161b22;
+      --bg-card-hover: #21262d;
+      --border-color: #30363d;
+      --text-main: #f0f6fc;
+      --text-muted: #8b949e;
+      --gold-primary: #f5c518;
+      --gold-secondary: #d4a843;
+      --crimson-accent: #e63946;
+      --rose-accent: #ff758f;
+      --green-accent: #2ea043;
+      --blue-accent: #58a6ff;
+      --purple-accent: #bc8cff;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding-bottom: 60px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1f1a10 0%, #161b22 100%);
+      border-bottom: 1px solid var(--gold-secondary);
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo { font-size: 2rem; }
+    .brand-title h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gold-primary);
+      letter-spacing: 0.5px;
+    }
+    .brand-title p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .header-kpis {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .kpi-chip {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 6px 14px;
+      text-align: center;
+    }
+    .kpi-chip .value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold-primary);
+    }
+    .kpi-chip .label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    nav.tab-nav {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0 30px;
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+    }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 14px 18px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn:hover { color: var(--text-main); }
+    .nav-btn.active {
+      color: var(--gold-primary);
+      border-bottom-color: var(--gold-primary);
+    }
+
+    main {
+      max-width: 1300px;
+      margin: 25px auto;
+      padding: 0 20px;
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.25s ease-in; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Grid & Cards */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+      margin-bottom: 15px;
+    }
+
+    .card-header h2 {
+      font-size: 1.1rem;
+      color: var(--gold-secondary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Swimlanes */
+    .swimlane-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      overflow-x: auto;
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .filter-pill {
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-pill.active, .filter-pill:hover {
+      background: var(--gold-secondary);
+      color: #000;
+      font-weight: 600;
+      border-color: var(--gold-secondary);
+    }
+
+    .lane {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      margin-bottom: 15px;
+      background: var(--bg-main);
+    }
+
+    .lane-header {
+      padding: 10px 16px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+
+    .lane-bride .lane-header { background: #3d1421; color: var(--rose-accent); }
+    .lane-groom .lane-header { background: #132a4a; color: var(--blue-accent); }
+    .lane-priest .lane-header { background: #382405; color: var(--gold-primary); }
+    .lane-food .lane-header { background: #10331b; color: var(--green-accent); }
+    .lane-photo .lane-header { background: #2b1442; color: var(--purple-accent); }
+    .lane-fleet .lane-header { background: #2d2015; color: #ffb703; }
+
+    .lane-body {
+      display: flex;
+      gap: 12px;
+      padding: 15px;
+      overflow-x: auto;
+    }
+
+    .event-node {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 14px;
+      min-width: 220px;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .event-node:hover {
+      transform: translateY(-2px);
+      border-color: var(--gold-primary);
+    }
+    .event-time {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--gold-primary);
+      margin-bottom: 4px;
+    }
+    .event-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .event-lead {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* CRUD Task List */
+    .task-controls {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .task-input-box {
+      display: flex;
+      gap: 10px;
+      flex: 1;
+      min-width: 300px;
+    }
+
+    input[type="text"], select {
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+    input[type="text"]:focus, select:focus {
+      outline: none;
+      border-color: var(--gold-primary);
+    }
+
+    button.btn-primary {
+      background: var(--gold-primary);
+      color: #000;
+      font-weight: 700;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button.btn-primary:hover { background: var(--gold-secondary); }
+
+    .task-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    .task-table th, .task-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-color);
+      text-align: left;
+      font-size: 0.9rem;
+    }
+    .task-table th {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+    }
+
+    .status-badge {
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .status-planned { background: #1f3a5f; color: var(--blue-accent); }
+    .status-progress { background: #3d2f09; color: var(--gold-primary); }
+    .status-completed { background: #143d1f; color: var(--green-accent); }
+
+    /* Modals & Dialogs */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: var(--bg-card);
+      border: 1px solid var(--gold-secondary);
+      border-radius: 12px;
+      max-width: 600px;
+      width: 100%;
+      padding: 25px;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+      margin-bottom: 15px;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Vision Studio */
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+    .color-swatch {
+      border-radius: 8px;
+      height: 70px;
+      display: flex;
+      align-items: flex-end;
+      padding: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="brand-logo">💍</div>
+      <div class="brand-title">
+        <h1>Sree Krushna — Marriage OS</h1>
+        <p>Single Operating Knowledge Base & Control Tower</p>
+      </div>
+    </div>
+    <div class="header-kpis">
+      <div class="kpi-chip">
+        <div class="value" id="kpi-events">7</div>
+        <div class="label">Events</div>
+      </div>
+      <div class="kpi-chip">
+        <div class="value" id="kpi-rituals">12</div>
+        <div class="label">Vedic Rites</div>
+      </div>
+      <div class="kpi-chip">
+        <div class="value" id="kpi-tasks">14</div>
+        <div class="label">Action Items</div>
+      </div>
+      <div class="kpi-chip">
+        <div class="value" style="color: var(--green-accent);">SSOT Ready</div>
+        <div class="label">Architecture</div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tab-nav">
+    <button class="nav-btn active" onclick="switchTab('tab-dashboard')">📊 Dashboard</button>
+    <button class="nav-btn" onclick="switchTab('tab-swimlane')">⏱️ Visual Swimlanes</button>
+    <button class="nav-btn" onclick="switchTab('tab-tasks')">📋 Task Manager (CRUD)</button>
+    <button class="nav-btn" onclick="switchTab('tab-rituals')">🕉️ Vedic Rituals & Samagri</button>
+    <button class="nav-btn" onclick="switchTab('tab-vision')">🎨 Couple Vision Studio</button>
+  </nav>
+
+  <main>
+
+    <!-- Tab 1: Dashboard -->
+    <div id="tab-dashboard" class="tab-content active">
+      <div class="dashboard-grid">
+        <div class="card">
+          <div class="card-header">
+            <h2>📅 Chronological Milestones</h2>
+          </div>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px;">
+            <li>💍 <strong>EVT-001: Nirbandha & Ashirbad</strong> — Formal Engagement & Ring Exchange</li>
+            <li>🌿 <strong>EVT-002: Mehendi & Sangeet</strong> — Henna & Musical Celebration</li>
+            <li>🌿 <strong>EVT-003: Mangan & Haldi</strong> — Sacred Turmeric Snana</li>
+            <li>👑 <strong>EVT-004: Barat & Vedic Wedding</strong> — Kanyadaan, Saptapadi, Sindoor Daan</li>
+            <li>🎉 <strong>EVT-005: Grand Reception</strong> — Royal Buffet & Celebration</li>
+            <li>🏡 <strong>EVT-006: Grihapravesh & Chauthi</strong> — 4th Night Sacred Union</li>
+            <li>🌺 <strong>EVT-007: Astamangala</strong> — 8th Day Parental Feast</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2>🔐 4-Tier Access Control (RBAC)</h2>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Data visibility is strictly segregated for confidentiality & ease of coordination:</p>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.9rem;">
+            <li>👑 <strong>Tier 1 (Sree & Groom):</strong> Master control, private vault & budget ledger.</li>
+            <li>🏛️ <strong>Tier 2 (Parents & Committee):</strong> Milestones, category budgets, vendor selections.</li>
+            <li>📋 <strong>Tier 3 (Day Coordinators):</strong> Scoped run-sheets, tasks, samagri & fleet rosters.</li>
+            <li>✉️ <strong>Tier 4 (Guests & Family):</strong> Personal itinerary, venue maps & room assignments.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2>🛡️ Active Governance Radar</h2>
+          </div>
+          <div style="font-size: 0.9rem; display: flex; flex-direction: column; gap: 10px;">
+            <div><strong>SSOT Control Plane:</strong> <span style="color: var(--green-accent);">Active (v2.0)</span></div>
+            <div><strong>Operational Gates:</strong> 4 Synchronization Handshakes Defined</div>
+            <div><strong>Contingency Playbooks:</strong> 13 Pre-Approved SOPs (`CP-001` to `CP-013`)</div>
+            <div><strong>Gold & Vault Custody:</strong> Asset State Protocol (`AST-###`) Enabled</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 2: Visual Swimlanes -->
+    <div id="tab-swimlane" class="tab-content">
+      <div class="swimlane-container">
+        <div class="card-header">
+          <h2>⏱️ Live Wedding Day Multi-Track Swimlanes (6 Parallel Tracks)</h2>
+        </div>
+        <div class="filter-bar">
+          <div class="filter-pill active" onclick="filterLane('all')">Show All Tracks</div>
+          <div class="filter-pill" onclick="filterLane('bride')">👰 Bride Track</div>
+          <div class="filter-pill" onclick="filterLane('groom')">🤵 Groom Track</div>
+          <div class="filter-pill" onclick="filterLane('priest')">🕉️ Purohit Track</div>
+          <div class="filter-pill" onclick="filterLane('food')">🍲 Catering Track</div>
+          <div class="filter-pill" onclick="filterLane('photo')">📸 Photo/Video Track</div>
+          <div class="filter-pill" onclick="filterLane('fleet')">🚗 Fleet & Custody</div>
+        </div>
+
+        <!-- Lane 1: Bride -->
+        <div class="lane lane-bride" data-track="bride">
+          <div class="lane-header">👰 Track 1: Bride Team & Styling</div>
+          <div class="lane-body">
+            <div class="event-node" onclick="showEventDetails('Bride Makeup & Styling', '08:00 AM', 'Green Room VEN-003', 'PER-006 (Bride Mother) & MUA')">
+              <div class="event-time">08:00 AM</div>
+              <div class="event-title">Makeup & Styling Begins</div>
+              <div class="event-lead">Lead: PER-006 & Stylist</div>
+            </div>
+            <div class="event-node" onclick="showEventDetails('Baula Patani Red Silk Ready', '06:00 PM', 'Green Room VEN-003', 'Mukuta & Jewellery Custody Verified')">
+              <div class="event-time">06:00 PM</div>
+              <div class="event-title">Bridal Attire & Mukuta Ready</div>
+              <div class="event-lead">Lead: PER-007 (Custody)</div>
+            </div>
+            <div class="event-node" onclick="showEventDetails('Varamala Stage Entry', '08:00 PM', 'Main Reception Stage', 'Escorted by bridal party')">
+              <div class="event-time">08:00 PM (Gate 02)</div>
+              <div class="event-title">Varamala Stage Entry</div>
+              <div class="event-lead">Lead: PER-008 (Stage Lead)</div>
+            </div>
+            <div class="event-node" onclick="showEventDetails('Mandap Entry for Kanyadaan', '09:30 PM', 'Vedic Mandap', 'Kanyadata (Father) seated')">
+              <div class="event-time">09:30 PM (Gate 03)</div>
+              <div class="event-title">Kanyadaan & Saptapadi</div>
+              <div class="event-lead">Lead: PER-005 (Kanyadata)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lane 2: Groom -->
+        <div class="lane lane-groom" data-track="groom">
+          <div class="lane-header">🤵 Track 2: Groom Team & Barat</div>
+          <div class="lane-body">
+            <div class="event-node" onclick="showEventDetails('Groom Safa & Mukuta Styling', '04:00 PM', 'Hotel Room 201', 'Silk dhoti & Mukuta')">
+              <div class="event-time">04:00 PM</div>
+              <div class="event-title">Groom Safa & Mukuta Styling</div>
+              <div class="event-lead">Lead: PER-008</div>
+            </div>
+            <div class="event-node" onclick="showEventDetails('Barat Assembly & Procession', '06:30 PM', 'Venue Outer Gate', 'Dhol / Shehnai / Car VEH-01')">
+              <div class="event-time">06:30 PM</div>
+              <div class="event-title">Barat Assembly & Departure</div>
+              <div class="event-lead">Lead: PER-014</div>
+            </div>
+            <div class="event-node" onclick="showEventDetails('Baranugam Entrance Welcoming', '07:30 PM', 'Venue Main Arch', 'Bride Mother welcomes Groom')">
+              <div class="event-time">07:30 PM (Gate 01)</div>
+              <div class="event-title">Baranugam Welcoming Aarti</div>
+              <div class="event-lead">Lead: PER-006 (Bride Mother)</div>
+            </div>
+            <div class="event-node" onclick="showEventDetails('Mandap Vedic Liturgies', '09:30 PM', 'Vedic Mandap', 'Kanyadaan, Saptapadi, Sindoor')">
+              <div class="event-time">09:30 PM (Gate 03)</div>
+              <div class="event-title">Vedic Mandap Rites</div>
+              <div class="event-lead">Officiating Purohit</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lane 3: Priest -->
+        <div class="lane lane-priest" data-track="priest">
+          <div class="lane-header">🕉️ Track 3: Vedic Purohits & Liturgy</div>
+          <div class="lane-body">
+            <div class="event-node" onclick="showEventDetails('Mandap Shuddhi & Homa Setup', '06:00 PM', 'Vedic Mandap', 'Sacred wood, Ghee, Kund prep')">
+              <div class="event-time">06:00 PM</div>
+              <div class="event-title">Mandap Shuddhi & Fire Prep</div>
+              <div class="event-lead">Lead: PER-080 (Priest)</div>
+            </div>
+            <div class="event-node" onclick="showEventDetails('Samagri Verification', '07:00 PM', 'Mandap', 'SAM-005 itemized audit')">
+              <div class="event-time">07:00 PM</div>
+              <div class="event-title">SAM-005 Samagri Audit</div>
+              <div class="event-lead">Lead: PER-007</div>
+            </div>
+            <div class="event-node" onclick="showEventDetails('Kanyadaan & Saptapadi Chant', '09:30 PM', 'Mandap', 'Seven sacred steps & vows')">
+              <div class="event-time">09:30 PM (Gate 03)</div>
+              <div class="event-title">Kanyadaan & Saptapadi</div>
+              <div class="event-lead">Lead: Officiating Purohits</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lane 4: Food -->
+        <div class="lane lane-food" data-track="food">
+          <div class="lane-header">🍲 Track 4: Catering & Hospitality</div>
+          <div class="lane-body">
+            <div class="event-node" onclick="showEventDetails('Welcome Refreshment Counters', '07:00 PM', 'Entrance Lounge', 'Mocktails, Odia sweets, hot tea')">
+              <div class="event-time">07:00 PM</div>
+              <div class="event-title">Welcome Drinks Counter Active</div>
+              <div class="event-lead">Lead: PER-014 (Food Lead)</div>
+            </div>
+            <div class="event-node" onclick="showEventDetails('Royal Odia Dinner Buffet Opens', '08:30 PM', 'Dining Banquet Hall', 'Kanika, Dalma, Paneer, Chhena Poda')">
+              <div class="event-time">08:30 PM</div>
+              <div class="event-title">Main Dinner Buffet Opens</div>
+              <div class="event-lead">Lead: Caterer & PER-014</div>
+            </div>
+            <div class="event-node" onclick="showEventDetails('Fasting Elders & Priest Dining', '10:00 PM', 'VIP Sattvic Lounge', 'Pure ghee Sattvic feast')">
+              <div class="event-time">10:00 PM</div>
+              <div class="event-title">Sattvic Meals for Priests/Elders</div>
+              <div class="event-lead">Lead: PER-005</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lane 5: Photo -->
+        <div class="lane lane-photo" data-track="photo">
+          <div class="lane-header">📸 Track 5: Photography & Cinematography</div>
+          <div class="lane-body">
+            <div class="event-node" onclick="showEventDetails('Prep Candids & Jewelry Closeups', '04:30 PM', 'Green Rooms', 'Bride/Groom styling shoot')">
+              <div class="event-time">04:30 PM</div>
+              <div class="event-title">Bridal & Groom Prep Shoot</div>
+              <div class="event-lead">Lead: VDR-003 (Photo Studio)</div>
+            </div>
+            <div class="event-node" onclick="showEventDetails('Drone Barat Procession Coverage', '06:30 PM', 'Venue Approach Road', 'Aerial footage of Barat')">
+              <div class="event-time">06:30 PM</div>
+              <div class="event-title">Barat Drone & Candid Shoot</div>
+              <div class="event-lead">Lead: Cinematography Crew</div>
+            </div>
+            <div class="event-node" onclick="showEventDetails('Mandap Closeups & Emotional Vida', '09:30 PM', 'Mandap', 'Kanyadaan, Sindoor, Kanyavida')">
+              <div class="event-time">09:30 PM</div>
+              <div class="event-title">Mandap & Sindoor Daan Rites</div>
+              <div class="event-lead">Lead: VDR-003 Lead Camera</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lane 6: Fleet -->
+        <div class="lane lane-fleet" data-track="fleet">
+          <div class="lane-header">🚗 Track 6: Fleet, Shuttles & Cash Custody</div>
+          <div class="lane-body">
+            <div class="event-node" onclick="showEventDetails('Guest Hotel Shuttles (VEH-04)', '03:30 PM', 'Hotel Lobby', 'Shuttle runs for outstation guests')">
+              <div class="event-time">03:30 PM</div>
+              <div class="event-title">Hotel Guest Shuttles Active</div>
+              <div class="event-lead">Lead: PER-012 (Fleet Lead)</div>
+            </div>
+            <div class="event-node" onclick="showEventDetails('Decorated Bridal Car Ready', '06:00 PM', 'Groom Hotel', 'VEH-01 decorated with fresh flowers')">
+              <div class="event-time">06:00 PM</div>
+              <div class="event-title">Bridal Car (VEH-01) Ready</div>
+              <div class="event-lead">Lead: PER-008</div>
+            </div>
+            <div class="event-node" onclick="showEventDetails('Priest Dakshina Cash Envelope CSH-01', '09:30 PM', 'Mandap Side', 'Handover to Purohit post-Saptapadi')">
+              <div class="event-time">09:30 PM</div>
+              <div class="event-title">Cash Envelope CSH-01 Ready</div>
+              <div class="event-lead">Lead: PER-007 (Custodian)</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Tab 3: Tasks (CRUD) -->
+    <div id="tab-tasks" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <h2>📋 Action Items & Task Manager (CRUD)</h2>
+        </div>
+
+        <div class="task-controls">
+          <div class="task-input-box">
+            <input type="text" id="new-task-title" placeholder="Add a new wedding task (e.g. Schedule MUA trial)..." />
+            <select id="new-task-event">
+              <option value="Master_Planning">General Planning</option>
+              <option value="EVT-001">EVT-001 (Nirbandha)</option>
+              <option value="EVT-002">EVT-002 (Mehendi)</option>
+              <option value="EVT-003">EVT-003 (Haldi)</option>
+              <option value="EVT-004">EVT-004 (Wedding Day)</option>
+              <option value="EVT-005">EVT-005 (Reception)</option>
+              <option value="EVT-006">EVT-006 (Chauthi)</option>
+            </select>
+            <select id="new-task-owner">
+              <option value="Sree & Groom">Sree & Groom</option>
+              <option value="Sree">Sree (Bride)</option>
+              <option value="Groom">Groom</option>
+              <option value="Parents Council">Parents Council</option>
+              <option value="Planning Committee">Planning Committee</option>
+            </select>
+            <button class="btn-primary" onclick="addNewTask()">+ Add Task</button>
+          </div>
+        </div>
+
+        <table class="task-table">
+          <thead>
+            <tr>
+              <th style="width: 40px;">Done</th>
+              <th>Task ID</th>
+              <th>Action Title</th>
+              <th>Event</th>
+              <th>Owner</th>
+              <th>Priority</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="task-table-body">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Tab 4: Vedic Rituals -->
+    <div id="tab-rituals" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <h2>🕉️ Odia Hindu / Brahmin Vedic Ritual Specifications</h2>
+        </div>
+        <div class="dashboard-grid">
+          <div class="card" style="background: var(--bg-main);">
+            <h3 style="color: var(--gold-primary); margin-bottom: 8px;">RIT-001: Nirbandha & Ashirbad</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">Formal Vedic promise of alliance, horoscope affirmation (Lagna Patrika), and ring exchange.</p>
+            <div style="font-size: 0.78rem; color: var(--gold-secondary);">Samagri: SAM-001 | Priest Req: Yes</div>
+          </div>
+          <div class="card" style="background: var(--bg-main);">
+            <h3 style="color: var(--gold-primary); margin-bottom: 8px;">RIT-002: Deva Nimantrana</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">First consecrated invitation offering to Lord Jagannath at Puri with Pana Gua and sacred cloth.</p>
+            <div style="font-size: 0.78rem; color: var(--gold-secondary);">Samagri: SAM-002 | Puri Pata Offering</div>
+          </div>
+          <div class="card" style="background: var(--bg-main);">
+            <h3 style="color: var(--gold-primary); margin-bottom: 8px;">RIT-003: Mangan & Haldi Snana</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">Turmeric application by 7 married women (Sadhaba), maternal uncle yellow attire gifting & Snana.</p>
+            <div style="font-size: 0.78rem; color: var(--gold-secondary);">Samagri: SAM-003 | Mangala Ghata</div>
+          </div>
+          <div class="card" style="background: var(--bg-main);">
+            <h3 style="color: var(--gold-primary); margin-bottom: 8px;">RIT-005: Kanyadaan & Hastaganthi</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">Sacred Vedic handover of the bride with Kusha grass and tying of the sacred cloth knot.</p>
+            <div style="font-size: 0.78rem; color: var(--gold-secondary);">Samagri: SAM-005 | Baula Patani Silk</div>
+          </div>
+          <div class="card" style="background: var(--bg-main);">
+            <h3 style="color: var(--gold-primary); margin-bottom: 8px;">RIT-007: Saptapadi (Seven Vows)</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">Seven sacred steps around Agni Deva sealing eternal companionship and shared dharma.</p>
+            <div style="font-size: 0.78rem; color: var(--gold-secondary);">Samagri: SAM-005 | Sakha Saptapada Bhava</div>
+          </div>
+          <div class="card" style="background: var(--bg-main);">
+            <h3 style="color: var(--gold-primary); margin-bottom: 8px;">RIT-011: Chauthi Sacred Union</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">4th night Vedic homa, untying of Hastaganthi, and entry into the consecrated Phula Sajya.</p>
+            <div style="font-size: 0.78rem; color: var(--gold-secondary);">Samagri: SAM-006 | Kesara Khira</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 5: Vision Studio -->
+    <div id="tab-vision" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <h2>🎨 Sree & Groom Vision Studio</h2>
+        </div>
+        <p style="font-size: 0.9rem; color: var(--text-muted);">A curated space for the couple to align on wedding themes, color palettes, photography shots, and personal touches.</p>
+
+        <h3 style="margin-top: 20px; font-size: 1rem; color: var(--gold-secondary);">Event Color Palette Concepts</h3>
+        <div class="palette-grid">
+          <div class="color-swatch" style="background: linear-gradient(135deg, #f72585, #7209b7);">Mehendi: Vibrant Bohemian</div>
+          <div class="color-swatch" style="background: linear-gradient(135deg, #ffb703, #fb8500);">Haldi: Auspicious Yellow & Gold</div>
+          <div class="color-swatch" style="background: linear-gradient(135deg, #9d0208, #d00000);">Wedding: Traditional Odia Crimson</div>
+          <div class="color-swatch" style="background: linear-gradient(135deg, #03045e, #0077b6);">Reception: Royal Midnight Blue</div>
+        </div>
+
+        <h3 style="margin-top: 25px; font-size: 1rem; color: var(--gold-secondary);">Must-Have Photography Inspirations</h3>
+        <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.9rem; margin-top: 10px;">
+          <li>📸 <strong>The Mandap Candid:</strong> High-emotion closeup during Kanyadaan water pouring.</li>
+          <li>📸 <strong>The Seven Steps:</strong> Low-angle capture of Saptapadi feet movement across betel nuts.</li>
+          <li>📸 <strong>The Sindoor Daan:</strong> The exact second the vermilion is applied with wedding Mukuta framing.</li>
+          <li>📸 <strong>The Departure:</strong> Emotional rice-throwing over mother's shoulder during Kanyavida.</li>
+        </ul>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Detail Modal -->
+  <div id="detail-modal" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h2 id="modal-title" style="color: var(--gold-primary); font-size: 1.2rem;">Node Details</h2>
+        <button class="modal-close" onclick="closeModal(null)">&times;</button>
+      </div>
+      <div style="font-size: 0.95rem; display: flex; flex-direction: column; gap: 10px;">
+        <div><strong>Time:</strong> <span id="modal-time" style="color: var(--gold-secondary);"></span></div>
+        <div><strong>Location:</strong> <span id="modal-location"></span></div>
+        <div><strong>Lead / Assigned:</strong> <span id="modal-lead"></span></div>
+        <p id="modal-desc" style="color: var(--text-muted); margin-top: 8px;"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initial Task State
+    let taskList = [
+      { id: 'TSK-001', title: 'Confirm Wedding & Reception Dates with Family Astrologer', event: 'Master_Planning', owner: 'Parents Council', priority: 'Critical', status: 'Completed', done: true },
+      { id: 'TSK-002', title: 'Finalize Main Venue & Sign Booking Contract', event: 'EVT-004', owner: 'Sree & Groom', priority: 'Critical', status: 'In-Progress', done: false },
+      { id: 'TSK-003', title: 'Schedule Makeup Artist (MUA) Bridal Trial', event: 'EVT-004', owner: 'Sree', priority: 'High', status: 'In-Progress', done: false },
+      { id: 'TSK-004', title: 'Curate Traditional Odia Feast Menu with Caterer', event: 'EVT-004', owner: 'Planning Committee', priority: 'High', status: 'Planned', done: false },
+      { id: 'TSK-005', title: 'Select Photography & Cinematography Studio', event: 'Master_Planning', owner: 'Sree & Groom', priority: 'High', status: 'In-Progress', done: false },
+      { id: 'TSK-006', title: 'Verify SAM-005 Sacred Mandap Samagri Checklist with Purohit', event: 'EVT-004', owner: 'Parents Council', priority: 'Medium', status: 'Planned', done: false },
+      { id: 'TSK-007', title: 'Design & Order Printed Invitation Box Cards', event: 'Master_Planning', owner: 'Sree & Groom', priority: 'High', status: 'Planned', done: false }
+    ];
+
+    function renderTasks() {
+      const tbody = document.getElementById('task-table-body');
+      tbody.innerHTML = '';
+      taskList.forEach((t, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleTask(${index})" /></td>
+          <td style="font-family: monospace; color: var(--gold-secondary);">${t.id}</td>
+          <td style="${t.done ? 'text-decoration: line-through; color: var(--text-muted);' : 'font-weight: 500;'}">${t.title}</td>
+          <td><span style="font-size: 0.8rem; color: var(--blue-accent);">${t.event}</span></td>
+          <td>${t.owner}</td>
+          <td><span style="color: ${t.priority === 'Critical' ? 'var(--crimson-accent)' : t.priority === 'High' ? 'var(--gold-primary)' : 'var(--text-muted)'}; font-weight: 600;">${t.priority}</span></td>
+          <td><span class="status-badge ${t.status === 'Completed' ? 'status-completed' : t.status === 'In-Progress' ? 'status-progress' : 'status-planned'}">${t.status}</span></td>
+          <td><button style="background: none; border: none; color: var(--crimson-accent); cursor: pointer; font-size: 1.1rem;" onclick="deleteTask(${index})">&times;</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+      document.getElementById('kpi-tasks').innerText = taskList.length;
+    }
+
+    function toggleTask(index) {
+      taskList[index].done = !taskList[index].done;
+      taskList[index].status = taskList[index].done ? 'Completed' : 'In-Progress';
+      renderTasks();
+    }
+
+    function deleteTask(index) {
+      taskList.splice(index, 1);
+      renderTasks();
+    }
+
+    function addNewTask() {
+      const titleInput = document.getElementById('new-task-title');
+      const title = titleInput.value.trim();
+      if (!title) return;
+
+      const event = document.getElementById('new-task-event').value;
+      const owner = document.getElementById('new-task-owner').value;
+      const newId = 'TSK-' + String(taskList.length + 1).padStart(3, '0');
+
+      taskList.unshift({
+        id: newId,
+        title: title,
+        event: event,
+        owner: owner,
+        priority: 'High',
+        status: 'In-Progress',
+        done: false
+      });
+
+      titleInput.value = '';
+      renderTasks();
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+
+    function filterLane(track) {
+      document.querySelectorAll('.filter-pill').forEach(el => el.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      document.querySelectorAll('.lane').forEach(lane => {
+        if (track === 'all' || lane.dataset.track === track) {
+          lane.style.display = 'block';
+        } else {
+          lane.style.display = 'none';
+        }
+      });
+    }
+
+    function showEventDetails(title, time, location, lead) {
+      document.getElementById('modal-title').innerText = title;
+      document.getElementById('modal-time').innerText = time;
+      document.getElementById('modal-location').innerText = location;
+      document.getElementById('modal-lead').innerText = lead;
+      document.getElementById('modal-desc').innerText = 'Part of the Sree Krushna Marriage OS live day-of execution track. All preconditions and assigned coordinators are logged under SSOT.';
+      document.getElementById('detail-modal').classList.add('active');
+    }
+
+    function closeModal(e) {
+      document.getElementById('detail-modal').classList.remove('active');
+    }
+
+    // Initialize
+    renderTasks();
+  </script>
+</body>
+</html>

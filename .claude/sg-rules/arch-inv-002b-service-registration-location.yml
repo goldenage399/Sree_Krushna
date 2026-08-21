@@ -1,0 +1,13 @@
+id: arch-inv-002b-service-registration-location
+language: JavaScript
+files:
+  - "src/pages/**"
+  - "src/components/**"
+rule:
+  pattern: ServiceRegistry.register($$$)
+message: |
+  ARCH-INV-002 (corollary): ServiceRegistry.register() called outside ServiceInitializer.js.
+  Service registrations must live in ServiceInitializer.registerBusinessServices() only.
+  Page components and feature components may call ServiceRegistry.get() but never .register().
+  Ref: docs/incidents/INC-017-arch-inv-002-service-registration-page-component.md
+severity: error

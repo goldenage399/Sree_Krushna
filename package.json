@@ -1,0 +1,23 @@
+{
+    "name":  "sree-krushna-marriage-os",
+    "version":  "1.0.0",
+    "description":  "Sree Krushna Marriage OS - Event, Ritual, Vendor \u0026 Operational Knowledge Base",
+    "scripts":  {
+                    "verify:governance-wiring":  "node scripts/verify-governance-wiring.cjs",
+                    "verify:governance-wiring:all":  "node scripts/verify-governance-wiring.cjs --all",
+                    "verify:governance-schema":  "node scripts/verify-governance-schema.cjs",
+                    "verify:mobile":  "node scripts/verify-mobile.mjs",
+                    "test:e2e":  "npx playwright test",
+                    "test:e2e:ui":  "npx playwright test --ui",
+                    "audit:lighthouse":  "lhci autorun",
+                    "query":  "node tools/query-cli/cli.cjs"
+                },
+    "keywords":  [
+                     "marriage-os",
+                     "governance",
+                     "sap-sync",
+                     "pact-001"
+                 ],
+    "author":  "goldenage399",
+    "license":  "ISC"
+}

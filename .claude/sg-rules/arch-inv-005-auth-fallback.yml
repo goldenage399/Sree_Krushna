@@ -1,0 +1,19 @@
+id: arch-inv-005-missing-auth-fallback
+language: JavaScript
+files:
+  - "src/contexts/AuthContext.jsx"
+  - "src/contexts/ProfileContext.jsx"
+rule:
+  kind: if_statement
+  has:
+    pattern: $SNAP.exists()
+  not:
+    has:
+      kind: else_clause
+message: |
+  ARCH-INV-005: Missing else branch on .exists() check in auth-critical file.
+  When a user document is not found, role/level silently stays null.
+  setLoading(false) fires normally → HomeRedirect infinite spinner with no recovery.
+  Add: else { console.warn('ADLF-001: doc missing'); setRole(fallback); setLevel(fallback); }
+  Ref: ADLF-001, docs/protocols/AUTH-DOCUMENT-LOOKUP-FALLBACK-PROTOCOL.md
+severity: error

@@ -1,0 +1,22 @@
+id: arch-inv-009-status-vocabulary
+language: JavaScript
+files:
+  - "src/**/*.js"
+  - "src/**/*.jsx"
+rule:
+  any:
+    - pattern: "updateTaskStatus($ID, $VAL, $$$REST)"
+    - pattern: "$SVC.updateTaskStatus($ID, $VAL, $$$REST)"
+    - pattern: "updateTaskStatusWithEscalation($ID, $VAL, $$$REST)"
+    - pattern: "$SVC.updateTaskStatusWithEscalation($ID, $VAL, $$$REST)"
+constraints:
+  VAL:
+    kind: string
+    not:
+      regex: "^['\"](pending|in_progress|completed|cancelled)['\"]$"
+message: |
+  ARCH-INV-009 / TLM-009 Violation: Invalid task status string literal passed to updateTaskStatus/updateTaskStatusWithEscalation.
+  The task status vocabulary is frozen to canonical WRITABLE_STATUSES ('pending', 'in_progress', 'completed', 'cancelled').
+  Do NOT pass custom status strings like 'on_hold', 'escalated', or 'blocked' to this call.
+  Import WRITABLE_STATUSES or TASK_STATUS from 'src/constants/taskStatus.js' and use one of its values instead.
+severity: error

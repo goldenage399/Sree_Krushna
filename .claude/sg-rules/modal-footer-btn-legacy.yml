@@ -1,0 +1,23 @@
+id: modal-footer-btn-legacy
+message: |
+  Modal footer uses legacy padding pattern (px-6 py-3 min-h-[48px]).
+  Migrate to: className="btn touch-target w-full sm:w-auto px-5 ..."
+  See COMPONENTS.md § Modal Footer Layout & Button Standards.
+severity: warning
+language: JavaScript
+files:
+  - "src/**/*.jsx"
+rule:
+  # ast-grep does not support $$$ inside a string literal; match the className
+  # string node by regex instead (requires px-6, py-3, and min-h-[48px] all present).
+  kind: string
+  all:
+    - regex: "px-6"
+    - regex: "py-3"
+    - regex: "min-h-\\[48px\\]"
+  inside:
+    kind: jsx_attribute
+    has:
+      kind: property_identifier
+      regex: "^className$"
+    stopBy: end

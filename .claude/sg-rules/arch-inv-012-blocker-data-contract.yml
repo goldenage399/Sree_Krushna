@@ -1,0 +1,15 @@
+id: arch-inv-012-blocker-data-contract
+language: JavaScript
+files:
+  - "src/**/*.js"
+  - "src/**/*.jsx"
+rule:
+  any:
+    - pattern: "{ blockedBy: $VAL }"
+    - pattern: "task.blockedBy"
+message: |
+  ARCH-INV-012 / ADR-012 Violation: Deprecated blocker field shape 'blockedBy' accessed or written.
+  The task blocker source of truth is the canonical `blockers[]` array (LOCK-DATA-001).
+  Writing to `blockedBy` or reading it is deprecated.
+  Please migrate usage to write to the `blockers[]` array, containing objects with type, description, and status.
+severity: warning

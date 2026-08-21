@@ -1,0 +1,76 @@
+﻿# ══════════════════════════════════════════════════════════════════════════════
+# Playwright Cross-Device CI — Sree Krushna Marriage OS
+# Pillar 5: Real-device viewport matrix (M-GATE-01 compliant)
+# Triggers: push & PR to main / develop
+# ══════════════════════════════════════════════════════════════════════════════
+name: Playwright Mobile Matrix
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - "public/**"
+      - "index.html"
+      - "tests/**"
+      - "playwright.config.mjs"
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - "public/**"
+      - "index.html"
+      - "tests/**"
+      - "playwright.config.mjs"
+
+jobs:
+  playwright:
+    name: "Playwright — ${{ matrix.project }}"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    strategy:
+      fail-fast: false
+      matrix:
+        project:
+          - "iPhone SE 300px (M-GATE-01 minimum)"
+          - "iPhone SE 320px"
+          - "iPhone 13"
+          - "Pixel 5"
+          - "iPad 768px"
+          - "Desktop 1280"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium webkit
+
+      - name: Start local server
+        run: |
+          npm install -g serve
+          serve public -l 5000 &
+          sleep 3
+        env:
+          NODE_ENV: test
+
+      - name: Run Playwright — ${{ matrix.project }}
+        run: npx playwright test --project="${{ matrix.project }}"
+        env:
+          PLAYWRIGHT_BASE_URL: "http://localhost:5000"
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ matrix.project }}
+          path: playwright-report/
+          retention-days: 7

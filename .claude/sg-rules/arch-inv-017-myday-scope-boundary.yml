@@ -1,0 +1,17 @@
+id: arch-inv-017-myday-scope-boundary
+language: JavaScript
+files:
+  - "src/pages/MyDayPage.jsx"
+  - "src/components/myday/**/*.jsx"
+rule:
+  any:
+    - pattern: "$X.runtimeDiscoveries"
+    - pattern: "$X.checkpoints"
+message: |
+  ARCH-INV-017 / ADR-028 Violation: MyDay must consume Task Runtime/Lifecycle
+  state only, never a sibling ticket's internal model directly — TASK-226's
+  runtimeDiscoveries[] or TASK-224's proposed checkpoints[] accessed here.
+  Project through task.status/blockers/todayFocus/todayReview or the generic
+  tasks/{id}/events subcollection instead.
+  See docs/adr/ADR-028-TASK-EXECUTION-REFERENCE-ARCHITECTURE.md, Invariant 1/4.
+severity: warning

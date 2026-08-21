@@ -1,0 +1,12 @@
+// Add to: File → Preferences → Keyboard Shortcuts (JSON)
+// i.e. the file at: %APPDATA%\Code\User\keybindings.json   (Windows)
+//                   ~/.config/Code/User/keybindings.json    (Linux)
+//                   ~/Library/Application Support/Code/User/keybindings.json (Mac)
+[
+  {
+    "key": "ctrl+shift+h",
+    "command": "workbench.action.tasks.runTask",
+    "args": "Adjust Markdown Headers (Selection)",
+    "when": "editorLangId == markdown"
+  }
+]

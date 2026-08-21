@@ -1,0 +1,15 @@
+id: arch-inv-013-task-risk-utils
+language: JavaScript
+files:
+  - "src/**/*.jsx"
+rule:
+  any:
+    - pattern: $VAR = Math.floor($$$BEFORE / (1000 * 60 * 60 * 24))
+    - pattern: $T.priority === 'critical' || !!$T.escalation?.isEscalated
+constraints:
+  VAR:
+    regex: "^(idleDays|daysIdle)$"
+message: |
+  ARCH-INV-013: Task idle duration or SLA risk calculations MUST NOT be computed inline in presentation components.
+  Use enrichTaskForDisplay() / computeIdleDays() / computeSlaRisk() from src/utils/taskRiskUtils.js instead.
+severity: error

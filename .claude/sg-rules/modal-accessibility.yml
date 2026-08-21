@@ -1,0 +1,24 @@
+id: modal-accessibility-governance
+language: JavaScript
+files:
+  - "src/**/*.jsx"
+rule:
+  any:
+    - kind: jsx_opening_element
+      all:
+        - has: { field: name, regex: "^ResponsiveModal$" }
+        - not:
+            has:
+              kind: jsx_attribute
+              has: { kind: property_identifier, regex: "^id$" }
+    - kind: jsx_opening_element
+      all:
+        - has: { field: name, regex: "^ResponsiveModal$" }
+        - not:
+            has:
+              kind: jsx_attribute
+              has: { kind: property_identifier, regex: "^data-testid$" }
+message: |
+  MODAL-ACCESSIBILITY: Any ResponsiveModal element MUST specify both `id` and `data-testid` props.
+  This avoids duplicate element IDs (HTML Spec violation) and provides stable unique anchors for E2E testing.
+severity: error

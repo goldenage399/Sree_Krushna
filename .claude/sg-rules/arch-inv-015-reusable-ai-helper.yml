@@ -1,0 +1,16 @@
+id: arch-inv-015-reusable-ai-helper
+language: JavaScript
+files:
+  - "src/components/TaskCard.jsx"
+  - "src/components/TaskUpdateModal.jsx"
+  - "src/components/ContextRichWorkSection.jsx"
+  - "src/components/TaskCreation/**/*.jsx"
+  - "src/pages/**/*.jsx"
+rule:
+  any:
+    - pattern: buildAISearchURL($$$)
+    - pattern: launchAISearchSidebar($$$)
+message: |
+  ARCH-INV-015: Direct use of buildAISearchURL or launchAISearchSidebar is forbidden in presentation components.
+  You MUST use the reusable <AISearchHelper> component instead to maintain styling, alignment, and event consistency.
+severity: error

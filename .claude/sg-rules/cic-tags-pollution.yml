@@ -1,0 +1,13 @@
+id: cic-tags-pollution
+language: JavaScript
+files:
+  - "src/components/TagDisplay.jsx"
+rule:
+  pattern: |
+    const colorOptions = {
+      $$$
+    }
+message: |
+  CIC-POLLUTION: Do not define static colorOptions map inside TagDisplay.jsx.
+  Use theme-aware Categorical Identity Colouring (CIC) slots via getTagStyle() style mapping to resolve tag colors dynamically.
+severity: error

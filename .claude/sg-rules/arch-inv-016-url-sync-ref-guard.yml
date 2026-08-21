@@ -1,0 +1,26 @@
+id: ARCH_INV_016_URL_SYNC_REF_GUARD
+language: JavaScript
+rule:
+  all:
+    - pattern: useSearchParams()
+    - pattern: useEffect($EFFECT, $DEPS)
+    - has:
+        pattern: setSearchParams($PARAMS)
+    - not:
+        has:
+          pattern: useRef($VAL)
+message: |
+  ARCH-INV-016: Bidirectional URL sync detected without a useRef guard.
+  When custom hooks or components synchronize local synchronous state (like modal open/close)
+  with global asynchronous state (like React Router's useSearchParams), you MUST use a useRef
+  guard to prevent race conditions that immediately reopen the closed modal/dialog.
+  Example:
+    const justClosedTaskId = useRef(null);
+    // inside closeTask:
+    justClosedTaskId.current = taskId;
+    detailsModal.close();
+    setSearchParams(...);
+    // inside useEffect:
+    if (justClosedTaskId.current === taskId) return;
+  Ref: FKL-DI-021 / INC-053
+severity: warning

@@ -1,0 +1,22 @@
+id: arch-inv-008-profile-writes
+language: JavaScript
+files:
+  - "src/services/**"
+  - "src/components/**"
+  - "src/contexts/**"
+rule:
+  any:
+    - pattern: "updateDoc($_, {profileAssignments: $_, $$$})"
+    - pattern: "updateDoc($_, {$$$, profileAssignments: $_})"
+    - pattern: "updateDoc($_, {$$$, profileAssignments: $_, $$$})"
+    - pattern: "setDoc($_, {profileAssignments: $_, $$$})"
+    - pattern: "setDoc($_, {$$$, profileAssignments: $_})"
+    - pattern: "setDoc($_, {$$$, profileAssignments: $_, $$$})"
+    - pattern: "setDoc($_, {profileAssignments: $_, $$$}, $_)"
+    - pattern: "setDoc($_, {$$$, profileAssignments: $_}, $_)"
+    - pattern: "setDoc($_, {$$$, profileAssignments: $_, $$$}, $_)"
+message: |
+  ARCH-INV-008: Direct client-side write to profileAssignments detected.
+  All profile assignments and revocations must route through consolidated Cloud Functions via MultiUserProfileAssignmentService.
+  Ref: .cache/architectural-invariants.jsonl → ARCH-INV-008
+severity: error

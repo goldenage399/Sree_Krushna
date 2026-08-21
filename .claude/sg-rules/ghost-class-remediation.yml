@@ -1,0 +1,28 @@
+id: ghost-class-detection
+language: JavaScript
+# RULE STATUS: RETIRED — false positives resolved 2026-05-18
+#
+# ORIGINAL PURPOSE: Catch usages of bg-surface-base-* before these classes were defined.
+#
+# WHY RETIRED: bg-surface-base and all its variants are now fully defined in
+#   tailwind-semantic-bridge.css L127-L133 as Protocol 62 fallback mappings:
+#     bg-surface-base           → var(--color-surface)
+#     bg-surface-base-secondary → var(--color-surface-secondary)
+#     bg-surface-base-tertiary  → var(--color-surface-sunken)
+#     bg-surface-base-card      → var(--color-surface-elevated)
+#     bg-surface-base-highlight → var(--color-accent-muted)
+#     bg-surface-base-input     → var(--color-surface)
+#     bg-surface-base-inverse   → var(--modal-backdrop, rgba(0, 0, 0, 0.6))
+#
+#   All sg:check warnings from this rule were 100% false positives.
+#   The rule is kept as a tombstone. To reactivate, restore the rule block.
+#
+# FUTURE: If a genuinely undefined bg-surface-base-* variant appears, add it
+#   to tailwind-semantic-bridge.css first, then update this rule if needed.
+rule:
+  kind: jsx_attribute
+  regex: bg-surface-base-NOMATCH_TOMBSTONE
+message: |
+  GHOST CLASS: unregistered bg-surface-base-* variant detected.
+  Add to tailwind-semantic-bridge.css before using.
+severity: warning

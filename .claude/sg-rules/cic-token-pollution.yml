@@ -1,0 +1,12 @@
+id: cic-token-pollution
+language: JavaScript
+files:
+  - "src/pages/TaskCalendarPage.jsx"
+rule:
+  all:
+    - pattern: "const PROJECT_PALETTE = [ $$$ ]"
+    - regex: "--theme-info|--theme-success|--theme-warning|--theme-error"
+message: |
+  CIC-POLLUTION: Do not reuse status-semantic color tokens (such as --theme-error) in PROJECT_PALETTE.
+  Use theme-aware Categorical Identity Colouring (CIC) tokens (--cic-slot-N-base) instead.
+severity: error

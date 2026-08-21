@@ -1,0 +1,1294 @@
+# std.agent.skill-router — Unified Cross-Repo Routing Index
+# Canonical: THIS FILE (Task-Dashboard/.agent/skill-router.yaml)
+#   NOTE 2026-06-10: previous header claimed canonical source was
+#   Capsicum/.agent/skill-router.yaml — verified stale: no skill-router.yaml
+#   exists in Capsicum or PIOperationsMgmt_Firebase. This copy is the only
+#   one in existence and is therefore authoritative until SAP re-establishes sync.
+# See docs/SKILL-ROUTER-PRD.md §5 (ENH-AGENT-ROUTER-001)
+# Generated: 2026-05-04 | Phase 2 Canonicalization | Hand-amended: 2026-06-10 (COS demotion)
+
+# <!-- shared:std.agent.skill-router:start -->
+
+# ─── SKILLS ───────────────────────────────────────────────────────────────────
+# Source: SKILL.md files per repo
+# repo field: repos where the skill/invocation is physically installed
+
+skills:
+
+  - id: web-deployment-gate
+    repo: [task-dashboard, sree-krushna, bms, capsicum, pio, ug-farmhouse, qsr]
+    triggers: ["deploy web", "pre-flight check", "new web app", "launch site", "verify deployment", "web deployment checklist", "deploy gate", "web audit", "/web-deployment-gate"]
+    cost: low
+    invoke: /web-deployment-gate
+    when: "Pre-flight deployment verification, auditing web SPAs for session persistence, 404, security headers, PWA cache invalidation, and scaffolding new web repos"
+    related_skills: [mobile-ui-validator, gas-deploy-guard, protocol-enforcer-pre-code]
+
+  # Shared: capsicum + pio
+  - id: caveman
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["caveman mode", "terse", "compress output", "token budget tight", "short answers"]
+    cost: medium
+    invoke: /caveman
+    when: "Token budget constrained or user requests ultra-compressed output style"
+    related_skills: [caveman-compress]
+
+  - id: change-prd-architect
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["create PRD", "draft PRD", "new PRD", "feature spec", "change request", "impact analysis", "design doc", "update PRD"]
+    cost: high
+    invoke: /change-prd-architect
+    when: "Formalizing a feature or architectural change into a structured PRD"
+    related_skills: [enhancement-scaffolder, writing-technical-documentation]
+
+  - id: enhancement-scaffolder
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["new enhancement", "scaffold enhancement", "create ENH", "start new feature", "new CAP", "new PIO-"]
+    cost: medium
+    invoke: /enhancement-scaffolder
+    when: "Beginning a new tracked enhancement — creates standard folder and doc structure"
+    related_skills: [change-prd-architect, enhancement-tracker-update, enhancement-lifecycle]
+
+  - id: enhancement-tracker-update
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["update tracker", "update enhancement", "tracker update", "update ENHANCEMENTS.md", "mark phase complete"]
+    cost: medium
+    invoke: /enhancement-tracker-update
+    when: "Recording progress on an in-flight enhancement to the canonical tracker"
+    related_skills: [enhancement-scaffolder, task-close-gate]
+
+  - id: phased-commit-orchestrator
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["commit changes", "make commit", "organize commits", "stage and commit", "messy diff"]
+    cost: medium
+    invoke: /phased-commit-orchestrator
+    when: "Turning staged/unstaged changes into logical, reviewable commit phases"
+
+  - id: prompt-clarity
+    repo: [task-dashboard, qsr]
+    triggers: ["prompt clarity", "prompt-clarity", "clarify prompt", "reframe prompt", "rephrase prompt", "/prompt-clarity"]
+    cost: low
+    invoke: /prompt-clarity
+    when: "Scan ambiguous user requests and present 2-3 reframed interpretations before starting work"
+
+  - id: pin-branch
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["pin this", "pin branch", "park this", "come back to this", "/pin-branch", "pin investigation", "defer this"]
+    cost: low
+    invoke: /pin-branch
+    when: "Mid-session branch/investigation needs to be persisted without creating a full enhancement ticket"
+    related_skills: [enhancement-scaffolder, enhancement-tracker-update]
+    protocol: .agent/workflows/SESSION-ORCHESTRATION.md
+
+
+  # Capsicum-local skills
+  - id: caveman-compress
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["compress memory file", "compress CLAUDE.md", "compress todos", "/caveman:compress"]
+    cost: medium
+    invoke: /caveman-compress
+    when: "Compressing natural language memory files to reduce input token cost"
+    related_skills: [caveman]
+
+  # PIO-local skills
+  - id: aep-orchestrator
+    repo: [pio]
+    triggers: ["what should we work on", "plan next work", "AEP plan", "orchestrate session"]
+    cost: high
+    invoke: /aep-orchestrator
+    when: "Reading PIO system state to produce an AEP execution plan"
+
+  - id: aep-protocol-guardian
+    repo: [pio]
+    triggers: ["check gate conditions", "AEP gate", "audit gate", "AEP guard"]
+    cost: medium
+    invoke: /aep-protocol-guardian
+    when: "Auditing AEP structural integrity and gate conditions without writing code"
+
+  - id: aep-validator
+    repo: [pio]
+    triggers: ["validate PIO", "validate enhancement completion", "AEP validate", "check DoD"]
+    cost: high
+    invoke: /aep-validator
+    when: "Verifying that AEP Worker output meets DoD criteria"
+
+  - id: aep-worker
+    repo: [pio]
+    triggers: ["execute PIO", "execute task", "AEP execute"]
+    cost: medium
+    invoke: /aep-worker
+    when: "Executing a single scoped AEP task — does not plan, only implements"
+
+  - id: backend-test-generator
+    repo: [pio, task-dashboard]
+    triggers: ["write test", "generate test script", "backend test", "a quick test", "P106", "P107", "test mocks the unit under test", "sequential mock call-order drift"]
+    cost: low
+    invoke: /backend-test-generator
+    when: "Creating clean, permanent backend test scripts"
+
+  - id: contract-first-api-validator
+    repo: [pio, task-dashboard]
+    triggers: ["contract drift", "validate API contract", "contract first", "api contract"]
+    cost: low
+    invoke: /contract-first-api-validator
+    when: "Ensuring zero drift between code implementation and API contract definition"
+
+  - id: declarative-schema-enforcer
+    repo: [pio, task-dashboard]
+    triggers: ["schema enforcer", "forgotten field bug", "declarative schema", "schema-driven write"]
+    cost: low
+    invoke: /declarative-schema-enforcer
+    when: "Enforcing schema-driven writes to eliminate forgotten-field bugs"
+
+  - id: frontend-design
+    repo: [pio, task-dashboard]
+    triggers: ["build web component", "build page", "design UI", "landing page", "dashboard UI", "frontend design"]
+    cost: medium
+    invoke: /frontend-design
+    when: "Creating distinctive production-grade frontend interfaces or web components"
+
+  - id: mermaid-skill
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["mermaid", "diagram", "flowchart", "sequence diagram", "class diagram", "ER diagram", "state machine", "architecture diagram", "visualize flow", "git graph"]
+    cost: low
+    invoke: /mermaid-skill
+    when: "Generating or validating Mermaid diagrams (.mmd) and exporting to PNG/SVG/PDF via mmdc CLI or Kroki API"
+
+  - id: gas-deploy-guard
+    repo: [pio, task-dashboard]
+    triggers: ["deploy to GAS", "clasp push", "GAS deploy", "deploy guard"]
+    cost: low
+    invoke: /gas-deploy-guard
+    when: "Gating GAS deployments to prevent downtime from bad pushes"
+
+  - id: deploy-firebase
+    repo: [task-dashboard]
+    triggers: ["deploy firebase", "firebase deploy", "deploy functions", "deploy rules", "deploy to firebase", "push functions", "publish functions", "deploy firestore rules", "release backend", "deploy backend firebase"]
+    cost: medium
+    invoke: .agent/workflows/deploy-firebase.md
+    when: "Deploying Cloud Functions or Firestore rules to the pi-ops Firebase project. Covers pre-deploy checklist, PowerShell quoting rules, quota-aware batching, and failure recovery."
+    related_skills: [backend-readiness]
+
+  - id: gas-optimizer
+    repo: [pio, task-dashboard]
+    triggers: ["GAS performance", "optimize GAS", "batch reads", "reduce API calls", "GAS optimization"]
+    cost: high
+    invoke: /gas-optimizer
+    when: "Applying GAS-specific optimization rules for data volume and access patterns"
+
+  - id: governance-invoker
+    repo: [pio, task-dashboard]
+    triggers: ["research governance", "/research-governance", "6-phase research workflow"]
+    cost: low
+    invoke: /governance-invoker
+    when: "Invoking Python governance layer for research workflows with 6-phase state machine"
+
+  - id: preflight
+    repo: [task-dashboard]
+    triggers: ["preflight", "pre-change check", "risk scan", "what should I read first", "routing table", "before touching"]
+    cost: low
+    invoke: .agent/PREFLIGHT.md
+    when: "DEFAULT pre-change route since 2026-06-10 (COS demotion). One-page routing table (R1-R12) + `npm run preflight` mechanical signal scan. Use for all single/dual-surface tasks."
+    related_skills: [cos-orchestrator]
+
+  - id: cos-invoke
+    repo: [task-dashboard]
+    triggers: ["cos invoke", "start cos", "invoke cos", "run cos", "cos entry"]
+    cost: low
+    invoke: .agent/workflows/cos-invoke.md
+    when: "Thin COS entry point (demoted 2026-06-10): routes to PREFLIGHT.md default path; escalates to cos-orchestrator deep path only for >=3-surface tasks or active incidents."
+
+  - id: cos-orchestrator
+    repo: [pio, task-dashboard]
+    triggers: ["run full COS", "orchestrate multi-surface task", "cos deep path"]
+    cost: high
+    invoke: /cos-orchestrator
+    when: "DEEP PATH ONLY (demoted 2026-06-10): full mode state machine for tasks spanning >=3 surfaces, active INC-XXX incidents, or god-node refactors (>800 lines AND >10 consumers). Default route is the `preflight` entry above."
+
+  - id: memory-decision-logger
+    repo: [pio, task-dashboard]
+    triggers: ["log decision", "record decision", "decision rationale", "capture decision"]
+    cost: medium
+    invoke: /memory-decision-logger
+    when: "Capturing key decisions with rationale for persistent PIO memory"
+
+  - id: memory-event-logger
+    repo: [pio, task-dashboard]
+    triggers: ["log event", "memory event", "record event to memory"]
+    cost: low
+    invoke: /memory-event-logger
+    when: "Logging discrete events to persistent memory"
+
+  # RETIRED 2026-06-10: memory-file-logger — file_reads.md was write-only memory
+  # (appended every session, consumed by nothing). Skill doc retained with
+  # retirement banner; do not route to it. See memory/decisions.md 2026-06-10.
+
+  - id: memory-session-end
+    repo: [pio, task-dashboard]
+    triggers: ["end session memory", "sync memory", "memory sync", "session memory sync"]
+    cost: medium
+    invoke: /memory-session-end
+    when: "Synchronizing all PIO memory files before ending a session"
+
+  - id: memory-session-loader
+    repo: [pio, task-dashboard]
+    triggers: ["load memory", "session memory load", "start session memory"]
+    cost: medium
+    invoke: /memory-session-loader
+    when: "Loading persistent agent memory at the start of a PIO work session"
+
+  - id: memory-verification-logger
+    repo: [pio, task-dashboard]
+    triggers: ["log verification", "verification record", "audit verification", "skipped test record"]
+    cost: medium
+    invoke: /memory-verification-logger
+    when: "Ensuring all completed work has an explicit verification record"
+
+  - id: browser-subagent-hardener
+    repo: [task-dashboard]
+    triggers: ["browser subagent", "hardened browser prompt", "login flow test", "route gate verification", "ui feature testing", "viewport normalization", "browser test subagent"]
+    cost: medium
+    invoke: /browser-subagent-hardener
+    when: "Composing a browser_subagent task for login flows, route-gate verification, or UI feature testing. Prevents silent failures from unauthorized redirects, viewport mismatches, and missing console captures."
+
+  - id: governance-wiring-audit
+    repo: [pio, task-dashboard]
+    triggers: ["governance wiring", "verify wiring", "artifact wired", "is it wired", "wiring audit", "read path", "consumption layer", "P81", "P82", "P83", "P84", "P87", "P88", "PACT-001", "governance artifact", "task status vocabulary", "TLM-009", "status constants", "no native browser dialogs", "alert() prohibited", "toast notification standard", "P61-EXT", "P90", "page-anchor position parity", "position static overrides fixed", "modal invisible anchor", "P91", "global surface utilities", "bg-surface", "scoped utility class", "transparent surface", "washed out modal", "P92", "task write event coverage", "appendTaskEvent", "lifecycle event coverage", "ARCH-INV-012", "event subcollection", "task event missing"]
+    cost: low
+    invoke: npm run verify:governance-wiring
+    when: "Checking whether a governance artifact (dist catalog, workflow, skill, P-standard) has been wired into the agent consumption layer. Run after any new governance artifact is created."
+
+  - id: db-inspect-fleet
+    repo: [task-dashboard]
+    triggers: ["inspect firestore", "check firestore", "query firestore", "look up task", "inspect task", "lookup user assignments", "check user profile", "db inspect", "check task data", "who can see task", "firestore admin", "check live data", "verify assignments", "profile assignment audit", "task visibility check", "p85", "createusercontext full-object", "p86", "decommission legacy role", "p-case", "case-insensitive status queries"]
+    cost: low
+    invoke: src/scripts/db-inspect.cjs
+    when: "Querying live prod Firestore (pi-ops) data without browser auth. Fleet: `npm run db:overview|task|user|profile|project|search`. Assignment linkage audit: `npm run db:verify:assignments`. Standard: P53."
+    protocol: docs/ssot/dev-workflow-hub/FIREBASE-INSPECTION-STANDARD.md
+    pattern_doc: .agent/patterns/db-inspect-fleet.md
+
+  - id: triage-anomalies-first
+    repo: [task-dashboard, pio, capsicum]
+    triggers: ["data anomaly", "schema drift", "missing field", "backfill", "migration script", "repair script", "reconciler", "bad data", "data mismatch", "fix data", "legacy data", "wrong field value", "data cleanup"]
+    cost: low
+    invoke: read .agent/patterns/triage-anomalies-first.md
+    when: "BEFORE building any data-repair/backfill/migration/reconciler tooling — count the anomaly population, separate real users from disposable seed/test records, and validate scope with the user. Match effort to scale. Origin: INC-012 / TASK-176 over-remediation."
+    pattern_doc: .agent/patterns/triage-anomalies-first.md
+
+  - id: eur-surface-audit
+    repo: [task-dashboard]
+    triggers: ["ingest external design", "port external jsx", "copy from reference design", "EUR execution phase", "external jsx ingestion", "architectural orphan", "no internal equivalent", "follow reference design structure", "paste external component into production", "adapt external jsx", "external design to production", "port sandbox design", "EUR ingestion"]
+    cost: low
+    invoke: read .agent/patterns/eur-surface-audit.md
+    when: "Before opening any production file during EUR Execution mode — or any time the task involves porting elements from an external/sandbox JSX file into internal code. Run the Surface Audit Gate first: classify every external element into LAYOUT_ONLY / STYLED_EXISTING / STYLED_NEW / BEHAVIORAL_EXTERNAL / ARCHITECTURAL_ORPHAN and get architect sign-off before writing any code. Prevents over-ingestion of elements with no internal architectural home."
+    pattern_doc: .agent/patterns/eur-surface-audit.md
+
+  - id: css-bridge-specificity
+    repo: [task-dashboard]
+    triggers: ["responsive class not working", "sm: class does nothing", "md: class ignored", "lg: class ignored", "grid won't multi-column", "responsive prefix no-op", "bridge specificity", "tailwind responsive broken", "layout not responsive", "breakpoint class ignored", "sm: grid-cols not applying", "grid stays single column", "responsive class silently ignored", "tailwind bridge override"]
+    cost: low
+    invoke: read .agent/patterns/css-bridge-specificity-management.md
+    when: "Any symptom where a Tailwind responsive prefix class (sm:/md:/lg:/xl:) appears to do nothing, or a CSS Grid refuses to go multi-column. This is the most common layout bug in this codebase (4 confirmed incidents). Read the pattern BEFORE touching any code. VEA-001 applies: do not attempt a second edit without visual evidence."
+    pattern_doc: .agent/patterns/css-bridge-specificity-management.md
+
+  - id: pattern-proxy-signal-verdicts
+    repo: [task-dashboard]
+    triggers: ["is this dead code", "safe to delete", "can we remove this", "retire this file", "consolidate these files", "merge these files", "this looks like a duplicate", "nothing uses this", "unused token", "unused export", "stale file", "which one is canonical", "delete the redundant one"]
+    cost: low
+    invoke: read .agent/patterns/proxy-signal-verdicts.md
+    when: "MANDATORY before any delete / merge / retire / consolidate. Import counts, filenames, filesystem mtimes and header comments are PROXIES, not evidence. Measure real consumption, diff real content, check load order, and re-verify at the moment of the edit. TASK-218 produced five confident WRONG verdicts this way — each one command from shipping a regression (e.g. '--tc-* is dead, 2 importers' was actually ~1,500 live usages)."
+    pattern_doc: .agent/patterns/proxy-signal-verdicts.md
+
+  - id: token-type-contract
+    repo: [task-dashboard]
+    triggers: ["token-type-001", "token type contract", "color-mix transparent", "color mix returns transparent", "border color not applying", "color not applying", "text color ignored", "element invisible in one theme", "invisible in sepia", "invisible in velvet-dark", "theme looks broken but only in some themes", "gradient token", "accent color wrong", "focus ring wrong colour", "chip invisible"]
+    cost: low
+    invoke: read docs/incidents/INC-062-token-type-001-recurrence-theme-accent-gradient.md
+    when: "Any symptom where a colour silently fails to apply — `color:`/`border-color:` ignored, `color-mix()` producing transparent, or an element visible in some themes but not others. Cause is almost always a GRADIENT-valued token used in a colour slot (invalid CSS, silently dropped). Twice now: INC-057, then INC-062. Authoritative check: `npm run check:color-mix` (derives gradient tokens from theme-tokens.css). Standard: TOKEN-TYPE-001."
+    pattern_doc: .agent/patterns/derive-dont-declare-guardrails.md
+
+  - id: layout-catalog-lookup
+    repo: [task-dashboard]
+    triggers: ["layout bug", "css height", "overflow", "container constraint", "layout not working", "element wrong size", "css cascade", "layout investigation", "sizing issue", "grid not", "flex not", "css layout", "height wrong", "width wrong", "layout trace", "selector properties", "layout catalog"]
+    cost: low
+    invoke: read dist/layout-catalog.json
+    when: "Before any CSS/layout grep spiral — query dist/layout-catalog.json for O(1) selector property lookup (327 selectors, 205 source files). Avoids multi-turn cascade tracing by exposing pre-computed box-model properties per selector."
+
+  - id: mobile-ui-validator
+    repo: [pio, task-dashboard]
+    triggers: ["mobile validation", "check mobile layout", "300px check", "responsive check"]
+    cost: low
+    invoke: /mobile-ui-validator
+    when: "Ensuring UI components work on mobile (300px) with active CSS"
+
+  - id: pirr-compliance-checklist
+    repo: [pio, task-dashboard]
+    triggers: ["PIRR compliance", "definition of done docs", "DoD docs check"]
+    cost: medium
+    invoke: /pirr-compliance-checklist
+    when: "Ensuring DoD includes documentation artifacts, not just code"
+
+  - id: planning-with-files
+    repo: [pio, task-dashboard]
+    triggers: ["file-based planning", "task_plan.md", "manus planning", "complex task plan"]
+    cost: high
+    invoke: /planning-with-files
+    when: "File-based planning for complex multi-step tasks using task_plan/findings/progress pattern"
+
+  - id: protocol-enforcer-pre-code
+    repo: [pio, task-dashboard]
+    triggers: ["check protocols before coding", "pre-code protocol", "protocol gate"]
+    cost: medium
+    invoke: /protocol-enforcer-pre-code
+    when: "Blocking protocol violations before implementation starts"
+
+  - id: cos-safe-refactor
+    repo: [pio, task-dashboard]
+    triggers: ["safe refactor this", "P11 safe refactor mode", "large refactor safety", "cos safe refactor", "cos mode 5"]
+    cost: high
+    invoke: /cos-safe-refactor
+    when: "COS MODE 5 — Safe Refactor Specialist: regression safety, god-node extraction, change-impact analysis, Retirement checks"
+    related_skills: [change-impact-analysis, cos-integration-verifier]
+
+  - id: schema-migration-guide
+    repo: [pio, task-dashboard]
+    triggers: ["schema migration", "migrate schema", "non-destructive schema change"]
+    cost: low
+    invoke: /schema-migration-guide
+    when: "Ensuring schema changes are reversible and non-destructive"
+
+  - id: admin-component-contracts
+    repo: [task-dashboard]
+    triggers: ["AdminStatTile", "AdminShell", "AdminSectionHeader", "admin primitive", "admin component contract", "tile className", "tile padding", "admin component props"]
+    cost: low
+    invoke: /admin-component-contracts
+    when: "Reviewing or modifying shared admin UI primitives (AdminStatTile, AdminShell exports). Provides source-pointer contract — line ranges in AdminShell.jsx — instead of re-tracing the file."
+    related_skills: [parent-layout-audit, ui-design-validator, ssot-domain-mapper]
+
+  - id: parent-layout-audit
+    repo: [task-dashboard]
+    triggers: ["min-width fit", "tile sizing", "usable width", "parent padding", "ancestor padding", "sizing math", "fits at 320", "fits in viewport", "pixel math", "flex tile", "tile grid fit", "profile-mgmt-stats"]
+    cost: low
+    invoke: /parent-layout-audit
+    when: "Before asserting that a child min-width/max-width/column count fits in a viewport. Mandatory when any pixel-fit claim is made — traces ancestor padding chain to compute real usable width."
+    related_skills: [admin-component-contracts, ssot-domain-mapper, mobile-ui-validator]
+
+  - id: ssot-domain-mapper
+    repo: [pio, task-dashboard]
+    triggers: ["map SSOT", "orphan SSOT", "find governing doc", "ssot domain", "which spoke", "which doc governs", "governing documentation"]
+    cost: low
+    invoke: /ssot-domain-mapper
+    when: "Mapping code changes to their governing documentation in docs/ssot/ to prevent orphan SSOTs. Hub-and-spoke tree: architecture-hub, ui-design, dev-workflow-hub, testing-hub."
+    related_skills: [admin-component-contracts, parent-layout-audit, ui-design-validator]
+
+  - id: systematic-debugger
+    repo: [pio, task-dashboard]
+    triggers: ["6-step debug", "shotgun debugging", "systematic debug", "debug protocol"]
+    cost: low
+    invoke: /systematic-debugger
+    when: "Preventing shotgun debugging by enforcing 6-step systematic protocol"
+
+  - id: task-firestore-direct-write
+    repo: [task-dashboard]
+    triggers: ["create a task for", "log this as a task", "add a task via script", "direct firestore task write", "admin script task creation"]
+    cost: low
+    invoke: .agent/skills/task-firestore-direct-write/SKILL.md
+    when: "Writing a tasks/ doc directly via admin SDK script (bypassing the wizard/UI) so it satisfies firestore.rules create constraints (projectId, originProfileId) and the full profile-centric schema (assignedTo.department, escalation, schemaVersion) on first try instead of after a failed re-check."
+
+  - id: test-driven-development
+    repo: [pio, task-dashboard]
+    triggers: ["TDD", "test first", "write tests before", "test driven development"]
+    cost: high
+    invoke: /test-driven-development
+    when: "Implementing features or bugfixes with test-first approach"
+
+  - id: ui-design-validator
+    repo: [pio, task-dashboard]
+    triggers: ["validate UI design", "design system check", "visual stability", "UI system", "z-index", "sticky broken", "position sticky", "stacking context", "z-index token", "scroll model", "semantic token", "bg-white wrong"]
+    cost: low
+    invoke: /ui-design-validator
+    when: "Enforcing this repo's CSS contracts: z-index tokens (--z-sticky/--z-modal from layout-tokens.css), sticky/scroll viewport model (Model A vs Model B), and semantic tokens over hardcoded values."
+    related_skills: [ssot-domain-mapper, admin-component-contracts, mobile-ui-validator]
+
+  - id: ui-ux-pro-max
+    repo: [pio, task-dashboard]
+    triggers: ["UI/UX design", "50 styles", "React component design", "Tailwind UI", "frontend stack design"]
+    cost: high
+    invoke: /ui-ux-pro-max
+    when: "Full UI/UX design intelligence — 50 styles, 21 palettes, 9 stacks (React, Next.js, Vue, etc.)"
+
+  - id: vercel-react-best-practices
+    repo: [pio, task-dashboard]
+    triggers: ["React performance", "Next.js optimization", "Vercel patterns", "React best practices"]
+    cost: medium
+    invoke: /vercel-react-best-practices
+    when: "Writing, reviewing, or refactoring React/Next.js code for optimal performance"
+
+  - id: cos-integration-verifier
+    repo: [pio, task-dashboard]
+    triggers: ["run verifier", "verify this change", "review before execute", "cos verifier", "cos integration verifier"]
+    cost: high
+    invoke: /cos-integration-verifier
+    when: "COS MODE 3 — Integration Verifier: plan reviews, P18 integration tracing, T2/T3 Definition of Done checks"
+    related_skills: [plan-review, cos-safe-refactor]
+
+  - id: writejournal-audit-gate
+    repo: [pio, task-dashboard]
+    triggers: ["financial audit trail", "write journal", "trace ID", "transaction audit"]
+    cost: low
+    invoke: /writejournal-audit-gate
+    when: "Ensuring financial transactions have an audit trail and trace ID"
+
+  - id: writing-clearly-and-concisely
+    repo: [pio, task-dashboard]
+    triggers: ["improve writing", "cleaner prose", "commit message prose", "error message wording"]
+    cost: medium
+    invoke: /writing-clearly-and-concisely
+    when: "Writing prose humans will read — docs, commit messages, error messages, UI text"
+
+  - id: writing-plans
+    repo: [pio, task-dashboard]
+    triggers: ["write plan before coding", "implementation plan", "plan multi-step task"]
+    cost: medium
+    invoke: /writing-plans
+    when: "Writing a structured plan before implementation when given spec or requirements"
+
+  - id: writing-technical-documentation
+    repo: [pio, task-dashboard]
+    triggers: ["write ADR", "architecture doc", "SSOT doc", "large technical guide"]
+    cost: medium
+    invoke: /writing-technical-documentation
+    when: "Creating or updating ADRs, SSOTs, or large technical guides with hierarchy enforcement"
+
+
+# ─── WORKFLOWS ────────────────────────────────────────────────────────────────
+# Source: .agent/workflows/*.md and .agent/workflows/portable/*.md
+# repo field: repos where the workflow file is physically present
+
+workflows:
+
+  # Shared: all repos (capsicum + pio + task-dashboard)
+  - id: aos-session-close
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["/aos-session-close", "session close", "end session", "closeout", "PIRR closeout"]
+    cost: high
+    invoke: workflow:aos-session-close
+    when: "Ending a working session — deployment check, memory sync, forensic audit"
+    related_skills: [aos-session-open, phased-commit-orchestrator, task-close-gate, session-closeout-protocol]
+
+  - id: sap-sync
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["sap-sync", "sync shared blocks", "mid-session sync", "/sap-sync", "propagate sap"]
+    cost: low
+    invoke: workflow:sap-sync
+    when: "Synchronizing Shared Alignment Protocol (SAP) blocks to sibling repositories mid-session"
+    related_skills: [memory-session-end, pirr-compliance-checklist]
+
+  - id: backend-readiness
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["backend readiness", "pre-wiring validation", "schema migration check", "new table setup"]
+    cost: high
+    invoke: workflow:backend-readiness
+    when: "Pre-flight backend testing before deploying schema changes or new tables"
+
+  - id: complex-architecture-blueprint
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["architecture blueprint", "AVP protocol", "multi-module blueprint", "complex arch plan"]
+    cost: medium
+    invoke: workflow:complex-architecture-blueprint
+    when: "Creating architectural blueprints for complex multi-module changes with built-in guardrails"
+    related_skills: [change-prd-architect, adr-gate]
+
+  - id: debug-backend
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["debug backend", "GAS error", "API error", "backend error", "CORS error", "sheet error"]
+    cost: medium
+    invoke: workflow:debug-backend
+    when: "Debugging backend/GAS issues — API errors, CORS, Sheet operations, deployment"
+    related_skills: [serverless-debugging, systematic-debugging, backend-testing]
+
+  - id: external-ui-redesign
+    repo: [task-dashboard]
+    triggers: ["external ui redesign", "external redesign", "external mock", "redesign brief", "external collaborator design", "ui design variant", "delegate ui design", "design direction brief"]
+    cost: medium
+    invoke: workflow:external-ui-redesign
+    when: "Delegating UI component visual/information design to an external agent — framing, briefing, variant review, direction iteration, PRISM ingestion (EUR-001)"
+    related_skills: [change-prd-architect, mobile-ui-validator]
+
+  - id: graphify
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["graphify", "knowledge graph", "build graph", "semantic graph", "map codebase graph"]
+    cost: low
+    invoke: workflow:graphify
+    when: "Building or updating the semantic knowledge graph for any codebase"
+    related_skills: [graphify-adoption, graph-assisted-pre-flight, router-action-coverage]
+
+  - id: large-code-removal
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["remove large block", "delete 100+ lines", "large code removal", "safe removal"]
+    cost: low
+    invoke: workflow:large-code-removal
+    when: "Safely removing 100+ lines of code with dependency checks"
+
+  - id: post-incident-governance
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["production bug resolved", "repeated failure", "post-incident", "systemic gap", "we should always", "we should never"]
+    cost: medium
+    invoke: workflow:post-incident-governance
+    when: "Routing post-incident learnings through classification gate to persistent invariants"
+
+  - id: post-incident-analysis
+    repo: [task-dashboard]
+    triggers: ["post-incident-analysis", "post incident analysis", "/post-incident-analysis", "incident retrospective"]
+    cost: medium
+    invoke: read .agent/workflows/post-incident-analysis.md
+    when: "Performing 9-step post-incident retrospective and writing INC case study"
+
+  - id: postmortem
+    repo: [task-dashboard]
+    triggers: ["postmortem", "/postmortem", "incident postmortem"]
+    cost: medium
+    invoke: read .agent/workflows/postmortem.md
+    when: "Postmortem diagnostic engine for incident root-cause analysis"
+
+  - id: task-backlog-inventory
+    repo: [task-dashboard]
+    triggers: ["task-backlog-inventory", "/task-backlog-inventory", "backlog inventory", "audit task backlog"]
+    cost: medium
+    invoke: read .agent/workflows/task-backlog-inventory.md
+    when: "Auditing, filtering, and topologically sequencing pending tasks and tech debt into canonical inventory"
+
+  - id: ssot-reconciliation
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["ssot conflict", "doc vs code mismatch", "resolve SSOT", "SSOT unclear"]
+    cost: medium
+    invoke: workflow:ssot-reconciliation
+    when: "Investigating and resolving doc/code conflicts when SSOT is unclear"
+
+  - id: ingest-recurring-checklist
+    repo: [task-dashboard]
+    triggers: ["ingest checklist", "operations manual", "ingest SOP", "new recurring checklist", "checklist ingestion", "/ingest-recurring-checklist"]
+    cost: medium
+    invoke: workflow:ingest-recurring-checklist
+    when: "Ingesting an operations manual, shift checklist, or SOP into project-anchored checklist templates and positional profiles"
+    related_skills: [firebase-firestore]
+
+  - id: source-intake-workflow
+    repo: [qsr]
+    triggers: ["source intake", "SOURCE_INTAKE_WORKFLOW"]
+    cost: low
+    invoke: workflow:SOURCE_INTAKE_WORKFLOW
+    when: "Source intake workflow in QSR"
+
+  - id: ingest-component-workflow
+    repo: [testvitejsx]
+    triggers: ["ingest component", "INGEST_COMPONENT_WORKFLOW"]
+    cost: medium
+    invoke: workflow:INGEST_COMPONENT_WORKFLOW
+    when: "Component ingestion workflow in TestViteJSX"
+
+  - id: sandbox-ref-update-workflow
+    repo: [testvitejsx]
+    triggers: ["sandbox ref update", "SANDBOX_REF_UPDATE_WORKFLOW"]
+    cost: low
+    invoke: workflow:SANDBOX_REF_UPDATE_WORKFLOW
+    when: "Sandbox reference update workflow in TestViteJSX"
+
+  - id: session-close-workflow
+    repo: [qsr, testvitejsx]
+    triggers: ["session close", "SESSION_CLOSE_WORKFLOW"]
+    cost: medium
+    invoke: workflow:SESSION_CLOSE_WORKFLOW
+    when: "Session close workflow in QSR and TestViteJSX"
+
+  # Shared: pio + task-dashboard
+  - id: aos-session
+    repo: [pio, task-dashboard]
+    triggers: ["aos session", "AOS workflow", "/aos-session"]
+    cost: medium
+    invoke: workflow:aos-session
+    when: "AOS session workflow — Phase A discovery and Phase C PIRR reconciliation"
+
+  - id: aos-session-open
+    repo: [pio, task-dashboard]
+    triggers: ["/aos-session-open", "/aos-session-start", "session open", "begin work session", "start session"]
+    cost: medium
+    invoke: workflow:aos-session-open
+    when: "Starting a new working session — memory load, discovery, governance toggle"
+
+  - id: backend-testing
+    repo: [pio, task-dashboard]
+    triggers: ["run backend tests", "backend test suite", "test silent failures"]
+    cost: low
+    invoke: workflow:backend-testing
+    when: "Running and managing backend tests, catching silent failures"
+
+  - id: change-impact-analysis
+    repo: [pio, task-dashboard]
+    triggers: ["change impact", "impact analysis", "affected files", "shared code change"]
+    cost: low
+    invoke: workflow:change-impact-analysis
+    when: "Identifying all affected code when modifying shared state, patterns, or interfaces"
+
+  - id: context-bootstrap
+    repo: [pio]
+    triggers: ["context bootstrap", "ICAP", "bootstrap context", "/context-bootstrap"]
+    cost: medium
+    invoke: workflow:context-bootstrap
+    when: "Institutionalized Context Acquisition Protocol (ICAP) — 5-phase context acquisition pipeline for any module"
+
+  - id: codebase-navigation
+    repo: [pio, task-dashboard]
+    triggers: ["navigate codebase", "codebase index", "find code", "codebase navigation"]
+    cost: medium
+    invoke: workflow:codebase-navigation
+    when: "Mapping and navigating codebases efficiently — prevents wasted searches"
+
+  - id: debug-architecture
+    repo: [pio, task-dashboard]
+    triggers: ["debug architecture", "architectural bug", "architectural issue debug"]
+    cost: low
+    invoke: workflow:debug-architecture
+    when: "Mandatory workflow for debugging architectural issues (generic)"
+
+  - id: debug-frontend
+    repo: [pio, task-dashboard]
+    triggers: ["debug frontend", "UI bug", "frontend error", "value display bug", "state sync issue", "theme bug", "styling override", "style broken in theme", "looks wrong in dark mode", "looks wrong in sepia", "button style broken", "color wrong in theme", "theme override", "opt-out class", "gradient override", "typography weight inflation", "font-black or font-extrabold", "typography scale mismatch", "font size mismatch", "non-canonical shadow classes", "shadow-2xs", "shadow-xs", "p-ui-typo", "typography scale, weight", "pattern-typography-weight-and-bridge-token-enforcement"]
+    cost: high
+    invoke: workflow:debug-frontend
+    when: "Debugging all frontend issues — value display, UI interaction, state sync, handoff, AND theme/styling-override symptoms (component correct in one theme, broken in another → debug-frontend Track G → FKL-DI-003 opt-out contract)"
+
+  - id: debug
+    repo: [pio, task-dashboard]
+    triggers: ["debug", "something broken", "error in app", "not working", "bug"]
+    cost: medium
+    invoke: workflow:debug
+    when: "Master debug entry point — routes to frontend or backend based on symptom classification"
+
+  - id: deploy-backend
+    repo: [pio, task-dashboard]
+    triggers: ["deploy backend", "deploy GAS", "push to GAS", "backend deploy"]
+    cost: medium
+    invoke: workflow:deploy-backend
+    when: "Deploying backend code to Google Apps Script"
+
+  - id: enh-update
+    repo: [pio, task-dashboard]
+    triggers: ["update enhancement tracker", "enh update", "tracker progress update", "update phases"]
+    cost: medium
+    invoke: workflow:enh-update
+    when: "Updating enhancement tracker with current DoD, phases, and next steps"
+
+  - id: file-placement
+    repo: [pio, task-dashboard]
+    triggers: ["where should this file go", "file placement", "new file location", "where to create file"]
+    cost: high
+    invoke: workflow:file-placement
+    when: "Deciding correct file placement for code and documentation by content and context"
+
+  - id: governance-workflow
+    repo: [pio, task-dashboard]
+    triggers: ["SDLC governance", "requirement envelope", "governance workflow", "strict governance"]
+    cost: medium
+    invoke: workflow:governance-workflow
+    when: "Strict SDLC governance — prevents helpful inference trap via requirement envelopes"
+
+  - id: implementation-plan-template
+    repo: [pio, task-dashboard]
+    triggers: ["implementation plan", "plan template", "create impl plan"]
+    cost: medium
+    invoke: workflow:implementation-plan-template
+    when: "Creating comprehensive implementation plans that pass external review in 1-2 rounds"
+
+  - id: mobile-ui-engineering
+    repo: [pio, task-dashboard]
+    triggers: ["mobile engineering", "responsive design", "mobile CSS", "mobile debugging"]
+    cost: medium
+    invoke: workflow:mobile-ui-engineering
+    when: "Mobile UI engineering — responsive rules and mobile-specific debugging"
+
+  - id: new-module-creation
+    repo: [pio, task-dashboard]
+    triggers: ["new module", "create module", "module scaffold", "new feature module"]
+    cost: low
+    invoke: workflow:new-module-creation
+    when: "Creating a new module following the repo's structure standard"
+
+  - id: perf-review
+    repo: [pio, task-dashboard]
+    triggers: ["performance review", "perf check", "optimize code", "perf patterns"]
+    cost: low
+    invoke: workflow:perf-review
+    when: "Reviewing code for performance optimization using indexed patterns"
+
+  - id: plan-review
+    repo: [pio, task-dashboard]
+    triggers: ["review this plan", "plan review", "feedback on plan", "5 lens check", "5 lenses check", "5 lenses", "run 5 lenses", "apply 5 lenses", "five lenses", "five lens check"]
+    cost: medium
+    invoke: workflow:plan-review
+    when: "Comprehensive plan review to compress multi-round feedback into single-pass. Includes the 5 Lenses feasibility gate (UX · Workflow Efficiency · Cognitive Load · Performance · Implementation Practicality) — the execution-stage counterpart to the Gear 2 ideation gate in enhancement-scaffolder Step 2.7."
+
+  - id: plan
+    repo: [pio, task-dashboard]
+    triggers: ["/plan", "create plan", "plan task"]
+    cost: low
+    invoke: workflow:plan
+    when: "Creating an implementation plan using the writing-plans skill"
+
+  - id: harvest-frontend-knowledge
+    repo: [task-dashboard]
+    triggers: ["harvest knowledge", "session harvest", "what did we learn", "capture frontend learning", "classify discovery", "fkl harvest", "five questions", "log this discovery"]
+    cost: low
+    invoke: workflow:harvest-frontend-knowledge
+    when: "Classifying and routing frontend discoveries (design rules, fixes, processes, architectural learnings) at session close or milestone boundary"
+    related_skills: [post-incident-governance, capture-pattern, register-standard]
+
+  - id: register-standard
+    repo: [pio, task-dashboard]
+    triggers: ["register standard", "new code standard", "enforce everywhere", "codify pattern", "should be the standard"]
+    cost: medium
+    invoke: workflow:register-standard
+    when: "Registering a new code standard for propagation and enforcement across the codebase"
+
+  - id: research-governance
+    repo: [pio, task-dashboard]
+    triggers: ["research governance", "systematic research", "multi-document research"]
+    cost: high
+    invoke: workflow:research-governance
+    when: "Systematic multi-document research with 100% coverage and source traceability"
+
+  - id: scan-violations
+    repo: [pio, task-dashboard]
+    triggers: ["scan violations", "compliance check", "check standards", "technical debt scan"]
+    cost: medium
+    invoke: workflow:scan-violations
+    when: "Scanning codebase for registered-standard violations, updating technical debt register"
+
+  - id: skill-source-verification-gate
+    repo: [task-dashboard]
+    triggers: ["port skill from", "skill from pio", "skill from another repo", "adapt skill", "copy skill", "stale skill", "skill wrong token", "skill wrong path"]
+    cost: low
+    invoke: read .agent/patterns/skill-source-verification-gate.md
+    when: "Before trusting or deploying any skill ported from a sibling repo. Verifies CSS token names, file paths, hub doc references, and component facts against live source to prevent silent wrong-guidance."
+    related_skills: [skill-onboarding]
+
+  - id: skill-onboarding
+    repo: [pio, task-dashboard]
+    triggers: ["onboard skill", "install skill", "add external skill", "new skill"]
+    cost: medium
+    invoke: workflow:skill-onboarding
+    when: "Onboarding external skills into the project's skill ecosystem"
+
+  - id: strict-mode
+    repo: [pio, task-dashboard]
+    triggers: ["strict mode", "tight control", "hallucinating", "need more structure"]
+    cost: medium
+    invoke: workflow:strict-mode
+    when: "Invoking structured control mode when agent needs tight constraints"
+
+  - id: table-schema-documentation
+    repo: [pio, task-dashboard]
+    triggers: ["document table schema", "table schema", "production schema doc"]
+    cost: medium
+    invoke: workflow:table-schema-documentation
+    when: "Documenting production table schemas for any module or repo"
+
+  # Shared: capsicum + task-dashboard
+  - id: graph-assisted-pre-flight
+    repo: [capsicum, task-dashboard]
+    triggers: ["graph pre-flight", "graphify pre-flight", "pre-flight with graph"]
+    cost: low
+    invoke: workflow:graph-assisted-pre-flight
+    when: "Using graphify knowledge graph to validate scope before implementation"
+
+  # Capsicum-local workflows (main)
+  - id: adr-gate
+    repo: [capsicum]
+    triggers: ["architectural decision", "ADR", "decision record", "we decided to", "we chose X over Y", "rejected alternative"]
+    cost: low
+    invoke: workflow:adr-gate
+    when: "Capturing architectural reasoning at the moment it exists before context is lost"
+    related_skills: [spoke-and-wheel-docs, complex-architecture-blueprint]
+
+  - id: aos-session-open
+    repo: [capsicum]
+    triggers: ["/aos-session-open", "capsicum session start", "open capsicum session"]
+    cost: medium
+    invoke: workflow:aos-session-open
+    when: "Starting a Capsicum session — knowledge graph load, handoff selection, discovery"
+    related_skills: [aos-session-close, session-handoff-system, graphify]
+
+  - id: compile-manual
+    repo: [capsicum]
+    triggers: ["compile manual", "generate user guide", "/compile-manual", "role manual"]
+    cost: low
+    invoke: workflow:compile-manual
+    when: "Generating role-filtered manuals (users/managers/admins) from structured docs"
+
+  - id: deploy-frontend
+    repo: [capsicum]
+    triggers: ["deploy frontend", "push frontend", "Firebase deploy", "Vite build deploy"]
+    cost: low
+    invoke: workflow:deploy-frontend
+    when: "Deploying frontend changes — runs GAS push AND Firebase Vite build"
+
+  - id: sync-shared-blocks
+    repo: [capsicum]
+    triggers: ["sync shared blocks", "propagate pending syncs", "/sync-shared-blocks", "needful on shared blocks"]
+    cost: medium
+    invoke: workflow:sync-shared-blocks
+    when: "Propagating pending SAP shared-block changes from Capsicum to sibling repos"
+
+  # Capsicum-local portable workflows
+  - id: api-layer-modernization
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["api layer modernization", "replace switch block", "PUBLIC_ACTIONS map"]
+    cost: low
+    invoke: workflow:api-layer-modernization
+    when: "Replacing procedural switch(action) with declarative PUBLIC_ACTIONS lookup map"
+
+  - id: automation-safety-protocol
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["automation safety", "safe automation"]
+    cost: low
+    invoke: workflow:automation-safety-protocol
+    when: "Safety protocol checklist for automated operations"
+
+  - id: build-safety-guards
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["build safety", "ESM migration safety", "wiring bug", "module wiring check"]
+    cost: medium
+    invoke: workflow:build-safety-guards
+    when: "Guarding against ESM migration wiring bugs during frontend modularization"
+
+  - id: document-driven-guardrails
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["document driven guardrails", "markdown CI database"]
+    cost: low
+    invoke: workflow:document-driven-guardrails
+    when: "Using markdown documents as dynamic CI/CD databases for agent skills"
+
+  - id: enhancement-lifecycle
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["enhancement lifecycle", "ENH lifecycle before implementation"]
+    cost: low
+    invoke: workflow:enhancement-lifecycle
+    when: "Standard lifecycle process checks for enhancements before implementation begins"
+
+  - id: financial-integrity-patterns
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["financial integrity", "financial backend patterns"]
+    cost: low
+    invoke: workflow:financial-integrity-patterns
+    when: "Enforcing financial integrity patterns in backend operations"
+
+  - id: frontend-esm-migration
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["ESM migration", "frontend ESM", "module migration steps"]
+    cost: medium
+    invoke: workflow:frontend-esm-migration
+    when: "Migrating frontend from concatenated JS to ESM module architecture"
+
+  - id: frontend-modularization
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["frontend modularization", "split monolithic JS", "JS modules baseline"]
+    cost: medium
+    invoke: workflow:frontend-modularization
+    when: "Splitting monolithic frontend JS into functional modules with baseline layout"
+    related_skills: [frontend-esm-migration, build-safety-guards, api-layer-modernization]
+
+  - id: graphify-adoption
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["graphify adoption", "install graphify", "new repo graphify", "upgrade graphify"]
+    cost: medium
+    invoke: workflow:graphify-adoption
+    when: "Initiating graphify in a new repository or upgrading existing semantic coverage"
+
+  - id: just-in-time-architecture
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["just in time architecture", "JIT architecture", "dormant triggers"]
+    cost: low
+    invoke: workflow:just-in-time-architecture
+    when: "Planting dormant triggers for future patterns instead of pre-building architecture"
+
+  - id: router-action-coverage
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["router coverage", "action coverage", "dispatch table coverage", "classify router action"]
+    cost: medium
+    invoke: workflow:router-action-coverage
+    when: "Enforcing coverage classification for every action in API dispatch table"
+
+  - id: schema-sentinel-governance
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["schema sentinel", "schema registry", "HEADERS drift", "competing schema truths"]
+    cost: medium
+    invoke: workflow:schema-sentinel-governance
+    when: "Preventing schema drift when a registry coexists with local HEADERS constants"
+    related_skills: [document-driven-guardrails, spreadsheet-backend-patterns]
+
+  - id: self-guarding-manual-system
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["self guarding manual", "manual verification", "last_verified"]
+    cost: medium
+    invoke: workflow:self-guarding-manual-system
+    when: "Self-guarding manual system with verification timestamps"
+
+  - id: serverless-debugging
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["serverless debug", "GAS diagnostic", "diag function", "multi-step function failure"]
+    cost: low
+    invoke: workflow:serverless-debugging
+    when: "Debugging multi-step GAS functions with standalone diag_ isolator pattern"
+
+  - id: session-closeout-protocol
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["session closeout protocol", "portable closeout"]
+    cost: low
+    invoke: workflow:session-closeout-protocol
+    when: "Portable session closeout checklist"
+
+  - id: session-handoff-system
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["session handoff", "handoff system", "mandatory orientation"]
+    cost: low
+    invoke: workflow:session-handoff-system
+    when: "Enforcing mandatory orientation phase before coding in every new session"
+
+  - id: spoke-and-wheel-docs
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["spoke and wheel", "before creating md file", "doc structure decision"]
+    cost: low
+    invoke: workflow:spoke-and-wheel-docs
+    when: "Decision sequence for creating new markdown files following spoke-and-wheel pattern"
+
+  - id: spreadsheet-backend-patterns
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["spreadsheet backend", "GAS backend patterns", "JSON envelope pattern"]
+    cost: medium
+    invoke: workflow:spreadsheet-backend-patterns
+    when: "Enforcing standard JSON envelope pattern for all GAS backend endpoints"
+
+  - id: structured-interaction-schema
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["structured interaction schema", "UI YAML schema", "encode UI interactions"]
+    cost: low
+    invoke: workflow:structured-interaction-schema
+    when: "Encoding UI interactions into formal YAML blocks for compilation and linting"
+
+  - id: systematic-debugging
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["systematic debugging", "step by step debug", "debugging checklist"]
+    cost: low
+    invoke: workflow:systematic-debugging
+    when: "Step-by-step systematic debugging protocol"
+
+  - id: task-close-gate
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["task close gate", "close task", "done check", "artifact chain complete", "is task done"]
+    cost: medium
+    invoke: workflow:task-close-gate
+    when: "Verifying full artifact chain is closed (validators, compiled outputs, docs) before declaring done"
+    related_skills: [enhancement-tracker-update, ssot-reconciliation, post-incident-governance]
+
+  - id: two-track-deployment
+    repo: [capsicum, pio, task-dashboard]
+    triggers: ["two track deploy", "which deploy tracks", "deployment tracks", "GAS or Firebase"]
+    cost: low
+    invoke: workflow:two-track-deployment
+    when: "Determining which deployment tracks to fire based on files modified"
+
+  # PIO-local workflows
+  - id: new-prd
+    repo: [pio, task-dashboard]
+    triggers: ["new PRD session", "start PRD in PIO", "/new-prd"]
+    cost: low
+    invoke: workflow:new-prd
+    when: "Triggering change-prd-architect to start a new PRD session in PIO context"
+
+  # Task-Dashboard-local workflows
+  - id: external-review-package
+    repo: [task-dashboard]
+    triggers: ["external review package", "external review prep", "external review prompt", "prepare external review", "ERP-001", "/external-review-package"]
+    cost: low
+    invoke: workflow:external-review-package
+    when: "Preparing a 3-part un-anchored external review package (Source SSOT + Context Explainer + Challenge Prompt) for independent evaluation by external reviewers or secondary AI models."
+
+  - id: capture-pattern
+    repo: [task-dashboard]
+    triggers: ["capture this pattern", "add this to patterns", "register this approach", "this should be repeatable", "save this for next time", "make this a workflow", "capture pattern"]
+    cost: low
+    invoke: workflow:capture-pattern
+    when: "Capturing a discovered design/process/methodology pattern into .agent/patterns/ — the Task-Dashboard equivalent of QSR REF_UPDATE_WORKFLOW. Runs worthiness filter, routes to correct home, updates the originating workflow."
+
+  - id: snapshot-update
+    repo: [task-dashboard]
+    triggers: ["update snapshot", "snapshot update", "rolling snapshot", "snapshot-update", "SNAPSHOT_UPDATE_WORKFLOW"]
+    cost: low
+    invoke: workflow:snapshot-update
+    when: "Updating the rolling clarity snapshots in enhancement-notes/SNAPSHOT-*.md in line with QSR's SNAPSHOT_UPDATE_WORKFLOW. Updates timestamps, classification, and applies strip-down rules."
+
+  - id: debug-issue
+    repo: [task-dashboard]
+    triggers: ["debug issue", "Layer 0 verification", "issue debug", "debug with layer 0"]
+    cost: low
+    invoke: workflow:debug-issue
+    when: "Systematic issue debugging with mandatory Layer 0 verification step"
+
+  - id: debug-task-architecture
+    repo: [task-dashboard]
+    triggers: ["debug task architecture", "User-Profile-Task bug", "ADR-001 debug"]
+    cost: medium
+    invoke: workflow:debug-task-architecture
+    when: "Mandatory workflow for debugging User-Profile-Task architectural issues (ADR-001)"
+
+  - id: enhancement-protocol
+    repo: [task-dashboard]
+    triggers: ["enhancement protocol", "create enhancement note", "tracked enhancement TD"]
+    cost: low
+    invoke: workflow:enhancement-protocol
+    when: "Creating tracked enhancement notes following Task-Dashboard protocol"
+
+  - id: file-placement-guardrail
+    repo: [task-dashboard]
+    triggers: ["file placement guardrail", "check file placement", "before creating file"]
+    cost: medium
+    invoke: workflow:file-placement-guardrail
+    when: "Guardrail for correct file placement before creating any new file"
+
+  - id: git-commit
+    repo: [task-dashboard]
+    triggers: ["git commit windows", "PowerShell commit", "commit in PowerShell"]
+    cost: low
+    invoke: workflow:git-commit
+    when: "Git commit workflow for Windows/PowerShell environment"
+
+  - id: run-pirr
+    repo: [task-dashboard]
+    triggers: ["run PIRR", "PIRR", "post-implementation reconciliation", "sync docs after feature"]
+    cost: medium
+    invoke: workflow:run-pirr
+    when: "Running PIRR to sync documentation with code changes post-implementation"
+
+  - id: pattern-ivp-001
+    repo: [task-dashboard]
+    triggers: ["FirebaseError", "permission-denied", "debug", "investigate", "insufficient permissions", "403 Forbidden", "P93", "P-FSM-001", "P-CSS-001"]
+    cost: low
+    invoke: read .agent/patterns/ivp-001.md
+    when: "Surface the IVP-001 pattern when debugging or when permissions failures are detected"
+
+  - id: pattern-rules-enforcement-testing-no-emulator
+    repo: [task-dashboard]
+    triggers: ["test firestore rules", "verify security rules", "non-member denial test", "permission-denied test", "test rules without emulator", "verify rules enforcement"]
+    cost: low
+    invoke: read .agent/patterns/rules-enforcement-testing-no-emulator.md
+    when: "MANDATORY before writing any script intended to prove a Firestore rule denies/permits access. The Admin SDK bypasses rules and cannot verify enforcement — use client-SDK custom-token impersonation (with explicit user approval) instead. TASK-213 DoD closure caught this: an admin-SDK 'denial test' would have proven nothing."
+
+  - id: check-p83-null-safe-reads
+    repo: [task-dashboard]
+    triggers: ["firestore rules change", "editing firestore.rules", "P83", "null-safe read", "resource.data on get rule", "permission-denied on new document", "missing or insufficient permissions"]
+    cost: low
+    invoke: npm run check:p83
+    when: "Before or after any firestore.rules edit — heuristic scan for get/read rules that dereference resource.data (P83). Added 260731 after this invariant recurred once (INC-069) while manualOnly with no automated check."
+
+  - id: p94-auth-level-type-coercion
+    repo: [task-dashboard]
+    triggers: ["P94", "level === 1", "isSuperAdmin", "auth level comparison", "level type coercion", "parseInt level", "level strict equality", "level is string"]
+    cost: low
+    invoke: read docs/incidents/INC-038-superadmin-level-strict-equality-type-mismatch.md
+    when: "Remind about P94 — auth level from Firestore is a string; parseInt(level) before any numeric comparison"
+
+  - id: pattern-event-metadata-contract-drift
+    repo: [task-dashboard]
+    triggers: ["event metadata missing", "activity feed missing note", "task update not showing in activity", "metadata field undefined", "appendTaskEvent meta", "event.metadata", "field shows in details but not activity", "P97"]
+    cost: low
+    invoke: read .agent/patterns/event-metadata-contract-drift.md
+    when: "Surface the event-metadata-contract-drift pattern when a value is present in Firestore but missing from only one of several UI surfaces reading it — check for writer/reader field-name drift before assuming a coverage gap"
+
+  - id: pattern-data-migration-occupancy-safety
+    repo: [task-dashboard]
+    triggers: ["p28", "non-destructive migration", "data occupancy check", "migration safety", "overwrite database", "data loss migration"]
+    cost: low
+    invoke: read .agent/patterns/data-migration-occupancy-safety.md
+    when: "Surface the data-migration-occupancy-safety pattern (P28) when running migrations or updating databases to prevent overwriting active schemas"
+
+  - id: p100-reusable-ai-search-helper
+    repo: [task-dashboard]
+    triggers: ["p100", "reusable ai search", "aisearchhelper", "buildaisearchurl", "launchaisearchsidebar"]
+    cost: low
+    invoke: read .claude/sg-rules/arch-inv-015-reusable-ai-helper.yml
+    when: "Remind about P100 standard enforcing the use of <AISearchHelper> instead of direct utilities"
+
+  - id: p101-url-sync-ref-guard
+    repo: [task-dashboard]
+    triggers: ["p101", "asynchronous url sync", "useSearchParams", "url sync ref guard", "modal reopening", "stale url parameters"]
+    cost: low
+    invoke: read .claude/sg-rules/arch-inv-016-url-sync-ref-guard.yml
+    when: "Remind about P101 standard enforcing a useRef guard for bidirectional asynchronous URL state synchronization"
+
+  - id: p104-committed-secret-scan
+    repo: [task-dashboard]
+    triggers: ["p104", "committed secret scan", "service account key", "private key", "credential leak", "api key", "serviceAccountKey", "rotate key", "secret in repo"]
+    cost: low
+    invoke: npm run check:secrets
+    when: "Before adding any credential/service-account JSON/API key to a file, or when auditing for leaked secrets. Scans GIT-TRACKED files, not the built bundle — the pi-ops production key leaked via a .js file that was never bundled, so bundle inspection passes clean on this failure. Rotation, not deletion, makes an exposed key inert."
+
+  - id: p105-firestore-list-rule-query-filter-parity
+    repo: [task-dashboard]
+    triggers: ["p105", "firestore list-rule", "list rule query filter parity", "unfiltered list query", "permission-denied on list", "resource.data list rule", "getDocs query permission denied"]
+    cost: low
+    invoke: read docs/incidents/INC-071-task-events-unfiltered-list-query-permission-denied.md
+    when: "Before writing or debugging a Firestore getDocs(query(...)) against a collection whose list/read rule authorizes non-admin users via resource.data.<field> (not just isOwner()/hasGlobalLevel()) — the client query MUST include a matching where('<field>', '==', value), or Firestore denies the whole query, not just the docs that would fail. Recurred once already (profiles list rule) before being catalogued here."
+
+  - id: session-compaction-tracker
+    repo: [task-dashboard]
+    triggers: ["compaction tracker", "session tracker", "resilience tracker", "avoid compaction loss", "tracker logs"]
+    cost: low
+    invoke: read .agent/workflows/session-compaction-tracker.md
+    when: "Creating a lightweight session progress tracker to protect task details across compactions"
+
+  - id: p-pos-routine
+    repo: [task-dashboard]
+    triggers: ["p-pos-routine", "p105", "position routine", "recurring checklist scoping", "position workspace scoping", "audit and compliance tab"]
+    cost: low
+    invoke: read docs/ssot/architecture-hub/RECURRING-CHECKLISTS-AND-ROUTINES-SSOT.md
+    when: "Enforces isolation between worker-facing position workspace (user-scoped) and administrative audit console (Level 1-3)"
+
+  - id: pattern-search-before-inventing
+    repo: [task-dashboard]
+    triggers: ["search before inventing", "check existing mechanism", "exhaustive discovery", "no existing tool"]
+    cost: low
+    invoke: read .agent/patterns/search-before-inventing.md
+    when: "Before creating any new protocol or tool, perform exhaustive multi-repo discovery"
+
+
+# ─── ROLE ACTIVATION ──────────────────────────────────────────────────────────
+# WFL-ROLE-001 — interactive role selection with confidence scoring + role preview
+# Phase 4 deliverable (2026-06-28); invoke BEFORE role-specific execution
+
+  - id: role-activation
+    repo: [task-dashboard]
+    triggers: ["which role", "activate role", "what role", "role selection", "select role", "pick a role", "switch role", "role picker"]
+    cost: low
+    invoke: read .agent/workflows/role-activation.md
+    when: "User wants explicit role selection, is unsure which role applies, or task spans multiple roles"
+
+
+# ─── ROLES ────────────────────────────────────────────────────────────────────
+# Phase 2 deliverable (2026-06-28) — CGO-001 Role entities mapped to trigger keywords
+# lifecycle_status: draft — contracts exist; not yet enforced by Policy Engine (Phase 6)
+# Role contracts: .agent/roles/<id>.yaml
+# Schema: .agent/roles/schema.yaml v1.0.0
+
+roles:
+
+  - id: principal-architect
+    contract: .agent/roles/principal-architect.yaml
+    triggers: ["run full COS", "orchestrate multi-surface", "architectural analysis", "blast radius", "surface map", "MODE 1", "topology analysis", "architecture-decision", "evaluate domain model", "domain model exploration", "domain model evaluation", "is this architecturally sound"]
+    emits_handoff: architecture-decision
+    review_configuration: architecture-review
+
+  - id: delivery-planner
+    contract: .agent/roles/delivery-planner.yaml
+    triggers: ["create execution plan", "phase this out", "plan the implementation", "phased plan", "validation gate", "decision node", "phased-execution-plan"]
+    emits_handoff: phased-execution-plan
+    review_configuration: plan-feasibility
+
+  - id: safe-implementer
+    contract: .agent/roles/safe-implementer.yaml
+    triggers: ["implement safely", "execute the plan", "safe refactor", "surgical change", "within blast radius", "implementation-evidence"]
+    emits_handoff: implementation-evidence
+    review_configuration: change-impact-review
+
+  - id: governance-reviewer
+    contract: .agent/roles/governance-reviewer.yaml
+    triggers: ["run PIRR", "governance review", "compliance check", "pirr compliance", "governance-status", "ready to merge", "pre-merge check"]
+    emits_handoff: governance-status
+    review_configuration: post-implementation
+
+  - id: requirement-analyst
+    contract: .agent/roles/requirement-analyst.yaml
+    triggers: ["create PRD", "draft PRD", "write requirements", "acceptance criteria", "requirement spec", "feature spec", "out of scope", "requirement-analyst"]
+    emits_handoff: architecture-decision
+    review_configuration: requirement-review
+
+  - id: qa-agent
+    contract: .agent/roles/qa-agent.yaml
+    triggers: ["validate implementation", "verify the build", "run qa", "integration verify", "validation-report", "check acceptance criteria", "verify architect claim", "verify gap", "short-circuit verify", "check findings", "fact-check architecture", "verify unverified claim"]
+    emits_handoff: validation-report
+    review_configuration: change-impact-review
+
+  - id: migration-agent
+    contract: .agent/roles/migration-agent.yaml
+    triggers: ["run migration", "data migration", "schema migration", "migrate collection", "firestore migration", "migration-agent"]
+    emits_handoff: implementation-evidence
+    review_configuration: change-impact-review
+
+  - id: pr-release-agent
+    contract: .agent/roles/pr-release-agent.yaml
+    triggers: ["create PR", "open pull request", "merge this", "push to remote", "release", "commit and push", "pr-release-agent"]
+    emits_handoff: session-handoff
+    review_configuration: post-implementation
+
+  - id: architecture-council
+    repo: [task-dashboard, qsr]
+    triggers: ["architecture council", "architecture-council", "run arch council", "architectural review", "/architecture-council", "evaluate domain model", "domain model evaluation"]
+    cost: high
+    invoke: workflow:architecture-council
+    when: "Multi-disciplinary 4-phase council review for major architectural and schema decisions"
+
+  - id: ui-council
+    repo: [task-dashboard, qsr]
+    triggers: ["ui council", "ui-council", "run ui council", "ui review", "/ui-council"]
+    cost: high
+    invoke: workflow:ui-council
+    when: "Multi-disciplinary UI/UX council review for spatial immutability and visual hierarchy"
+
+  - id: interactive-orchestrator
+    repo: [task-dashboard, qsr]
+    triggers: ["interactive orchestrator", "interactive-orchestrator", "interactive task step"]
+    cost: medium
+    invoke: workflow:interactive-orchestrator
+    when: "Interactive step-by-step task orchestration and user decision gating"
+
+  - id: knowledge-archaeology
+    repo: [task-dashboard, qsr]
+    triggers: ["knowledge archaeology", "knowledge-archaeology", "unearth decision"]
+    cost: medium
+    invoke: workflow:knowledge-archaeology
+    when: "Unearthing implicit historical decisions from commit logs and thread archives"
+
+  - id: knowledge-consolidation
+    repo: [task-dashboard, qsr]
+    triggers: ["knowledge consolidation", "knowledge-consolidation", "consolidate docs"]
+    cost: medium
+    invoke: workflow:knowledge-consolidation
+    when: "Consolidating fragmented design documents and decision notes into canonical SSOTs"
+
+  - id: knowledge-intake
+    repo: [task-dashboard, qsr]
+    triggers: ["knowledge intake", "knowledge-intake", "ingest research"]
+    cost: low
+    invoke: workflow:knowledge-intake
+    when: "Ingesting external research notes into structured system knowledge"
+
+  - id: knowledge-sync
+    repo: [task-dashboard, qsr]
+    triggers: ["knowledge sync", "knowledge-sync", "sync knowledge"]
+    cost: low
+    invoke: workflow:knowledge-sync
+    when: "Synchronizing state knowledge across documentation layers"
+
+  - id: prompt-clarity
+    repo: [task-dashboard, qsr]
+    triggers: ["prompt clarity", "prompt-clarity", "clarify prompt", "refame underspecified prompt"]
+    cost: low
+    invoke: /prompt-clarity
+    when: "Reframing ambiguous or underspecified prompts into testable options"
+
+  - id: enhancement-protocol-enforcer
+    repo: [task-dashboard, qsr]
+    triggers: ["enhancement protocol enforcer", "enhancement-protocol-enforcer"]
+    cost: medium
+    invoke: /enhancement-protocol-enforcer
+    when: "Enforce Protocol 6 enhancement tracking rules"
+
+# <!-- shared:std.agent.skill-router:end -->

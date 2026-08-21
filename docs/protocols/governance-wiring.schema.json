@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pi-ops/governance-wiring.schema.json",
+  "title": "Governance Wiring (GAWC) materialized graph",
+  "description": "Schema for governance-wiring.json — the generated materialization of GAWC artifact wiring. Authored from GOVERNANCE_WIRING_PROJECTION_ARCHITECTURE.md (GWPA) §2. GENERATED ARTIFACT: emitted by scripts/verify-governance-wiring.cjs --emit from artifact frontmatter + consumption-file scan; never hand-edited (GWPA-INV-002). Edit surface = distributed frontmatter (GWPA §2 source-of-truth rule).",
+  "$comment": "Two wiring families (GWPA §2.1): pact artifacts carry activation_tier (reference|routed|guarded) and a bidirectional consumed_by; matrix artifacts are wired via consumption files (required/atLeastOne) and have no tier. GWPA-INV-005: orphans/broken back-links are REPRESENTED (wiring_state) and rendered in an alarm state — never rejected by the schema or silently omitted. Enforcement of wiring is the verifier's exit code, not this schema.",
+  "type": "object",
+  "required": ["generated_at", "generator", "source_of_truth", "classes", "columns", "artifacts", "summary"],
+  "additionalProperties": false,
+  "properties": {
+    "generated_at": { "type": "string", "format": "date-time" },
+    "generator": { "type": "string", "description": "compiler id + version that emitted this file" },
+    "source_of_truth": {
+      "const": "frontmatter",
+      "description": "GWPA §2: distributed consumed_by frontmatter is canonical; this file is a generated cache"
+    },
+    "classes": {
+      "type": "array",
+      "description": "Lane (track) definitions — one per artifact class present",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/class" }
+    },
+    "columns": {
+      "type": "array",
+      "description": "Ordered projection column axis for the pact family: the tier ladder + terminal excluded zone (GWPA §3). The matrix family is grouped by wiring_state instead.",
+      "items": { "enum": ["reference", "routed", "guarded", "excluded"] },
+      "default": ["reference", "routed", "guarded", "excluded"]
+    },
+    "artifacts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/artifact" }
+    },
+    "summary": { "$ref": "#/$defs/summary" }
+  },
+  "$defs": {
+    "class": {
+      "type": "object",
+      "required": ["id", "label", "display_order"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "display_order": { "type": "integer", "minimum": 0, "description": "stable lane order; classes do not reorder at runtime (GWPA-INV-004)" }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "description": "A consumed_by link: artifact -> consumer",
+      "required": ["consumer_file", "verified"],
+      "additionalProperties": false,
+      "properties": {
+        "consumer_file": { "type": "string", "description": "file that pulls this artifact" },
+        "at": { "type": "string", "description": "phase/section where the artifact is consumed" },
+        "verified": { "type": "boolean", "description": "true only if consumer_file actually references the artifact (bidirectional check)" }
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "required": ["id", "artifact_type", "wiring_model", "class", "status", "scope", "consumed_by"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "description": "stable identifier (file path, or file#ref for shared-file types), unambiguous across classes" },
+        "artifact_type": {
+          "enum": [
+            "agent-pattern", "agent-skill", "agent-workflow", "dist-catalog", "p-standard", "arch-invariant",
+            "rolling-snapshot", "protocol", "collaborator-wiring", "doc-file", "module-spec"
+          ],
+          "description": "first 6 are the types verify-governance-wiring.cjs tracks today; last 3 are GWPA target classes added as the verifier learns to track them (PIO-159), and doc-file is local to Task-Dashboard"
+        },
+        "wiring_model": {
+          "enum": ["pact", "matrix"],
+          "description": "pact = tier'd + bidirectional consumed_by (patterns, and future rolling-snapshot/protocol/collaborator-wiring); matrix = wired via consumption files (catalogs/workflows/skills/standards/invariants)"
+        },
+        "class": { "type": "string", "description": "references a classes[].id (the lane)" },
+        "activation_tier": { "enum": ["reference", "routed", "guarded"], "description": "the pact column axis; required only when wiring_model == pact" },
+        "status": {
+          "type": "object",
+          "required": ["wiring_state"],
+          "additionalProperties": false,
+          "properties": {
+            "declared": { "enum": ["HYPOTHESIS", "VALIDATED"], "description": "pact-only; matrix artifacts carry no declared status" },
+            "wiring_state": {
+              "enum": ["wired", "partial", "unwired", "orphan", "broken-backlink"],
+              "description": "derived by the compiler. orphan = in-scope with zero edges; broken-backlink = claimed consumer doesn't reference back; partial = matrix optional wiring absent"
+            }
+          }
+        },
+        "scope": { "enum": ["in", "excluded"] },
+        "exclusion_reason": { "type": "string", "description": "required when scope == excluded (e.g. append-only archive, code-verified SSOT)" },
+        "consumed_by": {
+          "type": "array",
+          "description": "may be empty for orphan/unwired artifacts — that absence IS the signal (GWPA-INV-005), not a schema error",
+          "items": { "$ref": "#/$defs/edge" }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "wiring_model": { "const": "pact" } }, "required": ["wiring_model"] },
+          "then": { "required": ["activation_tier"] }
+        },
+        {
+          "if": { "properties": { "scope": { "const": "excluded" } }, "required": ["scope"] },
+          "then": { "required": ["exclusion_reason"] }
+        }
+      ]
+    },
+    "summary": {
+      "type": "object",
+      "required": ["total", "wired", "partial", "unwired", "orphan", "broken_backlink", "excluded"],
+      "additionalProperties": false,
+      "properties": {
+        "total": { "type": "integer", "minimum": 0 },
+        "wired": { "type": "integer", "minimum": 0 },
+        "partial": { "type": "integer", "minimum": 0 },
+        "unwired": { "type": "integer", "minimum": 0 },
+        "orphan": { "type": "integer", "minimum": 0 },
+        "broken_backlink": { "type": "integer", "minimum": 0 },
+        "excluded": { "type": "integer", "minimum": 0 }
+      }
+    }
+  },
+  "examples": [
+    {
+      "generated_at": "2026-06-14T00:00:00Z",
+      "generator": "verify-governance-wiring.cjs --emit (illustrative example only)",
+      "source_of_truth": "frontmatter",
+      "classes": [
+        { "id": "agent-pattern", "label": ".agent/patterns/ file (Activation Contract / PACT-001)", "display_order": 0 },
+        { "id": "rolling-snapshot", "label": "Rolling Snapshot", "display_order": 1 },
+        { "id": "agent-workflow", "label": ".agent/workflows/ file", "display_order": 2 }
+      ],
+      "columns": ["reference", "routed", "guarded", "excluded"],
+      "artifacts": [
+        {
+          "id": ".agent/patterns/no-silent-deferral.md",
+          "artifact_type": "agent-pattern",
+          "wiring_model": "pact",
+          "class": "agent-pattern",
+          "activation_tier": "reference",
+          "status": { "declared": "VALIDATED", "wiring_state": "wired" },
+          "scope": "in",
+          "consumed_by": [
+            { "consumer_file": ".agent/workflows/aos-session-close.md", "at": "Anti-Patterns table + Step 5.0.5", "verified": true }
+          ]
+        },
+        {
+          "id": "docs/SYSTEM_CLARITY_SNAPSHOT.md",
+          "artifact_type": "rolling-snapshot",
+          "wiring_model": "pact",
+          "class": "rolling-snapshot",
+          "activation_tier": "reference",
+          "status": { "declared": "VALIDATED", "wiring_state": "wired" },
+          "scope": "in",
+          "consumed_by": [
+            { "consumer_file": ".agent/workflows/aos-session-open.md", "at": "Step 1 READ (§2 + §5)", "verified": true }
+          ]
+        },
+        {
+          "id": ".agent/workflows/ssot-reconciliation.md",
+          "artifact_type": "agent-workflow",
+          "wiring_model": "matrix",
+          "class": "agent-workflow",
+          "status": { "wiring_state": "wired" },
+          "scope": "in",
+          "consumed_by": [
+            { "consumer_file": ".agent/skill-router.yaml", "verified": true }
+          ]
+        }
+      ],
+      "summary": { "total": 3, "wired": 3, "partial": 0, "unwired": 0, "orphan": 0, "broken_backlink": 0, "excluded": 0 }
+    }
+  ]
+}
