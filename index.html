@@ -735,134 +735,361 @@
     }
     [data-theme="light"] .milestone-tag { color: var(--gold-deep); }
 
-    /* Swimlanes Layout */
+    /* ==========================================================================
+       SWIMLANES 3-ZONE ENGINE & CONSOLE DRAWER (ROYAL VEDIC ORCHESTRATION)
+       ========================================================================== */
     .swimlane-container {
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
-      padding: 22px;
+      padding: 24px;
       box-shadow: var(--shadow-elevation-2);
       transition: background 0.3s ease;
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
 
+    /* ── ZONE 1: Global Health & KPI Bar ───────────────────────────────── */
+    .swimlane-z1 {
+      background: linear-gradient(135deg, rgba(245, 197, 24, 0.07) 0%, rgba(59, 130, 246, 0.04) 100%), var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .z1-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .z1-badge {
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      background: rgba(245, 197, 24, 0.15);
+      color: var(--gold-bright);
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(245, 197, 24, 0.3);
+    }
+    [data-theme="light"] .z1-badge {
+      color: var(--gold-deep);
+      border-color: rgba(198, 146, 20, 0.4);
+    }
+    .z1-stats-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .z1-stat-pill {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px;
+      padding: 6px 14px;
+      font-size: 0.82rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+      color: var(--text-main);
+      box-shadow: var(--shadow-elevation-1);
+    }
+    .z1-stat-pill strong {
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    .z1-stat-pill.stat-done strong { color: var(--emerald-sacred); }
+    .z1-stat-pill.stat-active strong { color: var(--gold-bright); }
+    [data-theme="light"] .z1-stat-pill.stat-active strong { color: var(--gold-deep); }
+    .z1-stat-pill.stat-gate strong { color: var(--crimson-royal); }
+    .z1-stat-pill.stat-clock strong { color: var(--sapphire-royal); }
+
+    /* ── ZONE 2: Interactive Stepped Stage Pipeline Strip ───────────────── */
+    .stage-strip-container {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 4px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border-subtle) transparent;
+    }
+    .stage-strip {
+      display: flex;
+      gap: 12px;
+      min-width: max-content;
+      padding: 4px 2px;
+    }
+    .stage-card {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      min-width: 200px;
+      max-width: 240px;
+      cursor: pointer;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      position: relative;
+    }
+    .stage-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--gold-bright);
+      box-shadow: var(--shadow-elevation-2);
+    }
+    .stage-card.active {
+      background: linear-gradient(145deg, rgba(245, 197, 24, 0.12) 0%, var(--bg-surface-elevated) 100%);
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 0 1px var(--gold-primary), var(--shadow-elevation-2);
+    }
+    .stage-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .stage-card-num {
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: var(--gold-bright);
+    }
+    [data-theme="light"] .stage-card-num { color: var(--gold-deep); }
+    .stage-card-icon {
+      font-size: 1.2rem;
+    }
+    .stage-card-name {
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.3;
+    }
+    .stage-card-time {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .stage-progress-bar {
+      width: 100%;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin-top: 4px;
+    }
+    [data-theme="light"] .stage-progress-bar {
+      background: rgba(0, 0, 0, 0.08);
+    }
+    .stage-progress-fill {
+      height: 100%;
+      background: var(--gold-gradient);
+      border-radius: var(--radius-sm);
+      transition: width 0.3s ease;
+    }
+
+    /* ── ZONE 3: Multi-Track Toolbar & 2D Matrix Grid ──────────────────── */
+    .swimlane-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 4px;
+    }
     .filter-bar {
       display: flex;
       gap: 8px;
-      margin-bottom: 20px;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
-      padding-bottom: 6px;
+      padding-bottom: 4px;
       scrollbar-width: none;
     }
     .filter-bar::-webkit-scrollbar { display: none; }
-
     .filter-pill {
       background: var(--bg-surface-elevated);
       border: 1px solid var(--border-subtle);
       color: var(--text-muted);
       padding: 8px 14px;
-      min-height: 40px;
-      border-radius: 30px;
+      min-height: 44px;
+      border-radius: 100px;
       font-size: 0.84rem;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       white-space: nowrap;
       display: inline-flex;
       align-items: center;
+      gap: 6px;
       flex-shrink: 0;
       transition: all 0.2s ease;
     }
-    .filter-pill.active, .filter-pill:hover {
+    .filter-pill:hover {
+      color: var(--text-main);
+      border-color: var(--border-focus);
+    }
+    .filter-pill.active {
       background: var(--gold-gradient);
-      color: #ffffff;
+      color: #080b11;
       font-weight: 700;
-      border-color: var(--gold-bright);
+      border-color: transparent;
       box-shadow: var(--shadow-elevation-1);
     }
-    [data-theme="dark"] .filter-pill.active, [data-theme="dark"] .filter-pill:hover {
-      color: #080b11;
-    }
 
-    .lane {
+    .swimlane-matrix-wrapper {
+      width: 100%;
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
-      margin-bottom: 16px;
       background: var(--bg-base);
       overflow: hidden;
+      box-shadow: var(--shadow-elevation-1);
+    }
+    .swimlane-scroll {
       width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border-subtle) transparent;
+    }
+    .swimlane-matrix-table {
+      width: 100%;
+      min-width: 820px;
+      display: flex;
+      flex-direction: column;
     }
 
-    .lane-header {
-      padding: 10px 16px;
-      font-family: var(--font-display);
+    .matrix-header-row {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      background: var(--bg-surface-elevated);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 12px 18px;
+      font-size: 0.74rem;
       font-weight: 700;
-      font-size: 0.95rem;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .matrix-track-col-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .matrix-time-bands-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+    }
+
+    .matrix-row {
+      display: grid;
+      grid-template-columns: 240px 1fr;
       border-bottom: 1px solid var(--border-subtle);
+      min-height: 140px;
+      transition: background 0.2s ease;
+    }
+    .matrix-row:last-child {
+      border-bottom: none;
+    }
+    .matrix-row:hover {
+      background: rgba(245, 197, 24, 0.02);
     }
 
-    .lane-bride .lane-header { background: linear-gradient(90deg, #3d1421, var(--bg-surface-elevated)); color: var(--rose-silk); }
-    .lane-groom .lane-header { background: linear-gradient(90deg, #132a4a, var(--bg-surface-elevated)); color: var(--sapphire-royal); }
-    .lane-priest .lane-header { background: linear-gradient(90deg, #382405, var(--bg-surface-elevated)); color: var(--gold-bright); }
-    .lane-food .lane-header { background: linear-gradient(90deg, #0e331b, var(--bg-surface-elevated)); color: var(--emerald-sacred); }
-    .lane-photo .lane-header { background: linear-gradient(90deg, #2b1442, var(--bg-surface-elevated)); color: var(--purple-royal); }
-    .lane-fleet .lane-header { background: linear-gradient(90deg, #332110, var(--bg-surface-elevated)); color: #fbbf24; }
-
-    .lane-body {
+    /* Track Row Left Header Column */
+    .matrix-row-label {
+      background: var(--bg-surface-elevated);
+      border-right: 1px solid var(--border-subtle);
+      padding: 18px 16px;
       display: flex;
-      gap: 12px;
-      padding: 14px;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scroll-snap-type: x proximity;
-      scrollbar-width: thin;
-      scrollbar-color: var(--gold-antique) transparent;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 6px;
+      position: sticky;
+      left: 0;
+      z-index: 2;
+    }
+    .matrix-row-track-title {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-main);
+    }
+    .matrix-row-lead {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 500;
     }
 
+    /* Track Row Right Nodes Column */
+    .matrix-row-nodes {
+      padding: 16px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: stretch;
+      background: var(--bg-base);
+    }
+
+    /* Event Node Card */
     .event-node {
       background: var(--bg-surface-elevated);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
-      padding: 14px;
-      min-width: 230px;
-      min-height: 110px;
+      padding: 14px 16px;
+      min-width: 250px;
+      max-width: 310px;
+      flex: 1 1 260px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      flex-shrink: 0;
-      scroll-snap-align: start;
+      gap: 10px;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: var(--shadow-elevation-1);
       position: relative;
     }
     .event-node:hover {
-      transform: translateY(-3px);
+      transform: translateY(-2px);
       border-color: var(--gold-bright);
       box-shadow: var(--shadow-elevation-2);
     }
+    .event-node.is-completed {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: linear-gradient(145deg, rgba(16, 185, 129, 0.05) 0%, var(--bg-surface-elevated) 100%);
+    }
 
-    .event-time {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--gold-bright);
-      margin-bottom: 4px;
+    .node-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 8px;
     }
-    [data-theme="light"] .event-time { color: var(--gold-deep); }
-    .event-title {
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 4px;
-      color: var(--text-main);
-      line-height: 1.3;
+    .node-time {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--gold-bright);
+      background: rgba(245, 197, 24, 0.1);
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
     }
-    .event-lead {
-      font-size: 0.75rem;
+    [data-theme="light"] .node-time { color: var(--gold-deep); }
+    .node-id-badge {
+      font-family: monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
       color: var(--text-muted);
     }
     .gate-badge {
@@ -871,7 +1098,324 @@
       background: rgba(230, 57, 70, 0.2);
       color: var(--crimson-royal);
       border-radius: var(--radius-sm);
+      font-weight: 800;
+      letter-spacing: 0.4px;
+    }
+
+    .event-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .node-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-subtle);
+    }
+    .node-lead {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .node-status-pill {
+      font-size: 0.7rem;
       font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .node-status-planned { background: rgba(59, 130, 246, 0.15); color: var(--sapphire-royal); }
+    .node-status-progress { background: rgba(245, 197, 24, 0.15); color: var(--gold-bright); }
+    [data-theme="light"] .node-status-progress { color: var(--gold-deep); }
+    .node-status-completed { background: rgba(16, 185, 129, 0.15); color: var(--emerald-sacred); }
+
+    /* ── SLIDE-OVER CONSOLE DRAWER (TASK INSPECTION SHEET) ──────────────── */
+    .console-backdrop {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(8px);
+      z-index: var(--z-modal);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .console-backdrop.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .console-drawer {
+      position: fixed;
+      top: 0;
+      right: -520px;
+      width: 480px;
+      max-width: 100vw;
+      height: 100vh;
+      background: var(--bg-surface);
+      border-left: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-elevation-3);
+      z-index: calc(var(--z-modal) + 1);
+      display: flex;
+      flex-direction: column;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    .console-drawer.active {
+      right: 0;
+    }
+
+    .drawer-header {
+      padding: 18px 24px;
+      background: var(--bg-surface-elevated);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .drawer-header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .drawer-id-tag {
+      font-family: monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--gold-bright);
+      letter-spacing: 0.5px;
+    }
+    [data-theme="light"] .drawer-id-tag { color: var(--gold-deep); }
+    .drawer-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.3;
+      margin: 0;
+    }
+    .drawer-close-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.6rem;
+      min-width: 44px;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .drawer-close-btn:hover { color: var(--gold-bright); }
+
+    .drawer-body {
+      padding: 20px 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      scrollbar-width: thin;
+    }
+    .drawer-section {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .drawer-section-title {
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .drawer-lead-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .drawer-lead-info h5 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin: 0 0 2px 0;
+    }
+    .drawer-lead-info p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+    .drawer-lead-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .contact-action-btn {
+      padding: 8px 14px;
+      min-height: 44px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+    }
+    .contact-action-btn:hover {
+      border-color: var(--gold-bright);
+      transform: translateY(-1px);
+    }
+    .contact-action-btn.wa-btn {
+      background: #25D366;
+      color: #ffffff;
+      border: none;
+    }
+    .contact-action-btn.wa-btn:hover {
+      background: #20bd5a;
+      box-shadow: var(--shadow-elevation-2);
+    }
+
+    .checklist-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .checklist-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 10px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .checklist-row:hover {
+      background: var(--bg-surface-elevated);
+    }
+    .checklist-checkbox {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--gold-primary);
+      cursor: pointer;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    .checklist-text {
+      font-size: 0.84rem;
+      color: var(--text-main);
+      line-height: 1.4;
+      transition: color 0.15s, text-decoration 0.15s;
+    }
+    .checklist-text.checked {
+      text-decoration: line-through;
+      color: var(--text-dim);
+    }
+
+    .linked-entity-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .entity-pill {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 100px;
+      background: rgba(245, 197, 24, 0.12);
+      color: var(--gold-bright);
+      border: 1px solid rgba(245, 197, 24, 0.25);
+    }
+    [data-theme="light"] .entity-pill {
+      color: var(--gold-deep);
+      border-color: rgba(198, 146, 20, 0.35);
+    }
+
+    .drawer-status-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .status-select-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 10px;
+      min-height: 44px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .status-select-btn:hover {
+      color: var(--text-main);
+      border-color: var(--border-focus);
+    }
+    .status-select-btn.active-status {
+      background: var(--gold-gradient);
+      color: #080b11;
+      font-weight: 800;
+      border-color: transparent;
+      box-shadow: var(--shadow-elevation-1);
+    }
+
+    @media (max-width: 480px) {
+      .console-drawer {
+        top: auto;
+        bottom: -100vh;
+        right: 0;
+        width: 100vw;
+        height: 85vh;
+        border-left: none;
+        border-top: 1px solid var(--gold-antique);
+        border-radius: 20px 20px 0 0;
+        transition: bottom 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .console-drawer.active {
+        bottom: 0;
+      }
+      .matrix-header-row {
+        grid-template-columns: 1fr;
+      }
+      .matrix-row {
+        grid-template-columns: 1fr;
+      }
+      .matrix-row-label {
+        position: static;
+        border-right: none;
+        border-bottom: 1px solid var(--border-subtle);
+      }
     }
 
     /* CRUD Task Manager & Summary KPI Bar */
@@ -2191,9 +2735,12 @@
             <span class="stage-card-icon">${s.icon}</span>
           </div>
           <div class="stage-card-name">${s.name}</div>
-          <div class="stage-card-time">${s.timeframe}</div>
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.76rem; color: var(--text-muted);">
+            <span>${s.timeframe}</span>
+            <span style="font-weight: 700; color: ${pct === 100 ? 'var(--emerald-sacred)' : 'var(--gold-bright)'};">${pct}%</span>
+          </div>
           <div class="stage-progress-bar">
-            <div class="stage-progress-fill" style="width: ${pct}%;"></div>
+            <div class="stage-progress-fill" style="width: ${pct}%; background: ${pct === 100 ? 'var(--emerald-sacred)' : 'var(--gold-gradient)'};"></div>
           </div>
         `;
         strip.appendChild(card);
@@ -2210,6 +2757,7 @@
       const resetBtn = document.getElementById('btn-show-all-stages');
       if (resetBtn) {
         resetBtn.style.display = (activeStageId !== 'ALL') ? 'inline-flex' : 'none';
+        resetBtn.innerText = 'View All Stages';
       }
 
       renderStageStrip();
@@ -2234,11 +2782,27 @@
       renderSwimlaneMatrix();
     }
 
+    function updateTrackFilterCounts() {
+      if (typeof MARRIAGE_STATE === 'undefined') return;
+      
+      const allCount = (activeStageId === 'ALL') ? currentTasks.length : currentTasks.filter(t => t.stage === activeStageId).length;
+      const allPill = document.querySelector('#swimlane-track-filters .filter-pill[data-track="all"]');
+      if (allPill) allPill.innerText = `All Tracks (${allCount})`;
+
+      MARRIAGE_STATE.tracks.forEach(tr => {
+        let count = currentTasks.filter(t => t.track === tr.id);
+        if (activeStageId !== 'ALL') count = count.filter(t => t.stage === activeStageId);
+        const pill = document.querySelector(`#swimlane-track-filters .filter-pill[data-track="${tr.id}"]`);
+        if (pill) pill.innerText = `${tr.icon} ${tr.title} (${count.length})`;
+      });
+    }
+
     function renderSwimlaneMatrix() {
       const table = document.getElementById('swimlane-matrix-table');
       if (!table || typeof MARRIAGE_STATE === 'undefined') return;
 
       table.innerHTML = '';
+      updateTrackFilterCounts();
 
       // 1. Matrix Sticky Header Row
       const headerRow = document.createElement('div');
@@ -2246,8 +2810,8 @@
       headerRow.innerHTML = `
         <div class="matrix-track-col-header">OPERATIONAL TRACK</div>
         <div class="matrix-time-bands-header">
-          <span>SYNCHRONIZED ACTIVITIES & DELIVERABLES ${activeStageId !== 'ALL' ? `(${activeStageId})` : '(ALL STAGES)'}</span>
-          <span style="font-size: 0.74rem; font-weight: 500; color: var(--gold-bright);">Click node to inspect ↗</span>
+          <span>SYNCHRONIZED ACTIVITIES & DELIVERABLES &bull; ${activeStageId !== 'ALL' ? `${activeStageId}` : 'ALL 6 STAGES'}</span>
+          <span style="font-size: 0.74rem; font-weight: 500; color: var(--gold-bright);">Click node to inspect & checklist ↗</span>
         </div>
       `;
       table.appendChild(headerRow);
@@ -2279,11 +2843,15 @@
         // Left Track Header
         const labelCol = document.createElement('div');
         labelCol.className = 'matrix-row-label';
+        labelCol.style.borderLeft = `4px solid ${tr.color}`;
         labelCol.innerHTML = `
           <div class="matrix-row-track-title" style="color: ${tr.color};">
             <span>${tr.icon}</span> ${tr.title}
           </div>
           <div class="matrix-row-lead">Lead: ${tr.lead}</div>
+          <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 4px;">
+            ${trackTasks.length} active node${trackTasks.length === 1 ? '' : 's'}
+          </div>
         `;
         row.appendChild(labelCol);
 
@@ -2293,15 +2861,19 @@
 
         if (trackTasks.length === 0) {
           nodesCol.innerHTML = `
-            <div style="font-size: 0.8rem; color: var(--text-dim); font-style: italic; padding: 12px;">
-              No operational activities scheduled in this stage for ${tr.title}.
+            <div style="font-size: 0.84rem; color: var(--text-dim); font-style: italic; padding: 16px; display: flex; align-items: center; gap: 8px;">
+              <span>ℹ️</span> No operational activities scheduled in ${activeStageId} for ${tr.title}.
             </div>
           `;
         } else {
           trackTasks.forEach(t => {
             const isDone = (t.status === 'Completed' || t.done);
+            const totalChecks = (t.checklist && t.checklist.length) || 0;
+            const doneChecks = totalChecks > 0 ? t.checklist.filter(c => c.done).length : (isDone ? 1 : 0);
+
             const node = document.createElement('div');
             node.className = `event-node ${isDone ? 'is-completed' : ''}`;
+            node.style.borderLeft = `3px solid ${tr.color}`;
             node.setAttribute('data-testid', `swimlane-node-${t.id}`);
             node.onclick = () => openTaskConsole(t.id);
 
@@ -2316,9 +2888,12 @@
               <div class="event-title">${t.title}</div>
               <div class="node-bottom">
                 <span class="node-lead">${t.lead || tr.lead}</span>
-                <span class="node-status-pill ${isDone ? 'node-status-completed' : t.status === 'In-Progress' ? 'node-status-progress' : 'node-status-planned'}">
-                  ${isDone ? 'Done ✓' : t.status || 'Planned'}
-                </span>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  ${totalChecks > 0 ? `<span style="font-size: 0.68rem; font-weight: 700; color: ${doneChecks === totalChecks ? 'var(--emerald-sacred)' : 'var(--gold-bright)'};">✓ ${doneChecks}/${totalChecks}</span>` : ''}
+                  <span class="node-status-pill ${isDone ? 'node-status-completed' : t.status === 'In-Progress' ? 'node-status-progress' : 'node-status-planned'}">
+                    ${isDone ? 'Done ✓' : t.status || 'Planned'}
+                  </span>
+                </div>
               </div>
             `;
             nodesCol.appendChild(node);
