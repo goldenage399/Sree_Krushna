@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 💄 Task Pack 07: Trial Runs & Rehearsal Coordination
 
 **Pack ID:** `TSK_PACK_07`

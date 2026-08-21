@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 💌 Task Pack 08: Digital Guest Experience & RSVP Platform
 
 **Pack ID:** `TSK_PACK_08`

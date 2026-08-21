@@ -1,4 +1,5 @@
 ---
+hub: 01_TIMELINE_EVENTS/HUB.md
 id: EVT-003
 title: "Mangan & Haldi Ceremony"
 category: "pre_wedding"

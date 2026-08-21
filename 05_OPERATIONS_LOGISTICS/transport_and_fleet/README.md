@@ -1,3 +1,7 @@
+---
+hub: 05_OPERATIONS_LOGISTICS/HUB.md
+---
+
 # 🚗 Transport, Fleet & Guest Movement
 
 **SSOT Scope:** Master vehicle assignments, airport/railway arrival rosters, VIP movement schedules, and bridal car logistics.

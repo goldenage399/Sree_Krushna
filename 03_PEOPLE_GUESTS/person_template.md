@@ -1,4 +1,5 @@
 ---
+hub: 03_PEOPLE_GUESTS/HUB.md
 id: PER-###
 full_name: "Firstname Lastname"
 short_name: "Nickname"

@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 🏛️ Master Wedding Work Breakdown Structure (WBS) Blueprint
 
 **Specification Code:** `SPEC-GOV-WBS-001`  

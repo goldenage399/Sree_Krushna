@@ -1,3 +1,7 @@
+---
+hub: 03_PEOPLE_GUESTS/HUB.md
+---
+
 # 💌 Invitations, Cards & RSVP Management
 
 **SSOT Scope:** Master invitation strategy, card designs, printing batches, distribution routes, and real-time RSVP aggregation.

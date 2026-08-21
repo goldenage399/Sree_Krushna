@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 🌐 Web Deployment Guide: Sree Krushna Marriage OS
 
 **Specification:** `SPEC-DEPLOY-WEB-001`  

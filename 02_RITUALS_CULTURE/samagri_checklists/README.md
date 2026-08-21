@@ -1,3 +1,7 @@
+---
+hub: 02_RITUALS_CULTURE/HUB.md
+---
+
 # 🏺 Sacred Materials & Samagri Checklists (`SAM-###`)
 
 This directory contains itemized procurement, quantity, and custody lists for all sacred ritual items required by officiating priests.

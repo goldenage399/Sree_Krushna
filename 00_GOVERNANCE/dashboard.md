@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 📊 Marriage Master Dashboard & Control Center
 
 **SSOT Scope:** Global Marriage Status, Countdown, Financial Summary, Critical Path & Risk Radar  

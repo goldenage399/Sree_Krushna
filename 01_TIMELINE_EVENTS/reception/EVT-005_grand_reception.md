@@ -1,4 +1,5 @@
 ---
+hub: 01_TIMELINE_EVENTS/HUB.md
 id: EVT-005
 title: "Grand Wedding Reception Banquet"
 category: "reception"

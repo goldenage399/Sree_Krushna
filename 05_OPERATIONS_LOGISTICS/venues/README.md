@@ -1,3 +1,7 @@
+---
+hub: 05_OPERATIONS_LOGISTICS/HUB.md
+---
+
 # 🏛️ Venues & Properties Directory (`venues/`)
 
 This directory houses individual, canonical Markdown specifications for all event locations, halls, temples, and resorts (`VEN-###`).

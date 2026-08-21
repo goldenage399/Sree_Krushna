@@ -1,3 +1,7 @@
+---
+hub: 02_RITUALS_CULTURE/HUB.md
+---
+
 # 🏺 SAM-001: Nirbandha Sacred Materials & Samagri Checklist
 
 **Associated Ritual:** [`RIT-001: Nirbandha & Ashirbad`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/specs/RIT-001_nirbandha.md)  

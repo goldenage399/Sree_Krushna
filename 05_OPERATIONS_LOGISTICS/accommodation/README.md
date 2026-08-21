@@ -1,3 +1,7 @@
+---
+hub: 05_OPERATIONS_LOGISTICS/HUB.md
+---
+
 # 🏨 Guest Accommodation & Room Blocks
 
 **SSOT Scope:** Master hotel inventory, room block allocations, check-in schedules, key distribution, and hospitality desk operations.

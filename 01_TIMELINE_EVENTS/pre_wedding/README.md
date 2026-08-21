@@ -1,3 +1,7 @@
+---
+hub: 01_TIMELINE_EVENTS/HUB.md
+---
+
 # 🌸 Pre-Wedding Events Directory
 
 This directory contains concrete specifications for all gatherings occurring prior to the main wedding day.

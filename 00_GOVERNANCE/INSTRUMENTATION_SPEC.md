@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # Sree Krushna Marriage OS — E2E & Telemetry Instrumentation Spec
 
 ## Overview

@@ -1,3 +1,7 @@
+---
+hub: 03_PEOPLE_GUESTS/HUB.md
+---
+
 # 📇 Individual Person Directory (`directory/`)
 
 This directory houses individual, canonical Markdown profile files for all participants and guests (`PER-###`).

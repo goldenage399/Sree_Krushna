@@ -1,3 +1,7 @@
+---
+hub: 02_RITUALS_CULTURE/HUB.md
+---
+
 # 🏺 SAM-003: Mangan, Mangalakrutya & Haldi Sacred Materials
 
 **Associated Ritual:** [`RIT-003: Mangan, Mangalakrutya & Haldi Snana`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/specs/RIT-003_mangan_haldi.md)  

@@ -1,3 +1,7 @@
+---
+hub: 01_TIMELINE_EVENTS/HUB.md
+---
+
 # ⏳ Master Marriage Timeline & Event Sequence
 
 **SSOT Scope:** Chronological sequence of all events, pre-wedding milestones, wedding day rituals, reception, and post-marriage ceremonies.

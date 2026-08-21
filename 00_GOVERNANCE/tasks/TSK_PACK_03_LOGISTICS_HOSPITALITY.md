@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 🏨 Task Pack 03: Hospitality, Guest Experience & Fleet Logistics
 
 **Pack ID:** `TSK_PACK_03`  

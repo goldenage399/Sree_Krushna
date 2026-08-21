@@ -1,3 +1,7 @@
+---
+hub: 05_OPERATIONS_LOGISTICS/HUB.md
+---
+
 # ⏱️ Day-of Operational Run Sheets (Mission Control)
 
 **SSOT Scope:** Minute-by-minute operational execution schedules used during live event days.

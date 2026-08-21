@@ -1,4 +1,5 @@
 ---
+hub: 01_TIMELINE_EVENTS/HUB.md
 id: EVT-006
 title: "Grihapravesh & Chauthi Ceremony"
 category: "post_wedding"

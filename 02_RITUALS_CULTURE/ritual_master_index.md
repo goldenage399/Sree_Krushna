@@ -1,3 +1,7 @@
+---
+hub: 02_RITUALS_CULTURE/HUB.md
+---
+
 # 🕉️ Ritual Master Index & Odia Brahmin Liturgical Sequence
 
 **SSOT Scope:** Master liturgical inventory of all traditional Odia Hindu / Brahmin Vedic wedding rituals, sequence, officiating priests, and participant requirements.

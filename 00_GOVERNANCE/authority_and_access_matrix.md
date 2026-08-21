@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 🔐 Authority, RBAC & Scoped Access Matrix
 
 **Specification:** `SPEC-RBAC-SCOPED-001`  

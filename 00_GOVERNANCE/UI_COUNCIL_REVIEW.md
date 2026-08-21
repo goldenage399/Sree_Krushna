@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 🏛️ UI Council Review: Sree Krushna Marriage OS (v2.0 Web Portal)
 
 **Evaluation Surface:** Single-Page Application Web Portal (`public/index.html`, `js/auth.js`, `js/allowed_users.js`, `js/config.js`)  

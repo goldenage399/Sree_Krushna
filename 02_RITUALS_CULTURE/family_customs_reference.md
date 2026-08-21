@@ -1,3 +1,7 @@
+---
+hub: 02_RITUALS_CULTURE/HUB.md
+---
+
 # 📖 Odia Hindu Brahmin Marriage Customs & Kula Rites Reference
 
 **SSOT Scope:** Cultural reference manual capturing traditional Odia marriage customs, Brahmin gotra/pravara rules, auspicious muhurat conventions, and specific family traditions.

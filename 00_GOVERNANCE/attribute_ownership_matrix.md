@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 🏛️ Canonical Attribute Ownership Matrix (SSOT Anti-Duplication Protocol)
 
 **Specification:** `SPEC-SSOT-OWNERSHIP-001`  

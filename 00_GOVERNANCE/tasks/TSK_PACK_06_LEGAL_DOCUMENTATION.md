@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # ⚖️ Task Pack 06: Legal & Marriage Registration Compliance
 
 **Pack ID:** `TSK_PACK_06`

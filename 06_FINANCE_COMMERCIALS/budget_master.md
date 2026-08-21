@@ -1,3 +1,7 @@
+---
+hub: 06_FINANCE_COMMERCIALS/HUB.md
+---
+
 # 💰 Master Financial Budget & Ledger
 
 **SSOT Scope:** Master accounting ledger tracking Planned Budget vs Committed Contracts vs Actual Paid Disbursements vs Outstanding Balances.

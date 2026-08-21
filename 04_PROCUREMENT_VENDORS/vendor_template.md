@@ -1,4 +1,5 @@
 ---
+hub: 04_PROCUREMENT_VENDORS/HUB.md
 id: VDR-###
 business_name: "Vendor Business Name"
 category: "Venue | Catering | Decor | Photography | Priest | Makeup | Music | Attire | Jewellery | Transport"

@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 💑 Couple's Co-Creation & Onboarding Guide
 ## How to Share, Collaborate & Build Sree Krushna Marriage OS Together
 

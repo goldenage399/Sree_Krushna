@@ -1,4 +1,5 @@
 ---
+hub: 02_RITUALS_CULTURE/HUB.md
 id: RIT-008
 name: "Sindoor Daan & Mangalsutra Dharan"
 event_id: "EVT-004"

@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 🏁 Post-Wedding Closure & Archival Protocol
 
 This directory houses the formal handover, return, reconciliation, and post-wedding closure workflows.

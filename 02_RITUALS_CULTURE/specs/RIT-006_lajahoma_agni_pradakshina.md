@@ -1,4 +1,5 @@
 ---
+hub: 02_RITUALS_CULTURE/HUB.md
 id: RIT-006
 name: "Lajahoma & Agni Pradakshina"
 event_id: "EVT-004"

@@ -1,3 +1,7 @@
+---
+hub: 05_OPERATIONS_LOGISTICS/HUB.md
+---
+
 # 🚦 Operational Gates & Synchronization Handshakes
 
 **Specification:** `SPEC-OPERATIONAL-GATES-001`  

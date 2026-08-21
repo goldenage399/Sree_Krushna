@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # ⚡ Task Pack 05: Live Day-of Multi-Track Execution
 
 **Pack ID:** `TSK_PACK_05`  

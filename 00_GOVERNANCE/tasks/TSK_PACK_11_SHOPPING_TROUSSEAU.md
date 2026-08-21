@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 🛍️ Task Pack 11: Master Shopping, Trousseau & Family Gifting
 
 **Pack ID:** `TSK_PACK_11`  

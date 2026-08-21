@@ -1,3 +1,7 @@
+---
+hub: 04_PROCUREMENT_VENDORS/HUB.md
+---
+
 # 💍 Gold, Jewellery & High-Value Asset Custody Protocol (`AST-###`)
 
 **Specification:** `SPEC-ASSET-CUSTODY-001`  

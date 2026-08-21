@@ -1,4 +1,5 @@
 ---
+hub: 02_RITUALS_CULTURE/HUB.md
 id: RIT-007
 name: "Saptapadi (Seven Sacred Steps & Vows)"
 event_id: "EVT-004"

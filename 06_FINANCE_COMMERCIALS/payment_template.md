@@ -1,4 +1,5 @@
 ---
+hub: 06_FINANCE_COMMERCIALS/HUB.md
 id: PAY-###
 contract_id: "CTR-###"
 vendor_id: "VDR-###"

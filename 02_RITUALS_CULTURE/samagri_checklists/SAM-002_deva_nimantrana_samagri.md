@@ -1,3 +1,7 @@
+---
+hub: 02_RITUALS_CULTURE/HUB.md
+---
+
 # 🏺 SAM-002: Deva Nimantrana Sacred Materials Checklist
 
 **Associated Ritual:** [`RIT-002: Deva Nimantrana`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/specs/RIT-002_deva_nimantrana.md)  

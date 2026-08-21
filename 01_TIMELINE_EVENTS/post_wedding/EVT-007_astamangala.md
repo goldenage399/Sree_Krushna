@@ -1,4 +1,5 @@
 ---
+hub: 01_TIMELINE_EVENTS/HUB.md
 id: EVT-007
 title: "Astamangala (Eighth-Day Return Feast)"
 category: "post_wedding"

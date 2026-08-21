@@ -1,3 +1,7 @@
+---
+hub: 03_PEOPLE_GUESTS/HUB.md
+---
+
 # 👥 People & Guest Master Directory
 
 **SSOT Scope:** Master queryable register of all individuals (Couple, Parents, Family, Guests, VIPs, Coordinators, and Vendor Leads).

@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # ⚖️ Decision Register (`DEC-###`)
 
 This directory contains formal **Decision Records (`DEC-###`)** for all major choices regarding venues, dates, vendor selections, policy agreements, and budget commitments.

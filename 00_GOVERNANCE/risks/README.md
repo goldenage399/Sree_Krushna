@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 🛡️ Risk Register & Contingency Matrices (`RSK-###`)
 
 This directory tracks operational, environmental, vendor, financial, and logistical risks along with concrete mitigation plans and fallback contacts.

@@ -1,4 +1,5 @@
 ---
+hub: 01_TIMELINE_EVENTS/HUB.md
 id: EVT-004
 title: "Barat, Kanyadaan & Main Vedic Wedding"
 category: "wedding_day"

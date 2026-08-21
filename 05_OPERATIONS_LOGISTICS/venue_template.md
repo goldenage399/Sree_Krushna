@@ -1,4 +1,5 @@
 ---
+hub: 05_OPERATIONS_LOGISTICS/HUB.md
 id: VEN-###
 name: "Venue / Property Name"
 location_type: "Marriage_Hall | Hotel | Resort | Home | Temple"

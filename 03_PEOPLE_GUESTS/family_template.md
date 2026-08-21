@@ -1,4 +1,5 @@
 ---
+hub: 03_PEOPLE_GUESTS/HUB.md
 id: FAM-###
 household_name: "Family / Household Name"
 head_person_id: "PER-###"

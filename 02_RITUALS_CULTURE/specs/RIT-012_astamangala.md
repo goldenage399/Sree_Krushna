@@ -1,4 +1,5 @@
 ---
+hub: 02_RITUALS_CULTURE/HUB.md
 id: RIT-012
 name: "Astamangala (Eighth-Day Return & Maternal Feast)"
 event_id: "EVT-007"

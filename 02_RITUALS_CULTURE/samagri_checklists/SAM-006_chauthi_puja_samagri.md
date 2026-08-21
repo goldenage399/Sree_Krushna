@@ -1,3 +1,7 @@
+---
+hub: 02_RITUALS_CULTURE/HUB.md
+---
+
 # 🏺 SAM-006: Chauthi Puja & Bedchamber Samagri Checklist
 
 **Associated Ritual:** [`RIT-011: Chauthi Puja`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/specs/RIT-011_chauthi_puja.md)  

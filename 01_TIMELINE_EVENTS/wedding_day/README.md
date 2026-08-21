@@ -1,3 +1,7 @@
+---
+hub: 01_TIMELINE_EVENTS/HUB.md
+---
+
 # 👑 Wedding Day Events Directory
 
 This directory contains specifications for the main wedding day events, barat procession, and mandap Vedic rites.

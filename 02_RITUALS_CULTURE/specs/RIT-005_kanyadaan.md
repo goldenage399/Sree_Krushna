@@ -1,4 +1,5 @@
 ---
+hub: 02_RITUALS_CULTURE/HUB.md
 id: RIT-005
 name: "Kanyadaan & Hastaganthi"
 event_id: "EVT-004"

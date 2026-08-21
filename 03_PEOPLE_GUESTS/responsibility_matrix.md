@@ -1,3 +1,7 @@
+---
+hub: 03_PEOPLE_GUESTS/HUB.md
+---
+
 # 👥 Master Family & Coordinator Responsibility (RACI) Matrix
 
 **SSOT Scope:** Explicit allocation of responsibilities across family members, coordinators, and leads to eliminate day-of operational ambiguity.

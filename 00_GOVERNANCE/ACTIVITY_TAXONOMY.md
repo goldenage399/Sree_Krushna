@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 🏷️ Activity, Task & Subtask Taxonomy Specification
 
 **Specification Code:** `SPEC-GOV-TAXONOMY-001`  

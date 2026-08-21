@@ -1,4 +1,5 @@
 ---
+hub: 02_RITUALS_CULTURE/HUB.md
 id: RIT-010
 name: "Grihapravesh (Welcoming the Bride as Goddess Lakshmi)"
 event_id: "EVT-006"

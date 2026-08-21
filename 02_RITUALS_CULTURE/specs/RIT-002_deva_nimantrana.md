@@ -1,4 +1,5 @@
 ---
+hub: 02_RITUALS_CULTURE/HUB.md
 id: RIT-002
 name: "Deva Nimantrana (Puri Lord Jagannath & Kuladevata Card Offering)"
 event_id: "EVT-001"

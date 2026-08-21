@@ -1,3 +1,7 @@
+---
+hub: 01_TIMELINE_EVENTS/HUB.md
+---
+
 # 🏡 Post-Wedding Ceremonies & Customs Directory
 
 This directory contains specifications for Odia post-wedding traditional customs including Chauthi, Grihapravesh, and Astamangala.

@@ -1,3 +1,7 @@
+---
+hub: 04_PROCUREMENT_VENDORS/HUB.md
+---
+
 # 🛍️ Vendor Master Index & Procurement Control Center
 
 **SSOT Scope:** Master directory of all vendor domains, candidate evaluations, contracts, deliverables, and payment commitments.

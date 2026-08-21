@@ -1,3 +1,7 @@
+---
+hub: 06_FINANCE_COMMERCIALS/HUB.md
+---
+
 # 🎁 Gifts, Shagun & Exchange Registry
 
 **SSOT Scope:** Tracking customary gift exchanges between bride & groom households, incoming guest shagun envelopes, and outbound return gifts (*Bidhai*).

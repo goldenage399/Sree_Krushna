@@ -1,3 +1,7 @@
+---
+hub: 04_PROCUREMENT_VENDORS/HUB.md
+---
+
 # 📑 Vendor Contracts & Service Level Agreements (`contracts/`)
 
 This directory houses structured Markdown contract summaries and signed agreement specifications (`CTR-###`).

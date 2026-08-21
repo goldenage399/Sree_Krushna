@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # ✈️ Task Pack 09: Outstation/NRI Travel & Vendor Trial Runs
 
 **Pack ID:** `TSK_PACK_09`

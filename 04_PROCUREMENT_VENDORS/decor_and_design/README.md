@@ -1,3 +1,7 @@
+---
+hub: 04_PROCUREMENT_VENDORS/HUB.md
+---
+
 # 🌺 Decor, Floral & Visual Spatial Design
 
 **SSOT Scope:** Color palettes, themes, mandap structure specifications, stage layouts, floral requirements, and ambient lighting design.

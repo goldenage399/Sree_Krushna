@@ -1,3 +1,7 @@
+---
+hub: 06_FINANCE_COMMERCIALS/HUB.md
+---
+
 # 📑 Payment Ledger & Receipts Directory (`ledger/`)
 
 This directory houses individual, canonical Markdown payment records (`PAY-###`) for all bank transfers, cash disbursements, advances, and settlements.

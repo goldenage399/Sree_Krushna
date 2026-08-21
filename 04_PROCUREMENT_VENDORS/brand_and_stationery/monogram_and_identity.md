@@ -1,3 +1,7 @@
+---
+hub: 04_PROCUREMENT_VENDORS/HUB.md
+---
+
 # 🎨 Sree & Krushna Monogram, Visual Identity & Creative Brand System
 
 **Specification Code:** `SPEC-BRAND-ID-001`  

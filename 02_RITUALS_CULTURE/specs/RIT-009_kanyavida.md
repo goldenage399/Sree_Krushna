@@ -1,4 +1,5 @@
 ---
+hub: 02_RITUALS_CULTURE/HUB.md
 id: RIT-009
 name: "Kanyavida (Bahaghara Vida / Bride Farewell)"
 event_id: "EVT-004"

@@ -1,4 +1,5 @@
 ---
+hub: 01_TIMELINE_EVENTS/HUB.md
 id: EVT-002
 title: "Mehendi & Sangeet Celebration"
 category: "pre_wedding"

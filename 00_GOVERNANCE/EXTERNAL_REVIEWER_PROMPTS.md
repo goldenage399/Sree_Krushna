@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 📝 External Reviewer Prompts & Review Packs
 
 This document contains pre-formulated prompts tailored for different reviewer personas (AI Architects, Family/Planning Committee, and Wedding Domain Experts) to review the **Sree Krushna Marriage OS Presentation Blueprint**.

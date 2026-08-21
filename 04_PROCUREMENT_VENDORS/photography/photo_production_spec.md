@@ -1,3 +1,7 @@
+---
+hub: 04_PROCUREMENT_VENDORS/HUB.md
+---
+
 # 📸 Master Photography, Cinematography & Media Production Specification
 
 **Specification Code:** `SPEC-PROC-PHOTO-001`  

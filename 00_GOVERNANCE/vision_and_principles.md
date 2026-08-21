@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 🌟 Marriage Vision, Values & Decision Principles
 
 **SSOT Scope:** Guiding aesthetic, spiritual, familial, scale, and financial boundaries.

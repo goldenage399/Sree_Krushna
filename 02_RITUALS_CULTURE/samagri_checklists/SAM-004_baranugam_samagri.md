@@ -1,3 +1,7 @@
+---
+hub: 02_RITUALS_CULTURE/HUB.md
+---
+
 # 🏺 SAM-004: Baranugam & Barat Welcoming Materials
 
 **Associated Ritual:** [`RIT-004: Baranugam & Barat Reception`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/specs/RIT-004_baranugam.md)  

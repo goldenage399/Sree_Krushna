@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 🎨 Task Pack 10: Monograms, Invitation Suite & Video Invites
 
 **Pack ID:** `TSK_PACK_10`  

@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 💍 Sree Krushna Marriage Operating System (SSOT)
 ## Architecture, Role-Based Access & Presentation Blueprint
 **Document Reference:** `DOC-ARCH-PRESENTATION-001`  

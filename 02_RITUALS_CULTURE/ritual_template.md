@@ -1,4 +1,5 @@
 ---
+hub: 02_RITUALS_CULTURE/HUB.md
 id: RIT-###
 name: "Ritual Name"
 event_id: "EVT-###"

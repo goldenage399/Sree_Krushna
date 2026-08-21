@@ -1,3 +1,7 @@
+---
+hub: 02_RITUALS_CULTURE/HUB.md
+---
+
 # 🏺 SAM-005: Main Mandap, Kanyadaan, Homa & Saptapadi Samagri
 
 **Associated Rituals:** [`RIT-005: Kanyadaan`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/specs/RIT-005_kanyadaan.md), [`RIT-006: Lajahoma`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/specs/RIT-006_lajahoma_agni_pradakshina.md), [`RIT-007: Saptapadi`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/specs/RIT-007_saptapadi.md), [`RIT-008: Sindoor Daan`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/specs/RIT-008_sindoor_daan.md)  

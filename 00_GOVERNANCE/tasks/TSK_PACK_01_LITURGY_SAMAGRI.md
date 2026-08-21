@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 🕉️ Task Pack 01: Vedic Liturgies & Sacred Samagri Custody
 
 **Pack ID:** `TSK_PACK_01`  

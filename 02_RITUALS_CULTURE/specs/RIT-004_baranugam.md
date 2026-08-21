@@ -1,4 +1,5 @@
 ---
+hub: 02_RITUALS_CULTURE/HUB.md
 id: RIT-004
 name: "Baranugam & Barat Reception"
 event_id: "EVT-004"

@@ -1,3 +1,7 @@
+---
+hub: 05_OPERATIONS_LOGISTICS/HUB.md
+---
+
 # 🏨 Master Hotel Accommodation & Room Allocation Matrix
 
 **Specification Code:** `SPEC-OPS-ACC-001`  

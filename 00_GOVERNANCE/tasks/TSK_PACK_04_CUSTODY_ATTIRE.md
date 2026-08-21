@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 👑 Task Pack 04: Wardrobe, Jewellery & Precious Asset Custody
 
 **Pack ID:** `TSK_PACK_04`  

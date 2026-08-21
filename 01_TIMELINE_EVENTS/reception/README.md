@@ -1,3 +1,7 @@
+---
+hub: 01_TIMELINE_EVENTS/HUB.md
+---
+
 # 🎉 Reception Events Directory
 
 This directory contains specifications for the post-wedding grand reception, dinner banquet, and community celebration.

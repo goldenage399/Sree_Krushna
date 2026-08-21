@@ -1,3 +1,7 @@
+---
+hub: 04_PROCUREMENT_VENDORS/HUB.md
+---
+
 # 🍲 Food, Hospitality & Catering Management
 
 **SSOT Scope:** Master menus, tastings, authentic Odia wedding feast preparations, special dietary accommodations (diabetic/pure vegetarian), and plate-count auditing.

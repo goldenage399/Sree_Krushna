@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 📋 Master Task & Subtask Governance Register (`TSK-###`)
 
 **Specification Code:** `SPEC-GOV-TSK-MASTER-001`  

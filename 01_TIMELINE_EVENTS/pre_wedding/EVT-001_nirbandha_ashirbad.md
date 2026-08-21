@@ -1,4 +1,5 @@
 ---
+hub: 01_TIMELINE_EVENTS/HUB.md
 id: EVT-001
 title: "Nirbandha & Ashirbad"
 category: "pre_wedding"

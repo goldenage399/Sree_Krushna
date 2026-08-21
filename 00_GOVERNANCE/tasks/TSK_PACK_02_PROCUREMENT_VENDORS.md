@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 🤝 Task Pack 02: Commercials, Contracts & Vendor Procurement
 
 **Pack ID:** `TSK_PACK_02`  

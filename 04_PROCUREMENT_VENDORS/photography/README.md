@@ -1,3 +1,7 @@
+---
+hub: 04_PROCUREMENT_VENDORS/HUB.md
+---
+
 # 📸 Photography, Cinematography & Media Management
 
 **SSOT Scope:** Photography creative briefs, must-have shot lists, crew logistics, raw file ingestion, and album approval pipeline.

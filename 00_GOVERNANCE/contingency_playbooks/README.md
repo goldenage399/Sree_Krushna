@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 🚨 Operational Contingency Playbooks (`CP-###`)
 
 **Specification:** `SPEC-CONTINGENCY-PLAYBOOKS-001`  

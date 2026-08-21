@@ -1,3 +1,7 @@
+---
+hub: 02_RITUALS_CULTURE/HUB.md
+---
+
 # 📜 Ritual Specifications Directory (`specs/`)
 
 This directory houses individual, detailed liturgical specification documents for each Vedic and traditional marriage rite (`RIT-###`).

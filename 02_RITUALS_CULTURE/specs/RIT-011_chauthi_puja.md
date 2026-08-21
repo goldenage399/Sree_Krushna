@@ -1,4 +1,5 @@
 ---
+hub: 02_RITUALS_CULTURE/HUB.md
 id: RIT-011
 name: "Chauthi Puja & Sacred Marital Union Rites"
 event_id: "EVT-006"

@@ -1,3 +1,7 @@
+---
+hub: 06_FINANCE_COMMERCIALS/HUB.md
+---
+
 # 💵 Day-of Cash Envelopes & Petty Cash Management
 
 **SSOT Scope:** Master register for physical cash envelopes required on event days (Priest Dakshina, Temple offerings, driver overtime, tips, and emergency petty cash).

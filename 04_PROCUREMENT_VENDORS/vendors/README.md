@@ -1,3 +1,7 @@
+---
+hub: 04_PROCUREMENT_VENDORS/HUB.md
+---
+
 # 🏢 Vendor Profiles Directory (`vendors/`)
 
 This directory houses individual, canonical Markdown profile files for all commercial suppliers and service providers (`VDR-###`).

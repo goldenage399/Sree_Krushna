@@ -1,3 +1,7 @@
+---
+hub: 04_PROCUREMENT_VENDORS/HUB.md
+---
+
 # 👗 Attire, Jewellery & Wardrobe Inventory
 
 **SSOT Scope:** Complete registry of bridal and groom outfits, fitting timelines, family attire coordination, high-value gold/diamond jewelry manifests, and safe-deposit locker custody.

@@ -1,3 +1,7 @@
+---
+hub: 00_GOVERNANCE/HUB.md
+---
+
 # 🔄 Change Management & Impact Propagation Protocol
 
 **Specification:** `SPEC-CHANGE-MGMT-001`  

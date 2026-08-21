@@ -1,4 +1,5 @@
 ---
+hub: 02_RITUALS_CULTURE/HUB.md
 id: RIT-003
 name: "Mangan, Mangalakrutya & Haldi Snana"
 event_id: "EVT-003"

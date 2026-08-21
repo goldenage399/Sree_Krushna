@@ -1,4 +1,5 @@
 ---
+hub: 02_RITUALS_CULTURE/HUB.md
 id: RIT-001
 name: "Nirbandha & Ashirbad"
 event_id: "EVT-001"

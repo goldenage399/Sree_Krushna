@@ -1,4 +1,5 @@
 ---
+hub: 01_TIMELINE_EVENTS/HUB.md
 id: EVT-###
 title: "Event Name"
 category: "pre_wedding | wedding_day | reception | post_wedding"

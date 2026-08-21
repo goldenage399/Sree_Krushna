@@ -1,3 +1,7 @@
+---
+hub: 04_PROCUREMENT_VENDORS/HUB.md
+---
+
 # 💌 Invitation Suite, Video Invites & Stationery Specification
 
 **Specification Code:** `SPEC-BRAND-INV-001`  

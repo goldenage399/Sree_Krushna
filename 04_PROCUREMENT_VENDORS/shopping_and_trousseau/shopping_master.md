@@ -1,3 +1,7 @@
+---
+hub: 04_PROCUREMENT_VENDORS/HUB.md
+---
+
 # 🛍️ Master Shopping, Trousseau & Gifting Register (`SHP-###`)
 
 **Specification Code:** `SPEC-PROC-SHOP-001`  
