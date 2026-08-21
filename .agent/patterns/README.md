@@ -90,8 +90,7 @@ The tier is a **graduation ladder**: a pattern may start at `reference` and grad
 | [typography-weight-and-bridge-token-enforcement.md](typography-weight-and-bridge-token-enforcement.md) | `reference` | VALIDATED | `debug-frontend.md`, `cos-invoke.md` | universal |
 | [intent-clarity-decoupling-and-plan-hardstop.md](intent-clarity-decoupling-and-plan-hardstop.md) | `reference` | VALIDATED | `prompt-clarity/SKILL.md`, `role-activation.md`, `plan.md` | universal |
 | [p81-id-registration-process.md](p81-id-registration-process.md) | `reference` | VALIDATED | `INC-016`, `INC-085`, `AGENTS.md` (Modal Rule 5), `PREFLIGHT.md` R13 | universal |
-
-
+| [deterministic-ui-manual-capture-and-annotation-pipeline.md](deterministic-ui-manual-capture-and-annotation-pipeline.md) | `reference` | VALIDATED | `UI_MANUAL_CAPTURE_WORKFLOW.md` | universal |
 
 > **SDP-001 note**: Governed by [`docs/protocols/SYSTEM-DISCOVERY-PROTOCOL.md`](../../docs/protocols/SYSTEM-DISCOVERY-PROTOCOL.md) — not a `.agent/patterns/` file. Wired here as a cross-reference so agents checking this index before proposing new systems, schemas, or contracts are pointed to the correct gate.
 

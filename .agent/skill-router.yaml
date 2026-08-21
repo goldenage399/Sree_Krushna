@@ -530,21 +530,28 @@ workflows:
     when: "Safely removing 100+ lines of code with dependency checks"
 
   - id: post-incident-governance
-    repo: [capsicum, pio, task-dashboard]
-    triggers: ["production bug resolved", "repeated failure", "post-incident", "systemic gap", "we should always", "we should never"]
+    repo: [capsicum, pio, task-dashboard, sree-krushna, ug-farmhouse]
+    triggers: ["production bug resolved", "repeated failure", "post-incident", "systemic gap", "we should always", "we should never", "/post-incident-governance"]
     cost: medium
-    invoke: workflow:post-incident-governance
+    invoke: read .agent/workflows/post-incident-governance.md
     when: "Routing post-incident learnings through classification gate to persistent invariants"
 
+  - id: post-incident-governance-lite
+    repo: [capsicum, pio, task-dashboard, sree-krushna, ug-farmhouse]
+    triggers: ["post-incident-governance-lite", "/post-incident-governance-lite", "quick post-incident", "rapid incident log"]
+    cost: low
+    invoke: read .agent/workflows/post-incident-governance-lite.md
+    when: "Streamlined post-incident governance logging for single-surface bugs"
+
   - id: post-incident-analysis
-    repo: [task-dashboard]
+    repo: [task-dashboard, sree-krushna, ug-farmhouse]
     triggers: ["post-incident-analysis", "post incident analysis", "/post-incident-analysis", "incident retrospective"]
     cost: medium
     invoke: read .agent/workflows/post-incident-analysis.md
     when: "Performing 9-step post-incident retrospective and writing INC case study"
 
   - id: postmortem
-    repo: [task-dashboard]
+    repo: [task-dashboard, sree-krushna, ug-farmhouse]
     triggers: ["postmortem", "/postmortem", "incident postmortem"]
     cost: medium
     invoke: read .agent/workflows/postmortem.md

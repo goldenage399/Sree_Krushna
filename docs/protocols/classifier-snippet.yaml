@@ -1,0 +1,209 @@
+# 🧠 Protocol Classifier Intelligence
+# Automatic protocol selection rules for Claude Code
+
+version: "1.0"
+description: "Intelligent protocol selection and automatic triggering system"
+
+# =============================================================================
+# AUTOMATIC TRIGGER RULES
+# =============================================================================
+
+automatic_triggers:
+  # File modification detection
+  file_changes:
+    pattern: ["edit", "write", "modify.*file", "update.*file", "change.*code"]
+    protocol: "BUILD-VERIFICATION-PROTOCOL"
+    priority: "CRITICAL"
+    action: "npm run build"
+    time_estimate: "30-60s"
+    
+  # Automation and batch operations
+  automation_requests:
+    pattern: ["automate", "batch", "refactor.*multiple", "replace.*across", "fix.*all", "update.*many"]
+    protocol: "SAFE-AUTOMATION-PROTOCOL"
+    priority: "CRITICAL"
+    steps: 4
+    time_estimate: "2-5min"
+    
+  # Proto-tagged prompts (natural language governance)
+  proto_tagged:
+    pattern: ["^proto-.*"]
+    protocol: "PROTO-GOVERNANCE-INTELLIGENCE-SYSTEM"
+    priority: "SUPER_CRITICAL"
+    action: "comprehensive_governance_mode"
+    domains: ["theme", "modal", "automation", "crisis", "rollout", "document", "diagnose", "safe"]
+    
+  # Multi-file operations
+  multi_file:
+    pattern: ["process.*files", ">3.*files", "batch.*files", "multiple.*files"]
+    protocol: "SURGICAL-TARGETING-ANALYSIS"
+    priority: "MANDATORY"
+    action: "grep -l violations by type"
+    time_estimate: "1-2min"
+    
+  # Crisis detection
+  crisis_indicators:
+    pattern: ["error.*multiple", "fail.*build", "corrupt", "broken.*system", "emergency", "203.*corruption"]
+    protocol: "CRISIS-RESPONSE-MODE"
+    priority: "CRISIS_LEVEL"
+    immediate_action: true
+    time_estimate: "5-15min"
+
+# =============================================================================
+# MANUAL PROTOCOL SELECTION RULES
+# =============================================================================
+
+manual_triggers:
+  # UI/UX Development Work
+  ui_development:
+    keywords: ["ui", "theme", "component", "modal", "accessibility", "responsive"]
+    required_consultation: "MULTI-ASSIGNMENT-MASTER-REFERENCE"
+    protocols: 
+      - "COMPLIANCE-DEVELOPMENT-PROTOCOL"
+      - "TESTING-VALIDATION-PROTOCOL"
+      - "MOBILE-FIRST-INTERACTION-PROTOCOL"
+    priority: "MANDATORY"
+    
+  # Documentation work
+  documentation:
+    keywords: ["document", "write.*guide", "create.*docs", "update.*docs", "documentation"]
+    protocols:
+      - "CONTEXT-OPTIMIZATION-PROTOCOL"
+      - "DOCUMENTATION-FIRST-PROTOCOL"
+      - "TOKEN-OPTIMIZATION-SAFETY-PROTOCOL"
+    priority: "MANDATORY"
+    
+  # Testing operations
+  testing:
+    keywords: ["test", "validate", "verify", "check.*functionality"]
+    protocols:
+      - "TESTING-INTEGRITY-PROTOCOL"
+      - "BUILD-VERIFICATION-PROTOCOL"
+    tools: ["quick-theme-test.cjs", "visual-theme-validator.cjs", "modal-theme-validator.cjs"]
+    
+  # Cleanup operations
+  cleanup:
+    keywords: ["cleanup", "optimize", "remove.*unused", "delete.*old"]
+    protocols:
+      - "SAFE-CLEANUP-CHECKLIST"
+      - "TOKEN-OPTIMIZATION-SAFETY-PROTOCOL"
+    priority: "MANDATORY"
+    warning: "High risk of over-cleanup"
+
+# =============================================================================
+# INTELLIGENT SYNTHESIS RULES
+# =============================================================================
+
+synthesis_patterns:
+  # Complex multi-domain requests
+  modal_theme_work:
+    pattern: ["modal.*theme", "theme.*modal", "modal.*dark.*theme"]
+    synthesis: ["MODAL-PROTOCOLS", "THEME-PROTOCOLS", "ACCESSIBILITY-PROTOCOLS"]
+    approach: "comprehensive_multi_domain"
+    
+  batch_safe_automation:
+    pattern: ["batch.*safe", "safe.*batch", "automate.*safely"]
+    synthesis: ["SAFE-AUTOMATION-PROTOCOL", "TESTING-PROTOCOLS", "DOCUMENTATION-PROTOCOLS"]
+    approach: "safety_first_automation"
+    
+  production_readiness:
+    pattern: ["production", "deploy", "ready.*live", "release"]
+    synthesis: ["ROLLOUT-PROTOCOLS", "TESTING-PROTOCOLS", "PERFORMANCE-PROTOCOLS", "SECURITY-PROTOCOLS"]
+    approach: "comprehensive_production_validation"
+    
+  crisis_recovery:
+    pattern: ["crisis.*recover", "emergency.*fix", "rollback.*emergency"]
+    synthesis: ["CRISIS-RESPONSE-MODE", "ROLLBACK-PROCEDURES", "VALIDATION-PROTOCOLS"]
+    approach: "emergency_response_sequence"
+
+# =============================================================================
+# CONFLICT RESOLUTION MATRIX
+# =============================================================================
+
+conflict_resolution:
+  priority_hierarchy:
+    1: "SUPER_CRITICAL"    # Proto Governance Intelligence
+    2: "CRISIS_LEVEL"      # Emergency protocols
+    3: "CRITICAL"          # Safety protocols
+    4: "MANDATORY"         # Standard protocols
+    5: "HIGH"              # Recommended protocols
+    
+  execution_strategies:
+    sequential:
+      - ["BUILD-VERIFICATION-PROTOCOL", "SAFE-AUTOMATION-PROTOCOL"]
+      - ["CONTEXT-OPTIMIZATION-PROTOCOL", "DOCUMENTATION-FIRST-PROTOCOL"]
+      
+    parallel:
+      - ["UI-COMPLIANCE-PROTOCOLS", "DOCUMENTATION-PROTOCOLS"]
+      - ["TESTING-PROTOCOLS", "VALIDATION-PROTOCOLS"]
+      
+    override:
+      - "CRISIS-RESPONSE-MODE overrides all except PROTO-GOVERNANCE"
+      - "PROTO-GOVERNANCE coordinates all other protocols"
+
+# =============================================================================
+# PERFORMANCE OPTIMIZATION
+# =============================================================================
+
+performance_targets:
+  protocol_selection_time: "<2 seconds"
+  lookup_time: "<10 seconds"
+  token_efficiency: "99.998% reduction vs scattered references"
+  accuracy_target: "99%+ correct protocol selection"
+  
+optimization_features:
+  smart_caching: true
+  pattern_learning: true
+  context_awareness: true
+  dependency_tracking: true
+
+# =============================================================================
+# VALIDATION AND TESTING
+# =============================================================================
+
+validation_rules:
+  protocol_health_check:
+    build_verification: "npm run build must pass"
+    testing_tools: "theme testing scripts must be available"
+    documentation: "protocol docs must be accessible"
+    crisis_protocols: "emergency protocols must exist"
+    
+  success_indicators:
+    - "10-second protocol lookup achieved"
+    - "Zero protocol confusion reported"
+    - "Automatic enforcement working"
+    - "Crisis response ready"
+    - "Conflict resolution systematic"
+
+# =============================================================================
+# EMERGENCY OVERRIDES
+# =============================================================================
+
+emergency_commands:
+  crisis_repair: "proto-crisis-repair"
+  rollback_emergency: "proto-rollbacks"
+  token_lock: "proto-token-lock"
+  safe_automation_override: "proto-safe-automation"
+  
+emergency_triggers:
+  - "203+ corruption instances"
+  - "Terminal misconfiguration"
+  - "Failed automation cascades"
+  - "Test integrity violations"
+  - "Build failures after changes"
+
+# =============================================================================
+# INTEGRATION POINTS
+# =============================================================================
+
+integration:
+  claude_md: "Reference from main protocol enforcement rules"
+  quick_references: "Cross-reference with existing navigation guides"
+  ui_testing: "Link to UI testing quick reference"
+  task_mapping: "Connect to task-to-file mapping"
+  
+cross_references:
+  - "../../CLAUDE.md"
+  - "../claude-navigation/quick-reference.md"
+  - "../claude-navigation/ui-testing-quick-reference.md"
+  - "../QUICK-TASK-REFERENCE.md"

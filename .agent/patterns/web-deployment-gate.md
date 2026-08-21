@@ -1,13 +1,17 @@
 ---
 pattern: web-deployment-gate
 activation_tier: reference
-status: ADOPTED
+canonical_source: task-dashboard
+status: HYPOTHESIS
 consumed_by:
-  - file: .agent/workflows/web-deployment-gate.md
-    at: "Release Gate"
+  - file: CLAUDE.md
+    at: "Pattern Activation and PACT-001 Cross-References"
+  - file: .agent/workflows/plan.md
+    at: "Step 0.1: Universal Patterns Reference Check"
+
 ---
 
-<!-- shared:std.agent.web-deployment-gate:start -->
+﻿<!-- shared:std.agent.web-deployment-gate:start -->
 # Pattern: Web Deployment Gate & UX Resilience Protocol
 
 **ID:** `PAT-DEPLOY-GATE-001`  

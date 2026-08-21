@@ -16,6 +16,7 @@ Review relevant ecosystem patterns:
 - `.agent/patterns/db-inspect-fleet.md`
 - `.agent/patterns/deep-link-hook-composition.md`
 - `.agent/patterns/derive-dont-declare-guardrails.md`
+- `.agent/patterns/deterministic-ui-manual-capture-and-annotation-pipeline.md`
 - `.agent/patterns/enhancement-id-staleness-collision.md`
 - `.agent/patterns/eur-surface-audit.md`
 - `.agent/patterns/event-metadata-contract-drift.md`
@@ -62,6 +63,7 @@ Review relevant ecosystem patterns:
 - `.agent/patterns/typography-weight-and-bridge-token-enforcement.md`
 - `.agent/patterns/ui-primitive-codebase-wide-standardization.md`
 - `.agent/patterns/verifiable-implementation-before-adr-promotion.md`
+- `.agent/patterns/web-deployment-gate.md`
 - `.agent/patterns/write-site-contract-verification.md`
 - `.agent/patterns/write-without-reader.md`
 
