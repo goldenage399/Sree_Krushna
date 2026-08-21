@@ -49,8 +49,22 @@ for (const relPath of filesToAudit) {
     continue;
   }
 
-  const content = fs.readFileSync(fullPath, 'utf8');
+  let content = fs.readFileSync(fullPath, 'utf8');
   console.log(`\n🔍 Auditing ${relPath}...`);
+
+  // Support modular external CSS stylesheets
+  const linkMatches = [...content.matchAll(/<link\s+[^>]*rel=["']stylesheet["'][^>]*href=["']([^"']+)["'][^>]*>/gi)];
+  for (const match of linkMatches) {
+    let cssHref = match[1];
+    if (cssHref.startsWith('/')) cssHref = cssHref.slice(1);
+    const cssPath = path.join(path.dirname(fullPath), cssHref);
+    const altCssPath = path.join(ROOT_DIR, 'public', cssHref);
+    if (fs.existsSync(cssPath)) {
+      content += '\n' + fs.readFileSync(cssPath, 'utf8');
+    } else if (fs.existsSync(altCssPath)) {
+      content += '\n' + fs.readFileSync(altCssPath, 'utf8');
+    }
+  }
 
   // Check 1: Viewport Meta Tag
   const hasViewport = /<meta\s+name=["']viewport["']\s+content=["'][^"']*width=device-width[^"']*["']/i.test(content);

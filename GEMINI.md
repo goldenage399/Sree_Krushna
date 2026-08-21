@@ -31,14 +31,6 @@ All entities must use standardized 3-digit padded identifiers:
 - Spoke documents contain detailed domain specifications and declare parent hub in frontmatter.
 - Master entities are canonical; all views (run sheets, dashboards, trackers) are derived views.
 
-### 4. Mandatory Mobile-First Verification Gate (`M-GATE-01` / Protocol 19)
-- Every UI component, stylesheet, or page layout MUST be validated down to **300px/320px viewport**.
-- **Touch Target Minimum**: All interactive elements (buttons, pills, checkboxes, inputs) MUST have $\ge 44 \times 44\text{px}$ effective hit targets.
-- **Zero Horizontal Overflow**: The document body must never exhibit horizontal scroll on mobile (`overflow-x: hidden`).
-- **Flex-Stack Mandate**: Multi-column forms, control bars, and card headers MUST stack vertically (`flex-direction: column`) on mobile viewports ($< 768\text{px}$).
-- **Table Containment**: All tabular data MUST be wrapped in `.table-responsive-wrapper` with touch momentum scrolling.
-- Never declare a UI step complete without running the 5-point Mobile Gate Checklist.
-
 ---
 
 ## 2. Session Startup Gate (MANDATORY)
@@ -77,7 +69,7 @@ Before any task work, review:
 ---
 
 ## 4. Pattern Activation & PACT-001 Cross-References
-This repository implements the following ecosystem patterns:
+This repository implements the following universal patterns:
 - `.agent/patterns/anti-masking-fallback-layers.md`
 - `.agent/patterns/call-graph-and-rules-ast-verification-gate.md`
 - `.agent/patterns/centralized-mutation-delegation.md`
@@ -88,6 +80,7 @@ This repository implements the following ecosystem patterns:
 - `.agent/patterns/db-inspect-fleet.md`
 - `.agent/patterns/deep-link-hook-composition.md`
 - `.agent/patterns/derive-dont-declare-guardrails.md`
+- `.agent/patterns/deterministic-ui-manual-capture-and-annotation-pipeline.md`
 - `.agent/patterns/enhancement-id-staleness-collision.md`
 - `.agent/patterns/eur-surface-audit.md`
 - `.agent/patterns/event-metadata-contract-drift.md`
@@ -134,5 +127,6 @@ This repository implements the following ecosystem patterns:
 - `.agent/patterns/typography-weight-and-bridge-token-enforcement.md`
 - `.agent/patterns/ui-primitive-codebase-wide-standardization.md`
 - `.agent/patterns/verifiable-implementation-before-adr-promotion.md`
+- `.agent/patterns/web-deployment-gate.md`
 - `.agent/patterns/write-site-contract-verification.md`
 - `.agent/patterns/write-without-reader.md`

@@ -132,10 +132,10 @@ if (fs.existsSync(SPOKE_VERIFIER_SRC)) {
 }
 copyFileSafe('scripts/verify-governance-schema.cjs', 'scripts/verify-governance-schema.cjs');
 
-// ─── Step 3: Protocol Documentation ───────────────────────────────────────────
-console.log(`\n--- Step 3: Copying Protocol Documentation ---`);
-copyFileSafe('docs/protocols/PATTERN-ACTIVATION-CONTRACT-MANUAL.md', 'docs/protocols/PATTERN-ACTIVATION-CONTRACT-MANUAL.md');
-copyFileSafe('docs/protocols/governance-wiring.schema.json', 'docs/protocols/governance-wiring.schema.json');
+// ─── Step 3: Complete Protocols Suite (docs/protocols/) ───────────────────────
+console.log(`\n--- Step 3: Deploying Complete Protocols Suite (docs/protocols/) ---`);
+ensureDir(path.join(TARGET_ROOT, 'docs/protocols'));
+copyDirRecursive('docs/protocols', 'docs/protocols');
 copyFileSafe('.agent/patterns/README.md', '.agent/patterns/README.md');
 
 // ─── Step 4: Workflows & Governance Councils ──────────────────────────────────
@@ -154,6 +154,10 @@ const WORKFLOWS = [
   'ui-council.md',
   'external-ui-redesign.md',
   'mobile-ui-engineering.md',
+  'post-incident-governance.md',
+  'post-incident-governance-lite.md',
+  'post-incident-analysis.md',
+  'postmortem.md',
   'table-schema-documentation.md',
   'new-prd.md',
   'perf-review.md',
@@ -165,6 +169,7 @@ const PORTABLE_WORKFLOWS = [
   'systematic-debugging.md',
   'session-handoff-system.md',
   'ssot-reconciliation.md',
+  'post-incident-governance.md',
   'financial-integrity-patterns.md',
   'spreadsheet-backend-patterns.md',
 ];
@@ -309,8 +314,156 @@ if (fs.existsSync(targetPlanWf)) {
   writeFileNoBom(targetPlanWf, planContent);
 }
 
-// ─── Step 10: package.json Governance Scripts ─────────────────────────────────
-console.log(`\n--- Step 10: Configuring package.json ---`);
+// ─── Step 10: Canonical Enhancement Infrastructure (Cluster Model) ───────────
+console.log(`\n--- Step 10: Deploying Canonical Enhancement Infrastructure ---`);
+ensureDir(path.join(TARGET_ROOT, 'docs/enhancements'));
+ensureDir(path.join(TARGET_ROOT, 'enhancement-notes'));
+
+const prefix = REPO_NAME.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 4) || 'ENH';
+
+const enhConfig = {
+  canonical_prefix: prefix,
+  next_id: 1,
+  repo: REPO_NAME,
+  notes: `canonical_prefix is the native ID prefix for enhancements in this repository. Foreign references from other SAP repos (TASK-, PIO-, CAP-, BMS-) must include a source annotation. next_id is auto-incremented by the enhancement-scaffolder on each new enhancement confirmation.`
+};
+if (!fs.existsSync(path.join(TARGET_ROOT, 'enhancement-config.json'))) {
+  writeFileNoBom(path.join(TARGET_ROOT, 'enhancement-config.json'), JSON.stringify(enhConfig, null, 2) + '\n');
+}
+
+const enhProtocol = `# ENHANCEMENT_PROTOCOL.md — ${REPO_NAME} Standard
+
+This document defines the governance for creating, tracking, and verifying enhancements within the ${REPO_NAME} repository. It follows the Domain-Based Cluster Model used across the unified ecosystem.
+
+## 🏗️ Backlog Architecture: The Cluster Model
+
+- **Master Registry**: [ENHANCEMENT-MASTER-REGISTRY.md](./ENHANCEMENT-MASTER-REGISTRY.md) (The system index)
+- **Domain Clusters**: Backlog items are stored in domain-specific files to minimize context load for agents:
+    - [UI Quality Cluster](./docs/enhancements/UI-QUALITY-ENHANCEMENT-CLUSTER.md) (Visual design, layout, theme tokens, responsiveness, 300px mobile)
+    - [Infrastructure Cluster](./docs/enhancements/INFRASTRUCTURE-ENHANCEMENT-CLUSTER.md) (Architecture, compilers, scripts, CI/CD, hosting)
+    - [Governance Cluster](./docs/enhancements/GOVERNANCE-ENHANCEMENT-CLUSTER.md) (Protocols, workflows, SSOT reconciliation, 4-PPSD rules)
+    - [Business Logic Cluster](./docs/enhancements/BUSINESS-LOGIC-ENHANCEMENT-CLUSTER.md) (Features, domain models, logic, workflows)
+
+## 📋 Enhancement Lifecycle
+
+<!-- shared:std.enhancement.lifecycle:start -->
+### 1. Registration
+- **Dependency Check**: Before scaffolding, MUST search the Master Registry (\`ENHANCEMENT-MASTER-REGISTRY.md\`) and Domain Cluster files for keywords related to the new feature to identify overlapping contexts or dependencies.
+- **Simple Enhancements (≤ 2 days)**: Add a lean entry to the appropriate Cluster file.
+- **Complex Enhancements (> 2 days)**:
+    - Create a tracked folder in \`enhancement-notes/\`.
+    - Create \`00_ENHANCEMENT_INDEX.md\` using the standard template.
+    - Declare all dependencies explicitly (e.g. \`Depends On: None (Foundational)\` or specific IDs like \`Depends On: ${prefix}-001\`). Empty arrays \`[]\` are prohibited.
+    - Register in the Master Registry and appropriate Cluster file.
+- **ID Governance**: ID governance is managed via \`enhancement-config.json\` at repo root.
+  This file must exist and define \`canonical_prefix\` and \`next_id\` before scaffolding
+  can proceed. See [enhancement-scaffolder](.agent/skills/enhancement-scaffolder/SKILL.md)
+  for enforcement logic.
+
+### 2. Organizational Rationale (The "Why")
+The use of dedicated tracking folders for complex work is enforced to ensure:
+- **Knowledge Transfer**: Detailed technical context is maintained for future agents/users.
+- **Audit Trail**: A complete record of architectural and implementation decisions.
+- **Maintainability**: Future modifications have a clear roadmap and testing procedures.
+- **Quality Assurance**: Prevents "Implementation Drift" by enforcing measurable success criteria.
+<!-- shared:std.enhancement.lifecycle:end -->
+
+## Prefix Governance
+- **Native Prefix**: \`${prefix}-NNN\` (Unique to this repository).
+<!-- shared:std.enhancement.prefix-governance:start -->
+- **Foreign References**: \`TASK-NNN\`, \`PIO-NNN\`, \`CAP-NNN\`, or \`BMS-NNN\` (Used when referencing or porting from other SAP repositories).
+- **Cluster Tags**: \`[UI-QUALITY]\`, \`[INFRA]\`, \`[GOVERNANCE]\`, \`[BUSINESS-LOGIC]\`
+<!-- shared:std.enhancement.prefix-governance:end -->
+
+## ✅ Definition of Done (v1.7 Standard)
+
+> **Constraint**: ALL criteria must be verified before marking an enhancement as COMPLETED.
+
+<!-- shared:std.enhancement.dod-v1.7:start -->
+### 🛡️ 4-Tier Verification Matrix
+
+| Tier | Name | Target | Requirement |
+| :--- | :--- | :--- | :--- |
+| **T1** | **Static** | Syntax/Lint | 100% clean console, no lint errors, valid JSON schemas. |
+| **T2** | **Functional** | Logic/UI | Verified via integration test, manual walkthrough, or visual inspection. |
+| **T3** | **Integrated** | State/Flow | Verified end-to-end data chain (State → Storage/Backend → UI Views). |
+| **T4** | **Standard** | Governance | 100% compliance with \`npm run verify:governance-wiring:all\` and linked PIRR artifact with evidence populated in each category. |
+<!-- shared:std.enhancement.dod-v1.7:end -->
+
+<!-- shared:std.enhancement.cascading-rules:start -->
+### 🔄 Cascading Rules
+1. **Extraction Before Deletion**: Any logic/structure being replaced must be extracted to an Enhancement Note before removal.
+2. **SSOT Synchronicity**: Documentation must be updated in the same session as code changes (AOS Phase C).
+3. **No Disposable Scripts**: Test scripts must be semi-permanent and semantic (no \`temp.js\`).
+4. **Return Discipline**: Phase completion requires surfacing the actual content of material artifacts, not descriptions of changes made. Confirmation that a file was edited is not a reviewable artifact. The file content is.
+5. **Cluster Health Threshold**: Any Domain Cluster exceeding 800 lines triggers a mandatory domain-split review before new entries are added.
+6. **Pre-Execution Manifest for High-Risk Operations**: Operations classified as high-risk — including prefix changes, bulk renames, deletions, and cross-file replacements — require a pre-execution manifest returned for approval before any command runs.
+<!-- shared:std.enhancement.cascading-rules:end -->
+
+---
+**Status**: 🔵 ACTIVE (v1.7)  
+**Guardian**: [AOS Phase Gate Governance](.agent/workflows/aos-session-open.md)
+`;
+if (!fs.existsSync(path.join(TARGET_ROOT, 'ENHANCEMENT_PROTOCOL.md'))) {
+  writeFileNoBom(path.join(TARGET_ROOT, 'ENHANCEMENT_PROTOCOL.md'), enhProtocol);
+}
+
+const enhIndex = `# ENHANCEMENTS.md — ${REPO_NAME} Enhancement System Index
+
+This file is the root-level entry point for ${REPO_NAME}'s enhancement-tracking system, mirroring the domain-cluster model used in \`Task-Dashboard\`, \`PIOperationsMgmt_Firebase\`, \`Capsicum\`, and \`BMS\`. It is a navigation index only — never a write target. Lean entries go in the relevant Domain Cluster file; full detail for Complex enhancements goes in \`enhancement-notes/\`.
+
+## 📋 Quick Navigation
+
+- **Primary Registry**: [ENHANCEMENT-MASTER-REGISTRY.md](./ENHANCEMENT-MASTER-REGISTRY.md)
+- **Protocol**: [ENHANCEMENT_PROTOCOL.md](./ENHANCEMENT_PROTOCOL.md)
+
+### 📂 Domain Clusters (Active Backlogs)
+
+| Cluster | Focus | Backlog |
+| :--- | :--- | :--- |
+| **🧠 Governance** | Protocols, workflows, SSOT reconciliation, entity lifecycles | [Backlog](./docs/enhancements/GOVERNANCE-ENHANCEMENT-CLUSTER.md) |
+| **📂 Infrastructure** | Architecture, Hub & Spoke structure, compilers, scripts, CI/CD | [Backlog](./docs/enhancements/INFRASTRUCTURE-ENHANCEMENT-CLUSTER.md) |
+| **🎨 UI Quality** | View modularization, design tokens, responsiveness, 300px mobile | [Backlog](./docs/enhancements/UI-QUALITY-ENHANCEMENT-CLUSTER.md) |
+| **💼 Business Logic** | Features, domain entities, business logic, workflows | [Backlog](./docs/enhancements/BUSINESS-LOGIC-ENHANCEMENT-CLUSTER.md) |
+
+---
+
+**Bootstrapped**: ${new Date().toISOString().slice(0, 10)}. See [ENHANCEMENT_PROTOCOL.md](./ENHANCEMENT_PROTOCOL.md) for lifecycle rules.
+
+**Add a New Enhancement**: Follow the process in the [enhancement-scaffolder skill](.agent/skills/enhancement-scaffolder/SKILL.md).
+`;
+if (!fs.existsSync(path.join(TARGET_ROOT, 'ENHANCEMENTS.md'))) {
+  writeFileNoBom(path.join(TARGET_ROOT, 'ENHANCEMENTS.md'), enhIndex);
+}
+
+const enhRegistry = `# ENHANCEMENT-MASTER-REGISTRY.md — ${REPO_NAME} Master Enhancement Registry
+
+This file is the primary system index for all tracked enhancements in ${REPO_NAME}, recording both active and completed initiatives across all domain clusters.
+
+| ID | Title | Cluster | Tier | Status | Branch | Target Release | Spec / PRD | PR / Commit | Completed Date |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+`;
+if (!fs.existsSync(path.join(TARGET_ROOT, 'ENHANCEMENT-MASTER-REGISTRY.md'))) {
+  writeFileNoBom(path.join(TARGET_ROOT, 'ENHANCEMENT-MASTER-REGISTRY.md'), enhRegistry);
+}
+
+const clusterFiles = [
+  { name: 'GOVERNANCE-ENHANCEMENT-CLUSTER.md', title: 'Governance Enhancement Cluster', focus: 'Tracks protocols, workflows, SSOT reconciliation mechanisms, and 4-PPSD rules.' },
+  { name: 'INFRASTRUCTURE-ENHANCEMENT-CLUSTER.md', title: 'Infrastructure & Architecture Enhancement Cluster', focus: 'Tracks architecture integrity, Hub & Spoke structures, compilers, verification scripts, and CI/CD automation.' },
+  { name: 'UI-QUALITY-ENHANCEMENT-CLUSTER.md', title: 'UI Quality Enhancement Cluster', focus: 'Tracks visual hierarchy, component modularization, design tokens, responsive layouts, and mobile 300px compliance.' },
+  { name: 'BUSINESS-LOGIC-ENHANCEMENT-CLUSTER.md', title: 'Business Logic Enhancement Cluster', focus: 'Tracks domain models, business logic, entities, operational workflows, and features.' }
+];
+
+clusterFiles.forEach(cf => {
+  const p = path.join(TARGET_ROOT, 'docs/enhancements', cf.name);
+  if (!fs.existsSync(p)) {
+    const cContent = `# ${cf.title}\n\n${cf.focus}\n\n## 📋 Active Enhancements\n\n| ID | Title | Priority | Status | Spec / Index |\n| :--- | :--- | :--- | :--- | :--- |\n\n## 🗃️ Backlog\n\n- None pending.\n`;
+    writeFileNoBom(p, cContent);
+  }
+});
+
+// ─── Step 11: package.json Governance Scripts ─────────────────────────────────
+console.log(`\n--- Step 11: Configuring package.json ---`);
 const pkgPath = path.join(TARGET_ROOT, 'package.json');
 let pkg = {};
 if (fs.existsSync(pkgPath)) {
@@ -331,8 +484,8 @@ pkg.scripts['verify:governance-schema'] = 'node scripts/verify-governance-schema
 
 writeFileNoBom(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
 
-// ─── Step 11: .agent Configuration & Routing Catalogs ─────────────────────────
-console.log(`\n--- Step 11: Deploying Complete .agent Skill Router ---`);
+// ─── Step 12: .agent Configuration & Routing Catalogs ─────────────────────────
+console.log(`\n--- Step 12: Deploying Complete .agent Skill Router ---`);
 copyFileSafe('.agent/skill-router.yaml', '.agent/skill-router.yaml');
 
 const STANDARDS_CATALOG_CONTENT = JSON.stringify({
@@ -411,11 +564,13 @@ const PREFLIGHT_CONTENT = `# ${REPO_NAME} — Preflight Gate & Routing Table
 `;
 writeFileNoBom(path.join(TARGET_ROOT, '.agent/PREFLIGHT.md'), PREFLIGHT_CONTENT);
 
-// ─── Step 12: Agent Operating Manuals (CLAUDE.md / GEMINI.md) ────────────────
-console.log(`\n--- Step 12: Creating / Updating Agent Operating Manuals ---`);
+// ─── Step 13: Agent Operating Manuals (CLAUDE.md / GEMINI.md) ────────────────
+console.log(`\n--- Step 13: Creating / Updating Agent Operating Manuals ---`);
 const claudeMdPath = path.join(TARGET_ROOT, 'CLAUDE.md');
+const geminiMdPath = path.join(TARGET_ROOT, 'GEMINI.md');
+const patternListing = deployedPatternNames.map(p => `- \`.agent/patterns/${p}.md\``).join('\n');
+
 if (!fs.existsSync(claudeMdPath) || force) {
-  const patternListing = deployedPatternNames.map(p => `- \`.agent/patterns/${p}.md\``).join('\n');
   const AGENT_MANUAL_CONTENT = `# ${REPO_NAME} — Agent Operating Manual
 
 This repository represents **${REPO_NAME}** — ${REPO_DESC}.
@@ -472,13 +627,22 @@ This repository implements the following universal patterns:
 ${patternListing}
 `;
   writeFileNoBom(claudeMdPath, AGENT_MANUAL_CONTENT);
-  writeFileNoBom(path.join(TARGET_ROOT, 'GEMINI.md'), AGENT_MANUAL_CONTENT);
+  writeFileNoBom(geminiMdPath, AGENT_MANUAL_CONTENT);
 } else {
-  console.log(`ℹ️ Existing CLAUDE.md preserved (use --force to overwrite)`);
+  let existingContent = fs.readFileSync(claudeMdPath, 'utf8');
+  const newSection = `## 4. Pattern Activation & PACT-001 Cross-References\nThis repository implements the following universal patterns:\n${patternListing}\n`;
+  if (existingContent.includes('## 4. Pattern Activation & PACT-001 Cross-References')) {
+    existingContent = existingContent.replace(/## 4\. Pattern Activation & PACT-001 Cross-References[\s\S]*/, newSection);
+  } else {
+    existingContent += `\n\n${newSection}`;
+  }
+  writeFileNoBom(claudeMdPath, existingContent);
+  writeFileNoBom(geminiMdPath, existingContent);
+  console.log(`ℹ️ Updated pattern references in existing CLAUDE.md and GEMINI.md`);
 }
 
-// ─── Step 13: Run Verification Gate in Target ─────────────────────────────────
-console.log(`\n--- Step 13: Running Automated Verification in Target Repo ---`);
+// ─── Step 14: Run Verification Gate in Target ─────────────────────────────────
+console.log(`\n--- Step 14: Running Automated Verification in Target Repo ---`);
 if (!dryRun) {
   try {
     const verifierScript = path.join(TARGET_ROOT, 'scripts/verify-governance-wiring.cjs');
