@@ -130,7 +130,9 @@ async function runTests() {
       { name: 'Auth Gate Script (js/auth.js)', test: /src=["']\/?js\/auth\.js["']/i },
       { name: 'Hero Countdown Component', test: /id=["']countdown["']|class=["'][^"']*countdown[^"']*["']/i },
       { name: 'Navigation Tabs Shell (class="tab-nav")', test: /<nav\s+class=["']tab-nav["']|class=["'][^"']*nav-btn[^"']*["']/i },
-      { name: 'Inspection Console Drawer', test: /id=["']console-drawer["']/i }
+      { name: 'Inspection Console Drawer', test: /id=["']console-drawer["']/i },
+      { name: 'DO-PKOS Canvas Container', test: /id=["']dopkos-canvas-container["']/i },
+      { name: 'DO-PKOS Engine Script (/js/modules/dopkos-engine.js)', test: /src=["']\/?js\/modules\/dopkos-engine\.js["']/i }
     ];
 
     requiredElements.forEach(item => {
