@@ -3,7 +3,7 @@
  * Strategy: Stale-While-Revalidate for UI shell; Network-First for Auth & Dynamic APIs.
  */
 
-const CACHE_NAME = 'sree-krushna-os-v2.7.0';
+const CACHE_NAME = 'sree-krushna-os-v2.8.0';
 const STATIC_SHELL = [
   '/',
   '/index.html',
@@ -13,6 +13,10 @@ const STATIC_SHELL = [
   '/js/theme-init.js',
   '/js/auth.js',
   '/js/marriage-state.js',
+  '/js/modules/console-drawer.js',
+  '/js/modules/threads-engine.js',
+  '/js/modules/intake-engine.js',
+  '/js/modules/dopkos-engine.js',
   '/js/app.js'
 ];
 
