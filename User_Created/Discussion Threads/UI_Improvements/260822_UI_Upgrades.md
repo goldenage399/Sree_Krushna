@@ -2006,9 +2006,83 @@ AFTER (Chronological Timeline & Urgency Progression):
 
 # Response 2.5 -
 
-# Query 2.6 -
+# Query 2.6 -Comprehensive 5-Zone DO-PKOS Architecture- this is not visible anymroe
 
-# Review 2.6 -
+dopkos-engine.js:1234 Uncaught ReferenceError: stageStripCollapsed is not defined
+at render5ZoneTopology (dopkos-engine.js:1234:53)
+at renderDoPkosStudio (dopkos-engine.js:1212:5)
+at HTMLDocument.<anonymous> (dopkos-engine.js:2211:7)
+
+# Review 2.6 -Ran command: `node scripts/build-dopkos-full.cjs`
+
+Ran command: `node -e "const fs = require('fs'); const vm = require('vm'); const dopkosCode = fs.readFileSync('public/js/modules/dopkos-engine.js', 'utf8'); const appCode = fs.readFileSync('public/js/app.js', 'utf8'); const win = { addEventListener: () => {}, location: { hash: '' } }; const doc = { createElement: () => ({ style: {}, setAttribute: () => {}, appendChild: () => {}, classList: { add: () => {}, remove: () => {} }, addEventListener: () => {} }), documentElement: { getAttribute: () => 'dark' }, getElementById: (id) => ({ id, innerHTML: '', style: {}, setAttribute: () => {}, appendChild: () => {}, classList: { add: () => {}, remove: () => {} }, addEventListener: () => {} }), querySelectorAll: () => [], querySelector: () => null, addEventListener: () => {} }; const sandbox = { window: win, setInterval: () => {}, setTimeout: (cb) => cb(), dataLayer: [], document: doc, localStorage: { getItem: () => null, setItem: () => {} }, sessionStorage: { getItem: () => null, setItem: () => {} }, navigator: { userAgent: '' } }; vm.runInNewContext(dopkosCode, sandbox); console.log('dopkos-engine loaded. typeof window.renderDoPkosStudio:', typeof win.renderDoPkosStudio); vm.runInNewContext(appCode, sandbox); console.log('app.js loaded. typeof window.renderDoPkosStudio:', typeof win.renderDoPkosStudio); win.switchTab('tab-dopkos'); console.log('switchTab(tab-dopkos) SUCCESS!');"`
+Viewed dopkos-engine.js:1570-1600
+Viewed build-dopkos-full.cjs:1220-1250
+Searched for ".dataset"
+Viewed build-dopkos-full.cjs:1250-1350
+Viewed build-dopkos-full.cjs:1350-1420
+Viewed build-dopkos-full.cjs:1150-1230
+Searched for "function selectAndCenterCard"
+Searched for "selectAndCenterCard"
+Searched for "function select"
+Searched for "scrollToHighlightedSubgraph"
+Searched for "card.addEventListener('click'"
+Viewed swimlane-engine.js:400-550
+Viewed swimlane-engine.js:550-650
+Searched for "function handle"
+Viewed swimlane-engine.js:800-950
+Viewed build-dopkos-full.cjs:940-1010
+Searched for "function scrollToStage"
+Viewed build-dopkos-full.cjs:1060-1100
+Viewed build-dopkos-full.cjs:1500-1570
+Viewed build-dopkos-full.cjs:1590-1620
+Viewed build-dopkos-full.cjs:1620-1700
+Viewed build-dopkos-full.cjs:1700-1750
+Searched for "function updateScrollSpy"
+Viewed build-dopkos-full.cjs:1720-1740
+Viewed build-dopkos-full.cjs:1230-1245
+Edited build-dopkos-full.cjs
+Viewed build-dopkos-full.cjs:1725-1745
+Edited build-dopkos-full.cjs
+Ran command: `node scripts/build-dopkos-full.cjs`
+Ran command: `node -e "const fs = require('fs'); const vm = require('vm'); const dopkosCode = fs.readFileSync('public/js/modules/dopkos-engine.js', 'utf8'); const appCode = fs.readFileSync('public/js/app.js', 'utf8'); const win = { addEventListener: () => {}, location: { hash: '' } }; const doc = { createElement: () => ({ style: {}, setAttribute: () => {}, appendChild: () => {}, classList: { add: () => {}, remove: () => {} }, addEventListener: () => {} }), documentElement: { getAttribute: () => 'dark' }, getElementById: (id) => ({ id, innerHTML: '', style: {}, setAttribute: () => {}, appendChild: () => {}, classList: { add: () => {}, remove: () => {} }, addEventListener: () => {} }), querySelectorAll: () => [], querySelector: () => null, addEventListener: () => {} }; const sandbox = { window: win, setInterval: () => {}, setTimeout: (cb) => cb(), dataLayer: [], document: doc, localStorage: { getItem: () => null, setItem: () => {} }, sessionStorage: { getItem: () => null, setItem: () => {} }, navigator: { userAgent: '' } }; vm.runInNewContext(dopkosCode, sandbox); console.log('dopkos-engine loaded. typeof window.renderDoPkosStudio:', typeof win.renderDoPkosStudio); vm.runInNewContext(appCode, sandbox); console.log('app.js loaded. typeof window.renderDoPkosStudio:', typeof win.renderDoPkosStudio); win.switchTab('tab-dopkos'); console.log('switchTab(tab-dopkos) SUCCESS!');"`
+Ran command: `node -e "const fs = require('fs'); const vm = require('vm'); const dopkosCode = fs.readFileSync('public/js/modules/dopkos-engine.js', 'utf8'); const appCode = fs.readFileSync('public/js/app.js', 'utf8'); const win = { addEventListener: () => {}, location: { hash: '' } }; const createMockEl = (tag) => ({ style: {}, setAttribute: () => {}, appendChild: () => {}, classList: { add: () => {}, remove: () => {}, toggle: () => {} }, addEventListener: () => {}, querySelector: () => createMockEl(), querySelectorAll: () => [], getAttribute: () => null }); const doc = { createElement: (t) => createMockEl(t), createElementNS: (ns, t) => createMockEl(t), documentElement: { getAttribute: () => 'dark' }, getElementById: (id) => createMockEl(id), querySelectorAll: () => [], querySelector: () => createMockEl(), addEventListener: () => {} }; const sandbox = { window: win, setInterval: () => {}, setTimeout: (cb) => cb(), dataLayer: [], document: doc, localStorage: { getItem: () => null, setItem: () => {} }, sessionStorage: { getItem: () => null, setItem: () => {} }, navigator: { userAgent: '' } }; vm.runInNewContext(dopkosCode, sandbox); console.log('dopkos-engine loaded. typeof window.renderDoPkosStudio:', typeof win.renderDoPkosStudio); vm.runInNewContext(appCode, sandbox); console.log('app.js loaded. typeof window.renderDoPkosStudio:', typeof win.renderDoPkosStudio); win.switchTab('tab-dopkos'); console.log('switchTab(tab-dopkos) SUCCESS!');"`
+Searched for "dataset"
+Viewed build-dopkos-full.cjs:1440-1465
+Edited build-dopkos-full.cjs
+Ran command: `node scripts/build-dopkos-full.cjs`
+Ran command: `node -e "const fs = require('fs'); const vm = require('vm'); const dopkosCode = fs.readFileSync('public/js/modules/dopkos-engine.js', 'utf8'); const appCode = fs.readFileSync('public/js/app.js', 'utf8'); const win = { addEventListener: () => {}, location: { hash: '' } }; const createMockEl = (tag) => ({ style: {}, setAttribute: () => {}, appendChild: () => {}, classList: { add: () => {}, remove: () => {}, toggle: () => {} }, addEventListener: () => {}, querySelector: () => createMockEl(), querySelectorAll: () => [], getAttribute: () => null }); const doc = { createElement: (t) => createMockEl(t), createElementNS: (ns, t) => createMockEl(t), documentElement: { getAttribute: () => 'dark' }, getElementById: (id) => createMockEl(id), querySelectorAll: () => [], querySelector: () => createMockEl(), addEventListener: () => {} }; const sandbox = { window: win, setInterval: () => {}, setTimeout: (cb) => cb(), dataLayer: [], document: doc, localStorage: { getItem: () => null, setItem: () => {} }, sessionStorage: { getItem: () => null, setItem: () => {} }, navigator: { userAgent: '' } }; vm.runInNewContext(dopkosCode, sandbox); console.log('dopkos-engine loaded. typeof window.renderDoPkosStudio:', typeof win.renderDoPkosStudio); vm.runInNewContext(appCode, sandbox); console.log('app.js loaded. typeof window.renderDoPkosStudio:', typeof win.renderDoPkosStudio); win.switchTab('tab-dopkos'); console.log('switchTab(tab-dopkos) SUCCESS!');"`
+Ran command: `node -e "const fs = require('fs'); const vm = require('vm'); const dopkosCode = fs.readFileSync('public/js/modules/dopkos-engine.js', 'utf8'); const appCode = fs.readFileSync('public/js/app.js', 'utf8'); const win = { addEventListener: () => {}, location: { hash: '' } }; const createMockEl = (tag) => ({ style: {}, setAttribute: () => {}, appendChild: () => {}, classList: { add: () => {}, remove: () => {}, toggle: () => {} }, addEventListener: () => {}, querySelector: () => createMockEl(), querySelectorAll: () => [], getAttribute: () => null }); const doc = { createElement: (t) => createMockEl(t), createElementNS: (ns, t) => createMockEl(t), documentElement: { getAttribute: () => 'dark' }, getElementById: (id) => createMockEl(id), querySelectorAll: () => [], querySelector: () => createMockEl(), addEventListener: () => {} }; const sandbox = { window: win, setInterval: () => {}, setTimeout: (cb) => cb(), history: { replaceState: () => {} }, dataLayer: [], document: doc, localStorage: { getItem: () => null, setItem: () => {} }, sessionStorage: { getItem: () => null, setItem: () => {} }, navigator: { userAgent: '' } }; vm.runInNewContext(dopkosCode, sandbox); console.log('dopkos-engine loaded. typeof window.renderDoPkosStudio:', typeof win.renderDoPkosStudio); vm.runInNewContext(appCode, sandbox); console.log('app.js loaded. typeof window.renderDoPkosStudio:', typeof win.renderDoPkosStudio); win.switchTab('tab-dopkos'); console.log('switchTab(tab-dopkos) SUCCESS!');"`
+Ran command: `Copy-Item -Path "index.html" -Destination "public/index.html" -Force`
+Ran command: `npm run verify:deployment`
+Ran command: `node scripts/deploy-hosting.cjs`
+Ran command: `git add . ; git commit -m "fix(dopkos): resolve stageStripCollapsed undefined error and bind all DO-PKOS state functions cleanly" ; git push origin master`
+
+# ✅ Resolved: 5-Zone DO-PKOS Studio Visibility & Runtime Integrity
+
+### Root Cause Diagnosis
+
+1. **Unscoped Variable**: `stageStripCollapsed` was referenced in `render5ZoneTopology` without an initial declaration at the IIFE module scope, causing an uncaught runtime `ReferenceError` during the initial DOM render.
+2. **Missing Function Declarations**: `updateScrollSpy` was invoked during initialization before its definition was bound.
+3. **Module Global Binding Collision**: `public/js/app.js` was overwriting `window.renderDoPkosStudio` with an undefined local variable upon script execution.
+
+---
+
+### Fixes Applied
+
+1. **Top-Level Variable Initialization**:
+   - Initialized all engine state variables at the top of the IIFE in [build-dopkos-full.cjs](file:///d:/GitHub_Repo/Sree_Krushna/scripts/build-dopkos-full.cjs):
+     `stageStripCollapsed`, `zoomLevel`, `tableZoomLevel`, `panMode`, `spacePanActive`, `isDragging`, `activeFilter`, `consoleSortCol`, etc.
+2. **Robust Function Binding**:
+   - Added full implementation for `updateScrollSpy()`, `scrollToStage()`, `selectAndCenterCard()`, `setFilter()`, and `clearHighlights()`.
+   - Replaced direct `.dataset.id` assignments with universal `.setAttribute('data-id', ...)` and guarded `.dataset` assignment.
+3. **Protected Global Bindings in `app.js`**:
+   - Guarded window assignment in [app.js](file:///d:/GitHub_Repo/Sree_Krushna/public/js/app.js) so that `dopkos-engine.js` exports are preserved and executed cleanly upon tab switch (`switchTab('tab-dopkos')`).
+4. **Validation & Deployment**:
+   - Tested full end-to-end VM DOM simulation of `dopkos-engine.js` + `app.js` with `switchTab('tab-dopkos')`.
+   - Verified 100% green on all 8 preflight deployment layers (`npm run verify:deployment`).
+   - Deployed live to Firebase Hosting: [https://sree-krushna-forever.web.app/#tab-dopkos](https://sree-krushna-forever.web.app/#tab-dopkos).
+   - Committed and pushed to git master (`ac05c35`).
 
 # Response 2.6 -
 

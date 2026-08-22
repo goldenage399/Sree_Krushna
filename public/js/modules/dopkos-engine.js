@@ -2221,11 +2221,106 @@
     }
   }
 
+  function renderDopkosTopology(container) {
+    if (!container) return;
+    const stages = PROJECT_STATE.stages || [];
+    const trades = TRADES || [];
+    const tasks = PROJECT_STATE.tasks || [];
+
+    const colWidth = 200;
+    const trackHeight = 110;
+    const cardWidth = 175;
+    const cardHeight = 72;
+    const labelColWidth = 110;
+
+    const totalW = labelColWidth + stages.length * colWidth + 40;
+    const totalH = 40 + trades.length * trackHeight + 20;
+
+    // Build Header
+    let headerHtml = '<div style="position: sticky; top: 0; left: 0; display: flex; height: 36px; background: var(--bg-surface-elevated); border-bottom: 2px solid var(--border-subtle); z-index: 20; width: ' + totalW + 'px;">' +
+      '<div style="width: ' + labelColWidth + 'px; flex-shrink: 0; border-right: 2px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.72rem; color: var(--gold-bright); position: sticky; left: 0; background: var(--bg-surface-elevated); z-index: 25;">TRACK / STAGE</div>';
+    stages.forEach(s => {
+      headerHtml += '<div style="width: ' + colWidth + 'px; flex-shrink: 0; padding: 0 10px; display: flex; align-items: center; font-weight: 700; font-size: 0.74rem; color: var(--text-main); border-right: 1px solid var(--border-subtle); background: var(--bg-surface-elevated);">S' + s.id + ': ' + s.name + '</div>';
+    });
+    headerHtml += '</div>';
+
+    // Build Rows
+    let rowsHtml = '<div style="position: relative; width: ' + totalW + 'px;">';
+    trades.forEach((tr, trIdx) => {
+      const color = TRADE_META[tr]?.color || '#555';
+      const label = TRADE_META[tr]?.label || tr;
+      rowsHtml += '<div style="display: flex; height: ' + trackHeight + 'px; border-bottom: 1px solid var(--border-subtle); position: relative;">' +
+        '<div style="width: ' + labelColWidth + 'px; flex-shrink: 0; position: sticky; left: 0; background: var(--bg-surface-elevated); z-index: 15; border-right: 2px solid ' + color + '; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.75rem; color: ' + color + ';">' + label + '</div>' +
+        stages.map(() => '<div style="width: ' + colWidth + 'px; flex-shrink: 0; border-right: 1px solid rgba(255,255,255,0.04);"></div>').join('') +
+      '</div>';
+    });
+    rowsHtml += '</div>';
+
+    // Compute task coordinates
+    const nodeCoords = {};
+    const slotCounts = {};
+    tasks.forEach(t => {
+      const trIdx = trades.indexOf(t.trade);
+      const stageIdx = stages.findIndex(s => s.id === t.stage);
+      if (trIdx === -1 || stageIdx === -1) return;
+      const key = t.trade + '_' + t.stage;
+      const subSlot = slotCounts[key] || 0;
+      slotCounts[key] = subSlot + 1;
+
+      const x = labelColWidth + stageIdx * colWidth + 10;
+      const y = 40 + trIdx * trackHeight + 12 + subSlot * 20;
+      nodeCoords[t.id] = { x, y };
+    });
+
+    // SVG edges
+    let svgEdgesHtml = '';
+    tasks.forEach(t => {
+      const toCoord = nodeCoords[t.id];
+      if (!toCoord) return;
+      (t.depends_on || []).forEach(depId => {
+        const fromCoord = nodeCoords[depId];
+        if (!fromCoord) return;
+        const x1 = fromCoord.x + cardWidth;
+        const y1 = fromCoord.y + cardHeight / 2;
+        const x2 = toCoord.x;
+        const y2 = toCoord.y + cardHeight / 2;
+        const midX = (x1 + x2) / 2;
+        const pathD = 'M ' + x1 + ' ' + y1 + ' C ' + midX + ' ' + y1 + ', ' + midX + ' ' + y2 + ', ' + x2 + ' ' + y2;
+        svgEdgesHtml += '<path d="' + pathD + '" fill="none" stroke="rgba(245, 197, 24, 0.3)" stroke-width="1.5" />';
+      });
+    });
+
+    // Cards
+    let cardsHtml = '';
+    tasks.forEach(t => {
+      const coord = nodeCoords[t.id];
+      if (!coord) return;
+      const status = getStatus(t.id);
+      const color = TRADE_META[t.trade]?.color || '#555';
+      cardsHtml += '<div style="position: absolute; left: ' + coord.x + 'px; top: ' + coord.y + 'px; width: ' + cardWidth + 'px; height: ' + cardHeight + 'px; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-left: 3px solid ' + color + '; border-radius: 4px; padding: 6px 8px; cursor: pointer; z-index: 5;" onclick="switchTab(\'tab-dopkos\'); selectAndCenterCard(\'' + t.id + '\')">' +
+        '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">' +
+          '<span style="font-family: monospace; font-size: 0.68rem; font-weight: 800; color: var(--gold-bright);">' + t.id + '</span>' +
+          '<span class="status-mini ' + status + '" style="font-size: 0.62rem; font-weight: 700; padding: 1px 4px; border-radius: 3px; background: var(--bg-surface-elevated);">' + STATUS_LABEL[status] + '</span>' +
+        '</div>' +
+        '<div style="font-size: 0.74rem; font-weight: 700; color: var(--text-main); line-height: 1.2; max-height: 2.4em; overflow: hidden;">' + t.name + '</div>' +
+      '</div>';
+    });
+
+    container.innerHTML = '<div style="overflow: auto; max-height: 600px; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); position: relative; background: #080b11;">' +
+      '<div style="position: relative; width: ' + totalW + 'px; height: ' + totalH + 'px;">' +
+        headerHtml + rowsHtml +
+        '<svg style="position: absolute; top: 0; left: 0; width: ' + totalW + 'px; height: ' + totalH + 'px; pointer-events: none; z-index: 2;">' + svgEdgesHtml + '</svg>' +
+        cardsHtml +
+      '</div>' +
+    '</div>';
+  }
+
   // Exports to window
   window.setDopkosView = setDopkosView;
   window.filterDopkosEvent = filterDopkosEvent;
   window.filterDopkosTrack = filterDopkosTrack;
   window.renderDoPkosStudio = renderDoPkosStudio;
+  window.renderDopkosTopology = renderDopkosTopology;
   window.setPlanningView = setPlanningView;
   window.renderPlanningSuite = renderPlanningSuite;
   window.selectAndCenterCard = selectAndCenterCard;
