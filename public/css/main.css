@@ -77,7 +77,7 @@
     html, body {
       width: 100%;
       max-width: 100vw;
-      overflow-x: hidden;
+      overflow-x: clip; /* Protocol 34: Prevents sticky failure across WebKit/Blink */
     }
 
     body {
@@ -248,36 +248,37 @@
       top: 0;
       z-index: var(--z-sticky);
       background: var(--bg-glass);
-      backdrop-filter: blur(20px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border-subtle);
       box-shadow: var(--shadow-elevation-1);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
       width: 100%;
       padding-top: env(safe-area-inset-top, 0px);
+      will-change: transform;
+    }
+
+    /* Directional Auto-Hide for Mobile Viewports */
+    .app-sticky-shell.nav-hidden {
+      transform: translateY(-100%);
     }
 
     .app-sticky-shell.is-scrolled {
       box-shadow: var(--shadow-elevation-2);
+      border-bottom-color: rgba(212, 168, 67, 0.35);
     }
 
-    /* Header Component */
+    /* Header Component — Stable Fixed-Height Layout */
     header {
-      padding: 12px 32px;
+      padding: 10px 28px;
       padding-left: max(20px, env(safe-area-inset-left));
       padding-right: max(20px, env(safe-area-inset-right));
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 12px;
-      transition: padding 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      gap: 10px;
       border-bottom: 1px solid rgba(212, 168, 67, 0.1);
-    }
-
-    .app-sticky-shell.is-scrolled header {
-      padding: 6px 32px;
-      padding-left: max(20px, env(safe-area-inset-left));
-      padding-right: max(20px, env(safe-area-inset-right));
     }
 
     .brand {
@@ -286,48 +287,32 @@
       gap: 10px;
     }
     .brand-logo {
-      font-size: 1.8rem;
-      transition: font-size 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      font-size: 1.6rem;
       flex-shrink: 0;
-    }
-    .app-sticky-shell.is-scrolled .brand-logo {
-      font-size: 1.3rem;
     }
 
     .brand-title h1 {
       font-family: var(--font-display);
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 800;
       background: var(--gold-gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: 0.8px;
       line-height: 1.2;
-      transition: font-size 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .app-sticky-shell.is-scrolled .brand-title h1 {
-      font-size: 1.1rem;
     }
 
     .brand-title p {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: var(--text-muted);
       font-weight: 400;
-      transition: max-height 0.2s ease, opacity 0.2s ease;
-      max-height: 20px;
-      opacity: 1;
-    }
-    .app-sticky-shell.is-scrolled .brand-title p {
-      max-height: 0;
-      opacity: 0;
-      overflow: hidden;
-      margin: 0;
+      line-height: 1.2;
     }
 
     .header-right {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
@@ -335,18 +320,18 @@
       background: var(--bg-surface-elevated);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-sm);
-      padding: 8px 12px;
-      min-height: 44px;
-      min-width: 44px;
+      padding: 7px 12px;
+      min-height: 40px;
+      min-width: 40px;
       color: var(--text-main);
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
-      transition: all 0.2s;
+      transition: border-color 0.2s, transform 0.2s;
     }
     .theme-toggle-btn:hover {
       border-color: var(--gold-antique);
@@ -357,12 +342,12 @@
       background: var(--bg-surface-elevated);
       border: 1px solid var(--border-subtle);
       border-radius: 100px;
-      padding: 6px 14px;
-      min-height: 44px;
+      padding: 5px 12px;
+      min-height: 40px;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
     }
     .user-profile-chip strong { color: var(--gold-bright); }
     [data-theme="light"] .user-profile-chip strong { color: var(--gold-deep); }
@@ -372,10 +357,10 @@
       border: none;
       color: var(--crimson-royal);
       cursor: pointer;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 600;
-      padding: 6px 8px;
-      min-height: 40px;
+      padding: 4px 6px;
+      min-height: 32px;
       border-radius: var(--radius-sm);
       display: inline-flex;
       align-items: center;
@@ -384,10 +369,10 @@
     }
     .logout-btn:hover { background: rgba(230, 57, 70, 0.15); }
 
-    /* Navigation Bar */
+    /* Navigation Bar — Stable Horizontal Strip */
     nav.tab-nav {
       background: transparent;
-      padding: 0 32px;
+      padding: 0 28px;
       padding-left: max(20px, env(safe-area-inset-left));
       padding-right: max(20px, env(safe-area-inset-right));
       display: flex;
@@ -396,7 +381,6 @@
       -webkit-overflow-scrolling: touch;
       scroll-snap-type: x proximity;
       scrollbar-width: none;
-      transition: padding 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
     nav.tab-nav::-webkit-scrollbar { display: none; }
 
@@ -404,24 +388,21 @@
       background: none;
       border: none;
       color: var(--text-muted);
-      padding: 12px 16px;
-      min-height: 44px;
+      padding: 10px 14px;
+      min-height: 42px;
       font-family: var(--font-body);
-      font-size: 0.9rem;
+      font-size: 0.86rem;
       font-weight: 600;
       cursor: pointer;
       border-bottom: 3px solid transparent;
-      transition: all 0.2s ease;
+      border-radius: 4px 4px 0 0;
+      transition: color 0.2s ease, border-color 0.2s ease;
       white-space: nowrap;
       display: inline-flex;
       align-items: center;
       gap: 6px;
       scroll-snap-align: start;
       flex-shrink: 0;
-    }
-    .app-sticky-shell.is-scrolled .nav-btn {
-      padding: 8px 12px;
-      font-size: 0.84rem;
     }
 
     .nav-btn:hover { color: var(--text-main); }
@@ -1709,18 +1690,83 @@
        ========================================================================== */
     @media (max-width: 768px) {
       header {
-        padding: 10px 16px;
+        padding: 8px 14px;
+        padding-left: max(12px, env(safe-area-inset-left));
+        padding-right: max(12px, env(safe-area-inset-right));
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 8px;
       }
-      .app-sticky-shell.is-scrolled header {
-        padding: 6px 16px;
+      .brand {
+        gap: 8px;
+        min-width: 0;
+        flex-shrink: 1;
       }
-      
+      .brand-logo {
+        font-size: 1.35rem;
+      }
+      .brand-title h1 {
+        font-size: 1.05rem;
+        white-space: nowrap;
+      }
+      .brand-title p {
+        display: none; /* Clean static omission on mobile: saves 20px with zero layout shift */
+      }
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-shrink: 0;
+        flex-wrap: nowrap;
+      }
+      #openInspirationBtn, #openIntakeLedgerBtn {
+        padding: 6px 10px;
+        min-height: 38px;
+        min-width: 38px;
+      }
+      #openInspirationBtn span:not(:first-child),
+      #openIntakeLedgerBtn span:not(:first-child) {
+        display: none; /* Show concise icon-only on mobile */
+      }
+      .theme-toggle-btn {
+        padding: 6px 10px;
+        min-height: 38px;
+        min-width: 38px;
+      }
+      #themeToggleText {
+        display: none; /* Just icon on mobile */
+      }
+      .user-profile-chip {
+        padding: 4px 8px;
+        min-height: 38px;
+        font-size: 0.76rem;
+        gap: 4px;
+      }
+      #userEmail {
+        max-width: 80px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .logout-btn {
+        padding: 4px 6px;
+        min-height: 32px;
+        font-size: 0.74rem;
+      }
       nav.tab-nav {
-        padding: 0 12px;
+        padding: 0 10px;
+        padding-left: max(8px, env(safe-area-inset-left));
+        padding-right: max(8px, env(safe-area-inset-right));
+        gap: 4px;
       }
       .nav-btn {
-        padding: 10px 14px;
-        font-size: 0.85rem;
+        padding: 8px 12px;
+        font-size: 0.82rem;
+        min-height: 40px;
       }
 
       main {
@@ -1799,22 +1845,17 @@
         justify-content: space-between;
       }
       header {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 8px;
-        padding: 8px 12px;
+        padding: 6px 10px;
+        padding-left: max(8px, env(safe-area-inset-left));
+        padding-right: max(8px, env(safe-area-inset-right));
+        gap: 6px;
       }
-      .brand {
-        justify-content: flex-start;
-      }
-      .header-right {
-        justify-content: space-between;
-        width: 100%;
-      }
-      .user-profile-chip {
-        flex: 1;
-        justify-content: space-between;
-      }
+      .brand-logo { font-size: 1.2rem; }
+      .brand-title h1 { font-size: 0.95rem; }
+      #userEmail { max-width: 55px; }
+      .user-profile-chip { padding: 3px 6px; font-size: 0.72rem; }
+      nav.tab-nav { padding: 0 6px; gap: 2px; }
+      .nav-btn { padding: 6px 9px; font-size: 0.78rem; min-height: 36px; }
       .cd-pill { font-size: 0.67rem; padding: 4px 10px; }
       .countdown-box { gap: 4px; }
       .cd-sep { font-size: 1.1rem; margin-bottom: 12px; }
@@ -1830,4 +1871,32 @@
       .tab-content { display: block !important; margin-bottom: 40px; page-break-after: always; }
       .card, .lane, .ritual-card { border: 1px solid #ccc; background: #fff; color: #000; }
       h1, h2, h3, h4 { color: #000 !important; }
+    }
+
+    /* PWA Update Invalidation Floating Banner */
+    .pwa-update-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--bg-surface-elevated, #131b2e);
+      border: 1px solid var(--gold-antique, #d4a843);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45), 0 0 16px rgba(212, 168, 67, 0.2);
+      border-radius: 12px;
+      padding: 12px 18px;
+      animation: toastSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes toastSlideUp {
+      from {
+        transform: translateY(80px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }

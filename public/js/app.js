@@ -15,21 +15,52 @@ window.dataLayer = window.dataLayer || [];
       });
     }
 
-    // Sticky Header Scroll Compressor Engine
+    // ── Smooth Directional Sticky Shell Engine (Zero Jitter / Protocol 34) ────
     const stickyShell = document.getElementById('stickyHeaderShell');
-    let ticking = false;
+    let lastScrollY = window.scrollY || 0;
+    let isHidden = false;
+    const scrollElevationThreshold = 80;
+    const scrollClearThreshold = 25;
+    const scrollDeltaThreshold = 8;
+    let scrollTicking = false;
 
     window.addEventListener('scroll', () => {
-      if (!ticking) {
+      if (!scrollTicking && stickyShell) {
         window.requestAnimationFrame(() => {
-          if (window.scrollY > 30) {
+          const currentScrollY = Math.max(0, window.scrollY || 0);
+          const delta = currentScrollY - lastScrollY;
+
+          // 1. Elevation shadow toggle with dual-threshold hysteresis (no oscillation)
+          if (currentScrollY > scrollElevationThreshold && !stickyShell.classList.contains('is-scrolled')) {
             stickyShell.classList.add('is-scrolled');
-          } else {
+          } else if (currentScrollY < scrollClearThreshold && stickyShell.classList.contains('is-scrolled')) {
             stickyShell.classList.remove('is-scrolled');
           }
-          ticking = false;
+
+          // 2. Mobile Directional Auto-Hide (Scroll-Down: hide, Scroll-Up: reveal)
+          if (window.innerWidth <= 768) {
+            if (Math.abs(delta) > scrollDeltaThreshold) {
+              if (delta > 0 && currentScrollY > 120 && !isHidden) {
+                stickyShell.classList.add('nav-hidden');
+                isHidden = true;
+              } else if (delta < 0 && isHidden) {
+                stickyShell.classList.remove('nav-hidden');
+                isHidden = false;
+              }
+            }
+            if (currentScrollY < 50 && isHidden) {
+              stickyShell.classList.remove('nav-hidden');
+              isHidden = false;
+            }
+          } else if (isHidden) {
+            stickyShell.classList.remove('nav-hidden');
+            isHidden = false;
+          }
+
+          lastScrollY = currentScrollY;
+          scrollTicking = false;
         });
-        ticking = true;
+        scrollTicking = true;
       }
     }, { passive: true });
 
@@ -592,30 +623,18 @@ window.dataLayer = window.dataLayer || [];
 
     function addNewTask() {
       const titleInput = document.getElementById('new-task-title');
-      const title = titleInput.value.trim();
-      if (!title) return;
+      const title = titleInput ? titleInput.value.trim() : '';
+      const eventSelect = document.getElementById('new-task-event');
+      const event = eventSelect ? eventSelect.value : 'Master_Planning';
 
-      const event = document.getElementById('new-task-event').value;
-      const owner = document.getElementById('new-task-owner').value;
-      const newId = generateNextTaskId();
-
-      currentTasks.unshift({
-        id: newId,
-        title: title,
-        stage: 'STAGE_03',
-        track: 'bride',
-        lead: owner,
-        priority: 'High',
-        status: 'In-Progress',
-        done: false,
-        checklist: [{ text: 'Deliverable execution verified', done: false }]
+      openUniversalIntakeModal({
+        domain: 'Tasks',
+        event: event,
+        contextLabel: 'Operational Task Proposal (' + (event === 'Master_Planning' ? 'General Planning' : event) + ')',
+        initialNotes: title
       });
 
-      titleInput.value = '';
-      saveMasterTasks();
-      renderTasks();
-      renderStageStrip();
-      renderSwimlaneMatrix();
+      if (titleInput) titleInput.value = '';
     }
 
     // ── Tab & Navigation Engine ─────────────────────────────────────
@@ -678,7 +697,9 @@ window.dataLayer = window.dataLayer || [];
       document.getElementById('detail-modal').setAttribute('aria-hidden', 'false');
     }
 
+    let currentLiturgyTitle = '';
     function showRitualModal(title, desc, samagri, priest, duration) {
+      currentLiturgyTitle = title;
       document.getElementById('modal-title').innerText = title;
       document.getElementById('modal-time').innerText = duration;
       document.getElementById('modal-location').innerText = priest;
@@ -694,8 +715,236 @@ window.dataLayer = window.dataLayer || [];
     }
 
     // ==========================================================================
+    // UNIVERSAL WRITE-INTENT & CHANGE REQUEST DISPATCHER (SPEC-ARCH-INTENT-DISPATCH-001)
+    // ==========================================================================
+    let changeRequestsList = JSON.parse(localStorage.getItem('sree_krushna_change_requests_v1')) || [
+      {
+        requestId: 'CR-001',
+        targetDomain: 'VISION',
+        intentType: 'DROP_INSPIRATION',
+        submitter: 'Sree (Bride)',
+        targetEvent: 'EVT-004',
+        title: 'Mandap Decor: Suspended Tuberose Dome with Hanging Temple Bells',
+        payload: {
+          rawNotes: 'Suspended tuberose floral dome over mandap with traditional brass bells and warm fairy lights',
+          mediaUrl: 'https://www.instagram.com/reel/C3example1/',
+          platform: 'Instagram'
+        },
+        status: 'Pending_Review',
+        submittedAt: '2026-08-22T02:35:00Z'
+      },
+      {
+        requestId: 'CR-002',
+        targetDomain: 'VISION',
+        intentType: 'DROP_INSPIRATION',
+        submitter: 'Krushna (Groom)',
+        targetEvent: 'EVT-005',
+        title: 'Reception Entry: Cinematic Stage Walk with Cold Pyros & Live Flute',
+        payload: {
+          rawNotes: 'Cold pyrotechnics on grand stage walk with live classical flute fusion for reception entry',
+          mediaUrl: 'https://youtube.com/shorts/example2',
+          platform: 'YouTube'
+        },
+        status: 'Pending_Review',
+        submittedAt: '2026-08-22T02:35:00Z'
+      }
+    ];
+
+    function saveChangeRequests() {
+      localStorage.setItem('sree_krushna_change_requests_v1', JSON.stringify(changeRequestsList));
+    }
+
+    function dispatchChangeRequest({ targetDomain, intentType, title, payload, targetEvent = 'Master_Planning', submitter = 'Family Lead' }) {
+      const numericIds = changeRequestsList.map(item => {
+        const match = String(item.requestId).match(/CR-(\d+)/);
+        return match ? parseInt(match[1], 10) : 0;
+      });
+      const nextId = 'CR-' + String(Math.max(0, ...numericIds) + 1).padStart(3, '0');
+
+      const cr = {
+        requestId: nextId,
+        targetDomain: targetDomain,
+        intentType: intentType,
+        submitter: submitter,
+        targetEvent: targetEvent,
+        title: title,
+        payload: payload,
+        status: 'Pending_Review',
+        submittedAt: new Date().toISOString()
+      };
+
+      changeRequestsList.unshift(cr);
+      saveChangeRequests();
+
+      // If domain is VISION, also mirror to ideasList for Tab 5 visual display
+      if (targetDomain === 'VISION') {
+        const nextIdeaId = 'IDEA-' + String(Math.max(0, ...ideasList.map(i => {
+          const m = String(i.id).match(/IDEA-(\d+)/);
+          return m ? parseInt(m[1], 10) : 0;
+        })) + 1).padStart(3, '0');
+
+        ideasList.unshift({
+          id: nextIdeaId,
+          submitter: submitter,
+          category: payload.category || 'General',
+          event: targetEvent,
+          rawText: payload.rawNotes || title,
+          reframedTitle: title,
+          mediaUrl: payload.mediaUrl || '',
+          platform: payload.platform || 'Web Note',
+          suggestedAction: `Evaluate proposal #${nextId} during next planning sync with ${submitter}.`,
+          status: 'Staged',
+          timestamp: new Date().toISOString().split('T')[0]
+        });
+        saveIdeas();
+        renderIdeas();
+      }
+
+      showChangeRequestReceipt(cr);
+      return cr;
+    }
+
+    function showChangeRequestReceipt(cr) {
+      const modal = document.getElementById('changeRequestReceiptModal');
+      if (modal) {
+        const idEl = document.getElementById('cr-receipt-id');
+        const titleEl = document.getElementById('cr-receipt-title');
+        const domainEl = document.getElementById('cr-receipt-domain');
+        const submitterEl = document.getElementById('cr-receipt-submitter');
+        if (idEl) idEl.innerText = cr.requestId;
+        if (titleEl) titleEl.innerText = cr.title;
+        if (domainEl) domainEl.innerText = `${cr.targetDomain} (${cr.intentType})`;
+        if (submitterEl) submitterEl.innerText = cr.submitter;
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+      } else {
+        alert(`✅ Change Request #${cr.requestId} Logged!\n\nTitle: ${cr.title}\nDomain: ${cr.targetDomain}\n\nForwarded to Planning Council & Backend Team for Review.`);
+      }
+    }
+
+    function closeChangeRequestReceipt() {
+      const modal = document.getElementById('changeRequestReceiptModal');
+      if (modal) {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    // ── User Identity & Submitter Resolution Engine ───────────────
+    function getAuthenticatedSubmitterName() {
+      if (window.currentUserRole && window.currentUserRole.role) {
+        if (window.currentUserRole.role.includes('Groom')) return 'Krushna (Groom)';
+        if (window.currentUserRole.role.includes('Bride')) return 'Sree (Bride)';
+        if (window.currentUserRole.role.includes('Parents')) return 'Parents Council';
+      }
+      if (window.currentUser && window.currentUser.email) {
+        const email = window.currentUser.email.toLowerCase();
+        if (email.includes('goldenage') || email.includes('krushna')) return 'Krushna (Groom)';
+        if (email.includes('sreesubha') || email.includes('sree')) return 'Sree (Bride)';
+      }
+      return 'Krushna (Groom)'; // Default fallback
+    }
+
+    function autoSelectAuthenticatedSubmitter(selectId) {
+      const select = document.getElementById(selectId);
+      if (!select) return;
+      const currentSubmitter = getAuthenticatedSubmitterName();
+      for (let i = 0; i < select.options.length; i++) {
+        if (select.options[i].value.includes('Groom') && currentSubmitter.includes('Groom')) {
+          select.selectedIndex = i;
+          break;
+        } else if (select.options[i].value.includes('Bride') && currentSubmitter.includes('Bride')) {
+          select.selectedIndex = i;
+          break;
+        } else if (select.options[i].value === currentSubmitter) {
+          select.selectedIndex = i;
+          break;
+        }
+      }
+    }
+
+    // ── Universal Marriage Intent & Proposal Studio Engine ────────
+    function openUniversalIntakeModal(options = {}) {
+      const modal = document.getElementById('inspirationModal');
+      if (!modal) return;
+
+      // 1. Auto-select authenticated user profile
+      autoSelectAuthenticatedSubmitter('idea-submitter');
+
+      // 2. Pre-select category/domain if specified
+      if (options.domain) {
+        const catSelect = document.getElementById('idea-category');
+        if (catSelect && catSelect.options) {
+          for (let i = 0; i < catSelect.options.length; i++) {
+            if (catSelect.options[i] && catSelect.options[i].value && catSelect.options[i].value.toLowerCase() === options.domain.toLowerCase()) {
+              catSelect.selectedIndex = i;
+              break;
+            }
+          }
+        }
+      }
+
+      // 3. Pre-select event milestone if specified
+      if (options.event) {
+        const evtSelect = document.getElementById('idea-event');
+        if (evtSelect) evtSelect.value = options.event;
+      }
+
+      // 4. Render Context Ribbon
+      const ribbon = document.getElementById('intake-context-ribbon');
+      if (ribbon) {
+        if (options.contextLabel) {
+          ribbon.innerHTML = `🏷️ <strong>Launch Context:</strong> ${options.contextLabel}`;
+          ribbon.style.display = 'block';
+        } else {
+          ribbon.style.display = 'none';
+        }
+      }
+
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+      const notesEl = document.getElementById('idea-notes');
+      if (notesEl) {
+        notesEl.value = options.initialNotes || '';
+        notesEl.focus();
+      }
+    }
+
+    function closeInspirationModal(e) {
+      const modal = document.getElementById('inspirationModal');
+      if (modal) {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    // ── Polymorphic Domain Trigger Aliases ───────────────────────────
+    function openInspirationModal() {
+      openUniversalIntakeModal({ domain: 'Decor', contextLabel: 'General Wedding Proposal & Vision' });
+    }
+
+    function openLiturgyNoteModal() {
+      const ritual = currentLiturgyTitle || 'Vedic Liturgy';
+      openUniversalIntakeModal({ domain: 'Rituals', contextLabel: `Liturgy & Samagri Adjustment: ${ritual}` });
+    }
+
+    function openVendorNominationModal() {
+      openUniversalIntakeModal({ domain: 'Vendors', contextLabel: 'Vendor Nomination & Quotation' });
+    }
+
+    function openCustodyProposalModal() {
+      openUniversalIntakeModal({ domain: 'Custody', contextLabel: 'Custody Asset & Locker Record' });
+    }
+
+    function closeLiturgyNoteModal() { closeInspirationModal(null); }
+    function closeVendorNominationModal() { closeInspirationModal(null); }
+    function closeCustodyProposalModal() { closeInspirationModal(null); }
+
+    // ==========================================================================
     // CO-CREATION & ASYNCHRONOUS IDEA INGESTION ENGINE (SPEC-INTAKE-COCREATION-001)
     // ==========================================================================
+    let currentIdeaFilter = 'ALL';
+
     let ideasList = JSON.parse(localStorage.getItem('sree_krushna_ideas_v1')) || [
       {
         id: 'IDEA-001',
@@ -729,23 +978,6 @@ window.dataLayer = window.dataLayer || [];
       localStorage.setItem('sree_krushna_ideas_v1', JSON.stringify(ideasList));
     }
 
-    function openInspirationModal() {
-      const modal = document.getElementById('inspirationModal');
-      if (modal) {
-        modal.classList.add('active');
-        modal.setAttribute('aria-hidden', 'false');
-        document.getElementById('idea-notes').focus();
-      }
-    }
-
-    function closeInspirationModal(e) {
-      const modal = document.getElementById('inspirationModal');
-      if (modal) {
-        modal.classList.remove('active');
-        modal.setAttribute('aria-hidden', 'true');
-      }
-    }
-
     function detectPlatform() {
       const urlInput = document.getElementById('idea-url');
       const badge = document.getElementById('idea-platform-badge');
@@ -777,7 +1009,6 @@ window.dataLayer = window.dataLayer || [];
         return;
       }
 
-      // Client-Side AI Reframer Engine (Heuristic Synthesis & Schema Normalization)
       let cleanTitle = notes.length > 60 ? notes.substring(0, 58) + '...' : notes;
       cleanTitle = cleanTitle.charAt(0).toUpperCase() + cleanTitle.slice(1);
       
@@ -788,8 +1019,11 @@ window.dataLayer = window.dataLayer || [];
         'Catering': 'Traditional Odia Feast',
         'Music': 'Stage Entertainment & Audio',
         'Rituals': 'Vedic Liturgy & Samagri',
+        'Vendors': 'Vendor Procurement & Quotes',
+        'Custody': 'Precious Asset & Vault Custody',
+        'Tasks': 'Operational Task Proposal',
         'Venue': 'Hospitality & Logistics',
-        'General': 'General Wedding Planning'
+        'General': 'General Wedding Proposal'
       };
 
       const structuredTitle = `${categoryLabels[cat] || cat}: ${cleanTitle}`;
@@ -805,16 +1039,19 @@ window.dataLayer = window.dataLayer || [];
     }
 
     function submitIdea() {
-      const notes = document.getElementById('idea-notes').value.trim();
+      const notesEl = document.getElementById('idea-notes');
+      const notes = notesEl ? notesEl.value.trim() : '';
       if (!notes) {
-        alert('Please enter your idea or concept notes before submitting.');
+        alert('Please enter your proposal, notes or quote before submitting.');
         return;
       }
 
-      const submitter = document.getElementById('idea-submitter').value;
+      const submitterEl = document.getElementById('idea-submitter');
+      const submitter = submitterEl ? submitterEl.value : getAuthenticatedSubmitterName();
       const category = document.getElementById('idea-category').value;
       const event = document.getElementById('idea-event').value;
-      const url = document.getElementById('idea-url').value.trim();
+      const urlEl = document.getElementById('idea-url');
+      const url = urlEl ? urlEl.value.trim() : '';
 
       let platform = 'Web Note';
       if (url.includes('instagram.com')) platform = 'Instagram';
@@ -822,58 +1059,103 @@ window.dataLayer = window.dataLayer || [];
       else if (url.includes('pinterest.')) platform = 'Pinterest';
       else if (url.includes('drive.google.com')) platform = 'Drive';
 
-      const numericIds = ideasList.map(item => {
-        const match = String(item.id).match(/IDEA-(\d+)/);
-        return match ? parseInt(match[1], 10) : 0;
-      });
-      const nextId = 'IDEA-' + String(Math.max(0, ...numericIds) + 1).padStart(3, '0');
+      const domainMap = {
+        'Decor': 'VISION',
+        'Photography': 'VISION',
+        'Attire': 'VISION',
+        'Catering': 'VENDORS',
+        'Music': 'VISION',
+        'Rituals': 'RITUALS',
+        'Vendors': 'VENDORS',
+        'Custody': 'CUSTODY',
+        'Tasks': 'TASKS',
+        'Venue': 'OPERATIONS',
+        'General': 'VISION'
+      };
+      const targetDomain = domainMap[category] || 'VISION';
+
+      const intentMap = {
+        'TASKS': 'PROPOSE_TASK',
+        'RITUALS': 'ADJUST_RITUAL',
+        'VENDORS': 'NOMINATE_VENDOR',
+        'CUSTODY': 'PROPOSE_ASSET',
+        'VISION': 'DROP_INSPIRATION',
+        'OPERATIONS': 'PROPOSE_TASK'
+      };
+      const intentType = intentMap[targetDomain] || 'DROP_INSPIRATION';
 
       let reframedTitle = `${category}: ${notes.length > 55 ? notes.substring(0, 52) + '...' : notes}`;
 
-      const newIdea = {
-        id: nextId,
+      dispatchChangeRequest({
+        targetDomain: targetDomain,
+        intentType: intentType,
+        title: reframedTitle,
+        targetEvent: event,
         submitter: submitter,
-        category: category,
-        event: event,
-        rawText: notes,
-        reframedTitle: reframedTitle,
-        mediaUrl: url,
-        platform: platform,
-        suggestedAction: `Evaluate proposal with ${submitter} and coordinate with ${category} lead.`,
-        status: 'Staged',
-        timestamp: new Date().toISOString().split('T')[0]
-      };
-
-      ideasList.unshift(newIdea);
-      saveIdeas();
-      renderIdeas();
+        payload: {
+          category: category,
+          rawNotes: notes,
+          mediaUrl: url,
+          platform: platform
+        }
+      });
 
       // Reset form
-      document.getElementById('idea-notes').value = '';
-      document.getElementById('idea-url').value = '';
-      document.getElementById('idea-platform-badge').innerHTML = '';
-      document.getElementById('idea-ai-preview').innerHTML = 'Click "Structure with AI" to generate a standardized proposal title and suggested action item.';
+      notesEl.value = '';
+      if (urlEl) urlEl.value = '';
+      const badge = document.getElementById('idea-platform-badge');
+      if (badge) badge.innerHTML = '';
+      const preview = document.getElementById('idea-ai-preview');
+      if (preview) preview.innerHTML = 'Click "Structure with AI" to generate a standardized proposal title and suggested action item.';
 
       closeInspirationModal(null);
-      
-      // Auto-switch or notification
-      const countEl = document.getElementById('ideas-count');
-      if (countEl) countEl.innerText = ideasList.length;
-      alert(`✨ Idea ${nextId} submitted to Staging Inbox! View it in Vision Studio.`);
     }
 
-    function deleteIdea(index) {
-      if (confirm(`Remove idea ${ideasList[index].id} from staging queue?`)) {
-        ideasList.splice(index, 1);
-        saveIdeas();
-        renderIdeas();
+    // ── Soft-Archive / Non-Destructive Withdraw ─────────────────────
+    function withdrawIdea(index) {
+      const idea = ideasList[index];
+      if (!idea) return;
+
+      if (idea.status === 'Withdrawn') {
+        idea.status = 'Staged';
+        delete idea.withdrawnAt;
+      } else {
+        if (!confirm(`Move proposal "${idea.id}" to Withdrawn status? (This preserves audit history without permanently deleting).`)) {
+          return;
+        }
+        idea.status = 'Withdrawn';
+        idea.withdrawnAt = new Date().toISOString();
+        idea.withdrawnBy = getAuthenticatedSubmitterName();
       }
+
+      // Keep changeRequestsList in sync
+      const matchedCr = changeRequestsList.find(cr => cr.requestId === idea.id || (cr.title && cr.title === idea.reframedTitle));
+      if (matchedCr) {
+        matchedCr.status = idea.status === 'Withdrawn' ? 'Withdrawn' : 'Pending_Review';
+        saveChangeRequests();
+      }
+
+      saveIdeas();
+      renderIdeas();
+      renderIntakeLedger();
+    }
+
+    function filterIdeas(filterType) {
+      currentIdeaFilter = filterType;
+      document.querySelectorAll('.idea-filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-filter') === filterType);
+      });
+      renderIdeas();
     }
 
     function copyIdeasForDev() {
-      const exportJson = JSON.stringify(ideasList, null, 2);
+      const payload = {
+        changeRequests: changeRequestsList,
+        stagedIdeas: ideasList
+      };
+      const exportJson = JSON.stringify(payload, null, 2);
       navigator.clipboard.writeText(exportJson).then(() => {
-        alert(`📋 Copied ${ideasList.length} staged ideas as structured JSON to clipboard for developer triage!`);
+        alert(`📋 Copied ${changeRequestsList.length} change requests & ${ideasList.length} staged ideas as structured JSON to clipboard for developer triage!`);
       }).catch(() => {
         alert('Failed to copy to clipboard. Please check browser permissions.');
       });
@@ -884,25 +1166,37 @@ window.dataLayer = window.dataLayer || [];
       const countEl = document.getElementById('ideas-count');
       if (!grid) return;
 
-      if (countEl) countEl.innerText = ideasList.length;
+      let filtered = ideasList;
+      if (currentIdeaFilter === 'STAGED') {
+        filtered = ideasList.filter(i => i.status !== 'Withdrawn');
+      } else if (currentIdeaFilter === 'WITHDRAWN') {
+        filtered = ideasList.filter(i => i.status === 'Withdrawn');
+      }
 
-      if (ideasList.length === 0) {
+      if (countEl) countEl.innerText = filtered.length;
+
+      if (filtered.length === 0) {
         grid.innerHTML = `
           <div style="grid-column: 1 / -1; text-align: center; padding: 28px; border: 1px dashed var(--border-subtle); border-radius: var(--radius-md); background: rgba(15, 22, 36, 0.4); color: var(--text-dim);">
-            No ideas in staging queue. Click "+ Drop New Idea" or the "💡 Share Idea" button in the header to submit inspiration!
+            No ideas in this view. Click "+ Drop New Idea" or the "💡 Share Idea" button in the header to submit inspiration!
           </div>
         `;
         return;
       }
 
       grid.innerHTML = '';
-      ideasList.forEach((idea, index) => {
+      filtered.forEach((idea) => {
+        const originalIndex = ideasList.findIndex(i => i.id === idea.id);
         const card = document.createElement('div');
         card.className = 'role-badge-card';
         card.style.position = 'relative';
         card.style.display = 'flex';
         card.style.flexDirection = 'column';
         card.style.justifyContent = 'space-between';
+        if (idea.status === 'Withdrawn') {
+          card.style.opacity = '0.65';
+          card.style.borderStyle = 'dashed';
+        }
         card.setAttribute('data-testid', `idea-card-${idea.id}`);
 
         let mediaAffordance = '';
@@ -917,15 +1211,18 @@ window.dataLayer = window.dataLayer || [];
           `;
         }
 
+        const withdrawBtnText = idea.status === 'Withdrawn' ? '↺ Restore' : '📥 Withdraw';
+        const withdrawBtnStyle = idea.status === 'Withdrawn' ? 'background: rgba(245, 197, 24, 0.1); color: var(--gold-bright);' : 'background: none; color: var(--text-muted);';
+
         card.innerHTML = `
           <div>
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; gap: 6px;">
               <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
                 <span style="font-family: monospace; font-weight: 700; color: var(--gold-bright); font-size: 0.78rem;">${idea.id}</span>
                 <span class="status-badge" style="background: rgba(59, 130, 246, 0.15); color: var(--sapphire-royal); font-size: 0.68rem;">${idea.category}</span>
-                <span class="status-badge status-progress" style="font-size: 0.68rem;">${idea.status}</span>
+                <span class="status-badge ${idea.status === 'Withdrawn' ? '' : 'status-progress'}" style="font-size: 0.68rem; ${idea.status === 'Withdrawn' ? 'color: var(--text-dim); border-color: var(--border-subtle);' : ''}">${idea.status}</span>
               </div>
-              <button onclick="deleteIdea(${index})" style="background: none; border: none; color: var(--crimson-royal); font-size: 1.1rem; cursor: pointer; padding: 2px 6px;" title="Dismiss Idea">&times;</button>
+              <button onclick="withdrawIdea(${originalIndex})" class="theme-toggle-btn" style="padding: 2px 8px; font-size: 0.72rem; ${withdrawBtnStyle}" title="${idea.status === 'Withdrawn' ? 'Restore proposal' : 'Withdraw without deleting'}">${withdrawBtnText}</button>
             </div>
             <h5 style="font-size: 0.92rem; color: var(--text-main); margin: 0 0 6px; line-height: 1.3;">${idea.reframedTitle || idea.rawText}</h5>
             <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; margin: 0 0 6px;">"${idea.rawText}"</p>
@@ -940,15 +1237,92 @@ window.dataLayer = window.dataLayer || [];
       });
     }
 
+    // ── Universal Intake & Change Requests Ledger Modal ────────────
+    let currentLedgerFilter = 'ALL';
+
+    function openIntakeLedgerModal() {
+      const modal = document.getElementById('intakeLedgerModal');
+      if (modal) {
+        renderIntakeLedger();
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+      }
+    }
+
+    function closeIntakeLedgerModal(e) {
+      const modal = document.getElementById('intakeLedgerModal');
+      if (modal) {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    function filterIntakeLedger(domain) {
+      currentLedgerFilter = domain;
+      document.querySelectorAll('.ledger-filter-btn, .ledger-tab-filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-domain') === domain);
+      });
+      renderIntakeLedger();
+    }
+
+    function renderIntakeLedger() {
+      const modalTbody = document.getElementById('intake-ledger-tbody');
+      const tabTbody = document.getElementById('intake-tab-tbody');
+      const modalCountEl = document.getElementById('intake-ledger-count');
+      const tabCountEl = document.getElementById('ledger-tab-count');
+
+      let filtered = changeRequestsList;
+      if (currentLedgerFilter !== 'ALL') {
+        filtered = changeRequestsList.filter(cr => cr.targetDomain === currentLedgerFilter);
+      }
+
+      if (modalCountEl) modalCountEl.innerText = filtered.length;
+      if (tabCountEl) tabCountEl.innerText = filtered.length;
+
+      const renderRows = (tbody) => {
+        if (!tbody) return;
+        if (filtered.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="6" style="text-align: center; color: var(--text-dim); padding: 24px;">
+                No change requests found for domain: ${currentLedgerFilter}
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        tbody.innerHTML = '';
+        filtered.forEach(cr => {
+          const tr = document.createElement('tr');
+          const statusColor = cr.status === 'Pending_Review' ? 'var(--gold-bright)' : cr.status === 'Approved_Merged' ? 'var(--emerald-royal)' : 'var(--crimson-royal)';
+          tr.innerHTML = `
+            <td><strong style="font-family: monospace; color: var(--gold-bright); font-size: 0.8rem;">${cr.requestId}</strong></td>
+            <td><span class="role-pill-tag" style="background: var(--bg-surface-elevated); font-size: 0.72rem;">${cr.targetDomain}</span></td>
+            <td>
+              <div style="font-weight: 600; color: var(--text-main); font-size: 0.84rem;">${cr.title}</div>
+              <div style="font-size: 0.74rem; color: var(--text-dim); margin-top: 2px;">${cr.payload ? (cr.payload.rawNotes || '') : ''}</div>
+            </td>
+            <td style="font-size: 0.8rem; color: var(--text-muted);">${cr.submitter}</td>
+            <td style="font-size: 0.75rem; color: var(--text-dim);">${cr.submittedAt ? cr.submittedAt.split('T')[0] : '2026-08-22'}</td>
+            <td><span class="status-badge" style="color: ${statusColor}; border-color: ${statusColor}; font-size: 0.7rem;">${cr.status}</span></td>
+          `;
+          tbody.appendChild(tr);
+        });
+      };
+
+      renderRows(modalTbody);
+      renderRows(tabTbody);
+    }
+
     // ── Global System Initialization ───────────────────────────────
     updateStageIndicator();
     renderStageStrip();
     renderSwimlaneMatrix();
     renderTasks();
     renderIdeas();
+    renderIntakeLedger();
     hydrateActiveTab();
-  
-
 
     const GA4_ID = "G-XXXXXXXXXX";   // ← keep in sync with <head> config tag
     const deviceType = /Mobi|Android/i.test(navigator.userAgent) ? "mobile" : "desktop";
@@ -976,12 +1350,18 @@ window.dataLayer = window.dataLayer || [];
     window.switchTab = switchTab;
     window.openTaskConsole = openTaskConsole;
     window.closeTaskConsole = closeTaskConsole;
-    window.toggleChecklistItem = toggleChecklistItem;
+    window.toggleConsoleChecklist = toggleConsoleChecklist;
+    window.toggleChecklistItem = toggleConsoleChecklist; // alias
+    window.toggleMasterTask = toggleMasterTask;
+    window.deleteMasterTask = deleteMasterTask;
     window.setTaskStatus = setTaskStatus;
     window.addNewTask = addNewTask;
-    window.filterTasks = filterTasks;
-    window.filterSwimlane = filterSwimlane;
-    window.showNodeModal = showNodeModal;
+    window.selectStage = selectStage;
+    window.filterSwimlaneTrack = filterSwimlaneTrack;
+    window.filterSwimlane = filterSwimlaneTrack; // alias
+    window.onSwimlaneSearch = onSwimlaneSearch;
+    window.showEventDetails = showEventDetails;
+    window.showNodeModal = showEventDetails; // alias
     window.showRitualModal = showRitualModal;
     window.closeModal = closeModal;
     window.openInspirationModal = openInspirationModal;
@@ -989,9 +1369,26 @@ window.dataLayer = window.dataLayer || [];
     window.detectPlatform = detectPlatform;
     window.reframeWithAI = reframeWithAI;
     window.submitIdea = submitIdea;
-    window.deleteIdea = deleteIdea;
+    window.withdrawIdea = withdrawIdea;
+    window.restoreIdea = withdrawIdea; // alias
+    window.filterIdeas = filterIdeas;
     window.copyIdeasForDev = copyIdeasForDev;
     window.updateCountdown = updateCountdown;
+    window.dispatchChangeRequest = dispatchChangeRequest;
+    window.showChangeRequestReceipt = showChangeRequestReceipt;
+    window.closeChangeRequestReceipt = closeChangeRequestReceipt;
+    window.openUniversalIntakeModal = openUniversalIntakeModal;
+    window.openLiturgyNoteModal = openLiturgyNoteModal;
+    window.closeLiturgyNoteModal = closeLiturgyNoteModal;
+    window.openVendorNominationModal = openVendorNominationModal;
+    window.closeVendorNominationModal = closeVendorNominationModal;
+    window.openCustodyProposalModal = openCustodyProposalModal;
+    window.closeCustodyProposalModal = closeCustodyProposalModal;
+    window.openIntakeLedgerModal = openIntakeLedgerModal;
+    window.closeIntakeLedgerModal = closeIntakeLedgerModal;
+    window.filterIntakeLedger = filterIntakeLedger;
+    window.renderIntakeLedger = renderIntakeLedger;
+    window.getAuthenticatedSubmitterName = getAuthenticatedSubmitterName;
 
     // ── Real User Monitoring (RUM) / Web Vitals (Safe Async IIFE) ──
     (async function initWebVitals() {
@@ -1004,3 +1401,20 @@ window.dataLayer = window.dataLayer || [];
         console.warn("[RUM] web-vitals load failed:", err.message);
       }
     })();
+
+    // ── PWA Live Invalidation & Service Worker Update Hook ─────────
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.ready.then((reg) => {
+        reg.addEventListener('updatefound', () => {
+          const installingWorker = reg.installing;
+          if (installingWorker) {
+            installingWorker.addEventListener('statechange', () => {
+              if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                const toast = document.getElementById('pwa-update-toast');
+                if (toast) toast.style.display = 'flex';
+              }
+            });
+          }
+        });
+      });
+    }

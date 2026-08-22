@@ -75,11 +75,15 @@ onAuthStateChanged(auth, (user) => {
     if (authOverlay) authOverlay.style.display = "none";
     if (appRoot) appRoot.style.display = "block";
     const userRoleInfo = getUserRole(user.email);
+    window.currentUser = user;
+    window.currentUserRole = userRoleInfo;
     if (userEmailEl) {
       userEmailEl.innerHTML = `<strong>${userRoleInfo.role}</strong> &bull; ${user.email}`;
     }
     clearError();
   } else if (user && !isAllowed(user.email)) {
+    window.currentUser = null;
+    window.currentUserRole = null;
     // Authenticated but NOT on the allow-list: deny access, sign out.
     if (appRoot) appRoot.style.display = "none";
     if (authOverlay) authOverlay.style.display = "flex";

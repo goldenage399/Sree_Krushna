@@ -1,0 +1,83 @@
+[
+  {
+    "requestId": "CR-001",
+    "targetDomain": "VISION",
+    "intentType": "DROP_INSPIRATION",
+    "submitter": "Sree (Bride)",
+    "targetEvent": "EVT-004",
+    "title": "Mandap Decor: Suspended Tuberose Dome with Hanging Temple Bells",
+    "payload": {
+      "rawNotes": "Suspended tuberose floral dome over mandap with traditional brass bells and warm fairy lights",
+      "mediaUrl": "https://www.instagram.com/reel/C3example1/",
+      "platform": "Instagram"
+    },
+    "status": "Pending_Review",
+    "submittedAt": "2026-08-22T02:35:00Z"
+  },
+  {
+    "requestId": "CR-002",
+    "targetDomain": "VISION",
+    "intentType": "DROP_INSPIRATION",
+    "submitter": "Krushna (Groom)",
+    "targetEvent": "EVT-005",
+    "title": "Reception Entry: Cinematic Stage Walk with Cold Pyros & Live Flute",
+    "payload": {
+      "rawNotes": "Cold pyrotechnics on grand stage walk with live classical flute fusion for reception entry",
+      "mediaUrl": "https://youtube.com/shorts/example2",
+      "platform": "YouTube"
+    },
+    "status": "Pending_Review",
+    "submittedAt": "2026-08-22T02:35:00Z"
+  },
+  {
+    "requestId": "CR-003",
+    "targetDomain": "VENDORS",
+    "intentType": "NOMINATE_VENDOR",
+    "submitter": "Parents Council",
+    "targetEvent": "EVT-004",
+    "title": "Vendor Proposal (Catering): Nimapada Sweets & Odia Feast Caterers",
+    "payload": {
+      "vendorName": "Nimapada Sweets & Odia Feast Caterers",
+      "category": "Catering",
+      "contact": "Debashis +91 9861000000",
+      "rawNotes": "Specialists in pure Ghee Chenna Jhili, Dalma, and traditional Kanika rice for 800 guests.",
+      "mediaUrl": "https://nimapadaccaterers.com"
+    },
+    "status": "Approved_Merged",
+    "submittedAt": "2026-08-22T09:15:00Z",
+    "resolvedAt": "2026-08-22T06:26:27.454Z",
+    "resolvedEntityId": "VDR-005"
+  },
+  {
+    "requestId": "CR-004",
+    "targetDomain": "RITUALS",
+    "intentType": "ADJUST_RITUAL",
+    "submitter": "Head Priest / Purohit",
+    "targetEvent": "EVT-004",
+    "title": "Liturgy Note: RIT-007 (Hastaganthi & Saptapadi)",
+    "payload": {
+      "ritualName": "RIT-007: Hastaganthi & Saptapadi",
+      "rawNotes": "Please arrange 7 betel leaves with whole areca nuts and unhusked paddy placed before the holy homa fire."
+    },
+    "status": "Pending_Review",
+    "submittedAt": "2026-08-22T09:30:00Z"
+  },
+  {
+    "requestId": "CR-005",
+    "targetDomain": "CUSTODY",
+    "intentType": "PROPOSE_ASSET",
+    "submitter": "Parents Council",
+    "targetEvent": "EVT-004",
+    "title": "Custody Asset: Sacred Solapith & Brass Mukutas (~450g) for Bride & Groom",
+    "payload": {
+      "assetName": "Sacred Solapith & Brass Mukutas",
+      "metal": "Sacred Mukuta",
+      "weight": "450g",
+      "wearer": "Bride & Groom",
+      "proposedCustodian": "Uncle / Family Coordinator",
+      "rawNotes": "Consecrated Mukutas to be handed over at Mandap 30 mins before Baarata arrival."
+    },
+    "status": "Pending_Review",
+    "submittedAt": "2026-08-22T10:00:00Z"
+  }
+]

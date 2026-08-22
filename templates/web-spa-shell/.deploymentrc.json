@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "sree-krushna-marriage-os",
+  "profile": "vanilla-spa",
+  "version": "1.0.0",
+  "rootIndex": "index.html",
+  "publicDir": "public",
+  "entryHtml": "public/index.html",
+  "jsFiles": [
+    "public/js/config.js",
+    "public/js/marriage-state.js",
+    "public/js/theme-init.js",
+    "public/js/auth.js",
+    "public/js/app.js"
+  ],
+  "cssFiles": [
+    "public/css/main.css"
+  ],
+  "serviceWorker": "public/sw.js",
+  "errorPage": "public/404.html",
+  "firebaseConfig": "firebase.json",
+  "ignoredDomIds": [],
+  "securityHeaders": [
+    "X-Frame-Options",
+    "cleanUrls"
+  ],
+  "decompositionAudit": {
+    "baseRef": "35157cb",
+    "originalFile": "index.html",
+    "currentJsFiles": [
+      "public/js/config.js",
+      "public/js/marriage-state.js",
+      "public/js/theme-init.js",
+      "public/js/auth.js",
+      "public/js/app.js"
+    ],
+    "currentCssFile": "public/css/main.css",
+    "currentHtmlFile": "public/index.html",
+    "expectedDataObjects": [
+      "MARRIAGE_STATE",
+      "stages",
+      "tracks",
+      "gates",
+      "tasks"
+    ],
+    "ignoredRemovedIds": [
+      "vendor-row-VEN-001",
+      "vendor-row-VDR-001",
+      "vendor-row-VDR-002",
+      "vendor-row-VDR-003",
+      "vendor-row-VDR-004",
+      "vendor-row-VDR-005",
+      "asset-row-AST-001",
+      "asset-row-AST-002",
+      "asset-row-AST-003",
+      "asset-row-AST-004",
+      "asset-row-AST-005",
+      "asset-row-AST-006"
+    ]
+  }
+}

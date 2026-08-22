@@ -1,0 +1,23 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper: Authenticated User
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Universal Change Requests / Intent Queue (SPEC-ARCH-INTENT-DISPATCH-001)
+    match /change_requests/{requestId} {
+      allow create: if true;
+      allow read: if true;
+      allow update, delete: if isAuthenticated();
+    }
+
+    // Marriage Proposals Collection
+    match /proposals/{proposalId} {
+      allow create, read: if true;
+      allow update, delete: if isAuthenticated();
+    }
+  }
+}

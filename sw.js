@@ -3,14 +3,17 @@
  * Strategy: Stale-While-Revalidate for UI shell; Network-First for Auth & Dynamic APIs.
  */
 
-const CACHE_NAME = 'sree-krushna-os-v1.3.0';
+const CACHE_NAME = 'sree-krushna-os-v2.2.0';
 const STATIC_SHELL = [
   '/',
   '/index.html',
   '/manifest.json',
+  '/css/main.css',
   '/js/config.js',
+  '/js/theme-init.js',
   '/js/auth.js',
-  '/js/marriage-state.js'
+  '/js/marriage-state.js',
+  '/js/app.js'
 ];
 
 // Install Event: Cache Core Shell Assets

@@ -96,6 +96,12 @@
             <span style="font-weight: 700;">Share Idea</span>
           </button>
 
+          <!-- Universal Intake Ledger CTA -->
+          <button id="openIntakeLedgerBtn" class="theme-toggle-btn" style="background: rgba(59, 130, 246, 0.12); border-color: rgba(59, 130, 246, 0.35); color: var(--sapphire-royal);" data-testid="open-intake-ledger-btn" aria-label="View Change Requests Ledger" onclick="openIntakeLedgerModal()">
+            <span>📨</span>
+            <span style="font-weight: 600;">Intake Ledger</span>
+          </button>
+
           <!-- Theme Switcher Toggle -->
           <button id="themeToggleBtn" class="theme-toggle-btn" data-testid="theme-toggle-button" aria-label="Toggle Bright/Dark Theme" onclick="toggleTheme()">
             <span id="themeToggleIcon">☀️</span>
@@ -118,6 +124,7 @@
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-vision" data-testid="nav-tab-vision" onclick="switchTab('tab-vision')">🎨 Vision Studio</button>
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-procurement" data-testid="nav-tab-procurement" onclick="switchTab('tab-procurement')">🤝 Vendors</button>
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-governance" data-testid="nav-tab-governance" onclick="switchTab('tab-governance')">🛡️ Custody</button>
+        <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-intake" data-testid="nav-tab-intake" onclick="switchTab('tab-intake')">📨 Intake Ledger</button>
       </nav>
 
     </div>
@@ -383,7 +390,7 @@
 
           <div class="task-controls" data-testid="task-controls">
             <div class="task-input-box">
-              <input type="text" id="new-task-title" data-testid="input-task-title" placeholder="Add a new wedding task (e.g. Schedule MUA trial)..." aria-label="New Task Title" inputmode="text" autocomplete="off" />
+              <input type="text" id="new-task-title" data-testid="input-task-title" placeholder="Propose a wedding task (e.g. Schedule MUA trial)..." aria-label="New Task Title" inputmode="text" autocomplete="off" onkeydown="if(event.key==='Enter') addNewTask()" />
               <select id="new-task-event" data-testid="select-task-event" aria-label="Event Scope">
                 <option value="Master_Planning">General Planning</option>
                 <option value="EVT-001">EVT-001 (Nirbandha)</option>
@@ -400,7 +407,7 @@
                 <option value="Parents Council">Parents Council</option>
                 <option value="Planning Committee">Planning Committee</option>
               </select>
-              <button class="btn-primary" data-testid="btn-add-task" onclick="addNewTask()">+ Add Task</button>
+              <button class="btn-primary" data-testid="btn-add-task" onclick="addNewTask()">+ Propose Task →</button>
             </div>
           </div>
 
@@ -636,9 +643,12 @@
           <!-- 3. Family Co-Creation & Ingested Inspirations Feed -->
           <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 32px; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
             <h4 style="font-family: var(--font-display); color: var(--gold-bright); margin: 0;">💡 Family Ideas & Ingested Inspirations (<span id="ideas-count">0</span>)</h4>
-            <div style="display: flex; gap: 8px;">
-              <button class="theme-toggle-btn" style="padding: 6px 12px; font-size: 0.78rem;" onclick="copyIdeasForDev()" title="Copy all ideas as structured JSON for developer ingestion">📋 Copy for Dev</button>
-              <button class="theme-toggle-btn" style="background: var(--gold-gradient); color: #080b11; font-weight: 700; padding: 6px 14px; font-size: 0.8rem;" onclick="openInspirationModal()">+ Drop New Idea</button>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+              <button id="filter-ideas-all" class="theme-toggle-btn idea-filter-btn active" onclick="filterIdeas('ALL')" style="font-size: 0.75rem; padding: 4px 10px;">All</button>
+              <button id="filter-ideas-staged" class="theme-toggle-btn idea-filter-btn" onclick="filterIdeas('STAGED')" style="font-size: 0.75rem; padding: 4px 10px;">Active</button>
+              <button id="filter-ideas-withdrawn" class="theme-toggle-btn idea-filter-btn" onclick="filterIdeas('WITHDRAWN')" style="font-size: 0.75rem; padding: 4px 10px;">Withdrawn</button>
+              <button class="theme-toggle-btn" style="padding: 4px 10px; font-size: 0.75rem;" onclick="copyIdeasForDev()" title="Copy all ideas as structured JSON for developer ingestion">📋 Copy for Dev</button>
+              <button class="theme-toggle-btn" style="background: var(--gold-gradient); color: #080b11; font-weight: 700; padding: 4px 12px; font-size: 0.75rem;" onclick="openInspirationModal()">+ Drop New Idea</button>
             </div>
           </div>
           <div id="ideas-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;" data-testid="ideas-grid">
@@ -668,6 +678,9 @@
               <span class="role-pill-tag" style="background: var(--bg-surface-elevated); color: var(--text-muted); border: 1px solid var(--border-subtle);">📸 Photography: Portfolio Review</span>
               <span class="role-pill-tag" style="background: var(--bg-surface-elevated); color: var(--text-muted); border: 1px solid var(--border-subtle);">💐 Decor: 3D Concepts Pending</span>
               <span class="role-pill-tag" style="background: var(--bg-surface-elevated); color: var(--text-muted); border: 1px solid var(--border-subtle);">💄 MUA: Trial Scheduling</span>
+            </div>
+            <div style="margin-top: 20px;">
+              <button class="btn-return" style="padding: 10px 22px; font-size: 0.88rem; cursor: pointer; border: none;" onclick="openVendorNominationModal()">🤝 Nominate Vendor / Submit Quote →</button>
             </div>
           </div>
 
@@ -715,6 +728,9 @@
               <span class="role-pill-tag" style="background: var(--bg-surface-elevated); color: var(--text-muted); border: 1px solid var(--border-subtle);">👑 Mukuta Custody: Standby</span>
               <span class="role-pill-tag" style="background: var(--bg-surface-elevated); color: var(--text-muted); border: 1px solid var(--border-subtle);">🔒 Mandap Handover Protocol: Standby</span>
             </div>
+            <div style="margin-top: 20px;">
+              <button class="btn-return" style="padding: 10px 22px; font-size: 0.88rem; cursor: pointer; border: none;" onclick="openCustodyProposalModal()">🛡️ Propose Custody Asset / Locker Note →</button>
+            </div>
           </div>
 
           <div class="table-responsive-wrapper" data-testid="custody-table-wrapper">
@@ -741,6 +757,51 @@
         </div>
       </div>
 
+      <!-- TAB 8: UNIVERSAL INTAKE & CHANGE LEDGER -->
+      <div id="tab-intake" class="tab-content" role="tabpanel" aria-labelledby="nav-tab-intake" data-testid="panel-intake">
+        <div class="card" data-testid="card-intake-ledger">
+          <div class="card-header">
+            <h3>📨 Universal Family Intake & Change Ledger</h3>
+            <span class="status-badge" style="background: rgba(59, 130, 246, 0.15); color: var(--sapphire-royal);">Live Change Stream</span>
+          </div>
+
+          <!-- Top Action & Filter Row -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="theme-toggle-btn ledger-tab-filter-btn active" data-domain="ALL" onclick="filterIntakeLedger('ALL')">All Requests (<span id="ledger-tab-count">5</span>)</button>
+              <button class="theme-toggle-btn ledger-tab-filter-btn" data-domain="VISION" onclick="filterIntakeLedger('VISION')">💡 Vision</button>
+              <button class="theme-toggle-btn ledger-tab-filter-btn" data-domain="TASKS" onclick="filterIntakeLedger('TASKS')">📋 Tasks</button>
+              <button class="theme-toggle-btn ledger-tab-filter-btn" data-domain="VENDORS" onclick="filterIntakeLedger('VENDORS')">🤝 Vendors</button>
+              <button class="theme-toggle-btn ledger-tab-filter-btn" data-domain="RITUALS" onclick="filterIntakeLedger('RITUALS')">🕉️ Liturgy</button>
+              <button class="theme-toggle-btn ledger-tab-filter-btn" data-domain="CUSTODY" onclick="filterIntakeLedger('CUSTODY')">🛡️ Custody</button>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="theme-toggle-btn" onclick="copyIdeasForDev()">📋 Export Intake JSON</button>
+              <button class="btn-return" style="padding: 6px 14px; font-size: 0.82rem; border: none; cursor: pointer;" onclick="openInspirationModal()">+ Propose New Item</button>
+            </div>
+          </div>
+
+          <!-- Responsive Table Container -->
+          <div class="table-responsive-wrapper" data-testid="intake-tab-table-wrapper">
+            <table class="task-table" data-testid="intake-tab-table">
+              <thead>
+                <tr>
+                  <th>Request ID</th>
+                  <th>Domain</th>
+                  <th>Proposal Title & Notes</th>
+                  <th>Submitter</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="intake-tab-tbody">
+                <!-- Populated dynamically by renderIntakeLedger() -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
     </main>
   </div>
 
@@ -758,22 +819,30 @@
         <div style="background: var(--bg-surface-elevated); padding: 12px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); margin-top: 6px;">
           <p id="modal-desc" data-testid="modal-desc" style="color: var(--text-main); font-size: 0.88rem; line-height: 1.5;"></p>
         </div>
+        <div style="margin-top: 10px; display: flex; justify-content: flex-end;">
+          <button type="button" class="theme-toggle-btn" style="background: rgba(245, 197, 24, 0.15); color: var(--gold-bright); border-color: var(--gold-antique); font-size: 0.8rem; padding: 6px 12px;" onclick="openLiturgyNoteModal()">✍️ Suggest Note / Samagri</button>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- Co-Creation & Inspiration Drop Modal -->
+  <!-- Universal Marriage Intent & Proposal Studio (SPEC-INTAKE-STUDIO-002) -->
   <div id="inspirationModal" class="modal-overlay" data-testid="inspiration-modal" role="dialog" aria-modal="true" aria-labelledby="inspiration-modal-title" onclick="closeInspirationModal(event)">
-    <div class="modal" data-testid="inspiration-modal-content" style="max-width: 620px;" onclick="event.stopPropagation()">
+    <div class="modal" data-testid="inspiration-modal-content" style="max-width: 640px;" onclick="event.stopPropagation()">
       <div class="modal-header">
         <h2 id="inspiration-modal-title" style="font-family: var(--font-display); color: var(--gold-bright); font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
-          <span>💡</span> Share Wedding Inspiration & Proposal
+          <span>👑</span> Universal Proposal & Intent Studio
         </h2>
         <button class="modal-close" data-testid="inspiration-modal-close" aria-label="Close modal" onclick="closeInspirationModal(null)">&times;</button>
       </div>
 
-      <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 4px;">
-        <!-- Submitter & Category Row -->
+      <!-- Dynamic Context Ribbon -->
+      <div id="intake-context-ribbon" style="display: none; background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: var(--radius-sm); padding: 8px 12px; font-size: 0.8rem; color: var(--sapphire-royal); margin-top: 4px;">
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 8px;">
+        <!-- Submitter & Planning Domain Row -->
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
           <div>
             <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Your Name / Submitter</label>
@@ -785,7 +854,7 @@
             </select>
           </div>
           <div>
-            <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Planning Category</label>
+            <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Planning Domain</label>
             <select id="idea-category" style="width: 100%; padding: 10px 12px; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); color: var(--text-main); font-size: 0.88rem;">
               <option value="Decor">💐 Mandap & Floral Decor</option>
               <option value="Photography">📸 Photo, Cinema & Drone</option>
@@ -793,15 +862,18 @@
               <option value="Catering">🍲 Odia Feast & Sweets</option>
               <option value="Music">🎵 Music & Entertainment</option>
               <option value="Rituals">🕉️ Vedic Liturgy & Samagri</option>
+              <option value="Vendors">🤝 Vendor Nomination & Quotes</option>
+              <option value="Custody">🛡️ Gold, Silver & Custody</option>
+              <option value="Tasks">📋 Operational Task Action</option>
               <option value="Venue">🏨 Venue & Accommodation</option>
-              <option value="General">💡 General Idea</option>
+              <option value="General">💡 General Creative Idea</option>
             </select>
           </div>
         </div>
 
-        <!-- Target Event -->
+        <!-- Target Event / Milestone Scope -->
         <div>
-          <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Target Event / Milestone</label>
+          <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Target Event / Milestone Scope</label>
           <select id="idea-event" style="width: 100%; padding: 10px 12px; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); color: var(--text-main); font-size: 0.88rem;">
             <option value="Master_Planning">👑 Master Timeline / All Events</option>
             <option value="EVT-001">💍 EVT-001: Ring Ceremony / Engagement</option>
@@ -814,19 +886,19 @@
           </select>
         </div>
 
-        <!-- Raw Notes / Text -->
+        <!-- Raw Notes / Proposal Text -->
         <div>
-          <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Raw Idea, Concept or Notes *</label>
-          <textarea id="idea-notes" rows="3" placeholder="e.g., Saw a royal cold pyrotechnics entrance on stage with flute music, should we request this for the reception stage entry?" style="width: 100%; padding: 12px; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); color: var(--text-main); font-size: 0.88rem; font-family: inherit; resize: vertical; box-sizing: border-box;"></textarea>
+          <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Proposal Notes, Quote, Description or Request *</label>
+          <textarea id="idea-notes" rows="3" placeholder="Enter your proposal, requirement, vendor quote, samagri note, or creative idea..." style="width: 100%; padding: 12px; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); color: var(--text-main); font-size: 0.88rem; font-family: inherit; resize: vertical; box-sizing: border-box;"></textarea>
         </div>
 
         <!-- Media / Reel / Video / Drive Link -->
         <div>
           <label style="font-size: 0.8rem; color: var(--text-muted); display: flex; justify-content: space-between; margin-bottom: 4px;">
-            <span>Media Link (Instagram Reel / YouTube / Pinterest / Drive)</span>
+            <span>Reference Media or Quote Link (Instagram / YouTube / Drive / PDF)</span>
             <span id="idea-platform-badge" style="font-size: 0.75rem; color: var(--gold-bright);"></span>
           </label>
-          <input type="url" id="idea-url" placeholder="https://www.instagram.com/reel/... or https://youtube.com/..." oninput="detectPlatform()" style="width: 100%; padding: 10px 12px; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); color: var(--text-main); font-size: 0.88rem; box-sizing: border-box;" />
+          <input type="url" id="idea-url" placeholder="https://www.instagram.com/reel/... or https://drive.google.com/..." oninput="detectPlatform()" style="width: 100%; padding: 10px 12px; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); color: var(--text-main); font-size: 0.88rem; box-sizing: border-box;" />
         </div>
 
         <!-- AI Reframing Action & Preview Area -->
@@ -845,7 +917,76 @@
         <!-- Submit Button -->
         <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px;">
           <button type="button" class="theme-toggle-btn" onclick="closeInspirationModal(null)">Cancel</button>
-          <button type="button" class="btn-return" style="padding: 10px 20px; font-size: 0.9rem; border: none; cursor: pointer;" onclick="submitIdea()">Submit to Staging Inbox →</button>
+          <button type="button" class="btn-return" style="padding: 10px 22px; font-size: 0.9rem; border: none; cursor: pointer;" onclick="submitIdea()">Submit Proposal to Intake Queue →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Universal Change Request Receipt Confirmation Modal -->
+  <div id="changeRequestReceiptModal" class="modal-overlay" data-testid="cr-receipt-modal" role="dialog" aria-modal="true" aria-labelledby="cr-receipt-title-heading" onclick="closeChangeRequestReceipt()">
+    <div class="modal" data-testid="cr-receipt-modal-content" style="max-width: 520px; text-align: center;" onclick="event.stopPropagation()">
+      <div style="font-size: 2.8rem; margin-bottom: 8px;">📨</div>
+      <span class="status-badge status-progress" style="font-size: 0.75rem; margin-bottom: 10px;">Change Request Queued</span>
+      <h2 id="cr-receipt-title-heading" style="font-family: var(--font-display); color: var(--gold-bright); font-size: 1.25rem; margin-bottom: 8px;">
+        Request <span id="cr-receipt-id" style="font-family: monospace;">CR-001</span> Logged
+      </h2>
+      <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; text-align: left; margin-bottom: 16px; font-size: 0.85rem;">
+        <div style="margin-bottom: 6px;"><strong style="color: var(--text-muted);">Title:</strong> <span id="cr-receipt-title" style="color: var(--text-main); font-weight: 600;"></span></div>
+        <div style="margin-bottom: 6px;"><strong style="color: var(--text-muted);">Domain:</strong> <span id="cr-receipt-domain" style="color: var(--sapphire-royal);"></span></div>
+        <div><strong style="color: var(--text-muted);">Submitted By:</strong> <span id="cr-receipt-submitter" style="color: var(--gold-bright);"></span></div>
+      </div>
+      <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin-bottom: 20px;">
+        Your proposal has been securely logged into the change queue. The <strong>Planning Council & Backend Team</strong> will analyze this change and incorporate it into the master operational schedule upon review.
+      </p>
+      <button type="button" class="btn-return" style="width: 100%; padding: 12px; font-size: 0.95rem; border: none; cursor: pointer;" onclick="closeChangeRequestReceipt()">Got It, Continue Planning ✓</button>
+    </div>
+  </div>
+
+  <!-- Universal Intake & Change Requests Ledger Modal -->
+  <div id="intakeLedgerModal" class="modal-overlay" data-testid="intake-ledger-modal" role="dialog" aria-modal="true" aria-labelledby="intake-ledger-title" onclick="closeIntakeLedgerModal(event)">
+    <div class="modal" data-testid="intake-ledger-modal-content" style="max-width: 820px;" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h2 id="intake-ledger-title" style="font-family: var(--font-display); color: var(--gold-bright); font-size: 1.25rem; display: flex; align-items: center; gap: 8px;">
+          <span>📨</span> Universal Family Intake & Change Ledger (<span id="intake-ledger-count">5</span>)
+        </h2>
+        <button class="modal-close" data-testid="intake-ledger-modal-close" aria-label="Close modal" onclick="closeIntakeLedgerModal(null)">&times;</button>
+      </div>
+      
+      <!-- Filter Domain Tabs -->
+      <div style="display: flex; gap: 8px; margin: 12px 0 16px; flex-wrap: wrap;">
+        <button class="theme-toggle-btn ledger-filter-btn active" data-domain="ALL" onclick="filterIntakeLedger('ALL')">All Requests</button>
+        <button class="theme-toggle-btn ledger-filter-btn" data-domain="VISION" onclick="filterIntakeLedger('VISION')">💡 Vision / Ideas</button>
+        <button class="theme-toggle-btn ledger-filter-btn" data-domain="TASKS" onclick="filterIntakeLedger('TASKS')">📋 Tasks</button>
+        <button class="theme-toggle-btn ledger-filter-btn" data-domain="VENDORS" onclick="filterIntakeLedger('VENDORS')">🤝 Vendors</button>
+        <button class="theme-toggle-btn ledger-filter-btn" data-domain="RITUALS" onclick="filterIntakeLedger('RITUALS')">🕉️ Liturgy</button>
+        <button class="theme-toggle-btn ledger-filter-btn" data-domain="CUSTODY" onclick="filterIntakeLedger('CUSTODY')">🛡️ Custody</button>
+      </div>
+
+      <!-- Ledger Table -->
+      <div class="table-responsive-wrapper" style="max-height: 400px; overflow-y: auto;">
+        <table class="task-table" data-testid="intake-ledger-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Domain</th>
+              <th>Proposal Title & Notes</th>
+              <th>Submitter</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="intake-ledger-tbody">
+            <!-- Dynamically rendered by renderIntakeLedger() -->
+          </tbody>
+        </table>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px; flex-wrap: wrap; gap: 8px;">
+        <span style="font-size: 0.78rem; color: var(--text-dim);">Immutable audit trail for all wedding change requests.</span>
+        <div style="display: flex; gap: 8px;">
+          <button class="theme-toggle-btn" onclick="copyIdeasForDev()">📋 Export Full Intake JSON</button>
+          <button class="btn-return" style="padding: 8px 18px; font-size: 0.85rem; border: none; cursor: pointer;" onclick="closeIntakeLedgerModal(null)">Close</button>
         </div>
       </div>
     </div>
@@ -932,8 +1073,18 @@
        • Visible in GA4 → Reports → Events → web_vitals
        • Falls back to console.table if GA4 not loaded (dev / ad-blocked)
        • Replace G-XXXXXXXXXX in <head> with real GA4 Measurement ID
-  ════════════════════════════════════════════════════════════════ -->
-  
+  <!-- PWA Live Update Invalidation Toast -->
+  <div id="pwa-update-toast" class="pwa-update-toast" data-testid="pwa-update-toast" style="display: none;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span style="font-size: 1.3rem;">👑</span>
+      <div>
+        <div style="font-weight: 700; font-size: 0.85rem; color: var(--gold-bright);">New Version Deployed</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted);">Sree Krushna OS has been updated.</div>
+      </div>
+    </div>
+    <button id="pwa-reload-btn" class="theme-toggle-btn" style="background: var(--gold-gradient); color: #080b11; font-weight: 700; padding: 6px 14px; font-size: 0.78rem; border: none; cursor: pointer;" onclick="window.location.reload(true)">Reload Now ↻</button>
+  </div>
+
   <script src="/js/app.js"></script>
 </body>
 </html>

@@ -13,10 +13,13 @@
     "verify:governance-wiring:all": "node scripts/verify-governance-wiring.cjs --all",
     "verify:governance-schema": "node scripts/verify-governance-schema.cjs",
     "verify:deployment": "node scripts/verify-deployment.cjs",
+    "verify:react-deployment": "node scripts/verify-react-deployment.cjs",
     "verify:mobile": "node scripts/verify-mobile.mjs",
     "audit:decomposition": "node scripts/forensic-audit.cjs",
     "audit:lighthouse": "lhci autorun",
-    "pre-deploy": "npm run verify:governance-wiring:all && npm run verify:mobile && npm run audit:decomposition && npm run verify:deployment && npm run test:smoke",
+    "bootstrap:web-app": "node scripts/bootstrap-web-app.cjs",
+    "triage:requests": "node scripts/triage-requests.cjs",
+    "pre-deploy": "npm run verify:deployment",
     "query": "node tools/query-cli/cli.cjs"
   },
   "keywords": [

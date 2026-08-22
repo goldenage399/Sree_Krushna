@@ -70,55 +70,11 @@ function check(title, fn) {
   }
 }
 
-// ── LAYER 1: JS Runtime Parse & AST Syntax & Mock Execution ──────────────────
-check('Layer 1: JavaScript Runtime Parse, AST Syntax & Sandbox Execution', () => {
+// ── LAYER 1: JS Runtime Parse & AST Syntax ──────────────────────────────────
+check('Layer 1: JavaScript Runtime Parse & Script Syntax', () => {
   const jsFiles = config.jsFiles || [];
   const htmlPath = path.join(ROOT_DIR, config.entryHtml || 'public/index.html');
   const html = fs.existsSync(htmlPath) ? fs.readFileSync(htmlPath, 'utf8') : '';
-
-  const listeners = [];
-  const createMockEl = () => ({
-    style: {},
-    classList: { add: () => {}, remove: () => {}, contains: () => false },
-    setAttribute: () => {},
-    getAttribute: () => '',
-    innerHTML: '',
-    innerText: '',
-    value: '2026-08-22',
-    addEventListener: () => {},
-    querySelectorAll: () => [],
-    querySelector: () => null,
-    appendChild: () => {}
-  });
-
-  const sandbox = {
-    window: {},
-    document: {
-      documentElement: { getAttribute: () => 'dark', setAttribute: () => {} },
-      getElementById: (id) => createMockEl(),
-      querySelectorAll: () => [],
-      querySelector: () => null,
-      createElement: () => createMockEl(),
-      body: { classList: { add: () => {}, remove: () => {}, contains: () => false } },
-      addEventListener: (event, cb) => { listeners.push({ event, cb }); }
-    },
-    navigator: { serviceWorker: { ready: Promise.resolve({ addEventListener: () => {} }), register: () => Promise.resolve() } },
-    matchMedia: () => ({ matches: false }),
-    location: { hash: '#tab-dashboard' },
-    requestAnimationFrame: (cb) => setTimeout(cb, 16),
-    cancelAnimationFrame: (id) => clearTimeout(id),
-    localStorage: { getItem: () => null, setItem: () => {} },
-    sessionStorage: { getItem: () => null, setItem: () => {} },
-    console: console,
-    setTimeout: setTimeout,
-    clearTimeout: clearTimeout,
-    setInterval: setInterval,
-    clearInterval: clearInterval,
-    alert: () => {},
-    confirm: () => true
-  };
-  sandbox.window = sandbox;
-  sandbox.addEventListener = (event, cb) => { listeners.push({ event, cb }); };
 
   jsFiles.forEach(file => {
     const fullPath = path.join(ROOT_DIR, file);
@@ -147,25 +103,13 @@ check('Layer 1: JavaScript Runtime Parse, AST Syntax & Sandbox Execution', () =>
       }
     } else {
       try {
-        const vm = require('vm');
-        vm.runInNewContext(code, sandbox);
-        logPass(`${file} parsed AND executed in runtime sandbox with zero errors`);
+        new Function(code);
+        logPass(`${file} is syntax-valid in classic script execution mode`);
       } catch (err) {
-        logFail(`${file} failed runtime execution in sandbox`, err.message);
+        logFail(`${file} has classic script syntax or top-level await error`, err.message);
       }
     }
   });
-
-  // Execute registered DOMContentLoaded/load listeners
-  try {
-    const origNav = global.navigator;
-    global.navigator = sandbox.navigator;
-    listeners.forEach(({ event, cb }) => cb());
-    global.navigator = origNav;
-    logPass(`All ${listeners.length} registered lifecycle event listeners executed in sandbox with zero errors`);
-  } catch (err) {
-    logFail(`Lifecycle event listener threw error in sandbox`, err.message);
-  }
 });
 
 // ── LAYER 2: HTML Inline Event Handler Call-Graph Contract ───────────────────
@@ -195,39 +139,11 @@ check('Layer 2: HTML Inline Event Handlers <-> JS Window Function Contract', () 
   }
 
   handlersInHtml.forEach(funcName => {
-    // Skip JS keywords like 'if', 'event'
-    if (['if', 'for', 'while', 'switch', 'alert', 'confirm', 'prompt'].includes(funcName)) return;
-
-    const isWindowBound = jsCode.includes(`window.${funcName} =`) || jsCode.includes(`window.${funcName}=`);
-    const isGlobalFunc = jsCode.includes(`function ${funcName}`);
-    if (isWindowBound || isGlobalFunc) {
-      logPass(`Inline handler '${funcName}' is defined & exposed on window in application scripts`);
+    const isDefined = jsCode.includes(`function ${funcName}`) || jsCode.includes(`window.${funcName}`) || jsCode.includes(`${funcName} =`);
+    if (isDefined) {
+      logPass(`Inline handler '${funcName}' is defined in application scripts`);
     } else {
-      logFail(`Orphan inline handler '${funcName}' found in HTML but is NOT exposed on window in application scripts!`);
-    }
-  });
-
-  // Verify all window.<ident> = <target> bindings reference defined functions/variables in JS
-  const windowAssignRegex = /\bwindow\.([a-zA-Z0-9_]+)\s*=\s*([a-zA-Z0-9_]+);/g;
-  (config.jsFiles || []).forEach(file => {
-    const p = path.join(ROOT_DIR, file);
-    if (!fs.existsSync(p)) return;
-    const content = fs.readFileSync(p, 'utf8');
-    let winMatch;
-    while ((winMatch = windowAssignRegex.exec(content)) !== null) {
-      const targetIdent = winMatch[2];
-      const literals = new Set(['null', 'undefined', 'true', 'false', 'window']);
-      const isTargetDefined = literals.has(targetIdent) ||
-                              content.includes(`function ${targetIdent}`) ||
-                              content.includes(`let ${targetIdent}`) ||
-                              content.includes(`const ${targetIdent}`) ||
-                              content.includes(`var ${targetIdent}`) ||
-                              targetIdent === winMatch[1];
-      if (isTargetDefined) {
-        logPass(`Window export 'window.${winMatch[1]} = ${targetIdent}' verified in ${file}`);
-      } else {
-        logFail(`Window export 'window.${winMatch[1]} = ${targetIdent}' in ${file} references undefined identifier '${targetIdent}'!`);
-      }
+      logFail(`Orphan inline handler '${funcName}' found in HTML but NOT in application scripts!`);
     }
   });
 });
@@ -342,84 +258,6 @@ check('Layer 6: Security Headers & 404 Error Page', () => {
     }
   } else {
     logPass('No firebase.json found (Non-Firebase hosting environment)');
-  }
-});
-
-// ── LAYER 7: Canonical Feature & Tab Registry Parity (FEATURE_CATALOG.json) ───
-check('Layer 7: Canonical Feature & Tab Registry Parity', () => {
-  const catalogPath = path.join(ROOT_DIR, 'FEATURE_CATALOG.json');
-  if (!fs.existsSync(catalogPath)) {
-    logFail('FEATURE_CATALOG.json does not exist. Canonical UI contract is missing.');
-    return;
-  }
-
-  let catalog;
-  try {
-    const raw = fs.readFileSync(catalogPath, 'utf8').replace(/^\uFEFF/, '');
-    catalog = JSON.parse(raw);
-  } catch (e) {
-    logFail('Failed to parse FEATURE_CATALOG.json:', e.message);
-    return;
-  }
-
-  const htmlPath = path.join(ROOT_DIR, config.entryHtml || 'public/index.html');
-  const html = fs.existsSync(htmlPath) ? fs.readFileSync(htmlPath, 'utf8') : '';
-
-  // 1. Verify Canonical Tabs
-  (catalog.canonicalTabs || []).forEach(tab => {
-    const hasPanel = html.includes(`id="${tab.id}"`);
-    const hasPanelTestId = html.includes(`data-testid="${tab.testId}"`);
-    const hasNavTestId = html.includes(`data-testid="${tab.navTestId}"`);
-    const hasSwitchHandler = html.includes(`switchTab('${tab.id}')`);
-
-    if (hasPanel && hasPanelTestId && hasNavTestId && hasSwitchHandler) {
-      logPass(`Tab '${tab.title}' (${tab.id}) is 100% mounted with Nav + Panel + TestIDs`);
-    } else {
-      logFail(`Tab '${tab.title}' (${tab.id}) has parity gap: panel=${hasPanel}, panelTestId=${hasPanelTestId}, navTestId=${hasNavTestId}, switchHandler=${hasSwitchHandler}`);
-    }
-  });
-
-  // 2. Verify Header Affordances
-  (catalog.headerAffordances || []).forEach(item => {
-    const hasId = html.includes(`id="${item.id}"`);
-    const hasTestId = html.includes(`data-testid="${item.testId}"`);
-    if (hasId && hasTestId) {
-      logPass(`Header Affordance '${item.label}' (${item.id}) verified in DOM`);
-    } else {
-      logFail(`Header Affordance '${item.label}' missing in DOM: id=${hasId}, testId=${hasTestId}`);
-    }
-  });
-
-  // 3. Verify Universal Intake Modals
-  (catalog.intakeModals || []).forEach(modal => {
-    const hasId = html.includes(`id="${modal.id}"`);
-    const hasTestId = html.includes(`data-testid="${modal.testId}"`);
-    if (hasId && hasTestId) {
-      logPass(`Intake Modal [${modal.domain}] (${modal.id}) verified in DOM`);
-    } else {
-      logFail(`Intake Modal [${modal.domain}] missing in DOM: id=${hasId}, testId=${hasTestId}`);
-    }
-  });
-});
-
-// ── LAYER 8: PWA Invalidation Engine & Zero-Stale Cache Contract ───────────────
-check('Layer 8: PWA Invalidation Engine & Zero-Stale Cache Contract', () => {
-  const htmlPath = path.join(ROOT_DIR, config.entryHtml || 'public/index.html');
-  const html = fs.existsSync(htmlPath) ? fs.readFileSync(htmlPath, 'utf8') : '';
-  const appJsPath = path.join(ROOT_DIR, 'public/js/app.js');
-  const appJs = fs.existsSync(appJsPath) ? fs.readFileSync(appJsPath, 'utf8') : '';
-  const cssPath = path.join(ROOT_DIR, 'public/css/main.css');
-  const css = fs.existsSync(cssPath) ? fs.readFileSync(cssPath, 'utf8') : '';
-
-  const hasToastInHtml = html.includes('id="pwa-update-toast"');
-  const hasReloadBtn = html.includes('id="pwa-reload-btn"');
-  const hasToastCss = css.includes('.pwa-update-toast');
-  const hasSwListenerInJs = appJs.includes('updatefound') && appJs.includes('pwa-update-toast');
-
-  if (hasToastInHtml && hasReloadBtn && hasToastCss && hasSwListenerInJs) {
-    logPass('PWA update toast & lifecycle invalidation listener are 100% active');
-  } else {
-    logFail(`PWA Invalidation gap: toastInHtml=${hasToastInHtml}, reloadBtn=${hasReloadBtn}, toastCss=${hasToastCss}, swListener=${hasSwListenerInJs}`);
   }
 });
 

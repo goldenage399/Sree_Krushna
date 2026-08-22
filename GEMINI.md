@@ -109,6 +109,7 @@ This repository implements the following universal patterns:
 - `.agent/patterns/playwright-e2e-testing-protocol.md`
 - `.agent/patterns/playwright-indexeddb-auth-session-capture.md`
 - `.agent/patterns/playwright-spa-e2e-testing-best-practices.md`
+- `.agent/patterns/portability-agnostic-derivation-gate.md`
 - `.agent/patterns/position-routine-workspace-vs-audit-scoping.md`
 - `.agent/patterns/prop-cascade-trace-safety.md`
 - `.agent/patterns/proxy-signal-verdicts.md`

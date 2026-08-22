@@ -1,0 +1,109 @@
+﻿{
+  "": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.1.0",
+  "system": "Sree Krushna Marriage OS",
+  "canonicalTabs": [
+    {
+      "id": "tab-dashboard",
+      "testId": "panel-dashboard",
+      "navTestId": "nav-tab-dashboard",
+      "title": "Command Center",
+      "required": true
+    },
+    {
+      "id": "tab-swimlane",
+      "testId": "panel-swimlane",
+      "navTestId": "nav-tab-swimlane",
+      "title": "Swimlanes",
+      "required": true
+    },
+    {
+      "id": "tab-tasks",
+      "testId": "panel-tasks",
+      "navTestId": "nav-tab-tasks",
+      "title": "Tasks (CRUD)",
+      "required": true
+    },
+    {
+      "id": "tab-rituals",
+      "testId": "panel-rituals",
+      "navTestId": "nav-tab-rituals",
+      "title": "Vedic Liturgy",
+      "required": true
+    },
+    {
+      "id": "tab-vision",
+      "testId": "panel-vision",
+      "navTestId": "nav-tab-vision",
+      "title": "Vision Studio",
+      "required": true
+    },
+    {
+      "id": "tab-procurement",
+      "testId": "panel-procurement",
+      "navTestId": "nav-tab-procurement",
+      "title": "Vendors",
+      "required": true
+    },
+    {
+      "id": "tab-governance",
+      "testId": "panel-governance",
+      "navTestId": "nav-tab-governance",
+      "title": "Custody",
+      "required": true
+    },
+    {
+      "id": "tab-intake",
+      "testId": "panel-intake",
+      "navTestId": "nav-tab-intake",
+      "title": "Intake Ledger",
+      "required": true
+    }
+  ],
+  "headerAffordances": [
+    {
+      "id": "openInspirationBtn",
+      "testId": "open-inspiration-btn",
+      "label": "Share Idea CTA",
+      "required": true
+    },
+    {
+      "id": "openIntakeLedgerBtn",
+      "testId": "open-intake-ledger-btn",
+      "label": "Intake Ledger CTA",
+      "required": true
+    },
+    {
+      "id": "themeToggleBtn",
+      "testId": "theme-toggle-button",
+      "label": "Theme Switcher",
+      "required": true
+    },
+    {
+      "id": "logoutBtn",
+      "testId": "logout-button",
+      "label": "Sign Out Button",
+      "required": true
+    }
+  ],
+  "intakeModals": [
+    {
+      "id": "inspirationModal",
+      "testId": "inspiration-modal",
+      "domain": "UNIVERSAL",
+      "required": true
+    },
+    {
+      "id": "intakeLedgerModal",
+      "testId": "intake-ledger-modal",
+      "domain": "ALL",
+      "required": true
+    },
+    {
+      "id": "changeRequestReceiptModal",
+      "testId": "cr-receipt-modal",
+      "domain": "ALL",
+      "required": true
+    }
+  ]
+}
