@@ -153,43 +153,115 @@ ensureDir(path.join(TARGET_ROOT, 'docs/protocols'));
 copyDirRecursive('docs/protocols', 'docs/protocols');
 copyFileSafe('.agent/patterns/README.md', '.agent/patterns/README.md');
 
-// ─── Step 4: Workflows & Governance Councils ──────────────────────────────────
-console.log(`\n--- Step 4: Synchronizing Workflows & Governance Councils ---`);
+// ─── Step 4: Workflows & Governance Councils (P108 Portability Gate) ─────────
+console.log(`\n--- Step 4: Synchronizing Workflows & Governance Councils (P108 Gate) ---`);
 ensureDir(path.join(TARGET_ROOT, '.agent/workflows'));
 ensureDir(path.join(TARGET_ROOT, '.agent/workflows/portable'));
 
+// Target Stack Fingerprinting
+const isHub = path.resolve(TARGET_ROOT) === path.resolve(HUB_ROOT);
+const hasFirebase = fs.existsSync(path.join(TARGET_ROOT, 'firebase.json')) || fs.existsSync(path.join(TARGET_ROOT, 'firestore.rules'));
+const hasGas = fs.existsSync(path.join(TARGET_ROOT, '.clasp.json')) || fs.existsSync(path.join(TARGET_ROOT, 'appsscript.json'));
+const hasWebSpa = fs.existsSync(path.join(TARGET_ROOT, 'public/index.html')) || fs.existsSync(path.join(TARGET_ROOT, 'src/App.jsx')) || fs.existsSync(path.join(TARGET_ROOT, 'index.html'));
+
+// Tier 3: Repo-Bound Blacklist (Strictly isolated to source)
+const REPO_BOUND_WORKFLOW_BLACKLIST = [
+  'ingest-recurring-checklist.md',
+  'task-backlog-inventory.md',
+  'cos-invoke.md',
+  'debug-task-architecture.md',
+  'change-prd-architect.md'
+];
+
+const REPO_BOUND_SKILL_BLACKLIST = [
+  'cos-orchestrator',
+  'cos-safe-refactor',
+  'cos-integration-verifier',
+  'india-corp-compliance-pack'
+];
+
+// Stack Condition Map
+const STACK_CONDITIONAL_WORKFLOWS = {
+  'deploy-firebase.md': () => hasFirebase,
+  'task-firestore-direct-write.md': () => hasFirebase,
+  'db-inspect.md': () => hasFirebase,
+  'web-deployment-gate.md': () => hasWebSpa,
+  'shadcn.md': () => hasWebSpa,
+  'debug-frontend.md': () => hasWebSpa,
+};
+
+const STACK_CONDITIONAL_SKILLS = {
+  'firebase-firestore': () => hasFirebase,
+  'gas-deploy-guard': () => hasGas,
+  'gas-optimizer': () => hasGas,
+  'writejournal-audit-gate': () => hasGas,
+  'vercel-react-best-practices': () => hasWebSpa,
+};
+
+// Sync Workflows with P108 Portability Gate
 const wfSrcDir = path.join(HUB_ROOT, '.agent/workflows');
 if (fs.existsSync(wfSrcDir)) {
   const allWfFiles = fs.readdirSync(wfSrcDir).filter(f => f.endsWith('.md'));
-  allWfFiles.forEach(wf => copyFileSafe(`.agent/workflows/${wf}`, `.agent/workflows/${wf}`));
-  console.log(`ℹ️ Dynamically synchronized ${allWfFiles.length} root workflow files.`);
+  let deployedWfs = 0;
+  allWfFiles.forEach(wf => {
+    if (!isHub && REPO_BOUND_WORKFLOW_BLACKLIST.includes(wf)) {
+      return;
+    }
+    if (!isHub && STACK_CONDITIONAL_WORKFLOWS[wf] && !STACK_CONDITIONAL_WORKFLOWS[wf]()) {
+      return;
+    }
+    copyFileSafe(`.agent/workflows/${wf}`, `.agent/workflows/${wf}`);
+    deployedWfs++;
+  });
+  console.log(`ℹ️ [P108 Gate] Deployed ${deployedWfs} compliant root workflows.`);
 }
 
+// Sync Portable Reference Workflows (100% Universal Agnostic Specs)
 const portableWfSrcDir = path.join(HUB_ROOT, '.agent/workflows/portable');
 if (fs.existsSync(portableWfSrcDir)) {
   const allPortableFiles = fs.readdirSync(portableWfSrcDir).filter(f => f.endsWith('.md'));
   allPortableFiles.forEach(pwf => copyFileSafe(`.agent/workflows/portable/${pwf}`, `.agent/workflows/portable/${pwf}`));
-  console.log(`ℹ️ Dynamically synchronized ${allPortableFiles.length} portable workflow files.`);
+  console.log(`ℹ️ [P108 Gate] Synchronized ${allPortableFiles.length} portable reference workflows.`);
 }
 
-// ─── Step 5: Full .agent/skills Suite ─────────────────────────────────────────
-console.log(`\n--- Step 5: Deploying All .agent Skills ---`);
+// ─── Step 5: Full .agent/skills Suite (P108 Portability Gate) ─────────────────
+console.log(`\n--- Step 5: Deploying All .agent Skills (P108 Gate) ---`);
 ensureDir(path.join(TARGET_ROOT, '.agent/skills'));
 const skillsSrcDir = path.join(HUB_ROOT, '.agent/skills');
 if (fs.existsSync(skillsSrcDir)) {
   const skillDirs = fs.readdirSync(skillsSrcDir, { withFileTypes: true }).filter(d => d.isDirectory());
-  skillDirs.forEach(d => copyDirRecursive(`.agent/skills/${d.name}`, `.agent/skills/${d.name}`));
-  console.log(`ℹ️ Dynamically deployed ${skillDirs.length} .agent skills.`);
+  let deployedSkills = 0;
+  skillDirs.forEach(d => {
+    if (!isHub && REPO_BOUND_SKILL_BLACKLIST.includes(d.name)) {
+      return;
+    }
+    if (!isHub && STACK_CONDITIONAL_SKILLS[d.name] && !STACK_CONDITIONAL_SKILLS[d.name]()) {
+      return;
+    }
+    copyDirRecursive(`.agent/skills/${d.name}`, `.agent/skills/${d.name}`);
+    deployedSkills++;
+  });
+  console.log(`ℹ️ [P108 Gate] Deployed ${deployedSkills} compliant .agent skills.`);
 }
 
-// ─── Step 6: Deploy .claude/skills (Impeccable, Site Architecture, etc.) ──────
-console.log(`\n--- Step 6: Deploying Claude-Native Skills (Impeccable, etc.) ---`);
+// ─── Step 6: Deploy .claude/skills (P108 Portability Gate) ────────────────────
+console.log(`\n--- Step 6: Deploying Claude-Native Skills (P108 Gate) ---`);
 ensureDir(path.join(TARGET_ROOT, '.claude/skills'));
 const claudeSkillsSrcDir = path.join(HUB_ROOT, '.claude/skills');
 if (fs.existsSync(claudeSkillsSrcDir)) {
   const claudeSkillDirs = fs.readdirSync(claudeSkillsSrcDir, { withFileTypes: true }).filter(d => d.isDirectory());
-  claudeSkillDirs.forEach(d => copyDirRecursive(`.claude/skills/${d.name}`, `.claude/skills/${d.name}`));
-  console.log(`ℹ️ Dynamically deployed ${claudeSkillDirs.length} .claude skills.`);
+  let deployedClaudeSkills = 0;
+  claudeSkillDirs.forEach(d => {
+    if (!isHub && REPO_BOUND_SKILL_BLACKLIST.includes(d.name)) {
+      return;
+    }
+    if (!isHub && STACK_CONDITIONAL_SKILLS[d.name] && !STACK_CONDITIONAL_SKILLS[d.name]()) {
+      return;
+    }
+    copyDirRecursive(`.claude/skills/${d.name}`, `.claude/skills/${d.name}`);
+    deployedClaudeSkills++;
+  });
+  console.log(`ℹ️ [P108 Gate] Deployed ${deployedClaudeSkills} compliant .claude skills.`);
 }
 
 // ─── Step 7: Incident Encyclopedia (All 86+ INCs) ────────────────────────────
