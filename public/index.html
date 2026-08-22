@@ -431,13 +431,13 @@
             </div>
 
             <!-- View Switcher Segmented Control -->
-            <div style="display: flex; gap: 4px; background: var(--bg-surface-elevated); padding: 4px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); flex-wrap: wrap;">
-              <button id="btn-view-topology" class="theme-toggle-btn dopkos-view-btn" onclick="setDopkosView('TOPOLOGY')" style="font-size: 0.76rem; padding: 5px 12px; border: 1px solid var(--gold-bright); color: var(--gold-bright);">🕸️ UG Dependency Topology</button>
-              <button id="btn-view-threads" class="theme-toggle-btn dopkos-view-btn active" onclick="setDopkosView('THREADS')" style="font-size: 0.76rem; padding: 5px 12px; background: var(--gold-gradient); color: #080b11; font-weight: 700;">🧵 Pull-a-Thread (Today's Actions)</button>
-              <button id="btn-view-runsheet" class="theme-toggle-btn dopkos-view-btn" onclick="setDopkosView('RUNSHEET')" style="font-size: 0.76rem; padding: 5px 12px;">⏱️ Day-Of Run Sheet</button>
-              <button id="btn-view-roadmap" class="theme-toggle-btn dopkos-view-btn" onclick="setDopkosView('ROADMAP')" style="font-size: 0.76rem; padding: 5px 12px;">📅 Macro Gantt</button>
-              <button id="btn-view-matrix" class="theme-toggle-btn dopkos-view-btn" onclick="setDopkosView('MATRIX')" style="font-size: 0.76rem; padding: 5px 12px;">📊 2D Role Matrix</button>
-              <button id="btn-view-critical" class="theme-toggle-btn dopkos-view-btn" onclick="setDopkosView('CRITICAL')" style="font-size: 0.76rem; padding: 5px 12px;">⚡ Critical Path</button>
+            <div style="display: flex; gap: 6px; background: var(--bg-surface-elevated); padding: 4px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); flex-wrap: wrap;">
+              <button id="btn-view-topology" class="dopkos-view-btn active" onclick="setDopkosView('TOPOLOGY')">🕸️ Sacred Precedence Topology (DAG)</button>
+              <button id="btn-view-threads" class="dopkos-view-btn" onclick="setDopkosView('THREADS')">🧵 Pull-a-Thread (Today's Actions)</button>
+              <button id="btn-view-runsheet" class="dopkos-view-btn" onclick="setDopkosView('RUNSHEET')">⏱️ Day-Of Run Sheet</button>
+              <button id="btn-view-roadmap" class="dopkos-view-btn" onclick="setDopkosView('ROADMAP')">📅 Macro Gantt</button>
+              <button id="btn-view-matrix" class="dopkos-view-btn" onclick="setDopkosView('MATRIX')">📊 2D Role Matrix</button>
+              <button id="btn-view-critical" class="dopkos-view-btn" onclick="setDopkosView('CRITICAL')">⚡ Critical Path</button>
             </div>
           </div>
 
@@ -496,44 +496,27 @@
           </div>
 
           <div class="task-controls" data-testid="task-controls">
-            <div class="task-input-box" id="taskFormBox" data-testid="task-form-box">
-              <input type="hidden" id="editing-task-id" value="" />
-              <input type="text" id="new-task-title" data-testid="input-task-title" placeholder="Propose or edit a wedding task (e.g. Schedule MUA trial)..." aria-label="Task Title" inputmode="text" autocomplete="off" onkeydown="if(event.key==='Enter') submitTaskForm()" />
-              <select id="new-task-event" data-testid="select-task-event" aria-label="Event Scope">
-                <option value="Master_Planning">General Planning</option>
-                <option value="STAGE_01">STAGE_01 (Pre-Wedding & Sourcing)</option>
-                <option value="STAGE_02">STAGE_02 (Logistics & Pre-Rituals)</option>
-                <option value="STAGE_03">STAGE_03 (Rayagada Rites)</option>
-                <option value="STAGE_04">STAGE_04 (Bhubaneswar Rites)</option>
-                <option value="STAGE_05">STAGE_05 (Post-Wedding Closures)</option>
-                <option value="EVT-001">EVT-001 (Nirbandha)</option>
-                <option value="EVT-002">EVT-002 (Mehendi)</option>
-                <option value="EVT-003">EVT-003 (Haldi)</option>
-                <option value="EVT-004">EVT-004 (Wedding Day)</option>
-                <option value="EVT-005">EVT-005 (Reception)</option>
-                <option value="EVT-006">EVT-006 (Chauthi)</option>
-              </select>
-              <select id="new-task-owner" data-testid="select-task-owner" aria-label="Assigned Owner">
-                <option value="Sree & Krushna">Sree & Krushna</option>
-                <option value="Sree (Bride)">Sree (Bride)</option>
-                <option value="Krushna (Groom)">Krushna (Groom)</option>
-                <option value="Parents Council">Parents Council</option>
-                <option value="Planning Committee">Planning Committee</option>
-                <option value="PER-005 (Bride Father / Elders)">PER-005 (Bride Father / Elders)</option>
-                <option value="PER-006 (Groom Father / Elders)">PER-006 (Groom Father / Elders)</option>
-                <option value="Chief Purohit">Chief Purohit</option>
-                <option value="Catering Lead">Catering Lead</option>
-                <option value="Media Lead">Media Lead</option>
-                <option value="Logistics Lead">Logistics Lead</option>
-              </select>
-              <select id="new-task-priority" data-testid="select-task-priority" aria-label="Priority" style="min-width: 100px;">
-                <option value="Medium">Medium</option>
-                <option value="High">High</option>
-                <option value="Critical">Critical</option>
-                <option value="Planned">Planned</option>
-              </select>
-              <button id="taskFormSubmitBtn" class="btn-primary" data-testid="btn-add-task" onclick="submitTaskForm()">+ Propose Task →</button>
-              <button id="taskFormCancelBtn" class="header-action-btn" data-testid="btn-cancel-edit" onclick="cancelTaskEdit()" style="display: none; min-height: 38px; padding: 6px 12px; background: rgba(255,255,255,0.08); color: var(--text-muted); border: 1px solid var(--border-subtle); border-radius: 6px; cursor: pointer;">Cancel</button>
+            <div class="task-input-box" id="taskFormBox" data-testid="task-form-box" style="display: flex; gap: 10px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+              <div style="display: flex; gap: 8px; flex: 1; min-width: 260px;">
+                <input type="text" id="new-task-title" data-testid="input-task-title" placeholder="Propose a new wedding task or operational change..." aria-label="Task Title" inputmode="text" autocomplete="off" onkeydown="if(event.key==='Enter') addNewTask()" />
+                <select id="new-task-event" data-testid="select-task-event" aria-label="Event Scope" style="max-width: 210px;">
+                  <option value="Master_Planning">General Planning</option>
+                  <option value="STAGE_01">STAGE_01 (Pre-Wedding & Sourcing)</option>
+                  <option value="STAGE_02">STAGE_02 (Logistics & Pre-Rituals)</option>
+                  <option value="STAGE_03">STAGE_03 (Rayagada Rites)</option>
+                  <option value="STAGE_04">STAGE_04 (Bhubaneswar Rites)</option>
+                  <option value="STAGE_05">STAGE_05 (Post-Wedding Closures)</option>
+                  <option value="EVT-001">EVT-001 (Nirbandha)</option>
+                  <option value="EVT-002">EVT-002 (Mehendi)</option>
+                  <option value="EVT-003">EVT-003 (Haldi)</option>
+                  <option value="EVT-004">EVT-004 (Wedding Day)</option>
+                  <option value="EVT-005">EVT-005 (Reception)</option>
+                  <option value="EVT-006">EVT-006 (Chauthi)</option>
+                </select>
+              </div>
+              <button id="taskFormSubmitBtn" class="btn-primary" data-testid="btn-add-task" onclick="addNewTask()" style="white-space: nowrap; padding: 10px 18px; min-height: 44px; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
+                <span>💡</span> <span>Open Proposal Studio →</span>
+              </button>
             </div>
           </div>
 
@@ -549,7 +532,7 @@
                   <th>Assigned Owner</th>
                   <th>Priority</th>
                   <th>Status</th>
-                  <th style="min-width: 90px; text-align: center;">Action</th>
+                  <th style="min-width: 120px; text-align: center;">Proposal / Change</th>
                 </tr>
               </thead>
               <tbody id="task-table-body" data-testid="task-table-body">

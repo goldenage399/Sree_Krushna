@@ -622,7 +622,7 @@ window.dataLayer = window.dataLayer || [];
           <td><strong data-testid="task-owner-${t.id}" style="white-space: nowrap;">${t.lead || 'Committee'}</strong></td>
           <td><span style="color: ${t.priority === 'Critical' ? 'var(--crimson-royal)' : t.priority === 'High' ? 'var(--gold-bright)' : 'var(--text-muted)'}; font-weight: 700;" data-testid="task-priority-${t.id}">${t.priority || 'Medium'}</span></td>
           <td><span class="status-badge ${isDone ? 'status-completed' : t.status === 'In-Progress' ? 'status-progress' : 'status-planned'}" data-testid="task-status-${t.id}">${t.status || 'Planned'}</span></td>
-          <td style="text-align: center;"><button class="header-action-btn" data-testid="task-edit-${t.id}" aria-label="Update task ${t.id}" onclick="loadTaskForEdit('${t.id}')" style="min-height: 28px; padding: 2px 10px; font-size: 0.74rem; background: rgba(212, 168, 67, 0.1); border: 1px solid rgba(212, 168, 67, 0.35); color: var(--gold-bright); border-radius: var(--radius-sm, 6px); cursor: pointer; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;"><span>✏️</span><span>Update</span></button></td>
+          <td style="text-align: center;"><button class="header-action-btn" data-testid="task-propose-update-${t.id}" aria-label="Propose update for task ${t.id}" onclick="proposeTaskUpdate('${t.id}')" style="min-height: 28px; padding: 3px 10px; font-size: 0.74rem; background: rgba(212, 168, 67, 0.12); border: 1px solid rgba(212, 168, 67, 0.38); color: var(--gold-bright); border-radius: var(--radius-sm, 6px); cursor: pointer; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;"><span>💡</span><span>Propose Update</span></button></td>
         `;
         tbody.appendChild(tr);
       });
@@ -644,95 +644,25 @@ window.dataLayer = window.dataLayer || [];
       renderSwimlaneMatrix();
     }
 
-    function loadTaskForEdit(taskId) {
+    function proposeTaskUpdate(taskId) {
       const t = currentTasks.find(x => x.id === taskId);
       if (!t) return;
 
-      // Switch tab to Tasks if not already active
-      switchTab('tab-tasks');
-
-      // Populate form fields
-      const idInput = document.getElementById('editing-task-id');
-      const titleInput = document.getElementById('new-task-title');
-      const eventSelect = document.getElementById('new-task-event');
-      const ownerSelect = document.getElementById('new-task-owner');
-      const prioritySelect = document.getElementById('new-task-priority');
-      const submitBtn = document.getElementById('taskFormSubmitBtn');
-      const cancelBtn = document.getElementById('taskFormCancelBtn');
-      const formBox = document.getElementById('taskFormBox');
-
-      if (idInput) idInput.value = t.id;
-      if (titleInput) titleInput.value = t.title || '';
-      if (eventSelect) eventSelect.value = t.stage || t.eventScope || 'Master_Planning';
-      if (ownerSelect) ownerSelect.value = t.lead || 'Planning Committee';
-      if (prioritySelect) prioritySelect.value = t.priority || 'Medium';
-
-      if (submitBtn) {
-        submitBtn.textContent = `💾 Save Changes (${t.id})`;
-        submitBtn.style.background = 'linear-gradient(135deg, var(--gold-bright) 0%, var(--gold-antique) 100%)';
-        submitBtn.style.color = '#0b0f19';
-      }
-      if (cancelBtn) cancelBtn.style.display = 'inline-flex';
-
-      // Smooth scroll to form box & highlight it
-      if (formBox) {
-        formBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        formBox.classList.add('editing-highlight');
-        setTimeout(() => formBox.classList.remove('editing-highlight'), 1500);
-      }
-      if (titleInput) titleInput.focus();
+      const eventScope = t.stage || t.eventScope || 'Master_Planning';
+      openUniversalIntakeModal({
+        domain: 'Tasks',
+        event: eventScope,
+        contextLabel: `Change Request for Task ${t.id} (${t.title})`,
+        initialNotes: `[${t.id}] Update Proposal:\n• Current Action: ${t.title}\n• Assigned Owner: ${t.lead || 'Planning Committee'}\n• Priority: ${t.priority || 'Medium'}\n• Status: ${t.status || 'Planned'}\n• Proposed Adjustment: `
+      });
     }
 
-    function cancelTaskEdit() {
-      const idInput = document.getElementById('editing-task-id');
-      const titleInput = document.getElementById('new-task-title');
-      const submitBtn = document.getElementById('taskFormSubmitBtn');
-      const cancelBtn = document.getElementById('taskFormCancelBtn');
-
-      if (idInput) idInput.value = '';
-      if (titleInput) titleInput.value = '';
-      if (submitBtn) {
-        submitBtn.textContent = '+ Propose Task →';
-        submitBtn.style.background = '';
-        submitBtn.style.color = '';
-      }
-      if (cancelBtn) cancelBtn.style.display = 'none';
+    function loadTaskForEdit(taskId) {
+      proposeTaskUpdate(taskId);
     }
 
     function submitTaskForm() {
-      const idInput = document.getElementById('editing-task-id');
-      const editingId = idInput ? idInput.value : '';
-
-      if (editingId) {
-        // UPDATE EXISTING TASK IN PLACE
-        const t = currentTasks.find(x => x.id === editingId);
-        if (!t) return;
-
-        const titleInput = document.getElementById('new-task-title');
-        const eventSelect = document.getElementById('new-task-event');
-        const ownerSelect = document.getElementById('new-task-owner');
-        const prioritySelect = document.getElementById('new-task-priority');
-
-        const newTitle = titleInput ? titleInput.value.trim() : '';
-        if (!newTitle) {
-          alert('Task title cannot be empty.');
-          return;
-        }
-
-        t.title = newTitle;
-        if (eventSelect) t.stage = eventSelect.value;
-        if (ownerSelect) t.lead = ownerSelect.value;
-        if (prioritySelect) t.priority = prioritySelect.value;
-
-        saveMasterTasks();
-        renderTasks();
-        renderStageStrip();
-        renderSwimlaneMatrix();
-        cancelTaskEdit();
-      } else {
-        // ADD NEW TASK
-        addNewTask();
-      }
+      addNewTask();
     }
 
     function generateNextTaskId() {
@@ -1529,7 +1459,7 @@ window.dataLayer = window.dataLayer || [];
     }
 
     // ── DO_PKOS Operating Studio (Sandbox) Engine ───────────────────
-    let currentDopkosView = 'THREADS'; // 'THREADS' | 'RUNSHEET' | 'ROADMAP' | 'MATRIX' | 'CRITICAL'
+    let currentDopkosView = 'TOPOLOGY'; // 'TOPOLOGY' | 'THREADS' | 'RUNSHEET' | 'ROADMAP' | 'MATRIX' | 'CRITICAL'
     let currentDopkosEvent = 'ALL';
     let currentDopkosTrack = 'ALL';
 
@@ -1736,6 +1666,11 @@ window.dataLayer = window.dataLayer || [];
       const container = document.getElementById('dopkos-canvas-container');
       if (!container) return;
 
+      // Synchronize View Switcher Button Active Highlighters
+      document.querySelectorAll('.dopkos-view-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.id === `btn-view-${currentDopkosView.toLowerCase()}`);
+      });
+
       if (currentDopkosView === 'TOPOLOGY') {
         renderDopkosTopology(container);
       } else if (currentDopkosView === 'THREADS') {
@@ -1773,35 +1708,53 @@ window.dataLayer = window.dataLayer || [];
     ];
 
     const TOPOLOGY_TASKS = [
+      // Stage 1: T-180 Foundation (Col 0)
       { id: 'GOV-001', name: 'Chief Purohit Lagna Lock', track: 'purohit', stage: 1, col: 0, status: 'DONE', depends_on: [] },
       { id: 'TSK-001', name: 'Nuapatna Baula Patani Saree', track: 'bride', stage: 1, col: 0, status: 'DONE', depends_on: [] },
-      { id: 'TSK-003', name: 'Photographer 36-Q SLA', track: 'media', stage: 1, col: 0, status: 'READY', depends_on: [] },
+      { id: 'TSK-002', name: 'Groom Silk Attire Prep', track: 'groom', stage: 1, col: 0, status: 'DONE', depends_on: ['TSK-001'] },
       { id: 'FOOD-001', name: '21-Item Menu Tasting', track: 'catering', stage: 1, col: 0, status: 'READY', depends_on: [] },
-      { id: 'SEC-001', name: 'Gold Vault Dual-Custody', track: 'fleet', stage: 1, col: 0, status: 'READY', depends_on: [] },
+      { id: 'TSK-003', name: 'Photographer 36-Q SLA', track: 'media', stage: 1, col: 0, status: 'READY', depends_on: [] },
       { id: 'VEN-001', name: 'Rayagada & BBSR Leases', track: 'fleet', stage: 1, col: 0, status: 'READY', depends_on: ['GOV-001'] },
 
+      // Stage 2: T-120 Procurement (Col 1)
       { id: 'RIT-001', name: 'Vidhi-Patra Signoff', track: 'purohit', stage: 2, col: 1, status: 'READY', depends_on: ['GOV-001'] },
-      { id: 'TSK-002', name: 'Groom Silk Attire Prep', track: 'groom', stage: 2, col: 1, status: 'READY', depends_on: ['TSK-001'] },
-      { id: 'TSK-004', name: 'Pre-Wedding Location Permits', track: 'media', stage: 2, col: 1, status: 'READY', depends_on: ['TSK-003'] },
+      { id: 'TSK-006', name: 'Bridal Footwear & Trousseau', track: 'bride', stage: 2, col: 1, status: 'READY', depends_on: ['TSK-001'] },
       { id: 'GFT-001', name: 'Deva Nimantrana (Puri)', track: 'groom', stage: 2, col: 1, status: 'READY', depends_on: ['RIT-001'] },
       { id: 'FOOD-002', name: 'Pahala Mithai Booking', track: 'catering', stage: 2, col: 1, status: 'READY', depends_on: ['FOOD-001'] },
+      { id: 'TSK-004', name: 'Pre-Wedding Shoot Permits', track: 'media', stage: 2, col: 1, status: 'READY', depends_on: ['TSK-003'] },
+      { id: 'SEC-001', name: 'Gold Vault Dual-Custody', track: 'fleet', stage: 2, col: 1, status: 'READY', depends_on: [] },
 
-      { id: 'RIT-002', name: 'Silver Mukuta Sizing', track: 'groom', stage: 3, col: 2, status: 'READY', depends_on: ['TSK-002'] },
+      // Stage 3: T-60 Detailing (Col 2)
+      { id: 'RIT-006', name: 'Samagri Inventory Check', track: 'purohit', stage: 3, col: 2, status: 'READY', depends_on: ['RIT-001'] },
       { id: 'TSK-005', name: 'MUA Trial & Lookbook', track: 'bride', stage: 3, col: 2, status: 'READY', depends_on: ['TSK-001'] },
+      { id: 'RIT-002', name: 'Silver Mukuta Sizing', track: 'groom', stage: 3, col: 2, status: 'READY', depends_on: ['TSK-002'] },
+      { id: 'FOOD-004', name: 'FSSAI Hygiene & Water Audit', track: 'catering', stage: 3, col: 2, status: 'READY', depends_on: ['FOOD-002'] },
+      { id: 'MED-002', name: 'Drone DGCA Clearance', track: 'media', stage: 3, col: 2, status: 'READY', depends_on: ['TSK-004'] },
       { id: 'PWR-001', name: '125kVA Generator Test', track: 'fleet', stage: 3, col: 2, status: 'READY', depends_on: ['VEN-001'] },
 
+      // Stage 4: T-14 Rayagada (Col 3)
+      { id: 'RIT-007', name: 'Aarti Thali & Samagri Pack', track: 'purohit', stage: 4, col: 3, status: 'LOCKED', depends_on: ['RIT-006'] },
       { id: 'RIT-003', name: 'Mangan Turmeric Bath', track: 'bride', stage: 4, col: 3, status: 'LOCKED', depends_on: ['RIT-001', 'TSK-005'] },
       { id: 'RIT-004', name: 'Patra Paribartana Vows', track: 'groom', stage: 4, col: 3, status: 'LOCKED', depends_on: ['RIT-003', 'GFT-001'] },
-      { id: 'MED-001', name: 'Drone Clearance & Audio Sync', track: 'media', stage: 4, col: 3, status: 'LOCKED', depends_on: ['TSK-004', 'PWR-001'] },
+      { id: 'FOOD-005', name: 'Rayagada Feast Service', track: 'catering', stage: 4, col: 3, status: 'LOCKED', depends_on: ['FOOD-001'] },
+      { id: 'MED-001', name: 'Lapel Audio Sync Dry-Run', track: 'media', stage: 4, col: 3, status: 'LOCKED', depends_on: ['MED-002', 'PWR-001'] },
+      { id: 'SEC-002', name: 'Ring & Horoscope Safe Escort', track: 'fleet', stage: 4, col: 3, status: 'LOCKED', depends_on: ['SEC-001'] },
 
-      { id: 'GATE-02', name: 'Baranugam Arch Welcome', track: 'purohit', stage: 5, col: 4, status: 'LOCKED', is_gate: true, depends_on: ['RIT-004', 'VEN-001'] },
-      { id: 'RIT-005', name: 'Kanyadaan & Hastaganthi', track: 'purohit', stage: 5, col: 4, status: 'LOCKED', depends_on: ['GATE-02', 'SEC-001'] },
+      // Stage 5: Day 0 BBSR Wedding (Col 4)
+      { id: 'RIT-005', name: 'Kanyadaan & Hastaganthi 08:00', track: 'purohit', stage: 5, col: 4, status: 'LOCKED', depends_on: ['GATE-02', 'SEC-003'] },
       { id: 'GATE-04', name: 'Sindoor Daan & Mukuta', track: 'bride', stage: 5, col: 4, status: 'LOCKED', is_gate: true, depends_on: ['RIT-005', 'RIT-002'] },
-      { id: 'FOOD-003', name: '850p Royal Reception Feast', track: 'catering', stage: 5, col: 4, status: 'LOCKED', depends_on: ['GATE-04', 'FOOD-002'] },
+      { id: 'GATE-02', name: 'Baranugam Arch Welcome', track: 'groom', stage: 5, col: 4, status: 'LOCKED', is_gate: true, depends_on: ['RIT-004', 'VEN-001'] },
+      { id: 'FOOD-003', name: '850p Royal Reception Feast', track: 'catering', stage: 5, col: 4, status: 'LOCKED', depends_on: ['GATE-04', 'FOOD-004'] },
       { id: 'MED-006', name: 'Mandap Audio 2-Cam Record', track: 'media', stage: 5, col: 4, status: 'LOCKED', depends_on: ['GATE-02', 'MED-001'] },
+      { id: 'SEC-003', name: 'Jewellery Dual-Custody Open', track: 'fleet', stage: 5, col: 4, status: 'LOCKED', depends_on: ['SEC-002'] },
 
-      { id: 'LEG-001', name: 'SUJOG Marriage Registration', track: 'fleet', stage: 6, col: 5, status: 'LOCKED', depends_on: ['RIT-005'] },
-      { id: 'CLS-001', name: '4TB Archive & Vault Reseal', track: 'fleet', stage: 6, col: 5, status: 'LOCKED', depends_on: ['FOOD-003', 'MED-006'] }
+      // Stage 6: Post & Legal SUJOG (Col 5)
+      { id: 'RIT-008', name: 'Astamangala Blessing', track: 'purohit', stage: 6, col: 5, status: 'LOCKED', depends_on: ['RIT-005'] },
+      { id: 'TSK-007', name: 'Grihapravesh Altas Setup', track: 'bride', stage: 6, col: 5, status: 'LOCKED', depends_on: ['GATE-04'] },
+      { id: 'TSK-008', name: 'Chauthi Homa Attire', track: 'groom', stage: 6, col: 5, status: 'LOCKED', depends_on: ['GATE-04'] },
+      { id: 'FOOD-006', name: 'Kitchen Handover & Audit', track: 'catering', stage: 6, col: 5, status: 'LOCKED', depends_on: ['FOOD-003'] },
+      { id: 'CLS-001', name: '4TB Raw Data & 48h Teaser', track: 'media', stage: 6, col: 5, status: 'LOCKED', depends_on: ['MED-006'] },
+      { id: 'LEG-001', name: 'SUJOG Marriage Registration', track: 'fleet', stage: 6, col: 5, status: 'LOCKED', depends_on: ['RIT-005'] }
     ];
 
     function getTopologyPredecessors(taskId, visited = new Set()) {
@@ -2676,7 +2629,7 @@ window.dataLayer = window.dataLayer || [];
     window.toggleChecklistItem = toggleConsoleChecklist; // alias
     window.toggleMasterTask = toggleMasterTask;
     window.loadTaskForEdit = loadTaskForEdit;
-    window.cancelTaskEdit = cancelTaskEdit;
+    window.proposeTaskUpdate = proposeTaskUpdate;
     window.submitTaskForm = submitTaskForm;
     window.setTaskStatus = setTaskStatus;
     window.addNewTask = addNewTask;
