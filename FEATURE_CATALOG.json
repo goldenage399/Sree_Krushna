@@ -1,4 +1,4 @@
-﻿{
+{
   "": "https://json-schema.org/draft/2020-12/schema",
   "version": "1.1.0",
   "system": "Sree Krushna Marriage OS",
@@ -15,6 +15,13 @@
       "testId": "panel-swimlane",
       "navTestId": "nav-tab-swimlane",
       "title": "Swimlanes",
+      "required": true
+    },
+    {
+      "id": "tab-dopkos",
+      "testId": "panel-dopkos",
+      "navTestId": "nav-tab-dopkos",
+      "title": "DO_PKOS Studio 🧪",
       "required": true
     },
     {

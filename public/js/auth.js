@@ -77,9 +77,36 @@ onAuthStateChanged(auth, (user) => {
     const userRoleInfo = getUserRole(user.email);
     window.currentUser = user;
     window.currentUserRole = userRoleInfo;
+    
+    // Update legacy element if present
     if (userEmailEl) {
-      userEmailEl.innerHTML = `<strong>${userRoleInfo.role}</strong> &bull; ${user.email}`;
+      userEmailEl.textContent = user.email;
     }
+
+    // Update Popover Elements
+    const roleBadgeEl = document.getElementById("userRoleBadge");
+    if (roleBadgeEl) {
+      roleBadgeEl.textContent = userRoleInfo.role.split(" ")[0] || "Admin";
+    }
+
+    const popoverRoleEl = document.getElementById("popoverRole");
+    if (popoverRoleEl) {
+      popoverRoleEl.textContent = userRoleInfo.role;
+    }
+
+    const initialsEl = document.getElementById("userAvatarInitials");
+    if (initialsEl) {
+      const name = user.displayName || user.email || "SK";
+      const parts = name.split(/[\s@._-]+/).filter(Boolean);
+      let initials = "SK";
+      if (parts.length >= 2) {
+        initials = (parts[0][0] + parts[1][0]).toUpperCase();
+      } else if (parts.length === 1) {
+        initials = parts[0].substring(0, 2).toUpperCase();
+      }
+      initialsEl.textContent = initials;
+    }
+
     clearError();
   } else if (user && !isAllowed(user.email)) {
     window.currentUser = null;
@@ -120,3 +147,57 @@ if (logoutBtn) {
     }
   });
 }
+
+// ── Profile Popover Interactive Handling ──
+function toggleProfileMenu(e) {
+  if (e) e.stopPropagation();
+  const popover = document.getElementById("profilePopover");
+  const trigger = document.getElementById("profileTriggerBtn");
+  const dropdown = document.getElementById("userProfileDropdown");
+  if (!popover) return;
+
+  const isHidden = popover.style.display === "none" || !popover.classList.contains("active");
+  if (isHidden) {
+    popover.style.display = "block";
+    popover.classList.add("active");
+    if (dropdown) dropdown.classList.add("active");
+    if (trigger) trigger.setAttribute("aria-expanded", "true");
+  } else {
+    popover.style.display = "none";
+    popover.classList.remove("active");
+    if (dropdown) dropdown.classList.remove("active");
+    if (trigger) trigger.setAttribute("aria-expanded", "false");
+  }
+}
+window.toggleProfileMenu = toggleProfileMenu;
+
+// Global Click Dismiss
+document.addEventListener("click", (e) => {
+  const popover = document.getElementById("profilePopover");
+  const dropdown = document.getElementById("userProfileDropdown");
+  if (popover && popover.classList.contains("active")) {
+    if (!dropdown || !dropdown.contains(e.target)) {
+      popover.style.display = "none";
+      popover.classList.remove("active");
+      if (dropdown) dropdown.classList.remove("active");
+      const trigger = document.getElementById("profileTriggerBtn");
+      if (trigger) trigger.setAttribute("aria-expanded", "false");
+    }
+  }
+});
+
+// ESC key dismiss
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    const popover = document.getElementById("profilePopover");
+    const dropdown = document.getElementById("userProfileDropdown");
+    if (popover && popover.classList.contains("active")) {
+      popover.style.display = "none";
+      popover.classList.remove("active");
+      if (dropdown) dropdown.classList.remove("active");
+      const trigger = document.getElementById("profileTriggerBtn");
+      if (trigger) trigger.setAttribute("aria-expanded", "false");
+    }
+  }
+});
+

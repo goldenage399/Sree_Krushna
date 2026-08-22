@@ -77,40 +77,85 @@
   <!-- Authenticated Application Root -->
   <div id="appRoot" data-testid="app-root" style="display: none;">
     
-    <!-- Unified Sticky & Compact Header Shell -->
+    <!-- Unified Sticky & Compact Header Shell (Version 1: Condensed Two-Tier Dock) -->
     <div id="stickyHeaderShell" class="app-sticky-shell" data-testid="app-sticky-shell">
       
-      <!-- Top Header -->
+      <!-- Top Header Row -->
       <header role="banner" data-testid="app-header">
         <div class="brand" data-testid="brand-block">
-          <div class="brand-logo" aria-hidden="true">👑</div>
+          <div class="brand-logo-seal" aria-hidden="true">👑</div>
           <div class="brand-title">
-            <h1 data-testid="app-heading">Sree Krushna</h1>
-            <p data-testid="app-tagline">The Sacred Union &bull; Single Source of Truth</p>
+            <div class="brand-heading-row">
+              <h1 data-testid="app-heading">Sree Krushna</h1>
+              <span class="brand-badge" data-testid="app-badge">SSOT v2.0</span>
+            </div>
+            <p data-testid="app-tagline" class="brand-tagline">The Sacred Union &bull; Single Source of Truth</p>
           </div>
         </div>
-        <div class="header-right">
+
+        <!-- Header Center: Live Countdown Capsule -->
+        <div class="header-center" data-testid="header-center">
+          <button id="headerCountdownCapsule" class="header-countdown-capsule" data-testid="header-countdown-capsule" aria-label="Cycle Countdown Event" title="Click to cycle event milestone" onclick="cycleCountdownEvent()">
+            <span class="cd-mini-icon" id="cdMiniIcon">💍</span>
+            <span class="cd-mini-label" id="cdMiniLabel">Engagement</span>
+            <span class="cd-mini-dot">&bull;</span>
+            <span class="cd-mini-digits" id="cdMiniDigits">--d --h --m</span>
+            <span class="cd-mini-chevron" aria-hidden="true">▾</span>
+          </button>
+        </div>
+
+        <div class="header-right" data-testid="header-right-actions">
           <!-- Share Inspiration / Idea Drop CTA -->
-          <button id="openInspirationBtn" class="theme-toggle-btn" style="background: linear-gradient(135deg, rgba(245, 197, 24, 0.2) 0%, rgba(212, 168, 67, 0.1) 100%); border-color: var(--gold-antique); color: var(--gold-bright);" data-testid="open-inspiration-btn" aria-label="Share Idea or Inspiration" onclick="openInspirationModal()">
-            <span>💡</span>
-            <span style="font-weight: 700;">Share Idea</span>
+          <button id="openInspirationBtn" class="header-action-btn btn-gold" data-testid="open-inspiration-btn" aria-label="Share Idea or Inspiration" onclick="openInspirationModal()">
+            <span class="btn-icon">💡</span>
+            <span class="btn-text">Share Idea</span>
           </button>
 
           <!-- Universal Intake Ledger CTA -->
-          <button id="openIntakeLedgerBtn" class="theme-toggle-btn" style="background: rgba(59, 130, 246, 0.12); border-color: rgba(59, 130, 246, 0.35); color: var(--sapphire-royal);" data-testid="open-intake-ledger-btn" aria-label="View Change Requests Ledger" onclick="openIntakeLedgerModal()">
-            <span>📨</span>
-            <span style="font-weight: 600;">Intake Ledger</span>
+          <button id="openIntakeLedgerBtn" class="header-action-btn btn-blue" data-testid="open-intake-ledger-btn" aria-label="View Change Requests Ledger" onclick="openIntakeLedgerModal()">
+            <span class="btn-icon">📨</span>
+            <span class="btn-text">Intake Ledger</span>
           </button>
 
           <!-- Theme Switcher Toggle -->
-          <button id="themeToggleBtn" class="theme-toggle-btn" data-testid="theme-toggle-button" aria-label="Toggle Bright/Dark Theme" onclick="toggleTheme()">
+          <button id="themeToggleBtn" class="header-action-btn btn-ghost theme-toggle-btn" data-testid="theme-toggle-button" aria-label="Toggle Bright/Dark Theme" onclick="toggleTheme()">
             <span id="themeToggleIcon">☀️</span>
-            <span id="themeToggleText">Light</span>
+            <span id="themeToggleText" class="btn-text">Light</span>
           </button>
 
-          <div class="user-profile-chip" data-testid="user-profile-chip">
-            <span>👤 <span id="userEmail" data-testid="user-email"></span></span>
-            <button id="logoutBtn" class="logout-btn" data-testid="logout-button" aria-label="Sign Out">Sign Out</button>
+          <!-- Executive User Profile Dropdown & Popover -->
+          <div class="user-profile-dropdown" id="userProfileDropdown" data-testid="user-profile-chip">
+            <button id="profileTriggerBtn" class="profile-trigger-btn" data-testid="profile-trigger-button" aria-label="User Account Menu" aria-haspopup="true" aria-expanded="false" onclick="toggleProfileMenu(event)">
+              <span class="user-avatar-circle" id="userAvatarInitials">SK</span>
+              <span class="user-role-badge" id="userRoleBadge">SuperAdmin</span>
+              <span class="dropdown-chevron" aria-hidden="true">▾</span>
+            </button>
+
+            <!-- Popover Card -->
+            <div id="profilePopover" class="profile-popover" role="menu" aria-label="User Session Information" data-testid="profile-popover" style="display: none;">
+              <div class="popover-header">
+                <div class="popover-avatar-large" id="popoverAvatar">👑</div>
+                <div class="popover-user-info">
+                  <div class="popover-role" id="popoverRole">SuperAdmin (Groom)</div>
+                  <div class="popover-email" id="userEmail" data-testid="user-email">goldenage399@gmail.com</div>
+                </div>
+              </div>
+              <div class="popover-divider"></div>
+              <div class="popover-section">
+                <div class="popover-label">Session Status</div>
+                <div class="popover-badge-row">
+                  <span class="popover-badge-pill">🛡️ Full SSOT Access</span>
+                  <span class="popover-badge-pill">⚡ Tier 1</span>
+                </div>
+              </div>
+              <div class="popover-divider"></div>
+              <div class="popover-footer">
+                <button id="logoutBtn" class="popover-logout-btn" data-testid="logout-button" aria-label="Sign Out">
+                  <span>🚪</span>
+                  <span>Sign Out</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </header>
@@ -792,6 +837,7 @@
                   <th>Submitter</th>
                   <th>Date</th>
                   <th>Status</th>
+                  <th style="min-width: 130px; text-align: center;">Consensus Action</th>
                 </tr>
               </thead>
               <tbody id="intake-tab-tbody">
@@ -974,6 +1020,7 @@
               <th>Submitter</th>
               <th>Date</th>
               <th>Status</th>
+              <th style="min-width: 130px; text-align: center;">Consensus Action</th>
             </tr>
           </thead>
           <tbody id="intake-ledger-tbody">

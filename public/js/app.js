@@ -139,7 +139,40 @@ window.dataLayer = window.dataLayer || [];
       cdFlipNum(document.getElementById('cd-hours'), cdPad(hours));
       cdFlipNum(document.getElementById('cd-mins'),  cdPad(mins));
       cdFlipNum(document.getElementById('cd-secs'),  cdPad(secs));
+
+      // Synchronize Header Live Countdown Capsule
+      const miniIcon = document.getElementById('cdMiniIcon');
+      const miniLabel = document.getElementById('cdMiniLabel');
+      const miniDigits = document.getElementById('cdMiniDigits');
+      if (miniDigits) {
+        const iconMap = { engagement: '💍', wedding: '👑', reception: '🎉' };
+        const labelMap = { engagement: 'Engagement', wedding: 'Wedding', reception: 'Reception' };
+        if (miniIcon) miniIcon.textContent = iconMap[cdActiveEvent] || '💍';
+        if (miniLabel) miniLabel.textContent = labelMap[cdActiveEvent] || 'Event';
+        if (diff <= 0) {
+          miniDigits.textContent = 'Celebrated ✓';
+        } else {
+          miniDigits.textContent = `${days}d ${cdPad(hours)}h ${cdPad(mins)}m`;
+        }
+      }
     }
+
+    function cycleCountdownEvent() {
+      const order = ['engagement', 'wedding', 'reception'];
+      const currentIndex = order.indexOf(cdActiveEvent);
+      const nextIndex = (currentIndex + 1) % order.length;
+      cdActiveEvent = order[nextIndex];
+
+      // Sync Hero pills
+      document.querySelectorAll('.cd-pill').forEach(b => {
+        const isMatch = b.dataset.event === cdActiveEvent;
+        b.classList.toggle('active', isMatch);
+        b.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+      });
+
+      updateCountdown();
+    }
+    window.cycleCountdownEvent = cycleCountdownEvent;
 
     // Wire event-switcher pills
     document.querySelectorAll('.cd-pill').forEach(btn => {
@@ -1292,7 +1325,7 @@ window.dataLayer = window.dataLayer || [];
         if (filtered.length === 0) {
           tbody.innerHTML = `
             <tr>
-              <td colspan="6" style="text-align: center; color: var(--text-dim); padding: 24px;">
+              <td colspan="7" style="text-align: center; color: var(--text-dim); padding: 24px;">
                 No change requests found for domain: ${currentLedgerFilter}
               </td>
             </tr>
@@ -1304,6 +1337,21 @@ window.dataLayer = window.dataLayer || [];
         filtered.forEach(cr => {
           const tr = document.createElement('tr');
           const statusColor = cr.status === 'Pending_Review' ? 'var(--gold-bright)' : cr.status === 'Approved_Merged' ? 'var(--emerald-royal)' : 'var(--crimson-royal)';
+          
+          let actionBtns = '';
+          if (cr.status === 'Approved_Merged') {
+            actionBtns = `<span style="color: var(--emerald-royal); font-size: 0.75rem; font-weight: 600;">✓ Merged</span>`;
+          } else if (cr.status === 'Withdrawn') {
+            actionBtns = `<button onclick="approveChangeRequest('${cr.requestId}')" class="theme-toggle-btn" style="padding: 2px 8px; font-size: 0.72rem; color: var(--gold-bright);">↺ Re-open</button>`;
+          } else {
+            actionBtns = `
+              <div style="display: flex; gap: 4px; justify-content: center;">
+                <button onclick="approveChangeRequest('${cr.requestId}')" class="btn-primary" style="padding: 3px 8px; font-size: 0.72rem; border-radius: var(--radius-sm); cursor: pointer;" title="Align & Merge into live execution">✓ Approve</button>
+                <button onclick="rejectChangeRequest('${cr.requestId}')" class="theme-toggle-btn" style="padding: 3px 6px; font-size: 0.72rem; color: var(--text-dim);" title="Soft-archive proposal">✕</button>
+              </div>
+            `;
+          }
+
           tr.innerHTML = `
             <td><strong style="font-family: monospace; color: var(--gold-bright); font-size: 0.8rem;">${cr.requestId}</strong></td>
             <td><span class="role-pill-tag" style="background: var(--bg-surface-elevated); font-size: 0.72rem;">${cr.targetDomain}</span></td>
@@ -1314,6 +1362,7 @@ window.dataLayer = window.dataLayer || [];
             <td style="font-size: 0.8rem; color: var(--text-muted);">${cr.submitter}</td>
             <td style="font-size: 0.75rem; color: var(--text-dim);">${cr.submittedAt ? cr.submittedAt.split('T')[0] : '2026-08-22'}</td>
             <td><span class="status-badge" style="color: ${statusColor}; border-color: ${statusColor}; font-size: 0.7rem;">${cr.status}</span></td>
+            <td style="text-align: center;">${actionBtns}</td>
           `;
           tbody.appendChild(tr);
         });
@@ -1321,6 +1370,79 @@ window.dataLayer = window.dataLayer || [];
 
       renderRows(modalTbody);
       renderRows(tabTbody);
+    }
+
+    function approveChangeRequest(requestId) {
+      const cr = changeRequestsList.find(r => r.requestId === requestId);
+      if (!cr) return;
+
+      if (cr.status === 'Approved_Merged') {
+        alert(`Proposal ${requestId} is already Approved & Merged into active master state.`);
+        return;
+      }
+
+      cr.status = 'Approved_Merged';
+      cr.mergedAt = new Date().toISOString();
+      cr.mergedBy = getAuthenticatedSubmitterName();
+
+      let createdEntityId = null;
+
+      // Automated SSOT State Mutation for Tasks
+      if (cr.targetDomain === 'TASKS' || cr.intentType === 'PROPOSE_TASK') {
+        const nextId = generateNextTaskId();
+        createdEntityId = nextId;
+        const newTask = {
+          id: nextId,
+          title: cr.title.replace(/^Task Proposal:\s*/, '').replace(/^Tasks:\s*/, ''),
+          event: cr.targetEvent || 'Master_Planning',
+          owner: cr.payload ? (cr.payload.suggestedOwner || cr.submitter) : cr.submitter,
+          priority: 'High',
+          status: 'Planned',
+          track: 'purohit',
+          checklist: [
+            { text: `Review proposal requirements: ${cr.payload ? (cr.payload.rawNotes || cr.title) : cr.title}`, done: false },
+            { text: 'Confirm operational lead and execution window', done: false }
+          ]
+        };
+        currentTasks.unshift(newTask);
+        renderTaskTable();
+        renderSwimlaneMatrix();
+      }
+
+      // Persist changes
+      try {
+        localStorage.setItem(STORAGE_KEYS.CHANGE_REQUESTS, JSON.stringify(changeRequestsList));
+        localStorage.setItem('sree_krushna_tasks_v1', JSON.stringify(currentTasks));
+      } catch (e) {
+        console.warn('Storage sync failed:', e.message);
+      }
+
+      renderIntakeLedger();
+      renderIdeas();
+
+      alert(`🎉 Proposal ${requestId} successfully APPROVED & GRADUATED into live active SSOT${createdEntityId ? ` as ${createdEntityId}` : ''}!`);
+    }
+
+    function rejectChangeRequest(requestId) {
+      const cr = changeRequestsList.find(r => r.requestId === requestId);
+      if (!cr) return;
+
+      if (!confirm(`Are you sure you want to mark proposal "${cr.requestId}: ${cr.title}" as Withdrawn? (This preserves audit history).`)) {
+        return;
+      }
+
+      cr.status = 'Withdrawn';
+      cr.withdrawnAt = new Date().toISOString();
+      cr.withdrawnBy = getAuthenticatedSubmitterName();
+
+      try {
+        localStorage.setItem(STORAGE_KEYS.CHANGE_REQUESTS, JSON.stringify(changeRequestsList));
+      } catch (e) {
+        console.warn('Storage sync failed:', e.message);
+      }
+
+      renderIntakeLedger();
+      renderIdeas();
     }
 
     // ── Global System Initialization ───────────────────────────────
@@ -1396,6 +1518,8 @@ window.dataLayer = window.dataLayer || [];
     window.closeIntakeLedgerModal = closeIntakeLedgerModal;
     window.filterIntakeLedger = filterIntakeLedger;
     window.renderIntakeLedger = renderIntakeLedger;
+    window.approveChangeRequest = approveChangeRequest;
+    window.rejectChangeRequest = rejectChangeRequest;
     window.getAuthenticatedSubmitterName = getAuthenticatedSubmitterName;
 
     // ── Real User Monitoring (RUM) / Web Vitals (Safe Async IIFE) ──
