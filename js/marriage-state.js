@@ -4,7 +4,7 @@
  * • 6 Temporal Stages / Phases
  * • 6 Parallel Operational Swimlanes (Tracks)
  * • 4 Critical Operational Gates (GATE-01 to GATE-04)
- * • 62 Master Tasks & Work Packages (TSK-101 through TSK-1105)
+ * • 71 Master Tasks & Work Packages (TSK-101 through TSK-1105)
  * • Sacred Samagri (SAM-###), Precious Assets (AST-###), People & Contacts (PER-###)
  */
 
@@ -24,7 +24,7 @@
       couple: 'Sree & Krushna',
       muhurat: '2027-03-10 08:00 IST',
       venue: 'Swarna Mandap, Bhubaneswar, Odisha',
-      updatedAt: '2026-08-22T14:06:13.540Z'
+      updatedAt: '2026-08-22T14:10:09.980Z'
     },
 
     // ── 6 TEMPORAL PHASES / STAGES ──────────────────────────────────
@@ -724,6 +724,234 @@
             "priority": "Medium",
             "status": "Planned",
             "timeTag": "T-7 Days",
+            "desc": "Execute the formal booking contract with Mayfair Convention Hub for the main wedding hall, green rooms, central mandap courtyard, and designated dining pavilion with 50% advance deposit.",
+            "checklist": [
+                  {
+                        "text": "Hall capacity verified for 500+ guests with central air conditioning.",
+                        "done": false
+                  },
+                  {
+                        "text": "2 VIP Green Rooms reserved with attached private washrooms and locks.",
+                        "done": false
+                  },
+                  {
+                        "text": "Dedicated parking zone for 100+ vehicles confirmed with venue security.",
+                        "done": false
+                  },
+                  {
+                        "text": "Generator power backup (125 kVA) written into the contract rider.",
+                        "done": false
+                  },
+                  {
+                        "text": "50% booking advance payment executed (`PAY-001`).",
+                        "done": false
+                  }
+            ],
+            "linkedEntities": [
+                  "VEN-001",
+                  "CTR-001",
+                  "PAY-001"
+            ],
+            "gate": null
+      },
+      {
+            "id": "TSK-202",
+            "wbs": "3.2.1",
+            "stage": "STAGE_01",
+            "track": "catering",
+            "title": "Traditional Odia Feast Catering SLA & Menu Finalization",
+            "lead": "PER-014 (Food & Hospitality Lead)",
+            "priority": "Critical",
+            "status": "Planned",
+            "timeTag": "T-90 Days",
+            "desc": "Finalize contract with Royal Odia Caterers (`VDR-001`) for multi-course traditional Odia wedding banquet, live snack counters, specialized banana-leaf VIP service, and sweet counter.",
+            "checklist": [
+                  {
+                        "text": "Food tasting session completed with Parents Council.",
+                        "done": false
+                  },
+                  {
+                        "text": "Traditional signature menu locked: *Kanika, Ghee Rice, Dalma, Paneer Besara, Chhena Jhili, Rasagola, Chhena Poda*.",
+                        "done": false
+                  },
+                  {
+                        "text": "Minimum guaranteed plate count (450 pax) + 15% floating buffer locked.",
+                        "done": false
+                  },
+                  {
+                        "text": "Mineral water dispenser (20L jars + eco paper cups) SLA signed.",
+                        "done": false
+                  },
+                  {
+                        "text": "Waste disposal and live banquet cleaning staff SLA finalized.",
+                        "done": false
+                  }
+            ],
+            "linkedEntities": [
+                  "VDR-001",
+                  "CTR-002"
+            ],
+            "gate": null
+      },
+      {
+            "id": "TSK-203",
+            "wbs": "3.3.1",
+            "stage": "STAGE_01",
+            "track": "media",
+            "title": "Cinematography, Drone & Photography Suite Contract",
+            "lead": "Sree & Krushna",
+            "priority": "High",
+            "status": "Planned",
+            "timeTag": "T-90 Days",
+            "desc": "Finalize photography agreement with Studio Cinema & Drone (`VDR-003`) covering 3 candid photographers, 2 cinematic videographers, 1 drone operator, and 1 traditional stage photographer.",
+            "checklist": [
+                  {
+                        "text": "Portfolio review and lighting style alignment completed.",
+                        "done": false
+                  },
+                  {
+                        "text": "Drone flight permission and indoor gimbal stabilization confirmed.",
+                        "done": false
+                  },
+                  {
+                        "text": "YouTube / Private Web Live Stream link delivery SLA included.",
+                        "done": false
+                  },
+                  {
+                        "text": "Raw footage SSD drive delivery within 7 days SLA locked.",
+                        "done": false
+                  },
+                  {
+                        "text": "Advance booking payment executed (`PAY-003`).",
+                        "done": false
+                  }
+            ],
+            "linkedEntities": [
+                  "VDR-003",
+                  "CTR-003",
+                  "PAY-003"
+            ],
+            "gate": null
+      },
+      {
+            "id": "TSK-204",
+            "wbs": "3.4.1",
+            "stage": "STAGE_01",
+            "track": "media",
+            "title": "Mandap Floral Architecture & Dynamic Light Styling",
+            "lead": "PER-006 / PER-008",
+            "priority": "High",
+            "status": "Planned",
+            "timeTag": "T-45 Days",
+            "desc": "Finalize 3D mandap render and floral contract with Mandap Decorators (`VDR-002`) featuring a consecrated fresh tuberose (*Rajanigandha*) and marigold dome, fairy light canopy, and royal entryway arches.",
+            "checklist": [
+                  {
+                        "text": "3D architectural render approved by Sree & Krushna.",
+                        "done": false
+                  },
+                  {
+                        "text": "Fresh flower sourcing lock from local flower mandis confirmed.",
+                        "done": false
+                  },
+                  {
+                        "text": "Fire-retardant fabric certification obtained for mandap drapes.",
+                        "done": false
+                  },
+                  {
+                        "text": "Stage sofa seating and family brass chairs delivered and inspected.",
+                        "done": false
+                  },
+                  {
+                        "text": "Ambient warm yellow lighting (2700K) specified for photo clarity.",
+                        "done": false
+                  }
+            ],
+            "linkedEntities": [
+                  "VDR-002",
+                  "CTR-004"
+            ],
+            "gate": null
+      },
+      {
+            "id": "TSK-205",
+            "wbs": "3.5.1",
+            "stage": "STAGE_01",
+            "track": "bride",
+            "title": "Bridal Makeup Artist (MUA) & Groom Styling Suite",
+            "lead": "Sree (Bride)",
+            "priority": "High",
+            "status": "Planned",
+            "timeTag": "T-30 Days",
+            "desc": "Book Bridal Artistry Studio (`VDR-005`) for HD Airbrush bridal makeup, hair styling, traditional Odia sandalwood forehead artistry (*Chandan Chita*), saree draping, and mother/sister styling.",
+            "checklist": [
+                  {
+                        "text": "Bridal trial makeup and hair test completed.",
+                        "done": false
+                  },
+                  {
+                        "text": "Sandalwood forehead design (*Chita*) reference template approved.",
+                        "done": false
+                  },
+                  {
+                        "text": "Call-time schedule locked (MUA on-site 3.5 hours before Barat arrival).",
+                        "done": false
+                  },
+                  {
+                        "text": "Groom professional beard trimming and hair styling appointment booked.",
+                        "done": false
+                  }
+            ],
+            "linkedEntities": [
+                  "VDR-005",
+                  "CTR-005"
+            ],
+            "gate": null
+      },
+      {
+            "id": "TSK-206",
+            "wbs": "3.6.1",
+            "stage": "STAGE_01",
+            "track": "groom",
+            "title": "Barajatri Brass Band, Royal Dhol & Pyrotechnic Permitting",
+            "lead": "PER-008 (Groom Lead)",
+            "priority": "High",
+            "status": "Planned",
+            "timeTag": "T-30 Days",
+            "desc": "Contract consecrated traditional Odia brass band, royal Punjabi dhol unit, illuminated mobile light trolleys, and cold spark pyrotechnic machines for the Barat procession.",
+            "checklist": [
+                  {
+                        "text": "Brass band 15-piece brass ensemble confirmed with curated song playlist.",
+                        "done": false
+                  },
+                  {
+                        "text": "2 Punjabi dhol players contracted for high-energy entrance beats.",
+                        "done": false
+                  },
+                  {
+                        "text": "4 Cold spark pyrotechnic machines booked (safe indoor/outdoor operation).",
+                        "done": false
+                  },
+                  {
+                        "text": "Procession route from hotel to main hall mapped with transit police.",
+                        "done": false
+                  }
+            ],
+            "linkedEntities": [
+                  "VDR-006",
+                  "CTR-006"
+            ],
+            "gate": null
+      },
+      {
+            "id": "TSK-207",
+            "wbs": "3.7.1",
+            "stage": "STAGE_02",
+            "track": "fleet",
+            "title": "High-Fidelity Audio, Collar Mics & Purohit Sound Rider",
+            "lead": "PER-014 (Logistics Lead)",
+            "priority": "Medium",
+            "status": "Planned",
+            "timeTag": "T-7 Days",
             "desc": "Deploy professional PA audio setup with wireless lapel/collar microphones for the officiating Purohits, ambient mandap speakers, and reception sound engineering.",
             "checklist": [
                   {
@@ -746,6 +974,118 @@
             "linkedEntities": [
                   "VDR-007",
                   "CTR-007"
+            ],
+            "gate": null
+      },
+      {
+            "id": "TSK-208",
+            "wbs": "3.3.2",
+            "stage": "STAGE_01",
+            "track": "fleet",
+            "title": "Pre-Wedding Shoot & Multi-Event Photography Vendor Selection",
+            "lead": "Sree & Krushna",
+            "priority": "Critical",
+            "status": "Planned",
+            "timeTag": "T-120 Days",
+            "desc": "Evaluate candidate photography and cinematography studios using the comprehensive evaluation questionnaire (`SPEC-PROC-PHOTO-EVAL-001`), locking in pre-wedding shoot dates/locations and multi-event coverage for 11 Feb Engagement (Rayagada) and 10 Mar Wedding/Reception.",
+            "checklist": [
+                  {
+                        "text": "Evaluation questionnaire dispatched to shortlisted photography studios.",
+                        "done": false
+                  },
+                  {
+                        "text": "Pre-wedding shoot locations selected (Puri Beach, Konark Forest, Temples, Chilika).",
+                        "done": false
+                  },
+                  {
+                        "text": "Pre-wedding shoot date and styling/outfit changes locked.",
+                        "done": false
+                  },
+                  {
+                        "text": "Rayagada travel readiness and crew deployment SLA confirmed.",
+                        "done": false
+                  },
+                  {
+                        "text": "Final studio contract signed with milestone payment schedule.",
+                        "done": false
+                  }
+            ],
+            "linkedEntities": [
+                  "VDR-003"
+            ],
+            "gate": null
+      },
+      {
+            "id": "TSK-209",
+            "wbs": "3.1.2",
+            "stage": "STAGE_01",
+            "track": "fleet",
+            "title": "Rayagada Engagement Venue Booking & Layout Sign-off (`VEN-001`)",
+            "lead": "Sree & Krushna / Family Leads",
+            "priority": "Critical",
+            "status": "Planned",
+            "timeTag": "T-120 Days",
+            "desc": "Execute booking agreement for Rayagada Convention Center / Kalyan Mandap (`VEN-001`) for the 11th Feb 2027 Engagement ceremony, verifying hall capacity (300+ guests), dining pavilion, VIP green rooms, and parking.",
+            "checklist": [
+                  {
+                        "text": "Site visit inspection completed for Rayagada venue hall and dining capacity.",
+                        "done": false
+                  },
+                  {
+                        "text": "2 Air-conditioned VIP green rooms (Bride & Groom) inspected.",
+                        "done": false
+                  },
+                  {
+                        "text": "40 kVA generator power backup confirmed with venue management.",
+                        "done": false
+                  },
+                  {
+                        "text": "Formal booking advance payment executed (`CTR-008`).",
+                        "done": false
+                  }
+            ],
+            "linkedEntities": [
+                  "VEN-001",
+                  "EVT-001",
+                  "CTR-008"
+            ],
+            "gate": null
+      },
+      {
+            "id": "TSK-210",
+            "wbs": "3.4.2",
+            "stage": "STAGE_01",
+            "track": "fleet",
+            "title": "Rayagada Engagement Decorator Procurement & Floral SLA",
+            "lead": "PER-006 / PER-008 (Family Leads)",
+            "priority": "High",
+            "status": "Planned",
+            "timeTag": "T-90 Days",
+            "desc": "Contract the event decorator for the 11th Feb 2027 Engagement ceremony in Rayagada based on `SPEC-PROC-DECOR-ENG-001`, locking in the fresh marigold & jasmine entrance torana, elevated ring exchange stage, floral backdrop, and lighting setup.",
+            "checklist": [
+                  {
+                        "text": "Decorator questionnaire and quote comparison completed.",
+                        "done": false
+                  },
+                  {
+                        "text": "30 ft × 18 ft stage layout, 8 ft floral ring, and monogram backdrop approved.",
+                        "done": false
+                  },
+                  {
+                        "text": "100% fresh floral delivery guarantee by 04:00 AM on event day.",
+                        "done": false
+                  },
+                  {
+                        "text": "300 Banquet chairs with gold tie-backs and VIP seating sofa included in SLA.",
+                        "done": false
+                  },
+                  {
+                        "text": "Sound system and stage microphone rider signed with decorator.",
+                        "done": false
+                  }
+            ],
+            "linkedEntities": [
+                  "VDR-008"
             ],
             "gate": null
       },
