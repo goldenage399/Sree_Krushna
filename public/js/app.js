@@ -622,7 +622,7 @@ window.dataLayer = window.dataLayer || [];
           <td><strong data-testid="task-owner-${t.id}" style="white-space: nowrap;">${t.lead || 'Committee'}</strong></td>
           <td><span style="color: ${t.priority === 'Critical' ? 'var(--crimson-royal)' : t.priority === 'High' ? 'var(--gold-bright)' : 'var(--text-muted)'}; font-weight: 700;" data-testid="task-priority-${t.id}">${t.priority || 'Medium'}</span></td>
           <td><span class="status-badge ${isDone ? 'status-completed' : t.status === 'In-Progress' ? 'status-progress' : 'status-planned'}" data-testid="task-status-${t.id}">${t.status || 'Planned'}</span></td>
-          <td style="text-align: center;"><button style="background: none; border: none; color: var(--crimson-royal); cursor: pointer; font-size: 1.4rem; min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center;" data-testid="task-delete-${t.id}" aria-label="Delete task ${t.id}" onclick="deleteMasterTask(${index})">&times;</button></td>
+          <td style="text-align: center;"><button class="header-action-btn" data-testid="task-edit-${t.id}" aria-label="Update task ${t.id}" onclick="loadTaskForEdit('${t.id}')" style="min-height: 28px; padding: 2px 10px; font-size: 0.74rem; background: rgba(212, 168, 67, 0.1); border: 1px solid rgba(212, 168, 67, 0.35); color: var(--gold-bright); border-radius: var(--radius-sm, 6px); cursor: pointer; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;"><span>✏️</span><span>Update</span></button></td>
         `;
         tbody.appendChild(tr);
       });
@@ -644,12 +644,95 @@ window.dataLayer = window.dataLayer || [];
       renderSwimlaneMatrix();
     }
 
-    function deleteMasterTask(index) {
-      currentTasks.splice(index, 1);
-      saveMasterTasks();
-      renderTasks();
-      renderStageStrip();
-      renderSwimlaneMatrix();
+    function loadTaskForEdit(taskId) {
+      const t = currentTasks.find(x => x.id === taskId);
+      if (!t) return;
+
+      // Switch tab to Tasks if not already active
+      switchTab('tab-tasks');
+
+      // Populate form fields
+      const idInput = document.getElementById('editing-task-id');
+      const titleInput = document.getElementById('new-task-title');
+      const eventSelect = document.getElementById('new-task-event');
+      const ownerSelect = document.getElementById('new-task-owner');
+      const prioritySelect = document.getElementById('new-task-priority');
+      const submitBtn = document.getElementById('taskFormSubmitBtn');
+      const cancelBtn = document.getElementById('taskFormCancelBtn');
+      const formBox = document.getElementById('taskFormBox');
+
+      if (idInput) idInput.value = t.id;
+      if (titleInput) titleInput.value = t.title || '';
+      if (eventSelect) eventSelect.value = t.stage || t.eventScope || 'Master_Planning';
+      if (ownerSelect) ownerSelect.value = t.lead || 'Planning Committee';
+      if (prioritySelect) prioritySelect.value = t.priority || 'Medium';
+
+      if (submitBtn) {
+        submitBtn.textContent = `💾 Save Changes (${t.id})`;
+        submitBtn.style.background = 'linear-gradient(135deg, var(--gold-bright) 0%, var(--gold-antique) 100%)';
+        submitBtn.style.color = '#0b0f19';
+      }
+      if (cancelBtn) cancelBtn.style.display = 'inline-flex';
+
+      // Smooth scroll to form box & highlight it
+      if (formBox) {
+        formBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        formBox.classList.add('editing-highlight');
+        setTimeout(() => formBox.classList.remove('editing-highlight'), 1500);
+      }
+      if (titleInput) titleInput.focus();
+    }
+
+    function cancelTaskEdit() {
+      const idInput = document.getElementById('editing-task-id');
+      const titleInput = document.getElementById('new-task-title');
+      const submitBtn = document.getElementById('taskFormSubmitBtn');
+      const cancelBtn = document.getElementById('taskFormCancelBtn');
+
+      if (idInput) idInput.value = '';
+      if (titleInput) titleInput.value = '';
+      if (submitBtn) {
+        submitBtn.textContent = '+ Propose Task →';
+        submitBtn.style.background = '';
+        submitBtn.style.color = '';
+      }
+      if (cancelBtn) cancelBtn.style.display = 'none';
+    }
+
+    function submitTaskForm() {
+      const idInput = document.getElementById('editing-task-id');
+      const editingId = idInput ? idInput.value : '';
+
+      if (editingId) {
+        // UPDATE EXISTING TASK IN PLACE
+        const t = currentTasks.find(x => x.id === editingId);
+        if (!t) return;
+
+        const titleInput = document.getElementById('new-task-title');
+        const eventSelect = document.getElementById('new-task-event');
+        const ownerSelect = document.getElementById('new-task-owner');
+        const prioritySelect = document.getElementById('new-task-priority');
+
+        const newTitle = titleInput ? titleInput.value.trim() : '';
+        if (!newTitle) {
+          alert('Task title cannot be empty.');
+          return;
+        }
+
+        t.title = newTitle;
+        if (eventSelect) t.stage = eventSelect.value;
+        if (ownerSelect) t.lead = ownerSelect.value;
+        if (prioritySelect) t.priority = prioritySelect.value;
+
+        saveMasterTasks();
+        renderTasks();
+        renderStageStrip();
+        renderSwimlaneMatrix();
+        cancelTaskEdit();
+      } else {
+        // ADD NEW TASK
+        addNewTask();
+      }
     }
 
     function generateNextTaskId() {
@@ -1446,7 +1529,7 @@ window.dataLayer = window.dataLayer || [];
     }
 
     // ── DO_PKOS Operating Studio (Sandbox) Engine ───────────────────
-    let currentDopkosView = 'RUNSHEET'; // 'RUNSHEET' | 'ROADMAP' | 'MATRIX' | 'CRITICAL'
+    let currentDopkosView = 'THREADS'; // 'THREADS' | 'RUNSHEET' | 'ROADMAP' | 'MATRIX' | 'CRITICAL'
     let currentDopkosEvent = 'ALL';
     let currentDopkosTrack = 'ALL';
 
@@ -1653,7 +1736,9 @@ window.dataLayer = window.dataLayer || [];
       const container = document.getElementById('dopkos-canvas-container');
       if (!container) return;
 
-      if (currentDopkosView === 'RUNSHEET') {
+      if (currentDopkosView === 'THREADS') {
+        renderDopkosThreads(container);
+      } else if (currentDopkosView === 'RUNSHEET') {
         renderDopkosRunSheet(container);
       } else if (currentDopkosView === 'ROADMAP') {
         renderDopkosRoadmap(container);
@@ -1869,6 +1954,414 @@ window.dataLayer = window.dataLayer || [];
       container.innerHTML = html;
     }
 
+    // View 5: 🧵 Workstream Journey (Pulling the Thread Engine)
+    let activeDopkosThread = 'PHOTO';
+
+    const WORKSTREAM_THREADS = {
+      PHOTO: {
+        id: 'PHOTO',
+        icon: '📸',
+        title: 'Photography & Cinematography Journey',
+        lead: 'Media Lead & Couple (Sree & Krushna)',
+        tagline: 'From shortlisting with the 36-Question SLA to Pre-wedding permits, Rayagada shoot, and 4TB raw archiving.',
+        steps: [
+          {
+            stepNum: 1,
+            horizon: 'T-180 (TODAY)',
+            status: 'ACTIVE_TODAY',
+            title: 'Shortlist & Evaluate 3 Lead Photographers with 36-Question SLA',
+            description: 'Evaluate camera rigs (Sony A7IV / FX3), macro lenses for vermilion/rings, Purohit lapel audio sync, dual-card backup, and confirm lead shooter presence.',
+            deliverable: 'Signed SLA with 4TB raw data backup clause & 48h teaser commitment',
+            ctaLabel: 'Propose Photographer Candidate',
+            ctaDomain: 'Vendors',
+            ctaNotes: 'Evaluate wedding photographer quote against 36-question SLA'
+          },
+          {
+            stepNum: 2,
+            horizon: 'T-150',
+            status: 'NEXT_UP',
+            title: 'Select & Permit Pre-Wedding Locations',
+            description: 'Choose 2 curated Odisha backdrops: Puri Blue Flag Beach (sunrise seascape) vs Konark Marine Drive vs Muktesvara Temple heritage surroundings.',
+            deliverable: 'Location permits secured, travel itinerary, wardrobe lookbook aligned with Sree'
+          },
+          {
+            stepNum: 3,
+            horizon: 'T-120',
+            status: 'FUTURE',
+            title: 'Rayagada Engagement Coverage Protocol',
+            description: 'Coordinate photographer travel to Rayagada, establish lighting for evening Patra Paribartana & ring ceremony vows in indoor hall.',
+            deliverable: 'Engagement shot-list: Paternal vow exchange, horoscope close-up, ring macro'
+          },
+          {
+            stepNum: 4,
+            horizon: 'T-30',
+            status: 'FUTURE',
+            title: 'Drone Clearances & Lapel Audio Hardware Dry-Run',
+            description: 'Verify DGCA drone clearance, test wireless Purohit lapel mics against fire-homa frequency interference, and calibrate 125kVA generator power isolation.',
+            deliverable: 'Audio sanity test sign-off with Chief Purohit'
+          },
+          {
+            stepNum: 5,
+            horizon: 'Day 0B (10 Mar)',
+            status: 'FUTURE',
+            title: 'Wedding Day 2-Camera Mandap Sanctum & Reception Protocol',
+            description: '04:00 bridal detail macro shots -> 07:30 Barat arrival -> 08:00 Lagna Muhurat (uninterrupted Hastaganthi & Sindoor Daan) -> 19:00 Royal Reception live feed.',
+            deliverable: 'Mandap sacred zone non-intrusive lens protocol enforced'
+          },
+          {
+            stepNum: 6,
+            horizon: 'Post-Wedding',
+            status: 'FUTURE',
+            title: '48h Teaser, 4TB Raw Data Handover & Luxury Album Print',
+            description: 'Receive 60-second highlight reel within 48h for family broadcast. Collect uncompressed raw footage on encrypted drive. Proof and sign off 80-page legacy album.',
+            deliverable: 'Physical album delivery & cloud archive lock'
+          }
+        ]
+      },
+      ATTIRE: {
+        id: 'ATTIRE',
+        icon: '👗',
+        title: 'Handloom Trousseau & Bridal Attire Journey',
+        lead: 'Bride Team (Sree & Mother)',
+        tagline: 'Authentic Nuapatna Baula Patani, Cuttack Silver Filigree Mukutas, and Reception Silk.',
+        steps: [
+          {
+            stepNum: 1,
+            horizon: 'T-180 (TODAY)',
+            status: 'ACTIVE_TODAY',
+            title: 'Commission Nuapatna Master Weaver for Baula Patani & Dhoti',
+            description: 'Directly commission authentic natural dyed Mulberry silk saree with traditional temple borders and coordinated Groom yellow silk Dhoti & Kurta.',
+            deliverable: 'Weaving order placed with 90-day production window',
+            ctaLabel: 'Propose Handloom Weaver',
+            ctaDomain: 'Vision',
+            ctaNotes: 'Commission Nuapatna weaver for authentic Baula Patani saree'
+          },
+          {
+            stepNum: 2,
+            horizon: 'T-150',
+            status: 'NEXT_UP',
+            title: 'Head-Size Measurement for Cuttack Silver Filigree Mukutas',
+            description: 'Coordinate with Cuttack artisans to measure Bride & Groom head circumferences for lightweight, bespoke silver filigree crowns.',
+            deliverable: 'Bespoke silver Mukuta pair crafting confirmed'
+          },
+          {
+            stepNum: 3,
+            horizon: 'T-120',
+            status: 'FUTURE',
+            title: 'Finalize Reception Evening Silk & Groom Royal Sherwani',
+            description: 'Select Bride reception couture and Groom bespoke royal bandhgala/sherwani with coordinated accents.',
+            deliverable: 'Attire ensemble locked and tailored'
+          },
+          {
+            stepNum: 4,
+            horizon: 'T-60',
+            status: 'FUTURE',
+            title: 'MUA Hair Styling & Saree Draping Trial',
+            description: 'Complete trial session with bridal makeup artist for longevity, humidity resistance, and traditional Odia Mukuta fastening.',
+            deliverable: 'MUA lookbook approved by Sree'
+          },
+          {
+            stepNum: 5,
+            horizon: 'Day 0A & 0B',
+            status: 'FUTURE',
+            title: 'Ceremonial Draping for Mangan & Sacred Mandap Sanctum',
+            description: 'Mangan turmeric ritual bath dressing -> 05:30 wedding morning jewellery fitting & sacred Baula Patani draping -> Evening reception transformation.',
+            deliverable: 'Smooth 3-change wardrobe schedule executed'
+          }
+        ]
+      },
+      VENUE: {
+        id: 'VENUE',
+        icon: '🏛️',
+        title: 'Venues, Hospitality & Transport Journey',
+        lead: 'Groom Uncle & Fleet Coordinator',
+        tagline: 'Rayagada Nirbandha Hall, BBSR 850p Mandap, Hotel Room Blocks & Airport Shuttles.',
+        steps: [
+          {
+            stepNum: 1,
+            horizon: 'T-180 (TODAY)',
+            status: 'ACTIVE_TODAY',
+            title: 'Sign Rayagada & BBSR Venue Contracts with Power SLAs',
+            description: 'Lock Rayagada Nirbandha AC banquet (11 Feb 2027) and BBSR Grand Mandap & Lawn (10 Mar 2027) with dedicated 125kVA generator & rain contingency clauses.',
+            deliverable: 'Signed venue contracts with clear load-in and cleanup windows',
+            ctaLabel: 'Propose Venue Agreement',
+            ctaDomain: 'Venues',
+            ctaNotes: 'Finalize venue contracts with 125kVA power generator backup'
+          },
+          {
+            stepNum: 2,
+            horizon: 'T-150',
+            status: 'NEXT_UP',
+            title: 'Block Hotel Rooms in Rayagada & Bhubaneswar',
+            description: 'Reserve 25 AC rooms in Rayagada and 45 rooms in BBSR. Allocate ground-floor / near-lift rooms for elders.',
+            deliverable: 'Room inventory locked with group discounts'
+          },
+          {
+            stepNum: 3,
+            horizon: 'T-90',
+            status: 'FUTURE',
+            title: 'Collect Outstation/NRI Guest Travel Windows',
+            description: 'Issue Save-The-Dates with travel intake form to compile flight and train arrivals into BBI and RGDA.',
+            deliverable: 'Consolidated guest arrival manifest'
+          },
+          {
+            stepNum: 4,
+            horizon: 'T-14',
+            status: 'FUTURE',
+            title: 'Fleet Mobilisation & Driver Contact Roster',
+            description: 'Contract 8 dedicated Innovas/Travellers with designated route leaders and emergency contact cards in Odia & English.',
+            deliverable: 'Driver duty chart and dispatch hotline live'
+          },
+          {
+            stepNum: 5,
+            horizon: 'Day 0A & 0B',
+            status: 'FUTURE',
+            title: 'Welcome Concierge, Valet & Departure Handover',
+            description: 'Manage hotel check-in desks, Barat parking escort, and post-reception luggage departure.',
+            deliverable: '100% guest check-in and checkout reconciled'
+          }
+        ]
+      },
+      FOOD: {
+        id: 'FOOD',
+        icon: '🍲',
+        title: 'Authentic Odia Catering & Mithai Journey',
+        lead: 'Food & Hospitality Lead',
+        tagline: '21-Item Odia Feast, Chhena Poda Shelf-Life Tracking, and FSSAI Food Safety.',
+        steps: [
+          {
+            stepNum: 1,
+            horizon: 'T-180 (TODAY)',
+            status: 'ACTIVE_TODAY',
+            title: 'Menu Tasting & Formulation of Authentic 21-Item Feast',
+            description: 'Formulate master menu: Kanika, Dalma, Paneer Besara, Dahi Baigana, Potola Rasa, Machha Besara (non-veg counters segregated), and Ambula Rai.',
+            deliverable: 'Approved multi-course tasting menu sign-off',
+            ctaLabel: 'Propose Catering Menu',
+            ctaDomain: 'Food',
+            ctaNotes: 'Approve authentic 21-item Odia catering menu with FSSAI hygiene SLA'
+          },
+          {
+            stepNum: 2,
+            horizon: 'T-120',
+            status: 'NEXT_UP',
+            title: 'Book Traditional Mithai Artisans & Shelf-Life Batches',
+            description: 'Contract renowned confectioners for authentic Pahala Rasagola, Nayagarh Chhena Poda, Nimapada Chhena Jhili, and Puri Khaja.',
+            deliverable: 'Staggered delivery batches aligned to event mornings'
+          },
+          {
+            stepNum: 3,
+            horizon: 'T-60',
+            status: 'FUTURE',
+            title: 'FSSAI Catering Hygiene Audit & Water Verification',
+            description: 'Inspect caterer commercial kitchen, verify RO potable water supply for cooking/drinking, and audit food handler medical certificates.',
+            deliverable: 'Food safety audit compliance certificate'
+          },
+          {
+            stepNum: 4,
+            horizon: 'Day 0A & 0B',
+            status: 'FUTURE',
+            title: 'Sattvic Priest Meals, Live Counters & 850p Buffet Waves',
+            description: 'Serve sattvic without onion/garlic meals to Purohits prior to muhurat. Manage 3 parallel buffet lines to keep wait times under 4 minutes.',
+            deliverable: '850+ guests served with zero stockouts'
+          }
+        ]
+      },
+      CUSTODY: {
+        id: 'CUSTODY',
+        icon: '💍',
+        title: 'Precious Gold, Silver & Vault Custody Journey',
+        lead: 'Security & Custody Lead (Parents Council)',
+        tagline: 'Two-Person Dual Custody, Photographic Cataloging & Mandap Handshake.',
+        steps: [
+          {
+            stepNum: 1,
+            horizon: 'T-180 (TODAY)',
+            status: 'ACTIVE_TODAY',
+            title: 'Photographic Gold Jewellery Cataloging & Hallmarking Audit',
+            description: 'Photograph, weigh, and catalog every bridal gold ornament with BIS hallmark certificates and assign secure transit bags.',
+            deliverable: 'Signed Master Asset Ledger with high-res photos',
+            ctaLabel: 'Propose Custody Ledger Entry',
+            ctaDomain: 'Governance',
+            ctaNotes: 'Log gold jewellery inventory into secure two-person custody ledger'
+          },
+          {
+            stepNum: 2,
+            horizon: 'T-120',
+            status: 'NEXT_UP',
+            title: 'Cuttack Silver Filigree Mukutas Inspection & Safe Storage',
+            description: 'Receive bespoke silver Mukuta crowns from artisans, verify craftsmanship, and lock in velvet protective strongboxes.',
+            deliverable: 'Silver Mukuta vault custody receipt signed'
+          },
+          {
+            stepNum: 3,
+            horizon: 'T-14',
+            status: 'FUTURE',
+            title: 'Designate Two-Person Custody Teams & Bank Locker Schedule',
+            description: 'Formally assign two family elders (one from Bride, one from Groom side) who hold dual keys to the on-site hotel vault.',
+            deliverable: 'Vault dual-signatory protocol locked'
+          },
+          {
+            stepNum: 4,
+            horizon: 'Day 0B (04:00)',
+            status: 'FUTURE',
+            title: 'Vault Opening & Mandap Jewellery Handshake',
+            description: 'Open vault at 04:00 under witnessed sign-off for bridal dressing. Escort Mukuta to mandap at 08:30 for coronation.',
+            deliverable: 'Dual sign-off on asset transit log'
+          },
+          {
+            stepNum: 5,
+            horizon: 'Day 0B (23:00)',
+            status: 'FUTURE',
+            title: 'Post-Reception Vault Resealing & Cash/Gift Reconciliation',
+            description: 'Collect all jewellery, shagun envelopes, and gold gifts. Re-weigh and seal into hotel safe under dual signature.',
+            deliverable: 'Vault sealed and zero-discrepancy reconciliation report'
+          }
+        ]
+      },
+      LITURGY: {
+        id: 'LITURGY',
+        icon: '🕉️',
+        title: 'Vedic Liturgy, Chief Purohit & Samagri Journey',
+        lead: 'Chief Purohit & Groom Father',
+        tagline: '08:00 Lagna Muhurat, Deva Nimantrana, Kusha Grass & Astrological Sanctum.',
+        steps: [
+          {
+            stepNum: 1,
+            horizon: 'T-180 (TODAY)',
+            status: 'ACTIVE_TODAY',
+            title: 'Appoint Chief Purohit & Lock 08:00 IST Lagna Muhurat',
+            description: 'Formally engage respected Odia Brahmin Purohit, confirm exact Lagna Muhurat window (08:00 IST on 10 March 2027), and establish ritual precedence.',
+            deliverable: 'Purohit confirmation letter and sacred muhurat lock',
+            ctaLabel: 'Propose Liturgy Note',
+            ctaDomain: 'Rituals',
+            ctaNotes: 'Formalize Chief Purohit appointment and 08:00 Lagna Muhurat lock'
+          },
+          {
+            stepNum: 2,
+            horizon: 'T-120',
+            status: 'NEXT_UP',
+            title: 'Consecrated Vidhi-Patra & Deva Nimantrana Package',
+            description: 'Draft the sacred liturgical sequence and present first invitation with betel nut & cloth to Lord Jagannath Temple, Puri.',
+            deliverable: 'Deva Nimantrana offered at Puri Jagannath temple'
+          },
+          {
+            stepNum: 3,
+            horizon: 'T-14',
+            status: 'FUTURE',
+            title: 'Samagri Trunks Packing & Holy Mahaprasad Procured',
+            description: 'Procure pure ghee, dry coconuts, Kusha grass, Ganga jal, raw turmeric, and fresh Mahaprasad from Puri.',
+            deliverable: '100% samagri checklist verified with Chief Priest'
+          },
+          {
+            stepNum: 4,
+            horizon: 'Day 0A & 0B',
+            status: 'FUTURE',
+            title: 'Execute Sacred Rites in Exact Purohit Sequence',
+            description: 'Officiate Nirbandha (11 Feb) -> Mangan turmeric bath -> Kanyadaan, Hastaganthi knot, Lajahoma, Saptapadi, Sindoor Daan, Mukuta coronation.',
+            deliverable: 'Irreversible Vedic rites completed without delay'
+          }
+        ]
+      }
+    };
+
+    function selectDopkosThread(threadKey) {
+      activeDopkosThread = threadKey;
+      renderDoPkosStudio();
+    }
+
+    function renderDopkosThreads(container) {
+      const thread = WORKSTREAM_THREADS[activeDopkosThread] || WORKSTREAM_THREADS.PHOTO;
+
+      // Thread Selector Tabs
+      let selectorHtml = `<div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px;">`;
+      Object.keys(WORKSTREAM_THREADS).forEach(key => {
+        const t = WORKSTREAM_THREADS[key];
+        const isActive = activeDopkosThread === key;
+        const activeStyle = isActive 
+          ? 'background: var(--gold-gradient); color: #080b11; font-weight: 700; border-color: transparent;' 
+          : 'background: var(--bg-surface-elevated); color: var(--text-main); border: 1px solid var(--border-subtle);';
+        selectorHtml += `
+          <button class="theme-toggle-btn" onclick="selectDopkosThread('${key}')" style="font-size: 0.78rem; padding: 6px 14px; ${activeStyle}">
+            ${t.icon} ${t.title.split(' ')[0]}
+          </button>
+        `;
+      });
+      selectorHtml += `</div>`;
+
+      // Active Thread Header Banner
+      let bannerHtml = `
+        <div style="background: linear-gradient(135deg, rgba(245, 197, 24, 0.12), var(--bg-surface)); border: 1px solid var(--gold-antique); border-radius: var(--radius-md); padding: 16px; margin-bottom: 18px;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 1.5rem;">${thread.icon}</span>
+                <h3 style="margin: 0; font-family: var(--font-display); color: var(--gold-bright);">${thread.title}</h3>
+              </div>
+              <p style="color: var(--text-muted); font-size: 0.85rem; margin: 6px 0 0; line-height: 1.4;">${thread.tagline}</p>
+            </div>
+            <div style="text-align: right;">
+              <span class="status-badge" style="background: rgba(16, 185, 129, 0.15); color: var(--emerald-royal); font-size: 0.74rem;">👤 Lead: ${thread.lead}</span>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Chronological Journey Steps
+      let stepsHtml = `<div style="display: flex; flex-direction: column; gap: 14px; position: relative;">`;
+
+      thread.steps.forEach((s) => {
+        const isActiveToday = s.status === 'ACTIVE_TODAY';
+        const isNextUp = s.status === 'NEXT_UP';
+
+        const stepBadge = isActiveToday 
+          ? `<span class="status-badge status-urgent" style="font-size: 0.72rem; animation: pulse 2s infinite;">👉 DO THIS TODAY</span>`
+          : (isNextUp ? `<span class="status-badge" style="background: rgba(59, 130, 246, 0.15); color: var(--sapphire-royal); font-size: 0.72rem;">⚪ NEXT UP</span>` : `<span class="status-badge" style="background: var(--bg-surface-elevated); color: var(--text-dim); font-size: 0.72rem;">⚪ FUTURE</span>`);
+
+        const cardBorder = isActiveToday 
+          ? `border: 2px solid var(--gold-bright); background: rgba(245, 197, 24, 0.06); box-shadow: 0 0 16px rgba(245, 197, 24, 0.15);` 
+          : `border: 1px solid var(--border-subtle); background: var(--bg-surface);`;
+
+        let actionCta = '';
+        if (s.ctaLabel) {
+          actionCta = `
+            <div style="margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--border-subtle); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+              <span style="font-size: 0.76rem; color: var(--text-dim);">Deliverable: <strong>${s.deliverable}</strong></span>
+              <button class="btn btn-primary" onclick="openUniversalIntakeModal({ domain: '${s.ctaDomain}', contextLabel: '${thread.title}', initialNotes: '${s.ctaNotes}' })" style="font-size: 0.76rem; padding: 5px 14px; background: var(--gold-gradient); color: #080b11; font-weight: 700;">
+                ⚡ ${s.ctaLabel} →
+              </button>
+            </div>
+          `;
+        } else {
+          actionCta = `
+            <div style="margin-top: 10px; font-size: 0.76rem; color: var(--text-dim);">
+              Deliverable: <strong>${s.deliverable}</strong>
+            </div>
+          `;
+        }
+
+        stepsHtml += `
+          <div style="${cardBorder} border-radius: var(--radius-md); padding: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-family: monospace; font-weight: 800; color: var(--gold-bright); background: rgba(245, 197, 24, 0.1); padding: 2px 8px; border-radius: var(--radius-sm); font-size: 0.8rem;">STEP ${s.stepNum} &bull; ${s.horizon}</span>
+                <h4 style="margin: 0; font-size: 0.95rem; color: var(--text-main); font-weight: 700;">${s.title}</h4>
+              </div>
+              ${stepBadge}
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.84rem; margin: 0 0 6px; line-height: 1.45;">
+              ${s.description}
+            </p>
+            ${actionCta}
+          </div>
+        `;
+      });
+
+      stepsHtml += `</div>`;
+
+      container.innerHTML = selectorHtml + bannerHtml + stepsHtml;
+    }
+
+
 
     // ── Global System Initialization ───────────────────────────────
     updateStageIndicator();
@@ -1909,13 +2402,16 @@ window.dataLayer = window.dataLayer || [];
     window.toggleConsoleChecklist = toggleConsoleChecklist;
     window.toggleChecklistItem = toggleConsoleChecklist; // alias
     window.toggleMasterTask = toggleMasterTask;
-    window.deleteMasterTask = deleteMasterTask;
+    window.loadTaskForEdit = loadTaskForEdit;
+    window.cancelTaskEdit = cancelTaskEdit;
+    window.submitTaskForm = submitTaskForm;
     window.setTaskStatus = setTaskStatus;
     window.addNewTask = addNewTask;
     window.selectStage = selectStage;
     window.setDopkosView = setDopkosView;
     window.filterDopkosEvent = filterDopkosEvent;
     window.filterDopkosTrack = filterDopkosTrack;
+    window.selectDopkosThread = selectDopkosThread;
     window.renderDoPkosStudio = renderDoPkosStudio;
     window.filterSwimlaneTrack = filterSwimlaneTrack;
     window.filterSwimlane = filterSwimlaneTrack; // alias
