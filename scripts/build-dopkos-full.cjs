@@ -844,52 +844,10 @@ const dopkosEngineCode = `/**
     renderDoPkosStudio();
   }
 
-  function renderSubViewWithHUD(container, title, renderBodyFn) {
-    container.innerHTML = '<div id="dopkos-5zone-frame" style="display: flex; flex-direction: column; height: 100%; flex: 1; min-height: 0; position: relative; background: #080b11; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-subtle);">' +
-      '<!-- Zone 1 HUD -->' +
-      '<div id="z1" style="display: flex; justify-content: space-between; align-items: center; padding: 6px 14px; background: var(--bg-surface-elevated); border-bottom: 1px solid var(--border-subtle); min-height: 44px; flex-shrink: 0; gap: 8px; flex-wrap: wrap;">' +
-        '<div style="display: flex; align-items: center; gap: 10px;">' +
-          '<span style="font-family: var(--font-display); font-size: 0.92rem; font-weight: 800; color: var(--gold-bright);">👑 SREE KRUSHNA MARRIAGE OS ▾</span>' +
-          '<span id="z1-stage-text" style="font-size: 0.74rem; color: var(--text-dim); font-weight: 700;">' + title + '</span>' +
-        '</div>' +
-        '<div id="z1-view-switcher" style="display: flex; gap: 4px; background: rgba(0,0,0,0.35); padding: 3px 5px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); flex-wrap: wrap;">' +
-          '<button class="dopkos-view-btn ' + (currentDopkosView === 'TOPOLOGY' ? 'active' : '') + '" onclick="setDopkosView(\\\'TOPOLOGY\\\')" style="font-size: 0.72rem; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-subtle); background: var(--bg-surface); color: var(--text-muted); cursor: pointer;">🕸️ DAG</button>' +
-          '<button class="dopkos-view-btn ' + (currentDopkosView === 'THREADS' ? 'active' : '') + '" onclick="setDopkosView(\\\'THREADS\\\')" style="font-size: 0.72rem; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-subtle); background: var(--bg-surface); color: var(--text-muted); cursor: pointer;">🧵 Threads</button>' +
-          '<button class="dopkos-view-btn ' + (currentDopkosView === 'RUNSHEET' ? 'active' : '') + '" onclick="setDopkosView(\\\'RUNSHEET\\\')" style="font-size: 0.72rem; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-subtle); background: var(--bg-surface); color: var(--text-muted); cursor: pointer;">⏱️ Run Sheet</button>' +
-          '<button class="dopkos-view-btn ' + (currentDopkosView === 'ROADMAP' ? 'active' : '') + '" onclick="setDopkosView(\\\'ROADMAP\\\')" style="font-size: 0.72rem; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-subtle); background: var(--bg-surface); color: var(--text-muted); cursor: pointer;">📅 Gantt</button>' +
-          '<button class="dopkos-view-btn ' + (currentDopkosView === 'MATRIX' ? 'active' : '') + '" onclick="setDopkosView(\\\'MATRIX\\\')" style="font-size: 0.72rem; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-subtle); background: var(--bg-surface); color: var(--text-muted); cursor: pointer;">📊 Matrix</button>' +
-          '<button class="dopkos-view-btn ' + (currentDopkosView === 'CRITICAL' ? 'active' : '') + '" onclick="setDopkosView(\\\'CRITICAL\\\')" style="font-size: 0.72rem; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-subtle); background: var(--bg-surface); color: var(--text-muted); cursor: pointer;">⚡ Critical</button>' +
-        '</div>' +
-        '<div id="z1-kpis" style="display: flex; gap: 8px;"></div>' +
-      '</div>' +
-      '<div id="dopkos-subview-body" style="flex: 1; overflow: auto; padding: 16px; background: #080b11;"></div>' +
-    '</div>';
-    renderZ1Kpis();
-    const body = document.getElementById('dopkos-subview-body');
-    if (body && renderBodyFn) renderBodyFn(body);
-  }
-
   function renderDoPkosStudio() {
     const container = document.getElementById('dopkos-canvas-container');
     if (!container) return;
-
-    syncDopkosViewButtons();
-
-    if (currentDopkosView === 'TOPOLOGY') {
-      render5ZoneTopology(container);
-    } else if (currentDopkosView === 'THREADS') {
-      renderSubViewWithHUD(container, 'PULL-A-THREAD WORKSTREAM JOURNEYS', (body) => {
-        if (window.renderDopkosThreads) window.renderDopkosThreads(body);
-      });
-    } else if (currentDopkosView === 'RUNSHEET') {
-      renderSubViewWithHUD(container, 'DAY-OF LITURGICAL RUN SHEET', renderDopkosRunSheet);
-    } else if (currentDopkosView === 'ROADMAP') {
-      renderSubViewWithHUD(container, 'MACRO GANTT PLANNING ROADMAP', renderDopkosRoadmap);
-    } else if (currentDopkosView === 'MATRIX') {
-      renderSubViewWithHUD(container, '2D ROLE-BY-STAGE OPERATIONAL MATRIX', renderDopkosMatrix);
-    } else if (currentDopkosView === 'CRITICAL') {
-      renderSubViewWithHUD(container, 'ZERO-SLACK CRITICAL PATH CHAIN', renderDopkosCritical);
-    }
+    render5ZoneTopology(container);
   }
 
   function render5ZoneTopology(container) {
@@ -897,18 +855,10 @@ const dopkosEngineCode = `/**
     
     container.innerHTML = '<div id="dopkos-5zone-frame" style="display: flex; flex-direction: column; height: 100%; flex: 1; min-height: 0; position: relative; background: #080b11; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-subtle);">' +
       '<!-- Zone 1 HUD -->' +
-      '<div id="z1" style="display: flex; justify-content: space-between; align-items: center; padding: 6px 14px; background: var(--bg-surface-elevated); border-bottom: 1px solid var(--border-subtle); min-height: 44px; flex-shrink: 0; gap: 8px; flex-wrap: wrap;">' +
+      '<div id="z1" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 16px; background: var(--bg-surface-elevated); border-bottom: 1px solid var(--border-subtle); height: 44px; flex-shrink: 0;">' +
         '<div style="display: flex; align-items: center; gap: 10px;">' +
           '<span style="font-family: var(--font-display); font-size: 0.92rem; font-weight: 800; color: var(--gold-bright);">👑 SREE KRUSHNA MARRIAGE OS ▾</span>' +
           '<span id="z1-stage-text" style="font-size: 0.74rem; color: var(--text-dim); font-weight: 700;">STAGE 1 OF 6 — T-180 SACRED FOUNDATION</span>' +
-        '</div>' +
-        '<div id="z1-view-switcher" style="display: flex; gap: 4px; background: rgba(0,0,0,0.35); padding: 3px 5px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); flex-wrap: wrap;">' +
-          '<button class="dopkos-view-btn ' + (currentDopkosView === 'TOPOLOGY' ? 'active' : '') + '" onclick="setDopkosView(\\\'TOPOLOGY\\\')" style="font-size: 0.72rem; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-subtle); background: var(--bg-surface); color: var(--text-muted); cursor: pointer;">🕸️ DAG</button>' +
-          '<button class="dopkos-view-btn ' + (currentDopkosView === 'THREADS' ? 'active' : '') + '" onclick="setDopkosView(\\\'THREADS\\\')" style="font-size: 0.72rem; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-subtle); background: var(--bg-surface); color: var(--text-muted); cursor: pointer;">🧵 Threads</button>' +
-          '<button class="dopkos-view-btn ' + (currentDopkosView === 'RUNSHEET' ? 'active' : '') + '" onclick="setDopkosView(\\\'RUNSHEET\\\')" style="font-size: 0.72rem; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-subtle); background: var(--bg-surface); color: var(--text-muted); cursor: pointer;">⏱️ Run Sheet</button>' +
-          '<button class="dopkos-view-btn ' + (currentDopkosView === 'ROADMAP' ? 'active' : '') + '" onclick="setDopkosView(\\\'ROADMAP\\\')" style="font-size: 0.72rem; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-subtle); background: var(--bg-surface); color: var(--text-muted); cursor: pointer;">📅 Gantt</button>' +
-          '<button class="dopkos-view-btn ' + (currentDopkosView === 'MATRIX' ? 'active' : '') + '" onclick="setDopkosView(\\\'MATRIX\\\')" style="font-size: 0.72rem; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-subtle); background: var(--bg-surface); color: var(--text-muted); cursor: pointer;">📊 Matrix</button>' +
-          '<button class="dopkos-view-btn ' + (currentDopkosView === 'CRITICAL' ? 'active' : '') + '" onclick="setDopkosView(\\\'CRITICAL\\\')" style="font-size: 0.72rem; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-subtle); background: var(--bg-surface); color: var(--text-muted); cursor: pointer;">⚡ Critical</button>' +
         '</div>' +
         '<div id="z1-kpis" style="display: flex; gap: 8px;"></div>' +
       '</div>' +
