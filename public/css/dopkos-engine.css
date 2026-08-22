@@ -449,6 +449,44 @@
   letter-spacing: 0.06em;
 }
 
+/* Custom Dark Gold Scrollbars inside DO-PKOS Studio */
+#tab-dopkos *::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+#tab-dopkos *::-webkit-scrollbar-track {
+  background: rgba(8, 11, 17, 0.95);
+}
+#tab-dopkos *::-webkit-scrollbar-thumb {
+  background: rgba(212, 168, 67, 0.4);
+  border-radius: 4px;
+}
+#tab-dopkos *::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 197, 24, 0.8);
+}
+#tab-dopkos * {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212, 168, 67, 0.4) rgba(8, 11, 17, 0.95);
+}
+
+/* Close Button in Slide-over Detail Panel */
+#tab-dopkos .panel-close-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  line-height: 1;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+#tab-dopkos .panel-close-btn:hover {
+  color: var(--gold-bright, #f5c518);
+  background: rgba(245, 197, 24, 0.15);
+  transform: scale(1.1);
+}
+
 /* ==========================================================================
    NAVIGATOR / ZOOM CONTROL HUD
    ========================================================================== */
@@ -459,7 +497,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  background: rgba(13, 18, 31, 0.85);
+  background: rgba(13, 18, 31, 0.9);
   backdrop-filter: blur(8px);
   border: 1px solid var(--border-color);
   border-radius: 6px;
@@ -471,6 +509,30 @@
   display: flex;
   align-items: center;
   gap: 4px;
+}
+
+#tab-dopkos .nav-btn {
+  padding: 3px 8px;
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+#tab-dopkos .nav-btn:hover {
+  background: var(--card-bg);
+  border-color: var(--gold-bright, #f5c518);
+  color: var(--gold-bright, #f5c518);
+}
+
+#tab-dopkos .nav-btn.active {
+  background: var(--gold-bright, #f5c518);
+  color: #080b11;
+  font-weight: 800;
 }
 
 /* ==========================================================================
@@ -515,6 +577,10 @@
   outline: none;
 }
 
+#tab-dopkos #console-search:focus {
+  border-color: var(--gold-bright, #f5c518);
+}
+
 #tab-dopkos .console-widget {
   font-size: 0.68rem;
   font-weight: 800;
@@ -524,12 +590,19 @@
   border: 1px solid var(--border-color);
   color: var(--text-primary);
   cursor: pointer;
+  transition: all 0.15s ease;
 }
 
 #tab-dopkos .console-widget.has-issues {
   background: rgba(239, 68, 68, 0.15);
   color: var(--status-hold-text);
   border-color: var(--status-hold-text);
+}
+
+#tab-dopkos .console-widget.has-gates {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  border-color: rgba(245, 158, 11, 0.4);
 }
 
 #tab-dopkos #console-filters {
@@ -546,6 +619,12 @@
   border: 1px solid var(--border-color);
   color: var(--text-secondary);
   cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+#tab-dopkos .filter-pill:hover {
+  border-color: var(--gold-bright, #f5c518);
+  color: var(--text-primary);
 }
 
 #tab-dopkos .filter-pill.active {
@@ -553,6 +632,103 @@
   color: #080b11;
   font-weight: 800;
   border-color: var(--gold-bright, #f5c518);
+}
+
+/* Export Dropdown in Console Toolbar */
+#tab-dopkos .console-export-container {
+  position: relative;
+  display: inline-block;
+}
+
+#tab-dopkos .console-export-dropdown {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  margin-bottom: 6px;
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  min-width: 190px;
+  overflow: hidden;
+}
+
+#tab-dopkos .console-export-dropdown.open {
+  display: flex;
+  flex-direction: column;
+}
+
+#tab-dopkos .console-export-item {
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+}
+
+#tab-dopkos .console-export-item:last-child {
+  border-bottom: none;
+}
+
+#tab-dopkos .console-export-item:hover {
+  background: rgba(245, 197, 24, 0.15);
+  color: var(--gold-bright, #f5c518);
+}
+
+/* Table Zoom Group in Console Toolbar */
+#tab-dopkos .console-zoom-group {
+  display: inline-flex;
+  align-items: center;
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#tab-dopkos .console-zoom-btn {
+  padding: 3px 8px;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+#tab-dopkos .console-zoom-btn:hover {
+  background: rgba(245, 197, 24, 0.2);
+  color: var(--gold-bright, #f5c518);
+}
+
+#tab-dopkos .console-zoom-val {
+  font-family: monospace;
+  font-size: 0.7rem;
+  min-width: 38px;
+  text-align: center;
+  border-left: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+}
+
+#tab-dopkos #console-list {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  max-height: 240px;
+}
+
+#tab-dopkos #z45.expanded #console-list {
+  max-height: calc(80vh - 50px);
 }
 
 #tab-dopkos .console-table {

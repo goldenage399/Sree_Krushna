@@ -1287,18 +1287,18 @@
             '<input type="text" id="console-search" placeholder="Search tasks, roles, tags..." oninput="renderConsoleList()" />' +
           '</div>' +
           '<div id="console-filters">' +
-            '<button class="filter-pill ' + (activeFilter === 'ALL' ? 'active' : '') + '" onclick="setFilter(\'ALL\')">ALL</button>' +
-            '<button class="filter-pill ' + (activeFilter === 'READY' ? 'active' : '') + '" onclick="setFilter(\'READY\')">READY</button>' +
-            '<button class="filter-pill ' + (activeFilter === 'ACTIVE' ? 'active' : '') + '" onclick="setFilter(\'ACTIVE\')">ACTIVE</button>' +
-            '<button class="filter-pill ' + (activeFilter === 'HOLD' ? 'active' : '') + '" onclick="setFilter(\'HOLD\')">HOLD</button>' +
-            '<button class="filter-pill ' + (activeFilter === 'DONE' ? 'active' : '') + '" onclick="setFilter(\'DONE\')">DONE</button>' +
+            '<button class="filter-pill ' + (activeFilter === 'ALL' ? 'active' : '') + '" data-filter="ALL" onclick="setFilter(\'ALL\')">ALL</button>' +
+            '<button class="filter-pill ' + (activeFilter === 'READY' ? 'active' : '') + '" data-filter="READY" onclick="setFilter(\'READY\')">READY</button>' +
+            '<button class="filter-pill ' + (activeFilter === 'ACTIVE' ? 'active' : '') + '" data-filter="ACTIVE" onclick="setFilter(\'ACTIVE\')">ACTIVE</button>' +
+            '<button class="filter-pill ' + (activeFilter === 'HOLD' ? 'active' : '') + '" data-filter="HOLD" onclick="setFilter(\'HOLD\')">HOLD</button>' +
+            '<button class="filter-pill ' + (activeFilter === 'DONE' ? 'active' : '') + '" data-filter="DONE" onclick="setFilter(\'DONE\')">DONE</button>' +
           '</div>' +
           '<div class="console-export-container">' +
             '<button id="console-export-btn" class="header-action-btn" onclick="toggleExportMenu(event)" style="font-size: 0.72rem; padding: 2px 8px;">EXPORT ▾</button>' +
             '<div id="console-export-dropdown" class="console-export-dropdown">' +
-              '<button class="console-export-item" onclick="copyConsoleTasksTSV()">📋 Copy TSV (Excel / Sheets)</button>' +
-              '<button class="console-export-item" onclick="downloadConsoleTasksCSV()">📥 Download CSV</button>' +
-              '<button class="console-export-item" onclick="downloadConsoleTasksJSON()">💾 Download JSON</button>' +
+              '<button id="btn-export-tsv" class="console-export-item" onclick="copyConsoleTasksTSV()">📋 Copy TSV (Excel / Sheets)</button>' +
+              '<button id="btn-export-csv" class="console-export-item" onclick="downloadConsoleTasksCSV()">📥 Download CSV</button>' +
+              '<button id="btn-export-json" class="console-export-item" onclick="downloadConsoleTasksJSON()">💾 Download JSON</button>' +
             '</div>' +
           '</div>' +
           '<div class="console-zoom-group">' +
@@ -1321,6 +1321,37 @@
     updateScrollSpy();
     applyZoom(zoomLevel);
     bindSwimlaneScrollEvents();
+    wireAllDopkosEvents();
+  }
+
+  function wireAllDopkosEvents() {
+    const el = id => document.getElementById(id);
+    if (el('zoom-out')) el('zoom-out').onclick = () => applyZoom(zoomLevel - 0.1);
+    if (el('zoom-in')) el('zoom-in').onclick = () => applyZoom(zoomLevel + 0.1);
+    if (el('zoom-reset')) el('zoom-reset').onclick = () => applyZoom(1.0);
+    if (el('zoom-fit')) el('zoom-fit').onclick = () => fitZoom();
+    if (el('zoom-fullscreen')) el('zoom-fullscreen').onclick = () => toggleFullscreen();
+    if (el('zoom-pan')) el('zoom-pan').onclick = () => togglePanMode();
+
+    if (el('console-export-btn')) el('console-export-btn').onclick = (e) => toggleExportMenu(e);
+    if (el('btn-export-tsv')) el('btn-export-tsv').onclick = () => copyConsoleTasksTSV();
+    if (el('btn-export-csv')) el('btn-export-csv').onclick = () => downloadConsoleTasksCSV();
+    if (el('btn-export-json')) el('btn-export-json').onclick = () => downloadConsoleTasksJSON();
+
+    if (el('console-table-zoom-out')) el('console-table-zoom-out').onclick = () => applyTableZoom(tableZoomLevel - 0.1);
+    if (el('console-table-zoom-in')) el('console-table-zoom-in').onclick = () => applyTableZoom(tableZoomLevel + 0.1);
+    if (el('console-table-zoom-reset')) el('console-table-zoom-reset').onclick = () => applyTableZoom(1.0);
+
+    if (el('console-expand-toggle-btn')) el('console-expand-toggle-btn').onclick = () => toggleConsoleExpand();
+    if (el('console-blockers-widget')) el('console-blockers-widget').onclick = () => setFilter('HOLD');
+    if (el('console-gates-widget')) el('console-gates-widget').onclick = () => setFilter('ALL');
+    if (el('console-search')) el('console-search').oninput = () => renderConsoleList();
+    if (el('console-backdrop')) el('console-backdrop').onclick = () => toggleConsoleExpand(false);
+
+    document.querySelectorAll('#console-filters .filter-pill').forEach(btn => {
+      const f = btn.getAttribute('data-filter') || btn.textContent.trim();
+      btn.onclick = () => setFilter(f);
+    });
   }
 
   function renderZ1() {
@@ -1631,7 +1662,7 @@
     if (header) {
       header.innerHTML = '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">' +
           '<span style="font-family: monospace; font-size: 0.9rem; font-weight: 800; color: ' + trColor + ';">' + t.id + '</span>' +
-          '<button onclick="closePanel()" style="background: none; border: none; color: var(--text-dim); font-size: 1.2rem; cursor: pointer;">✕</button>' +
+          '<button id="btn-panel-close-x" class="panel-close-btn" onclick="closePanel()" title="Close details">✕</button>' +
         '</div>' +
         '<div style="font-size: 0.88rem; font-weight: 700; color: var(--text-main); line-height: 1.3; margin-bottom: 8px;">' + t.name + '</div>' +
         '<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">' +
@@ -1639,6 +1670,9 @@
           '<span style="font-size: 0.74rem; font-weight: 800; color: ' + trColor + ';">' + (TRADE_META[tr]?.label || tr) + '</span>' +
           '<span style="font-size: 0.74rem; color: var(--text-dim);">Stage ' + t.stage + '</span>' +
         '</div>';
+
+      const closeX = header.querySelector('#btn-panel-close-x');
+      if (closeX) closeX.addEventListener('click', closePanel);
     }
 
     const body = document.getElementById('panel-body');
@@ -2328,6 +2362,39 @@
   window.toggleConsoleExpand = toggleConsoleExpand;
   window.setFilter = setFilter;
   window.renderConsoleList = renderConsoleList;
+  window.closePanel = closePanel;
+  window.openPanel = openPanel;
+  window.toggleCardStatus = toggleCardStatus;
+  window.toggleExportMenu = toggleExportMenu;
+  window.copyConsoleTasksTSV = copyConsoleTasksTSV;
+  window.downloadConsoleTasksCSV = downloadConsoleTasksCSV;
+  window.downloadConsoleTasksJSON = downloadConsoleTasksJSON;
+  window.applyTableZoom = applyTableZoom;
+  window.applyZoom = applyZoom;
+  window.fitZoom = fitZoom;
+  window.toggleFullscreen = toggleFullscreen;
+  window.togglePanMode = togglePanMode;
+  window.toggleStageStrip = toggleStageStrip;
+
+  window.DOPKOS = {
+    PROJECT_STATE,
+    renderDoPkosStudio,
+    renderPlanningSuite,
+    selectAndCenterCard,
+    closePanel,
+    openPanel,
+    toggleCardStatus,
+    setFilter,
+    applyZoom,
+    fitZoom,
+    toggleFullscreen,
+    togglePanMode,
+    toggleConsoleExpand,
+    toggleExportMenu,
+    copyConsoleTasksTSV,
+    downloadConsoleTasksCSV,
+    downloadConsoleTasksJSON
+  };
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
