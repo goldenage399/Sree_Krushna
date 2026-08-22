@@ -1010,7 +1010,7 @@
   const TRADE_META = PROJECT_STATE.trade_meta;
   const PARALLEL_TASKS = new Set(['TSK-001', 'TSK-002', 'FOOD-001', 'TSK-003', 'VEN-001']);
 
-  const CARD_W = 158, CARD_H = 88, COL_W = 184, SLOT_H = 108, ROW_PAD = 10;
+  const CARD_W = 168, CARD_H = 88, COL_W = 196, SLOT_H = 110, ROW_PAD = 12;
   const LABEL_W = 100;
 
   const STATUS_MAP = { available:'READY', not_started:'LOCKED', in_progress:'ACTIVE', blocked:'HOLD', complete:'DONE', missed_window:'MISSED' };
@@ -1066,6 +1066,18 @@
     try {
       localStorage.setItem(storageKey, JSON.stringify(overrides));
     } catch(e) {}
+  }
+
+  function toggleCardStatus(taskId, event) {
+    if (event) event.stopPropagation();
+    const current = getStatus(taskId);
+    const nextMap = { 'LOCKED': 'READY', 'READY': 'ACTIVE', 'ACTIVE': 'DONE', 'DONE': 'READY', 'HOLD': 'READY', 'FUTURE_HOLD': 'READY' };
+    const nextStatus = nextMap[current] || 'READY';
+    setStatus(taskId, nextStatus);
+    if (nextStatus === 'DONE') {
+      propagateDone(taskId);
+    }
+    renderDoPkosStudio();
   }
 
   function propagateDone(taskId) {
@@ -1328,6 +1340,13 @@
     if (!inner) return;
     inner.innerHTML = '';
 
+    inner.addEventListener('click', (e) => {
+      if (e.target === inner || e.target.id === 'dep-svg' || e.target.classList.contains('trade-row') || e.target.classList.contains('trade-content')) {
+        clearHighlights();
+        selectedTopologyTaskId = null;
+      }
+    });
+
     TRADES.forEach(tr => {
       const row = document.createElement('div');
       row.className = 'trade-row';
@@ -1366,10 +1385,10 @@
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.id = 'dep-svg';
     svg.style.position = 'absolute';
-    svg.style.top = 0;
+    svg.style.top = '0';
     svg.style.left = LABEL_W + 'px';
     svg.style.pointerEvents = 'none';
-    svg.style.zIndex = 1;
+    svg.style.zIndex = '1';
     svg.setAttribute('width', totalW + 'px');
     svg.setAttribute('height', totalH + 'px');
 
@@ -1422,6 +1441,8 @@
     visiblePath.setAttribute('stroke-width', strokeWidth);
     visiblePath.setAttribute('fill', 'none');
     if (dashArray !== 'none') visiblePath.setAttribute('stroke-dasharray', dashArray);
+    visiblePath.setAttribute('data-from', fromId);
+    visiblePath.setAttribute('data-to', toId);
     g.appendChild(visiblePath);
 
     const hitPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -1430,6 +1451,8 @@
     hitPath.setAttribute('stroke', 'transparent');
     hitPath.setAttribute('stroke-width', '14');
     hitPath.setAttribute('fill', 'none');
+    hitPath.setAttribute('data-from', fromId);
+    hitPath.setAttribute('data-to', toId);
     hitPath.style.pointerEvents = 'stroke';
     hitPath.style.cursor = 'pointer';
     g.appendChild(hitPath);
@@ -1479,9 +1502,10 @@
       '</div>' +
       '<div class="card-name" style="font-size: 0.76rem; font-weight: 700; color: var(--text-main); line-height: 1.25; max-height: 2.5em; overflow: hidden; margin: 2px 0 4px;">' + t.name + '</div>' +
       gateRef +
-      '<button class="status-pill ' + status + '" style="font-size: 0.62rem; font-weight: 800; padding: 2px 6px; border-radius: 3px; border: 1px solid transparent; cursor: pointer;">' + STATUS_LABEL[status] + '</button>';
+      '<button class="status-pill ' + status + '" onclick="toggleCardStatus(\'' + t.id + '\', event)" title="' + (PILL_TITLE[status] || '') + '" style="font-size: 0.62rem; font-weight: 800; padding: 2px 6px; border-radius: 3px; border: 1px solid transparent; cursor: pointer;">' + STATUS_LABEL[status] + '</button>';
 
     card.addEventListener('click', e => {
+      e.stopPropagation();
       selectAndCenterCard(t.id, true);
     });
 
@@ -1514,6 +1538,41 @@
 
     if (!tasks.length) {
       list.innerHTML = '<div style="text-align:center;padding:16px;color:var(--text-dim);font-size:0.78rem;">NO MATCHING TASKS FOUND</div>';
+      return;
+    }
+
+    if (consoleExpanded) {
+      let tableHtml = '<table style="width: 100%; border-collapse: collapse; font-size: 0.76rem;">' +
+        '<thead><tr style="background: var(--bg-surface-elevated); color: var(--gold-bright); border-bottom: 2px solid var(--border-subtle);">' +
+          '<th style="padding: 6px 10px; text-align: left;">TRADE</th>' +
+          '<th style="padding: 6px 10px; text-align: left;">ID</th>' +
+          '<th style="padding: 6px 10px; text-align: left;">TASK NAME</th>' +
+          '<th style="padding: 6px 10px; text-align: left;">STAGE</th>' +
+          '<th style="padding: 6px 10px; text-align: left;">STATUS</th>' +
+          '<th style="padding: 6px 10px; text-align: left;">PREDECESSORS</th>' +
+          '<th style="padding: 6px 10px; text-align: left;">UNLOCKS</th>' +
+        '</tr></thead><tbody>';
+
+      tasks.forEach(t => {
+        const status = getStatus(t.id);
+        const tr = displayTrade(t);
+        const color = TRADE_META[tr]?.color || '#555';
+        const preds = (t.depends_on || []).join(', ') || '—';
+        const succs = (t.unlocks || []).join(', ') || '—';
+
+        tableHtml += '<tr onclick="selectAndCenterCard(\'' + t.id + '\', true)" style="border-bottom: 1px solid var(--border-subtle); cursor: pointer;" onmouseover="this.style.background=\'rgba(255,255,255,0.04)\'" onmouseout="this.style.background=\'transparent\'">' +
+          '<td style="padding: 6px 10px;"><span style="background:' + color + '22; color:' + color + '; padding: 2px 6px; border-radius: 3px; font-weight: 700;">' + (TRADE_META[tr]?.label || tr) + '</span></td>' +
+          '<td style="padding: 6px 10px; font-family: monospace; font-weight: 800; color: var(--gold-bright);">' + t.id + '</td>' +
+          '<td style="padding: 6px 10px; font-weight: 600; color: var(--text-main);">' + t.name + '</td>' +
+          '<td style="padding: 6px 10px; color: var(--text-dim);">S' + t.stage + '</td>' +
+          '<td style="padding: 6px 10px;"><span class="status-mini ' + status + '" style="font-size:0.68rem; padding:2px 6px; border-radius:3px; font-weight:700; background:var(--bg-surface);">' + STATUS_LABEL[status] + '</span></td>' +
+          '<td style="padding: 6px 10px; font-family: monospace; font-size: 0.7rem; color: #f59e0b;">' + preds + '</td>' +
+          '<td style="padding: 6px 10px; font-family: monospace; font-size: 0.7rem; color: #38bdf8;">' + succs + '</td>' +
+        '</tr>';
+      });
+
+      tableHtml += '</tbody></table>';
+      list.innerHTML = tableHtml;
       return;
     }
 
@@ -1562,14 +1621,73 @@
     }
   }
 
+  function highlightSvgLines(taskId, dependsOn, unlocks) {
+    const depSvg = document.getElementById('dep-svg');
+    if (!depSvg) return;
+
+    depSvg.querySelectorAll('g.dep-edge').forEach(g => {
+      const from = g.getAttribute('data-from');
+      const to = g.getAttribute('data-to');
+
+      if (to === taskId && dependsOn.includes(from)) {
+        g.classList.add('is-highlighted', 'is-predecessor-line');
+      } else if (from === taskId && unlocks.includes(to)) {
+        g.classList.add('is-highlighted', 'is-successor-line');
+      } else {
+        g.classList.remove('is-highlighted', 'is-predecessor-line', 'is-successor-line');
+      }
+    });
+  }
+
+  function scrollToHighlightedSubgraph(taskId, dependsOn, unlocks, forceScroll = false) {
+    const scrollEl = document.getElementById('z3-viewport');
+    const clickedPos = cardPos(taskId);
+    if (!scrollEl || !clickedPos) return;
+
+    let minX = clickedPos.x;
+    let maxX = minX + CARD_W;
+
+    dependsOn.forEach(depId => {
+      const pos = cardPos(depId);
+      if (pos) {
+        minX = Math.min(minX, pos.x);
+        maxX = Math.max(maxX, pos.x + CARD_W);
+      }
+    });
+
+    unlocks.forEach(succId => {
+      const pos = cardPos(succId);
+      if (pos) {
+        minX = Math.min(minX, pos.x);
+        maxX = Math.max(maxX, pos.x + CARD_W);
+      }
+    });
+
+    const visibleWidth = scrollEl.clientWidth;
+    const subGraphWidth = maxX - minX;
+
+    let targetScrollLeft = scrollEl.scrollLeft;
+    if (subGraphWidth > visibleWidth) {
+      targetScrollLeft = clickedPos.x + CARD_W / 2 - visibleWidth / 2;
+    } else {
+      const subGraphCenter = (minX + maxX) / 2;
+      targetScrollLeft = subGraphCenter - visibleWidth / 2;
+    }
+
+    let targetScrollTop = clickedPos.y + CARD_H / 2 - scrollEl.clientHeight / 2;
+
+    scrollEl.scrollTo({
+      left: Math.max(0, targetScrollLeft),
+      top: Math.max(0, targetScrollTop),
+      behavior: 'smooth'
+    });
+  }
+
   function applyHighlights(taskId) {
     const t = taskMap[taskId];
     if (!t) return;
 
     clearHighlights();
-
-    const tr = displayTrade(t);
-    const trColor = TRADE_META[tr]?.color || '#555';
 
     const swimlaneInner = document.getElementById('swimlane-inner');
     const depSvg = document.getElementById('dep-svg');
@@ -1592,21 +1710,24 @@
       const succCard = document.querySelector('.task-card[data-id="' + succId + '"]');
       if (succCard) succCard.classList.add('is-successor');
     });
+
+    highlightSvgLines(taskId, dependsOn, unlocks);
   }
 
   function selectAndCenterCard(targetId, forceScroll = true) {
+    if (selectedTopologyTaskId === targetId) {
+      clearHighlights();
+      selectedTopologyTaskId = null;
+      return;
+    }
     selectedTopologyTaskId = targetId;
     applyHighlights(targetId);
 
-    const scrollEl = document.getElementById('z3-viewport');
-    const pos = cardPos(targetId);
-    if (scrollEl && pos && forceScroll) {
-      scrollEl.scrollTo({
-        left: Math.max(0, pos.x - scrollEl.clientWidth / 2 + CARD_W / 2),
-        top: Math.max(0, pos.y - scrollEl.clientHeight / 2 + CARD_H / 2),
-        behavior: 'smooth'
-      });
-    }
+    const task = taskMap[targetId];
+    const dependsOn = (task && task.depends_on) || [];
+    const unlocks = (task && task.unlocks) || [];
+
+    scrollToHighlightedSubgraph(targetId, dependsOn, unlocks, forceScroll);
 
     if (window.openTaskConsole) {
       window.openTaskConsole(targetId);

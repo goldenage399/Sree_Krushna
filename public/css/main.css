@@ -2449,11 +2449,18 @@
 
 
 /* DO_PKOS 5-Zone Dedicated Full-Viewport Studio */
+main:has(#tab-dopkos.active) {
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 4px 12px 12px 12px !important;
+  width: 100% !important;
+}
+
 #tab-dopkos {
   display: none;
   flex-direction: column;
-  height: calc(100vh - 120px);
-  min-height: 580px;
+  height: calc(100vh - 90px);
+  min-height: 640px;
   position: relative;
   background: #080b11;
   border-radius: var(--radius-md);
@@ -2461,6 +2468,8 @@
   border: 1px solid var(--border-subtle, rgba(255,255,255,0.08));
   padding: 0;
   margin: 0;
+  width: 100%;
+  max-width: 100%;
 }
 #tab-dopkos.active {
   display: flex !important;
@@ -2538,7 +2547,7 @@
 }
 .stage-card:hover { border-color: var(--gold-antique, #d4a843); }
 .stage-card.active { border: 2px solid var(--gold-bright, #f5c518); background: rgba(245, 197, 24, 0.08); }
-.stage-card.done { border-color: #10b981; }
+.stage-card.done { border-color: #10b981; opacity: 0.6; }
 .stage-num { font-size: 0.68rem; font-weight: 800; color: var(--gold-bright, #f5c518); }
 .stage-name { font-size: 0.78rem; font-weight: 700; color: var(--text-main, #f8fafc); margin: 2px 0 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .stage-progress { height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; margin-bottom: 4px; }
@@ -2622,45 +2631,89 @@
   cursor: pointer;
   z-index: 2;
   box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.2s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.2s ease, opacity 0.2s ease;
 }
 .task-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.5); z-index: 5; }
 .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; }
 .card-id { font-family: monospace; font-size: 0.68rem; font-weight: 800; color: var(--gold-bright, #f5c518); }
 .card-name { font-size: 0.76rem; font-weight: 700; color: var(--text-main, #f8fafc); line-height: 1.25; max-height: 2.5em; overflow: hidden; margin: 2px 0 4px; }
 .card-gate { font-size: 0.62rem; color: #f59e0b; font-weight: 700; margin-bottom: 4px; }
-.status-pill { font-size: 0.62rem; font-weight: 800; padding: 2px 6px; border-radius: 3px; border: 1px solid transparent; cursor: pointer; }
-.status-pill.READY { background: rgba(245, 197, 24, 0.15); color: var(--gold-bright, #f5c518); border-color: var(--gold-bright, #f5c518); }
+.status-pill { font-size: 0.62rem; font-weight: 800; padding: 2px 6px; border-radius: 3px; border: 1px solid transparent; cursor: pointer; transition: all 0.2s ease; }
+.status-pill.READY { background: rgba(245, 197, 24, 0.15); color: var(--gold-bright, #f5c518); border-color: var(--gold-bright, #f5c518); animation: readyPulse 2s ease-in-out infinite; }
 .status-pill.ACTIVE { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-color: #38bdf8; }
 .status-pill.DONE { background: rgba(16, 185, 129, 0.15); color: #10b981; border-color: #10b981; }
 .status-pill.HOLD, .status-pill.FUTURE_HOLD { background: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: #ef4444; }
 .status-pill.LOCKED { background: rgba(255,255,255,0.06); color: var(--text-dim, #94a3b8); border-color: var(--border-subtle, rgba(255,255,255,0.08)); }
 
-/* Subgraph Highlighting State Machine */
+@keyframes readyPulse {
+  0%, 100% { box-shadow: 0 0 0 rgba(245, 197, 24, 0); }
+  50% { box-shadow: 0 0 8px rgba(245, 197, 24, 0.6); }
+}
+
+/* Subgraph Highlighting State Machine (UG-Farmhouse Fidelity) */
 #swimlane-inner.selection-active .task-card {
-  filter: brightness(0.48) saturate(0.35);
-  opacity: 0.65;
+  filter: brightness(0.45) saturate(0.3);
+  opacity: 0.45;
 }
 #swimlane-inner.selection-active .task-card.is-selected {
-  filter: none;
-  opacity: 1;
+  filter: none !important;
+  opacity: 1 !important;
   border: 2px solid var(--gold-bright, #f5c518) !important;
-  box-shadow: 0 0 16px rgba(245, 197, 24, 0.6);
+  box-shadow: 0 0 20px rgba(245, 197, 24, 0.7) !important;
   z-index: 15;
 }
 #swimlane-inner.selection-active .task-card.is-predecessor {
-  filter: none;
-  opacity: 1;
+  filter: none !important;
+  opacity: 1 !important;
   border: 2px solid #f59e0b !important;
-  box-shadow: 0 0 14px rgba(245, 158, 11, 0.5);
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.6) !important;
   z-index: 14;
 }
 #swimlane-inner.selection-active .task-card.is-successor {
-  filter: none;
-  opacity: 1;
+  filter: none !important;
+  opacity: 1 !important;
   border: 2px solid #38bdf8 !important;
-  box-shadow: 0 0 14px rgba(56, 189, 248, 0.5);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.6) !important;
   z-index: 14;
+}
+.task-card.edge-hovered {
+  border-color: var(--gold-bright, #f5c518) !important;
+  box-shadow: 0 0 12px rgba(245, 197, 24, 0.6) !important;
+}
+
+/* SVG Connections (UG-Farmhouse Fidelity) */
+#dep-svg {
+  position: absolute;
+  top: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+#dep-svg g.dep-edge {
+  transition: opacity 0.15s ease-out;
+}
+#dep-svg.selection-active g.dep-edge {
+  opacity: 0.06;
+}
+#dep-svg.selection-active g.dep-edge.is-highlighted {
+  opacity: 1 !important;
+}
+#dep-svg g.dep-edge path.visible-path {
+  pointer-events: none;
+  transition: opacity 0.15s ease-out, stroke-width 0.15s ease-out, stroke 0.15s ease-out;
+}
+#dep-svg g.dep-edge:hover path.visible-path {
+  stroke-width: 2.8px;
+  filter: drop-shadow(0 0 6px rgba(245, 197, 24, 0.8));
+}
+#dep-svg.selection-active g.dep-edge.is-predecessor-line path.visible-path {
+  stroke: #f59e0b !important;
+  stroke-width: 2.8px !important;
+  filter: drop-shadow(0 0 5px rgba(245, 158, 11, 0.85)) !important;
+}
+#dep-svg.selection-active g.dep-edge.is-successor-line path.visible-path {
+  stroke: #38bdf8 !important;
+  stroke-width: 2.8px !important;
+  filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.85)) !important;
 }
 
 /* Zone 4 & 5 Expandable Unified Command Console */
