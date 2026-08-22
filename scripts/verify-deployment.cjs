@@ -70,11 +70,55 @@ function check(title, fn) {
   }
 }
 
-// ── LAYER 1: JS Runtime Parse & AST Syntax ──────────────────────────────────
-check('Layer 1: JavaScript Runtime Parse & Script Syntax', () => {
+// ── LAYER 1: JS Runtime Parse & AST Syntax & Mock Execution ──────────────────
+check('Layer 1: JavaScript Runtime Parse, AST Syntax & Sandbox Execution', () => {
   const jsFiles = config.jsFiles || [];
   const htmlPath = path.join(ROOT_DIR, config.entryHtml || 'public/index.html');
   const html = fs.existsSync(htmlPath) ? fs.readFileSync(htmlPath, 'utf8') : '';
+
+  const listeners = [];
+  const createMockEl = () => ({
+    style: {},
+    classList: { add: () => {}, remove: () => {}, contains: () => false },
+    setAttribute: () => {},
+    getAttribute: () => '',
+    innerHTML: '',
+    innerText: '',
+    value: '2026-08-22',
+    addEventListener: () => {},
+    querySelectorAll: () => [],
+    querySelector: () => null,
+    appendChild: () => {}
+  });
+
+  const sandbox = {
+    window: {},
+    document: {
+      documentElement: { getAttribute: () => 'dark', setAttribute: () => {} },
+      getElementById: (id) => createMockEl(),
+      querySelectorAll: () => [],
+      querySelector: () => null,
+      createElement: () => createMockEl(),
+      body: { classList: { add: () => {}, remove: () => {}, contains: () => false } },
+      addEventListener: (event, cb) => { listeners.push({ event, cb }); }
+    },
+    navigator: { serviceWorker: { ready: Promise.resolve({ addEventListener: () => {} }), register: () => Promise.resolve() } },
+    matchMedia: () => ({ matches: false }),
+    location: { hash: '#tab-dashboard' },
+    requestAnimationFrame: (cb) => setTimeout(cb, 16),
+    cancelAnimationFrame: (id) => clearTimeout(id),
+    localStorage: { getItem: () => null, setItem: () => {} },
+    sessionStorage: { getItem: () => null, setItem: () => {} },
+    console: console,
+    setTimeout: setTimeout,
+    clearTimeout: clearTimeout,
+    setInterval: setInterval,
+    clearInterval: clearInterval,
+    alert: () => {},
+    confirm: () => true
+  };
+  sandbox.window = sandbox;
+  sandbox.addEventListener = (event, cb) => { listeners.push({ event, cb }); };
 
   jsFiles.forEach(file => {
     const fullPath = path.join(ROOT_DIR, file);
@@ -103,13 +147,25 @@ check('Layer 1: JavaScript Runtime Parse & Script Syntax', () => {
       }
     } else {
       try {
-        new Function(code);
-        logPass(`${file} is syntax-valid in classic script execution mode`);
+        const vm = require('vm');
+        vm.runInNewContext(code, sandbox);
+        logPass(`${file} parsed AND executed in runtime sandbox with zero errors`);
       } catch (err) {
-        logFail(`${file} has classic script syntax or top-level await error`, err.message);
+        logFail(`${file} failed runtime execution in sandbox`, err.message);
       }
     }
   });
+
+  // Execute registered DOMContentLoaded/load listeners
+  try {
+    const origNav = global.navigator;
+    global.navigator = sandbox.navigator;
+    listeners.forEach(({ event, cb }) => cb());
+    global.navigator = origNav;
+    logPass(`All ${listeners.length} registered lifecycle event listeners executed in sandbox with zero errors`);
+  } catch (err) {
+    logFail(`Lifecycle event listener threw error in sandbox`, err.message);
+  }
 });
 
 // ── LAYER 2: HTML Inline Event Handler Call-Graph Contract ───────────────────
