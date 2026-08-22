@@ -840,6 +840,22 @@ const dopkosEngineCode = `/**
     };
   }
 
+  function getDopkosScrollEl() {
+    return document.getElementById('dopkos-swimlane-scroll') || document.querySelector('#tab-dopkos .dopkos-swimlane-scroll') || document.querySelector('#tab-dopkos #swimlane-scroll') || document.getElementById('swimlane-scroll');
+  }
+
+  function getDopkosInnerEl() {
+    return document.getElementById('dopkos-swimlane-inner') || document.querySelector('#tab-dopkos .dopkos-swimlane-inner') || document.querySelector('#tab-dopkos #swimlane-inner') || document.getElementById('swimlane-inner');
+  }
+
+  function getDopkosSvgEl() {
+    return document.getElementById('dopkos-dep-svg') || document.querySelector('#tab-dopkos #dep-svg') || document.getElementById('dep-svg');
+  }
+
+  function getDopkosPanelEl() {
+    return document.getElementById('dopkos-detail-panel') || document.querySelector('#tab-dopkos #detail-panel') || document.getElementById('detail-panel');
+  }
+
   function setDopkosView(viewName) {
     currentDopkosView = viewName;
     syncDopkosViewButtons();
@@ -901,15 +917,15 @@ const dopkosEngineCode = `/**
       '</div>' +
       '<!-- ZONE 3 MULTI-TRACK SWIMLANE -->' +
       '<div id="z3" style="flex: 1; position: relative; overflow: hidden; background: #080b11;">' +
-        '<div id="swimlane-scroll" style="width: 100%; height: 100%; overflow: auto; position: relative;">' +
-          '<div id="stage-header-row" style="height: 32px; background: var(--bg-surface-elevated); border-bottom: 2px solid var(--border-subtle); position: sticky; top: 0; z-index: 30; width: ' + (totalW + LABEL_W) + 'px;">' +
+        '<div id="dopkos-swimlane-scroll" class="dopkos-swimlane-scroll" style="width: 100%; height: 100%; overflow: auto; position: relative; touch-action: pan-x pan-y;">' +
+          '<div id="dopkos-stage-header-row" style="height: 32px; background: var(--bg-surface-elevated); border-bottom: 2px solid var(--border-subtle); position: sticky; top: 0; z-index: 30; width: ' + (totalW + LABEL_W) + 'px;">' +
             '<div class="label-corner" style="width: 100px; height: 32px; position: sticky; left: 0; background: var(--bg-surface-elevated); z-index: 40; border-right: 2px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 800; color: var(--gold-bright);">TRACK</div>' +
-            '<div id="stage-header-bands-inner" style="position: absolute; left: 100px; top: 0; height: 32px;"></div>' +
+            '<div id="dopkos-stage-header-bands-inner" style="position: absolute; left: 100px; top: 0; height: 32px;"></div>' +
           '</div>' +
-          '<div id="swimlane-inner" style="position: relative; width: ' + (totalW + LABEL_W) + 'px; height: ' + totalH + 'px;"></div>' +
+          '<div id="dopkos-swimlane-inner" class="dopkos-swimlane-inner" style="position: relative; width: ' + (totalW + LABEL_W) + 'px; height: ' + totalH + 'px;"></div>' +
         '</div>' +
         '<!-- SLIDE-OVER DETAIL / INSPECTOR PANEL -->' +
-        '<div id="detail-panel">' +
+        '<div id="dopkos-detail-panel">' +
           '<div id="panel-header" style="padding: 12px 16px; border-bottom: 1px solid var(--border-subtle); background: var(--bg-surface);"></div>' +
           '<div id="panel-body" style="flex: 1; overflow-y: auto;"></div>' +
         '</div>' +
@@ -1118,7 +1134,7 @@ const dopkosEngineCode = `/**
   }
 
   function renderSwimlaneGrid() {
-    const inner = document.getElementById('swimlane-inner');
+    const inner = getDopkosInnerEl();
     if (!inner) return;
     inner.innerHTML = '';
     inner.style.width = (totalW + LABEL_W) + 'px';
@@ -1127,7 +1143,7 @@ const dopkosEngineCode = `/**
     inner.style.position = 'relative';
 
     inner.addEventListener('click', (e) => {
-      if (e.target === inner || e.target.id === 'dep-svg' || e.target.classList.contains('trade-row') || e.target.classList.contains('trade-content')) {
+      if (e.target === inner || e.target.id === 'dopkos-dep-svg' || e.target.classList.contains('trade-row') || e.target.classList.contains('trade-content')) {
         clearHighlights();
         selectedTopologyTaskId = null;
         closePanel();
@@ -1169,7 +1185,8 @@ const dopkosEngineCode = `/**
     });
 
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.id = 'dep-svg';
+    svg.id = 'dopkos-dep-svg';
+    svg.setAttribute('class', 'dopkos-dep-svg');
     svg.style.position = 'absolute';
     svg.style.top = '0';
     svg.style.left = LABEL_W + 'px';
@@ -1327,10 +1344,10 @@ const dopkosEngineCode = `/**
     const trColor = TRADE_META[tr]?.color || '#555';
     const status = getStatus(taskId);
 
-    const panel = document.getElementById('detail-panel');
+    const panel = getDopkosPanelEl();
     if (panel) panel.style.borderLeftColor = trColor;
 
-    const header = document.getElementById('panel-header');
+    const header = panel ? panel.querySelector('#panel-header') || document.getElementById('panel-header') : document.getElementById('panel-header');
     if (header) {
       header.innerHTML = '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">' +
           '<span style="font-family: monospace; font-size: 0.9rem; font-weight: 800; color: ' + trColor + ';">' + t.id + '</span>' +
@@ -1347,7 +1364,7 @@ const dopkosEngineCode = `/**
       if (closeX) closeX.addEventListener('click', closePanel);
     }
 
-    const body = document.getElementById('panel-body');
+    const body = panel ? panel.querySelector('#panel-body') || document.getElementById('panel-body') : document.getElementById('panel-body');
     if (body) {
       body.innerHTML = '';
 
@@ -1425,7 +1442,7 @@ const dopkosEngineCode = `/**
   }
 
   function closePanel() {
-    const panel = document.getElementById('detail-panel');
+    const panel = getDopkosPanelEl();
     if (panel) panel.classList.remove('open');
     activePanelTaskId = null;
   }
@@ -1574,7 +1591,7 @@ const dopkosEngineCode = `/**
     const lbl = document.getElementById('zoom-label');
     if (lbl) lbl.textContent = Math.round(zoomLevel * 100) + '%';
 
-    const inner = document.getElementById('swimlane-inner');
+    const inner = getDopkosInnerEl();
     if (inner) {
       inner.style.transform = zoomLevel === 1.0 ? '' : 'scale(' + zoomLevel + ')';
       inner.style.transformOrigin = 'top left';
@@ -1582,7 +1599,7 @@ const dopkosEngineCode = `/**
   }
 
   function fitZoom() {
-    const scrollEl = document.getElementById('swimlane-scroll');
+    const scrollEl = getDopkosScrollEl();
     if (!scrollEl) return;
     const fit = Math.min(scrollEl.clientWidth / (totalW + LABEL_W), (scrollEl.clientHeight - 32) / totalH);
     applyZoom(fit);
@@ -1604,7 +1621,7 @@ const dopkosEngineCode = `/**
     panMode = (forceVal !== undefined) ? forceVal : !panMode;
     window.panMode = panMode;
     const btn = document.getElementById('zoom-pan');
-    const scrollEl = document.getElementById('swimlane-scroll');
+    const scrollEl = getDopkosScrollEl();
     if (panMode || spacePanActive) {
       if (btn) btn.classList.add('active');
       if (scrollEl) scrollEl.classList.add('pan-active', 'pan-mode');
@@ -1623,7 +1640,7 @@ const dopkosEngineCode = `/**
     window.addEventListener('keydown', e => {
       if (e && e.code === 'Space' && !['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) {
         spacePanActive = true;
-        const scrollEl = document.getElementById('swimlane-scroll');
+        const scrollEl = getDopkosScrollEl();
         if (scrollEl) scrollEl.classList.add('pan-active', 'pan-mode');
       }
     });
@@ -1631,14 +1648,14 @@ const dopkosEngineCode = `/**
     window.addEventListener('keyup', e => {
       if (e && e.code === 'Space') {
         spacePanActive = false;
-        const scrollEl = document.getElementById('swimlane-scroll');
+        const scrollEl = getDopkosScrollEl();
         if (scrollEl && !panMode) scrollEl.classList.remove('pan-active', 'pan-mode');
       }
     });
 
     window.addEventListener('mousemove', e => {
       if (!isDragging || !e) return;
-      const scrollEl = document.getElementById('swimlane-scroll');
+      const scrollEl = getDopkosScrollEl();
       if (!scrollEl) return;
       const dx = (e.clientX || 0) - startX;
       const dy = (e.clientY || 0) - startY;
@@ -1652,7 +1669,7 @@ const dopkosEngineCode = `/**
     window.addEventListener('mouseup', () => {
       if (isDragging) {
         isDragging = false;
-        const scrollEl = document.getElementById('swimlane-scroll');
+        const scrollEl = getDopkosScrollEl();
         if (scrollEl) scrollEl.classList.remove('dragging');
         setTimeout(() => { hasDragged = false; }, 60);
       }
@@ -1660,7 +1677,7 @@ const dopkosEngineCode = `/**
   }
 
   function bindSwimlaneScrollEvents() {
-    const scrollContainerEl = document.getElementById('swimlane-scroll');
+    const scrollContainerEl = getDopkosScrollEl();
     if (!scrollContainerEl) return;
 
     ensureGlobalPanListeners();
@@ -1668,6 +1685,10 @@ const dopkosEngineCode = `/**
     if (panMode || spacePanActive) {
       scrollContainerEl.classList.add('pan-active', 'pan-mode');
     }
+
+    scrollContainerEl.addEventListener('wheel', () => {
+      scrollContainerEl.scrollTo(scrollContainerEl.scrollLeft, scrollContainerEl.scrollTop);
+    }, { passive: true });
 
     if (!scrollContainerEl._panMousedownBound) {
       scrollContainerEl._panMousedownBound = true;
@@ -1688,11 +1709,23 @@ const dopkosEngineCode = `/**
   }
 
   function updateScrollSpy() {
+    const scrollEl = getDopkosScrollEl();
+    if (!scrollEl) return;
+    const curX = scrollEl.scrollLeft;
+    const col = Math.floor(Math.max(0, curX - LABEL_W) / COL_W);
+    const visibleTask = PROJECT_STATE.tasks.find(t => (colMap[t.id] || 0) >= col);
+    if (visibleTask && PROJECT_STATE.project) {
+      const stageObj = (PROJECT_STATE.stages || []).find(s => s.id === visibleTask.stage);
+      const stageEl = document.getElementById('z1-stage');
+      if (stageEl && stageObj) {
+        stageEl.textContent = 'STAGE ' + stageObj.id + ' OF ' + (PROJECT_STATE.stages ? PROJECT_STATE.stages.length : 6) + ' — ' + stageObj.name.toUpperCase();
+      }
+    }
   }
 
   function clearHighlights() {
-    const swimlaneInner = document.getElementById('swimlane-inner');
-    const depSvg = document.getElementById('dep-svg');
+    const swimlaneInner = getDopkosInnerEl();
+    const depSvg = getDopkosSvgEl();
     if (swimlaneInner) swimlaneInner.classList.remove('selection-active');
     if (depSvg) depSvg.classList.remove('selection-active');
 
@@ -1708,7 +1741,7 @@ const dopkosEngineCode = `/**
   }
 
   function highlightSvgLines(taskId, dependsOn, unlocks) {
-    const depSvg = document.getElementById('dep-svg');
+    const depSvg = getDopkosSvgEl();
     if (!depSvg) return;
 
     depSvg.querySelectorAll('g.dep-edge').forEach(g => {
@@ -1726,7 +1759,7 @@ const dopkosEngineCode = `/**
   }
 
   function scrollToHighlightedSubgraph(taskId, dependsOn, unlocks, forceScroll = false) {
-    const scrollEl = document.getElementById('swimlane-scroll');
+    const scrollEl = getDopkosScrollEl();
     const clickedPos = cardPos(taskId);
     if (!scrollEl || !clickedPos) return;
 
@@ -1775,8 +1808,8 @@ const dopkosEngineCode = `/**
 
     clearHighlights();
 
-    const swimlaneInner = document.getElementById('swimlane-inner');
-    const depSvg = document.getElementById('dep-svg');
+    const swimlaneInner = getDopkosInnerEl();
+    const depSvg = getDopkosSvgEl();
     if (swimlaneInner) swimlaneInner.classList.add('selection-active');
     if (depSvg) depSvg.classList.add('selection-active');
 
@@ -1822,7 +1855,7 @@ const dopkosEngineCode = `/**
     if (!stageTasks.length) return;
     const minCol = Math.min(...stageTasks.map(t => colMap[t.id] || 0));
     const targetX = LABEL_W + minCol * COL_W - 20;
-    const scrollEl = document.getElementById('swimlane-scroll');
+    const scrollEl = getDopkosScrollEl();
     if (scrollEl) {
       scrollEl.scrollTo({ left: Math.max(0, targetX), behavior: 'smooth' });
     }
@@ -1834,21 +1867,6 @@ const dopkosEngineCode = `/**
       btn.classList.toggle('active', btn.textContent === filter);
     });
     renderConsoleList();
-  }
-
-  function updateScrollSpy() {
-    const scrollEl = document.getElementById('swimlane-scroll');
-    if (!scrollEl) return;
-    const curX = scrollEl.scrollLeft;
-    const col = Math.floor(Math.max(0, curX - LABEL_W) / COL_W);
-    const visibleTask = PROJECT_STATE.tasks.find(t => (colMap[t.id] || 0) >= col);
-    if (visibleTask && PROJECT_STATE.project) {
-      const stageObj = (PROJECT_STATE.stages || []).find(s => s.id === visibleTask.stage);
-      const stageEl = document.getElementById('z1-stage');
-      if (stageEl && stageObj) {
-        stageEl.textContent = 'STAGE ' + stageObj.id + ' OF ' + (PROJECT_STATE.stages ? PROJECT_STATE.stages.length : 6) + ' — ' + stageObj.name.toUpperCase();
-      }
-    }
   }
 
   function renderDopkosRunSheet(container) {
