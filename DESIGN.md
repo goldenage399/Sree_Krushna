@@ -40,6 +40,12 @@ colors:
   amber-fleet: "#fbbf24"
   whatsapp-green: "#25D366"
   whatsapp-green-hover: "#20bd5a"
+  status-ready: "#f5c518"
+  status-active: "#38bdf8"
+  status-hold: "#ef4444"
+  status-done: "#10b981"
+  highlight-predecessor: "#f59e0b"
+  highlight-successor: "#38bdf8"
 typography:
   display:
     fontFamily: "'Cinzel', serif"
@@ -52,9 +58,12 @@ typography:
     fontFamily: "'Outfit', -apple-system, sans-serif"
     fontWeight: 400
 rounded:
-  sm: "8px"
-  md: "14px"
-  lg: "20px"
+  2xs: "2px"
+  xs: "4px"
+  sm: "6px"
+  md: "8px"
+  lg: "14px"
+  xl: "20px"
   full: "9999px"
   pill: "100px"
 spacing:
@@ -107,6 +116,7 @@ The Sree Krushna Marriage OS implements a complete, semantic dual-theme token ar
 - **Imperial Temple Gold:** `--gold-bright: #ffd15c`, `--gold-primary: #f5c518`, `--gold-antique: #d4a843`, `--gold-deep: #996515`
 - **Sacred Crimson:** `--crimson-royal: #e63946`, `--crimson-deep: #9d0208`, `--crimson-bright: #d00000`
 - **Track Semantics:** `--rose-silk: #ff758f`, `--sapphire-royal: #3b82f6`, `--emerald-sacred: #10b981`, `--purple-royal: #a855f7`
+- **Dependency Highlights:** Predecessors (`#f59e0b`), Successors (`#38bdf8`), Selected Node (`#f5c518`)
 
 ---
 
@@ -114,6 +124,7 @@ The Sree Krushna Marriage OS implements a complete, semantic dual-theme token ar
 1. **Never use hardcoded hex values in component styling.** Always declare `var(--bg-surface)`, `var(--text-main)`, `var(--border-subtle)`.
 2. **Persistence:** Theme state is stored in `localStorage.getItem('sree_krushna_theme')` with instant hydration before DOM rendering to prevent flashing.
 3. **Contrast Compliance:** Both themes strictly satisfy WCAG AA/AAA contrast ratios against their respective backgrounds.
+4. **Zero-White Scrollbar Standard:** All scrollable containers (`#swimlane-scroll`, `#console-list`, `#stage-strip`) must use themed dark/gold hairlines (`6px` width, `rgba(212, 168, 67, 0.4)` thumb on `#080b11` track).
 
 ---
 
@@ -127,32 +138,34 @@ To eliminate the 200–800ms "black flash" while Google Identity resolves, the a
 
 ### 2. State & Deep-Link Navigation Engine
 - **Session Storage:** Active tab is persisted in `sessionStorage.getItem('sree_krushna_active_tab')`.
-- **URL Hash Synchronization:** The active tab is synchronized with the browser address bar (`#tab-vision`, `#tab-rituals`, `#tab-procurement`), allowing direct sharing of specific tabs over WhatsApp and seamless Back/Forward browser navigation.
+- **URL Hash Synchronization:** The active tab is synchronized with the browser address bar (`#tab-dopkos`, `#tab-planning`, `#tab-rituals`, `#tab-procurement`), allowing direct sharing of specific tabs over WhatsApp and seamless Back/Forward browser navigation.
 - **Hydration Priority:** `window.location.hash` $\rightarrow$ `sessionStorage` $\rightarrow$ Default (`tab-dashboard`).
 
-### 3. Branded Error & 404 Design System (`public/404.html`)
+### 3. 5-Zone DO-PKOS Topology Studio (`#tab-dopkos`)
+The canonical Precedence DAG Studio implements the authentic 5-Zone Monolithic Architecture:
+- **Zone 1 (Executive HUD):** Top status bar with active stage name, blocker telemetry pills (`⛔ X BLOCKERS`), ready task counters, and stage progress.
+- **Zone 2 (Stage Strip):** Stepped horizontal pipeline cards with progress meters and quick-jump stage scroll.
+- **Zone 3 (Multi-Track Swimlane & Bézier DAG):** Infinite horizontal scroll canvas with cubic-bezier dependency curves, predecessor (`#f59e0b`) & successor (`#38bdf8`) bidirectional highlights, zoom controls (`50%` to `150%`), and pan mode.
+- **Slide-Over Detail Inspector (`#detail-panel`):** Slide-over card inspection with lead coordinator direct dial (`tel:`) and pre-filled WhatsApp actions (`wa.me`), prerequisite chips, and unlock badges.
+- **Zone 4 & 5 (Command Console Sheet):** Bottom toolbar with instant search, status filter pills (`ALL`, `READY`, `ACTIVE`, `HOLD`, `DONE`), multi-format export dropdown (`TSV`, `CSV`, `JSON`), and expandable 70% viewport task sheet.
+
+### 4. Planning & Operations Suite (`#tab-planning`)
+- **Sub-Views:** 2D Precedence Matrix, Day-Of Run Sheet, Macro Stage Roadmap, Track Breakdown, and Critical Path analyzer.
+- **Cross-Navigation:** Clicking any task in Planning views deep-links directly to `#tab-dopkos` and centers the task node in the 5-Zone Studio.
+
+### 5. Branded Error & 404 Design System (`public/404.html`)
 - **Layout:** Centered luxury card with obsidian surface (`#0f1624`), gold perimeter border, floating crown emblem, and Cinzel heading.
 - **Recovery CTA:** Prominent gradient gold button (`← Return to Command Center`) linking directly to root `/`.
 
-### 4. Mobile Ergonomics & Protocol 19 (`M-GATE-01`)
+### 6. Mobile Ergonomics & Protocol 19 (`M-GATE-01`)
 - **Viewport Limit:** Strict validation down to **300px/320px** with zero horizontal overflow (`overflow-x: hidden`).
 - **Touch Targets:** All interactive elements (buttons, checkboxes, tab pills, delete buttons) guarantee minimum $\ge 44 \times 44\text{px}$ hit areas.
 - **Safe Area Insets:** Header and modal overlays adapt to device notches using `env(safe-area-inset-top)` and `env(safe-area-inset-bottom)`.
 - **Responsive Table Containment:** All tabular data wrapped in `.table-responsive-wrapper` with touch momentum scrolling.
 
-### 5. PWA & Service Worker Cache Lifecycle
-- **Cache Strategy:** Stale-While-Revalidate for app shell assets (`/`, `/index.html`, `/manifest.json`, `/js/config.js`, `/js/auth.js`).
-- **Cache Invalidation:** Versioned cache names (`sree-krushna-os-v1.1.0`) with automatic pruning of legacy cache buckets during the `activate` event.
+### 7. PWA & Service Worker Cache Lifecycle
+- **Cache Strategy:** Stale-While-Revalidate for production app shell assets with automatic `localhost` / `127.0.0.1` development bypass.
+- **Cache Invalidation:** Versioned cache names (`sree-krushna-os-v4.2.0`) with automatic pruning of legacy cache buckets during the `activate` event.
 
-### 6. UG-Farmhouse 3-Zone Swimlane Matrix Engine
-- **Zone 1 (Global Health Strip):** Obsidian surface with gold pill badge, real-time counters (Total, Completed, Active, Gates `4/4 Ready`, Lagna `21:30 IST`).
-- **Zone 2 (Interactive Stage Pipeline):** Stepped horizontal card strip (`STAGE 01` to `STAGE 06`) with percentage progress meters and active gold glow (`box-shadow: 0 0 0 1px var(--gold-primary)`).
-- **Zone 3 (Multi-Track Grid):** Responsive track filter pills with dynamic task counters, active stage breadcrumb indicator, gold-bordered reset CTA (`.stage-reset-btn`), and sticky track row headers with ceremonial color borders (`border-left: 4px solid <trackColor>`).
-
-### 7. Slide-Over Console Drawer (`#console-drawer`)
-- **Interaction Model:** Slide-in right sheet on desktop; smooth bottom-sheet modal on mobile ($< 480\text{px}$) with `85vh` height.
-- **Lead Coordinator Direct Dial:** Contact chip with direct phone dial (`tel:`) and pre-filled WhatsApp green action (`#25D366`, `wa.me`).
-- **Real-Time Checklists:** Custom checkbox controls with live state persistence and instantaneous progress recalculation across Zones 1 and 2.
-- **Status Controls:** High-contrast 3-way segmented control (`Planned`, `In-Progress`, `Completed ✓`).
 
 
