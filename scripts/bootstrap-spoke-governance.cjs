@@ -120,8 +120,8 @@ const DIRS = [
 ];
 DIRS.forEach(d => ensureDir(path.join(TARGET_ROOT, d)));
 
-// ─── Step 2: Verification Scripts ─────────────────────────────────────────────
-console.log(`\n--- Step 2: Deploying Governance Verification Scripts ---`);
+// ─── Step 2: Verification Scripts & 3 Core Universal Packages ────────────────
+console.log(`\n--- Step 2: Deploying 3 Core Universal Packages & Verification Scripts ---`);
 // Spoke verification script (checks P82 and PACT-001)
 const SPOKE_VERIFIER_SRC = path.join(HUB_ROOT, '..', 'Capsicum', 'scripts', 'verify-governance-wiring.cjs');
 if (fs.existsSync(SPOKE_VERIFIER_SRC)) {
@@ -132,6 +132,21 @@ if (fs.existsSync(SPOKE_VERIFIER_SRC)) {
 }
 copyFileSafe('scripts/verify-governance-schema.cjs', 'scripts/verify-governance-schema.cjs');
 
+// Package 1: Universal Web Release Assurance Gate (SPEC-SAP-DEPLOY-GATE-001)
+copyFileSafe('scripts/verify-deployment.cjs', 'scripts/verify-deployment.cjs');
+copyFileSafe('scripts/forensic-audit.cjs', 'scripts/forensic-audit.cjs');
+copyFileSafe('scripts/verify-react-deployment.cjs', 'scripts/verify-react-deployment.cjs');
+copyFileSafe('.deploymentrc.json', '.deploymentrc.json');
+
+// Package 2: Universal Web App Bootstrap & Scaffolder (SPEC-SAP-BOOTSTRAP-001)
+copyFileSafe('scripts/bootstrap-web-app.cjs', 'scripts/bootstrap-web-app.cjs');
+if (fs.existsSync(path.join(HUB_ROOT, 'templates/web-spa-shell'))) {
+  copyDirRecursive('templates/web-spa-shell', 'templates/web-spa-shell');
+}
+
+// Package 3: Universal Write-Intent & Triage Engine (SPEC-ARCH-INTENT-DISPATCH-001)
+copyFileSafe('scripts/triage-requests.cjs', 'scripts/triage-requests.cjs');
+
 // ─── Step 3: Complete Protocols Suite (docs/protocols/) ───────────────────────
 console.log(`\n--- Step 3: Deploying Complete Protocols Suite (docs/protocols/) ---`);
 ensureDir(path.join(TARGET_ROOT, 'docs/protocols'));
@@ -140,102 +155,42 @@ copyFileSafe('.agent/patterns/README.md', '.agent/patterns/README.md');
 
 // ─── Step 4: Workflows & Governance Councils ──────────────────────────────────
 console.log(`\n--- Step 4: Synchronizing Workflows & Governance Councils ---`);
-const WORKFLOWS = [
-  'plan.md',
-  'plan-review.md',
-  'sap-sync.md',
-  'capture-pattern.md',
-  'capture-pattern-lite.md',
-  'skill-onboarding.md',
-  'governance-workflow.md',
-  'aos-session-open.md',
-  'aos-session-close.md',
-  'architecture-council.md',
-  'ui-council.md',
-  'external-ui-redesign.md',
-  'mobile-ui-engineering.md',
-  'post-incident-governance.md',
-  'post-incident-governance-lite.md',
-  'post-incident-analysis.md',
-  'postmortem.md',
-  'table-schema-documentation.md',
-  'new-prd.md',
-  'perf-review.md',
-];
-WORKFLOWS.forEach(wf => copyFileSafe(`.agent/workflows/${wf}`, `.agent/workflows/${wf}`));
+ensureDir(path.join(TARGET_ROOT, '.agent/workflows'));
+ensureDir(path.join(TARGET_ROOT, '.agent/workflows/portable'));
 
-const PORTABLE_WORKFLOWS = [
-  'spoke-and-wheel-docs.md',
-  'systematic-debugging.md',
-  'session-handoff-system.md',
-  'ssot-reconciliation.md',
-  'post-incident-governance.md',
-  'financial-integrity-patterns.md',
-  'spreadsheet-backend-patterns.md',
-];
-PORTABLE_WORKFLOWS.forEach(pwf => copyFileSafe(`.agent/workflows/portable/${pwf}`, `.agent/workflows/portable/${pwf}`));
+const wfSrcDir = path.join(HUB_ROOT, '.agent/workflows');
+if (fs.existsSync(wfSrcDir)) {
+  const allWfFiles = fs.readdirSync(wfSrcDir).filter(f => f.endsWith('.md'));
+  allWfFiles.forEach(wf => copyFileSafe(`.agent/workflows/${wf}`, `.agent/workflows/${wf}`));
+  console.log(`ℹ️ Dynamically synchronized ${allWfFiles.length} root workflow files.`);
+}
+
+const portableWfSrcDir = path.join(HUB_ROOT, '.agent/workflows/portable');
+if (fs.existsSync(portableWfSrcDir)) {
+  const allPortableFiles = fs.readdirSync(portableWfSrcDir).filter(f => f.endsWith('.md'));
+  allPortableFiles.forEach(pwf => copyFileSafe(`.agent/workflows/portable/${pwf}`, `.agent/workflows/portable/${pwf}`));
+  console.log(`ℹ️ Dynamically synchronized ${allPortableFiles.length} portable workflow files.`);
+}
 
 // ─── Step 5: Full .agent/skills Suite ─────────────────────────────────────────
 console.log(`\n--- Step 5: Deploying All .agent Skills ---`);
-const CORE_SKILLS = [
-  'protocol-enforcer-pre-code',
-  'writing-plans',
-  'systematic-debugger',
-  'prompt-clarity',
-  'pin-branch',
-  'mermaid-skill',
-  'ssot-domain-mapper',
-  'writing-technical-documentation',
-  'writing-clearly-and-concisely',
-  'memory-session-loader',
-  'memory-session-end',
-  'memory-event-logger',
-  'memory-decision-logger',
-  'ui-ux-pro-max',
-  'frontend-design',
-  'ui-design-validator',
-  'mobile-ui-validator',
-  'parent-layout-audit',
-  'cos-orchestrator',
-  'cos-safe-refactor',
-  'cos-integration-verifier',
-  'admin-component-contracts',
-  'declarative-schema-enforcer',
-  'contract-first-api-validator',
-  'schema-migration-guide',
-  'caveman',
-  'caveman-compress',
-  'change-prd-architect',
-  'enhancement-scaffolder',
-  'enhancement-tracker-update',
-  'phased-commit-orchestrator',
-  'writejournal-audit-gate',
-  'pirr-compliance-checklist',
-  'planning-with-files',
-  'test-driven-development',
-  'backend-test-generator',
-  'gas-deploy-guard',
-  'gas-optimizer',
-  'task-firestore-direct-write',
-  'vercel-react-best-practices',
-];
-CORE_SKILLS.forEach(skill => copyDirRecursive(`.agent/skills/${skill}`, `.agent/skills/${skill}`));
+ensureDir(path.join(TARGET_ROOT, '.agent/skills'));
+const skillsSrcDir = path.join(HUB_ROOT, '.agent/skills');
+if (fs.existsSync(skillsSrcDir)) {
+  const skillDirs = fs.readdirSync(skillsSrcDir, { withFileTypes: true }).filter(d => d.isDirectory());
+  skillDirs.forEach(d => copyDirRecursive(`.agent/skills/${d.name}`, `.agent/skills/${d.name}`));
+  console.log(`ℹ️ Dynamically deployed ${skillDirs.length} .agent skills.`);
+}
 
 // ─── Step 6: Deploy .claude/skills (Impeccable, Site Architecture, etc.) ──────
 console.log(`\n--- Step 6: Deploying Claude-Native Skills (Impeccable, etc.) ---`);
-const CLAUDE_SKILLS = [
-  'impeccable',
-  'architecture-patterns',
-  'high-end-visual-design',
-  'improve-codebase-architecture',
-  'site-architecture',
-  'web-design-guidelines',
-  'skill-creator',
-  'triage',
-  'grill-with-docs',
-  'python-performance-optimization',
-];
-CLAUDE_SKILLS.forEach(skill => copyDirRecursive(`.claude/skills/${skill}`, `.claude/skills/${skill}`));
+ensureDir(path.join(TARGET_ROOT, '.claude/skills'));
+const claudeSkillsSrcDir = path.join(HUB_ROOT, '.claude/skills');
+if (fs.existsSync(claudeSkillsSrcDir)) {
+  const claudeSkillDirs = fs.readdirSync(claudeSkillsSrcDir, { withFileTypes: true }).filter(d => d.isDirectory());
+  claudeSkillDirs.forEach(d => copyDirRecursive(`.claude/skills/${d.name}`, `.claude/skills/${d.name}`));
+  console.log(`ℹ️ Dynamically deployed ${claudeSkillDirs.length} .claude skills.`);
+}
 
 // ─── Step 7: Incident Encyclopedia (All 86+ INCs) ────────────────────────────
 console.log(`\n--- Step 7: Deploying Incident Encyclopedia (docs/incidents/) ---`);
@@ -299,6 +254,36 @@ patternFiles.forEach(patName => {
 
   writeFileNoBom(path.join(TARGET_ROOT, '.agent/patterns', patName), content);
 });
+
+// Also scan and adapt any pre-existing local patterns in the target repo
+const allTargetPatterns = fs.readdirSync(path.join(TARGET_ROOT, '.agent/patterns')).filter(f => f.endsWith('.md') && f.toLowerCase() !== 'readme.md');
+allTargetPatterns.forEach(patName => {
+  const ref = path.basename(patName, '.md');
+  if (!deployedPatternNames.includes(ref)) {
+    deployedPatternNames.push(ref);
+  }
+  const targetPatPath = path.join(TARGET_ROOT, '.agent/patterns', patName);
+  let content = fs.readFileSync(targetPatPath, 'utf8');
+
+  if (!content.includes('activation_tier:')) {
+    if (content.startsWith('---')) {
+      content = content.replace(/^---\r?\n/, `---\npattern: ${ref}\nactivation_tier: reference\ncanonical_source: ${REPO_NAME.toLowerCase()}\nstatus: HYPOTHESIS\n`);
+    } else {
+      content = `---\npattern: ${ref}\nactivation_tier: reference\ncanonical_source: ${REPO_NAME.toLowerCase()}\nstatus: HYPOTHESIS\n${LOCAL_CONSUMED_BLOCK}\n---\n\n` + content;
+    }
+  }
+
+  content = content.replace(/consumed_by:[\s\S]*?(?=\r?\n(?:triggers|portability|canonical_source|activation_tier|status|tags|description|---):?)/, LOCAL_CONSUMED_BLOCK + '\n');
+  let triggersMatch = content.match(/^triggers:\s*\[.+\]/m) || content.match(/^triggers:\s*\n\s*-\s*.+/m);
+  let hasTriggers = !!triggersMatch;
+  let hasRouterEntry = routerSrcContent.includes('id: pattern-' + ref.toLowerCase()) || routerSrcContent.includes('id: ' + ref.toLowerCase());
+  let tier = (hasTriggers && hasRouterEntry) ? 'routed' : 'reference';
+
+  content = content.replace(/activation_tier:\s*\w+/, 'activation_tier: ' + tier);
+  writeFileNoBom(targetPatPath, content);
+});
+
+console.log(`ℹ️ Adapted ${deployedPatternNames.length} total patterns in target repo.`);
 
 // Ensure plan.md references all patterns
 const targetPlanWf = path.join(TARGET_ROOT, '.agent/workflows/plan.md');
@@ -481,6 +466,12 @@ pkg.scripts = pkg.scripts || {};
 pkg.scripts['verify:governance-wiring'] = 'node scripts/verify-governance-wiring.cjs';
 pkg.scripts['verify:governance-wiring:all'] = 'node scripts/verify-governance-wiring.cjs --all';
 pkg.scripts['verify:governance-schema'] = 'node scripts/verify-governance-schema.cjs';
+pkg.scripts['verify:deployment'] = 'node scripts/verify-deployment.cjs';
+pkg.scripts['verify:react-deployment'] = 'node scripts/verify-react-deployment.cjs';
+pkg.scripts['audit:decomposition'] = 'node scripts/forensic-audit.cjs';
+pkg.scripts['bootstrap:web-app'] = 'node scripts/bootstrap-web-app.cjs';
+pkg.scripts['triage:requests'] = 'node scripts/triage-requests.cjs';
+pkg.scripts['pre-deploy'] = 'npm run verify:deployment';
 
 writeFileNoBom(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
 
