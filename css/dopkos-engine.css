@@ -325,10 +325,12 @@
   height: 100%;
 }
 
+#tab-dopkos #dopkos-dep-svg,
 #tab-dopkos #dep-svg {
   position: absolute;
   top: 0;
   pointer-events: none;
+  z-index: 1;
 }
 
 /* ==========================================================================
@@ -344,7 +346,7 @@
   padding: 6px 8px;
   cursor: pointer;
   z-index: 2;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, opacity 0.2s ease;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease, opacity 0.2s ease, filter 0.2s ease;
   pointer-events: auto;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
@@ -357,56 +359,105 @@
 }
 
 #tab-dopkos .selection-active .task-card {
-  opacity: 0.25;
-  filter: grayscale(0.8);
+  opacity: 0.22 !important;
+  filter: brightness(0.65) contrast(0.7) grayscale(0.6) !important;
 }
 
 #tab-dopkos .selection-active .task-card.is-selected {
   opacity: 1 !important;
   filter: none !important;
   z-index: 15;
-  border-color: var(--selection-color) !important;
-  box-shadow: 0 0 18px var(--selection-glow) !important;
+  border-color: var(--selection-color, #f5c518) !important;
+  box-shadow: 0 0 18px var(--selection-glow, rgba(245, 197, 24, 0.6)) !important;
 }
 
 #tab-dopkos .selection-active .task-card.is-predecessor {
   opacity: 1 !important;
   filter: none !important;
   z-index: 14;
-  border-color: var(--highlight-predecessor) !important;
-  box-shadow: 0 0 14px var(--highlight-predecessor-glow) !important;
+  border-color: var(--highlight-predecessor, #f59e0b) !important;
+  box-shadow: 0 0 14px var(--highlight-predecessor-glow, rgba(245, 158, 11, 0.6)) !important;
 }
 
 #tab-dopkos .selection-active .task-card.is-successor {
   opacity: 1 !important;
   filter: none !important;
   z-index: 14;
-  border-color: var(--highlight-successor) !important;
-  box-shadow: 0 0 14px var(--highlight-successor-glow) !important;
+  border-color: var(--highlight-successor, #38bdf8) !important;
+  box-shadow: 0 0 14px var(--highlight-successor-glow, rgba(56, 189, 248, 0.6)) !important;
 }
 
+/* Connection line & glow properties */
+#tab-dopkos #dopkos-dep-svg g.dep-edge,
+#tab-dopkos #dep-svg g.dep-edge {
+  transition: opacity 0.2s ease;
+}
+
+#tab-dopkos #dopkos-dep-svg g.dep-edge path.visible-path,
 #tab-dopkos #dep-svg g.dep-edge path.visible-path {
-  transition: opacity 0.2s ease, stroke-width 0.2s ease, stroke 0.2s ease;
+  pointer-events: none;
+  transition: opacity 0.2s ease, stroke-width 0.2s ease, stroke 0.2s ease, filter 0.2s ease;
 }
 
+#tab-dopkos #dopkos-dep-svg g.dep-edge text,
+#tab-dopkos #dep-svg g.dep-edge text {
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+#tab-dopkos #dopkos-dep-svg g.dep-edge path.hit-path,
+#tab-dopkos #dep-svg g.dep-edge path.hit-path {
+  pointer-events: stroke;
+  fill: none;
+  stroke: transparent;
+  stroke-width: 16px;
+  cursor: pointer;
+}
+
+/* Hover style on the group */
+#tab-dopkos #dopkos-dep-svg g.dep-edge:hover path.visible-path,
+#tab-dopkos #dep-svg g.dep-edge:hover path.visible-path {
+  stroke: var(--gold-bright, #f5c518) !important;
+  stroke-width: 2.5px !important;
+  filter: drop-shadow(0 0 5px var(--selection-glow, rgba(245, 197, 24, 0.85))) !important;
+}
+
+/* Selection active dimming & glowing */
+#tab-dopkos #dopkos-dep-svg.selection-active g.dep-edge,
 #tab-dopkos #dep-svg.selection-active g.dep-edge {
-  opacity: 0.03;
+  opacity: 0.08;
 }
 
+#tab-dopkos #dopkos-dep-svg.selection-active g.dep-edge.is-highlighted,
 #tab-dopkos #dep-svg.selection-active g.dep-edge.is-highlighted {
-  opacity: 1;
+  opacity: 1 !important;
 }
 
+#tab-dopkos #dopkos-dep-svg.selection-active g.dep-edge.is-predecessor-line path.visible-path,
 #tab-dopkos #dep-svg.selection-active g.dep-edge.is-predecessor-line path.visible-path {
-  stroke: var(--highlight-predecessor);
-  stroke-width: 2.5px;
+  stroke: var(--highlight-predecessor, #f59e0b) !important;
+  stroke-width: 2.8px !important;
   opacity: 1 !important;
+  filter: drop-shadow(0 0 5px var(--highlight-predecessor-glow, rgba(245, 158, 11, 0.9))) drop-shadow(0 0 10px rgba(245, 158, 11, 0.45)) !important;
 }
 
+#tab-dopkos #dopkos-dep-svg.selection-active g.dep-edge.is-successor-line path.visible-path,
 #tab-dopkos #dep-svg.selection-active g.dep-edge.is-successor-line path.visible-path {
-  stroke: var(--highlight-successor);
-  stroke-width: 2.5px;
+  stroke: var(--highlight-successor, #38bdf8) !important;
+  stroke-width: 2.8px !important;
   opacity: 1 !important;
+  filter: drop-shadow(0 0 5px var(--highlight-successor-glow, rgba(56, 189, 248, 0.9))) drop-shadow(0 0 10px rgba(56, 189, 248, 0.45)) !important;
+}
+
+#tab-dopkos #dopkos-dep-svg.selection-active g.dep-edge.is-highlighted:hover path.visible-path,
+#tab-dopkos #dep-svg.selection-active g.dep-edge.is-highlighted:hover path.visible-path {
+  stroke-width: 3.8px !important;
+  filter: drop-shadow(0 0 8px var(--hover-glow-color, rgba(255, 255, 255, 0.95))) drop-shadow(0 0 16px rgba(255, 255, 255, 0.6)) !important;
+}
+
+#tab-dopkos .task-card.edge-hovered {
+  border-color: var(--text-primary, #ffffff) !important;
+  box-shadow: 0 0 12px var(--selection-glow, rgba(245, 197, 24, 0.7)) !important;
 }
 
 #tab-dopkos .status-pill {

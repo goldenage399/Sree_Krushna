@@ -1261,8 +1261,6 @@ const dopkosEngineCode = `/**
     g.appendChild(hitPath);
 
     g.addEventListener('mouseenter', () => {
-      visiblePath.setAttribute('stroke', 'var(--gold-bright, #ffd15c)');
-      visiblePath.setAttribute('stroke-width', '2.2');
       const fromCard = document.querySelector('.task-card[data-id="' + fromId + '"]');
       const toCard = document.querySelector('.task-card[data-id="' + toId + '"]');
       if (fromCard) fromCard.classList.add('edge-hovered');
@@ -1270,8 +1268,6 @@ const dopkosEngineCode = `/**
     });
 
     g.addEventListener('mouseleave', () => {
-      visiblePath.setAttribute('stroke', color);
-      visiblePath.setAttribute('stroke-width', strokeWidth);
       const fromCard = document.querySelector('.task-card[data-id="' + fromId + '"]');
       const toCard = document.querySelector('.task-card[data-id="' + toId + '"]');
       if (fromCard) fromCard.classList.remove('edge-hovered');
@@ -1731,11 +1727,17 @@ const dopkosEngineCode = `/**
 
     document.querySelectorAll('.task-card').forEach(card => {
       card.classList.remove('is-selected', 'is-predecessor', 'is-successor', 'edge-hovered');
+      if (card.style && typeof card.style.removeProperty === 'function') {
+        card.style.removeProperty('--selection-color');
+      }
     });
 
     if (depSvg) {
       depSvg.querySelectorAll('g.dep-edge').forEach(g => {
         g.classList.remove('is-highlighted', 'is-predecessor-line', 'is-successor-line');
+        if (g.style && typeof g.style.removeProperty === 'function') {
+          g.style.removeProperty('--hover-glow-color');
+        }
       });
     }
   }
@@ -1750,10 +1752,17 @@ const dopkosEngineCode = `/**
 
       if (to === taskId && dependsOn.includes(from)) {
         g.classList.add('is-highlighted', 'is-predecessor-line');
+        g.classList.remove('is-successor-line');
+        g.style.setProperty('--hover-glow-color', 'rgba(245, 158, 11, 0.95)');
       } else if (from === taskId && unlocks.includes(to)) {
         g.classList.add('is-highlighted', 'is-successor-line');
+        g.classList.remove('is-predecessor-line');
+        g.style.setProperty('--hover-glow-color', 'rgba(56, 189, 248, 0.95)');
       } else {
         g.classList.remove('is-highlighted', 'is-predecessor-line', 'is-successor-line');
+        if (g.style && typeof g.style.removeProperty === 'function') {
+          g.style.removeProperty('--hover-glow-color');
+        }
       }
     });
   }
@@ -1808,25 +1817,29 @@ const dopkosEngineCode = `/**
 
     clearHighlights();
 
+    const tr = displayTrade(t);
+    const trColor = TRADE_META[tr]?.color || '#f5c518';
+
     const swimlaneInner = getDopkosInnerEl();
     const depSvg = getDopkosSvgEl();
     if (swimlaneInner) swimlaneInner.classList.add('selection-active');
     if (depSvg) depSvg.classList.add('selection-active');
 
-    const card = document.querySelector('.task-card[data-id="' + taskId + '"]');
+    const card = document.querySelector('#tab-dopkos .task-card[data-id="' + taskId + '"]') || document.querySelector('.task-card[data-id="' + taskId + '"]');
     if (card) {
       card.classList.add('is-selected');
+      card.style.setProperty('--selection-color', trColor);
     }
 
     const dependsOn = t.depends_on || [];
     dependsOn.forEach(predId => {
-      const predCard = document.querySelector('.task-card[data-id="' + predId + '"]');
+      const predCard = document.querySelector('#tab-dopkos .task-card[data-id="' + predId + '"]') || document.querySelector('.task-card[data-id="' + predId + '"]');
       if (predCard) predCard.classList.add('is-predecessor');
     });
 
     const unlocks = t.unlocks || [];
     unlocks.forEach(succId => {
-      const succCard = document.querySelector('.task-card[data-id="' + succId + '"]');
+      const succCard = document.querySelector('#tab-dopkos .task-card[data-id="' + succId + '"]') || document.querySelector('.task-card[data-id="' + succId + '"]');
       if (succCard) succCard.classList.add('is-successor');
     });
 
