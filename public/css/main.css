@@ -2781,3 +2781,169 @@ main:has(#tab-dopkos.active) {
   overflow-y: auto;
   padding: 4px 0;
 }
+
+/* Console Export Dropdown & Zoom Suite */
+.console-export-container {
+  position: relative;
+  display: inline-flex;
+}
+.console-export-dropdown {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  right: 0;
+  background: var(--bg-surface-elevated, #131b2e);
+  border: 1px solid var(--gold-antique, #d4a843);
+  box-shadow: 0 -8px 24px rgba(0,0,0,0.6);
+  border-radius: 4px;
+  display: none;
+  flex-direction: column;
+  min-width: 240px;
+  z-index: 200;
+  padding: 4px 0;
+}
+.console-export-dropdown.show,
+.console-export-dropdown.open {
+  display: flex !important;
+}
+.console-export-item {
+  padding: 8px 14px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-main, #f8fafc);
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.console-export-item:hover {
+  background: rgba(245, 197, 24, 0.15);
+  color: var(--gold-bright, #f5c518);
+}
+
+.console-zoom-group {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border-subtle, rgba(255,255,255,0.08));
+  border-radius: 4px;
+  height: 26px;
+  overflow: hidden;
+  background: #080b11;
+  flex-shrink: 0;
+}
+.console-zoom-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim, #94a3b8);
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 0 8px;
+  height: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.12s, background 0.12s;
+}
+.console-zoom-btn:hover {
+  color: var(--gold-bright, #f5c518);
+  background: var(--bg-surface-elevated, #131b2e);
+}
+.console-zoom-btn.console-zoom-val {
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  padding: 0 6px;
+  border-left: 1px solid var(--border-subtle, rgba(255,255,255,0.08));
+  border-right: 1px solid var(--border-subtle, rgba(255,255,255,0.08));
+  min-width: 42px;
+  color: var(--text-main, #f8fafc);
+}
+
+/* Card Inline Dropdown Menu */
+.card-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--bg-surface-elevated, #131b2e);
+  border: 1px solid var(--border-subtle, rgba(255,255,255,0.08));
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  z-index: 60;
+  display: none;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+}
+.card-dropdown.open { display: block; }
+.dropdown-opt {
+  padding: 6px 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text-main, #f8fafc);
+}
+.dropdown-opt:hover {
+  background: rgba(245, 197, 24, 0.15);
+  color: var(--gold-bright, #f5c518);
+}
+
+/* Slide-over Detail / Inspector Panel */
+#detail-panel {
+  position: absolute;
+  top: 0;
+  right: -420px;
+  width: 400px;
+  height: 100%;
+  background: var(--bg-surface-elevated, #0f1624);
+  border-left: 3px solid var(--gold-bright, #f5c518);
+  box-shadow: -8px 0 32px rgba(0,0,0,0.7);
+  z-index: 160;
+  display: flex;
+  flex-direction: column;
+  transition: right 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+#detail-panel.open {
+  right: 0;
+}
+.panel-section {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.08));
+}
+.panel-section-title {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--gold-bright, #f5c518);
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+.dep-chip {
+  background: var(--bg-surface, #131d31);
+  border: 1px solid var(--border-subtle, rgba(255,255,255,0.08));
+  border-left: 3px solid #f5c518;
+  color: var(--text-main, #f8fafc);
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-family: monospace;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+.dep-chip:hover {
+  border-color: var(--gold-bright, #f5c518);
+  transform: translateY(-1px);
+}
+
+/* Pan Mode Cursors */
+.pan-active,
+#z3-viewport.pan-mode {
+  cursor: grab !important;
+}
+#z3-viewport.dragging {
+  cursor: grabbing !important;
+}

@@ -1925,9 +1925,84 @@ UNIVERSAL PROPOSAL & INTENT STUDIO (Modal):
 - **Deployment Gate (`verify-deployment.cjs`):** **All 8 Layers 100% GREEN**
 - **Git State:** Cleanly committed (`3625fd8` & `cc1a4bf`).
 
-# Query 2.5 -
+# Query 2.5 -- these arent enven sorted based on their urgency , atleast based on #swimlane-matrix-table > div.matrix-row.matrix-row-media > div.matrix-row-nodes > div:nth-child(3) > div.node-top > span Node TIme?? that also isnt done
 
-# Review 2.5 -
+# Review 2.5 -Searched for "swimlane-matrix-table"
+
+Viewed app.js:340-500
+Viewed marriage-state.js:1-150
+Viewed marriage-state.js:200-350
+Searched for ""track": "media""
+Viewed marriage-state.js:565-630
+Viewed marriage-state.js:795-855
+Searched for ""timeTag":"
+Searched for "tab-swimlane"
+Viewed index.html:350-420
+Viewed main.css:1350-1460
+Viewed main.css:1390-1440
+Viewed main.css:1380-1420
+Edited main.css
+Viewed index.html:390-406
+Edited index.html
+Edited index.html
+Viewed app.js:330-455
+Edited app.js
+Viewed app.js:2720-2760
+Viewed app.js:2800-2860
+Edited app.js
+Edited sw.js
+Viewed sw.js:1-15
+Viewed sw.js:1-15
+Ran command: `npm test`
+Ran command: `node scripts/verify-deployment.cjs`
+Ran command: `git add public/index.html index.html public/css/main.css public/js/app.js ; git commit -m "feat(swimlane): implement chronological timeline parsing and urgency sorting engine with matrix toolbar controls"`
+Ran command: `git log -n 3 --oneline`
+
+### ⏱️ Implemented: Chronological Timeline & Urgency Sorting Engine
+
+We have integrated a **Temporal Timeline & Urgency Sorting Engine** across the **Swimlane Matrix Table** (`#swimlane-matrix-table`). All tasks within every operational track (including Media, Bride, Groom, Purohit, Catering, and Fleet) are now deterministically sorted by their **exact temporal milestone**, **time tag (`timeTag`)**, and **urgency priority level**.
+
+---
+
+### 🔍 What Was Fixed
+
+```
+BEFORE (Arbitrary Array Insertion Order):
+[ TSK-204 · T-45 Days ] ➔ [ TSK-605 · Day +7 to +30 ] ➔ [ TSK-203 · T-90 Days ] ➔ [ TSK-405 · Day 0 - 19:30 ] ➔ [ TSK-205 · T-30 Days ]
+(Jumbled timeline, Day +30 appeared ahead of T-90 Days)
+
+AFTER (Chronological Timeline & Urgency Progression):
+[ TSK-203 · T-90 Days ] ➔ [ TSK-204 · T-45 Days ] ➔ [ TSK-1101 · ⚡ Critical T-45 ] ➔ [ TSK-205 · T-30 Days ] ➔ [ TSK-206 · T-7 Days ] ➔ [ TSK-305 · Day 0 - 15:00 ] ➔ [ TSK-405 · Day 0 - 19:30 ] ➔ [ TSK-605 · Day +7 to +30 ]
+```
+
+---
+
+### 🛠️ Key Engine Capabilities
+
+1. **Deterministic Timeline Parser (`parseTaskTimelineMinutes`):**
+   - **T-Days Syntax:** Translates `T-180 Days`, `T-90`, `T-45`, `T-2 Days` into normalized negative day offsets relative to wedding day.
+   - **T-Hours Syntax:** Translates `Day 0 • T - 4 Hours` into exact pre-event minute offsets.
+   - **Day 0 Clock Syntax:** Parses exact 24-hour wedding day schedules (e.g., `15:00 to 18:30`, `19:30 to 22:30`) into minute-by-minute sequences.
+   - **Day +Days Syntax:** Translates post-event milestones (`Day +1`, `Day +4`, `Day +7 to Day +30`) into positive time progression.
+
+2. **Urgency & Critical Path Escalation:**
+   - Tasks marked `Critical` now render a distinct **`⚡ Critical`** badge in the node header and feature emergency red border accenting.
+   - When sorting by Urgency, **Critical** and **High** priority blockers are surfaced to the leftmost leading position in every swimlane.
+
+3. **Interactive Swimlane Sub-Toolbar Controls:**
+   - Added 4 instant sort switches directly in the Swimlane toolbar:
+     - **`⏱️ Timeline`** (Default): Strict chronological sequence (`T-180` ➔ `Day 0 Hours` ➔ `Day +30`) with urgency tie-breaking.
+     - **`⚡ Urgency`**: Prioritizes `Critical` ➔ `High` ➔ `Medium` ➔ `Planned`.
+     - **`🔢 WBS`**: Hierarchical Work Breakdown Structure order (`2.1.1` ➔ `3.4.1` ➔ `10.1.1`).
+     - **`📊 Status`**: Groups active work first (`In-Progress` ➔ `Planned` ➔ `Done`).
+
+---
+
+### 🧪 Pre-Flight Gate Health Check
+
+- **Local Smoke Test (`npm test`):** **100% Passed**
+- **Deployment Suite (`verify-deployment.cjs`):** **All 8 Layers 100% GREEN**
+- **Git Commit:** Recorded cleanly (`d10e9a6`).
 
 # Response 2.5 -
 

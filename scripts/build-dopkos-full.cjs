@@ -866,66 +866,136 @@ const dopkosEngineCode = `/**
     colMap = computeColumns();
     
     container.innerHTML = '<div id="dopkos-5zone-frame" style="display: flex; flex-direction: column; height: 100%; flex: 1; min-height: 0; position: relative; background: #080b11; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-subtle);">' +
-      '<!-- Zone 1 HUD -->' +
-      '<div id="z1" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 16px; background: var(--bg-surface-elevated); border-bottom: 1px solid var(--border-subtle); height: 44px; flex-shrink: 0;">' +
-        '<div style="display: flex; align-items: center; gap: 10px;">' +
-          '<span style="font-family: var(--font-display); font-size: 0.92rem; font-weight: 800; color: var(--gold-bright);">👑 SREE KRUSHNA MARRIAGE OS ▾</span>' +
-          '<span id="z1-stage-text" style="font-size: 0.74rem; color: var(--text-dim); font-weight: 700;">STAGE 1 OF 6 — T-180 SACRED FOUNDATION</span>' +
+      '<!-- ZONE 1 HUD -->' +
+      '<div id="z1" style="display: flex; justify-content: space-between; align-items: center; padding: 6px 16px; background: var(--bg-surface-elevated); border-bottom: 1px solid var(--border-subtle); height: 44px; flex-shrink: 0;">' +
+        '<div style="display: flex; align-items: center; gap: 12px;">' +
+          '<span id="z1-project" style="font-family: var(--font-display); font-size: 0.92rem; font-weight: 800; color: var(--gold-bright); cursor: pointer;">👑 SREE KRUSHNA MARRIAGE OS ▾</span>' +
+          '<span id="z1-stage" style="font-size: 0.74rem; color: var(--text-dim); font-weight: 700;">STAGE 1 OF 6 — T-180 SACRED FOUNDATION</span>' +
         '</div>' +
-        '<div id="z1-kpis" style="display: flex; gap: 8px;"></div>' +
-      '</div>' +
-      '<!-- Zone 2 Stage Progress Strip -->' +
-      '<div id="stage-strip-strip" style="display: flex; gap: 6px; padding: 8px 12px; background: var(--bg-surface); overflow-x: auto; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0;"></div>' +
-      '<!-- Zone 3 Multi-Track Swimlane -->' +
-      '<div id="z3-viewport" style="flex: 1; position: relative; overflow: auto; background: #080b11;">' +
-        '<div id="stage-header-row" style="height: 30px; background: var(--bg-surface-elevated); border-bottom: 2px solid var(--border-subtle); position: sticky; top: 0; z-index: 30; width: ' + (totalW + LABEL_W) + 'px;">' +
-          '<div style="width: 100px; height: 30px; position: sticky; left: 0; background: var(--bg-surface-elevated); z-index: 40; border-right: 2px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: var(--gold-bright);">TRACK</div>' +
-          '<div id="stage-header-bands-inner" style="position: absolute; left: 100px; top: 0; height: 30px;"></div>' +
+        '<div id="z1-right" style="display: flex; align-items: center; gap: 10px;">' +
+          '<span id="z1-blockers" class="z1-stat red" style="font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 4px;">⛔ 0 BLOCKERS</span>' +
+          '<span id="z1-gates" class="z1-stat amber" style="font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; background: rgba(245, 158, 11, 0.15); color: #f59e0b;">⚠ 4 GATES</span>' +
+          '<span id="z1-ready" class="z1-stat green" style="font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; background: rgba(16, 185, 129, 0.15); color: #10b981;">✓ 3 READY</span>' +
+          '<span id="z1-updated" style="font-size: 0.68rem; color: var(--text-dim); font-weight: 600;">AS OF 2026-08-22</span>' +
         '</div>' +
-        '<div id="swimlane-inner" style="position: relative; width: ' + (totalW + LABEL_W) + 'px; height: ' + totalH + 'px;"></div>' +
       '</div>' +
-      '<!-- Zone 4 & 5 Expandable Bottom Command Console Sheet -->' +
+      '<!-- ZONE 2 STAGE STRIP -->' +
+      '<div id="stage-strip-wrapper" style="position: relative; flex-shrink: 0;">' +
+        '<div id="stage-strip" style="display: ' + (stageStripCollapsed ? 'none' : 'flex') + '; gap: 6px; padding: 8px 12px; background: var(--bg-surface); overflow-x: auto; border-bottom: 1px solid var(--border-subtle);"></div>' +
+        '<div id="stage-summary-bar" style="display: ' + (stageStripCollapsed ? 'flex' : 'none') + '; height: 28px; background: var(--bg-surface-elevated); border-bottom: 1px solid var(--border-subtle); align-items: center; justify-content: space-between; padding: 0 12px;">' +
+          '<div id="stage-summary-content" style="display: flex; align-items: center; gap: 10px; font-size: 0.74rem; font-weight: 700; color: var(--gold-bright);"></div>' +
+          '<button id="stage-expand-btn" class="theme-toggle-btn" onclick="toggleStageStrip()" style="font-size: 0.68rem; padding: 2px 6px;">EXPAND STAGES ▾</button>' +
+        '</div>' +
+      '</div>' +
+      '<!-- ZONE 3 MULTI-TRACK SWIMLANE -->' +
+      '<div id="z3" style="flex: 1; position: relative; overflow: hidden; background: #080b11;">' +
+        '<div id="swimlane-scroll" style="width: 100%; height: 100%; overflow: auto; position: relative;">' +
+          '<div id="stage-header-row" style="height: 32px; background: var(--bg-surface-elevated); border-bottom: 2px solid var(--border-subtle); position: sticky; top: 0; z-index: 30; width: ' + (totalW + LABEL_W) + 'px;">' +
+            '<div class="label-corner" style="width: 100px; height: 32px; position: sticky; left: 0; background: var(--bg-surface-elevated); z-index: 40; border-right: 2px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 800; color: var(--gold-bright);">TRACK</div>' +
+            '<div id="stage-header-bands-inner" style="position: absolute; left: 100px; top: 0; height: 32px;"></div>' +
+          '</div>' +
+          '<div id="swimlane-inner" style="position: relative; width: ' + (totalW + LABEL_W) + 'px; height: ' + totalH + 'px;"></div>' +
+        '</div>' +
+        '<!-- SLIDE-OVER DETAIL / INSPECTOR PANEL -->' +
+        '<div id="detail-panel">' +
+          '<div id="panel-header" style="padding: 12px 16px; border-bottom: 1px solid var(--border-subtle); background: var(--bg-surface);"></div>' +
+          '<div id="panel-body" style="flex: 1; overflow-y: auto;"></div>' +
+        '</div>' +
+        '<!-- NAVIGATOR / ZOOM CONTROL HUD -->' +
+        '<div id="console-navigator">' +
+          '<button id="zoom-pan" class="nav-btn ' + (panMode ? 'active' : '') + '" onclick="togglePanMode()" title="Toggle Pan Mode (or hold Space)">✋ PAN</button>' +
+          '<div id="nav-zoom-controls">' +
+            '<button id="zoom-out" class="nav-btn" onclick="applyZoom(zoomLevel - 0.1)">−</button>' +
+            '<span id="zoom-label" style="font-size: 0.72rem; font-weight: 800; min-width: 38px; text-align: center; font-family: monospace;">' + Math.round(zoomLevel * 100) + '%</span>' +
+            '<button id="zoom-in" class="nav-btn" onclick="applyZoom(zoomLevel + 0.1)">+</button>' +
+            '<button id="zoom-reset" class="nav-btn" onclick="applyZoom(1.0)">100%</button>' +
+            '<button id="zoom-fit" class="nav-btn" onclick="fitZoom()">FIT</button>' +
+            '<button id="zoom-fullscreen" class="nav-btn" onclick="toggleFullscreen()">FULL</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<!-- ZONE 4 & 5 UNIFIED COMMAND CONSOLE SHEET -->' +
       '<div id="console-backdrop" onclick="toggleConsoleExpand(false)"></div>' +
-      '<div id="z45" style="height: ' + (consoleExpanded ? '75%' : '160px') + '; position: ' + (consoleExpanded ? 'absolute; bottom: 0; left: 0; right: 0;' : 'relative') + '; background: #080b11; border-top: 2px solid var(--border-subtle); display: flex; flex-direction: column; z-index: 50; transition: height 0.25s ease;">' +
-        '<div id="console-top" style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: var(--bg-surface-elevated); border-bottom: 1px solid var(--border-subtle); gap: 10px;">' +
+      '<div id="z45" class="' + (consoleExpanded ? 'expanded' : '') + '">' +
+        '<div id="console-top">' +
           '<div style="display: flex; align-items: center; gap: 8px;">' +
             '<span style="font-size: 0.76rem; font-weight: 800; color: var(--gold-bright); font-family: var(--font-display);">⚡ COMMAND CONSOLE</span>' +
-            '<input type="text" id="console-search" placeholder="Search tasks..." oninput="renderConsoleList()" style="background: #080b11; border: 1px solid var(--border-subtle); border-radius: 4px; padding: 4px 8px; color: #fff; font-size: 0.76rem; max-width: 200px;" />' +
+            '<button id="console-blockers-widget" class="console-widget" onclick="setFilter(\\\'HOLD\\\')">⛔ 0 BLOCKERS</button>' +
+            '<button id="console-gates-widget" class="console-widget has-gates" onclick="setFilter(\\\'ALL\\\')">⚠ 4 GATES</button>' +
+            '<input type="text" id="console-search" placeholder="Search tasks, roles, tags..." oninput="renderConsoleList()" />' +
           '</div>' +
-          '<div id="console-filters" style="display: flex; gap: 4px;">' +
+          '<div id="console-filters">' +
             '<button class="filter-pill ' + (activeFilter === 'ALL' ? 'active' : '') + '" onclick="setFilter(\\\'ALL\\\')">ALL</button>' +
             '<button class="filter-pill ' + (activeFilter === 'READY' ? 'active' : '') + '" onclick="setFilter(\\\'READY\\\')">READY</button>' +
             '<button class="filter-pill ' + (activeFilter === 'ACTIVE' ? 'active' : '') + '" onclick="setFilter(\\\'ACTIVE\\\')">ACTIVE</button>' +
             '<button class="filter-pill ' + (activeFilter === 'HOLD' ? 'active' : '') + '" onclick="setFilter(\\\'HOLD\\\')">HOLD</button>' +
             '<button class="filter-pill ' + (activeFilter === 'DONE' ? 'active' : '') + '" onclick="setFilter(\\\'DONE\\\')">DONE</button>' +
           '</div>' +
+          '<div class="console-export-container">' +
+            '<button id="console-export-btn" class="header-action-btn" onclick="toggleExportMenu(event)" style="font-size: 0.72rem; padding: 2px 8px;">EXPORT ▾</button>' +
+            '<div id="console-export-dropdown" class="console-export-dropdown">' +
+              '<button class="console-export-item" onclick="copyConsoleTasksTSV()">📋 Copy TSV (Excel / Sheets)</button>' +
+              '<button class="console-export-item" onclick="downloadConsoleTasksCSV()">📥 Download CSV</button>' +
+              '<button class="console-export-item" onclick="downloadConsoleTasksJSON()">💾 Download JSON</button>' +
+            '</div>' +
+          '</div>' +
+          '<div class="console-zoom-group">' +
+            '<button id="console-table-zoom-out" class="console-zoom-btn" onclick="applyTableZoom(tableZoomLevel - 0.1)">−</button>' +
+            '<span id="console-table-zoom-reset" class="console-zoom-btn console-zoom-val" onclick="applyTableZoom(1.0)">' + Math.round(tableZoomLevel * 100) + '%</span>' +
+            '<button id="console-table-zoom-in" class="console-zoom-btn" onclick="applyTableZoom(tableZoomLevel + 0.1)">+</button>' +
+          '</div>' +
           '<button id="console-expand-toggle-btn" class="theme-toggle-btn" onclick="toggleConsoleExpand()" style="font-size: 0.72rem; padding: 3px 8px; font-weight: 700;">' + (consoleExpanded ? '⤡ RESTORE' : '⛶ EXPAND') + '</button>' +
         '</div>' +
-        '<div id="console-list" style="flex: 1; overflow-y: auto; padding: 4px 0;"></div>' +
+        '<div id="console-list"></div>' +
       '</div>' +
     '</div>';
 
-    renderZ1Kpis();
-    renderStageStripCards();
+    renderZ1();
+    renderStageStrip();
     renderStageHeaderBands();
     renderSwimlaneGrid();
     renderConsoleList();
+    renderStageSummaryBar();
+    updateScrollSpy();
+    applyZoom(zoomLevel);
+    bindSwimlaneScrollEvents();
   }
 
-  function renderZ1Kpis() {
-    const kpis = document.getElementById('z1-kpis');
-    if (!kpis) return;
-    const ready = PROJECT_STATE.tasks.filter(t => getStatus(t.id) === 'READY').length;
-    const done = PROJECT_STATE.tasks.filter(t => getStatus(t.id) === 'DONE').length;
-    const hold = PROJECT_STATE.tasks.filter(t => getStatus(t.id) === 'HOLD' || getStatus(t.id) === 'FUTURE_HOLD').length;
+  function renderZ1() {
+    const proj = document.getElementById('z1-project');
+    if (proj && PROJECT_STATE.project) proj.textContent = (PROJECT_STATE.project.name || PROJECT_STATE.project.id) + ' ▾';
 
-    kpis.innerHTML = '<span class="z1-stat ' + (hold ? 'red' : 'green') + '" style="font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; background: ' + (hold ? 'rgba(239, 68, 68, 0.15); color: #ef4444;' : 'rgba(255,255,255,0.06); color: var(--text-dim);') + '">⛔ ' + hold + ' HOLD</span>' +
-      '<span class="z1-stat green" style="font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; background: rgba(245, 197, 24, 0.15); color: var(--gold-bright);">⚡ ' + ready + ' READY</span>' +
-      '<span class="z1-stat green" style="font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; background: rgba(16, 185, 129, 0.15); color: #10b981;">✓ ' + done + ' DONE</span>';
+    const activeStage = PROJECT_STATE.project ? (PROJECT_STATE.project.active_stage || 1) : 1;
+    const stageObj = (PROJECT_STATE.stages || []).find(s => s.id === activeStage);
+    const stageEl = document.getElementById('z1-stage');
+    if (stageEl) {
+      stageEl.textContent = 'STAGE ' + activeStage + ' OF ' + (PROJECT_STATE.stages ? PROJECT_STATE.stages.length : 6) + ' — ' + (stageObj ? stageObj.name.toUpperCase() : '');
+    }
+
+    const holdCount = PROJECT_STATE.tasks.filter(t => getStatus(t.id) === 'HOLD' || getStatus(t.id) === 'FUTURE_HOLD').length;
+    const readyCount = PROJECT_STATE.tasks.filter(t => getStatus(t.id) === 'READY').length;
+    const doneCount = PROJECT_STATE.tasks.filter(t => getStatus(t.id) === 'DONE').length;
+
+    const bEl = document.getElementById('z1-blockers');
+    if (bEl) {
+      bEl.textContent = '⛔ ' + holdCount + ' BLOCKER' + (holdCount !== 1 ? 'S' : '');
+      bEl.className = 'z1-stat ' + (holdCount ? 'red' : 'green');
+    }
+
+    const bw = document.getElementById('console-blockers-widget');
+    if (bw) {
+      bw.textContent = '⛔ ' + holdCount + ' BLOCKER' + (holdCount !== 1 ? 'S' : '');
+      bw.className = 'console-widget' + (holdCount ? ' has-issues' : '');
+    }
+
+    const rEl = document.getElementById('z1-ready');
+    if (rEl) {
+      rEl.textContent = '✓ ' + readyCount + ' READY';
+    }
   }
 
-  function renderStageStripCards() {
-    const strip = document.getElementById('stage-strip-strip');
+  function renderStageStrip() {
+    const strip = document.getElementById('stage-strip');
     if (!strip) return;
     strip.innerHTML = '';
     const activeStage = PROJECT_STATE.project.active_stage || 1;
@@ -940,18 +1010,35 @@ const dopkosEngineCode = `/**
 
       const card = document.createElement('div');
       card.className = 'stage-card ' + (isDone ? 'done' : isActive ? 'active' : '');
-      card.style.cssText = 'flex: 1; min-width: 130px; padding: 6px 10px; border-radius: 4px; background: var(--bg-surface-elevated); border: 1px solid ' + (isActive ? 'var(--gold-bright)' : 'var(--border-subtle)') + '; cursor: pointer;';
+      card.style.cssText = 'flex: 1; min-width: 140px; padding: 8px 12px; border-radius: 6px; background: var(--bg-surface-elevated); border: 1px solid ' + (isActive ? 'var(--gold-bright)' : 'var(--border-subtle)') + '; cursor: pointer;';
       
-      const dots = (s.trades_active || []).map(tr => '<div style="width: 5px; height: 5px; border-radius: 50%; background: ' + (TRADE_META[tr]?.color || '#555') + ';"></div>').join('');
+      const dots = (s.trades_active || []).map(tr => '<div class="trade-dot" style="background: ' + (TRADE_META[tr]?.color || '#555') + ';" title="' + tr + '"></div>').join('');
 
-      card.innerHTML = '<div style="font-size: 0.65rem; font-weight: 800; color: var(--gold-bright);">STAGE ' + s.id + '</div>' +
-        '<div style="font-size: 0.74rem; font-weight: 700; color: var(--text-main); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + s.name + '</div>' +
-        '<div style="height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; margin: 4px 0 3px;"><div style="height: 100%; width: ' + pct + '%; background: var(--gold-bright);"></div></div>' +
-        '<div style="display: flex; gap: 3px;">' + dots + '</div>';
+      card.innerHTML = '<div class="stage-num" style="font-size: 0.68rem; font-weight: 800; color: var(--gold-bright);">STAGE ' + s.id + '</div>' +
+        '<div class="stage-name" style="font-size: 0.78rem; font-weight: 700; color: var(--text-main); margin: 2px 0 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + s.name + '</div>' +
+        '<div class="stage-progress" style="height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; margin-bottom: 4px;"><div class="stage-progress-fill" style="height: 100%; width: ' + pct + '%; background: var(--gold-bright);"></div></div>' +
+        '<div class="stage-badges" style="display: flex; gap: 4px;">' + dots + '</div>';
 
       card.addEventListener('click', () => scrollToStage(s.id));
       strip.appendChild(card);
     });
+  }
+
+  function renderStageSummaryBar() {
+    const content = document.getElementById('stage-summary-content');
+    if (!content) return;
+    const activeStageId = PROJECT_STATE.project ? (PROJECT_STATE.project.active_stage || 1) : 1;
+    const activeStage = (PROJECT_STATE.stages || []).find(s => s.id === activeStageId);
+    content.innerHTML = '<span style="color: var(--gold-bright);">STAGE ' + activeStageId + ' ACTIVE — ' + (activeStage ? activeStage.name.toUpperCase() : '') + '</span>';
+  }
+
+  function toggleStageStrip() {
+    stageStripCollapsed = !stageStripCollapsed;
+    const strip = document.getElementById('stage-strip');
+    const summary = document.getElementById('stage-summary-bar');
+    if (strip) strip.style.display = stageStripCollapsed ? 'none' : 'flex';
+    if (summary) summary.style.display = stageStripCollapsed ? 'flex' : 'none';
+    if (stageStripCollapsed) renderStageSummaryBar();
   }
 
   function renderStageHeaderBands() {
@@ -978,7 +1065,7 @@ const dopkosEngineCode = `/**
       
       band.style.left = (startCol * COL_W) + 'px';
       band.style.width = ((endCol - startCol) * COL_W) + 'px';
-      band.style.cssText = 'position: absolute; top: 0; height: 30px; display: flex; align-items: center; padding: 0 10px; font-size: 0.7rem; font-weight: 800; color: var(--gold-bright); border-right: 1px solid var(--border-subtle); cursor: pointer; left: ' + (startCol * COL_W) + 'px; width: ' + ((endCol - startCol) * COL_W) + 'px;';
+      band.style.cssText = 'position: absolute; top: 0; height: 32px; display: flex; align-items: center; padding: 0 12px; font-size: 0.72rem; font-weight: 800; color: var(--gold-bright); border-right: 1px solid var(--border-subtle); cursor: pointer; left: ' + (startCol * COL_W) + 'px; width: ' + ((endCol - startCol) * COL_W) + 'px;';
       band.textContent = 'S' + s.id + '  ' + s.name.toUpperCase();
       band.addEventListener('click', () => scrollToStage(s.id));
       inner.appendChild(band);
@@ -994,6 +1081,7 @@ const dopkosEngineCode = `/**
       if (e.target === inner || e.target.id === 'dep-svg' || e.target.classList.contains('trade-row') || e.target.classList.contains('trade-content')) {
         clearHighlights();
         selectedTopologyTaskId = null;
+        closePanel();
       }
     });
 
@@ -1016,7 +1104,6 @@ const dopkosEngineCode = `/**
       inner.appendChild(row);
     });
 
-    // Task cards
     PROJECT_STATE.tasks.forEach(t => {
       const tr = displayTrade(t);
       const pos = cardPos(t.id);
@@ -1124,6 +1211,7 @@ const dopkosEngineCode = `/**
     g.addEventListener('click', e => {
       e.stopPropagation();
       selectAndCenterCard(fromId, true);
+      openPanel(fromId);
     });
 
     svg.appendChild(g);
@@ -1152,14 +1240,124 @@ const dopkosEngineCode = `/**
       '</div>' +
       '<div class="card-name" style="font-size: 0.76rem; font-weight: 700; color: var(--text-main); line-height: 1.25; max-height: 2.5em; overflow: hidden; margin: 2px 0 4px;">' + t.name + '</div>' +
       gateRef +
-      '<button class="status-pill ' + status + '" onclick="toggleCardStatus(\\\'' + t.id + '\\\', event)" title="' + (PILL_TITLE[status] || '') + '" style="font-size: 0.62rem; font-weight: 800; padding: 2px 6px; border-radius: 3px; border: 1px solid transparent; cursor: pointer;">' + STATUS_LABEL[status] + '</button>';
+      '<div class="card-dropdown" id="drop-' + t.id + '"></div>' +
+      '<button class="status-pill ' + status + '" data-action="pill" data-id="' + t.id + '" onclick="toggleCardStatus(\\\'' + t.id + '\\\', event)" title="' + (PILL_TITLE[status] || '') + '" style="font-size: 0.62rem; font-weight: 800; padding: 2px 6px; border-radius: 3px; border: 1px solid transparent; cursor: pointer;">' + STATUS_LABEL[status] + '</button>';
 
     card.addEventListener('click', e => {
       e.stopPropagation();
       selectAndCenterCard(t.id, true);
+      openPanel(t.id);
     });
 
     return card;
+  }
+
+  function openPanel(taskId) {
+    const t = taskMap[taskId];
+    if (!t) return;
+
+    activePanelTaskId = taskId;
+    const tr = displayTrade(t);
+    const trColor = TRADE_META[tr]?.color || '#555';
+    const status = getStatus(taskId);
+
+    const panel = document.getElementById('detail-panel');
+    if (panel) panel.style.borderLeftColor = trColor;
+
+    const header = document.getElementById('panel-header');
+    if (header) {
+      header.innerHTML = '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">' +
+          '<span style="font-family: monospace; font-size: 0.9rem; font-weight: 800; color: ' + trColor + ';">' + t.id + '</span>' +
+          '<button onclick="closePanel()" style="background: none; border: none; color: var(--text-dim); font-size: 1.2rem; cursor: pointer;">✕</button>' +
+        '</div>' +
+        '<div style="font-size: 0.88rem; font-weight: 700; color: var(--text-main); line-height: 1.3; margin-bottom: 8px;">' + t.name + '</div>' +
+        '<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">' +
+          '<span class="status-mini ' + status + '" style="font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 3px; background: var(--bg-surface-elevated);">' + STATUS_LABEL[status] + '</span>' +
+          '<span style="font-size: 0.74rem; font-weight: 800; color: ' + trColor + ';">' + (TRADE_META[tr]?.label || tr) + '</span>' +
+          '<span style="font-size: 0.74rem; color: var(--text-dim);">Stage ' + t.stage + '</span>' +
+        '</div>';
+    }
+
+    const body = document.getElementById('panel-body');
+    if (body) {
+      body.innerHTML = '';
+
+      if (t.unlocks && t.unlocks.length) {
+        body.appendChild(buildPanelSection('UNLOCKS WHEN DONE', t.unlocks.map(uid => ({
+          id: uid, task: taskMap[uid],
+          color: taskMap[uid] ? (TRADE_META[displayTrade(taskMap[uid])]?.color || '#555') : '#555',
+          status: getStatus(uid)
+        }))));
+      }
+
+      if (t.depends_on && t.depends_on.length) {
+        body.appendChild(buildPanelSection('DEPENDS ON (PREDECESSORS)', t.depends_on.map(did => ({
+          id: did, task: taskMap[did],
+          color: taskMap[did] ? (TRADE_META[displayTrade(taskMap[did])]?.color || '#555') : '#555',
+          status: getStatus(did)
+        }))));
+      }
+
+      if (t.notes) {
+        const sec = document.createElement('div');
+        sec.className = 'panel-section';
+        sec.innerHTML = '<div class="panel-section-title">NOTES & SCOPE</div><div style="font-size: 0.78rem; color: var(--text-dim); line-height: 1.5;">' + t.notes + '</div>';
+        body.appendChild(sec);
+      }
+
+      if (t.lead || t.phone) {
+        const sec = document.createElement('div');
+        sec.className = 'panel-section';
+        sec.innerHTML = '<div class="panel-section-title">LEAD COORDINATOR</div>' +
+          '<div style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);">' + (t.lead || 'Family Elder') + '</div>' +
+          (t.phone ? '<div style="margin-top: 8px; display: flex; gap: 8px;">' +
+            '<a href="tel:' + t.phone + '" class="header-action-btn" style="font-size: 0.72rem; padding: 4px 10px; text-decoration: none;">📞 Call</a>' +
+            '<a href="https://wa.me/' + t.phone.replace(/[^0-9]/g, '') + '" target="_blank" class="header-action-btn btn-gold" style="font-size: 0.72rem; padding: 4px 10px; text-decoration: none;">💬 WhatsApp</a>' +
+          '</div>' : '');
+        body.appendChild(sec);
+      }
+    }
+
+    if (panel) panel.classList.add('open');
+  }
+
+  function buildPanelSection(title, items) {
+    const sec = document.createElement('div');
+    sec.className = 'panel-section';
+    
+    const titleEl = document.createElement('div');
+    titleEl.className = 'panel-section-title';
+    titleEl.textContent = title + ' (' + items.length + ')';
+    sec.appendChild(titleEl);
+
+    const chipsContainer = document.createElement('div');
+    chipsContainer.className = 'panel-chips-container';
+    chipsContainer.style.cssText = 'display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px;';
+
+    items.forEach(({ id, task, color, status }) => {
+      const chip = document.createElement('button');
+      chip.className = 'dep-chip';
+      chip.style.borderLeftColor = color;
+      chip.innerHTML = '<span style="font-family: monospace; font-weight: 800;">' + id + '</span>' +
+        '<span style="font-size: 0.65rem; color: var(--text-dim);">' + (STATUS_LABEL[status] || status) + '</span>';
+
+      chip.addEventListener('click', e => {
+        e.stopPropagation();
+        selectAndCenterCard(id, true);
+        openPanel(id);
+      });
+
+      chipsContainer.appendChild(chip);
+    });
+
+    sec.appendChild(chipsContainer);
+    return sec;
+  }
+
+  function closePanel() {
+    const panel = document.getElementById('detail-panel');
+    if (panel) panel.classList.remove('open');
+    activePanelTaskId = null;
   }
 
   function renderConsoleList() {
@@ -1210,7 +1408,7 @@ const dopkosEngineCode = `/**
         const preds = (t.depends_on || []).join(', ') || '—';
         const succs = (t.unlocks || []).join(', ') || '—';
 
-        tableHtml += '<tr onclick="selectAndCenterCard(\\\'' + t.id + '\\\', true)" style="border-bottom: 1px solid var(--border-subtle); cursor: pointer;" onmouseover="this.style.background=\\\'rgba(255,255,255,0.04)\\\'" onmouseout="this.style.background=\\\'transparent\\\'">' +
+        tableHtml += '<tr onclick="selectAndCenterCard(\\\'' + t.id + '\\\', true); openPanel(\\\'' + t.id + '\\\')" style="border-bottom: 1px solid var(--border-subtle); cursor: pointer;" onmouseover="this.style.background=\\\'rgba(255,255,255,0.04)\\\'" onmouseout="this.style.background=\\\'transparent\\\'">' +
           '<td style="padding: 6px 10px;"><span style="background:' + color + '22; color:' + color + '; padding: 2px 6px; border-radius: 3px; font-weight: 700;">' + (TRADE_META[tr]?.label || tr) + '</span></td>' +
           '<td style="padding: 6px 10px; font-family: monospace; font-weight: 800; color: var(--gold-bright);">' + t.id + '</td>' +
           '<td style="padding: 6px 10px; font-weight: 600; color: var(--text-main);">' + t.name + '</td>' +
@@ -1243,7 +1441,7 @@ const dopkosEngineCode = `/**
 
       row.addEventListener('click', () => {
         selectAndCenterCard(t.id, true);
-        if (window.openTaskConsole) window.openTaskConsole(t.id);
+        openPanel(t.id);
       });
       list.appendChild(row);
     });
@@ -1252,6 +1450,130 @@ const dopkosEngineCode = `/**
   function toggleConsoleExpand(forceState) {
     consoleExpanded = typeof forceState === 'boolean' ? forceState : !consoleExpanded;
     render5ZoneTopology(document.getElementById('dopkos-canvas-container'));
+  }
+
+  let tableZoomLevel = 1.0;
+  function applyTableZoom(newZoom) {
+    tableZoomLevel = Math.min(1.5, Math.max(0.7, Math.round(newZoom * 100) / 100));
+    renderConsoleList();
+    const lbl = document.getElementById('console-table-zoom-reset');
+    if (lbl) lbl.textContent = Math.round(tableZoomLevel * 100) + '%';
+  }
+
+  function toggleExportMenu(e) {
+    if (e) e.stopPropagation();
+    const dropdown = document.getElementById('console-export-dropdown');
+    if (dropdown) dropdown.classList.toggle('open');
+  }
+
+  function copyConsoleTasksTSV() {
+    const tasks = PROJECT_STATE.tasks;
+    const headers = ["ID", "Name", "Trade", "Stage", "Status", "Predecessors", "Unlocks"];
+    const rows = tasks.map(t => [t.id, t.name, t.trade, t.stage, getStatus(t.id), (t.depends_on || []).join(', '), (t.unlocks || []).join(', ')].join('\\t'));
+    const tsv = [headers.join('\\t'), ...rows].join('\\n');
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(tsv).then(() => alert('Copied ' + tasks.length + ' tasks to clipboard (TSV)!'));
+    }
+  }
+
+  function downloadConsoleTasksCSV() {
+    const tasks = PROJECT_STATE.tasks;
+    const headers = ["ID", "Name", "Trade", "Stage", "Status", "Predecessors", "Unlocks"];
+    const rows = tasks.map(t => ['"' + t.id + '"', '"' + t.name + '"', '"' + t.trade + '"', t.stage, '"' + getStatus(t.id) + '"', '"' + (t.depends_on || []).join(', ') + '"', '"' + (t.unlocks || []).join(', ') + '"'].join(','));
+    const csv = [headers.join(','), ...rows].join('\\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Sree_Krushna_Tasks.csv';
+    a.click();
+  }
+
+  function downloadConsoleTasksJSON() {
+    const jsonStr = JSON.stringify(PROJECT_STATE, null, 2);
+    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Sree_Krushna_Project_State.json';
+    a.click();
+  }
+
+  function applyZoom(newZoom) {
+    zoomLevel = Math.max(0.5, Math.min(1.5, +newZoom.toFixed(2)));
+    const lbl = document.getElementById('zoom-label');
+    if (lbl) lbl.textContent = Math.round(zoomLevel * 100) + '%';
+
+    const inner = document.getElementById('swimlane-inner');
+    if (inner) {
+      inner.style.transform = zoomLevel === 1.0 ? '' : 'scale(' + zoomLevel + ')';
+      inner.style.transformOrigin = 'top left';
+    }
+  }
+
+  function fitZoom() {
+    const scrollEl = document.getElementById('swimlane-scroll');
+    if (!scrollEl) return;
+    const fit = Math.min(scrollEl.clientWidth / (totalW + LABEL_W), (scrollEl.clientHeight - 32) / totalH);
+    applyZoom(fit);
+    scrollEl.scrollLeft = 0; scrollEl.scrollTop = 0;
+  }
+
+  let _isFullscreen = false;
+  function toggleFullscreen() {
+    if (!_isFullscreen) {
+      document.documentElement.requestFullscreen().catch(() => {});
+      _isFullscreen = true;
+    } else {
+      document.exitFullscreen().catch(() => {});
+      _isFullscreen = false;
+    }
+  }
+
+  function togglePanMode() {
+    panMode = !panMode;
+    const btn = document.getElementById('zoom-pan');
+    const scrollEl = document.getElementById('swimlane-scroll');
+    if (btn) btn.classList.toggle('active', panMode);
+    if (scrollEl) scrollEl.classList.toggle('pan-mode', panMode);
+  }
+
+  function bindSwimlaneScrollEvents() {
+    const scrollContainerEl = document.getElementById('swimlane-scroll');
+    if (!scrollContainerEl) return;
+
+    scrollContainerEl.addEventListener('mousedown', e => {
+      if (panMode || spacePanActive) {
+        isDragging = true;
+        hasDragged = false;
+        scrollContainerEl.classList.add('dragging');
+        startX = e.clientX;
+        startY = e.clientY;
+        scrollXStart = scrollContainerEl.scrollLeft;
+        scrollYStart = scrollContainerEl.scrollTop;
+        e.preventDefault();
+      }
+    });
+
+    window.addEventListener('mousemove', e => {
+      if (isDragging && scrollContainerEl) {
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        if (Math.abs(dx) > 3 || Math.abs(dy) > 3) hasDragged = true;
+        scrollContainerEl.scrollLeft = scrollXStart - dx;
+        scrollContainerEl.scrollTop = scrollYStart - dy;
+      }
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (isDragging && scrollContainerEl) {
+        isDragging = false;
+        scrollContainerEl.classList.remove('dragging');
+      }
+    });
+  }
+
+  function updateScrollSpy() {
   }
 
   function clearHighlights() {
@@ -1290,7 +1612,7 @@ const dopkosEngineCode = `/**
   }
 
   function scrollToHighlightedSubgraph(taskId, dependsOn, unlocks, forceScroll = false) {
-    const scrollEl = document.getElementById('z3-viewport');
+    const scrollEl = document.getElementById('swimlane-scroll');
     const clickedPos = cardPos(taskId);
     if (!scrollEl || !clickedPos) return;
 
@@ -1368,6 +1690,7 @@ const dopkosEngineCode = `/**
     if (selectedTopologyTaskId === targetId) {
       clearHighlights();
       selectedTopologyTaskId = null;
+      closePanel();
       return;
     }
     selectedTopologyTaskId = targetId;
@@ -1378,10 +1701,6 @@ const dopkosEngineCode = `/**
     const unlocks = (task && task.unlocks) || [];
 
     scrollToHighlightedSubgraph(targetId, dependsOn, unlocks, forceScroll);
-
-    if (window.openTaskConsole) {
-      window.openTaskConsole(targetId);
-    }
   }
 
   function scrollToStage(stageId) {
@@ -1389,7 +1708,7 @@ const dopkosEngineCode = `/**
     if (!stageTasks.length) return;
     const minCol = Math.min(...stageTasks.map(t => colMap[t.id] || 0));
     const targetX = LABEL_W + minCol * COL_W - 20;
-    const scrollEl = document.getElementById('z3-viewport');
+    const scrollEl = document.getElementById('swimlane-scroll');
     if (scrollEl) {
       scrollEl.scrollTo({ left: Math.max(0, targetX), behavior: 'smooth' });
     }

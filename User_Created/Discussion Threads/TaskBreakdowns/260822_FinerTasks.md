@@ -2274,6 +2274,7 @@ Both interfaces are now configured and live:
 
 - **Default View**: **Static 2D Precedence Matrix Grid (Image 1)** with amber upstream blocker & blue downstream unlock highlighting, status toggles, and breadcrumb path.
 - **Segmented Control Tabs**:
+
   ```
   [ 🕸️ 2D Precedence Matrix ]  [ 🧵 Pull-a-Thread ]  [ ⏱️ Day-Of Run Sheet ]  [ 📅 Macro Gantt ]  [ 📊 2D Role Matrix ]  [ ⚡ Critical Path ]
   ```
@@ -2324,6 +2325,7 @@ We have aligned the two DAG interfaces according to your specifications:
 
 - **Default View**: **Static 2D Precedence Matrix (Image 1)** with amber upstream blockers / blue downstream unlocks, status toggles, and breadcrumb chain.
 - **Segmented Control Tabs**:
+
   ```
   [ 🕸️ 2D Precedence Matrix ]  [ 🧵 Pull-a-Thread ]  [ ⏱️ Day-Of Run Sheet ]  [ 📅 Macro Gantt ]  [ 📊 2D Role Matrix ]  [ ⚡ Critical Path ]
   ```
@@ -2507,11 +2509,161 @@ Would you like to proceed with implementing the Firestore Realtime Sync layer?
 
 # Response 3.0 -
 
-# Query 3.1 -
+# Query 3.1 -Engine: 5-Zone DO-PKOS Studio (Image 2).- make it full wider and all the interactiosn highlights and everythign like D:\GitHub_Repo\UG-Farmhouse
 
-# Review 3.1 -
+# Review 3.1 -Ran command: `Get-ChildItem -Path "D:\GitHub_Repo\UG-Farmhouse" -Recurse -File | Select-Object -First 30 FullName`
 
-# Response 3.1 -
+Ran command: `Get-ChildItem -Path "D:\GitHub_Repo\UG-Farmhouse" -Recurse -File -Include "*.js","*.html","*.css" | Select-Object FullName`
+Viewed swimlane-engine.js:1-160
+Viewed swimlane-engine.js:160-450
+Viewed swimlane-engine.js:450-750
+Viewed swimlane-engine.js:750-950
+Viewed swimlane-engine.js:1050-1250
+Viewed swimlane-engine.js:1300-1550
+Searched for "main {"
+Viewed main.css:50-120
+Searched for "max-width:"
+Searched for "max-width"
+Viewed main.css:230-300
+Viewed main.css:430-500
+Viewed main.css:580-650
+Viewed main.css:800-900
+Viewed swimlane-engine.css:1-250
+Viewed swimlane-engine.css:250-500
+Viewed build-dopkos-full.cjs:800-950
+Viewed build-dopkos-full.cjs:950-1150
+Viewed build-dopkos-full.cjs:1180-1250
+Viewed main.css:2400-2550
+Viewed main.css:2550-2680
+Viewed main.css:2680-2731
+Viewed build-dopkos-full.cjs:1000-1350
+Viewed main.css:2600-2675
+Edited main.css
+Viewed build-dopkos-full.cjs:770-830
+Viewed build-dopkos-full.cjs:710-770
+Viewed build-dopkos-full.cjs:680-710
+Viewed build-dopkos-full.cjs:660-680
+Viewed build-dopkos-full.cjs:1100-1300
+Edited build-dopkos-full.cjs
+Viewed build-dopkos-full.cjs:980-1270
+Edited build-dopkos-full.cjs
+Ran command: `node scripts/build-dopkos-full.cjs`
+Ran command: `Copy-Item -Path "index.html" -Destination "public/index.html" -Force`
+Ran command: `npm run verify:deployment`
+Ran command: `npm test`
+Ran command: `npm run verify:governance-wiring:all`
+Ran command: `node scripts/deploy-hosting.cjs`
+Created walkthrough.md
+Ran command: `git add . ; git commit -m "feat(dopkos): expand DO-PKOS to full-width and port complete UG-Farmhouse interactive highlights and subgraph mechanics" ; git push origin master`
+
+# 🌟 5-Zone DO-PKOS Studio Upgraded to Full-Width & UG-Farmhouse Interactive Fidelity
+
+The **5-Zone DO-PKOS Studio** on [`#tab-dopkos`](https://sree-krushna-forever.web.app/#tab-dopkos) has been expanded to full screen width with the complete interaction and highlighting mechanics ported directly from `D:\GitHub_Repo\UG-Farmhouse`.
+
+- **Live URL**: [https://sree-krushna-forever.web.app/#tab-dopkos](https://sree-krushna-forever.web.app/#tab-dopkos)
+- **Git Commit**: [`3b155d1`](https://github.com/goldenage399/Sree_Krushna/commit/3b155d1) on `origin/master`
+
+---
+
+### 🎨 What Has Been Upgraded
+
+#### 1. Full-Width Responsive Viewport
+
+- **Screen-Edge Expansion**: Applied `main:has(#tab-dopkos.active)` to lift the container max-width restriction when viewing `#tab-dopkos`, allowing the canvas and swimlanes to utilize 100% of the display.
+- **Upgraded Card & Column Metrics**:
+  - `CARD_W = 168px` (increased card width for clear hierarchy).
+  - `COL_W = 196px` (spacious column spacing).
+  - `SLOT_H = 110px`, `ROW_PAD = 12px`, `LABEL_W = 100px`.
+  - Full-bleed studio height: `calc(100vh - 90px)` with `min-height: 640px`.
+
+---
+
+#### 2. Complete Interaction & Highlighting Mechanics (UG-Farmhouse Port)
+
+- **Subgraph Highlighting State Machine**:
+  - Clicking any node activates `.selection-active` across the entire canvas.
+  - **Clicked Card**: Highlighted with intense gold glow halo (`box-shadow: 0 0 20px rgba(245, 197, 24, 0.7)`).
+  - **Predecessors (Upstream Blockers)**: Glowing amber halo (`border: 2px solid #f59e0b`, `box-shadow: 0 0 16px rgba(245, 158, 11, 0.6)`).
+  - **Successors (Downstream Unlocks)**: Glowing cyan halo (`border: 2px solid #38bdf8`, `box-shadow: 0 0 16px rgba(56, 189, 248, 0.6)`).
+  - **Unconnected Nodes & Lines**: Automatically dimmed (`opacity: 0.45`, `filter: brightness(0.45) saturate(0.3)`).
+
+- **SVG Bézier Connector Curves & Edge Glowing**:
+  - Predecessor connector lines glow in amber (`#f59e0b`, `2.8px` width, drop-shadow glow).
+  - Successor connector lines glow in cyan (`#38bdf8`, `2.8px` width, drop-shadow glow).
+  - **Hovering Lines**: Hovering any connector highlights connected nodes (`.edge-hovered`) and thickens the line.
+  - **Clicking Lines**: Clicking any SVG edge selects and centers the connected task.
+
+- **Dynamic Auto-Centering Subgraph Viewport**:
+  - `scrollToHighlightedSubgraph(taskId, dependsOn, unlocks)` calculates the exact bounding box of the selected card and all its connected dependencies and smoothly centers the entire subgraph in `#z3-viewport`.
+
+- **Interactive Status Progression & Downstream Cascade**:
+  - Clicking the bottom `.status-pill` on any card toggles status (`LOCKED` $\rightarrow$ `READY` $\rightarrow$ `ACTIVE` $\rightarrow$ `DONE`).
+  - Marking a task `DONE` runs `propagateDone(taskId)`, unlocking all downstream tasks whose prerequisites are complete and transitioning them to `READY` (with a glowing gold pulse animation).
+
+- **Canvas Background Deselect**:
+  - Clicking on the canvas background or empty lane area clears all highlights and resets the viewport.
+
+- **Expanded Command Console Table (Zone 4 & 5)**:
+  - Toggling `⛶ EXPAND` transforms the bottom sheet into a `75vh` modal view with a sortable table (`TRADE`, `ID`, `TASK NAME`, `STAGE`, `STATUS`, `PREDECESSORS`, `UNLOCKS`).
+
+---
+
+### ✅ Verification & Quality Gates
+
+- Passed all 8 layers of `npm run verify:deployment`.
+- Passed smoke test suite (`npm test`) and governance wiring audit (`npm run verify:governance-wiring:all`).
+- Deployed live to Firebase Hosting.
+
+Detailed implementation logs are available in the [Walkthrough Artifact](file:///C:/Users/Temp/.gemini/antigravity-ide/brain/25ef7845-1d42-4146-96cc-edfeabaedb94/walkthrough.md).
+
+# Response 3.1 -# Walkthrough — Full-Width DO-PKOS Studio & UG-Farmhouse Interactive Fidelity
+
+We have upgraded the **5-Zone DO-PKOS Studio** (`#tab-dopkos`) to full viewport width with the complete interaction highlights and mechanics from `D:\GitHub_Repo\UG-Farmhouse`:
+
+---
+
+## 🚀 Key Upgrades Delivered
+
+### 1. Full-Width Viewport & Sizing Expansion
+
+- **Responsive Screen Stretch**: Added CSS container overrides (`main:has(#tab-dopkos.active)`) to lift the `1400px` max-width constraint when viewing `#tab-dopkos`, letting the 5-Zone Studio utilize 100% of the display width.
+- **Upgraded Sizing Tokens**:
+  - `CARD_W = 168px` (increased from 158px for readable typography).
+  - `COL_W = 196px` (spacious column spacing).
+  - `SLOT_H = 110px`, `ROW_PAD = 12px`, `LABEL_W = 100px`.
+  - `#tab-dopkos` height set to `calc(100vh - 90px)` (min-height `640px`).
+
+### 2. Rich Interaction & Highlighting Engine (UG-Farmhouse Port)
+
+- **Node Selection State Machine**:
+  - Clicking any card activates `.selection-active` across `#swimlane-inner` and `#dep-svg`.
+  - **Clicked Card**: Highlighted with `.is-selected` and intense gold halo (`box-shadow: 0 0 20px rgba(245, 197, 24, 0.7)`).
+  - **Upstream Predecessors**: Highlighted with `.is-predecessor` and amber halo (`border: 2px solid #f59e0b`, `box-shadow: 0 0 16px rgba(245, 158, 11, 0.6)`).
+  - **Downstream Successors**: Highlighted with `.is-successor` and cyan/blue halo (`border: 2px solid #38bdf8`, `box-shadow: 0 0 16px rgba(56, 189, 248, 0.6)`).
+  - **Dimming**: Non-connected cards and unrelated dependency lines dim automatically (`filter: brightness(0.45) saturate(0.3); opacity: 0.45`).
+- **SVG Edge Glowing & Hit-Path Interactions**:
+  - Predecessor lines glow with amber stroke (`#f59e0b`, `2.8px` width, drop-shadow glow).
+  - Successor lines glow with cyan stroke (`#38bdf8`, `2.8px` width, drop-shadow glow).
+  - Hovering any SVG line thickens it to `2.8px` and highlights connected cards (`.edge-hovered`).
+  - Clicking an SVG line or hit-path selects the upstream task.
+- **Dynamic Subgraph Auto-Centering**:
+  - `scrollToHighlightedSubgraph(taskId, dependsOn, unlocks)` automatically calculates the bounding box of the selected node and its connected predecessors/successors and smoothly centers the entire subgraph in `#z3-viewport`.
+- **Dynamic Status Progression**:
+  - Clicking the bottom `.status-pill` on any card toggles its state (`LOCKED` $\rightarrow$ `READY` $\rightarrow$ `ACTIVE` $\rightarrow$ `DONE`).
+  - Marking a task `DONE` triggers `propagateDone(taskId)`, automatically unlocking downstream tasks whose dependencies are met (animating them to `READY` with a glowing gold pulse).
+- **Background Click Reset**:
+  - Clicking the canvas background or swimlane lanes deselects all nodes and restores the standard view.
+- **Expanded Command Console Table**:
+  - Toggling `⛶ EXPAND` expands Zone 4 & 5 to `75vh` with a full sortable table grid (`TRADE`, `ID`, `TASK NAME`, `STAGE`, `STATUS`, `PREDECESSORS`, `UNLOCKS`).
+
+---
+
+## 🔍 Verification & Parity
+
+- Passed all 8 layers of `npm run verify:deployment`.
+- Passed smoke test suite (`npm test`).
+- Passed governance wiring audit (`npm run verify:governance-wiring:all`).
+- Deployed live to Firebase Hosting.
 
 # Query 3.2 -
 

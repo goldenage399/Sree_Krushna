@@ -31,7 +31,21 @@
     "console-list",
     "console-search",
     "dep-svg",
-    "z3-viewport"
+    "z3-viewport",
+    "z1-project",
+    "z1-stage",
+    "z1-blockers",
+    "console-blockers-widget",
+    "z1-ready",
+    "stage-summary-content",
+    "stage-summary-bar",
+    "detail-panel",
+    "panel-header",
+    "panel-body",
+    "console-table-zoom-reset",
+    "console-export-dropdown",
+    "zoom-label",
+    "zoom-pan"
   ],
   "securityHeaders": [
     "X-Frame-Options",
