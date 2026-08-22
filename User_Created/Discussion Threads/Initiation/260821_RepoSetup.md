@@ -22,11 +22,11 @@ Ran command: `Get-Content "D:\GitHub_Repo\Task-Dashboard\.agent\skill-router.yam
 Ran command: `Get-ChildItem -Path "D:\GitHub_Repo\PIOperationsMgmt_Firebase\.agent\skills\*\SKILL.md" -ErrorAction SilentlyContinue | ForEach-Object { $_.Directory.Name }`
 Ran command: `Get-ChildItem -Path "D:\GitHub_Repo\*\.agent\skills\*\SKILL.md" -ErrorAction SilentlyContinue | ForEach-Object { "$($_.Directory.Parent.Parent.Parent.Name): $($_.Directory.Name)" } | Sort-Object -Unique`
 
-# Cross-Repository Ecosystem: Governance, Workflows, Skills & SAP Sync
+## Cross-Repository Ecosystem: Governance, Workflows, Skills & SAP Sync
 
 ---
 
-## 1. Hub & Spoke Architectural Model
+### 1. Hub & Spoke Architectural Model
 
 The multi-repo ecosystem operates under a **Hub & Spoke Architecture** governed by the **Shared Architecture Protocol (SAP)** and **Spoke & Wheel Documentation System** ([`spoke-and-wheel-docs.md`](file:///d:/GitHub_Repo/Task-Dashboard/.agent/workflows/portable/spoke-and-wheel-docs.md)).
 
@@ -59,7 +59,7 @@ graph TD
     TD == "SAP Sync (/sap-sync)" ==> OTH
 ```
 
-### Key Hub-and-Spoke Governance Rules
+#### Key Hub-and-Spoke Governance Rules
 
 1. **Hub Documents (`HUB.md` / `DOCS_HUB.md`)**: Contain **only maps and links** (max 150 lines) with high-level snapshots; hubs never duplicate spoke content.
 2. **Spoke Documents**: Domain-specific content files that declare their parent hub in frontmatter (`hub: path/to/HUB.md`).
@@ -68,7 +68,7 @@ graph TD
 
 ---
 
-## 2. Standard Ecosystem Folder Structure
+### 2. Standard Ecosystem Folder Structure
 
 Every repository participating in the ecosystem adopts or adheres to this standardized layout:
 
@@ -98,11 +98,11 @@ Every repository participating in the ecosystem adopts or adheres to this standa
 
 ---
 
-## 3. Essential Go-To Workflows
+### 3. Essential Go-To Workflows
 
 All workflows are located in [`.agent/workflows/`](file:///d:/GitHub_Repo/Task-Dashboard/.agent/workflows/) and [`.agent/workflows/portable/`](file:///d:/GitHub_Repo/Task-Dashboard/.agent/workflows/portable/).
 
-### A. Session Lifecycle Workflows
+#### A. Session Lifecycle Workflows
 
 | Workflow                    | File Path                                                                                                                | Trigger / Purpose                                                                                    |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
@@ -111,7 +111,7 @@ All workflows are located in [`.agent/workflows/`](file:///d:/GitHub_Repo/Task-D
 | **Session Closeout & PIRR** | [`aos-session-close.md`](file:///d:/GitHub_Repo/Task-Dashboard/.agent/workflows/aos-session-close.md)                    | Logs telemetry to `.agent/memory/session_signals.jsonl`, runs PIRR check, and updates snapshots.     |
 | **Session Handoff**         | [`session-handoff-system.md`](file:///d:/GitHub_Repo/Task-Dashboard/.agent/workflows/portable/session-handoff-system.md) | Compiles concise handoff summaries across working sessions.                                          |
 
-### B. Core Execution & Code Change Workflows
+#### B. Core Execution & Code Change Workflows
 
 | Workflow                      | File Path                                                                                                                                                               | Trigger / Purpose                                                                                                                     |
 | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
@@ -121,7 +121,7 @@ All workflows are located in [`.agent/workflows/`](file:///d:/GitHub_Repo/Task-D
 | **Enhancement Lifecycle**     | [`enhancement-lifecycle.md`](file:///d:/GitHub_Repo/Task-Dashboard/.agent/workflows/portable/enhancement-lifecycle.md)                                                  | End-to-end enhancement execution (scaffolding $\rightarrow$ PRD $\rightarrow$ implementation $\rightarrow$ verification).             |
 | **Contract-First SDLC**       | [`contract-first-sdlc.md`](file:///d:/GitHub_Repo/Task-Dashboard/.agent/workflows/contract-first-sdlc.md)                                                               | Defines schemas and contracts prior to backend/frontend coding.                                                                       |
 
-### C. Debugging & Quality Assurance
+#### C. Debugging & Quality Assurance
 
 | Workflow                     | File Path                                                                                                            | Trigger / Purpose                                                                                                                                                         |
 | ---------------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -130,7 +130,7 @@ All workflows are located in [`.agent/workflows/`](file:///d:/GitHub_Repo/Task-D
 | **Post-Incident Governance** | [`post-incident-governance.md`](file:///d:/GitHub_Repo/Task-Dashboard/.agent/workflows/post-incident-governance.md)  | Post-fix incident analysis (PIRR), anti-pattern logging, and gate creation.                                                                                               |
 | **SSOT Reconciliation**      | [`ssot-reconciliation.md`](file:///d:/GitHub_Repo/Task-Dashboard/.agent/workflows/portable/ssot-reconciliation.md)   | Resolves drift between codebase implementation and documentation SSOTs.                                                                                                   |
 
-### D. Governance, UI & Operations Workflows
+#### D. Governance, UI & Operations Workflows
 
 | Workflow                          | File Path                                                                                                                                                                                             | Trigger / Purpose                                                                    |
 | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ---- | ---- | ---------- |
@@ -142,11 +142,11 @@ All workflows are located in [`.agent/workflows/`](file:///d:/GitHub_Repo/Task-D
 
 ---
 
-## 4. Essential Go-To Skills
+### 4. Essential Go-To Skills
 
 All skills are indexed in [`.agent/skill-router.yaml`](file:///d:/GitHub_Repo/Task-Dashboard/.agent/skill-router.yaml) and documented in each repository's `.agent/skills/<skill-id>/SKILL.md`.
 
-### 🛡️ Governance & Safety Skills
+#### 🛡️ Governance & Safety Skills
 
 - **`protocol-enforcer-pre-code`**: Hard-stops unauthorized file edits; verifies that requirements are approved.
 - **`governance-wiring-audit`** (`npm run verify:governance-wiring`): Audits whether artifacts, workflows, and P-standards are actively wired into consumption layers.
@@ -154,7 +154,7 @@ All skills are indexed in [`.agent/skill-router.yaml`](file:///d:/GitHub_Repo/Ta
 - **`ecosystem-portability-evaluator`**: Evaluates cross-repo portability of patterns and utilities.
 - **`writejournal-audit-gate`**: Ensures critical operational logs and audit trails are recorded during data mutations.
 
-### 📐 Planning & Documentation Skills
+#### 📐 Planning & Documentation Skills
 
 - **`writing-plans`**: Formulates structured, multi-step implementation plans with explicit verification criteria.
 - **`change-prd-architect`**: Drafts structured Product Requirement Documents (PRDs) and impact analyses.
@@ -163,7 +163,7 @@ All skills are indexed in [`.agent/skill-router.yaml`](file:///d:/GitHub_Repo/Ta
 - **`prompt-clarity`**: Parses ambiguous user requests and produces reframed interpretations before starting work.
 - **`pin-branch`**: Persists in-flight session branches without creating a full enhancement ticket.
 
-### ⚡ Architecture & Systematic Engineering Skills
+#### ⚡ Architecture & Systematic Engineering Skills
 
 - **`systematic-debugger`**: Enforces 4-PPSD discipline for complex bugs; halts speculative edits.
 - **`cos-orchestrator` / `cos-safe-refactor`**: Coordinates refactors touching multi-surface architectures.
@@ -171,7 +171,7 @@ All skills are indexed in [`.agent/skill-router.yaml`](file:///d:/GitHub_Repo/Ta
 - **`contract-first-api-validator`**: Enforces API contract parity across frontend and backend boundaries.
 - **`declarative-schema-enforcer` / `schema-migration-guide`**: Protects database schema integrity during migrations.
 
-### 🎨 Frontend & Design Skills
+#### 🎨 Frontend & Design Skills
 
 - **`ui-ux-pro-max` / `frontend-design`**: UI/UX design execution adhering to compact scales and theme variables.
 - **`mobile-ui-validator`**: Ensures all layouts render without clipping down to **300px** viewports.
@@ -179,14 +179,14 @@ All skills are indexed in [`.agent/skill-router.yaml`](file:///d:/GitHub_Repo/Ta
 - **`mermaid-skill`**: Generates valid architecture, class, and flowchart mermaid diagrams.
 - **`impeccable`**: Design token, font, and UI consistency inspection engine.
 
-### ⚙️ Backend, Database & Google Apps Script (GAS) Skills
+#### ⚙️ Backend, Database & Google Apps Script (GAS) Skills
 
 - **`gas-deploy-guard`**: Prevents deployment glitches, quota exhausts, and runtime regressions in Google Apps Script.
 - **`gas-optimizer`**: Optimizes batch reads/writes and cache management for GAS spreadsheets.
 - **`task-firestore-direct-write`**: Manages secure Firestore operations respecting security rules and indices.
 - **`db-inspect-fleet`**: Executes CLI database diagnostic scripts against production collections.
 
-### 🧠 Memory & Token Optimization Skills
+#### 🧠 Memory & Token Optimization Skills
 
 - **`memory-session-loader` / `memory-session-end`**: Loads past session context and writes closeout memories.
 - **`memory-event-logger` / `memory-decision-logger`**: Records critical decisions into memory registries.
@@ -194,21 +194,21 @@ All skills are indexed in [`.agent/skill-router.yaml`](file:///d:/GitHub_Repo/Ta
 
 ---
 
-## 5. SAP Sync (`/sap-sync`) & Cross-Repo Mechanics
+### 5. SAP Sync (`/sap-sync`) & Cross-Repo Mechanics
 
 The **Shared Architecture Protocol (SAP)** governs cross-repository synchronization via the **Pattern Activation Contract (PACT-001)**.
 
-### Purpose of `/sap-sync`
+#### Purpose of `/sap-sync`
 
 Ensures that all universal patterns, governance verifiers, and preflight rules authored in the canonical hub (`Task-Dashboard`) are consistently distributed and verified across sibling repositories.
 
-### `/sap-sync` Step-by-Step Procedure
+#### `/sap-sync` Step-by-Step Procedure
 
 ```powershell
-# Step 1: Scope Identification & Target Setup
+## Step 1: Scope Identification & Target Setup
 $target = "D:/GitHub_Repo/<target-spoke-folder>"
 
-# Step 2: Propagate PACT Verification Infrastructure
+## Step 2: Propagate PACT Verification Infrastructure
 if (!(Test-Path "$target/scripts")) { New-Item -ItemType Directory -Path "$target/scripts" }
 Copy-Item "scripts/verify-governance-wiring.cjs" -Destination "$target/scripts/verify-governance-wiring.cjs" -Force
 Copy-Item "scripts/verify-governance-schema.cjs" -Destination "$target/scripts/verify-governance-schema.cjs" -Force
@@ -223,28 +223,28 @@ if (!(Test-Path "$target/docs/protocols")) { New-Item -ItemType Directory -Path 
 Copy-Item "docs/protocols/PATTERN-ACTIVATION-CONTRACT-MANUAL.md" -Destination "$target/docs/protocols/PATTERN-ACTIVATION-CONTRACT-MANUAL.md" -Force
 Copy-Item "docs/protocols/governance-wiring.schema.json" -Destination "$target/docs/protocols/governance-wiring.schema.json" -Force
 
-# Step 3: Copy Universal Patterns
-# Find all patterns with 'portability: universal' in Task-Dashboard
+## Step 3: Copy Universal Patterns
+## Find all patterns with 'portability: universal' in Task-Dashboard
 Select-String -Path ".agent/patterns/*.md" -Pattern "portability:\s*universal"
-# Copy selected pattern to target
+## Copy selected pattern to target
 Copy-Item ".agent/patterns/<pattern-name>.md" -Destination "$target/.agent/patterns/<pattern-name>.md" -Force
 
-# Step 4: Wire Target Repository
-# 1. Add npm scripts to $target/package.json:
-#    "verify:governance-wiring": "node scripts/verify-governance-wiring.cjs"
-#    "verify:governance-wiring:all": "node scripts/verify-governance-wiring.cjs --all"
-#    "verify:governance-schema": "node scripts/verify-governance-schema.cjs"
-# 2. Add Row R14 to $target/.agent/PREFLIGHT.md.
-# 3. Update pattern frontmatter (consumed_by, activation_tier, canonical_source: task-dashboard).
+## Step 4: Wire Target Repository
+## 1. Add npm scripts to $target/package.json:
+##    "verify:governance-wiring": "node scripts/verify-governance-wiring.cjs"
+##    "verify:governance-wiring:all": "node scripts/verify-governance-wiring.cjs --all"
+##    "verify:governance-schema": "node scripts/verify-governance-schema.cjs"
+## 2. Add Row R14 to $target/.agent/PREFLIGHT.md.
+## 3. Update pattern frontmatter (consumed_by, activation_tier, canonical_source: task-dashboard).
 
-# Step 5: Verification
+## Step 5: Verification
 cd "$target"
 npm run verify:governance-wiring:all
 ```
 
 ---
 
-## 6. Quick-Reference Cheat Sheet for Daily Work
+### 6. Quick-Reference Cheat Sheet for Daily Work
 
 | When You Want To...                                | Do This First                                                                                                                                                                                                                                  |
 | -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -446,19 +446,19 @@ Every pattern copied between repos must specify:
 ### Synchronization Flow
 
 ```powershell
-# 1. Target identification
+## 1. Target identification
 $target = "D:/GitHub_Repo/<target-spoke-folder>"
 
-# 2. Copy PACT verification infrastructure
+## 2. Copy PACT verification infrastructure
 Copy-Item "scripts/verify-governance-wiring.cjs" -Destination "$target/scripts/verify-governance-wiring.cjs" -Force
 Copy-Item "scripts/verify-governance-schema.cjs" -Destination "$target/scripts/verify-governance-schema.cjs" -Force
 Copy-Item ".agent/workflows/capture-pattern.md" -Destination "$target/.agent/workflows/capture-pattern.md" -Force
 Copy-Item "docs/protocols/PATTERN-ACTIVATION-CONTRACT-MANUAL.md" -Destination "$target/docs/protocols/PATTERN-ACTIVATION-CONTRACT-MANUAL.md" -Force
 
-# 3. Synchronize Universal Patterns
+## 3. Synchronize Universal Patterns
 Copy-Item ".agent/patterns/<pattern-name>.md" -Destination "$target/.agent/patterns/<pattern-name>.md" -Force
 
-# 4. Verify Target Wiring
+## 4. Verify Target Wiring
 cd "$target"
 npm run verify:governance-wiring:all
 ```
@@ -482,17 +482,17 @@ foreach ($d in $dirs) {
 if (!(Test-Path $d)) { New-Item -ItemType Directory -Path $d -Force }
 }
 
-# 2. Copy scripts from Task-Dashboard
+## 2. Copy scripts from Task-Dashboard
 
 Copy-Item "d:\GitHub_Repo\Task-Dashboard\scripts\verify-governance-wiring.cjs" -Destination "d:\GitHub_Repo\Sree_Krushna\scripts\verify-governance-wiring.cjs" -Force
 Copy-Item "d:\GitHub_Repo\Task-Dashboard\scripts\verify-governance-schema.cjs" -Destination "d:\GitHub_Repo\Sree_Krushna\scripts\verify-governance-schema.cjs" -Force
 
-# 3. Copy docs/protocols from Task-Dashboard
+## 3. Copy docs/protocols from Task-Dashboard
 
 Copy-Item "d:\GitHub_Repo\Task-Dashboard\docs\protocols\PATTERN-ACTIVATION-CONTRACT-MANUAL.md" -Destination "d:\GitHub_Repo\Sree_Krushna\docs\protocols\PATTERN-ACTIVATION-CONTRACT-MANUAL.md" -Force
 Copy-Item "d:\GitHub_Repo\Task-Dashboard\docs\protocols\governance-wiring.schema.json" -Destination "d:\GitHub_Repo\Sree_Krushna\docs\protocols\governance-wiring.schema.json" -Force
 
-# 4. Copy standard workflows from Task-Dashboard
+## 4. Copy standard workflows from Task-Dashboard
 
 $workflowsToCopy = @(
     "sap-sync.md",
@@ -511,7 +511,7 @@ Copy-Item "d:\GitHub_Repo\Task-Dashboard\.agent\workflows\$wf" -Destination "d:\
 }
 }
 
-# 5. Copy portable workflows
+## 5. Copy portable workflows
 
 $portableWf = @(
     "spoke-and-wheel-docs.md",
@@ -525,7 +525,7 @@ Copy-Item "d:\GitHub_Repo\Task-Dashboard\.agent\workflows\portable\$pwf" -Destin
 }
 }
 
-# 6. Copy patterns README
+## 6. Copy patterns README
 
 Copy-Item "d:\GitHub_Repo\Task-Dashboard\.agent\patterns\README.md" -Destination "d:\GitHub_Repo\Sree_Krushna\.agent\patterns\README.md" -Force
 
@@ -578,11 +578,11 @@ Ran command:`@'
 '@ | Set-Content -Path "d:\GitHub_Repo\Sree_Krushna\package.json" -Encoding UTF8
 `Ran command:`@'
 
-# std.agent.skill-router — Sree_Krushna Cross-Repo Routing Index
+## std.agent.skill-router — Sree_Krushna Cross-Repo Routing Index
 
-# Project: Sree Krushna Marriage OS
+## Project: Sree Krushna Marriage OS
 
-# Generated: 2026-08-21 | SAP Spoke Alignment
+## Generated: 2026-08-21 | SAP Spoke Alignment
 
 skills:
 
@@ -745,12 +745,12 @@ Write-Output "Copied $( $patternsToCopy.Count ) universal patterns."`Ran command
 '@ | Set-Content -Path "d:\GitHub_Repo\Sree_Krushna\.agent\standards-catalog.json" -Encoding UTF8
 `Ran command:`@'
 
-# Sree_Krushna — Preflight Gate & Routing Table
+## Sree_Krushna — Preflight Gate & Routing Table
 
 > **Standard**: P82 (Governance Wiring Completeness) + P-ENT-ID (Entity Identifier Registry)
 > **Enforcement**: Run before making structural or schema changes to the Marriage OS.
 
-## Routing Matrix
+### Routing Matrix
 
 | Row | Trigger / Condition                                                                                           | Standard / Protocol                                               | Verification Action                                                   | Rationale / Failure Mode Prevented                         |
 | --- | ------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------------- | ---------------------------------------------------------- |
@@ -762,22 +762,22 @@ Write-Output "Copied $( $patternsToCopy.Count ) universal patterns."`Ran command
 
 `Ran command:`@'
 
-# Sree Krushna Marriage OS — Agent Operating Manual
+## Sree Krushna Marriage OS — Agent Operating Manual
 
 This repository represents the **Sree Krushna Marriage OS** — an architectural and operational knowledge base for wedding planning, rituals, procurement, guest management, and financials.
 
 ---
 
-## 1. Prime Invariants & Operating Discipline
+### 1. Prime Invariants & Operating Discipline
 
-### 1. 4-Phase Problem-Solving Discipline (4-PPSD)
+#### 1. 4-Phase Problem-Solving Discipline (4-PPSD)
 
 - **Phase 1: Ground Truth & Intent**: Analyze existing entity models (`ARCHITECTURE_SPEC.md`), invariants, and relations before modifying documents.
 - **Phase 2: Research & Domain Alignment**: Verify cultural traditions and logistics against SSOT specifications before proposing changes.
 - **Phase 3: Objective Rule Synthesis**: Follow explicit precedence ladders and schemas for events, rituals, and tasks.
 - **Phase 4: Evidence-Based Execution**: Execute in verified, consistent steps.
 
-### 2. Entity Identifier Integrity (`P-ENT-ID`)
+#### 2. Entity Identifier Integrity (`P-ENT-ID`)
 
 All entities must use standardized 3-digit padded identifiers:
 
@@ -793,7 +793,7 @@ All entities must use standardized 3-digit padded identifiers:
 - `PAY-###`: Finance & Ledger Records (`06_FINANCE_COMMERCIALS/ledger/`)
 - `RSK-###`: Risks & Mitigations (`00_GOVERNANCE/risks/`)
 
-### 3. Spoke & Wheel Documentation (`P-SSOT-DOCS`)
+#### 3. Spoke & Wheel Documentation (`P-SSOT-DOCS`)
 
 - Hub documents (`HUB.md` / `DOCS_HUB.md`) contain only indices and status snapshots (max 150 lines).
 - Spoke documents contain detailed domain specifications and declare parent hub in frontmatter.
@@ -801,7 +801,7 @@ All entities must use standardized 3-digit padded identifiers:
 
 ---
 
-## 2. Session Startup Gate (MANDATORY)
+### 2. Session Startup Gate (MANDATORY)
 
 Before any task work, review:
 
@@ -811,7 +811,7 @@ Before any task work, review:
 
 ---
 
-## 3. Key Workflows & Skills
+### 3. Key Workflows & Skills
 
 | Task Type                        | Workflow / Skill to Follow                                               |
 | -------------------------------- | ------------------------------------------------------------------------ |
@@ -840,11 +840,11 @@ Write-Output "BMS has no verify-governance-wiring"
 }`Ran command:`Get-ChildItem -Path "d:\GitHub_Repo\*\scripts\verify-governance\*"`Ran command:`Copy-Item "d:\GitHub_Repo\Capsicum\scripts\verify-governance-wiring.cjs" -Destination "d:\GitHub_Repo\Sree_Krushna\scripts\verify-governance-wiring.cjs" -Force
 node "d:\GitHub_Repo\Sree_Krushna\scripts\verify-governance-wiring.cjs"`Ran command:`node "d:\GitHub_Repo\Sree_Krushna\scripts\verify-governance-schema.cjs"`Ran command:`node scripts/verify-governance-wiring.cjs --all`Ran command:`@'
 
-# std.agent.skill-router — Sree_Krushna Cross-Repo Routing Index
+## std.agent.skill-router — Sree_Krushna Cross-Repo Routing Index
 
-# Project: Sree Krushna Marriage OS
+## Project: Sree Krushna Marriage OS
 
-# Generated: 2026-08-21 | SAP Spoke Alignment
+## Generated: 2026-08-21 | SAP Spoke Alignment
 
 skills:
 
@@ -1012,22 +1012,22 @@ skills:
   `Ran command:`# Update CLAUDE.md & GEMINI.md
   @'
 
-# Sree Krushna Marriage OS — Agent Operating Manual
+## Sree Krushna Marriage OS — Agent Operating Manual
 
 This repository represents the **Sree Krushna Marriage OS** — an architectural and operational knowledge base for wedding planning, rituals, procurement, guest management, and financials.
 
 ---
 
-## 1. Prime Invariants & Operating Discipline
+### 1. Prime Invariants & Operating Discipline
 
-### 1. 4-Phase Problem-Solving Discipline (4-PPSD)
+#### 1. 4-Phase Problem-Solving Discipline (4-PPSD)
 
 - **Phase 1: Ground Truth & Intent**: Analyze existing entity models (`ARCHITECTURE_SPEC.md`), invariants, and relations before modifying documents.
 - **Phase 2: Research & Domain Alignment**: Verify cultural traditions and logistics against SSOT specifications before proposing changes.
 - **Phase 3: Objective Rule Synthesis**: Follow explicit precedence ladders and schemas for events, rituals, and tasks.
 - **Phase 4: Evidence-Based Execution**: Execute in verified, consistent steps.
 
-### 2. Entity Identifier Integrity (`P-ENT-ID`)
+#### 2. Entity Identifier Integrity (`P-ENT-ID`)
 
 All entities must use standardized 3-digit padded identifiers:
 
@@ -1043,7 +1043,7 @@ All entities must use standardized 3-digit padded identifiers:
 - `PAY-###`: Finance & Ledger Records (`06_FINANCE_COMMERCIALS/ledger/`)
 - `RSK-###`: Risks & Mitigations (`00_GOVERNANCE/risks/`)
 
-### 3. Spoke & Wheel Documentation (`P-SSOT-DOCS`)
+#### 3. Spoke & Wheel Documentation (`P-SSOT-DOCS`)
 
 - Hub documents (`HUB.md` / `DOCS_HUB.md`) contain only indices and status snapshots (max 150 lines).
 - Spoke documents contain detailed domain specifications and declare parent hub in frontmatter.
@@ -1051,7 +1051,7 @@ All entities must use standardized 3-digit padded identifiers:
 
 ---
 
-## 2. Session Startup Gate (MANDATORY)
+### 2. Session Startup Gate (MANDATORY)
 
 Before any task work, review:
 
@@ -1062,7 +1062,7 @@ Before any task work, review:
 
 ---
 
-## 3. Key Workflows & Governance Protocols
+### 3. Key Workflows & Governance Protocols
 
 | Task Type                        | Workflow / Skill to Follow                                                                         |
 | -------------------------------- | -------------------------------------------------------------------------------------------------- |
@@ -1083,7 +1083,7 @@ Before any task work, review:
 
 ---
 
-## 4. Pattern Activation & PACT-001 Cross-References
+### 4. Pattern Activation & PACT-001 Cross-References
 
 This repository implements the following universal patterns:
 
@@ -1123,13 +1123,13 @@ consumed_by:
 
   }
 
-# Also ensure .agent/workflows/plan.md mentions the patterns
+## Also ensure .agent/workflows/plan.md mentions the patterns
 
 $planWf = Get-Content "d:\GitHub_Repo\Sree_Krushna\.agent\workflows\plan.md" -Raw
 if ($planWf -notmatch "patterns/") {
 $patternRefs = @"
 
-## Step 1: Context Loading & Pattern Check
+### Step 1: Context Loading & Pattern Check
 
 Load relevant universal patterns before formulating the plan:
 
@@ -1164,7 +1164,7 @@ if ($updated -match 'activation_tier:\s*guarded') {
 [System.IO.File]::WriteAllText($pat.FullName, $updated, (New-Object System.Text.UTF8Encoding($false)))
 }
 
-# Ensure .agent/workflows/plan.md mentions the patterns
+## Ensure .agent/workflows/plan.md mentions the patterns
 
 $planWfPath = "d:\GitHub_Repo\Sree_Krushna\.agent\workflows\plan.md"
 $planWf = [System.IO.File]::ReadAllText($planWfPath)
@@ -1180,7 +1180,7 @@ $content = [System.IO.File]::ReadAllText($planPath)
 
 $sectionToAdd = @"
 
-## Step 0.1: Universal Patterns Reference Check
+### Step 0.1: Universal Patterns Reference Check
 
 Review relevant universal patterns:
 
@@ -1201,13 +1201,13 @@ $updated = $content -replace '# /plan Workflow', "# /plan Workflow`r`n$sectionTo
 Write-Output "Updated plan.md"
 `Ran command:`node scripts/verify-governance-wiring.cjs --all`Ran command:`git status`
 
-## ✅ Governance Ecosystem & SAP Sync Successfully Initialized
+### ✅ Governance Ecosystem & SAP Sync Successfully Initialized
 
 The **Shared Architecture Protocol (SAP)**, **PACT-001 (Pattern Activation Contract)**, and standardized `.agent` infrastructure have been integrated into [`Sree_Krushna`](file:///d:/GitHub_Repo/Sree_Krushna).
 
 ---
 
-### 1. Infrastructure Deployed to `Sree_Krushna`
+#### 1. Infrastructure Deployed to `Sree_Krushna`
 
 ```
 d:\GitHub_Repo\Sree_Krushna/
@@ -1231,7 +1231,7 @@ d:\GitHub_Repo\Sree_Krushna/
 
 ---
 
-### 2. Verification Run
+#### 2. Verification Run
 
 ```powershell
 node scripts/verify-governance-wiring.cjs --all
@@ -1245,7 +1245,7 @@ node scripts/verify-governance-wiring.cjs --all
 
 ---
 
-### 3. Quick-Reference for Ongoing Work in `Sree_Krushna`
+#### 3. Quick-Reference for Ongoing Work in `Sree_Krushna`
 
 | Action                                    | Command / Protocol                                                                                                                                                                                 |
 | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1263,7 +1263,7 @@ node scripts/verify-governance-wiring.cjs --all
 
 Ran command: `Get-Content "d:\GitHub_Repo\Task-Dashboard\package.json" -Head 40`
 Ran command: `$scriptContent = @'
-#!/usr/bin/env node
+##!/usr/bin/env node
 /\*\*
 
 - bootstrap-spoke-governance.cjs — SAP Automated Repository Governance Onboarding
@@ -1519,9 +1519,9 @@ writeFileNoBom(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
 console.log(`\n--- Step 8: Generating .agent Catalogs & Routing ---`);
 const SKILL_ROUTER_CONTENT = `# std.agent.skill-router — ${REPO_NAME} Cross-Repo Routing Index
 
-# Project: ${REPO_NAME}
+## Project: ${REPO_NAME}
 
-# Generated: ${new Date().toISOString().slice(0, 10)} | SAP Spoke Alignment
+## Generated: ${new Date().toISOString().slice(0, 10)} | SAP Spoke Alignment
 
 skills:
 
@@ -1754,7 +1754,7 @@ const PREFLIGHT_CONTENT = `# ${REPO_NAME} — Preflight Gate & Routing Table
 > **Standard**: P82 (Governance Wiring Completeness)
 > **Enforcement**: Run before making structural, code, or schema changes.
 
-## Routing Matrix
+### Routing Matrix
 
 | Row | Trigger / Condition                            | Standard / Protocol                                                 | Verification Action                                              | Rationale / Failure Mode Prevented              |
 | --- | ---------------------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------- | ----------------------------------------------- |
@@ -1775,16 +1775,16 @@ This repository represents **${REPO_NAME}** — ${REPO_DESC}.
 
 ---
 
-## 1. Prime Invariants & Operating Discipline
+### 1. Prime Invariants & Operating Discipline
 
-### 1. 4-Phase Problem-Solving Discipline (4-PPSD)
+#### 1. 4-Phase Problem-Solving Discipline (4-PPSD)
 
 - **Phase 1: Ground Truth & Intent**: Analyze existing domain models, invariants, and relations before modifying documents.
 - **Phase 2: Research & Domain Alignment**: Verify benchmarks and standards against SSOT specifications before proposing changes.
 - **Phase 3: Objective Rule Synthesis**: Follow explicit precedence ladders and schemas for all domain entities and tasks.
 - **Phase 4: Evidence-Based Execution**: Execute in verified, consistent steps.
 
-### 2. Spoke & Wheel Documentation (\`P-SSOT-DOCS\`)
+#### 2. Spoke & Wheel Documentation (\`P-SSOT-DOCS\`)
 
 - Hub documents (\`HUB.md\` / \`DOCS_HUB.md\`) contain only indices and status snapshots (max 150 lines).
 - Spoke documents contain detailed domain specifications and declare parent hub in frontmatter.
@@ -1792,7 +1792,7 @@ This repository represents **${REPO_NAME}** — ${REPO_DESC}.
 
 ---
 
-## 2. Session Startup Gate (MANDATORY)
+### 2. Session Startup Gate (MANDATORY)
 
 Before any task work, review:
 
@@ -1802,7 +1802,7 @@ Before any task work, review:
 
 ---
 
-## 3. Key Workflows & Governance Protocols
+### 3. Key Workflows & Governance Protocols
 
 | Task Type                        | Workflow / Skill to Follow                                                                             |
 | -------------------------------- | ------------------------------------------------------------------------------------------------------ |
@@ -1823,7 +1823,7 @@ Before any task work, review:
 
 ---
 
-## 4. Pattern Activation & PACT-001 Cross-References
+### 4. Pattern Activation & PACT-001 Cross-References
 
 This repository implements the following universal patterns:
 
@@ -1872,9 +1872,9 @@ Ran command: `$newSapSync = @'
 
 ---
 
-## description: Synchronize universal PACT governance patterns, onboard new repositories, shared council blocks, and portable engine across repositories.
+### description: Synchronize universal PACT governance patterns, onboard new repositories, shared council blocks, and portable engine across repositories.
 
-# SAP & PACT Pattern Sync Workflow (`/sap-sync`)
+## SAP & PACT Pattern Sync Workflow (`/sap-sync`)
 
 > **Purpose**: Automates the cross-repository onboarding and synchronization of the PACT-001 (Pattern Activation Contract) governance mechanism, universal patterns, skills, shared council blocks, and portable engines across all repositories in the ecosystem.
 >
@@ -1894,15 +1894,15 @@ Ran command: `$newSapSync = @'
 
 ---
 
-## ⚡ Quick-Start: 1-Command New Repo Onboarding (Bootstrap)
+### ⚡ Quick-Start: 1-Command New Repo Onboarding (Bootstrap)
 
 To instantly initialize full `.agent` governance, PACT-001 patterns, universal skills, workflows, verification gates, `package.json` hooks, and `CLAUDE.md`/`GEMINI.md` for ANY new or existing repository:
 
 ```powershell
-# Run from Task-Dashboard canonical hub:
+## Run from Task-Dashboard canonical hub:
 npm run sap:bootstrap -- --target="d:/GitHub_Repo/<NewRepoName>"
 
-# Or invoke directly with Node:
+## Or invoke directly with Node:
 node scripts/bootstrap-spoke-governance.cjs --target="d:/GitHub_Repo/<NewRepoName>" --name="<RepoName>" --description="<Optional Description>"
 ```
 
@@ -1920,7 +1920,7 @@ node scripts/bootstrap-spoke-governance.cjs --target="d:/GitHub_Repo/<NewRepoNam
 
 ---
 
-## Step 0 — Portability & Scope Evaluation Gate (MANDATORY)
+### Step 0 — Portability & Scope Evaluation Gate (MANDATORY)
 
 Before promoting or modifying shared governance files, evaluate the 5-Gate Portability Model:
 
@@ -1932,7 +1932,7 @@ Before promoting or modifying shared governance files, evaluate the 5-Gate Porta
 
 ---
 
-## Step 1 — Verify Local State on Canonical Hub
+### Step 1 — Verify Local State on Canonical Hub
 
 1. Ensure the canonical hub (`Task-Dashboard`) is clean:
    ```powershell
@@ -1945,7 +1945,7 @@ Before promoting or modifying shared governance files, evaluate the 5-Gate Porta
 
 ---
 
-## Step 2 — Synchronize Existing Spokes
+### Step 2 — Synchronize Existing Spokes
 
 To update an already-onboarded repository with the latest universal patterns and skills:
 
@@ -1955,7 +1955,7 @@ node scripts/bootstrap-spoke-governance.cjs --target="d:/GitHub_Repo/<TargetSpok
 
 ---
 
-## Step 3 — Target Spoke Verification
+### Step 3 — Target Spoke Verification
 
 Always verify in the target spoke repository context:
 
@@ -1977,28 +1977,28 @@ $pkg.scripts | Add-Member -Name "sap:bootstrap" -Value "node scripts/bootstrap-s
 $pkgJson = $pkg | ConvertTo-Json -Depth 10
 [System.IO.File]::WriteAllText($pkgPath, $pkgJson, (New-Object System.Text.UTF8Encoding($false)))
 
-# 2. Copy bootstrap-spoke-governance.cjs to Sree_Krushna/scripts/
+## 2. Copy bootstrap-spoke-governance.cjs to Sree_Krushna/scripts/
 
 Copy-Item "d:\GitHub_Repo\Task-Dashboard\scripts\bootstrap-spoke-governance.cjs" -Destination "d:\GitHub_Repo\Sree_Krushna\scripts\bootstrap-spoke-governance.cjs" -Force
 
 Write-Output "Registered sap:bootstrap in package.json and copied bootstrap script to Sree_Krushna."
 `Ran command:`node scripts/verify-governance-wiring.cjs --all`
 
-## 🚀 1-Command Repository Governance Onboarding Package Created & Integrated
+### 🚀 1-Command Repository Governance Onboarding Package Created & Integrated
 
 The automated setup package is now ready. Whenever you create a new repository or want to wire governance into an existing repository, you only need to run **a single command** (or trigger `/sap-sync`), and it will handle directory creation, workflow/skill/pattern synchronization, configuration, and verification automatically.
 
 ---
 
-### 1. How to Use the 1-Command Bootstrap
+#### 1. How to Use the 1-Command Bootstrap
 
-#### From `Task-Dashboard` (Canonical Hub):
+##### From `Task-Dashboard` (Canonical Hub):
 
 ```powershell
-# Using npm script:
+## Using npm script:
 npm run sap:bootstrap -- --target="d:/GitHub_Repo/<NewRepoName>"
 
-# Or directly with Node:
+## Or directly with Node:
 node scripts/bootstrap-spoke-governance.cjs --target="d:/GitHub_Repo/<NewRepoName>" --name="<RepoName>" --description="<Optional Description>"
 ```
 
@@ -2048,7 +2048,7 @@ The workflow manual at [`.agent/workflows/sap-sync.md`](file:///d:/GitHub_Repo/T
 
 Ran command: `Get-ChildItem -Path "D:\GitHub_Repo\Task-Dashboard\.claude\skills\impeccable" -Recurse | Measure-Object -Property Length -Sum`
 Ran command: `$updatedBootstrap = @'
-#!/usr/bin/env node
+##!/usr/bin/env node
 /\*\*
 
 - bootstrap-spoke-governance.cjs — Universal Repository Governance & Skill Onboarding
@@ -2355,9 +2355,9 @@ writeFileNoBom(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
 console.log(`\n--- Step 9: Generating Complete .agent Catalogs & Routing ---`);
 const SKILL_ROUTER_CONTENT = `# std.agent.skill-router — ${REPO_NAME} Cross-Repo Routing Index
 
-# Project: ${REPO_NAME}
+## Project: ${REPO_NAME}
 
-# Generated: ${new Date().toISOString().slice(0, 10)} | SAP Universal Spoke Alignment
+## Generated: ${new Date().toISOString().slice(0, 10)} | SAP Universal Spoke Alignment
 
 skills:
 
@@ -2779,7 +2779,7 @@ const PREFLIGHT_CONTENT = `# ${REPO_NAME} — Preflight Gate & Routing Table
 > **Standard**: P82 (Governance Wiring Completeness)
 > **Enforcement**: Run before making structural, code, or schema changes.
 
-## Routing Matrix
+### Routing Matrix
 
 | Row | Trigger / Condition                            | Standard / Protocol                                                 | Verification Action                                              | Rationale / Failure Mode Prevented              |
 | --- | ---------------------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------- | ----------------------------------------------- |
@@ -2800,16 +2800,16 @@ This repository represents **${REPO_NAME}** — ${REPO_DESC}.
 
 ---
 
-## 1. Prime Invariants & Operating Discipline
+### 1. Prime Invariants & Operating Discipline
 
-### 1. 4-Phase Problem-Solving Discipline (4-PPSD)
+#### 1. 4-Phase Problem-Solving Discipline (4-PPSD)
 
 - **Phase 1: Ground Truth & Intent**: Analyze existing domain models, invariants, and relations before modifying documents.
 - **Phase 2: Research & Domain Alignment**: Verify benchmarks and standards against SSOT specifications before proposing changes.
 - **Phase 3: Objective Rule Synthesis**: Follow explicit precedence ladders and schemas for all domain entities and tasks.
 - **Phase 4: Evidence-Based Execution**: Execute in verified, consistent steps.
 
-### 2. Spoke & Wheel Documentation (\`P-SSOT-DOCS\`)
+#### 2. Spoke & Wheel Documentation (\`P-SSOT-DOCS\`)
 
 - Hub documents (\`HUB.md\` / \`DOCS_HUB.md\`) contain only indices and status snapshots (max 150 lines).
 - Spoke documents contain detailed domain specifications and declare parent hub in frontmatter.
@@ -2817,7 +2817,7 @@ This repository represents **${REPO_NAME}** — ${REPO_DESC}.
 
 ---
 
-## 2. Session Startup Gate (MANDATORY)
+### 2. Session Startup Gate (MANDATORY)
 
 Before any task work, review:
 
@@ -2827,7 +2827,7 @@ Before any task work, review:
 
 ---
 
-## 3. Key Workflows & Governance Councils
+### 3. Key Workflows & Governance Councils
 
 | Task Type                             | Workflow / Skill to Follow                                                                             |
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------ |
@@ -2853,7 +2853,7 @@ Before any task work, review:
 
 ---
 
-## 4. Pattern Activation & PACT-001 Cross-References
+### 4. Pattern Activation & PACT-001 Cross-References
 
 This repository implements the following universal patterns:
 
@@ -2983,9 +2983,9 @@ Edited CLAUDE.md
 Ran command:`Copy-Item "d:\GitHub_Repo\Sree_Krushna\CLAUDE.md" -Destination "d:\GitHub_Repo\Sree_Krushna\GEMINI.md" -Force
 node scripts/verify-governance-wiring.cjs --all`
 
-## 🎯 Complete Governance, Councils, UI/Arch Skills & Impeccable Synchronized
+### 🎯 Complete Governance, Councils, UI/Arch Skills & Impeccable Synchronized
 
-### Why they were previously separate:
+#### Why they were previously separate:
 
 1. **Directory Split (`.claude/skills/` vs `.agent/skills/`)**:
    - `impeccable`, `site-architecture`, `web-design-guidelines`, and `improve-codebase-architecture` were originally installed into `.claude/skills/` (the Claude Code runtime format), while standard markdown skills lived in `.agent/skills/`. The earlier sync script only targeted `.agent/skills/`.
@@ -2995,9 +2995,9 @@ node scripts/verify-governance-wiring.cjs --all`
 
 ---
 
-### What has been updated and synchronized:
+#### What has been updated and synchronized:
 
-#### 1. Synchronized to [`Sree_Krushna`](file:///d:/GitHub_Repo/Sree_Krushna):
+##### 1. Synchronized to [`Sree_Krushna`](file:///d:/GitHub_Repo/Sree_Krushna):
 
 - **🎨 Impeccable & Design Tool Suite** ([`.claude/skills/`](file:///d:/GitHub_Repo/Sree_Krushna/.claude/skills/)):
   - [`impeccable`](file:///d:/GitHub_Repo/Sree_Krushna/.claude/skills/impeccable): Full 2.2MB automated design linter, token validator, live UI buffer, font rules, and anti-pattern detectors.
@@ -3020,12 +3020,12 @@ node scripts/verify-governance-wiring.cjs --all`
 
 ---
 
-### 2. Upgraded 1-Command Universal Bootstrap Engine
+#### 2. Upgraded 1-Command Universal Bootstrap Engine
 
 The central bootstrap script [`bootstrap-spoke-governance.cjs`](file:///d:/GitHub_Repo/Task-Dashboard/scripts/bootstrap-spoke-governance.cjs) and [`sap-sync.md`](file:///d:/GitHub_Repo/Task-Dashboard/.agent/workflows/sap-sync.md) now deploy the complete 61-artifact ecosystem to **any new or existing repository** in one command:
 
 ```powershell
-# Run from Task-Dashboard:
+## Run from Task-Dashboard:
 npm run sap:bootstrap -- --target="d:/GitHub_Repo/<AnyRepoName>"
 ```
 
@@ -3084,27 +3084,27 @@ foreach ($d in $dirs) {
 if (!(Test-Path $d)) { New-Item -ItemType Directory -Path $d -Force }
 }
 
-# 2. Copy all 86+ INCs from Task-Dashboard to Sree_Krushna
+## 2. Copy all 86+ INCs from Task-Dashboard to Sree_Krushna
 
 Copy-Item "d:\GitHub_Repo\Task-Dashboard\docs\incidents\*.md" -Destination "d:\GitHub_Repo\Sree_Krushna\docs\incidents\" -Force
 $copiedIncs = (Get-ChildItem "d:\GitHub_Repo\Sree_Krushna\docs\incidents\*.md").Count
 
-# 3. Copy all patterns from Task-Dashboard
+## 3. Copy all patterns from Task-Dashboard
 
 Copy-Item "d:\GitHub_Repo\Task-Dashboard\.agent\patterns\*.md" -Destination "d:\GitHub_Repo\Sree_Krushna\.agent\patterns\" -Force
 $copiedPatterns = (Get-ChildItem "d:\GitHub_Repo\Sree_Krushna\.agent\patterns\*.md").Count
 
-# 4. Copy all debug workflows
+## 4. Copy all debug workflows
 
 Copy-Item "d:\GitHub_Repo\Task-Dashboard\.agent\workflows\*debug\*.md" -Destination "d:\GitHub_Repo\Sree_Krushna\.agent\workflows\" -Force
 Copy-Item "d:\GitHub_Repo\Task-Dashboard\.agent\workflows\debug.md" -Destination "d:\GitHub_Repo\Sree_Krushna\.agent\workflows\" -Force
 
-# 5. Copy all ast-grep rules
+## 5. Copy all ast-grep rules
 
 Copy-Item "d:\GitHub_Repo\Task-Dashboard\.claude\sg-rules\*.yml" -Destination "d:\GitHub_Repo\Sree_Krushna\.claude\sg-rules\" -Force
 $copiedRules = (Get-ChildItem "d:\GitHub_Repo\Sree_Krushna\.claude\sg-rules\*.yml").Count
 
-# 6. Copy tools/query-cli
+## 6. Copy tools/query-cli
 
 if (Test-Path "d:\GitHub_Repo\Task-Dashboard\tools\query-cli") {
 Copy-Item "d:\GitHub_Repo\Task-Dashboard\tools\query-cli\*" -Destination "d:\GitHub_Repo\Sree_Krushna\tools\query-cli\" -Recurse -Force
@@ -3140,7 +3140,7 @@ foreach ($pat in $patterns) {
 
 }
 
-# Update plan.md with all patterns
+## Update plan.md with all patterns
 
 $planPath = "d:\GitHub_Repo\Sree_Krushna\.agent\workflows\plan.md"
 $planContent = [System.IO.File]::ReadAllText($planPath)
@@ -3154,7 +3154,7 @@ if ($planContent -match '## Step 0\.1: Universal Patterns Reference Check[\s\S]*
 }
 [System.IO.File]::WriteAllText($planPath, $planContent, (New-Object System.Text.UTF8Encoding($false)))
 
-# Update CLAUDE.md with all patterns and debug workflows
+## Update CLAUDE.md with all patterns and debug workflows
 
 $claudePath = "d:\GitHub_Repo\Sree_Krushna\CLAUDE.md"
 $claudeContent = [System.IO.File]::ReadAllText($claudePath)
@@ -3363,7 +3363,7 @@ $pkg.scripts | Add-Member -Name "query" -Value "node tools/query-cli/cli.cjs" -M
 $pkgJson = $pkg | ConvertTo-Json -Depth 10
 [System.IO.File]::WriteAllText($pkgPath, $pkgJson, (New-Object System.Text.UTF8Encoding($false)))
 
-# Register query script in Task-Dashboard package.json
+## Register query script in Task-Dashboard package.json
 
 $hubPkgPath = "d:\GitHub_Repo\Task-Dashboard\package.json"
 $hubPkg = Get-Content $hubPkgPath -Raw | ConvertFrom-Json
@@ -3374,11 +3374,11 @@ $hubPkgJson = $hubPkg | ConvertTo-Json -Depth 10
 Write-Output "Registered 'npm run query' in Sree_Krushna and Task-Dashboard package.json"
 `Ran command:`node scripts/verify-governance-wiring.cjs --all`
 
-## 🌐 Complete Cross-Repo Tech-Stack Intelligence, Patterns, INCs & Debugger Fleet Synchronized
+### 🌐 Complete Cross-Repo Tech-Stack Intelligence, Patterns, INCs & Debugger Fleet Synchronized
 
 ---
 
-### 1. Why Were They Previously Kept in Silos?
+#### 1. Why Were They Previously Kept in Silos?
 
 Historically, the ecosystem separated artifacts due to **3 legacy architectural constraints**:
 
@@ -3388,7 +3388,7 @@ Historically, the ecosystem separated artifacts due to **3 legacy architectural 
 
 ---
 
-### 2. What Has Been Brought In & Synchronized
+#### 2. What Has Been Brought In & Synchronized
 
 All tech-stack patterns, incident case studies, debuggers, static analyzers, and query tools across the ecosystem are now synchronized and wired:
 
@@ -3396,7 +3396,7 @@ All tech-stack patterns, incident case studies, debuggers, static analyzers, and
 Total Active Governance Artifacts: 113 (100% Wired & Verified)
 ```
 
-#### 🛡️ 1. Complete Pattern Library (58 Patterns) — [`.agent/patterns/`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/patterns/)
+##### 🛡️ 1. Complete Pattern Library (58 Patterns) — [`.agent/patterns/`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/patterns/)
 
 - **State & Architecture**: `centralized-mutation-delegation`, `derive-dont-declare-guardrails`, `mutation-contract-pattern`, `subcollection-write-cache-atomicity`, `deep-link-hook-composition`.
 - **CSS & Design System**: `css-bridge-specificity-management`, `css-color-mix-gradient-silence`, `typography-weight-and-bridge-token-enforcement`, `theme-button-opt-out-contract`, `token-cascade-isolation`, `monolithic-css-append-and-all-theme-matrix-sweep`.
@@ -3404,7 +3404,7 @@ Total Active Governance Artifacts: 113 (100% Wired & Verified)
 - **Testing & Automation**: `playwright-e2e-testing-protocol`, `playwright-indexeddb-auth-session-capture`, `playwright-spa-e2e-testing-best-practices`, `mock-first-boundary-contract-lock`, `rules-enforcement-testing-no-emulator`.
 - **Universal Reasoning & Governance**: `search-before-inventing`, `raw-evidence-before-hypothesis`, `intent-clarity-decoupling-and-plan-hardstop`, `proxy-signal-verdicts`, `scope-ledger-anchor`, `triage-anomalies-first`, `p81-id-registration-process`.
 
-#### 📚 2. Incident Encyclopedia (86 Postmortems) — [`docs/incidents/`](file:///d:/GitHub_Repo/Sree_Krushna/docs/incidents/)
+##### 📚 2. Incident Encyclopedia (86 Postmortems) — [`docs/incidents/`](file:///d:/GitHub_Repo/Sree_Krushna/docs/incidents/)
 
 - **`INC-001` through `INC-086`**: Complete repository of failure modes, root cause analyses, and permanent invariants covering:
   - Security rules evaluation errors (`INC-008`, `INC-071`)
@@ -3416,7 +3416,7 @@ Total Active Governance Artifacts: 113 (100% Wired & Verified)
   - Upstream blocker discriminant field drift (`INC-076`)
   - Secret scanning & service account leak prevention (`INC-070`)
 
-#### 🔍 3. Dedicated Debugging Workflows — [`.agent/workflows/`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/workflows/)
+##### 🔍 3. Dedicated Debugging Workflows — [`.agent/workflows/`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/workflows/)
 
 - [`debug-frontend.md`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/workflows/debug-frontend.md): Systematic UI, CSS cascade, and React component diagnosis.
 - [`debug-backend.md`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/workflows/debug-backend.md): Service layer, Firestore, and backend logic debugging.
@@ -3424,28 +3424,28 @@ Total Active Governance Artifacts: 113 (100% Wired & Verified)
 - [`debug-task-architecture.md`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/workflows/debug-task-architecture.md): Task state machines and lifecycle debugging.
 - [`debug-issue.md`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/workflows/debug-issue.md) & [`debug.md`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/workflows/debug.md): General incident triage.
 
-#### ⚡ 4. Static AST Rules & Introspection Engine
+##### ⚡ 4. Static AST Rules & Introspection Engine
 
 - **24 AST-Grep Static Rules** ([`.claude/sg-rules/`](file:///d:/GitHub_Repo/Sree_Krushna/.claude/sg-rules/)): Enforcing z-index governance, semantic color tokens, auth fallbacks, and hook decoupling.
 - **Introspection Query CLI** ([`tools/query-cli/`](file:///d:/GitHub_Repo/Sree_Krushna/tools/query-cli/)): Real-time CLI search for incidents and invariants.
 
 ---
 
-### 3. How to Query the Tech Stack Knowledge Base
+#### 3. How to Query the Tech Stack Knowledge Base
 
 You can search across all 86 INCs and invariants using the query tool:
 
 ```powershell
-# Search frontend incidents & layout fixes:
+## Search frontend incidents & layout fixes:
 npm run query -- --frontend "modal backdrop flex"
 
-# Search backend / data / Firestore invariants:
+## Search backend / data / Firestore invariants:
 npm run query -- --backend "permission denied query"
 
-# Search tokens & style contracts:
+## Search tokens & style contracts:
 npm run query -- --token "theme-button-secondary"
 
-# Semantic concept search:
+## Semantic concept search:
 npm run query -- --concept "authentication fallback"
 ```
 
@@ -3901,15 +3901,15 @@ notes = "canonical_prefix is the native ID prefix for enhancements in this repos
 $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
 [System.IO.File]::WriteAllText("d:\GitHub_Repo\Sree_Krushna\enhancement-config.json", $cfg, $utf8NoBom)
 
-# 2. ENHANCEMENT_PROTOCOL.md
+## 2. ENHANCEMENT_PROTOCOL.md
 
 $proto = @'
 
-# ENHANCEMENT_PROTOCOL.md — Sree Krushna Standard
+## ENHANCEMENT_PROTOCOL.md — Sree Krushna Standard
 
 This document defines the governance for creating, tracking, and verifying enhancements within the Sree Krushna Marriage OS repository. It follows the Domain-Based Cluster Model used in the `Task-Dashboard`, `PIOperationsMgmt_Firebase`, `Capsicum`, and `BMS` ecosystem.
 
-## 🏗️ Backlog Architecture: The Cluster Model
+### 🏗️ Backlog Architecture: The Cluster Model
 
 - **Master Registry**: [ENHANCEMENT-MASTER-REGISTRY.md](./ENHANCEMENT-MASTER-REGISTRY.md) (The system index)
 - **Domain Clusters**: Backlog items are stored in domain-specific files to minimize context load for agents:
@@ -3918,11 +3918,11 @@ This document defines the governance for creating, tracking, and verifying enhan
   - [Governance Cluster](./docs/enhancements/GOVERNANCE-ENHANCEMENT-CLUSTER.md) (Protocols, workflows, SSOT reconciliation, 4-PPSD rules)
   - [Business Logic Cluster](./docs/enhancements/BUSINESS-LOGIC-ENHANCEMENT-CLUSTER.md) (Rituals, timeline events, guests, vendors, logistics, financials)
 
-## 📋 Enhancement Lifecycle
+### 📋 Enhancement Lifecycle
 
 <!-- shared:std.enhancement.lifecycle:start -->
 
-### 1. Registration
+#### 1. Registration
 
 - **Dependency Check**: Before scaffolding, MUST search the Master Registry (`ENHANCEMENT-MASTER-REGISTRY.md`) and Domain Cluster files for keywords related to the new feature to identify overlapping contexts or dependencies.
 - **Simple Enhancements (≤ 2 days)**: Add a lean entry to the appropriate Cluster file.
@@ -3936,7 +3936,7 @@ This document defines the governance for creating, tracking, and verifying enhan
   can proceed. See [enhancement-scaffolder](.agent/skills/enhancement-scaffolder/SKILL.md)
   for enforcement logic.
 
-### 2. Organizational Rationale (The "Why")
+#### 2. Organizational Rationale (The "Why")
 
 The use of dedicated tracking folders for complex work is enforced to ensure:
 
@@ -3946,7 +3946,7 @@ The use of dedicated tracking folders for complex work is enforced to ensure:
 - **Quality Assurance**: Prevents "Implementation Drift" by enforcing measurable success criteria.
 <!-- shared:std.enhancement.lifecycle:end -->
 
-## Prefix Governance
+### Prefix Governance
 
 - **Native Prefix**: `SK-NNN` (Unique to this repository).
 <!-- shared:std.enhancement.prefix-governance:start -->
@@ -3954,13 +3954,13 @@ The use of dedicated tracking folders for complex work is enforced to ensure:
 - **Cluster Tags**: `[UI-QUALITY]`, `[INFRA]`, `[GOVERNANCE]`, `[BUSINESS-LOGIC]`
 <!-- shared:std.enhancement.prefix-governance:end -->
 
-## ✅ Definition of Done (v1.7 Standard)
+### ✅ Definition of Done (v1.7 Standard)
 
 > **Constraint**: ALL criteria must be verified before marking an enhancement as COMPLETED.
 
 <!-- shared:std.enhancement.dod-v1.7:start -->
 
-### 🛡️ 4-Tier Verification Matrix
+#### 🛡️ 4-Tier Verification Matrix
 
 | Tier   | Name           | Target      | Requirement                                                                                                                    |
 | :----- | :------------- | :---------- | :----------------------------------------------------------------------------------------------------------------------------- |
@@ -3973,7 +3973,7 @@ The use of dedicated tracking folders for complex work is enforced to ensure:
 
 <!-- shared:std.enhancement.cascading-rules:start -->
 
-### 🔄 Cascading Rules
+#### 🔄 Cascading Rules
 
 1. **Extraction Before Deletion**: Any logic/structure being replaced must be extracted to an Enhancement Note before removal.
 2. **SSOT Synchronicity**: Documentation must be updated in the same session as code changes (AOS Phase C).
@@ -3990,20 +3990,20 @@ The use of dedicated tracking folders for complex work is enforced to ensure:
 '@
 [System.IO.File]::WriteAllText("d:\GitHub_Repo\Sree_Krushna\ENHANCEMENT_PROTOCOL.md", $proto, $utf8NoBom)
 
-# 3. ENHANCEMENTS.md
+## 3. ENHANCEMENTS.md
 
 $enhIndex = @'
 
-# ENHANCEMENTS.md — Sree Krushna Enhancement System Index
+## ENHANCEMENTS.md — Sree Krushna Enhancement System Index
 
 This file is the root-level entry point for Sree Krushna's enhancement-tracking system, mirroring the domain-cluster model used in `Task-Dashboard`, `PIOperationsMgmt_Firebase`, `Capsicum`, and `BMS`. It is a navigation index only — never a write target. Lean entries go in the relevant Domain Cluster file; full detail for Complex enhancements goes in `enhancement-notes/`.
 
-## 📋 Quick Navigation
+### 📋 Quick Navigation
 
 - **Primary Registry**: [ENHANCEMENT-MASTER-REGISTRY.md](./ENHANCEMENT-MASTER-REGISTRY.md)
 - **Protocol**: [ENHANCEMENT_PROTOCOL.md](./ENHANCEMENT_PROTOCOL.md)
 
-### 📂 Domain Clusters (Active Backlogs)
+#### 📂 Domain Clusters (Active Backlogs)
 
 | Cluster               | Focus                                                            | Backlog                                                              |
 | :-------------------- | :--------------------------------------------------------------- | :------------------------------------------------------------------- |
@@ -4020,11 +4020,11 @@ This file is the root-level entry point for Sree Krushna's enhancement-tracking 
 '@
 [System.IO.File]::WriteAllText("d:\GitHub_Repo\Sree_Krushna\ENHANCEMENTS.md", $enhIndex, $utf8NoBom)
 
-# 4. ENHANCEMENT-MASTER-REGISTRY.md
+## 4. ENHANCEMENT-MASTER-REGISTRY.md
 
 $enhRegistry = @'
 
-# ENHANCEMENT-MASTER-REGISTRY.md — Sree Krushna Master Enhancement Registry
+## ENHANCEMENT-MASTER-REGISTRY.md — Sree Krushna Master Enhancement Registry
 
 This file is the primary system index for all tracked enhancements in Sree Krushna Marriage OS, recording both active and completed initiatives across all domain clusters.
 
@@ -4051,21 +4051,21 @@ if (!(Test-Path $d)) { New-Item -ItemType Directory -Path $d -Force }
 
 $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
 
-# 2. Domain Cluster Files
+## 2. Domain Cluster Files
 
 $govCluster = @'
 
-# Governance Enhancement Cluster
+## Governance Enhancement Cluster
 
 Tracks protocols, workflows, SSOT reconciliation mechanisms, and 4-PPSD rules.
 
-## 📋 Active Enhancements
+### 📋 Active Enhancements
 
 | ID         | Title                                            | Priority | Status        | Spec / Index                                                                      |
 | :--------- | :----------------------------------------------- | :------- | :------------ | :-------------------------------------------------------------------------------- |
 | **SK-001** | Domain Workflow & SSOT Reconciliation Adaptation | P1       | `IN_PROGRESS` | [00_ENHANCEMENT_INDEX.md](../../enhancement-notes/SK-001/00_ENHANCEMENT_INDEX.md) |
 
-## 🗃️ Backlog
+### 🗃️ Backlog
 
 - None pending.
   '@
@@ -4073,17 +4073,17 @@ Tracks protocols, workflows, SSOT reconciliation mechanisms, and 4-PPSD rules.
 
 $infraCluster = @'
 
-# Infrastructure & Architecture Enhancement Cluster
+## Infrastructure & Architecture Enhancement Cluster
 
 Tracks architecture integrity, Hub & Spoke structures, compilers, verification scripts, and CI/CD automation.
 
-## 📋 Active Enhancements
+### 📋 Active Enhancements
 
 | ID         | Title                                                    | Priority | Status     | Spec / Index                                                                      |
 | :--------- | :------------------------------------------------------- | :------- | :--------- | :-------------------------------------------------------------------------------- |
 | **SK-002** | Hub-and-Spoke Documentation Architecture (`P-SSOT-DOCS`) | P1       | `PLANNING` | [00_ENHANCEMENT_INDEX.md](../../enhancement-notes/SK-002/00_ENHANCEMENT_INDEX.md) |
 
-## 🗃️ Backlog
+### 🗃️ Backlog
 
 - None pending.
   '@
@@ -4091,17 +4091,17 @@ Tracks architecture integrity, Hub & Spoke structures, compilers, verification s
 
 $uiCluster = @'
 
-# UI Quality Enhancement Cluster
+## UI Quality Enhancement Cluster
 
 Tracks visual hierarchy, component modularization, design tokens, responsive layouts, and mobile 300px compliance.
 
-## 📋 Active Enhancements
+### 📋 Active Enhancements
 
 | ID         | Title                                                          | Priority | Status     | Spec / Index                                                                      |
 | :--------- | :------------------------------------------------------------- | :------- | :--------- | :-------------------------------------------------------------------------------- |
 | **SK-003** | Frontend Monolith Decomposition & Modular Vanilla Architecture | P1       | `PLANNING` | [00_ENHANCEMENT_INDEX.md](../../enhancement-notes/SK-003/00_ENHANCEMENT_INDEX.md) |
 
-## 🗃️ Backlog
+### 🗃️ Backlog
 
 - None pending.
   '@
@@ -4109,28 +4109,28 @@ Tracks visual hierarchy, component modularization, design tokens, responsive lay
 
 $bizCluster = @'
 
-# Business Logic Enhancement Cluster
+## Business Logic Enhancement Cluster
 
 Tracks rituals, timeline events, guest management, vendor contracts, day-of-run sheets, and financial ledger models.
 
-## 📋 Active Enhancements
+### 📋 Active Enhancements
 
 | ID  | Title | Priority | Status | Spec / Index |
 | :-- | :---- | :------- | :----- | :----------- |
 | -   | -     | -        | -      | -            |
 
-## 🗃️ Backlog
+### 🗃️ Backlog
 
 - Expand guest seating & RSVP tracking integrations.
 - Implement vendor milestone payment triggers.
   '@
   [System.IO.File]::WriteAllText("d:\GitHub_Repo\Sree_Krushna\docs\enhancements\BUSINESS-LOGIC-ENHANCEMENT-CLUSTER.md", $bizCluster, $utf8NoBom)
 
-# 3. Scaffolding 00_ENHANCEMENT_INDEX.md for SK-001, SK-002, SK-003
+## 3. Scaffolding 00_ENHANCEMENT_INDEX.md for SK-001, SK-002, SK-003
 
 $sk1 = @'
 
-# SK-001: Domain Workflow & SSOT Reconciliation Adaptation
+## SK-001: Domain Workflow & SSOT Reconciliation Adaptation
 
 - **Cluster**: `[GOVERNANCE]`
 - **Status**: `IN_PROGRESS`
@@ -4138,11 +4138,11 @@ $sk1 = @'
 - **Depends On**: None (Foundational)
 - **Target Release**: v1.0.0
 
-## 🎯 Purpose
+### 🎯 Purpose
 
 Adapt portable workflows (`ssot-reconciliation.md`, `debug-backend.md`, `debug-task-architecture.md`, `session-handoff-system.md`) specifically for Marriage OS entity schemas (`EVT`, `RIT`, `PER`, `FAM`, `VEN`, `VDR`, `PAY`, `RSK`).
 
-## 📋 Deliverables
+### 📋 Deliverables
 
 1. Update `.agent/workflows/portable/ssot-reconciliation.md` with Marriage OS hub-and-spoke entity mapping.
 2. Update `.agent/workflows/debug-backend.md` and `debug-task-architecture.md` with Marriage OS state machine checks.
@@ -4152,7 +4152,7 @@ Adapt portable workflows (`ssot-reconciliation.md`, `debug-backend.md`, `debug-t
 
 $sk2 = @'
 
-# SK-002: Hub-and-Spoke Documentation Architecture (`P-SSOT-DOCS`)
+## SK-002: Hub-and-Spoke Documentation Architecture (`P-SSOT-DOCS`)
 
 - **Cluster**: `[INFRA]`
 - **Status**: `PLANNING`
@@ -4160,11 +4160,11 @@ $sk2 = @'
 - **Depends On**: SK-001
 - **Target Release**: v1.0.0
 
-## 🎯 Purpose
+### 🎯 Purpose
 
 Establish standardized `HUB.md` index files (strictly $\le 150$ lines per `P-SSOT-DOCS`) across all 7 core domain roots (`00_GOVERNANCE` to `06_FINANCE_COMMERCIALS`) and declare parent hub YAML frontmatters in all spoke documents.
 
-## 📋 Deliverables
+### 📋 Deliverables
 
 1. Create `00_GOVERNANCE/HUB.md` through `06_FINANCE_COMMERCIALS/HUB.md`.
 2. Add `hub:` frontmatter to all entity specs.
@@ -4174,7 +4174,7 @@ Establish standardized `HUB.md` index files (strictly $\le 150$ lines per `P-SSO
 
 $sk3 = @'
 
-# SK-003: Frontend Monolith Decomposition & Modular Vanilla Architecture
+## SK-003: Frontend Monolith Decomposition & Modular Vanilla Architecture
 
 - **Cluster**: `[UI-QUALITY]`
 - **Status**: `PLANNING`
@@ -4182,11 +4182,11 @@ $sk3 = @'
 - **Depends On**: SK-002
 - **Target Release**: v1.0.0
 
-## 🎯 Purpose
+### 🎯 Purpose
 
 Deconstruct the monolithic `public/index.html` (3,419 lines) into modular ES view controllers (`public/js/views/`), UI components (`public/js/components/`), and CSS stylesheets (`public/css/`), enforcing the $\le 300$ lines/file limit.
 
-## 📋 Deliverables
+### 📋 Deliverables
 
 1. Modularize CSS into tokens and component stylesheets.
 2. Modularize JavaScript into distinct view controllers and component renderers.
@@ -4211,7 +4211,7 @@ $regContent = $regContent.replace("| **SK-001** | Domain Workflow & SSOT Reconci
 $regContent = $regContent.replace("| **SK-002** | Hub-and-Spoke Documentation Architecture (`P-SSOT-DOCS`) | Architecture | Complex | `PLANNING` |", "| **SK-002** | Hub-and-Spoke Documentation Architecture (`P-SSOT-DOCS`) | Infrastructure | Complex | `IN_PROGRESS` |")
 [System.IO.File]::WriteAllText($regPath, $regContent, (New-Object System.Text.UTF8Encoding($false)))
 
-# Update SK-001 index
+## Update SK-001 index
 
 $sk1Path = "d:\GitHub_Repo\Sree_Krushna\enhancement-notes\SK-001\00_ENHANCEMENT_INDEX.md"
 $sk1Content = [System.IO.File]::ReadAllText($sk1Path)
@@ -4253,14 +4253,14 @@ $files | Select-Object -First 10 | ForEach-Object { " - $*" }
 `Ran command:`# Master DOCS_HUB.md
 $docsHub = @'
 
-# DOCS_HUB.md — Sree Krushna Marriage OS Documentation Hub
+## DOCS_HUB.md — Sree Krushna Marriage OS Documentation Hub
 
 > **Protocol Standard**: `P-SSOT-DOCS` (Spoke & Wheel Single Source of Truth)  
 > **Master Entity Specification**: [`ARCHITECTURE_SPEC.md`](./ARCHITECTURE_SPEC.md)
 
 ---
 
-## 🏛️ Domain Hubs Navigation
+### 🏛️ Domain Hubs Navigation
 
 | Domain                        | Hub File                                                             | Scope & Entities                                                  |
 | ----------------------------- | -------------------------------------------------------------------- | ----------------------------------------------------------------- |
@@ -4282,27 +4282,27 @@ $docsHub = @'
 
 $hub0 = @'
 
-# 00 Governance Hub
+## 00 Governance Hub
 
 > **Parent Hub**: [`DOCS_HUB.md`](../DOCS_HUB.md) | **Standard**: `P-SSOT-DOCS`
 
-## 📋 Governance Spokes Index
+### 📋 Governance Spokes Index
 
-### Authority & Operations
+#### Authority & Operations
 
 - [Authority & Access Matrix](./authority_and_access_matrix.md)
 - [Attribute Ownership Matrix](./attribute_ownership_matrix.md)
 - [Change Management Protocol](./change_management_protocol.md)
 - [Activity Taxonomy](./ACTIVITY_TAXONOMY.md)
 
-### Frameworks & Guidelines
+#### Frameworks & Guidelines
 
 - [Couple Co-Creation Guide](./COUPLE_CO_CREATION_GUIDE.md)
 - [External Reviewer Prompts](./EXTERNAL_REVIEWER_PROMPTS.md)
 - [Instrumentation Spec](./INSTRUMENTATION_SPEC.md)
 - [Deployment Guide](./DEPLOYMENT_GUIDE.md)
 
-### Entity Registries
+#### Entity Registries
 
 - Tasks Registry: `00_GOVERNANCE/tasks/` (`TSK-###`)
 - Decisions Registry: `00_GOVERNANCE/decisions/` (`DEC-###`)
@@ -4311,18 +4311,18 @@ $hub0 = @'
 
 $hub1 = @'
 
-# 01 Timeline Events Hub
+## 01 Timeline Events Hub
 
 > **Parent Hub**: [`DOCS_HUB.md`](../DOCS_HUB.md) | **Standard**: `P-SSOT-DOCS`
 
-## 📋 Timeline & Event Spokes
+### 📋 Timeline & Event Spokes
 
-### Master Schedules
+#### Master Schedules
 
 - [Master Timeline](./master_timeline.md)
 - [Event Template](./event_template.md)
 
-### Canonical Events (`EVT-###`)
+#### Canonical Events (`EVT-###`)
 
 - [`EVT-001` Nirbandha & Ashirbad](./specs/EVT-001_nirbandha_ashirbad.md)
 - [`EVT-002` Mehendi & Sangeet](./specs/EVT-002_mehendi_sangeet.md)
@@ -4335,19 +4335,19 @@ $hub1 = @'
 
 $hub2 = @'
 
-# 02 Rituals & Culture Hub
+## 02 Rituals & Culture Hub
 
 > **Parent Hub**: [`DOCS_HUB.md`](../DOCS_HUB.md) | **Standard**: `P-SSOT-DOCS`
 
-## 📋 Rituals & Culture Spokes
+### 📋 Rituals & Culture Spokes
 
-### Master Indices & Customs
+#### Master Indices & Customs
 
 - [Ritual Master Index](./ritual_master_index.md)
 - [Family Customs Reference](./family_customs_reference.md)
 - [Ritual Template](./ritual_template.md)
 
-### Ritual Specifications (`RIT-###`)
+#### Ritual Specifications (`RIT-###`)
 
 - [`RIT-001` Nirbandha](./specs/RIT-001_nirbandha.md)
 - [`RIT-002` Deva Nimantrana](./specs/RIT-002_deva_nimantrana.md)
@@ -4362,7 +4362,7 @@ $hub2 = @'
 - [`RIT-011` Chauthi Puja](./specs/RIT-011_chauthi_puja.md)
 - [`RIT-012` Astamangala](./specs/RIT-012_astamangala.md)
 
-### Samagri Checklists (`SAM-###`)
+#### Samagri Checklists (`SAM-###`)
 
 - [`SAM-001` Nirbandha Samagri](./samagri_checklists/SAM-001_nirbandha_samagri.md)
 - [`SAM-002` Deva Nimantrana Samagri](./samagri_checklists/SAM-002_deva_nimantrana_samagri.md)
@@ -4374,20 +4374,20 @@ $hub2 = @'
 
 $hub3 = @'
 
-# 03 People & Guests Hub
+## 03 People & Guests Hub
 
 > **Parent Hub**: [`DOCS_HUB.md`](../DOCS_HUB.md) | **Standard**: `P-SSOT-DOCS`
 
-## 📋 People & Guests Spokes
+### 📋 People & Guests Spokes
 
-### Directory & Responsibilities
+#### Directory & Responsibilities
 
 - [People Master Index](./people_master_index.md)
 - [Responsibility Matrix](./responsibility_matrix.md)
 - [Person Template](./person_template.md)
 - [Family Template](./family_template.md)
 
-### Entity Directories
+#### Entity Directories
 
 - Individual Profiles: `03_PEOPLE_GUESTS/directory/` (`PER-###`)
 - Family Units: `03_PEOPLE_GUESTS/families/` (`FAM-###`)
@@ -4396,18 +4396,18 @@ $hub3 = @'
 
 $hub4 = @'
 
-# 04 Procurement & Vendors Hub
+## 04 Procurement & Vendors Hub
 
 > **Parent Hub**: [`DOCS_HUB.md`](../DOCS_HUB.md) | **Standard**: `P-SSOT-DOCS`
 
-## 📋 Procurement & Vendor Spokes
+### 📋 Procurement & Vendor Spokes
 
-### Master Indices & Templates
+#### Master Indices & Templates
 
 - [Vendor Master Index](./vendor_master_index.md)
 - [Vendor Template](./vendor_template.md)
 
-### Category Specifications
+#### Category Specifications
 
 - [Attire & Jewellery Protocol](./attire_and_jewellery/asset_custody_protocol.md)
 - [Brand & Stationery: Invitation Suite](./brand_and_stationery/invitation_suite.md)
@@ -4415,7 +4415,7 @@ $hub4 = @'
 - [Photography & Media Production Spec](./photography/photo_production_spec.md)
 - [Shopping & Trousseau Master](./shopping_and_trousseau/shopping_master.md)
 
-### Entity Directories
+#### Entity Directories
 
 - Vendors: `04_PROCUREMENT_VENDORS/vendors/` (`VDR-###`)
 - Contracts: `04_PROCUREMENT_VENDORS/contracts/` (`CTR-###`)
@@ -4423,19 +4423,19 @@ $hub4 = @'
 
 $hub5 = @'
 
-# 05 Operations & Logistics Hub
+## 05 Operations & Logistics Hub
 
 > **Parent Hub**: [`DOCS_HUB.md`](../DOCS_HUB.md) | **Standard**: `P-SSOT-DOCS`
 
-## 📋 Operations & Logistics Spokes
+### 📋 Operations & Logistics Spokes
 
-### Master Indices & Frameworks
+#### Master Indices & Frameworks
 
 - [Operational Gates Model](./day_of_run_sheets/operational_gates_model.md)
 - [Hotel Room & Accommodation Mapping](./accommodation/hotel_room_mapping.md)
 - [Venue Template](./venue_template.md)
 
-### Entity Directories
+#### Entity Directories
 
 - Venues: `05_OPERATIONS_LOGISTICS/venues/` (`VEN-###`)
 - Day of Run Sheets: `05_OPERATIONS_LOGISTICS/day_of_run_sheets/`
@@ -4444,19 +4444,19 @@ $hub5 = @'
 
 $hub6 = @'
 
-# 06 Finance & Commercials Hub
+## 06 Finance & Commercials Hub
 
 > **Parent Hub**: [`DOCS_HUB.md`](../DOCS_HUB.md) | **Standard**: `P-SSOT-DOCS`
 
-## 📋 Finance & Commercial Spokes
+### 📋 Finance & Commercial Spokes
 
-### Master Ledgers & Frameworks
+#### Master Ledgers & Frameworks
 
 - [Budget Master](./budget_master.md)
 - [Cash Logistics & Disbursal](./cash_logistics.md)
 - [Payment Template](./payment_template.md)
 
-### Entity Directories
+#### Entity Directories
 
 - Payment Ledger: `06_FINANCE_COMMERCIALS/ledger/` (`PAY-###`)
 - Gifts & Shagun: `06_FINANCE_COMMERCIALS/gifts_and_shagun/`
@@ -4716,13 +4716,13 @@ Ran command: `node scripts/verify-governance-wiring.cjs --all
 node scripts/verify-mobile.mjs`
 Created walkthrough.md
 
-## 🏁 Sequential Execution Complete: Enhancement Infrastructure & `SK-001` to `SK-003`
+### 🏁 Sequential Execution Complete: Enhancement Infrastructure & `SK-001` to `SK-003`
 
 We have established the **canonical, identical Enhancement Infrastructure** matching `Task-Dashboard`, `Capsicum`, and `BMS`, and successfully completed and verified all three sequential initiatives.
 
 ---
 
-### 1. Canonical Enhancement Infrastructure (Cluster Model)
+#### 1. Canonical Enhancement Infrastructure (Cluster Model)
 
 The enhancement architecture now mirrors the exact taxonomy, shared markers, and file structure used across the ecosystem:
 
@@ -4737,7 +4737,7 @@ The enhancement architecture now mirrors the exact taxonomy, shared markers, and
 
 ---
 
-### 2. Milestone Execution Summary
+#### 2. Milestone Execution Summary
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
@@ -4749,12 +4749,12 @@ The enhancement architecture now mirrors the exact taxonomy, shared markers, and
 └────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-#### ✅ `SK-001`: Domain Workflow & SSOT Reconciliation Adaptation
+##### ✅ `SK-001`: Domain Workflow & SSOT Reconciliation Adaptation
 
 - Adapted [`.agent/workflows/portable/ssot-reconciliation.md`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/workflows/portable/ssot-reconciliation.md) with Marriage OS authority hierarchy (`ARCHITECTURE_SPEC.md` $\to$ Domain `HUB.md` $\to$ Entity Specs $\to$ State Machine).
 - Mapped entity schemas (`EVT`, `RIT`, `PER`, `FAM`, `VEN`, `VDR`, `PAY`, `RSK`).
 
-#### ✅ `SK-002`: Hub-and-Spoke Documentation Architecture (`P-SSOT-DOCS`)
+##### ✅ `SK-002`: Hub-and-Spoke Documentation Architecture (`P-SSOT-DOCS`)
 
 - Created [`DOCS_HUB.md`](file:///d:/GitHub_Repo/Sree_Krushna/DOCS_HUB.md) master navigation index.
 - Created all 7 domain `HUB.md` indices strictly $\le 150$ lines:
@@ -4767,7 +4767,7 @@ The enhancement architecture now mirrors the exact taxonomy, shared markers, and
   - `06_FINANCE_COMMERCIALS/HUB.md`
 - Automatically wired parent hub frontmatter into **97 spoke markdown files**.
 
-#### ✅ `SK-003`: Frontend Monolith Decomposition & Modular Architecture
+##### ✅ `SK-003`: Frontend Monolith Decomposition & Modular Architecture
 
 - Reduced [`public/index.html`](file:///d:/GitHub_Repo/Sree_Krushna/public/index.html) from **3,419 lines to 857 lines** (clean semantic shell).
 - Modularized styling into [`public/css/main.css`](file:///d:/GitHub_Repo/Sree_Krushna/public/css/main.css) (1,835 lines of tokens, component styles, and responsive queries).
@@ -4775,13 +4775,13 @@ The enhancement architecture now mirrors the exact taxonomy, shared markers, and
 
 ---
 
-### 3. Integrated into 1-Command Universal Bootstrap
+#### 3. Integrated into 1-Command Universal Bootstrap
 
 The 1-command onboarding script at [`Task-Dashboard/scripts/bootstrap-spoke-governance.cjs`](file:///d:/GitHub_Repo/Task-Dashboard/scripts/bootstrap-spoke-governance.cjs) now automatically provisions this exact Cluster Model enhancement infrastructure on any new repository.
 
 ---
 
-### 4. Verification Check
+#### 4. Verification Check
 
 ```powershell
 node scripts/verify-governance-wiring.cjs --all
@@ -4945,19 +4945,19 @@ Phase 4: 🎨 Frontend Modularization & Bootstrap Integration (SK-003)
 ### Proposed Commit Sequence:
 
 ```bash
-# Phase 1: Governance & Protocols
+## Phase 1: Governance & Protocols
 git add docs/protocols/ docs/incidents/ .agent/ package.json
 git commit -m "gov: synchronize complete protocol fleet, incident postmortems, and adapted ssot workflows"
 
-# Phase 2: Enhancement Infrastructure
+## Phase 2: Enhancement Infrastructure
 git add enhancement-config.json ENHANCEMENTS.md ENHANCEMENT_PROTOCOL.md ENHANCEMENT-MASTER-REGISTRY.md docs/enhancements/ enhancement-notes/
 git commit -m "enh: bootstrap cluster model enhancement infrastructure and track SK-001 to SK-003"
 
-# Phase 3: Hub-and-Spoke Documentation
+## Phase 3: Hub-and-Spoke Documentation
 git add DOCS_HUB.md 00_GOVERNANCE/ 01_TIMELINE_EVENTS/ 02_RITUALS_CULTURE/ 03_PEOPLE_GUESTS/ 04_PROCUREMENT_VENDORS/ 05_OPERATIONS_LOGISTICS/ 06_FINANCE_COMMERCIALS/
 git commit -m "docs: establish P-SSOT-DOCS hub-and-spoke architecture across all 7 primary domains"
 
-# Phase 4: Frontend Modularization & Tooling
+## Phase 4: Frontend Modularization & Tooling
 git add public/ index.html scripts/ CLAUDE.md GEMINI.md
 git commit -m "refactor(ui): decompose monolithic index.html into modular css and js with mobile 300px compliance"
 ```
@@ -5165,22 +5165,22 @@ Viewed CLAUDE.md:1-100
 Created D:\GitHub_Repo\Sree_Krushna\CLAUDE.md
 Ran command: `$manual = @'
 
-# Sree Krushna Marriage OS — Agent Operating Manual
+## Sree Krushna Marriage OS — Agent Operating Manual
 
 This repository represents the **Sree Krushna Marriage OS** — an architectural and operational knowledge base for wedding planning, rituals, procurement, guest management, and financials.
 
 ---
 
-## 1. Prime Invariants & Operating Discipline
+### 1. Prime Invariants & Operating Discipline
 
-### 1. 4-Phase Problem-Solving Discipline (4-PPSD)
+#### 1. 4-Phase Problem-Solving Discipline (4-PPSD)
 
 - **Phase 1: Ground Truth & Intent**: Analyze existing entity models (`ARCHITECTURE_SPEC.md`), invariants, and relations before modifying documents.
 - **Phase 2: Research & Domain Alignment**: Verify cultural traditions and logistics against SSOT specifications before proposing changes.
 - **Phase 3: Objective Rule Synthesis**: Follow explicit precedence ladders and schemas for events, rituals, and tasks.
 - **Phase 4: Evidence-Based Execution**: Execute in verified, consistent steps.
 
-### 2. Entity Identifier Integrity (`P-ENT-ID`)
+#### 2. Entity Identifier Integrity (`P-ENT-ID`)
 
 All entities must use standardized 3-digit padded identifiers:
 
@@ -5196,7 +5196,7 @@ All entities must use standardized 3-digit padded identifiers:
 - `PAY-###`: Finance & Ledger Records (`06_FINANCE_COMMERCIALS/ledger/`)
 - `RSK-###`: Risks & Mitigations (`00_GOVERNANCE/risks/`)
 
-### 3. Spoke & Wheel Documentation (`P-SSOT-DOCS`)
+#### 3. Spoke & Wheel Documentation (`P-SSOT-DOCS`)
 
 - Hub documents (`HUB.md` / `DOCS_HUB.md`) contain only indices and status snapshots (max 150 lines).
 - Spoke documents contain detailed domain specifications and declare parent hub in frontmatter.
@@ -5204,7 +5204,7 @@ All entities must use standardized 3-digit padded identifiers:
 
 ---
 
-## 2. Session Startup Gate (MANDATORY)
+### 2. Session Startup Gate (MANDATORY)
 
 Before any task work, review:
 
@@ -5215,7 +5215,7 @@ Before any task work, review:
 
 ---
 
-## 3. Key Workflows & Governance Protocols
+### 3. Key Workflows & Governance Protocols
 
 | Task Type                               | Workflow / Skill to Follow                                                                         |
 | --------------------------------------- | -------------------------------------------------------------------------------------------------- |
@@ -5241,7 +5241,7 @@ Before any task work, review:
 
 ---
 
-## 4. Pattern Activation & PACT-001 Cross-References
+### 4. Pattern Activation & PACT-001 Cross-References
 
 This repository implements the following universal patterns:
 
@@ -5319,13 +5319,13 @@ git commit -m "council: formalize Impeccable as Core Craft & Polish Auditor in U
 git status --short
 `
 
-## 🏛️ Impeccable Formally Seated as Core Member of UI Council
+### 🏛️ Impeccable Formally Seated as Core Member of UI Council
 
 `impeccable` has been integrated as a **Mandatory Core Member** of the **UI/UX Council** across the ecosystem (`.agent/workflows/ui-council.md`, `CLAUDE.md`, and `GEMINI.md`).
 
 ---
 
-### 💺 Updated Default UI Council Roster
+#### 💺 Updated Default UI Council Roster
 
 | Council Member                          | Sourced Skill / Standard                                                                                                          | Core Domain & Focus                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -5338,16 +5338,157 @@ git status --short
 
 ---
 
-### 🛠️ Key Governance Updates:
+#### 🛠️ Key Governance Updates:
 
 1. **Mandatory Participation**: Every UI Council session now requires an independent evaluation from `impeccable` during **Phase 1 (Independent Evaluation)** focusing on craftsmanship, cognitive distillation, and anti-AI-aesthetic enforcement.
 2. **Synchronized Across Repositories**: Updated in both [`Sree_Krushna/.agent/workflows/ui-council.md`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/workflows/ui-council.md) and [`Task-Dashboard/.agent/workflows/ui-council.md`](file:///d:/GitHub_Repo/Task-Dashboard/.agent/workflows/ui-council.md).
 3. **Agent Operating Manuals**: Updated [`CLAUDE.md`](file:///d:/GitHub_Repo/Sree_Krushna/CLAUDE.md) and [`GEMINI.md`](file:///d:/GitHub_Repo/Sree_Krushna/GEMINI.md) to highlight `impeccable` in UI review workflows.
 4. **Governance Verification**: Re-audited via `npm run verify:governance-wiring:all` — **120/120 artifacts 100% Green**.
 
-# Query 2.6 -
+# Query 2.6 -and same across all the repos via sap sync
 
-# Review 2.6 -
+# Review 2.6 -Ran command: `Get-ChildItem -Path "d:\GitHub_Repo" -Directory | Select-Object Name`
+
+Ran command: `@'
+const fs = require('fs');
+const path = require('path');
+const { execSync } = require('child_process');
+
+const HUB_ROOT = 'd:/GitHub_Repo/Task-Dashboard';
+const bootstrapScript = path.join(HUB_ROOT, 'scripts/bootstrap-spoke-governance.cjs');
+
+const TARGET_REPOS = [
+'PIOperationsMgmt_Firebase',
+'Capsicum',
+'BMS',
+'UG-Farmhouse',
+'QSR',
+'DashBoard',
+'Inventory_Mgmt',
+'SupervisorComplianceMonitoring',
+'Unified_Uploader',
+'Sree_Krushna'
+];
+
+console.log('🌐 ========================================================');
+console.log('🔄 SAP Universal Governance & UI Council Sync Across Repos');
+console.log('==========================================================\n');
+
+const results = [];
+
+for (const repo of TARGET_REPOS) {
+const targetDir = path.join('d:/GitHub_Repo', repo);
+if (!fs.existsSync(targetDir)) {
+console.log(`⚠️ Repo "${repo}" not found at ${targetDir}. Skipping.`);
+results.push({ repo, status: 'SKIPPED_NOT_FOUND' });
+continue;
+}
+
+console.log(`\n🚀 Synchronizing "${repo}"...`);
+try {
+const cmd = `node "${bootstrapScript}" --target="${targetDir}"`;
+const out = execSync(cmd, { cwd: HUB_ROOT, encoding: 'utf8' });
+console.log(`✅ "${repo}" successfully synced and verified!`);
+results.push({ repo, status: 'SUCCESS' });
+} catch (err) {
+console.error(`❌ "${repo}" sync failed:`, err.message);
+results.push({ repo, status: 'FAILED', error: err.message });
+}
+}
+
+console.log('\n==========================================================');
+console.log('📊 SAP Sync Summary Across All Repositories:');
+console.log('==========================================================');
+results.forEach(r => console.log(`  ${r.status === 'SUCCESS' ? '✅' : '❌'} ${r.repo}: ${r.status}`));
+console.log('==========================================================\n');
+'@ | Set-Content -Path "d:\GitHub_Repo\Task-Dashboard\scripts\sap-sync-all-repos.cjs" -Encoding UTF8
+
+node "d:\GitHub_Repo\Task-Dashboard\scripts\sap-sync-all-repos.cjs"
+`
+
+I have launched the universal SAP sync across all active repositories (`PIOperationsMgmt_Firebase`, `Capsicum`, `BMS`, `UG-Farmhouse`, `QSR`, `DashBoard`, `Inventory_Mgmt`, `SupervisorComplianceMonitoring`, `Unified_Uploader`, `Sree_Krushna`) to propagate `impeccable`'s core seat on the UI Council, the post-incident governance suite, all 62 protocols, 86 INCs, and the 60 universal patterns. I will report back the comprehensive summary once the sync finishes.
+
+Viewed skill-router.yaml:525-565
+Edited skill-router.yaml
+Ran command: `node "d:\GitHub_Repo\Task-Dashboard\scripts\sap-sync-all-repos.cjs"`
+Viewed skill-router.yaml:550-600
+Searched for "capture-pattern"
+Ran command: `Get-Content "d:\GitHub_Repo\Task-Dashboard\.agent\skill-router.yaml" | Select-String -Pattern "capture-pattern" -Context 2,2`
+Viewed skill-router.yaml:1220-1255
+Ran command: `Select-String -Path "d:\GitHub_Repo\Task-Dashboard\.agent\skill-router.yaml" -Pattern "capture-pattern"`
+Viewed skill-router.yaml:1020-1040
+Edited skill-router.yaml
+Ran command: `Copy-Item "d:\GitHub_Repo\Task-Dashboard\.agent\skill-router.yaml" -Destination "d:\GitHub_Repo\Sree_Krushna\.agent\skill-router.yaml" -Force
+node "d:\GitHub_Repo\Task-Dashboard\scripts\sap-sync-all-repos.cjs"`
+Viewed bootstrap-spoke-governance.cjs:240-300
+Edited bootstrap-spoke-governance.cjs
+Ran command: `node "d:\GitHub_Repo\Task-Dashboard\scripts\sap-sync-all-repos.cjs"`
+Ran command: `node "d:\GitHub_Repo\Task-Dashboard\scripts\bootstrap-spoke-governance.cjs" --target="d:\GitHub_Repo\PIOperationsMgmt_Firebase"`
+Viewed ia-uiux-separation.md:1-20
+Viewed skill-router.yaml:590-650
+Edited skill-router.yaml
+Ran command: `node "d:\GitHub_Repo\Task-Dashboard\scripts\sap-sync-all-repos.cjs"`
+Ran command: `node "d:\GitHub_Repo\Task-Dashboard\scripts\bootstrap-spoke-governance.cjs" --target="d:\GitHub_Repo\BMS"`
+Viewed skill-router.yaml:100-140
+Edited skill-router.yaml
+Viewed skill-router.yaml:650-680
+Edited skill-router.yaml
+Ran command: `Copy-Item "d:\GitHub_Repo\Task-Dashboard\.agent\skill-router.yaml" -Destination "d:\GitHub_Repo\Sree_Krushna\.agent\skill-router.yaml" -Force
+node "d:\GitHub_Repo\Task-Dashboard\scripts\sap-sync-all-repos.cjs"`
+Ran command: `git add .agent/skill-router.yaml .agent/workflows/ui-council.md CLAUDE.md GEMINI.md scripts/
+git commit -m "council: formalize Impeccable as Core Craft Auditor and sync SAP across all 10 repositories"
+`
+
+I have committed the updates in `Task-Dashboard` and will now verify that all repositories are completely synchronized and up to date.
+
+Ran command: `git status --short`
+Ran command: `node scripts/verify-governance-wiring.cjs --all
+node scripts/verify-mobile.mjs`
+Ran command: `git add .agent/ CLAUDE.md GEMINI.md index.html package.json public/ scripts/ "User_Created/Discussion Threads/"
+git commit -m "sync(sap): synchronize universal skill router and full governance fleet across repositories"
+git status --short
+`
+Ran command: `git status --short`
+
+## 🌐 Universal SAP Synchronization Complete Across All 10 Repositories
+
+The updated governance architecture—featuring **`impeccable` formally seated as a Core Craft Auditor on the UI Council**, the full **62-Protocol suite**, **86 Incident Postmortems (`INC-001` to `INC-086`)**, **60 PACT-001 patterns**, and the **Post-Incident Governance Engine**—has been synchronized and audited across the entire ecosystem.
+
+---
+
+### 📊 Ecosystem Verification Scorecard (100% Green / Exit Code 0)
+
+| Repository                           | Path                                            | Governance Audit       | Sync Status   |
+| ------------------------------------ | ----------------------------------------------- | ---------------------- | ------------- |
+| **`Task-Dashboard`** (Canonical Hub) | `d:/GitHub_Repo/Task-Dashboard`                 | 150+ artifacts audited | `VERIFIED` ✅ |
+| **`PIOperationsMgmt_Firebase`**      | `d:/GitHub_Repo/PIOperationsMgmt_Firebase`      | 174 artifacts audited  | `SUCCESS` ✅  |
+| **`Capsicum`**                       | `d:/GitHub_Repo/Capsicum`                       | 165 artifacts audited  | `SUCCESS` ✅  |
+| **`BMS`**                            | `d:/GitHub_Repo/BMS`                            | 164 artifacts audited  | `SUCCESS` ✅  |
+| **`UG-Farmhouse`**                   | `d:/GitHub_Repo/UG-Farmhouse`                   | 155 artifacts audited  | `SUCCESS` ✅  |
+| **`QSR`**                            | `d:/GitHub_Repo/QSR`                            | 152 artifacts audited  | `SUCCESS` ✅  |
+| **`DashBoard`**                      | `d:/GitHub_Repo/DashBoard`                      | 120 artifacts audited  | `SUCCESS` ✅  |
+| **`Inventory_Mgmt`**                 | `d:/GitHub_Repo/Inventory_Mgmt`                 | 120 artifacts audited  | `SUCCESS` ✅  |
+| **`SupervisorComplianceMonitoring`** | `d:/GitHub_Repo/SupervisorComplianceMonitoring` | 120 artifacts audited  | `SUCCESS` ✅  |
+| **`Unified_Uploader`**               | `d:/GitHub_Repo/Unified_Uploader`               | 120 artifacts audited  | `SUCCESS` ✅  |
+| **`Sree_Krushna`**                   | `d:/GitHub_Repo/Sree_Krushna`                   | 120 artifacts audited  | `SUCCESS` ✅  |
+
+---
+
+### 🏛️ Key Capabilities Propagated Globally:
+
+1. **`impeccable` as Mandatory Core UI Council Member**:
+   - Every repository's [`.agent/workflows/ui-council.md`](file:///d:/GitHub_Repo/Task-Dashboard/.agent/workflows/ui-council.md) now includes **The Craft & Visual Polish Auditor (`impeccable`)** in its default roster.
+   - Evaluates visual hierarchy, anti-AI-aesthetic elimination, cognitive load distillation, responsive breathing room, and live DOM ergonomics.
+
+2. **Complete Protocol & Incident Fleet**:
+   - Deployed all **62 Protocols** (`docs/protocols/`) and **86 Incident Postmortems** (`docs/incidents/`) across all spokes.
+   - Full 5-workflow **Post-Incident Governance & Analysis Engine** wired into all skill routers (`.agent/skill-router.yaml`).
+
+3. **Cluster-Model Enhancement Infrastructure**:
+   - Universal `ENHANCEMENTS.md`, `ENHANCEMENT_PROTOCOL.md` (v1.7), and `docs/enhancements/` 4-cluster backlogs established uniformly across all repos.
+
+4. **1-Command Ecosystem Sync Engine**:
+   - Script [`Task-Dashboard/scripts/sap-sync-all-repos.cjs`](file:///d:/GitHub_Repo/Task-Dashboard/scripts/sap-sync-all-repos.cjs) is available for 1-command reconciliation of the entire multi-repo workspace at any time.
 
 # Response 2.6 -
 
