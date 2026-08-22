@@ -1736,7 +1736,9 @@ window.dataLayer = window.dataLayer || [];
       const container = document.getElementById('dopkos-canvas-container');
       if (!container) return;
 
-      if (currentDopkosView === 'THREADS') {
+      if (currentDopkosView === 'TOPOLOGY') {
+        renderDopkosTopology(container);
+      } else if (currentDopkosView === 'THREADS') {
         renderDopkosThreads(container);
       } else if (currentDopkosView === 'RUNSHEET') {
         renderDopkosRunSheet(container);
@@ -1748,6 +1750,277 @@ window.dataLayer = window.dataLayer || [];
         renderDopkosCritical(container);
       }
     }
+
+    // ── UG-Farmhouse Authentic Dependency Topology Engine ───────────
+    let selectedTopologyTaskId = null;
+
+    const TOPOLOGY_TRACKS = [
+      { id: 'bride', label: '👰 BRIDE', color: '#c06b8c', bg: 'rgba(192, 107, 140, 0.08)' },
+      { id: 'groom', label: '🤵 GROOM', color: '#d4a843', bg: 'rgba(212, 168, 67, 0.08)' },
+      { id: 'purohit', label: '🕉️ PUROHIT', color: '#f5c518', bg: 'rgba(245, 197, 24, 0.08)' },
+      { id: 'catering', label: '🍲 CATERING', color: '#e07850', bg: 'rgba(224, 120, 80, 0.08)' },
+      { id: 'media', label: '📸 MEDIA', color: '#64b5f6', bg: 'rgba(100, 181, 246, 0.08)' },
+      { id: 'fleet', label: '🛡️ FLEET/VAULT', color: '#66bb6a', bg: 'rgba(102, 187, 106, 0.08)' }
+    ];
+
+    const TOPOLOGY_STAGES = [
+      { num: 1, name: 'STAGE 1: T-180 Foundation', col: 0 },
+      { num: 2, name: 'STAGE 2: T-120 Procurement', col: 1 },
+      { num: 3, name: 'STAGE 3: T-60 Detailing', col: 2 },
+      { num: 4, name: 'STAGE 4: T-14 Rayagada', col: 3 },
+      { num: 5, name: 'STAGE 5: Day 0 Wedding', col: 4 },
+      { num: 6, name: 'STAGE 6: Post & Legal', col: 5 }
+    ];
+
+    const TOPOLOGY_TASKS = [
+      { id: 'GOV-001', name: 'Chief Purohit Lagna Lock', track: 'purohit', stage: 1, col: 0, status: 'DONE', depends_on: [] },
+      { id: 'TSK-001', name: 'Nuapatna Baula Patani Saree', track: 'bride', stage: 1, col: 0, status: 'DONE', depends_on: [] },
+      { id: 'TSK-003', name: 'Photographer 36-Q SLA', track: 'media', stage: 1, col: 0, status: 'READY', depends_on: [] },
+      { id: 'FOOD-001', name: '21-Item Menu Tasting', track: 'catering', stage: 1, col: 0, status: 'READY', depends_on: [] },
+      { id: 'SEC-001', name: 'Gold Vault Dual-Custody', track: 'fleet', stage: 1, col: 0, status: 'READY', depends_on: [] },
+      { id: 'VEN-001', name: 'Rayagada & BBSR Leases', track: 'fleet', stage: 1, col: 0, status: 'READY', depends_on: ['GOV-001'] },
+
+      { id: 'RIT-001', name: 'Vidhi-Patra Signoff', track: 'purohit', stage: 2, col: 1, status: 'READY', depends_on: ['GOV-001'] },
+      { id: 'TSK-002', name: 'Groom Silk Attire Prep', track: 'groom', stage: 2, col: 1, status: 'READY', depends_on: ['TSK-001'] },
+      { id: 'TSK-004', name: 'Pre-Wedding Location Permits', track: 'media', stage: 2, col: 1, status: 'READY', depends_on: ['TSK-003'] },
+      { id: 'GFT-001', name: 'Deva Nimantrana (Puri)', track: 'groom', stage: 2, col: 1, status: 'READY', depends_on: ['RIT-001'] },
+      { id: 'FOOD-002', name: 'Pahala Mithai Booking', track: 'catering', stage: 2, col: 1, status: 'READY', depends_on: ['FOOD-001'] },
+
+      { id: 'RIT-002', name: 'Silver Mukuta Sizing', track: 'groom', stage: 3, col: 2, status: 'READY', depends_on: ['TSK-002'] },
+      { id: 'TSK-005', name: 'MUA Trial & Lookbook', track: 'bride', stage: 3, col: 2, status: 'READY', depends_on: ['TSK-001'] },
+      { id: 'PWR-001', name: '125kVA Generator Test', track: 'fleet', stage: 3, col: 2, status: 'READY', depends_on: ['VEN-001'] },
+
+      { id: 'RIT-003', name: 'Mangan Turmeric Bath', track: 'bride', stage: 4, col: 3, status: 'LOCKED', depends_on: ['RIT-001', 'TSK-005'] },
+      { id: 'RIT-004', name: 'Patra Paribartana Vows', track: 'groom', stage: 4, col: 3, status: 'LOCKED', depends_on: ['RIT-003', 'GFT-001'] },
+      { id: 'MED-001', name: 'Drone Clearance & Audio Sync', track: 'media', stage: 4, col: 3, status: 'LOCKED', depends_on: ['TSK-004', 'PWR-001'] },
+
+      { id: 'GATE-02', name: 'Baranugam Arch Welcome', track: 'purohit', stage: 5, col: 4, status: 'LOCKED', is_gate: true, depends_on: ['RIT-004', 'VEN-001'] },
+      { id: 'RIT-005', name: 'Kanyadaan & Hastaganthi', track: 'purohit', stage: 5, col: 4, status: 'LOCKED', depends_on: ['GATE-02', 'SEC-001'] },
+      { id: 'GATE-04', name: 'Sindoor Daan & Mukuta', track: 'bride', stage: 5, col: 4, status: 'LOCKED', is_gate: true, depends_on: ['RIT-005', 'RIT-002'] },
+      { id: 'FOOD-003', name: '850p Royal Reception Feast', track: 'catering', stage: 5, col: 4, status: 'LOCKED', depends_on: ['GATE-04', 'FOOD-002'] },
+      { id: 'MED-006', name: 'Mandap Audio 2-Cam Record', track: 'media', stage: 5, col: 4, status: 'LOCKED', depends_on: ['GATE-02', 'MED-001'] },
+
+      { id: 'LEG-001', name: 'SUJOG Marriage Registration', track: 'fleet', stage: 6, col: 5, status: 'LOCKED', depends_on: ['RIT-005'] },
+      { id: 'CLS-001', name: '4TB Archive & Vault Reseal', track: 'fleet', stage: 6, col: 5, status: 'LOCKED', depends_on: ['FOOD-003', 'MED-006'] }
+    ];
+
+    function getTopologyPredecessors(taskId, visited = new Set()) {
+      const t = TOPOLOGY_TASKS.find(x => x.id === taskId);
+      if (!t || !t.depends_on) return visited;
+      t.depends_on.forEach(depId => {
+        if (!visited.has(depId)) {
+          visited.add(depId);
+          getTopologyPredecessors(depId, visited);
+        }
+      });
+      return visited;
+    }
+
+    function getTopologySuccessors(taskId, visited = new Set()) {
+      TOPOLOGY_TASKS.forEach(t => {
+        if ((t.depends_on || []).includes(taskId) && !visited.has(t.id)) {
+          visited.add(t.id);
+          getTopologySuccessors(t.id, visited);
+        }
+      });
+      return visited;
+    }
+
+    function selectTopologyNode(taskId) {
+      if (selectedTopologyTaskId === taskId) {
+        selectedTopologyTaskId = null;
+      } else {
+        selectedTopologyTaskId = taskId;
+      }
+      renderDoPkosStudio();
+      if (selectedTopologyTaskId) {
+        openTaskConsole(taskId);
+      }
+    }
+
+    function clearTopologySelection() {
+      selectedTopologyTaskId = null;
+      renderDoPkosStudio();
+    }
+
+    function renderDopkosTopology(container) {
+      const CARD_W = 158;
+      const CARD_H = 78;
+      const COL_W = 184;
+      const ROW_H = 94;
+      const LABEL_W = 100;
+      const HEADER_H = 44;
+
+      const numCols = TOPOLOGY_STAGES.length;
+      const numRows = TOPOLOGY_TRACKS.length;
+      const totalWidth = LABEL_W + numCols * COL_W;
+      const totalHeight = HEADER_H + numRows * ROW_H;
+
+      const preds = selectedTopologyTaskId ? getTopologyPredecessors(selectedTopologyTaskId) : new Set();
+      const succs = selectedTopologyTaskId ? getTopologySuccessors(selectedTopologyTaskId) : new Set();
+      const isSelectionActive = !!selectedTopologyTaskId;
+
+      // Coordinate mapper
+      const taskCoords = {};
+      TOPOLOGY_TASKS.forEach(t => {
+        const rowIndex = TOPOLOGY_TRACKS.findIndex(tr => tr.id === t.track);
+        const colIndex = t.col !== undefined ? t.col : (t.stage - 1);
+        const x = LABEL_W + colIndex * COL_W + 12;
+        const y = HEADER_H + rowIndex * ROW_H + 8;
+        taskCoords[t.id] = { x, y, colIndex, rowIndex };
+      });
+
+      // Render Stage Headers
+      let headerHtml = `
+        <div style="display: flex; height: ${HEADER_H}px; border-bottom: 2px solid var(--border-subtle); position: sticky; top: 0; background: var(--bg-surface-elevated); z-index: 30;">
+          <div style="width: ${LABEL_W}px; flex-shrink: 0; border-right: 1px solid var(--border-subtle); background: var(--bg-surface-elevated); font-size: 0.72rem; font-weight: 800; color: var(--gold-bright); display: flex; align-items: center; justify-content: center; text-transform: uppercase;">
+            TRACK / STAGE
+          </div>
+      `;
+      TOPOLOGY_STAGES.forEach(s => {
+        headerHtml += `
+          <div style="width: ${COL_W}px; flex-shrink: 0; border-right: 1px solid var(--border-subtle); padding: 6px 10px; display: flex; flex-direction: column; justify-content: center;">
+            <span style="font-size: 0.68rem; font-weight: 700; color: var(--gold-bright); text-transform: uppercase;">STAGE ${s.num}</span>
+            <span style="font-size: 0.72rem; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${s.name.split(':')[1] || s.name}</span>
+          </div>
+        `;
+      });
+      headerHtml += `</div>`;
+
+      // Render Rows & Left Track Labels
+      let rowsHtml = '';
+      TOPOLOGY_TRACKS.forEach((track, rIndex) => {
+        rowsHtml += `
+          <div style="display: flex; height: ${ROW_H}px; border-bottom: 1px solid var(--border-subtle); background: ${track.bg};">
+            <div style="width: ${LABEL_W}px; flex-shrink: 0; border-right: 2px solid ${track.color}; background: var(--bg-surface-elevated); padding: 8px 6px; display: flex; flex-direction: column; justify-content: center; position: sticky; left: 0; z-index: 20;">
+              <span style="font-size: 0.76rem; font-weight: 800; color: ${track.color};">${track.label}</span>
+              <span style="font-size: 0.65rem; color: var(--text-dim);">${track.id.toUpperCase()}</span>
+            </div>
+            <div style="flex: 1; display: flex;">
+              ${TOPOLOGY_STAGES.map(() => `<div style="width: ${COL_W}px; flex-shrink: 0; border-right: 1px dashed rgba(255,255,255,0.05);"></div>`).join('')}
+            </div>
+          </div>
+        `;
+      });
+
+      // Render SVG Dependency Edges
+      let svgEdgesHtml = '';
+      TOPOLOGY_TASKS.forEach(t => {
+        const toCoord = taskCoords[t.id];
+        if (!toCoord) return;
+
+        (t.depends_on || []).forEach(fromId => {
+          const fromCoord = taskCoords[fromId];
+          if (!fromCoord) return;
+
+          const x1 = fromCoord.x + CARD_W;
+          const y1 = fromCoord.y + CARD_H / 2;
+          const x2 = toCoord.x;
+          const y2 = toCoord.y + CARD_H / 2;
+          const midX = (x1 + x2) / 2;
+          const pathD = `M ${x1} ${y1} C ${midX} ${y1}, ${midX} ${y2}, ${x2} ${y2}`;
+
+          const isEdgeActive = isSelectionActive && (
+            (t.id === selectedTopologyTaskId && preds.has(fromId)) ||
+            (fromId === selectedTopologyTaskId && succs.has(t.id)) ||
+            (preds.has(fromId) && preds.has(t.id)) ||
+            (succs.has(fromId) && succs.has(t.id))
+          );
+
+          const strokeColor = isEdgeActive 
+            ? (succs.has(t.id) ? '#38bdf8' : '#f59e0b') 
+            : (isSelectionActive ? 'rgba(255,255,255,0.08)' : 'rgba(245, 197, 24, 0.35)');
+          const strokeWidth = isEdgeActive ? 3 : 1.5;
+          const strokeDash = isEdgeActive ? 'none' : (t.is_gate ? '4,3' : 'none');
+
+          svgEdgesHtml += `
+            <path d="${pathD}" stroke="${strokeColor}" stroke-width="${strokeWidth}" fill="none" stroke-dasharray="${strokeDash}" />
+          `;
+        });
+      });
+
+      // Render Task Cards
+      let cardsHtml = '';
+      TOPOLOGY_TASKS.forEach(t => {
+        const coord = taskCoords[t.id];
+        if (!coord) return;
+
+        const isSelected = t.id === selectedTopologyTaskId;
+        const isPred = preds.has(t.id);
+        const isSucc = succs.has(t.id);
+        const isDimmed = isSelectionActive && !isSelected && !isPred && !isSucc;
+
+        let cardBorder = 'border: 1px solid var(--border-subtle);';
+        let cardBg = 'background: var(--bg-surface);';
+        let cardGlow = '';
+        let zIndex = 2;
+
+        if (isSelected) {
+          cardBorder = 'border: 2px solid var(--gold-bright);';
+          cardBg = 'background: rgba(245, 197, 24, 0.15);';
+          cardGlow = 'box-shadow: 0 0 16px rgba(245, 197, 24, 0.4);';
+          zIndex = 10;
+        } else if (isPred) {
+          cardBorder = 'border: 2px solid #f59e0b;';
+          cardBg = 'background: rgba(245, 158, 11, 0.12);';
+          cardGlow = 'box-shadow: 0 0 12px rgba(245, 158, 11, 0.3);';
+          zIndex = 9;
+        } else if (isSucc) {
+          cardBorder = 'border: 2px solid #38bdf8;';
+          cardBg = 'background: rgba(56, 189, 248, 0.12);';
+          cardGlow = 'box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);';
+          zIndex = 9;
+        } else if (isDimmed) {
+          cardBorder = 'border: 1px solid rgba(255,255,255,0.06);';
+          cardBg = 'background: rgba(15, 22, 36, 0.3); opacity: 0.35; filter: grayscale(0.8);';
+        }
+
+        const trackColor = TOPOLOGY_TRACKS.find(tr => tr.id === t.track)?.color || '#fff';
+        const gateBadge = t.is_gate ? `<span style="font-size: 0.62rem; color: #f59e0b; font-weight: 800;">🛡️ GATE</span>` : '';
+
+        cardsHtml += `
+          <div class="task-card-node" style="position: absolute; left: ${coord.x}px; top: ${coord.y}px; width: ${CARD_W}px; height: ${CARD_H}px; ${cardBg} ${cardBorder} ${cardGlow} border-left: 3px solid ${trackColor}; border-radius: 4px; padding: 6px 8px; cursor: pointer; z-index: ${zIndex}; transition: all 0.2s ease;" onclick="selectTopologyNode('${t.id}')">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+              <span style="font-family: monospace; font-size: 0.68rem; font-weight: 800; color: var(--gold-bright);">${t.id}</span>
+              ${gateBadge || `<span style="font-size: 0.62rem; color: ${t.status === 'DONE' ? 'var(--emerald-royal)' : 'var(--text-dim)'};">${t.status}</span>`}
+            </div>
+            <div style="font-size: 0.76rem; font-weight: 700; color: var(--text-main); line-height: 1.25; max-height: 2.5em; overflow: hidden;">${t.name}</div>
+            <div style="margin-top: 4px; font-size: 0.65rem; color: var(--text-dim); display: flex; justify-content: space-between;">
+              <span>${t.depends_on.length ? `Prereqs: ${t.depends_on.length}` : 'Start Node'}</span>
+              ${isSelected ? '<span style="color: var(--gold-bright); font-weight: 800;">ACTIVE</span>' : ''}
+              ${isPred ? '<span style="color: #f59e0b; font-weight: 800;">BLOCKER</span>' : ''}
+              ${isSucc ? '<span style="color: #38bdf8; font-weight: 800;">UNLOCKS</span>' : ''}
+            </div>
+          </div>
+        `;
+      });
+
+      // Canvas Instruction Bar
+      const instructionBar = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; background: rgba(15, 22, 36, 0.6); padding: 8px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); flex-wrap: wrap; gap: 8px;">
+          <div style="font-size: 0.78rem; color: var(--text-muted);">
+            💡 <strong>UG-Farmhouse Topology Engine:</strong> Click any card to highlight its complete upstream blockers (<span style="color: #f59e0b; font-weight: 700;">Amber Predecessors</span>) & downstream unlocks (<span style="color: #38bdf8; font-weight: 700;">Blue Successors</span>).
+          </div>
+          ${selectedTopologyTaskId ? `<button class="theme-toggle-btn" onclick="clearTopologySelection()" style="font-size: 0.72rem; padding: 4px 10px; background: var(--bg-surface-elevated);">✕ Reset Highlight</button>` : ''}
+        </div>
+      `;
+
+      // Full Assembly
+      container.innerHTML = `
+        ${instructionBar}
+        <div id="topology-scroll-viewport" style="overflow: auto; max-height: 620px; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); position: relative; background: #080b11;">
+          <div style="position: relative; width: ${totalWidth}px; height: ${totalHeight}px;">
+            ${headerHtml}
+            ${rowsHtml}
+            <svg style="position: absolute; top: 0; left: 0; width: ${totalWidth}px; height: ${totalHeight}px; pointer-events: none; z-index: 5;">
+              ${svgEdgesHtml}
+            </svg>
+            ${cardsHtml}
+          </div>
+        </div>
+      `;
+    }
+
 
     // View 1: ⏱️ Day-Of Live Multi-Track Run Sheet
     function renderDopkosRunSheet(container) {
@@ -2412,6 +2685,8 @@ window.dataLayer = window.dataLayer || [];
     window.filterDopkosEvent = filterDopkosEvent;
     window.filterDopkosTrack = filterDopkosTrack;
     window.selectDopkosThread = selectDopkosThread;
+    window.selectTopologyNode = selectTopologyNode;
+    window.clearTopologySelection = clearTopologySelection;
     window.renderDoPkosStudio = renderDoPkosStudio;
     window.filterSwimlaneTrack = filterSwimlaneTrack;
     window.filterSwimlane = filterSwimlaneTrack; // alias

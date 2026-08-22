@@ -432,8 +432,9 @@
 
             <!-- View Switcher Segmented Control -->
             <div style="display: flex; gap: 4px; background: var(--bg-surface-elevated); padding: 4px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); flex-wrap: wrap;">
-              <button id="btn-view-threads" class="theme-toggle-btn dopkos-view-btn" onclick="setDopkosView('THREADS')" style="font-size: 0.76rem; padding: 5px 12px; background: var(--gold-gradient); color: #080b11; font-weight: 700;">🧵 Pull-a-Thread (Today's Actions)</button>
-              <button id="btn-view-runsheet" class="theme-toggle-btn dopkos-view-btn active" onclick="setDopkosView('RUNSHEET')" style="font-size: 0.76rem; padding: 5px 12px;">⏱️ Day-Of Run Sheet</button>
+              <button id="btn-view-topology" class="theme-toggle-btn dopkos-view-btn" onclick="setDopkosView('TOPOLOGY')" style="font-size: 0.76rem; padding: 5px 12px; border: 1px solid var(--gold-bright); color: var(--gold-bright);">🕸️ UG Dependency Topology</button>
+              <button id="btn-view-threads" class="theme-toggle-btn dopkos-view-btn active" onclick="setDopkosView('THREADS')" style="font-size: 0.76rem; padding: 5px 12px; background: var(--gold-gradient); color: #080b11; font-weight: 700;">🧵 Pull-a-Thread (Today's Actions)</button>
+              <button id="btn-view-runsheet" class="theme-toggle-btn dopkos-view-btn" onclick="setDopkosView('RUNSHEET')" style="font-size: 0.76rem; padding: 5px 12px;">⏱️ Day-Of Run Sheet</button>
               <button id="btn-view-roadmap" class="theme-toggle-btn dopkos-view-btn" onclick="setDopkosView('ROADMAP')" style="font-size: 0.76rem; padding: 5px 12px;">📅 Macro Gantt</button>
               <button id="btn-view-matrix" class="theme-toggle-btn dopkos-view-btn" onclick="setDopkosView('MATRIX')" style="font-size: 0.76rem; padding: 5px 12px;">📊 2D Role Matrix</button>
               <button id="btn-view-critical" class="theme-toggle-btn dopkos-view-btn" onclick="setDopkosView('CRITICAL')" style="font-size: 0.76rem; padding: 5px 12px;">⚡ Critical Path</button>
