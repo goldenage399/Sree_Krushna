@@ -4,33 +4,45 @@ description: Universal pre-flight deployment checklist, UX resilience audit, and
 
 # Web Deployment Gate Workflow (`/web-deployment-gate`)
 
-> **Ecosystem Standard:** `SPEC-SAP-DEPLOY-GATE-001`  
+> **Ecosystem Standard:** `SPEC-SAP-DEPLOY-GATE-001` / `P-VERIFY-GATE-002`  
 > **Source-of-Truth Hub:** `Task-Dashboard` (`d:\GitHub_Repo\Task-Dashboard`)  
 > **Governing Pattern:** [Web Deployment Gate Pattern](file:///d:/GitHub_Repo/Sree_Krushna/.agent/patterns/web-deployment-gate.md)
 
 ---
 
-## Step 1 — Run the 9-Domain Pre-Flight Audit
+## Step 1 — Run the Automated 6-Layer Pre-Flight Gate
 
-Before running any deploy command, execute the audit routine in the project root:
+Before running any deploy command, execute the automated programmatic gate:
 
-```powershell
-# Execute the diagnostic check:
-$fb = Get-Content "firebase.json" -Raw
-$idx = Get-Content "index.html" -Raw
-
-Write-Host "1. 404 Check: " (Test-Path "public/404.html")
-Write-Host "2. Security Headers: " ($fb -match "X-Frame-Options" -and $fb -match "nosniff")
-Write-Host "3. Tab Persistence: " ($idx -match "sree_krushna_active_tab" -or $idx -match "active_tab")
-Write-Host "4. Skeleton Loader: " ($idx -match "authLoadingSkeleton" -or $idx -match "skeleton")
-Write-Host "5. Task ID Monotonic: " ($idx -match "Math\.max")
+```bash
+npm run verify:deployment
 ```
 
-If any check returns `False`, remediate the failure before proceeding.
+This enforces:
+1. **Layer 1:** Runtime AST parse (Classic script `new Function(code)` & ES Module syntax check).
+2. **Layer 2:** Call-graph contract (100% inline HTML event handlers bound to `window`).
+3. **Layer 3:** DOM ID reference integrity (100% `document.getElementById` queries exist in HTML).
+4. **Layer 4:** PWA Service Worker Shell cache assets exist on disk.
+5. **Layer 5:** Root and public distribution files are in exact byte sync.
+6. **Layer 6:** Security headers and branded `404.html` verified.
+
+If any check returns `FAIL`, deployment is blocked.
 
 ---
 
-## Step 2 — Verify Mobile 300px/320px Viewport Gate (`M-GATE-01`)
+## Step 2 — Run the Forensic AST Decomposition Audit (If Refactoring)
+
+If this session involved refactoring, decomposing, or moving code between files:
+
+```bash
+npm run audit:decomposition
+```
+
+Confirms zero dropped functions, CSS selectors, or state objects compared to pre-refactor git history.
+
+---
+
+## Step 3 — Verify Mobile 300px/320px Viewport Gate (`M-GATE-01`)
 
 Verify that the application layout satisfies Protocol 19:
 1. **Zero Horizontal Overflow:** Body element has `overflow-x: hidden` and all full-width cards fit inside a 300px canvas.
@@ -39,7 +51,7 @@ Verify that the application layout satisfies Protocol 19:
 
 ---
 
-## Step 3 — Service Worker Cache Version Bump
+## Step 4 — Service Worker Cache Version Bump
 
 If this deployment contains structural changes or bug fixes:
 1. Open `public/sw.js`.
@@ -50,26 +62,11 @@ If this deployment contains structural changes or bug fixes:
 
 ---
 
-## Step 4 — Canonical Asset Synchronization
-
-Sync the root development files into the public hosting distribution directory:
-
-```powershell
-Copy-Item index.html public/index.html -Force
-```
-
-Confirm that file size and hash match:
-```powershell
-(Get-Item index.html).Length -eq (Get-Item public/index.html).Length
-```
-
----
-
 ## Step 5 — Production Release Execution
 
 Deploy to Firebase Hosting:
 
-```powershell
+```bash
 firebase deploy --only hosting
 ```
 

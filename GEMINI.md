@@ -64,6 +64,7 @@ Before any task work, review:
 | UI Craft, Polish & Token Validation | `.claude/skills/impeccable/SKILL.md` & `.agent/skills/ui-design-validator/SKILL.md` |
 | Advanced UI/UX Design System | `.agent/skills/ui-ux-pro-max/SKILL.md` & `.agent/skills/frontend-design/SKILL.md` |
 | Post-Incident Governance & Analysis | `.agent/workflows/post-incident-governance.md` & `.agent/workflows/post-incident-analysis.md` |
+| SSOT Conflict & Drift Reconciliation | `.agent/workflows/ssot-reconciliation.md` & `.agent/skills/ssot-domain-mapper/SKILL.md` |
 | Site Architecture & Navigation | `.claude/skills/site-architecture/SKILL.md` |
 | Governance verification | `npm run verify:governance-wiring:all` |
 

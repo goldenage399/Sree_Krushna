@@ -572,10 +572,10 @@ workflows:
     when: "Auditing, filtering, and topologically sequencing pending tasks and tech debt into canonical inventory"
 
   - id: ssot-reconciliation
-    repo: [capsicum, pio, task-dashboard]
-    triggers: ["ssot conflict", "doc vs code mismatch", "resolve SSOT", "SSOT unclear"]
+    repo: [task-dashboard, sree-krushna, ug-farmhouse, capsicum, pio, qsr, dashboard, inventory_mgmt, supervisorcompliancemonitoring, unified_uploader]
+    triggers: ["ssot conflict", "doc vs code mismatch", "resolve SSOT", "SSOT unclear", "ssot-reconciliation", "/ssot-reconciliation", "ssot recon", "/ssot-recon"]
     cost: medium
-    invoke: workflow:ssot-reconciliation
+    invoke: read .agent/workflows/ssot-reconciliation.md
     when: "Investigating and resolving doc/code conflicts when SSOT is unclear"
 
   - id: ingest-recurring-checklist
