@@ -2822,7 +2822,9 @@ window.dataLayer = window.dataLayer || [];
     renderTasks();
     renderIdeas();
     renderIntakeLedger();
-    renderDoPkosStudio();
+    if (window.renderDoPkosStudio) {
+      window.renderDoPkosStudio();
+    }
     hydrateActiveTab();
 
     const GA4_ID = "G-XXXXXXXXXX";   // ← keep in sync with <head> config tag
@@ -2860,15 +2862,14 @@ window.dataLayer = window.dataLayer || [];
     window.setTaskStatus = setTaskStatus;
     window.addNewTask = addNewTask;
     window.selectStage = selectStage;
-    window.setDopkosView = setDopkosView;
-    window.filterDopkosEvent = filterDopkosEvent;
-    window.filterDopkosTrack = filterDopkosTrack;
-    window.selectDopkosThread = selectDopkosThread;
-    window.selectTopologyNode = selectTopologyNode;
-    window.clearTopologySelection = clearTopologySelection;
-    window.toggleTopologyStatus = toggleTopologyStatus;
-    window.renderDopkosTopology = renderDopkosTopology;
-    window.renderDoPkosStudio = renderDoPkosStudio;
+    if (typeof setDopkosView !== 'undefined') window.setDopkosView = setDopkosView;
+    if (typeof filterDopkosEvent !== 'undefined') window.filterDopkosEvent = filterDopkosEvent;
+    if (typeof filterDopkosTrack !== 'undefined') window.filterDopkosTrack = filterDopkosTrack;
+    if (typeof selectDopkosThread !== 'undefined') window.selectDopkosThread = selectDopkosThread;
+    if (typeof selectTopologyNode !== 'undefined') window.selectTopologyNode = selectTopologyNode;
+    if (typeof clearTopologySelection !== 'undefined') window.clearTopologySelection = clearTopologySelection;
+    if (typeof toggleTopologyStatus !== 'undefined') window.toggleTopologyStatus = toggleTopologyStatus;
+    if (typeof renderDopkosTopology !== 'undefined') window.renderDopkosTopology = renderDopkosTopology;
     window.filterSwimlaneTrack = filterSwimlaneTrack;
     window.filterSwimlane = filterSwimlaneTrack; // alias
     window.setSwimlaneSortMode = setSwimlaneSortMode;

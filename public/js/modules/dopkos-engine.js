@@ -11,7 +11,19 @@
   let currentDopkosTrack = 'ALL';
   let selectedTopologyTaskId = null;
   let consoleExpanded = false;
+  let stageStripCollapsed = false;
+  let zoomLevel = 1.0;
+  let tableZoomLevel = 1.0;
+  let panMode = false;
+  let spacePanActive = false;
+  let isDragging = false;
+  let hasDragged = false;
+  let startX = 0, startY = 0, scrollXStart = 0, scrollYStart = 0;
   let activeFilter = 'ALL';
+  let consoleSortCol = null;
+  let consoleSortDir = 'asc';
+  let activePanelTaskId = null;
+  let openDropdown = null;
 
   const PROJECT_STATE = {
   "project": {
@@ -1571,7 +1583,8 @@
     const status = getStatus(t.id);
     const card = document.createElement('div');
     card.className = 'task-card status-' + status;
-    card.dataset.id = t.id;
+    card.setAttribute('data-id', t.id);
+    if (card.dataset) card.dataset.id = t.id;
 
     const tr = displayTrade(t);
     const trColor = TRADE_META[tr]?.color || '#555';
@@ -1782,7 +1795,8 @@
       const row = document.createElement('div');
       row.className = 'console-task-row';
       row.style.cssText = 'display:flex;align-items:center;gap:10px;padding:6px 12px;border-bottom:1px solid var(--border-subtle);cursor:pointer;';
-      row.dataset.id = t.id;
+      row.setAttribute('data-id', t.id);
+      if (row.dataset) row.dataset.id = t.id;
 
       row.innerHTML = '<span style="background:' + color + '22;color:' + color + ';font-size:0.72rem;padding:2px 6px;border-radius:3px;font-weight:700;">' + (TRADE_META[tr]?.label || tr) + '</span>' +
         '<span style="font-family:monospace;font-weight:800;color:var(--gold-bright);font-size:0.78rem;min-width:60px;">' + t.id + '</span>' +
@@ -1802,7 +1816,6 @@
     render5ZoneTopology(document.getElementById('dopkos-canvas-container'));
   }
 
-  let tableZoomLevel = 1.0;
   function applyTableZoom(newZoom) {
     tableZoomLevel = Math.min(1.5, Math.max(0.7, Math.round(newZoom * 100) / 100));
     renderConsoleList();
@@ -2070,6 +2083,21 @@
       btn.classList.toggle('active', btn.textContent === filter);
     });
     renderConsoleList();
+  }
+
+  function updateScrollSpy() {
+    const scrollEl = document.getElementById('swimlane-scroll');
+    if (!scrollEl) return;
+    const curX = scrollEl.scrollLeft;
+    const col = Math.floor(Math.max(0, curX - LABEL_W) / COL_W);
+    const visibleTask = PROJECT_STATE.tasks.find(t => (colMap[t.id] || 0) >= col);
+    if (visibleTask && PROJECT_STATE.project) {
+      const stageObj = (PROJECT_STATE.stages || []).find(s => s.id === visibleTask.stage);
+      const stageEl = document.getElementById('z1-stage');
+      if (stageEl && stageObj) {
+        stageEl.textContent = 'STAGE ' + stageObj.id + ' OF ' + (PROJECT_STATE.stages ? PROJECT_STATE.stages.length : 6) + ' — ' + stageObj.name.toUpperCase();
+      }
+    }
   }
 
   function renderDopkosRunSheet(container) {
