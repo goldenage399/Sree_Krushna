@@ -1445,6 +1445,431 @@ window.dataLayer = window.dataLayer || [];
       renderIdeas();
     }
 
+    // ── DO_PKOS Operating Studio (Sandbox) Engine ───────────────────
+    let currentDopkosView = 'RUNSHEET'; // 'RUNSHEET' | 'ROADMAP' | 'MATRIX' | 'CRITICAL'
+    let currentDopkosEvent = 'ALL';
+    let currentDopkosTrack = 'ALL';
+
+    const DAY_OF_SCHEDULE = [
+      {
+        time: '03:30',
+        label: 'Mobilisation & Wakeup',
+        gate: null,
+        tracks: {
+          bride: { title: 'Wake-up, hydration & light nourishment', lead: 'PER-006 (Bride Mother)', status: 'Planned' },
+          groom: { title: 'Wake-up, grooming & hydration', lead: 'PER-008 (Groom Lead)', status: 'Planned' },
+          purohit: { title: 'Priest arrival & sacred fire-area inspection', lead: 'Chief Purohit', status: 'Planned' },
+          catering: { title: 'Kitchen mobilisation & priest meal packing', lead: 'Food Lead', status: 'Planned' },
+          media: { title: 'Camera batteries & media server sanity check', lead: 'Media Lead', status: 'Planned' },
+          fleet: { title: 'Early morning vehicle check & hotel shuttles', lead: 'Fleet Lead', status: 'Planned' }
+        }
+      },
+      {
+        time: '04:00',
+        label: 'Styling & Vault Opening',
+        gate: null,
+        tracks: {
+          bride: { title: 'Bridal MUA & hair styling begins', lead: 'MUA Team', status: 'Planned' },
+          groom: { title: 'Groom styling & traditional attire prep', lead: 'Groom Styling', status: 'Planned' },
+          purohit: { title: 'Samagri count & Kusha grass arrangement', lead: 'Priest Assistant', status: 'Planned' },
+          catering: { title: 'Breakfast buffet setup for early guests', lead: 'Catering Lead', status: 'Planned' },
+          media: { title: 'Macro detail shots of rings & invites', lead: 'Lead Photographer', status: 'Planned' },
+          fleet: { title: 'Jewellery vault opened under two-person custody', lead: 'Security Lead & Groom Father', status: 'Planned', critical: true }
+        }
+      },
+      {
+        time: '05:30',
+        label: 'Jewellery Fitting & Mandap Sanctum',
+        gate: null,
+        tracks: {
+          bride: { title: 'Bridal gold jewellery fitting & Baula Patani draping', lead: 'Bride Mother', status: 'Planned', critical: true },
+          groom: { title: 'Groom Dhoti & Mukuta placement prep', lead: 'Groom Uncle', status: 'Planned' },
+          purohit: { title: 'Mandap sacred purification with Ganga jal', lead: 'Chief Purohit', status: 'Planned' },
+          catering: { title: 'Guest breakfast service active', lead: 'Hospitality Lead', status: 'Planned' },
+          media: { title: 'First-look portrait setup & lighting lock', lead: 'Media Lead', status: 'Planned' },
+          fleet: { title: 'Driver manifests distributed for guest pickups', lead: 'Fleet Lead', status: 'Planned' }
+        }
+      },
+      {
+        time: '06:45',
+        label: 'Barat Assembly & Gate Readiness',
+        gate: 'GATE-02',
+        gateTitle: 'GATE-02: Barat Assembly & Narayana Reception',
+        tracks: {
+          bride: { title: 'Bride in private green room; final veil check', lead: 'Sree & Maid of Honor', status: 'Planned' },
+          groom: { title: 'Barat departure assembly with brass band', lead: 'Krushna & Barat Lead', status: 'Planned' },
+          purohit: { title: 'Aarti Thali, tender coconut & Varamala ready at arch', lead: 'Purohit & Bride Mother', status: 'Planned', critical: true },
+          catering: { title: 'Welcome drinks & fresh tender coconut station open', lead: 'Catering Lead', status: 'Planned' },
+          media: { title: 'Barat procession drone/gimbal live coverage', lead: 'Cinematographer', status: 'Planned' },
+          fleet: { title: 'Barat traffic escort & parking lanes locked', lead: 'Fleet Lead', status: 'Planned' }
+        }
+      },
+      {
+        time: '07:30',
+        label: 'Baranugam & Arch Entry',
+        gate: null,
+        tracks: {
+          bride: { title: 'Bride entry-ready on bridal pathway', lead: 'Bride Brother', status: 'Planned' },
+          groom: { title: 'Groom welcomed as Lord Narayana at mandap arch', lead: 'Bride Mother', status: 'Planned', critical: true },
+          purohit: { title: 'Vedic welcoming chants & Varamala exchange', lead: 'Chief Purohit', status: 'Planned' },
+          catering: { title: 'Morning snacks & spiced buttermilk distribution', lead: 'Food Lead', status: 'Planned' },
+          media: { title: 'Two-camera mandap recording initiated', lead: 'Media Lead', status: 'Planned' },
+          fleet: { title: 'Sacred zone security perimeter locked', lead: 'Security Lead', status: 'Planned' }
+        }
+      },
+      {
+        time: '08:00',
+        label: 'Astrological Lagna & Mandap Sanctum',
+        gate: 'GATE-03',
+        gateTitle: 'GATE-03: Kanyadaan, Hastaganthi & Saptapadi (08:00 Lagna Muhurat)',
+        tracks: {
+          bride: { title: 'Kanyadaan: Father pours consecrated water; Hastaganthi tied', lead: 'Kanyadata & Sree', status: 'Planned', critical: true },
+          groom: { title: 'Paternal vows affirmed; Hastaganthi sacred knot received', lead: 'Krushna & Parents', status: 'Planned', critical: true },
+          purohit: { title: 'Vedic Agni Homa, Lajahoma & Saptapadi seven vows', lead: 'Chief Purohit', status: 'Planned', critical: true },
+          catering: { title: 'Mandap sacred zone kept quiet; quiet service nearby', lead: 'Food Lead', status: 'Planned' },
+          media: { title: 'Lapel audio synced with macro ceremony recording', lead: 'Media Lead', status: 'Planned' },
+          fleet: { title: 'Fire safety marshal and backup generator on hot standby', lead: 'Fleet Lead', status: 'Planned' }
+        }
+      },
+      {
+        time: '08:45',
+        label: 'Coronation & Vermilion Rite',
+        gate: 'GATE-04',
+        gateTitle: 'GATE-04: Sindoor Daan & Mukuta Coronation',
+        tracks: {
+          bride: { title: 'Sindoor Daan on forehead parting; Mangalsutra Dharan', lead: 'Sree & Krushna', status: 'Planned', critical: true },
+          groom: { title: 'Cuttack silver filigree Mukuta crowned by maternal uncle', lead: 'Krushna & Uncle', status: 'Planned', critical: true },
+          purohit: { title: 'Final Shanti Patha & Mahaprasad blessing', lead: 'Chief Purohit', status: 'Planned' },
+          catering: { title: 'Grand traditional Odia wedding feast service begins', lead: 'Food Lead', status: 'Planned' },
+          media: { title: 'Elder blessing portraits & couple sanctum closeups', lead: 'Media Lead', status: 'Planned' },
+          fleet: { title: 'Precious jewellery & sacred samagri re-logged into safe', lead: 'Security Lead', status: 'Planned' }
+        }
+      },
+      {
+        time: '19:00',
+        label: 'Grand Royal Reception',
+        gate: null,
+        tracks: {
+          bride: { title: 'Bridal reception silk styling & stage entry', lead: 'Sree', status: 'Planned' },
+          groom: { title: 'Groom royal reception sherwani styling & stage walk', lead: 'Krushna', status: 'Planned' },
+          purohit: { title: 'Receiving line elder blessings', lead: 'Elders Council', status: 'Planned' },
+          catering: { title: '850+ capacity royal buffet opened in waves; live counters', lead: 'Catering Lead', status: 'Planned' },
+          media: { title: 'Photo lounge candids & guest stage portraits', lead: 'Media Lead', status: 'Planned' },
+          fleet: { title: 'VIP valet & guest departure transport active', lead: 'Fleet Lead', status: 'Planned' }
+        }
+      },
+      {
+        time: '23:00',
+        label: 'Reconciliation & Vault Closeout',
+        gate: null,
+        tracks: {
+          bride: { title: 'Personal luggage and attire transfer for Grihapravesh', lead: 'Bride Team', status: 'Planned' },
+          groom: { title: 'Groom departure preparation', lead: 'Groom Team', status: 'Planned' },
+          purohit: { title: 'Ritual trunk sealed for Day +1 rites', lead: 'Chief Purohit', status: 'Planned' },
+          catering: { title: 'Vendor meal service & kitchen cleanout signoff', lead: 'Food Lead', status: 'Planned' },
+          media: { title: '3-copy data backup verified with checksums', lead: 'Media Lead', status: 'Planned' },
+          fleet: { title: 'Gold jewellery, shagun cash & media sealed into vault', lead: 'Security Lead', status: 'Planned', critical: true }
+        }
+      }
+    ];
+
+    const MACRO_HORIZONS = [
+      {
+        id: 'H1',
+        name: 'T-180 to T-120: Foundation & Authority',
+        period: '11 Sep – 10 Nov 2026',
+        desc: 'Purohit appointment, venue leases, budget allocation, handloom trousseau weaving.',
+        tasks: ['GOV-001', 'GOV-002', 'GOV-003', 'VEN-001', 'VEN-002', 'VEN-003', 'SEC-001']
+      },
+      {
+        id: 'H2',
+        name: 'T-120 to T-60: Guest Architecture & Procurement',
+        period: '10 Nov 2026 – 9 Jan 2027',
+        desc: 'Rooming rules, photography SLAs, menu tasting, silver filigree Mukuta measurements.',
+        tasks: ['GFT-001', 'GFT-002', 'RIT-001', 'RIT-002', 'RIT-003', 'RIT-006', 'LOG-004']
+      },
+      {
+        id: 'H3',
+        name: 'T-60 to T-14: Operational Detailing & Trials',
+        period: '9 Jan – 25 Feb 2027',
+        desc: 'MUA trials, 125kVA generator load test, FSSAI catering hygiene audit, mithai batching.',
+        tasks: ['FOOD-001', 'FOOD-002', 'FOOD-003', 'FOOD-004', 'PWR-001', 'PWR-002', 'DEC-001', 'DEC-002', 'DEC-003']
+      },
+      {
+        id: 'H4',
+        name: 'T-14 to T-1: Rayagada Mobilisation',
+        period: '26 Jan – 10 Feb 2027',
+        desc: 'Deva Nimantrana, Rayagada stage installation, dry-runs, Mangan turmeric preparation.',
+        tasks: ['RIT-004', 'LOG-001', 'LOG-002', 'LOG-003', 'SEC-002', 'SEC-003', 'MED-001', 'MED-002', 'MED-003', 'MED-004']
+      },
+      {
+        id: 'H5',
+        name: 'Day 0A: Rayagada Nirbandha',
+        period: '11 February 2027',
+        desc: 'Patra Paribartana, paternal vow exchange, ring ceremony, traditional Rayagada feast.',
+        tasks: ['RIT-003', 'GATE-01', 'FOOD-001', 'SEC-001']
+      },
+      {
+        id: 'H6',
+        name: 'Day 0B: BBSR Wedding & Reception',
+        period: '10 March 2027',
+        desc: '08:00 Lagna Muhurat, Kanyadaan, Hastaganthi, Saptapadi, 850+ guest royal reception.',
+        tasks: ['RIT-005', 'GATE-02', 'GATE-03', 'GATE-04', 'FOOD-003', 'MED-006']
+      },
+      {
+        id: 'H7',
+        name: 'Day +1 to +30: Post-Wedding & Legal SUJOG',
+        period: '11 Mar – 10 Apr 2027',
+        desc: 'Grihapravesh, Chauthi night, Astamangala feast, SUJOG marriage registration, archive.',
+        tasks: ['LEG-001', 'LEG-002', 'CLS-001', 'CLS-002']
+      }
+    ];
+
+    function setDopkosView(viewName) {
+      currentDopkosView = viewName;
+      document.querySelectorAll('.dopkos-view-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.id === `btn-view-${viewName.toLowerCase()}`);
+      });
+      renderDoPkosStudio();
+    }
+
+    function filterDopkosEvent(evtId) {
+      currentDopkosEvent = evtId;
+      document.querySelectorAll('.dopkos-event-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-event') === evtId);
+      });
+      renderDoPkosStudio();
+    }
+
+    function filterDopkosTrack(trackId) {
+      currentDopkosTrack = trackId;
+      document.querySelectorAll('.dopkos-track-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-track') === trackId);
+      });
+      renderDoPkosStudio();
+    }
+
+    function renderDoPkosStudio() {
+      const container = document.getElementById('dopkos-canvas-container');
+      if (!container) return;
+
+      if (currentDopkosView === 'RUNSHEET') {
+        renderDopkosRunSheet(container);
+      } else if (currentDopkosView === 'ROADMAP') {
+        renderDopkosRoadmap(container);
+      } else if (currentDopkosView === 'MATRIX') {
+        renderDopkosMatrix(container);
+      } else if (currentDopkosView === 'CRITICAL') {
+        renderDopkosCritical(container);
+      }
+    }
+
+    // View 1: ⏱️ Day-Of Live Multi-Track Run Sheet
+    function renderDopkosRunSheet(container) {
+      let html = `
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+      `;
+
+      DAY_OF_SCHEDULE.forEach((slot) => {
+        // Render Gate Banner if slot is a gate
+        let gateBanner = '';
+        if (slot.gate) {
+          gateBanner = `
+            <div style="background: linear-gradient(90deg, rgba(245, 197, 24, 0.2), var(--bg-surface-elevated)); border-left: 4px solid var(--gold-bright); padding: 10px 16px; border-radius: var(--radius-sm); margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-family: var(--font-display); color: var(--gold-bright); font-weight: 700; font-size: 0.92rem;">🛡️ ${slot.gateTitle}</span>
+              <span class="status-badge" style="background: var(--gold-bright); color: #080b11; font-weight: 800; font-size: 0.72rem;">SYNCHRONIZATION GATE</span>
+            </div>
+          `;
+        }
+
+        // Render parallel track cards
+        const tracks = ['bride', 'groom', 'purohit', 'catering', 'media', 'fleet'];
+        let trackCardsHtml = '';
+
+        tracks.forEach(trackKey => {
+          if (currentDopkosTrack !== 'ALL' && currentDopkosTrack !== trackKey) return;
+          const item = slot.tracks[trackKey];
+          if (!item) return;
+
+          const trackIcons = { bride: '👰', groom: '🤵', purohit: '🕉️', catering: '🍲', media: '📸', fleet: '🛡️' };
+          const borderHighlight = item.critical ? 'border-color: var(--gold-bright); box-shadow: 0 0 10px rgba(245, 197, 24, 0.15);' : '';
+
+          trackCardsHtml += `
+            <div class="role-badge-card" style="margin: 0; padding: 10px 12px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; ${borderHighlight}" onclick="openTaskConsole('TSK-101')">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                  <span style="font-size: 0.72rem; font-weight: 700; color: var(--gold-bright); text-transform: uppercase;">${trackIcons[trackKey]} ${trackKey}</span>
+                  ${item.critical ? '<span class="status-badge status-urgent" style="font-size: 0.65rem; padding: 1px 6px;">Lagna Critical</span>' : ''}
+                </div>
+                <div style="font-size: 0.84rem; color: var(--text-main); font-weight: 600; line-height: 1.3;">${item.title}</div>
+              </div>
+              <div style="margin-top: 8px; font-size: 0.72rem; color: var(--text-dim); display: flex; justify-content: space-between;">
+                <span>👤 ${item.lead}</span>
+                <span style="color: var(--emerald-royal);">✓ ${item.status}</span>
+              </div>
+            </div>
+          `;
+        });
+
+        html += `
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px;">
+            ${gateBanner}
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; border-bottom: 1px dashed var(--border-subtle); padding-bottom: 6px;">
+              <span style="font-family: monospace; font-size: 1.05rem; font-weight: 800; color: var(--gold-bright); background: rgba(245, 197, 24, 0.1); padding: 2px 8px; border-radius: var(--radius-sm);">${slot.time} IST</span>
+              <strong style="color: var(--text-main); font-size: 0.9rem;">${slot.label}</strong>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px;">
+              ${trackCardsHtml}
+            </div>
+          </div>
+        `;
+      });
+
+      html += `</div>`;
+      container.innerHTML = html;
+    }
+
+    // View 2: 📅 Macro Planning Roadmap (Gantt Horizon)
+    function renderDopkosRoadmap(container) {
+      let html = `
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+      `;
+
+      MACRO_HORIZONS.forEach(horizon => {
+        html += `
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
+              <div>
+                <h4 style="font-family: var(--font-display); color: var(--gold-bright); margin: 0 0 4px; font-size: 1rem;">${horizon.name}</h4>
+                <p style="color: var(--text-muted); font-size: 0.82rem; margin: 0; line-height: 1.4;">${horizon.desc}</p>
+              </div>
+              <span class="status-badge" style="background: rgba(59, 130, 246, 0.15); color: var(--sapphire-royal); font-size: 0.74rem;">📅 ${horizon.period}</span>
+            </div>
+
+            <!-- Tasks Pills Row -->
+            <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px;">
+              ${horizon.tasks.map(t => `<span class="role-pill-tag" style="background: var(--bg-surface-elevated); font-family: monospace; font-size: 0.75rem; cursor: pointer;" onclick="openTaskConsole('${t}')">${t}</span>`).join('')}
+            </div>
+          </div>
+        `;
+      });
+
+      html += `</div>`;
+      container.innerHTML = html;
+    }
+
+    // View 3: 📊 2D Role Matrix (UG-Farmhouse DO_PKOS Standard)
+    function renderDopkosMatrix(container) {
+      let html = `
+        <div class="table-responsive-wrapper" style="overflow-x: auto;">
+          <table class="task-table" style="font-size: 0.8rem; border-collapse: collapse; width: 100%;">
+            <thead>
+              <tr>
+                <th style="min-width: 140px; position: sticky; left: 0; background: var(--bg-surface-elevated); z-index: 2;">Role Track</th>
+                <th>T-180..T-120</th>
+                <th>T-120..T-60</th>
+                <th>T-60..T-14</th>
+                <th>Rayagada (11 Feb)</th>
+                <th>BBSR Wedding (10 Mar)</th>
+                <th>Post-Event (SUJOG)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="position: sticky; left: 0; background: var(--bg-surface-elevated); font-weight: 700; color: var(--gold-bright);">👰 Bride Team</td>
+                <td>Handloom Baula Patani Saree</td>
+                <td>Bridal Footwear & MUA Trial</td>
+                <td>Green Room Logistics</td>
+                <td>Mangan Turmeric Bath</td>
+                <td>Kanyadaan & Hastaganthi</td>
+                <td>Grihapravesh Altas</td>
+              </tr>
+              <tr>
+                <td style="position: sticky; left: 0; background: var(--bg-surface-elevated); font-weight: 700; color: var(--gold-bright);">🤵 Groom Team</td>
+                <td>Groom Traditional Attire</td>
+                <td>Cuttack Mukuta Sizing</td>
+                <td>Barat Route Planning</td>
+                <td>Patra Paribartana Exchange</td>
+                <td>Baranugam & Saptapadi</td>
+                <td>Chauthi Night Homa</td>
+              </tr>
+              <tr>
+                <td style="position: sticky; left: 0; background: var(--bg-surface-elevated); font-weight: 700; color: var(--gold-bright);">🕉️ Purohit</td>
+                <td>Chief Purohit Appointment</td>
+                <td>Vidhi-Patra & Deva Nimantrana</td>
+                <td>Samagri Trunks Packing</td>
+                <td>Nirbandha Vows</td>
+                <td>08:00 Lagna Muhurat Homa</td>
+                <td>Astamangala Blessing</td>
+              </tr>
+              <tr>
+                <td style="position: sticky; left: 0; background: var(--bg-surface-elevated); font-weight: 700; color: var(--gold-bright);">🍲 Food & Catering</td>
+                <td>Authentic Odia Menu Tasting</td>
+                <td>Mithai Shelf-Life Booking</td>
+                <td>FSSAI Hygiene Audit</td>
+                <td>Traditional Rayagada Feast</td>
+                <td>850+ Capacity Royal Buffet</td>
+                <td>Astamangala Feast</td>
+              </tr>
+              <tr>
+                <td style="position: sticky; left: 0; background: var(--bg-surface-elevated); font-weight: 700; color: var(--gold-bright);">📸 Photo/Media</td>
+                <td>Pre-wedding Permits</td>
+                <td>4TB Backup Storage SLA</td>
+                <td>Mandap Sightlines Test</td>
+                <td>Family Portraits</td>
+                <td>Two-Camera Mandap Audio</td>
+                <td>Documentary Archive</td>
+              </tr>
+              <tr>
+                <td style="position: sticky; left: 0; background: var(--bg-surface-elevated); font-weight: 700; color: var(--gold-bright);">🛡️ Security/Fleet</td>
+                <td>Gold Insurance & Vault Lease</td>
+                <td>Hotel Blocks & Driver List</td>
+                <td>125kVA Generator Check</td>
+                <td>Ring Ceremony Security</td>
+                <td>Jewellery Dual-Custody</td>
+                <td>SUJOG Legal Closeout</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `;
+      container.innerHTML = html;
+    }
+
+    // View 4: ⚡ Critical Path & Lagna Protection Map
+    function renderDopkosCritical(container) {
+      let html = `
+        <div style="background: rgba(245, 197, 24, 0.05); border: 1px dashed var(--gold-antique); border-radius: var(--radius-md); padding: 16px; margin-bottom: 14px;">
+          <h4 style="font-family: var(--font-display); color: var(--gold-bright); margin: 0 0 6px;">⚡ Critical Path: Astrological Lagna & Gold Vault Protection</h4>
+          <p style="color: var(--text-muted); font-size: 0.82rem; margin: 0; line-height: 1.5;">
+            These items have strict zero-tolerance dependency timelines. Any delay on a predecessor blocks the irreversible sacred rites.
+          </p>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
+          <div class="role-badge-card" style="border: 2px solid var(--gold-bright); background: rgba(245, 197, 24, 0.08);">
+            <span class="status-badge status-urgent" style="font-size: 0.68rem; margin-bottom: 6px;">BLOCKER 1 &bull; Astrological Lagna</span>
+            <h5 style="color: var(--text-main); margin: 0 0 4px; font-size: 0.92rem;">Chief Purohit Lagna Lock (GOV-001)</h5>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0 0 8px;">Purohit's 08:00 IST Lagna timing strictly overrides all hospitality and entertainment schedules.</p>
+            <div style="font-size: 0.72rem; color: var(--gold-bright);">Prerequisite for: RIT-001, GFT-001, VEN-001</div>
+          </div>
+          <div class="role-badge-card" style="border: 2px solid var(--gold-bright); background: rgba(245, 197, 24, 0.08);">
+            <span class="status-badge status-urgent" style="font-size: 0.68rem; margin-bottom: 6px;">BLOCKER 2 &bull; Precious Vault</span>
+            <h5 style="color: var(--text-main); margin: 0 0 4px; font-size: 0.92rem;">Two-Person Jewellery Vault Protocol (SEC-001)</h5>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0 0 8px;">Vault opened strictly under dual family sign-off at 04:00 and sealed post-rite at 09:00.</p>
+            <div style="font-size: 0.72rem; color: var(--gold-bright);">Prerequisite for: Bridal Dressing, Mukuta Fitting</div>
+          </div>
+          <div class="role-badge-card" style="border: 2px solid var(--gold-bright); background: rgba(245, 197, 24, 0.08);">
+            <span class="status-badge status-urgent" style="font-size: 0.68rem; margin-bottom: 6px;">BLOCKER 3 &bull; Power Resilience</span>
+            <h5 style="color: var(--text-main); margin: 0 0 4px; font-size: 0.92rem;">Dedicated 125kVA Generator & Sound (PWR-001)</h5>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0 0 8px;">Independent power load prevents fire-homa blackout and guarantees Purohit lapel audio recording.</p>
+            <div style="font-size: 0.72rem; color: var(--gold-bright);">Prerequisite for: Mandap Lighting, Live Stream</div>
+          </div>
+        </div>
+      `;
+      container.innerHTML = html;
+    }
+
+
     // ── Global System Initialization ───────────────────────────────
     updateStageIndicator();
     renderStageStrip();
@@ -1452,6 +1877,7 @@ window.dataLayer = window.dataLayer || [];
     renderTasks();
     renderIdeas();
     renderIntakeLedger();
+    renderDoPkosStudio();
     hydrateActiveTab();
 
     const GA4_ID = "G-XXXXXXXXXX";   // ← keep in sync with <head> config tag
@@ -1487,6 +1913,10 @@ window.dataLayer = window.dataLayer || [];
     window.setTaskStatus = setTaskStatus;
     window.addNewTask = addNewTask;
     window.selectStage = selectStage;
+    window.setDopkosView = setDopkosView;
+    window.filterDopkosEvent = filterDopkosEvent;
+    window.filterDopkosTrack = filterDopkosTrack;
+    window.renderDoPkosStudio = renderDoPkosStudio;
     window.filterSwimlaneTrack = filterSwimlaneTrack;
     window.filterSwimlane = filterSwimlaneTrack; // alias
     window.onSwimlaneSearch = onSwimlaneSearch;
