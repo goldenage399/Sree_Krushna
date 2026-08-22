@@ -3,7 +3,7 @@
  * Strategy: Stale-While-Revalidate for UI shell; Network-First for Auth & Dynamic APIs.
  */
 
-const CACHE_NAME = 'sree-krushna-os-v2.8.0';
+const CACHE_NAME = 'sree-krushna-os-v3.0.0';
 const STATIC_SHELL = [
   '/',
   '/index.html',

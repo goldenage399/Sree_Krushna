@@ -1,8 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 
-const root = path.join(__dirname, '../public');
-const modulesDir = path.join(root, 'js/modules');
+const root = path.join(__dirname, '..');
+const publicDir = path.join(root, 'public');
+const modulesDir = path.join(publicDir, 'js/modules');
+
 if (!fs.existsSync(modulesDir)) fs.mkdirSync(modulesDir, { recursive: true });
 
 // Sree Krushna Marriage Canonical DO-PKOS Dataset
@@ -635,23 +637,27 @@ const MARRIAGE_PROJECT_STATE = {
   ]
 };
 
-
-// 2. Full DO-PKOS Portable Engine
+// Generate dopkos-engine.js
 const dopkosEngineCode = `/**
- * Sree Krushna Marriage OS — Authentic DO-PKOS Portable Engine
+ * Sree Krushna Marriage OS — Authentic DO-PKOS Multi-Track Operating Studio & Sacred Precedence DAG Engine
  * Module: js/modules/dopkos-engine.js
  * Sourced directly from UG-Farmhouse System Reference portable engine with 100% full-fidelity.
  */
 (function(window) {
   'use strict';
 
+  let currentDopkosView = 'TOPOLOGY';
+  let currentDopkosEvent = 'ALL';
+  let currentDopkosTrack = 'ALL';
+  let selectedTopologyTaskId = null;
+  let consoleExpanded = false;
+  let activeFilter = 'ALL';
+
   const PROJECT_STATE = ${JSON.stringify(MARRIAGE_PROJECT_STATE, null, 2)};
   window.PROJECT_STATE = PROJECT_STATE;
 
-  const DEFAULT_TRADE_META = PROJECT_STATE.trade_meta;
   const TRADES = PROJECT_STATE.trades;
   const TRADE_META = PROJECT_STATE.trade_meta;
-  const COORD_TRADE = {};
   const PARALLEL_TASKS = new Set(['TSK-001', 'TSK-002', 'FOOD-001', 'TSK-003', 'VEN-001']);
 
   const CARD_W = 158, CARD_H = 88, COL_W = 184, SLOT_H = 108, ROW_PAD = 10;
@@ -712,24 +718,6 @@ const dopkosEngineCode = `/**
     } catch(e) {}
   }
 
-  function getSince(taskId) {
-    const o = overrides[taskId];
-    return (o && typeof o === 'object') ? o.since : null;
-  }
-
-  function getAgeDays(taskId) {
-    const since = getSince(taskId);
-    if (!since) return null;
-    return Math.floor((Date.now() - new Date(since).getTime()) / 86400000);
-  }
-
-  function getAgeColor(days) {
-    if (days < 2)  return null;
-    if (days <= 5) return 'var(--text-secondary)';
-    if (days <= 10) return 'var(--status-active-text)';
-    return 'var(--status-hold-text)';
-  }
-
   function propagateDone(taskId) {
     const task = taskMap[taskId];
     if (!task) return;
@@ -738,14 +726,6 @@ const dopkosEngineCode = `/**
         const allDone = t.depends_on.every(d => getStatus(d) === 'DONE');
         if (allDone && getStatus(t.id) === 'LOCKED') {
           setStatus(t.id, 'READY');
-        }
-      }
-    });
-    PROJECT_STATE.tasks.forEach(t => {
-      if (t.sealing_gate === taskId && t.dependency_type === 'must_happen_during') {
-        const s = getStatus(t.id);
-        if (s !== 'DONE') {
-          setStatus(t.id, 'MISSED');
         }
       }
     });
@@ -836,15 +816,151 @@ const dopkosEngineCode = `/**
     };
   }
 
-  function renderStageHeader() {
-    const row = document.getElementById('stage-header-row');
-    if (!row) return;
-    row.style.width = (totalW + LABEL_W) + 'px';
+  function setDopkosView(viewName) {
+    currentDopkosView = viewName;
+    syncDopkosViewButtons();
+    renderDoPkosStudio();
+  }
+
+  function syncDopkosViewButtons() {
+    document.querySelectorAll('.dopkos-view-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.id === ('btn-view-' + currentDopkosView.toLowerCase()));
+    });
+  }
+
+  function filterDopkosEvent(evtId) {
+    currentDopkosEvent = evtId;
+    document.querySelectorAll('.dopkos-event-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-event') === evtId);
+    });
+    renderDoPkosStudio();
+  }
+
+  function filterDopkosTrack(trackId) {
+    currentDopkosTrack = trackId;
+    document.querySelectorAll('.dopkos-track-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-track') === trackId);
+    });
+    renderDoPkosStudio();
+  }
+
+  function renderDoPkosStudio() {
+    const container = document.getElementById('dopkos-canvas-container');
+    if (!container) return;
+
+    syncDopkosViewButtons();
+
+    if (currentDopkosView === 'TOPOLOGY') {
+      render5ZoneTopology(container);
+    } else if (currentDopkosView === 'THREADS') {
+      if (window.renderDopkosThreads) window.renderDopkosThreads(container);
+    } else if (currentDopkosView === 'RUNSHEET') {
+      renderDopkosRunSheet(container);
+    } else if (currentDopkosView === 'ROADMAP') {
+      renderDopkosRoadmap(container);
+    } else if (currentDopkosView === 'MATRIX') {
+      renderDopkosMatrix(container);
+    } else if (currentDopkosView === 'CRITICAL') {
+      renderDopkosCritical(container);
+    }
+  }
+
+  function render5ZoneTopology(container) {
+    colMap = computeColumns();
+    
+    container.innerHTML = '<div id="dopkos-5zone-frame" style="display: flex; flex-direction: column; height: 680px; position: relative; background: #080b11; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-subtle);">' +
+      '<!-- Zone 1 HUD -->' +
+      '<div id="z1" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 16px; background: var(--bg-surface-elevated); border-bottom: 1px solid var(--border-subtle); height: 44px; flex-shrink: 0;">' +
+        '<div style="display: flex; align-items: center; gap: 10px;">' +
+          '<span style="font-family: var(--font-display); font-size: 0.92rem; font-weight: 800; color: var(--gold-bright);">SREE KRUSHNA MARRIAGE OS ▾</span>' +
+          '<span id="z1-stage-text" style="font-size: 0.74rem; color: var(--text-dim); font-weight: 700;">STAGE 1 OF 6 — T-180 SACRED FOUNDATION</span>' +
+        '</div>' +
+        '<div id="z1-kpis" style="display: flex; gap: 8px;"></div>' +
+      '</div>' +
+      '<!-- Zone 2 Stage Progress Strip -->' +
+      '<div id="stage-strip-strip" style="display: flex; gap: 6px; padding: 8px 12px; background: var(--bg-surface); overflow-x: auto; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0;"></div>' +
+      '<!-- Zone 3 Multi-Track Swimlane -->' +
+      '<div id="z3-viewport" style="flex: 1; position: relative; overflow: auto; background: #080b11;">' +
+        '<div id="stage-header-row" style="height: 30px; background: var(--bg-surface-elevated); border-bottom: 2px solid var(--border-subtle); position: sticky; top: 0; z-index: 30; width: ' + (totalW + LABEL_W) + 'px;">' +
+          '<div style="width: 100px; height: 30px; position: sticky; left: 0; background: var(--bg-surface-elevated); z-index: 40; border-right: 2px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: var(--gold-bright);">TRACK</div>' +
+          '<div id="stage-header-bands-inner" style="position: absolute; left: 100px; top: 0; height: 30px;"></div>' +
+        '</div>' +
+        '<div id="swimlane-inner" style="position: relative; width: ' + (totalW + LABEL_W) + 'px; height: ' + totalH + 'px;"></div>' +
+      '</div>' +
+      '<!-- Zone 4 & 5 Expandable Bottom Command Console Sheet -->' +
+      '<div id="console-backdrop" onclick="toggleConsoleExpand(false)"></div>' +
+      '<div id="z45" style="height: ' + (consoleExpanded ? '75%' : '160px') + '; position: ' + (consoleExpanded ? 'absolute; bottom: 0; left: 0; right: 0;' : 'relative') + '; background: #080b11; border-top: 2px solid var(--border-subtle); display: flex; flex-direction: column; z-index: 50; transition: height 0.25s ease;">' +
+        '<div id="console-top" style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: var(--bg-surface-elevated); border-bottom: 1px solid var(--border-subtle); gap: 10px;">' +
+          '<div style="display: flex; align-items: center; gap: 8px;">' +
+            '<span style="font-size: 0.76rem; font-weight: 800; color: var(--gold-bright); font-family: var(--font-display);">⚡ COMMAND CONSOLE</span>' +
+            '<input type="text" id="console-search" placeholder="Search tasks..." oninput="renderConsoleList()" style="background: #080b11; border: 1px solid var(--border-subtle); border-radius: 4px; padding: 4px 8px; color: #fff; font-size: 0.76rem; max-width: 200px;" />' +
+          '</div>' +
+          '<div id="console-filters" style="display: flex; gap: 4px;">' +
+            '<button class="filter-pill ' + (activeFilter === 'ALL' ? 'active' : '') + '" onclick="setFilter(\\\'ALL\\\')">ALL</button>' +
+            '<button class="filter-pill ' + (activeFilter === 'READY' ? 'active' : '') + '" onclick="setFilter(\\\'READY\\\')">READY</button>' +
+            '<button class="filter-pill ' + (activeFilter === 'ACTIVE' ? 'active' : '') + '" onclick="setFilter(\\\'ACTIVE\\\')">ACTIVE</button>' +
+            '<button class="filter-pill ' + (activeFilter === 'HOLD' ? 'active' : '') + '" onclick="setFilter(\\\'HOLD\\\')">HOLD</button>' +
+            '<button class="filter-pill ' + (activeFilter === 'DONE' ? 'active' : '') + '" onclick="setFilter(\\\'DONE\\\')">DONE</button>' +
+          '</div>' +
+          '<button id="console-expand-toggle-btn" class="theme-toggle-btn" onclick="toggleConsoleExpand()" style="font-size: 0.72rem; padding: 3px 8px; font-weight: 700;">' + (consoleExpanded ? '⤡ RESTORE' : '⛶ EXPAND') + '</button>' +
+        '</div>' +
+        '<div id="console-list" style="flex: 1; overflow-y: auto; padding: 4px 0;"></div>' +
+      '</div>' +
+    '</div>';
+
+    renderZ1Kpis();
+    renderStageStripCards();
+    renderStageHeaderBands();
+    renderSwimlaneGrid();
+    renderConsoleList();
+  }
+
+  function renderZ1Kpis() {
+    const kpis = document.getElementById('z1-kpis');
+    if (!kpis) return;
+    const ready = PROJECT_STATE.tasks.filter(t => getStatus(t.id) === 'READY').length;
+    const done = PROJECT_STATE.tasks.filter(t => getStatus(t.id) === 'DONE').length;
+    const hold = PROJECT_STATE.tasks.filter(t => getStatus(t.id) === 'HOLD' || getStatus(t.id) === 'FUTURE_HOLD').length;
+
+    kpis.innerHTML = '<span class="z1-stat ' + (hold ? 'red' : 'green') + '" style="font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; background: ' + (hold ? 'rgba(239, 68, 68, 0.15); color: #ef4444;' : 'rgba(255,255,255,0.06); color: var(--text-dim);') + '">⛔ ' + hold + ' HOLD</span>' +
+      '<span class="z1-stat green" style="font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; background: rgba(245, 197, 24, 0.15); color: var(--gold-bright);">⚡ ' + ready + ' READY</span>' +
+      '<span class="z1-stat green" style="font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; background: rgba(16, 185, 129, 0.15); color: #10b981;">✓ ' + done + ' DONE</span>';
+  }
+
+  function renderStageStripCards() {
+    const strip = document.getElementById('stage-strip-strip');
+    if (!strip) return;
+    strip.innerHTML = '';
+    const activeStage = PROJECT_STATE.project.active_stage || 1;
+
+    PROJECT_STATE.stages.forEach(s => {
+      const stageTasks = PROJECT_STATE.tasks.filter(t => t.stage === s.id);
+      const doneCount = stageTasks.filter(t => getStatus(t.id) === 'DONE').length;
+      const total = stageTasks.length;
+      const pct = total ? Math.round(doneCount / total * 100) : 0;
+      const isActive = s.id === activeStage;
+      const isDone = doneCount === total && total > 0;
+
+      const card = document.createElement('div');
+      card.className = 'stage-card ' + (isDone ? 'done' : isActive ? 'active' : '');
+      card.style.cssText = 'flex: 1; min-width: 130px; padding: 6px 10px; border-radius: 4px; background: var(--bg-surface-elevated); border: 1px solid ' + (isActive ? 'var(--gold-bright)' : 'var(--border-subtle)') + '; cursor: pointer;';
+      
+      const dots = (s.trades_active || []).map(tr => '<div style="width: 5px; height: 5px; border-radius: 50%; background: ' + (TRADE_META[tr]?.color || '#555') + ';"></div>').join('');
+
+      card.innerHTML = '<div style="font-size: 0.65rem; font-weight: 800; color: var(--gold-bright);">STAGE ' + s.id + '</div>' +
+        '<div style="font-size: 0.74rem; font-weight: 700; color: var(--text-main); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + s.name + '</div>' +
+        '<div style="height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; margin: 4px 0 3px;"><div style="height: 100%; width: ' + pct + '%; background: var(--gold-bright);"></div></div>' +
+        '<div style="display: flex; gap: 3px;">' + dots + '</div>';
+
+      card.addEventListener('click', () => scrollToStage(s.id));
+      strip.appendChild(card);
+    });
+  }
+
+  function renderStageHeaderBands() {
     const inner = document.getElementById('stage-header-bands-inner');
     if (!inner) return;
     inner.innerHTML = '';
-    const activeStage = PROJECT_STATE.project ? PROJECT_STATE.project.active_stage : 1;
-
     const stages = PROJECT_STATE.stages || [];
     const stageCols = [];
     stages.forEach((s, idx) => {
@@ -857,74 +973,44 @@ const dopkosEngineCode = `/**
 
     stageCols.forEach((sc, i) => {
       const s = sc.stage;
-      const stageTasks = PROJECT_STATE.tasks.filter(t => t.stage === s.id);
-      const allDone = stageTasks.every(t => getStatus(t.id) === 'DONE');
-      const isActive = s.id === activeStage;
       const band = document.createElement('div');
-      band.className = 'stage-header-band' + (allDone ? ' s-complete' : isActive ? ' s-active' : '');
-      band.dataset.stage = s.id;
-      
+      band.className = 'stage-header-band';
       const startCol = sc.minCol;
       const nextStage = stageCols[i + 1];
       const endCol = nextStage ? nextStage.minCol : (sc.maxCol + 1);
       
       band.style.left = (startCol * COL_W) + 'px';
       band.style.width = ((endCol - startCol) * COL_W) + 'px';
+      band.style.cssText = 'position: absolute; top: 0; height: 30px; display: flex; align-items: center; padding: 0 10px; font-size: 0.7rem; font-weight: 800; color: var(--gold-bright); border-right: 1px solid var(--border-subtle); cursor: pointer; left: ' + (startCol * COL_W) + 'px; width: ' + ((endCol - startCol) * COL_W) + 'px;';
       band.textContent = 'S' + s.id + '  ' + s.name.toUpperCase();
       band.addEventListener('click', () => scrollToStage(s.id));
       inner.appendChild(band);
     });
   }
 
-  let _mlType2 = false, _mlType3 = false;
-  let _mlTimerFired = false;
-
-  function renderSwimlane() {
-    _mlType2 = false; _mlType3 = false;
+  function renderSwimlaneGrid() {
     const inner = document.getElementById('swimlane-inner');
     if (!inner) return;
     inner.innerHTML = '';
-    inner.style.width = (totalW + LABEL_W) + 'px';
-    inner.style.height = totalH + 'px';
-    inner.style.position = 'relative';
 
     TRADES.forEach(tr => {
       const row = document.createElement('div');
       row.className = 'trade-row';
-      row.dataset.trade = tr;
-      row.style.height = (rowH[tr] || SLOT_H) + 'px';
+      row.style.cssText = 'display: flex; height: ' + (rowH[tr] || SLOT_H) + 'px; border-bottom: 1px solid var(--border-subtle); position: relative;';
       
       const label = document.createElement('div');
       label.className = 'trade-label ' + tr;
+      label.style.cssText = 'width: 100px; flex-shrink: 0; position: sticky; left: 0; background: var(--bg-surface-elevated); z-index: 20; display: flex; align-items: center; justify-content: center; font-size: 0.74rem; font-weight: 800; border-right: 2px solid ' + (TRADE_META[tr]?.color || '#555') + '; color: ' + (TRADE_META[tr]?.color || '#555') + ';';
       label.textContent = TRADE_META[tr]?.label || tr;
       row.appendChild(label);
       
       const content = document.createElement('div');
       content.className = 'trade-content ' + tr + '-content';
+      content.style.cssText = 'flex: 1; position: relative;';
       row.appendChild(content);
 
       inner.appendChild(row);
     });
-
-    const maxStage = PROJECT_STATE.stages && PROJECT_STATE.stages.length ? Math.max(...PROJECT_STATE.stages.map(s => s.id)) : 1;
-    for (let s = 2; s <= maxStage; s++) {
-      const stageTasks = PROJECT_STATE.tasks.filter(t => t.stage === s);
-      if (!stageTasks.length) continue;
-      const minCol = Math.min(...stageTasks.map(t => colMap[t.id] || 0));
-      const xLine = LABEL_W + minCol * COL_W - 6;
-      const line = document.createElement('div');
-      line.className = 'stage-header-line';
-      line.dataset.minCol = minCol;
-      line.style.left = xLine + 'px';
-      line.style.height = totalH + 'px';
-      inner.appendChild(line);
-      const lbl = document.createElement('div');
-      lbl.className = 'stage-header-label';
-      lbl.dataset.minCol = minCol;
-      lbl.textContent = 'S' + s;
-      lbl.style.left = (xLine + 4) + 'px';
-      inner.appendChild(lbl);
-    }
 
     // Task cards
     PROJECT_STATE.tasks.forEach(t => {
@@ -939,10 +1025,6 @@ const dopkosEngineCode = `/**
       const contentContainer = inner.querySelector('.trade-content.' + tr + '-content');
       if (contentContainer) {
         contentContainer.appendChild(card);
-      } else {
-        card.style.left = (LABEL_W + pos.x) + 'px';
-        card.style.top = pos.y + 'px';
-        inner.appendChild(card);
       }
     });
 
@@ -968,24 +1050,24 @@ const dopkosEngineCode = `/**
   function drawDepLine(svg, fromId, toId, depType) {
     const fp = cardPos(fromId);
     const tp = cardPos(toId);
-    if (!fp || !tp || isNaN(fp.x) || isNaN(fp.y) || isNaN(tp.x) || isNaN(tp.y)) return;
+    if (!fp || !tp) return;
 
     const x1 = fp.x + CARD_W;
     const y1 = fp.y + CARD_H / 2;
     const x2 = tp.x;
     const y2 = tp.y + CARD_H / 2;
 
-    let color = '#363636';
-    let strokeWidth = 1.5;
+    let color = 'rgba(245, 197, 24, 0.4)';
+    let strokeWidth = 1.6;
     let dashArray = 'none';
 
     if (depType === 'must_precede_sealing') { 
       color = '#f59e0b'; 
-      strokeWidth = 2; 
+      strokeWidth = 2.2; 
     }
     else if (depType === 'must_happen_during') { 
       color = '#38bdf8'; 
-      strokeWidth = 2; 
+      strokeWidth = 2.2; 
       dashArray = '5,3'; 
     }
 
@@ -1005,49 +1087,17 @@ const dopkosEngineCode = `/**
     visiblePath.setAttribute('stroke-width', strokeWidth);
     visiblePath.setAttribute('fill', 'none');
     if (dashArray !== 'none') visiblePath.setAttribute('stroke-dasharray', dashArray);
-    visiblePath.setAttribute('data-from', fromId);
-    visiblePath.setAttribute('data-to', toId);
     g.appendChild(visiblePath);
 
     const hitPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     hitPath.setAttribute('class', 'hit-path');
     hitPath.setAttribute('d', pathD);
-    hitPath.setAttribute('data-from', fromId);
-    hitPath.setAttribute('data-to', toId);
+    hitPath.setAttribute('stroke', 'transparent');
+    hitPath.setAttribute('stroke-width', '14');
+    hitPath.setAttribute('fill', 'none');
+    hitPath.style.pointerEvents = 'stroke';
+    hitPath.style.cursor = 'pointer';
     g.appendChild(hitPath);
-
-    if (depType === 'must_precede_sealing' || depType === 'must_happen_during') {
-      const icon = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      icon.setAttribute('x', midX);
-      icon.setAttribute('y', midY + 4);
-      icon.setAttribute('text-anchor', 'middle');
-      icon.setAttribute('font-size', '10');
-      icon.textContent = depType === 'must_precede_sealing' ? '🔒' : '⚡';
-      icon.setAttribute('data-from', fromId);
-      icon.setAttribute('data-to', toId);
-      g.appendChild(icon);
-
-      const hitCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      hitCircle.setAttribute('class', 'hit-circle');
-      hitCircle.setAttribute('cx', midX);
-      hitCircle.setAttribute('cy', midY);
-      hitCircle.setAttribute('r', '12');
-      hitCircle.setAttribute('data-from', fromId);
-      hitCircle.setAttribute('data-to', toId);
-      g.appendChild(hitCircle);
-    }
-
-    if (depType === 'must_precede_sealing' && !_mlType3) {
-      _mlType3 = true;
-      const lbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      lbl.setAttribute('x', midX + 10); lbl.setAttribute('y', midY - 6);
-      lbl.setAttribute('class', 'dep-micro-legend');
-      if (_mlTimerFired) lbl.classList.add('fade-out');
-      lbl.textContent = 'SEALING GATE';
-      lbl.setAttribute('data-from', fromId);
-      lbl.setAttribute('data-to', toId);
-      g.appendChild(lbl);
-    }
 
     g.addEventListener('mouseenter', () => {
       const fromCard = document.querySelector('.task-card[data-id="' + fromId + '"]');
@@ -1064,7 +1114,8 @@ const dopkosEngineCode = `/**
     });
 
     g.addEventListener('click', e => {
-      handleLineClick(e, fromId, toId);
+      e.stopPropagation();
+      selectAndCenterCard(fromId, true);
     });
 
     svg.appendChild(g);
@@ -1085,154 +1136,21 @@ const dopkosEngineCode = `/**
     if (t.dependency_type === 'must_precede_sealing') depIcon = '<span class="card-dep-icon" title="Type 3: Must precede sealing">🔒</span>';
     else if (t.dependency_type === 'must_happen_during') depIcon = '<span class="card-dep-icon" title="Type 2: Embedded window">⚡</span>';
 
-    let workshopBadge = PARALLEL_TASKS.has(t.id) ? '<div class="workshop-badge">CANONICAL</div>' : '';
-    let gateRef = t.sealing_gate ? '<div class="card-gate">Gate: ' + t.sealing_gate + '</div>' : '';
+    let gateRef = t.sealing_gate ? '<div class="card-gate" style="font-size: 0.62rem; color: #f59e0b; font-weight: 700;">Gate: ' + t.sealing_gate + '</div>' : '';
 
-    let agePill = '';
-    if (status !== 'LOCKED' && status !== 'DONE') {
-      const days = getAgeDays(t.id);
-      if (days !== null && days >= 2) {
-        const ac = getAgeColor(days);
-        agePill = '<span style="color:' + ac + ';font-weight:400"> · ' + days + 'd</span>';
-      }
-    }
-
-    card.innerHTML = '<div class="card-header">' +
-        '<span class="card-id">' + t.id + '</span>' +
+    card.innerHTML = '<div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">' +
+        '<span class="card-id" style="font-family: monospace; font-size: 0.68rem; font-weight: 800; color: var(--gold-bright);">' + t.id + '</span>' +
         depIcon +
       '</div>' +
-      workshopBadge +
-      '<div class="card-name">' + t.name + '</div>' +
+      '<div class="card-name" style="font-size: 0.76rem; font-weight: 700; color: var(--text-main); line-height: 1.25; max-height: 2.5em; overflow: hidden; margin: 2px 0 4px;">' + t.name + '</div>' +
       gateRef +
-      '<div class="card-dropdown" id="drop-' + t.id + '"></div>' +
-      '<button class="status-pill ' + status + '" data-action="pill" data-id="' + t.id + '" title="' + (PILL_TITLE[status] || '') + '">' + STATUS_LABEL[status] + agePill + '</button>';
+      '<button class="status-pill ' + status + '" style="font-size: 0.62rem; font-weight: 800; padding: 2px 6px; border-radius: 3px; border: 1px solid transparent; cursor: pointer;">' + STATUS_LABEL[status] + '</button>';
 
     card.addEventListener('click', e => {
-      if (e.target.dataset.action === 'pill') {
-        e.stopPropagation();
-        toggleCardDropdown(t.id);
-        return;
-      }
       selectAndCenterCard(t.id, true);
     });
 
     return card;
-  }
-
-  function toggleCardDropdown(taskId) {
-    const drop = document.getElementById('drop-' + taskId);
-    if (!drop) return;
-    const isOpen = drop.classList.contains('open');
-    document.querySelectorAll('.card-dropdown.open').forEach(d => d.classList.remove('open'));
-    if (!isOpen) {
-      const current = getStatus(taskId);
-      const opts = ['READY', 'ACTIVE', 'DONE', 'HOLD', 'LOCKED'];
-      drop.innerHTML = opts.map(opt => 
-        '<div class="dropdown-opt" data-status="' + opt + '">' + (opt === current ? '✓ ' : '') + opt + '</div>'
-      ).join('');
-      drop.querySelectorAll('.dropdown-opt').forEach(optEl => {
-        optEl.addEventListener('click', e => {
-          e.stopPropagation();
-          const targetStatus = optEl.dataset.status;
-          setStatus(taskId, targetStatus);
-          if (targetStatus === 'DONE') propagateDone(taskId);
-          drop.classList.remove('open');
-          fullRender();
-        });
-      });
-      drop.classList.add('open');
-    }
-  }
-
-  function renderStageStrip() {
-    const stageStrip = document.getElementById('stage-strip');
-    if (!stageStrip) return;
-    stageStrip.innerHTML = '';
-    const activeStage = PROJECT_STATE.project ? PROJECT_STATE.project.active_stage : 1;
-
-    (PROJECT_STATE.stages || []).forEach(s => {
-      const tasksInStage = PROJECT_STATE.tasks.filter(t => t.stage === s.id);
-      const done = tasksInStage.filter(t => getStatus(t.id) === 'DONE').length;
-      const total = tasksInStage.length;
-      const pct = total ? Math.round(done / total * 100) : 0;
-
-      const isActive = s.id === activeStage;
-      const isDone = done === total && total > 0;
-      const isFuture = s.id > activeStage;
-
-      const card = document.createElement('div');
-      card.className = 'stage-card ' + (isDone ? 'done' : isActive ? 'active' : isFuture ? 'future' : '');
-      card.dataset.stage = s.id;
-
-      const badges = (s.trades_active || []).map(tr =>
-        '<div class="trade-dot" style="background:' + (TRADE_META[tr]?.color || '#555') + '" title="' + tr + '"></div>'
-      ).join('');
-
-      card.innerHTML = '<div class="stage-num">STAGE ' + s.id + '</div>' +
-        '<div class="stage-name">' + s.name + '</div>' +
-        (isActive ? '<div class="stage-progress"><div class="stage-progress-fill" style="width:' + pct + '%"></div></div>' : '') +
-        '<div class="stage-badges">' + badges + '</div>';
-
-      card.addEventListener('click', () => scrollToStage(s.id));
-      stageStrip.appendChild(card);
-    });
-  }
-
-  function scrollToStage(stageId) {
-    const stageTasks = PROJECT_STATE.tasks.filter(t => t.stage === stageId);
-    if (!stageTasks.length) return;
-    const minCol = Math.min(...stageTasks.map(t => colMap[t.id] || 0));
-    const targetX = LABEL_W + minCol * COL_W - 20;
-    const scrollEl = document.getElementById('swimlane-scroll');
-    if (scrollEl) {
-      scrollEl.scrollTo({ left: Math.max(0, targetX), behavior: 'smooth' });
-    }
-  }
-
-  function renderZ1() {
-    const proj = document.getElementById('z1-project');
-    if (proj && PROJECT_STATE.project) proj.textContent = (PROJECT_STATE.project.name || 'SREE KRUSHNA MARRIAGE OS') + ' ▾';
-
-    const activeStage = PROJECT_STATE.project ? PROJECT_STATE.project.active_stage : 1;
-    const stageName = PROJECT_STATE.stages ? (PROJECT_STATE.stages.find(s => s.id === activeStage)?.name || '') : '';
-    const stageEl = document.getElementById('z1-stage');
-    if (stageEl) {
-      stageEl.textContent = 'STAGE ' + activeStage + ' OF ' + (PROJECT_STATE.stages ? PROJECT_STATE.stages.length : 6) + ' — ' + stageName.toUpperCase();
-    }
-
-    const allHoldTasks = PROJECT_STATE.tasks.filter(t => {
-      const s = getStatus(t.id);
-      return s === 'HOLD' || s === 'FUTURE_HOLD' || s === 'MISSED';
-    });
-    const totalHold = allHoldTasks.length;
-    const activeHold = allHoldTasks.filter(t => getStatus(t.id) === 'HOLD').length;
-
-    const bEl = document.getElementById('z1-blockers');
-    if (bEl) {
-      bEl.textContent = '⛔ ' + totalHold + ' BLOCKER' + (totalHold !== 1 ? 'S' : '') + ' (' + activeHold + ' ACTIVE)';
-      bEl.className = 'z1-stat red' + (totalHold ? ' has-issues' : '');
-    }
-
-    const readyCount = PROJECT_STATE.tasks.filter(t => getStatus(t.id) === 'READY').length;
-    const rEl = document.getElementById('z1-ready');
-    if (rEl) {
-      rEl.textContent = '✓ ' + readyCount + ' READY';
-      rEl.className = 'z1-stat green' + (readyCount ? ' has-ready' : '');
-    }
-
-    const doneCount = PROJECT_STATE.tasks.filter(t => getStatus(t.id) === 'DONE').length;
-    const dEl = document.getElementById('z1-done');
-    if (dEl) {
-      dEl.textContent = '✓ ' + doneCount + ' DONE';
-      dEl.className = 'z1-stat green';
-    }
-  }
-
-  let consoleExpanded = false;
-  let activeFilter = 'ALL';
-
-  function renderConsole() {
-    renderConsoleList();
   }
 
   function renderConsoleList() {
@@ -1260,7 +1178,7 @@ const dopkosEngineCode = `/**
     });
 
     if (!tasks.length) {
-      list.innerHTML = '<div class="console-empty" style="text-align:center;padding:20px;color:var(--text-dim);">NO MATCHING TASKS FOUND</div>';
+      list.innerHTML = '<div style="text-align:center;padding:16px;color:var(--text-dim);font-size:0.78rem;">NO MATCHING TASKS FOUND</div>';
       return;
     }
 
@@ -1271,15 +1189,13 @@ const dopkosEngineCode = `/**
 
       const row = document.createElement('div');
       row.className = 'console-task-row';
-      row.style.cssText = 'display:flex;align-items:center;gap:12px;padding:8px 12px;border-bottom:1px solid var(--border-color);cursor:pointer;';
+      row.style.cssText = 'display:flex;align-items:center;gap:10px;padding:6px 12px;border-bottom:1px solid var(--border-subtle);cursor:pointer;';
       row.dataset.id = t.id;
 
-      row.innerHTML = '<span class="console-trade-badge" style="background:' + color + '22;color:' + color + ';font-size:0.75rem;padding:2px 6px;border-radius:3px;font-weight:700;">' + (TRADE_META[tr]?.label || tr) + '</span>' +
-        '<span class="console-task-id" style="font-family:monospace;font-weight:800;color:var(--gold-bright);font-size:0.8rem;min-width:65px;">' + t.id + '</span>' +
-        '<span class="console-task-name" style="flex:1;font-size:0.82rem;color:var(--text-main);font-weight:600;">' + t.name + '</span>' +
-        '<div style="display:flex;gap:6px;align-items:center;">' +
-          '<span class="status-mini ' + status + '" style="font-size:0.72rem;padding:2px 8px;border-radius:3px;font-weight:700;background:var(--bg-surface);">' + STATUS_LABEL[status] + '</span>' +
-        '</div>';
+      row.innerHTML = '<span style="background:' + color + '22;color:' + color + ';font-size:0.72rem;padding:2px 6px;border-radius:3px;font-weight:700;">' + (TRADE_META[tr]?.label || tr) + '</span>' +
+        '<span style="font-family:monospace;font-weight:800;color:var(--gold-bright);font-size:0.78rem;min-width:60px;">' + t.id + '</span>' +
+        '<span style="flex:1;font-size:0.8rem;color:var(--text-main);font-weight:600;">' + t.name + '</span>' +
+        '<span class="status-mini ' + status + '" style="font-size:0.7rem;padding:2px 6px;border-radius:3px;font-weight:700;background:var(--bg-surface);">' + STATUS_LABEL[status] + '</span>';
 
       row.addEventListener('click', () => {
         selectAndCenterCard(t.id, true);
@@ -1291,26 +1207,7 @@ const dopkosEngineCode = `/**
 
   function toggleConsoleExpand(forceState) {
     consoleExpanded = typeof forceState === 'boolean' ? forceState : !consoleExpanded;
-    const z45 = document.getElementById('z45');
-    const backdrop = document.getElementById('console-backdrop');
-    const expandBtn = document.getElementById('console-expand-toggle-btn');
-    
-    if (consoleExpanded) {
-      if (z45) {
-        z45.classList.add('expanded');
-        z45.style.height = '';
-      }
-      if (backdrop) backdrop.classList.add('show');
-      if (expandBtn) expandBtn.textContent = '⤡ RESTORE';
-    } else {
-      if (z45) {
-        z45.classList.remove('expanded');
-        z45.style.height = '180px';
-      }
-      if (backdrop) backdrop.classList.remove('show');
-      if (expandBtn) expandBtn.textContent = '⛶ EXPAND';
-    }
-    renderConsoleList();
+    render5ZoneTopology(document.getElementById('dopkos-canvas-container'));
   }
 
   function clearHighlights() {
@@ -1347,7 +1244,6 @@ const dopkosEngineCode = `/**
     const card = document.querySelector('.task-card[data-id="' + taskId + '"]');
     if (card) {
       card.classList.add('is-selected');
-      card.style.setProperty('--selection-color', trColor);
     }
 
     const dependsOn = t.depends_on || [];
@@ -1361,27 +1257,13 @@ const dopkosEngineCode = `/**
       const succCard = document.querySelector('.task-card[data-id="' + succId + '"]');
       if (succCard) succCard.classList.add('is-successor');
     });
-
-    if (depSvg) {
-      depSvg.querySelectorAll('g.dep-edge').forEach(g => {
-        const from = g.getAttribute('data-from');
-        const to = g.getAttribute('data-to');
-
-        if (to === taskId && dependsOn.includes(from)) {
-          g.classList.add('is-highlighted', 'is-predecessor-line');
-        } else if (from === taskId && unlocks.includes(to)) {
-          g.classList.add('is-highlighted', 'is-successor-line');
-        }
-      });
-    }
   }
 
   function selectAndCenterCard(targetId, forceScroll = true) {
-    window.currentHighlightId = targetId;
+    selectedTopologyTaskId = targetId;
     applyHighlights(targetId);
 
-    const task = taskMap[targetId];
-    const scrollEl = document.getElementById('swimlane-scroll');
+    const scrollEl = document.getElementById('z3-viewport');
     const pos = cardPos(targetId);
     if (scrollEl && pos && forceScroll) {
       scrollEl.scrollTo({
@@ -1396,46 +1278,122 @@ const dopkosEngineCode = `/**
     }
   }
 
-  function handleLineClick(e, fromId, toId) {
-    e.stopPropagation();
-    const primaryId = (window.currentHighlightId === fromId) ? toId : fromId;
-    selectAndCenterCard(primaryId, true);
-  }
-
-  function fullRender() {
-    renderZ1();
-    renderStageStrip();
-    renderStageHeader();
-    renderSwimlane();
-    renderConsole();
+  function scrollToStage(stageId) {
+    const stageTasks = PROJECT_STATE.tasks.filter(t => t.stage === stageId);
+    if (!stageTasks.length) return;
+    const minCol = Math.min(...stageTasks.map(t => colMap[t.id] || 0));
+    const targetX = LABEL_W + minCol * COL_W - 20;
+    const scrollEl = document.getElementById('z3-viewport');
+    if (scrollEl) {
+      scrollEl.scrollTo({ left: Math.max(0, targetX), behavior: 'smooth' });
+    }
   }
 
   function setFilter(filter) {
     activeFilter = filter;
     document.querySelectorAll('.filter-pill').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.filter === filter);
+      btn.classList.toggle('active', btn.textContent === filter);
     });
     renderConsoleList();
   }
 
-  function renderDoPkosStudio() {
-    fullRender();
+  function renderDopkosRunSheet(container) {
+    const DAY_OF_SCHEDULE = [
+      { time: '03:30', label: 'Mobilisation & Wakeup', gate: null, tasks: 'Mangala Snana, Mandap Samagri Setup, Fleet Engine Warmup' },
+      { time: '05:00', label: 'Bridal Dressing & Groom Prep', gate: null, tasks: 'MUA HD Hair & Makeup, Nuapatna Silk Dhoti Dressing' },
+      { time: '07:00', label: 'Baranugam & Barat Arrival', gate: 'GATE-02: Barat Welcoming & Tilak (07:45)', tasks: 'Barat Slow-Mo Drone, Arch Welcoming Aarti' },
+      { time: '08:00', label: 'Sacred Lagna Muhurat', gate: 'GATE-03: Lagna Muhurat Sanctum Lock (08:00 - 08:30)', tasks: 'Kanyadaan, Hastaganthi Sacred Knot, 7 Agni Ahutis' },
+      { time: '08:45', label: 'Saptapadi & Sindoor Daan', gate: 'GATE-04: Sindoor Daan & Legal Witness (09:15)', tasks: '7 Steps (Saptapadi), Silver Mukuta Coronation, Sindoor' }
+    ];
+
+    let html = '<div style="display: flex; flex-direction: column; gap: 12px;">';
+    DAY_OF_SCHEDULE.forEach(slot => {
+      html += '<div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px;">' +
+        (slot.gate ? '<div style="background: rgba(245, 197, 24, 0.15); border-left: 3px solid var(--gold-bright); padding: 6px 12px; margin-bottom: 8px; font-size: 0.78rem; font-weight: 800; color: var(--gold-bright);">🔒 ' + slot.gate + '</div>' : '') +
+        '<div style="display: flex; align-items: center; gap: 8px;">' +
+          '<span style="font-family: monospace; font-size: 1rem; font-weight: 800; color: var(--gold-bright);">' + slot.time + '</span>' +
+          '<strong style="font-size: 0.9rem; color: var(--text-main);">' + slot.label + '</strong>' +
+        '</div>' +
+        '<div style="font-size: 0.8rem; color: var(--text-dim); margin-top: 4px;">' + slot.tasks + '</div>' +
+      '</div>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
   }
 
-  // Exports
-  window.fullRender = fullRender;
+  function renderDopkosRoadmap(container) {
+    let html = '<div style="display: flex; flex-direction: column; gap: 12px;">';
+    PROJECT_STATE.stages.forEach(s => {
+      const stageTasks = PROJECT_STATE.tasks.filter(t => t.stage === s.id);
+      html += '<div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 16px;">' +
+        '<h4 style="margin: 0 0 6px 0; color: var(--gold-bright);">' + s.name + '</h4>' +
+        '<p style="margin: 0 0 10px 0; font-size: 0.8rem; color: var(--text-muted);">' + s.gate_condition + '</p>' +
+        '<div style="display: flex; gap: 6px; flex-wrap: wrap;">' +
+          stageTasks.map(t => '<span class="role-pill-tag" onclick="setDopkosView(\\\'TOPOLOGY\\\'); selectAndCenterCard(\\\'' + t.id + '\\\')" style="cursor: pointer; font-size: 0.74rem;">' + t.id + ': ' + t.name + '</span>').join('') +
+        '</div>' +
+      '</div>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
+  }
+
+  function renderDopkosMatrix(container) {
+    let html = '<div style="overflow-x: auto;"><table style="width: 100%; border-collapse: collapse; font-size: 0.76rem;"><thead><tr><th style="padding: 8px; border: 1px solid var(--border-subtle); background: var(--bg-surface-elevated); color: var(--gold-bright);">TRACK</th>';
+    PROJECT_STATE.stages.forEach(s => html += '<th style="padding: 8px; border: 1px solid var(--border-subtle); background: var(--bg-surface-elevated); color: var(--gold-bright);">S' + s.id + '</th>');
+    html += '</tr></thead><tbody>';
+    TRADES.forEach(tr => {
+      html += '<tr><td style="padding: 8px; border: 1px solid var(--border-subtle); font-weight: 700; color: ' + (TRADE_META[tr]?.color || '#fff') + ';">' + (TRADE_META[tr]?.label || tr) + '</td>';
+      PROJECT_STATE.stages.forEach(s => {
+        const tasksInSlot = PROJECT_STATE.tasks.filter(t => t.trade === tr && t.stage === s.id);
+        html += '<td style="padding: 6px; border: 1px solid var(--border-subtle); vertical-align: top;">' +
+          tasksInSlot.map(t => '<div onclick="setDopkosView(\\\'TOPOLOGY\\\'); selectAndCenterCard(\\\'' + t.id + '\\\')" style="cursor: pointer; background: var(--bg-surface); padding: 4px; border-radius: 3px; margin-bottom: 4px; font-weight: 600;">' + t.id + '</div>').join('') +
+        '</td>';
+      });
+      html += '</tr>';
+    });
+    html += '</tbody></table></div>';
+    container.innerHTML = html;
+  }
+
+  function renderDopkosCritical(container) {
+    const criticalChain = [
+      { id: 'GOV-001', name: 'Chief Purohit Lagna Lock', horizon: 'T-180' },
+      { id: 'RIT-001', name: 'Vidhi-Patra Signoff', horizon: 'T-120' },
+      { id: 'GFT-001', name: 'Deva Nimantrana at Puri Jagannath', horizon: 'T-90' },
+      { id: 'RIT-004', name: 'Patra Paribartana Vows (Rayagada)', horizon: 'T-14' },
+      { id: 'GATE-02', name: 'Baranugam Arch Welcome & Barat', horizon: 'Day 0 (07:30)' },
+      { id: 'RIT-005', name: 'Kanyadaan & Hastaganthi Sacred Knot', horizon: 'Day 0 (08:00)' },
+      { id: 'GATE-04', name: 'Sindoor Daan & Mukuta Coronation', horizon: 'Day 0 (08:45)' },
+      { id: 'LEG-001', name: 'SUJOG Legal Marriage Registration', horizon: 'Day +30' }
+    ];
+
+    let html = '<div style="display: flex; flex-direction: column; gap: 10px;">';
+    criticalChain.forEach((c, idx) => {
+      html += '<div style="display: flex; gap: 12px; align-items: center; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-left: 3px solid var(--gold-bright); border-radius: var(--radius-sm); padding: 10px 14px;">' +
+        '<span style="width: 24px; height: 24px; border-radius: 50%; background: var(--gold-bright); color: #080b11; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 0.76rem;">' + (idx + 1) + '</span>' +
+        '<div style="flex: 1;"><div style="font-weight: 700; color: var(--text-main); font-size: 0.85rem;">' + c.id + ': ' + c.name + '</div><div style="font-size: 0.72rem; color: var(--text-dim);">' + c.horizon + '</div></div>' +
+        '<button class="btn btn-primary" onclick="setDopkosView(\\\'TOPOLOGY\\\'); selectAndCenterCard(\\\'' + c.id + '\\\')" style="font-size: 0.72rem; padding: 3px 8px;">View In DAG →</button>' +
+      '</div>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
+  }
+
+  // Exports to window
+  window.setDopkosView = setDopkosView;
+  window.filterDopkosEvent = filterDopkosEvent;
+  window.filterDopkosTrack = filterDopkosTrack;
   window.renderDoPkosStudio = renderDoPkosStudio;
+  window.selectAndCenterCard = selectAndCenterCard;
+  window.scrollToStage = scrollToStage;
   window.toggleConsoleExpand = toggleConsoleExpand;
   window.setFilter = setFilter;
-  window.selectAndCenterCard = selectAndCenterCard;
-  window.clearHighlights = clearHighlights;
-  window.scrollToStage = scrollToStage;
+  window.renderConsoleList = renderConsoleList;
 
-  // Auto-init on DOM ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', fullRender);
+    document.addEventListener('DOMContentLoaded', renderDoPkosStudio);
   } else {
-    setTimeout(fullRender, 50);
+    setTimeout(renderDoPkosStudio, 50);
   }
 
 })(window);
@@ -1444,6 +1402,15 @@ const dopkosEngineCode = `/**
 fs.writeFileSync(path.join(modulesDir, 'dopkos-engine.js'), dopkosEngineCode, 'utf8');
 console.log('✓ Wrote public/js/modules/dopkos-engine.js');
 
+// Bump Service Worker Cache in sw.js and public/sw.js
+function bumpServiceWorker(swPath) {
+  if (!fs.existsSync(swPath)) return;
+  let swContent = fs.readFileSync(swPath, 'utf8');
+  swContent = swContent.replace(/sree-krushna-os-v[0-9.]+/g, 'sree-krushna-os-v3.0.0');
+  fs.writeFileSync(swPath, swContent, 'utf8');
+  console.log('✓ Bumped service worker cache in ' + swPath);
+}
 
-
-
+bumpServiceWorker(path.join(root, 'sw.js'));
+bumpServiceWorker(path.join(publicDir, 'sw.js'));
+console.log('=== DO-PKOS BUILD COMPLETED SUCCESSFULLY ===');

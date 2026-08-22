@@ -1763,11 +1763,167 @@ b785545 chore(tooling): add compile-master-state and ingest-blueprint utility sc
 
 # Response 2.3 -
 
-# Query 2.4 -
+# Query 2.4 -Tasks Page cant have actions button option as delte one- it can have Update button where in the same input form rerouting can happend
 
-# Review 2.4 -
+# Review 2.4 -Searched for "renderTasks"
 
-# Response 2.4 -
+Viewed app.js:550-660
+Viewed index.html:460-550
+Viewed app.js:650-710
+Viewed index.html:495-545
+Edited index.html
+Edited index.html
+Viewed app.js:605-680
+Viewed app.js:2340-2394
+Edited app.js
+Viewed app.js:2360-2440
+Edited app.js
+Viewed main.css:2030-2080
+Searched for "task-input-box"
+Viewed main.css:1920-1950
+Edited main.css
+Edited sw.js
+Edited sw.js
+Ran command: `npm test`
+Ran command: `node scripts/verify-deployment.cjs`
+Ran command: `git add public/index.html index.html public/js/app.js public/css/main.css public/sw.js sw.js ; git commit -m "feat(tasks): replace row deletion with in-place task edit routing and form update engine"`
+Ran command: `git status`
+Ran command: `git add "User_Created/Discussion Threads/TaskBreakdowns/260822_FinerTasks.md" "User_Created/Discussion Threads/UI_Improvements/260822_UI_Upgrades.md" ; git commit -m "docs(tasks): document in-place task update workflow and form rerouting"`
+Ran command: `git log -n 5 --oneline`
+
+### 📋 Implemented: In-Place Task Update & Form Rerouting Engine
+
+We have removed the delete (`&times;`) button from the Tasks CRUD table and replaced it with a **`✏️ Update`** workflow that reroutes directly into the top task input form with smooth focus, data pre-population, and state synchronization.
+
+---
+
+### 🔄 How the Update Workflow Operates
+
+```
+TABLE ROW ACTION:
+┌─────────┬─────────┬───────────────────────────────────┬───────────┬──────────────┬──────────┬───────────┬──────────────────────┐
+│  DONE   │ TASK ID │           ACTION TITLE            │   EVENT   │    OWNER     │ PRIORITY │  STATUS   │        ACTION        │
+├─────────┼─────────┼───────────────────────────────────┼───────────┼──────────────┼──────────┼───────────┼──────────────────────┤
+│  [ ]    │ TSK-101 │ Deva Nimantrana Sacred Invitation │ STAGE_01  │ PER-005      │ Critical │ Planned   │ [ ✏️ Update ]        │
+└─────────┴─────────┴───────────────────────────────────┴───────────┴──────────────┴──────────┴───────────┴──────────────────────┘
+                                                                                                                      │
+                                                        Clicks "Update"                                               │
+                                                              ────────────────────────────────────────────────────────┘
+                                                              ▼
+INPUT FORM (Smoothly Scrolls & Pulses with Gold Highlight):
+┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ [ Deva Nimantrana Sacred Invitation... ] [ STAGE_01 ▾ ] [ PER-005 (Bride Father) ▾ ] [ Critical ▾ ] [💾 Save (TSK-101)] [Cancel]│
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+1. **Safety First (Zero Accidental Deletions):**
+   - Removed destructive row deletion. Sacred wedding tasks and WBS items are preserved as immutable historical records.
+2. **One-Click Edit Rerouting (`loadTaskForEdit(taskId)`):**
+   - Clicking **`[ ✏️ Update ]`** on any task row:
+     - Automatically switches to the **Tasks (CRUD)** tab (if triggered from elsewhere).
+     - Smoothly scrolls to the top input form with a **1.2s golden glow pulse highlight**.
+     - Pre-populates the **Title**, **Event Scope**, **Assigned Owner**, and **Priority** fields.
+     - Dynamically changes the submit button to **`💾 Save Changes (TSK-101)`** with gold gradient styling.
+     - Reveals a **`Cancel`** button to abort editing at any time.
+3. **In-Place Persistence & Multi-View Synchronization (`submitTaskForm()`):**
+   - Submitting updates the task in `currentTasks` and `localStorage`.
+   - Instantly re-renders the **Task Table**, **Stage Strip**, and **Swimlane Matrix** without requiring a page reload.
+
+---
+
+### 🧪 Verification & Health Check
+
+- **Local Smoke Test (`npm test`):** **100% Passed**
+- **Deployment Verification Suite (`verify-deployment.cjs`):** **All 8 Layers 100% GREEN**
+- **Commits:** Systematically recorded via `/phased-commit-orchestrator` (`71a3ee9` & `9a312e1`).
+
+# Response 2.4 -instead it should have opened up Universal Proposal & Intent Studio
+
+Searched for "openUniversalIntakeModal"
+Viewed app.js:980-1080
+Viewed index.html:495-540
+Viewed app.js:615-665
+Edited index.html
+Edited index.html
+Viewed app.js:610-660
+Viewed app.js:645-765
+Viewed app.js:2720-2760
+Viewed app.js:2680-2720
+Edited app.js
+Viewed app.js:2660-2700
+Edited app.js
+Ran command: `npm test`
+Ran command: `node scripts/verify-deployment.cjs`
+Viewed app.js:650-740
+Edited app.js
+Ran command: `node scripts/verify-deployment.cjs`
+Ran command: `node -e "const { execSync } = require('child_process'); console.log(execSync('node scripts/verify-deployment.cjs', { encoding: 'utf8' }).split('\n').filter(l => l.includes('FAIL') || l.includes('❌')).join('\n'));"`
+Viewed app.js:2620-2650
+Edited app.js
+Ran command: `node scripts/verify-deployment.cjs`
+Ran command: `git add public/index.html index.html public/js/app.js ; git commit -m "feat(tasks): route task updates and proposals into Universal Proposal & Intent Studio"`
+Ran command: `git status`
+Ran command: `git add public/css/main.css public/sw.js sw.js ; git commit -m "chore(pwa): update styles and bump cache"`
+Ran command: `git log -n 3 --oneline`
+Ran command: `npm test`
+Ran command: `node scripts/verify-deployment.cjs`
+
+### 💡 Routed: Universal Proposal & Intent Studio Integration
+
+The task update and creation flows across the entire OS have now been unified to route directly into the **Universal Proposal & Intent Studio** (`#inspirationModal`).
+
+---
+
+### 🔄 Architectural Flow
+
+```
+TASK ROW ACTION:
+┌─────────┬─────────┬───────────────────────────────────┬───────────┬──────────────┬──────────┬───────────┬────────────────────────────┐
+│  DONE   │ TASK ID │           ACTION TITLE            │   EVENT   │    OWNER     │ PRIORITY │  STATUS   │      PROPOSAL / CHANGE     │
+├─────────┼─────────┼───────────────────────────────────┼───────────┼──────────────┼──────────┼───────────┼────────────────────────────┤
+│  [ ]    │ TSK-101 │ Deva Nimantrana Sacred Invitation │ STAGE_01  │ PER-005      │ Critical │ Planned   │ [ 💡 Propose Update ]      │
+└─────────┴─────────┴───────────────────────────────────┴───────────┴──────────────┴──────────┴───────────┴────────────────────────────┘
+                                                                                                                           │
+                                                        Clicks "Propose Update"                                            │
+                                                              ─────────────────────────────────────────────────────────────┘
+                                                              ▼
+UNIVERSAL PROPOSAL & INTENT STUDIO (Modal):
+┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ 🏷️ Launch Context: Change Request for Task TSK-101 (Deva Nimantrana Sacred Invitation)                                     │
+├─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ Submitter: [ Sree (Bride) ▾ ]        Category: [ Tasks ▾ ]        Milestone: [ STAGE_01 (Pre-Wedding & Sourcing) ▾ ]         │
+├─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ Proposed Update Notes:                                                                                                      │
+│ [TSK-101] Update Proposal:                                                                                                  │
+│ • Current Action: Deva Nimantrana Sacred Invitation                                                                         │
+│ • Assigned Owner: PER-005 (Bride Father / Elders)                                                                           │
+│ • Priority: Critical                                                                                                        │
+│ • Status: Planned                                                                                                           │
+│ • Proposed Adjustment: |                                                                                                    │
+├─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ [ 🤖 Reframe with AI ]  ────────────────────────►  [ ⚡ Dispatch Change Request (CR) → ]                                   │
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+1. **Context-Aware Pre-Population (`proposeTaskUpdate(taskId)`):**
+   - Clicking **`[ 💡 Propose Update ]`** on any row in the Tasks table:
+     - Automatically launches the **Universal Proposal & Intent Studio**.
+     - Sets Domain to **`Tasks`**.
+     - Pre-selects the task's corresponding **Event / Milestone**.
+     - Displays the launch context banner: `🏷️ Launch Context: Change Request for Task TSK-### (...)`.
+     - Populates the proposal notes with structured task metadata (`Action Title`, `Owner`, `Priority`, `Status`, and cursor prompt for adjustments).
+2. **Top Bar Proposal Studio Trigger:**
+   - The top task bar now features a direct **`💡 Open Proposal Studio →`** CTA which carries any quick title notes into the studio.
+3. **Full Lifecycle Accountability:**
+   - Submissions generate an immutable **Change Request Receipt (`CR-###`)** and log automatically into the **Intake Ledger**.
+
+---
+
+### 🧪 Pre-Flight Gate Health Check
+
+- **Local Smoke Test (`npm test`):** **100% Passed**
+- **Deployment Gate (`verify-deployment.cjs`):** **All 8 Layers 100% GREEN**
+- **Git State:** Cleanly committed (`3625fd8` & `cc1a4bf`).
 
 # Query 2.5 -
 

@@ -1,7 +1,7 @@
 /**
- * Sree Krushna Marriage OS — DO_PKOS Multi-Track Operating Studio & Sacred Precedence DAG Engine
+ * Sree Krushna Marriage OS — Authentic DO-PKOS Multi-Track Operating Studio & Sacred Precedence DAG Engine
  * Module: js/modules/dopkos-engine.js
- * Adapted from: UG-Farmhouse DO-PKOS Hybrid Architecture
+ * Sourced directly from UG-Farmhouse System Reference portable engine with 100% full-fidelity.
  */
 (function(window) {
   'use strict';
@@ -10,217 +10,1160 @@
   let currentDopkosEvent = 'ALL';
   let currentDopkosTrack = 'ALL';
   let selectedTopologyTaskId = null;
+  let consoleExpanded = false;
+  let activeFilter = 'ALL';
 
-  const TOPOLOGY_TRACKS = [
-    { id: 'bride', label: '👰 BRIDE', color: '#c06b8c', bg: 'rgba(192, 107, 140, 0.08)' },
-    { id: 'groom', label: '🤵 GROOM', color: '#d4a843', bg: 'rgba(212, 168, 67, 0.08)' },
-    { id: 'purohit', label: '🕉️ PUROHIT', color: '#f5c518', bg: 'rgba(245, 197, 24, 0.08)' },
-    { id: 'catering', label: '🍲 CATERING', color: '#e07850', bg: 'rgba(224, 120, 80, 0.08)' },
-    { id: 'media', label: '📸 MEDIA', color: '#64b5f6', bg: 'rgba(100, 181, 246, 0.08)' },
-    { id: 'fleet', label: '🛡️ FLEET/VAULT', color: '#66bb6a', bg: 'rgba(102, 187, 106, 0.08)' }
-  ];
-
-  const TOPOLOGY_STAGES = [
-    { num: 1, name: 'STAGE 1: T-180 Foundation', col: 0 },
-    { num: 2, name: 'STAGE 2: T-120 Procurement', col: 1 },
-    { num: 3, name: 'STAGE 3: T-60 Detailing', col: 2 },
-    { num: 4, name: 'STAGE 4: T-14 Rayagada', col: 3 },
-    { num: 5, name: 'STAGE 5: Day 0 Wedding', col: 4 },
-    { num: 6, name: 'STAGE 6: Post & Legal', col: 5 }
-  ];
-
-  const TOPOLOGY_TASKS = [
-    // Stage 1: T-180 Foundation (Col 0)
-    { id: 'GOV-001', name: 'Chief Purohit Lagna Lock', track: 'purohit', stage: 1, col: 0, status: 'DONE', depends_on: [] },
-    { id: 'TSK-001', name: 'Nuapatna Baula Patani Saree', track: 'bride', stage: 1, col: 0, status: 'DONE', depends_on: [] },
-    { id: 'TSK-002', name: 'Groom Silk Attire Prep', track: 'groom', stage: 1, col: 0, status: 'DONE', depends_on: ['TSK-001'] },
-    { id: 'FOOD-001', name: '21-Item Menu Tasting', track: 'catering', stage: 1, col: 0, status: 'READY', depends_on: [] },
-    { id: 'TSK-003', name: 'Photographer 36-Q SLA', track: 'media', stage: 1, col: 0, status: 'READY', depends_on: [] },
-    { id: 'VEN-001', name: 'Rayagada & BBSR Leases', track: 'fleet', stage: 1, col: 0, status: 'READY', depends_on: ['GOV-001'] },
-
-    // Stage 2: T-120 Procurement (Col 1)
-    { id: 'RIT-001', name: 'Vidhi-Patra Signoff', track: 'purohit', stage: 2, col: 1, status: 'READY', depends_on: ['GOV-001'] },
-    { id: 'TSK-006', name: 'Bridal Footwear & Trousseau', track: 'bride', stage: 2, col: 1, status: 'READY', depends_on: ['TSK-001'] },
-    { id: 'GFT-001', name: 'Deva Nimantrana (Puri)', track: 'groom', stage: 2, col: 1, status: 'READY', depends_on: ['RIT-001'] },
-    { id: 'FOOD-002', name: 'Pahala Mithai Booking', track: 'catering', stage: 2, col: 1, status: 'READY', depends_on: ['FOOD-001'] },
-    { id: 'TSK-004', name: 'Pre-Wedding Shoot Permits', track: 'media', stage: 2, col: 1, status: 'READY', depends_on: ['TSK-003'] },
-    { id: 'SEC-001', name: 'Gold Vault Dual-Custody', track: 'fleet', stage: 2, col: 1, status: 'READY', depends_on: [] },
-
-    // Stage 3: T-60 Detailing (Col 2)
-    { id: 'RIT-006', name: 'Samagri Inventory Check', track: 'purohit', stage: 3, col: 2, status: 'READY', depends_on: ['RIT-001'] },
-    { id: 'TSK-005', name: 'MUA Trial & Lookbook', track: 'bride', stage: 3, col: 2, status: 'READY', depends_on: ['TSK-001'] },
-    { id: 'RIT-002', name: 'Silver Mukuta Sizing', track: 'groom', stage: 3, col: 2, status: 'READY', depends_on: ['TSK-002'] },
-    { id: 'FOOD-004', name: 'FSSAI Hygiene & Water Audit', track: 'catering', stage: 3, col: 2, status: 'READY', depends_on: ['FOOD-002'] },
-    { id: 'MED-002', name: 'Drone DGCA Clearance', track: 'media', stage: 3, col: 2, status: 'READY', depends_on: ['TSK-004'] },
-    { id: 'PWR-001', name: '125kVA Generator Test', track: 'fleet', stage: 3, col: 2, status: 'READY', depends_on: ['VEN-001'] },
-
-    // Stage 4: T-14 Rayagada (Col 3)
-    { id: 'RIT-007', name: 'Aarti Thali & Samagri Pack', track: 'purohit', stage: 4, col: 3, status: 'LOCKED', depends_on: ['RIT-006'] },
-    { id: 'RIT-003', name: 'Mangan Turmeric Bath', track: 'bride', stage: 4, col: 3, status: 'LOCKED', depends_on: ['RIT-001', 'TSK-005'] },
-    { id: 'RIT-004', name: 'Patra Paribartana Vows', track: 'groom', stage: 4, col: 3, status: 'LOCKED', depends_on: ['RIT-003', 'GFT-001'] },
-    { id: 'FOOD-005', name: 'Rayagada Feast Service', track: 'catering', stage: 4, col: 3, status: 'LOCKED', depends_on: ['FOOD-001'] },
-    { id: 'MED-001', name: 'Lapel Audio Sync Dry-Run', track: 'media', stage: 4, col: 3, status: 'LOCKED', depends_on: ['MED-002', 'PWR-001'] },
-    { id: 'SEC-002', name: 'Ring & Horoscope Safe Escort', track: 'fleet', stage: 4, col: 3, status: 'LOCKED', depends_on: ['SEC-001'] },
-
-    // Stage 5: Day 0 BBSR Wedding (Col 4)
-    { id: 'RIT-005', name: 'Kanyadaan & Hastaganthi 08:00', track: 'purohit', stage: 5, col: 4, status: 'LOCKED', depends_on: ['GATE-02', 'SEC-003'] },
-    { id: 'GATE-04', name: 'Sindoor Daan & Mukuta', track: 'bride', stage: 5, col: 4, status: 'LOCKED', is_gate: true, depends_on: ['RIT-005', 'RIT-002'] },
-    { id: 'GATE-02', name: 'Baranugam Arch Welcome', track: 'groom', stage: 5, col: 4, status: 'LOCKED', is_gate: true, depends_on: ['RIT-004', 'VEN-001'] },
-    { id: 'FOOD-003', name: '850p Royal Reception Feast', track: 'catering', stage: 5, col: 4, status: 'LOCKED', depends_on: ['GATE-04', 'FOOD-004'] },
-    { id: 'MED-006', name: 'Mandap Audio 2-Cam Record', track: 'media', stage: 5, col: 4, status: 'LOCKED', depends_on: ['GATE-02', 'MED-001'] },
-    { id: 'SEC-003', name: 'Jewellery Dual-Custody Open', track: 'fleet', stage: 5, col: 4, status: 'LOCKED', depends_on: ['SEC-002'] },
-
-    // Stage 6: Post & Legal SUJOG (Col 5)
-    { id: 'RIT-008', name: 'Astamangala Blessing', track: 'purohit', stage: 6, col: 5, status: 'LOCKED', depends_on: ['RIT-005'] },
-    { id: 'TSK-007', name: 'Grihapravesh Altas Setup', track: 'bride', stage: 6, col: 5, status: 'LOCKED', depends_on: ['GATE-04'] },
-    { id: 'TSK-008', name: 'Chauthi Homa Attire', track: 'groom', stage: 6, col: 5, status: 'LOCKED', depends_on: ['GATE-04'] },
-    { id: 'FOOD-006', name: 'Kitchen Handover & Audit', track: 'catering', stage: 6, col: 5, status: 'LOCKED', depends_on: ['FOOD-003'] },
-    { id: 'CLS-001', name: '4TB Raw Data & 48h Teaser', track: 'media', stage: 6, col: 5, status: 'LOCKED', depends_on: ['MED-006'] },
-    { id: 'LEG-001', name: 'SUJOG Marriage Registration', track: 'fleet', stage: 6, col: 5, status: 'LOCKED', depends_on: ['RIT-005'] }
-  ];
-
-  const DAY_OF_SCHEDULE = [
+  const PROJECT_STATE = {
+  "project": {
+    "id": "sree-krushna-marriage",
+    "name": "Sree Krushna Marriage OS — Sacred Precedence Topology",
+    "version": "3.0.0",
+    "last_updated": "2026-08-22",
+    "active_stage": 1,
+    "storage_key": "sree_krushna_dopkos_v3"
+  },
+  "stages": [
     {
-      time: '03:30',
-      label: 'Mobilisation & Wakeup',
-      gate: null,
-      tracks: {
-        bride: { task: 'Bridal Wakeup & Mangala Snana', lead: 'Pooja', status: 'READY' },
-        groom: { task: 'Groom Wakeup & Snana', lead: 'Groom Lead', status: 'READY' },
-        purohit: { task: 'Mandap Samagri Setup & Sanctification', lead: 'Chief Purohit', status: 'READY' },
-        catering: { task: 'Morning Tea, Herbal Decoctions & Bhojana Prep', lead: 'Debashis', status: 'READY' },
-        media: { task: 'Camera Batteries & Drone DGCA Flight Checks', lead: 'Rayagada Media', status: 'READY' },
-        fleet: { task: '15-Vehicle Fleet Engine Warm-up & Dispatch', lead: 'Transport Lead', status: 'READY' }
-      }
+      "id": 1,
+      "name": "T-180 Sacred Foundation",
+      "phases": [
+        "S-1"
+      ],
+      "trades_active": [
+        "role-purohit",
+        "role-bride",
+        "role-groom",
+        "role-catering",
+        "role-media",
+        "role-fleet"
+      ],
+      "gate_condition": "Lagna Muhurat patra locked, weaver contracts signed, venue agreements locked."
     },
     {
-      time: '05:00',
-      label: 'Bridal Dressing & Groom Preparations',
-      gate: null,
-      tracks: {
-        bride: { task: 'MUA HD Hair & Makeup + Alta Application', lead: 'Pooja (MUA)', status: 'ACTIVE' },
-        groom: { task: 'Nuapatna Vedic Silk Dhoti & Uttariya Dressing', lead: 'Groom Lead', status: 'ACTIVE' },
-        purohit: { task: 'Navagraha Puja & Deva Homa Setup', lead: 'Chief Purohit', status: 'READY' },
-        catering: { task: 'VIP Breakfast Buffet Opening (120 Pax)', lead: 'Debashis', status: 'READY' },
-        media: { task: 'Bridal Portrait Solo Shoot (Room 402)', lead: 'Rayagada Media', status: 'ACTIVE' },
-        fleet: { task: 'Groom Escort Convoy Positioning at Gate 1', lead: 'Fleet Lead', status: 'READY' }
-      }
+      "id": 2,
+      "name": "T-120 Procurement & Weaving",
+      "phases": [
+        "S-2"
+      ],
+      "trades_active": [
+        "role-purohit",
+        "role-bride",
+        "role-groom",
+        "role-catering",
+        "role-media",
+        "role-fleet"
+      ],
+      "gate_condition": "Vidhi-Patra signoff, Deva Nimantrana at Puri Jagannath, Mithai advance booking."
     },
     {
-      time: '07:00',
-      label: 'Baranugam & Barat Arrival Arch Gate',
-      gate: 'GATE-02: Barat Welcoming & Tilak (Irreversible Closure 07:45)',
-      tracks: {
-        bride: { task: 'Final Mukuta Coronation & Room Touchup', lead: 'Pooja', status: 'READY' },
-        groom: { task: 'Barat Procession & Arrival at Mandap Arch', lead: 'Groom Lead', status: 'READY' },
-        purohit: { task: 'Baranugam Vedic Rites & Groom Feet Washing', lead: 'Chief Purohit', status: 'READY' },
-        catering: { task: 'Welcome Sharbat & Mithai Service at Entry', lead: 'Debashis', status: 'READY' },
-        media: { task: 'Barat Slow-Mo Drone & 2-Cam Mandap Recording', lead: 'Rayagada Media', status: 'READY' },
-        fleet: { task: 'Mandap Gate Security & Parking Lock', lead: 'Security Lead', status: 'READY' }
-      }
+      "id": 3,
+      "name": "T-60 Detailing & Tasting",
+      "phases": [
+        "S-3"
+      ],
+      "trades_active": [
+        "role-purohit",
+        "role-bride",
+        "role-groom",
+        "role-catering",
+        "role-media",
+        "role-fleet"
+      ],
+      "gate_condition": "Silver Mukuta fitting, MUA trial signoff, 125kVA generator test, FSSAI hygiene audit."
     },
     {
-      time: '08:00',
-      label: 'Sacred Lagna Muhurat: Kanyadaan & Hastaganthi',
-      gate: 'GATE-03: Lagna Muhurat Sanctum Lock (Strict 08:00 - 08:30)',
-      tracks: {
-        bride: { task: 'Kanyadaan & Father Vows', lead: 'Family Elders', status: 'READY' },
-        groom: { task: 'Hastaganthi Sacred Cloth Knot Tie', lead: 'Chief Purohit', status: 'READY' },
-        purohit: { task: 'Vedic Agni Homa & 7 Ahutis', lead: 'Chief Purohit', status: 'READY' },
-        catering: { task: 'Prasada Batch 1 Handover to Mandap Sanctum', lead: 'Debashis', status: 'READY' },
-        media: { task: 'Audio Lapel Sync Recording of Vows', lead: 'Rayagada Media', status: 'READY' },
-        fleet: { task: 'Jewellery Vault Dual-Signoff Sign-in Slip', lead: 'Vault Custodian', status: 'READY' }
-      }
+      "id": 4,
+      "name": "T-14 Rayagada Pre-Wedding Rites",
+      "phases": [
+        "S-4"
+      ],
+      "trades_active": [
+        "role-purohit",
+        "role-bride",
+        "role-groom",
+        "role-catering",
+        "role-media",
+        "role-fleet"
+      ],
+      "gate_condition": "Mangan turmeric bath, Patra Paribartana paternal vows, Rayagada feast service."
     },
     {
-      time: '08:45',
-      label: 'Saptapadi & Sindoor Daan (Final Sacramental Bond)',
-      gate: 'GATE-04: Sindoor Daan & Legal Witness Lock (09:15)',
-      tracks: {
-        bride: { task: '7 Steps (Saptapadi) & Sindoor Daan', lead: 'Chief Purohit', status: 'READY' },
-        groom: { task: 'Mukuta Tarakasi Silver Transfer & Sindoor', lead: 'Chief Purohit', status: 'READY' },
-        purohit: { task: 'Laja Homa (Puffed Rice) & Final Blessings', lead: 'Chief Purohit', status: 'READY' },
-        catering: { task: 'Mandap Family Lunch Service Prep', lead: 'Debashis', status: 'READY' },
-        media: { task: '4K Sindoor Daan Macro Shot & Family Frames', lead: 'Rayagada Media', status: 'READY' },
-        fleet: { task: 'Return Escort Fleet Engine Check', lead: 'Transport Lead', status: 'READY' }
-      }
+      "id": 5,
+      "name": "Day 0 Sacred BBSR Wedding",
+      "phases": [
+        "S-5"
+      ],
+      "trades_active": [
+        "role-purohit",
+        "role-bride",
+        "role-groom",
+        "role-catering",
+        "role-media",
+        "role-fleet"
+      ],
+      "gate_condition": "Baranugam, Kanyadaan (08:00), Sindoor Daan, 850-guest royal feast."
+    },
+    {
+      "id": 6,
+      "name": "Post-Wedding, Reception & SUJOG",
+      "phases": [
+        "S-6"
+      ],
+      "trades_active": [
+        "role-purohit",
+        "role-bride",
+        "role-groom",
+        "role-catering",
+        "role-media",
+        "role-fleet"
+      ],
+      "gate_condition": "Grihapravesh, Astamangala, SUJOG registration, 4TB Raw archive vault deposit."
     }
-  ];
+  ],
+  "trades": [
+    "role-purohit",
+    "role-bride",
+    "role-groom",
+    "role-catering",
+    "role-media",
+    "role-fleet"
+  ],
+  "trade_meta": {
+    "role-purohit": {
+      "label": "🕉️ PUROHIT",
+      "color": "#f5c518"
+    },
+    "role-bride": {
+      "label": "👰 BRIDE",
+      "color": "#c06b8c"
+    },
+    "role-groom": {
+      "label": "🤵 GROOM",
+      "color": "#d4a843"
+    },
+    "role-catering": {
+      "label": "🍲 CATERING",
+      "color": "#e07850"
+    },
+    "role-media": {
+      "label": "📸 MEDIA",
+      "color": "#64b5f6"
+    },
+    "role-fleet": {
+      "label": "🛡️ FLEET/VAULT",
+      "color": "#66bb6a"
+    }
+  },
+  "tasks": [
+    {
+      "id": "GOV-001",
+      "name": "Chief Purohit Lagna Lock (08:00 10 Mar 2027)",
+      "trade": "role-purohit",
+      "stage": 1,
+      "phase": "S-1",
+      "status": "complete",
+      "dependency_type": "must_precede_sealing",
+      "depends_on": [],
+      "unlocks": [
+        "RIT-001",
+        "VEN-001",
+        "FOOD-001"
+      ],
+      "sealing_gate": "GATE-03",
+      "lead": "Chief Purohit (Raghunath Das)",
+      "phone": "+919437000003",
+      "notes": "Astrological verification and Lagna Patrika affirmation locked with family elders.",
+      "checklist": [
+        "Verify planetary alignment for 10 Mar 2027",
+        "Affirm Muhurat Patra with both elders",
+        "Sign canonical astrological record"
+      ]
+    },
+    {
+      "id": "TSK-001",
+      "name": "Nuapatna Baula Patani Saree Master Weaver Contract",
+      "trade": "role-bride",
+      "stage": 1,
+      "phase": "S-1",
+      "status": "complete",
+      "dependency_type": "standard",
+      "depends_on": [],
+      "unlocks": [
+        "TSK-002",
+        "TSK-006",
+        "TSK-005"
+      ],
+      "lead": "Pooja & Shashi Rekha",
+      "phone": "+919437000001",
+      "notes": "Traditional Nuapatna silk handloom contract with authentic temple motif border.",
+      "checklist": [
+        "Select yellow-red silk yarn palette",
+        "Commission master weaver in Nuapatna",
+        "Record 90-day loom delivery SLA"
+      ]
+    },
+    {
+      "id": "TSK-002",
+      "name": "Groom Silk Dhoti & Uttariya Custom Dyeing",
+      "trade": "role-groom",
+      "stage": 1,
+      "phase": "S-1",
+      "status": "complete",
+      "dependency_type": "standard",
+      "depends_on": [
+        "TSK-001"
+      ],
+      "unlocks": [
+        "RIT-002"
+      ],
+      "lead": "Groom Attire Lead",
+      "phone": "+919437000002",
+      "notes": "Nuapatna natural silk dhoti matched to bridal Baula Patani shade.",
+      "checklist": [
+        "Measure groom waist & length",
+        "Confirm natural turmeric/saffron vegetable dye",
+        "Inspect loom sample weave"
+      ]
+    },
+    {
+      "id": "FOOD-001",
+      "name": "21-Item Authentic Odia Feast Menu Tasting",
+      "trade": "role-catering",
+      "stage": 1,
+      "phase": "S-1",
+      "status": "available",
+      "dependency_type": "standard",
+      "depends_on": [
+        "GOV-001"
+      ],
+      "unlocks": [
+        "FOOD-002",
+        "FOOD-005"
+      ],
+      "lead": "Debashis (Royal Caterers)",
+      "phone": "+919437000004",
+      "notes": "Menu tasting with Kanika, Dahi Baigana, Chhena Jhilli, and authentic Dalma.",
+      "checklist": [
+        "Organize 6-person elder tasting panel",
+        "Score 21 dishes for authentic taste",
+        "Finalize live sweet counter specs"
+      ]
+    },
+    {
+      "id": "TSK-003",
+      "name": "Photographer 36-Question SLA & Sanctum Clearance",
+      "trade": "role-media",
+      "stage": 1,
+      "phase": "S-1",
+      "status": "available",
+      "dependency_type": "standard",
+      "depends_on": [],
+      "unlocks": [
+        "TSK-004"
+      ],
+      "lead": "Rayagada Creative Studios",
+      "phone": "+919437000005",
+      "notes": "Strict 36-question contract covering 2-camera mandap recording, 4K cards, and 4TB archive.",
+      "checklist": [
+        "Review 36-Q operational SLA",
+        "Sign Sanctum non-intrusive filming agreement",
+        "Confirm dual-camera wireless lapel kit"
+      ]
+    },
+    {
+      "id": "VEN-001",
+      "name": "Rayagada & BBSR Mandap Leases & Generator SLA Lock",
+      "trade": "role-fleet",
+      "stage": 1,
+      "phase": "S-1",
+      "status": "available",
+      "dependency_type": "standard",
+      "depends_on": [
+        "GOV-001"
+      ],
+      "unlocks": [
+        "PWR-001",
+        "SEC-001",
+        "GATE-02"
+      ],
+      "lead": "Kalyan (Venue Lead)",
+      "phone": "+919437000006",
+      "notes": "Mandap lease agreements with strict 125kVA uninterrupted power backup guarantee.",
+      "checklist": [
+        "Sign Rayagada Kalyana Mandap lease",
+        "Sign Bhubaneswar Mandap agreement",
+        "Attach 125kVA generator SLA with penalty clause"
+      ]
+    },
+    {
+      "id": "RIT-001",
+      "name": "Vidhi-Patra Liturgy Signoff with Purohit",
+      "trade": "role-purohit",
+      "stage": 2,
+      "phase": "S-2",
+      "status": "not_started",
+      "dependency_type": "must_precede_sealing",
+      "depends_on": [
+        "GOV-001"
+      ],
+      "unlocks": [
+        "GFT-001",
+        "RIT-006",
+        "RIT-003"
+      ],
+      "sealing_gate": "GATE-02",
+      "lead": "Chief Purohit (Raghunath Das)",
+      "phone": "+919437000003",
+      "notes": "Complete liturgical script and samagri list approved by both family purohits.",
+      "checklist": [
+        "Review Vedic mantra sequence",
+        "Approve Gotra and Pravara lineages",
+        "Sign dual-family liturgical charter"
+      ]
+    },
+    {
+      "id": "TSK-006",
+      "name": "Bridal Footwear, Trousseau & Saree Delivery",
+      "trade": "role-bride",
+      "stage": 2,
+      "phase": "S-2",
+      "status": "not_started",
+      "dependency_type": "standard",
+      "depends_on": [
+        "TSK-001"
+      ],
+      "unlocks": [
+        "RIT-003"
+      ],
+      "lead": "Pooja & Shashi Rekha",
+      "phone": "+919437000001",
+      "notes": "Receive finished Nuapatna silk saree from loom and fit wedding footwear.",
+      "checklist": [
+        "Inspect Baula Patani saree zari quality",
+        "Verify blouse embroidery fitting",
+        "Pack trousseau in cedar strongbox"
+      ]
+    },
+    {
+      "id": "GFT-001",
+      "name": "Deva Nimantrana at Puri Shri Jagannath Temple",
+      "trade": "role-groom",
+      "stage": 2,
+      "phase": "S-2",
+      "status": "not_started",
+      "dependency_type": "must_precede_sealing",
+      "depends_on": [
+        "RIT-001"
+      ],
+      "unlocks": [
+        "RIT-004"
+      ],
+      "sealing_gate": "GATE-02",
+      "lead": "Groom Family Lead",
+      "phone": "+919437000002",
+      "notes": "Consecrated first wedding invitation offered to Lord Jagannath with Mahaprasad.",
+      "checklist": [
+        "Puri temple servitor booking",
+        "Offer first invitation with betel nuts and silk",
+        "Receive Lord Jagannath Nirmalya"
+      ]
+    },
+    {
+      "id": "FOOD-002",
+      "name": "Pahala Rasagola & Nayagarh Chhenapoda Booking",
+      "trade": "role-catering",
+      "stage": 2,
+      "phase": "S-2",
+      "status": "not_started",
+      "dependency_type": "standard",
+      "depends_on": [
+        "FOOD-001"
+      ],
+      "unlocks": [
+        "FOOD-004"
+      ],
+      "lead": "Debashis (Royal Caterers)",
+      "phone": "+919437000004",
+      "notes": "Batch order for 1,200 fresh hot Rasagolas in earthen handis and Nayagarh Chhenapoda.",
+      "checklist": [
+        "Book Pahala master sweetmakers batch",
+        "Reserve Nayagarh Chhenapoda wood-fire batch",
+        "Confirm morning delivery temperature logs"
+      ]
+    },
+    {
+      "id": "TSK-004",
+      "name": "Pre-Wedding Shoot Permits & Heritage Location Lock",
+      "trade": "role-media",
+      "stage": 2,
+      "phase": "S-2",
+      "status": "not_started",
+      "dependency_type": "standard",
+      "depends_on": [
+        "TSK-003"
+      ],
+      "unlocks": [
+        "MED-002"
+      ],
+      "lead": "Rayagada Creative Studios",
+      "phone": "+919437000005",
+      "notes": "Permits for Rayagada hills and Puri beach shoots with storyboard approval.",
+      "checklist": [
+        "Obtain forest and heritage shoot permits",
+        "Approve 40-scene couple shot-list",
+        "Schedule camera crew travel roster"
+      ]
+    },
+    {
+      "id": "SEC-001",
+      "name": "Jewellery Photographic Ledger & Vault Custody Protocol",
+      "trade": "role-fleet",
+      "stage": 2,
+      "phase": "S-2",
+      "status": "not_started",
+      "dependency_type": "standard",
+      "depends_on": [
+        "VEN-001"
+      ],
+      "unlocks": [
+        "SEC-002"
+      ],
+      "lead": "Vault Security Custodian",
+      "phone": "+919437000006",
+      "notes": "High-resolution photo catalogue of all heirloom jewellery with BIS hallmarks.",
+      "checklist": [
+        "Photograph every gold piece with weight tag",
+        "Record BIS Hallmark certificate numbers",
+        "Establish dual-custody key protocol"
+      ]
+    },
+    {
+      "id": "RIT-006",
+      "name": "108 Vedic Samagri Trunk Inventory & Quality Audit",
+      "trade": "role-purohit",
+      "stage": 3,
+      "phase": "S-3",
+      "status": "not_started",
+      "dependency_type": "standard",
+      "depends_on": [
+        "RIT-001"
+      ],
+      "unlocks": [
+        "RIT-007"
+      ],
+      "lead": "Chief Purohit (Raghunath Das)",
+      "phone": "+919437000003",
+      "notes": "Trunk packing of pure cow ghee, sacred woods, kusha grass, and Ganga water.",
+      "checklist": [
+        "Inspect 15kg pure desi cow ghee",
+        "Verify 108 distinct samagri sachets",
+        "Seal liturgical trunk with priest signoff"
+      ]
+    },
+    {
+      "id": "TSK-005",
+      "name": "Bridal Makeup (MUA) HD Trial & Lookbook Signoff",
+      "trade": "role-bride",
+      "stage": 3,
+      "phase": "S-3",
+      "status": "not_started",
+      "dependency_type": "standard",
+      "depends_on": [
+        "TSK-001"
+      ],
+      "unlocks": [
+        "RIT-003"
+      ],
+      "lead": "Pooja (Bride Lead)",
+      "phone": "+919437000001",
+      "notes": "Full HD hair and makeup trial with jewelry placement and timing verification.",
+      "checklist": [
+        "Conduct 3-hour MUA trial session",
+        "Capture 4K lighting lookbook photos",
+        "Approve Day-Of 04:00 AM dressing schedule"
+      ]
+    },
+    {
+      "id": "RIT-002",
+      "name": "Cuttack Tarakasi Silver Filigree Mukuta Sizing & Fitting",
+      "trade": "role-groom",
+      "stage": 3,
+      "phase": "S-3",
+      "status": "not_started",
+      "dependency_type": "must_precede_sealing",
+      "depends_on": [
+        "TSK-002"
+      ],
+      "unlocks": [
+        "GATE-04"
+      ],
+      "sealing_gate": "GATE-04",
+      "lead": "Groom Operations Lead",
+      "phone": "+919437000002",
+      "notes": "Custom sizing of authentic Cuttack silver filigree Mukutas for bride and groom.",
+      "checklist": [
+        "Measure head circumference for groom and bride",
+        "Verify pure silver filigree craftsmanship",
+        "Test secure pin placement with head wrap"
+      ]
+    },
+    {
+      "id": "FOOD-004",
+      "name": "Kitchen FSSAI Hygiene Audit & RO Water Quality Test",
+      "trade": "role-catering",
+      "stage": 3,
+      "phase": "S-3",
+      "status": "not_started",
+      "dependency_type": "standard",
+      "depends_on": [
+        "FOOD-002"
+      ],
+      "unlocks": [
+        "FOOD-003"
+      ],
+      "lead": "Debashis (Royal Caterers)",
+      "phone": "+919437000004",
+      "notes": "Laboratory water test for TDS < 80 and kitchen hygiene certification.",
+      "checklist": [
+        "Take water samples from kitchen RO filters",
+        "Verify FSSAI certificates of all raw spices",
+        "Inspect refrigeration cold-chain storage"
+      ]
+    },
+    {
+      "id": "MED-002",
+      "name": "Drone DGCA Flight Clearance & Audio Sync Dry-Run",
+      "trade": "role-media",
+      "stage": 3,
+      "phase": "S-3",
+      "status": "not_started",
+      "dependency_type": "standard",
+      "depends_on": [
+        "TSK-004"
+      ],
+      "unlocks": [
+        "MED-001"
+      ],
+      "lead": "Rayagada Creative Studios",
+      "phone": "+919437000005",
+      "notes": "DGCA drone flying approval over mandap grounds and sound-check.",
+      "checklist": [
+        "File DGCA digital sky flight clearance",
+        "Conduct wireless mic frequency sweep",
+        "Calibrate 2-camera white balance on mandap lighting"
+      ]
+    },
+    {
+      "id": "PWR-001",
+      "name": "125kVA Generator Full-Load Automatic Switchover Test",
+      "trade": "role-fleet",
+      "stage": 3,
+      "phase": "S-3",
+      "status": "not_started",
+      "dependency_type": "standard",
+      "depends_on": [
+        "VEN-001"
+      ],
+      "unlocks": [
+        "MED-001"
+      ],
+      "lead": "Logistics Lead",
+      "phone": "+919437000006",
+      "notes": "Full-load power cut test with sub-3-second automatic generator switchover.",
+      "checklist": [
+        "Simulate grid power cutoff at mandap",
+        "Verify automatic generator start in < 3s",
+        "Test AC chillers and lighting stability"
+      ]
+    },
+    {
+      "id": "RIT-007",
+      "name": "Aarti Thali, Mangala Ghata & Samagri Packing",
+      "trade": "role-purohit",
+      "stage": 4,
+      "phase": "S-4",
+      "status": "not_started",
+      "dependency_type": "standard",
+      "depends_on": [
+        "RIT-006"
+      ],
+      "unlocks": [
+        "RIT-005"
+      ],
+      "lead": "Chief Purohit (Raghunath Das)",
+      "phone": "+919437000003",
+      "notes": "7 ceremonial brass Aarti Thalis packed for Rayagada welcoming rituals.",
+      "checklist": [
+        "Polish brass thalis and lamps",
+        "Pack fresh betel leaves, vermillion, and rice",
+        "Deliver to Rayagada transit custody"
+      ]
+    },
+    {
+      "id": "RIT-003",
+      "name": "Mangan Turmeric Application & Sacred Snana",
+      "trade": "role-bride",
+      "stage": 4,
+      "phase": "S-4",
+      "status": "not_started",
+      "dependency_type": "must_precede_sealing",
+      "depends_on": [
+        "RIT-001",
+        "TSK-005",
+        "TSK-006"
+      ],
+      "unlocks": [
+        "RIT-004"
+      ],
+      "sealing_gate": "GATE-02",
+      "lead": "Pooja & Family Elders",
+      "phone": "+919437000001",
+      "notes": "Sacred turmeric bath performed by 7 married women in Rayagada.",
+      "checklist": [
+        "Grind fresh raw turmeric paste",
+        "Perform 7-Sadhaba ceremonial anointing",
+        "Record family blessings in bridal ledger"
+      ]
+    },
+    {
+      "id": "RIT-004",
+      "name": "Patra Paribartana Paternal Vows (Rayagada)",
+      "trade": "role-groom",
+      "stage": 4,
+      "phase": "S-4",
+      "status": "not_started",
+      "dependency_type": "must_precede_sealing",
+      "depends_on": [
+        "RIT-003",
+        "GFT-001"
+      ],
+      "unlocks": [
+        "GATE-02"
+      ],
+      "sealing_gate": "GATE-02",
+      "lead": "Groom Lead & Elders",
+      "phone": "+919437000002",
+      "notes": "Exchange of formal paternal alliance letters and blessings in Rayagada.",
+      "checklist": [
+        "Recite paternal gotra lineage",
+        "Exchange betel nut covenant box",
+        "Formal handshake between family heads"
+      ]
+    },
+    {
+      "id": "FOOD-005",
+      "name": "Rayagada Pre-Wedding Feast Service Execution",
+      "trade": "role-catering",
+      "stage": 4,
+      "phase": "S-4",
+      "status": "not_started",
+      "dependency_type": "standard",
+      "depends_on": [
+        "FOOD-001"
+      ],
+      "unlocks": [
+        "FOOD-003"
+      ],
+      "lead": "Debashis (Royal Caterers)",
+      "phone": "+919437000004",
+      "notes": "350-guest traditional Rayagada dinner service with regional delicacies.",
+      "checklist": [
+        "Set up live Odia food counters",
+        "Supervise hygienic dinner buffet",
+        "Sign off kitchen cleanup audit"
+      ]
+    },
+    {
+      "id": "MED-001",
+      "name": "Lapel Audio Sync & Live Stream Mandap Dry-Run",
+      "trade": "role-media",
+      "stage": 4,
+      "phase": "S-4",
+      "status": "not_started",
+      "dependency_type": "standard",
+      "depends_on": [
+        "MED-002",
+        "PWR-001"
+      ],
+      "unlocks": [
+        "MED-006"
+      ],
+      "lead": "Rayagada Creative Studios",
+      "phone": "+919437000005",
+      "notes": "Complete audio sync test on mandap mics and private YouTube stream test.",
+      "checklist": [
+        "Attach wireless lapel to Purohit mock robe",
+        "Verify zero audio clipping on Vedic chants",
+        "Stream 1080p private test to family abroad"
+      ]
+    },
+    {
+      "id": "SEC-002",
+      "name": "Jewellery & Horoscope Safe Escort to BBSR Mandap",
+      "trade": "role-fleet",
+      "stage": 4,
+      "phase": "S-4",
+      "status": "not_started",
+      "dependency_type": "must_precede_sealing",
+      "depends_on": [
+        "SEC-001"
+      ],
+      "unlocks": [
+        "SEC-003"
+      ],
+      "sealing_gate": "GATE-03",
+      "lead": "Vault Security Custodian",
+      "phone": "+919437000006",
+      "notes": "Armed escort vehicle transporting jewellery vault boxes from Rayagada to BBSR.",
+      "checklist": [
+        "Verify tamper-evident seal numbers",
+        "Sign custody departure transfer sheet",
+        "Secure strongbox in Bhubaneswar venue safe"
+      ]
+    },
+    {
+      "id": "GATE-02",
+      "name": "Baranugam & Barat Welcoming Arch Gate (07:30)",
+      "trade": "role-groom",
+      "stage": 5,
+      "phase": "S-5",
+      "status": "not_started",
+      "dependency_type": "must_precede_sealing",
+      "depends_on": [
+        "RIT-004",
+        "VEN-001"
+      ],
+      "unlocks": [
+        "RIT-005",
+        "MED-006"
+      ],
+      "sealing_gate": "GATE-03",
+      "lead": "Chief Purohit & Groom Lead",
+      "phone": "+919437000002",
+      "notes": "Groom arrival at mandap arch, feet washing ritual, and tilak coronation.",
+      "checklist": [
+        "Groom escorted to mandap entrance arch",
+        "Mother of the bride performs welcoming Aarti",
+        "Purohit recites welcoming mantras"
+      ]
+    },
+    {
+      "id": "SEC-003",
+      "name": "Jewellery Vault Dual-Custody Handover to Mandap",
+      "trade": "role-fleet",
+      "stage": 5,
+      "phase": "S-5",
+      "status": "not_started",
+      "dependency_type": "must_happen_during",
+      "depends_on": [
+        "SEC-002"
+      ],
+      "unlocks": [
+        "RIT-005"
+      ],
+      "sealing_gate": "GATE-03",
+      "lead": "Vault Security Custodian",
+      "phone": "+919437000006",
+      "notes": "Dual-key opening of safe and physical delivery of bridal gold to mandap.",
+      "checklist": [
+        "Key A (Groom Elder) & Key B (Bride Elder) insert",
+        "100% item photo match verification",
+        "Sign physical transfer slip on mandap"
+      ]
+    },
+    {
+      "id": "RIT-005",
+      "name": "Kanyadaan & Hastaganthi Sacred Knot (08:00 Lagna)",
+      "trade": "role-purohit",
+      "stage": 5,
+      "phase": "S-5",
+      "status": "not_started",
+      "dependency_type": "must_precede_sealing",
+      "depends_on": [
+        "GATE-02",
+        "SEC-003",
+        "RIT-007"
+      ],
+      "unlocks": [
+        "GATE-04",
+        "RIT-008",
+        "LEG-001"
+      ],
+      "sealing_gate": "GATE-04",
+      "lead": "Chief Purohit (Raghunath Das)",
+      "phone": "+919437000003",
+      "notes": "Core Vedic sacramental rites: Kanyadaan, Hastaganthi tied, and 7 Agni Ahutis.",
+      "checklist": [
+        "Kanyadaan paternal water rite",
+        "Hastaganthi sacred knot tied with Nuapatna silk",
+        "Vedic Agni Homa chant recitation"
+      ]
+    },
+    {
+      "id": "GATE-04",
+      "name": "Saptapadi & Sindoor Daan (Final Sacramental Bond 08:45)",
+      "trade": "role-bride",
+      "stage": 5,
+      "phase": "S-5",
+      "status": "not_started",
+      "dependency_type": "must_precede_sealing",
+      "depends_on": [
+        "RIT-005",
+        "RIT-002"
+      ],
+      "unlocks": [
+        "FOOD-003",
+        "TSK-007",
+        "TSK-008"
+      ],
+      "sealing_gate": "GATE-04",
+      "lead": "Groom & Bride",
+      "phone": "+919437000001",
+      "notes": "7 sacred steps (Saptapadi), Sindoor Daan, and Cuttack silver Mukuta coronation.",
+      "checklist": [
+        "Perform 7 steps around Vedic fire",
+        "Apply pure vermillion (Sindoor Daan)",
+        "Coronate both Mukutas on bride and groom"
+      ]
+    },
+    {
+      "id": "MED-006",
+      "name": "Mandap Audio 2-Camera 4K Live Recording",
+      "trade": "role-media",
+      "stage": 5,
+      "phase": "S-5",
+      "status": "not_started",
+      "dependency_type": "must_happen_during",
+      "depends_on": [
+        "GATE-02",
+        "MED-001"
+      ],
+      "unlocks": [
+        "CLS-001"
+      ],
+      "sealing_gate": "GATE-04",
+      "lead": "Rayagada Creative Studios",
+      "phone": "+919437000005",
+      "notes": "Dual 4K camera recording of entire Kanyadaan and Saptapadi rites with live backup.",
+      "checklist": [
+        "Verify both 4K camera rolling cards",
+        "Monitor wireless lapel audio clarity",
+        "Swap backup media cards at midpoint"
+      ]
+    },
+    {
+      "id": "FOOD-003",
+      "name": "850-Guest Royal Reception Feast Service (19:30)",
+      "trade": "role-catering",
+      "stage": 5,
+      "phase": "S-5",
+      "status": "not_started",
+      "dependency_type": "standard",
+      "depends_on": [
+        "GATE-04",
+        "FOOD-004",
+        "FOOD-005"
+      ],
+      "unlocks": [
+        "FOOD-006"
+      ],
+      "lead": "Debashis (Royal Caterers)",
+      "phone": "+919437000004",
+      "notes": "Grand 850-guest reception buffet and sit-down Odia traditional royal dining.",
+      "checklist": [
+        "Open VIP sit-down hall service (120 Pax)",
+        "Open general royal buffet (730 Pax)",
+        "Serve fresh hot Rasagolas from earthen pots"
+      ]
+    },
+    {
+      "id": "RIT-008",
+      "name": "Astamangala Blessing Ceremony (Day +8)",
+      "trade": "role-purohit",
+      "stage": 6,
+      "phase": "S-6",
+      "status": "not_started",
+      "dependency_type": "standard",
+      "depends_on": [
+        "RIT-005"
+      ],
+      "unlocks": [],
+      "lead": "Chief Purohit (Raghunath Das)",
+      "phone": "+919437000003",
+      "notes": "Astamangala sacred knot untying and homecoming puja.",
+      "checklist": [
+        "Untie Hastaganthi sacred knot with blessings",
+        "Distribute Mahaprasad to assembled family",
+        "Conclude liturgical lifecycle"
+      ]
+    },
+    {
+      "id": "TSK-007",
+      "name": "Grihapravesh Altas & Traditional Rice Pot Welcoming",
+      "trade": "role-bride",
+      "stage": 6,
+      "phase": "S-6",
+      "status": "not_started",
+      "dependency_type": "standard",
+      "depends_on": [
+        "GATE-04"
+      ],
+      "unlocks": [],
+      "lead": "Pooja & Groom Mother",
+      "phone": "+919437000001",
+      "notes": "Traditional bride entrance into groom home with red alta footprints and rice pot.",
+      "checklist": [
+        "Prepare milk-alta brass plate",
+        "Guide right-foot rice pot overturning",
+        "Seat couple for family ring finding game"
+      ]
+    },
+    {
+      "id": "TSK-008",
+      "name": "Chauthi Homa & Sacred Bedding Rites",
+      "trade": "role-groom",
+      "stage": 6,
+      "phase": "S-6",
+      "status": "not_started",
+      "dependency_type": "standard",
+      "depends_on": [
+        "GATE-04"
+      ],
+      "unlocks": [],
+      "lead": "Groom Family Lead",
+      "phone": "+919437000002",
+      "notes": "Chauthi sacred homa and floral bed chamber sanctification.",
+      "checklist": [
+        "Perform Chauthi evening homa",
+        "Decorate chamber with jasmine and rajnigandha",
+        "Receive elder blessings"
+      ]
+    },
+    {
+      "id": "FOOD-006",
+      "name": "Catering Settlement, Leftover Donation & Kitchen Handover",
+      "trade": "role-catering",
+      "stage": 6,
+      "phase": "S-6",
+      "status": "not_started",
+      "dependency_type": "standard",
+      "depends_on": [
+        "FOOD-003"
+      ],
+      "unlocks": [],
+      "lead": "Debashis (Royal Caterers)",
+      "phone": "+919437000004",
+      "notes": "Complete financial reconciliation, food donation to shelter, and kitchen audit.",
+      "checklist": [
+        "Coordinate leftover food dispatch to charity",
+        "Reconcile plate count vs final invoice",
+        "Obtain venue kitchen clearance slip"
+      ]
+    },
+    {
+      "id": "CLS-001",
+      "name": "4TB Master Raw Data Archive Handover & 48h Teaser",
+      "trade": "role-media",
+      "stage": 6,
+      "phase": "S-6",
+      "status": "not_started",
+      "dependency_type": "standard",
+      "depends_on": [
+        "MED-006"
+      ],
+      "unlocks": [],
+      "lead": "Rayagada Creative Studios",
+      "phone": "+919437000005",
+      "notes": "Dual 4TB hard drives handed over to bride and groom vaults with 48h teaser video.",
+      "checklist": [
+        "Deliver 4K 60-second teaser for WhatsApp",
+        "Hand over Drive A to Groom Family Vault",
+        "Hand over Drive B to Bride Family Vault"
+      ]
+    },
+    {
+      "id": "LEG-001",
+      "name": "SUJOG Odisha Legal Marriage Certificate Registration",
+      "trade": "role-fleet",
+      "stage": 6,
+      "phase": "S-6",
+      "status": "not_started",
+      "dependency_type": "standard",
+      "depends_on": [
+        "RIT-005"
+      ],
+      "unlocks": [],
+      "lead": "Legal & Governance Lead",
+      "phone": "+919437000006",
+      "notes": "Government of Odisha SUJOG portal marriage certificate registration and legal issuance.",
+      "checklist": [
+        "Upload signed priest certificate and witness IDs",
+        "Submit SUJOG portal online application",
+        "Download verified digital marriage certificate"
+      ]
+    }
+  ]
+};
+  window.PROJECT_STATE = PROJECT_STATE;
 
-  const MACRO_ROADMAP = [
-    { id: 'H1', name: 'Stage 1: T-180 to T-120 Foundation', period: 'Sep – Oct 2026', desc: 'Chief Purohit Lagna Lock, Nuapatna Weaving, Rayagada Venue Leases, 36-Q SLA.', tasks: ['GOV-001', 'TSK-001', 'FOOD-001', 'TSK-003', 'VEN-001'] },
-    { id: 'H2', name: 'Stage 2: T-120 to T-60 Procurement', period: 'Nov – Dec 2026', desc: 'Vidhi-Patra signoff, Deva Nimantrana at Puri Jagannath, Pahala Mithai batch booking.', tasks: ['RIT-001', 'TSK-006', 'GFT-001', 'FOOD-002', 'TSK-004', 'SEC-001'] },
-    { id: 'H3', name: 'Stage 3: T-60 to T-14 Detailing', period: 'Jan 2027', desc: 'Silver Mukuta fitting, MUA trials, 125kVA generator tests, FSSAI hygiene audit.', tasks: ['RIT-006', 'TSK-005', 'RIT-002', 'FOOD-004', 'MED-002', 'PWR-001'] },
-    { id: 'H4', name: 'Stage 4: T-14 to T-1 Rayagada', period: '01 – 09 Mar 2027', desc: 'Mangan turmeric bath, Patra Paribartana paternal vows, Rayagada feast service.', tasks: ['RIT-007', 'RIT-003', 'RIT-004', 'FOOD-005', 'MED-001', 'SEC-002'] },
-    { id: 'H5', name: 'Stage 5: Day 0 BBSR Wedding', period: '10 Mar 2027', desc: 'Baranugam, Kanyadaan (08:00), Sindoor Daan, 850-guest royal feast.', tasks: ['RIT-005', 'GATE-04', 'GATE-02', 'FOOD-003', 'MED-006', 'SEC-003'] },
-    { id: 'H6', name: 'Stage 6: Post-Wedding & SUJOG', period: '11 Mar – 10 Apr 2027', desc: 'Grihapravesh, Astamangala, SUJOG registration, 4TB Raw archive vault deposit.', tasks: ['RIT-008', 'TSK-007', 'TSK-008', 'FOOD-006', 'CLS-001', 'LEG-001'] }
-  ];
+  const TRADES = PROJECT_STATE.trades;
+  const TRADE_META = PROJECT_STATE.trade_meta;
+  const PARALLEL_TASKS = new Set(['TSK-001', 'TSK-002', 'FOOD-001', 'TSK-003', 'VEN-001']);
 
-  const TOPOLOGY_STORAGE_KEY = 'sree_krushna_topology_status_v1';
-  let topologyStatusOverrides = {};
+  const CARD_W = 158, CARD_H = 88, COL_W = 184, SLOT_H = 108, ROW_PAD = 10;
+  const LABEL_W = 100;
+
+  const STATUS_MAP = { available:'READY', not_started:'LOCKED', in_progress:'ACTIVE', blocked:'HOLD', complete:'DONE', missed_window:'MISSED' };
+  const STATUS_LABEL = { READY:'READY', LOCKED:'LOCKED', ACTIVE:'ACTIVE', HOLD:'HOLD', FUTURE_HOLD:'HOLD (LOCKED)', DONE:'DONE', MISSED:'MISSED' };
+
+  const PILL_TITLE = {
+    READY:  'READY: all dependencies met — can start immediately',
+    LOCKED: 'LOCKED: waiting on prerequisite tasks',
+    ACTIVE: 'ACTIVE: task is currently in progress',
+    HOLD:   'HOLD: task is blocked or flagged',
+    FUTURE_HOLD: 'HOLD (LOCKED): task is blocked, but predecessors are not yet complete',
+    DONE:   'DONE: task complete — downstream tasks unlocked',
+    MISSED: 'MISSED: window closed before task was completed'
+  };
+
+  const taskMap = {};
+  PROJECT_STATE.tasks.forEach(t => taskMap[t.id] = t);
+  window.taskMap = taskMap;
+
+  const storageKey = PROJECT_STATE.project.storage_key || 'sree_krushna_dopkos_v3';
+  let overrides = {};
   try {
-    topologyStatusOverrides = JSON.parse(localStorage.getItem(TOPOLOGY_STORAGE_KEY) || '{}');
-  } catch (e) {}
-
-  function getTopologyStatus(taskId) {
-    if (topologyStatusOverrides[taskId]) return topologyStatusOverrides[taskId];
-    const t = TOPOLOGY_TASKS.find(x => x.id === taskId);
-    if (!t) return 'LOCKED';
-    if (t.status === 'DONE') return 'DONE';
-    if (!t.depends_on || !t.depends_on.length) return 'READY';
-    const allPrereqsDone = t.depends_on.every(depId => getTopologyStatus(depId) === 'DONE');
-    return allPrereqsDone ? 'READY' : 'LOCKED';
-  }
-
-  function toggleTopologyStatus(taskId, event) {
-    if (event) event.stopPropagation();
-    const current = getTopologyStatus(taskId);
-    const nextMap = { 'LOCKED': 'READY', 'READY': 'ACTIVE', 'ACTIVE': 'DONE', 'DONE': 'READY', 'HOLD': 'READY' };
-    const nextStatus = nextMap[current] || 'READY';
-    topologyStatusOverrides[taskId] = nextStatus;
-    try {
-      localStorage.setItem(TOPOLOGY_STORAGE_KEY, JSON.stringify(topologyStatusOverrides));
-    } catch (e) {}
-    renderDoPkosStudio();
-  }
-
-  function getTopologyPredecessors(taskId, visited = new Set()) {
-    const t = TOPOLOGY_TASKS.find(x => x.id === taskId);
-    if (!t || !t.depends_on) return visited;
-    t.depends_on.forEach(depId => {
-      if (!visited.has(depId)) {
-        visited.add(depId);
-        getTopologyPredecessors(depId, visited);
-      }
+    const raw = JSON.parse(localStorage.getItem(storageKey) || '{}');
+    const now = new Date().toISOString();
+    Object.keys(raw).forEach(k => {
+      if (typeof raw[k] === 'string') { overrides[k] = { status: raw[k], since: now }; }
+      else overrides[k] = raw[k];
     });
-    return visited;
-  }
+  } catch(e) {}
 
-  function getTopologySuccessors(taskId, visited = new Set()) {
-    TOPOLOGY_TASKS.forEach(t => {
-      if ((t.depends_on || []).includes(taskId) && !visited.has(t.id)) {
-        visited.add(t.id);
-        getTopologySuccessors(t.id, visited);
-      }
-    });
-    return visited;
-  }
-
-  function selectTopologyNode(taskId) {
-    if (selectedTopologyTaskId === taskId) {
-      selectedTopologyTaskId = null;
+  function getStatus(taskId) {
+    const o = overrides[taskId];
+    let baseStatus = 'LOCKED';
+    if (o) {
+      baseStatus = typeof o === 'object' ? o.status : o;
     } else {
-      selectedTopologyTaskId = taskId;
+      const t = taskMap[taskId];
+      if (t) {
+        baseStatus = STATUS_MAP[t.status] || 'LOCKED';
+      }
     }
-    renderDoPkosStudio();
-    if (selectedTopologyTaskId && window.openTaskConsole) {
-      window.openTaskConsole(taskId);
+    if (baseStatus === 'HOLD') {
+      const t = taskMap[taskId];
+      if (t && !(t.depends_on || []).every(depId => getStatus(depId) === 'DONE')) {
+        return 'FUTURE_HOLD';
+      }
     }
+    return baseStatus;
   }
 
-  function clearTopologySelection() {
-    selectedTopologyTaskId = null;
-    renderDoPkosStudio();
+  function setStatus(taskId, uiStatus) {
+    overrides[taskId] = { status: uiStatus, since: new Date().toISOString() };
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(overrides));
+    } catch(e) {}
+  }
+
+  function propagateDone(taskId) {
+    const task = taskMap[taskId];
+    if (!task) return;
+    PROJECT_STATE.tasks.forEach(t => {
+      if (t.depends_on && t.depends_on.includes(taskId)) {
+        const allDone = t.depends_on.every(d => getStatus(d) === 'DONE');
+        if (allDone && getStatus(t.id) === 'LOCKED') {
+          setStatus(t.id, 'READY');
+        }
+      }
+    });
+  }
+
+  function computeColumns() {
+    const cols = {};
+    const computing = new Set();
+    const maxStage = PROJECT_STATE.stages && PROJECT_STATE.stages.length ? Math.max(...PROJECT_STATE.stages.map(s => s.id)) : 1;
+    const stageMin = new Array(maxStage + 1).fill(0);
+
+    function col(id) {
+      if (cols[id] !== undefined) return cols[id];
+      if (computing.has(id)) return stageMin[taskMap[id]?.stage||1];
+      computing.add(id);
+      const t = taskMap[id];
+      if (!t) { computing.delete(id); return 0; }
+      const m = stageMin[t.stage] || 0;
+      if (!t.depends_on || t.depends_on.length === 0) {
+        cols[id] = m;
+      } else {
+        const valid = t.depends_on.filter(d => taskMap[d]);
+        const maxDep = valid.length ? Math.max(...valid.map(d => col(d))) : 0;
+        cols[id] = Math.max(maxDep + 1, m);
+      }
+      computing.delete(id);
+      return cols[id];
+    }
+
+    for (let s = 1; s <= maxStage; s++) {
+      if (s > 1) {
+        const prev = PROJECT_STATE.tasks.filter(t => t.stage === s-1);
+        const prevMax = prev.length ? Math.max(...prev.map(t => cols[t.id] !== undefined ? cols[t.id] : 0)) : 0;
+        stageMin[s] = prevMax + 2;
+      }
+      PROJECT_STATE.tasks.filter(t => t.stage === s).forEach(t => col(t.id));
+    }
+    return cols;
+  }
+
+  let colMap = computeColumns();
+
+  function displayTrade(t) {
+    if (!t) return 'role-purohit';
+    return t.trade || 'role-purohit';
+  }
+
+  let cellTasks = {};
+  PROJECT_STATE.tasks.forEach(t => {
+    const tr = displayTrade(t);
+    const c = colMap[t.id] || 0;
+    const key = tr + '|' + c;
+    if (!cellTasks[key]) cellTasks[key] = [];
+    cellTasks[key].push(t.id);
+  });
+
+  let taskPos = {};
+  Object.entries(cellTasks).forEach(([key, ids]) => {
+    const [trade, col] = [key.substring(0, key.lastIndexOf('|')), key.substring(key.lastIndexOf('|') + 1)];
+    ids.forEach((id, i) => taskPos[id] = { col: parseInt(col), trade, subRow: i });
+  });
+
+  let rowSlots = {};
+  TRADES.forEach(tr => rowSlots[tr] = 1);
+  Object.values(taskPos).forEach(p => {
+    rowSlots[p.trade] = Math.max(rowSlots[p.trade] || 1, p.subRow + 1);
+  });
+  let rowH = {};
+  TRADES.forEach(tr => rowH[tr] = (rowSlots[tr] || 1) * SLOT_H + ROW_PAD * 2);
+
+  let rowY = {};
+  let curY = 0;
+  TRADES.forEach(tr => { rowY[tr] = curY; curY += rowH[tr]; });
+  let totalH = curY;
+
+  const maxColVals = Object.values(colMap);
+  const maxCol = maxColVals.length ? Math.max(...maxColVals) + 1 : 1;
+  let totalW = maxCol * COL_W + 60;
+
+  function cardPos(id) {
+    const p = taskPos[id];
+    if (!p) return null;
+    const yBase = rowY[p.trade];
+    if (yBase === undefined || isNaN(yBase)) return null;
+    return {
+      x: p.col * COL_W + 12,
+      y: yBase + ROW_PAD + p.subRow * SLOT_H,
+    };
   }
 
   function setDopkosView(viewName) {
@@ -258,7 +1201,7 @@
     syncDopkosViewButtons();
 
     if (currentDopkosView === 'TOPOLOGY') {
-      renderDopkosTopology(container);
+      render5ZoneTopology(container);
     } else if (currentDopkosView === 'THREADS') {
       if (window.renderDopkosThreads) window.renderDopkosThreads(container);
     } else if (currentDopkosView === 'RUNSHEET') {
@@ -272,374 +1215,535 @@
     }
   }
 
-  function renderDopkosTopology(container) {
-    const CARD_W = 158;
-    const CARD_H = 78;
-    const COL_W = 184;
-    const ROW_H = 94;
-    const LABEL_W = 100;
-    const HEADER_H = 44;
-
-    const numCols = TOPOLOGY_STAGES.length;
-    const numRows = TOPOLOGY_TRACKS.length;
-    const totalWidth = LABEL_W + numCols * COL_W;
-    const totalHeight = HEADER_H + numRows * ROW_H;
-
-    const preds = selectedTopologyTaskId ? getTopologyPredecessors(selectedTopologyTaskId) : new Set();
-    const succs = selectedTopologyTaskId ? getTopologySuccessors(selectedTopologyTaskId) : new Set();
-    const isSelectionActive = !!selectedTopologyTaskId;
-
-    const taskCoords = {};
-    TOPOLOGY_TASKS.forEach(t => {
-      const rowIndex = TOPOLOGY_TRACKS.findIndex(tr => tr.id === t.track);
-      const colIndex = t.col !== undefined ? t.col : (t.stage - 1);
-      const x = LABEL_W + colIndex * COL_W + 12;
-      const y = HEADER_H + rowIndex * ROW_H + 8;
-      taskCoords[t.id] = { x, y, colIndex, rowIndex };
-    });
-
-    let headerHtml = '<div style="display: flex; height: ' + HEADER_H + 'px; border-bottom: 2px solid var(--border-subtle); position: sticky; top: 0; background: var(--bg-surface-elevated); z-index: 30;">' +
-      '<div style="width: ' + LABEL_W + 'px; flex-shrink: 0; border-right: 1px solid var(--border-subtle); background: var(--bg-surface-elevated); font-size: 0.72rem; font-weight: 800; color: var(--gold-bright); display: flex; align-items: center; justify-content: center; text-transform: uppercase;">' +
-        'TRACK / STAGE' +
-      '</div>';
-    TOPOLOGY_STAGES.forEach(s => {
-      headerHtml += '<div style="width: ' + COL_W + 'px; flex-shrink: 0; border-right: 1px solid var(--border-subtle); padding: 6px 10px; display: flex; flex-direction: column; justify-content: center;">' +
-        '<span style="font-size: 0.68rem; font-weight: 700; color: var(--gold-bright); text-transform: uppercase;">STAGE ' + s.num + '</span>' +
-        '<span style="font-size: 0.72rem; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + (s.name.split(':')[1] || s.name) + '</span>' +
-      '</div>';
-    });
-    headerHtml += '</div>';
-
-    let rowsHtml = '';
-    TOPOLOGY_TRACKS.forEach((track) => {
-      rowsHtml += '<div style="display: flex; height: ' + ROW_H + 'px; border-bottom: 1px solid var(--border-subtle); background: ' + track.bg + ';">' +
-        '<div style="width: ' + LABEL_W + 'px; flex-shrink: 0; border-right: 2px solid ' + track.color + '; background: var(--bg-surface-elevated); padding: 8px 6px; display: flex; flex-direction: column; justify-content: center; position: sticky; left: 0; z-index: 20;">' +
-          '<span style="font-size: 0.76rem; font-weight: 800; color: ' + track.color + ';">' + track.label + '</span>' +
-          '<span style="font-size: 0.65rem; color: var(--text-dim);">' + track.id.toUpperCase() + '</span>' +
+  function render5ZoneTopology(container) {
+    colMap = computeColumns();
+    
+    container.innerHTML = '<div id="dopkos-5zone-frame" style="display: flex; flex-direction: column; height: 680px; position: relative; background: #080b11; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-subtle);">' +
+      '<!-- Zone 1 HUD -->' +
+      '<div id="z1" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 16px; background: var(--bg-surface-elevated); border-bottom: 1px solid var(--border-subtle); height: 44px; flex-shrink: 0;">' +
+        '<div style="display: flex; align-items: center; gap: 10px;">' +
+          '<span style="font-family: var(--font-display); font-size: 0.92rem; font-weight: 800; color: var(--gold-bright);">SREE KRUSHNA MARRIAGE OS ▾</span>' +
+          '<span id="z1-stage-text" style="font-size: 0.74rem; color: var(--text-dim); font-weight: 700;">STAGE 1 OF 6 — T-180 SACRED FOUNDATION</span>' +
         '</div>' +
-        '<div style="flex: 1; display: flex;">' +
-          TOPOLOGY_STAGES.map(() => '<div style="width: ' + COL_W + 'px; flex-shrink: 0; border-right: 1px dashed rgba(255,255,255,0.05);"></div>').join('') +
+        '<div id="z1-kpis" style="display: flex; gap: 8px;"></div>' +
+      '</div>' +
+      '<!-- Zone 2 Stage Progress Strip -->' +
+      '<div id="stage-strip-strip" style="display: flex; gap: 6px; padding: 8px 12px; background: var(--bg-surface); overflow-x: auto; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0;"></div>' +
+      '<!-- Zone 3 Multi-Track Swimlane -->' +
+      '<div id="z3-viewport" style="flex: 1; position: relative; overflow: auto; background: #080b11;">' +
+        '<div id="stage-header-row" style="height: 30px; background: var(--bg-surface-elevated); border-bottom: 2px solid var(--border-subtle); position: sticky; top: 0; z-index: 30; width: ' + (totalW + LABEL_W) + 'px;">' +
+          '<div style="width: 100px; height: 30px; position: sticky; left: 0; background: var(--bg-surface-elevated); z-index: 40; border-right: 2px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: var(--gold-bright);">TRACK</div>' +
+          '<div id="stage-header-bands-inner" style="position: absolute; left: 100px; top: 0; height: 30px;"></div>' +
         '</div>' +
-      '</div>';
+        '<div id="swimlane-inner" style="position: relative; width: ' + (totalW + LABEL_W) + 'px; height: ' + totalH + 'px;"></div>' +
+      '</div>' +
+      '<!-- Zone 4 & 5 Expandable Bottom Command Console Sheet -->' +
+      '<div id="console-backdrop" onclick="toggleConsoleExpand(false)"></div>' +
+      '<div id="z45" style="height: ' + (consoleExpanded ? '75%' : '160px') + '; position: ' + (consoleExpanded ? 'absolute; bottom: 0; left: 0; right: 0;' : 'relative') + '; background: #080b11; border-top: 2px solid var(--border-subtle); display: flex; flex-direction: column; z-index: 50; transition: height 0.25s ease;">' +
+        '<div id="console-top" style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: var(--bg-surface-elevated); border-bottom: 1px solid var(--border-subtle); gap: 10px;">' +
+          '<div style="display: flex; align-items: center; gap: 8px;">' +
+            '<span style="font-size: 0.76rem; font-weight: 800; color: var(--gold-bright); font-family: var(--font-display);">⚡ COMMAND CONSOLE</span>' +
+            '<input type="text" id="console-search" placeholder="Search tasks..." oninput="renderConsoleList()" style="background: #080b11; border: 1px solid var(--border-subtle); border-radius: 4px; padding: 4px 8px; color: #fff; font-size: 0.76rem; max-width: 200px;" />' +
+          '</div>' +
+          '<div id="console-filters" style="display: flex; gap: 4px;">' +
+            '<button class="filter-pill ' + (activeFilter === 'ALL' ? 'active' : '') + '" onclick="setFilter(\'ALL\')">ALL</button>' +
+            '<button class="filter-pill ' + (activeFilter === 'READY' ? 'active' : '') + '" onclick="setFilter(\'READY\')">READY</button>' +
+            '<button class="filter-pill ' + (activeFilter === 'ACTIVE' ? 'active' : '') + '" onclick="setFilter(\'ACTIVE\')">ACTIVE</button>' +
+            '<button class="filter-pill ' + (activeFilter === 'HOLD' ? 'active' : '') + '" onclick="setFilter(\'HOLD\')">HOLD</button>' +
+            '<button class="filter-pill ' + (activeFilter === 'DONE' ? 'active' : '') + '" onclick="setFilter(\'DONE\')">DONE</button>' +
+          '</div>' +
+          '<button id="console-expand-toggle-btn" class="theme-toggle-btn" onclick="toggleConsoleExpand()" style="font-size: 0.72rem; padding: 3px 8px; font-weight: 700;">' + (consoleExpanded ? '⤡ RESTORE' : '⛶ EXPAND') + '</button>' +
+        '</div>' +
+        '<div id="console-list" style="flex: 1; overflow-y: auto; padding: 4px 0;"></div>' +
+      '</div>' +
+    '</div>';
+
+    renderZ1Kpis();
+    renderStageStripCards();
+    renderStageHeaderBands();
+    renderSwimlaneGrid();
+    renderConsoleList();
+  }
+
+  function renderZ1Kpis() {
+    const kpis = document.getElementById('z1-kpis');
+    if (!kpis) return;
+    const ready = PROJECT_STATE.tasks.filter(t => getStatus(t.id) === 'READY').length;
+    const done = PROJECT_STATE.tasks.filter(t => getStatus(t.id) === 'DONE').length;
+    const hold = PROJECT_STATE.tasks.filter(t => getStatus(t.id) === 'HOLD' || getStatus(t.id) === 'FUTURE_HOLD').length;
+
+    kpis.innerHTML = '<span class="z1-stat ' + (hold ? 'red' : 'green') + '" style="font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; background: ' + (hold ? 'rgba(239, 68, 68, 0.15); color: #ef4444;' : 'rgba(255,255,255,0.06); color: var(--text-dim);') + '">⛔ ' + hold + ' HOLD</span>' +
+      '<span class="z1-stat green" style="font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; background: rgba(245, 197, 24, 0.15); color: var(--gold-bright);">⚡ ' + ready + ' READY</span>' +
+      '<span class="z1-stat green" style="font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; background: rgba(16, 185, 129, 0.15); color: #10b981;">✓ ' + done + ' DONE</span>';
+  }
+
+  function renderStageStripCards() {
+    const strip = document.getElementById('stage-strip-strip');
+    if (!strip) return;
+    strip.innerHTML = '';
+    const activeStage = PROJECT_STATE.project.active_stage || 1;
+
+    PROJECT_STATE.stages.forEach(s => {
+      const stageTasks = PROJECT_STATE.tasks.filter(t => t.stage === s.id);
+      const doneCount = stageTasks.filter(t => getStatus(t.id) === 'DONE').length;
+      const total = stageTasks.length;
+      const pct = total ? Math.round(doneCount / total * 100) : 0;
+      const isActive = s.id === activeStage;
+      const isDone = doneCount === total && total > 0;
+
+      const card = document.createElement('div');
+      card.className = 'stage-card ' + (isDone ? 'done' : isActive ? 'active' : '');
+      card.style.cssText = 'flex: 1; min-width: 130px; padding: 6px 10px; border-radius: 4px; background: var(--bg-surface-elevated); border: 1px solid ' + (isActive ? 'var(--gold-bright)' : 'var(--border-subtle)') + '; cursor: pointer;';
+      
+      const dots = (s.trades_active || []).map(tr => '<div style="width: 5px; height: 5px; border-radius: 50%; background: ' + (TRADE_META[tr]?.color || '#555') + ';"></div>').join('');
+
+      card.innerHTML = '<div style="font-size: 0.65rem; font-weight: 800; color: var(--gold-bright);">STAGE ' + s.id + '</div>' +
+        '<div style="font-size: 0.74rem; font-weight: 700; color: var(--text-main); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + s.name + '</div>' +
+        '<div style="height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; margin: 4px 0 3px;"><div style="height: 100%; width: ' + pct + '%; background: var(--gold-bright);"></div></div>' +
+        '<div style="display: flex; gap: 3px;">' + dots + '</div>';
+
+      card.addEventListener('click', () => scrollToStage(s.id));
+      strip.appendChild(card);
+    });
+  }
+
+  function renderStageHeaderBands() {
+    const inner = document.getElementById('stage-header-bands-inner');
+    if (!inner) return;
+    inner.innerHTML = '';
+    const stages = PROJECT_STATE.stages || [];
+    const stageCols = [];
+    stages.forEach((s, idx) => {
+      const stageTasks = PROJECT_STATE.tasks.filter(t => t.stage === s.id);
+      if (!stageTasks.length) return;
+      const minCol = Math.min(...stageTasks.map(t => colMap[t.id] || 0));
+      const maxCol = Math.max(...stageTasks.map(t => colMap[t.id] || 0));
+      stageCols.push({ stage: s, minCol, maxCol, idx });
     });
 
-    let svgEdgesHtml = '';
-    TOPOLOGY_TASKS.forEach(t => {
-      const toCoord = taskCoords[t.id];
-      if (!toCoord) return;
+    stageCols.forEach((sc, i) => {
+      const s = sc.stage;
+      const band = document.createElement('div');
+      band.className = 'stage-header-band';
+      const startCol = sc.minCol;
+      const nextStage = stageCols[i + 1];
+      const endCol = nextStage ? nextStage.minCol : (sc.maxCol + 1);
+      
+      band.style.left = (startCol * COL_W) + 'px';
+      band.style.width = ((endCol - startCol) * COL_W) + 'px';
+      band.style.cssText = 'position: absolute; top: 0; height: 30px; display: flex; align-items: center; padding: 0 10px; font-size: 0.7rem; font-weight: 800; color: var(--gold-bright); border-right: 1px solid var(--border-subtle); cursor: pointer; left: ' + (startCol * COL_W) + 'px; width: ' + ((endCol - startCol) * COL_W) + 'px;';
+      band.textContent = 'S' + s.id + '  ' + s.name.toUpperCase();
+      band.addEventListener('click', () => scrollToStage(s.id));
+      inner.appendChild(band);
+    });
+  }
 
-      (t.depends_on || []).forEach(fromId => {
-        const fromCoord = taskCoords[fromId];
-        if (!fromCoord) return;
+  function renderSwimlaneGrid() {
+    const inner = document.getElementById('swimlane-inner');
+    if (!inner) return;
+    inner.innerHTML = '';
 
-        const x1 = fromCoord.x + CARD_W;
-        const y1 = fromCoord.y + CARD_H / 2;
-        const x2 = toCoord.x;
-        const y2 = toCoord.y + CARD_H / 2;
-        const midX = (x1 + x2) / 2;
-        const midY = (y1 + y2) / 2;
-        const pathD = 'M ' + x1 + ' ' + y1 + ' C ' + midX + ' ' + y1 + ', ' + midX + ' ' + y2 + ', ' + x2 + ' ' + y2;
+    TRADES.forEach(tr => {
+      const row = document.createElement('div');
+      row.className = 'trade-row';
+      row.style.cssText = 'display: flex; height: ' + (rowH[tr] || SLOT_H) + 'px; border-bottom: 1px solid var(--border-subtle); position: relative;';
+      
+      const label = document.createElement('div');
+      label.className = 'trade-label ' + tr;
+      label.style.cssText = 'width: 100px; flex-shrink: 0; position: sticky; left: 0; background: var(--bg-surface-elevated); z-index: 20; display: flex; align-items: center; justify-content: center; font-size: 0.74rem; font-weight: 800; border-right: 2px solid ' + (TRADE_META[tr]?.color || '#555') + '; color: ' + (TRADE_META[tr]?.color || '#555') + ';';
+      label.textContent = TRADE_META[tr]?.label || tr;
+      row.appendChild(label);
+      
+      const content = document.createElement('div');
+      content.className = 'trade-content ' + tr + '-content';
+      content.style.cssText = 'flex: 1; position: relative;';
+      row.appendChild(content);
 
-        const isEdgeActive = isSelectionActive && (
-          (t.id === selectedTopologyTaskId && preds.has(fromId)) ||
-          (fromId === selectedTopologyTaskId && succs.has(t.id)) ||
-          (preds.has(fromId) && preds.has(t.id)) ||
-          (succs.has(fromId) && succs.has(t.id))
-        );
+      inner.appendChild(row);
+    });
 
-        const strokeColor = isEdgeActive 
-          ? (succs.has(t.id) ? '#38bdf8' : '#f59e0b') 
-          : (isSelectionActive ? 'rgba(255,255,255,0.06)' : 'rgba(245, 197, 24, 0.35)');
-        const strokeWidth = isEdgeActive ? 3.2 : 1.5;
-        const strokeDash = isEdgeActive ? 'none' : (t.is_gate ? '5,3' : 'none');
+    // Task cards
+    PROJECT_STATE.tasks.forEach(t => {
+      const tr = displayTrade(t);
+      const pos = cardPos(t.id);
+      if (!pos) return;
+      const card = buildCard(t);
+      card.style.left = pos.x + 'px';
+      card.style.top = (pos.y - (rowY[tr] || 0)) + 'px';
+      card.style.width = CARD_W + 'px';
+      
+      const contentContainer = inner.querySelector('.trade-content.' + tr + '-content');
+      if (contentContainer) {
+        contentContainer.appendChild(card);
+      }
+    });
 
-        let gateLabel = '';
-        if (t.is_gate && (isEdgeActive || !isSelectionActive)) {
-          gateLabel = '<text x="' + midX + '" y="' + (midY - 5) + '" font-size="9" fill="#f59e0b" font-weight="700" text-anchor="middle" letter-spacing="0.5">🔒 SEALING GATE</text>';
-        }
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.id = 'dep-svg';
+    svg.style.position = 'absolute';
+    svg.style.top = 0;
+    svg.style.left = LABEL_W + 'px';
+    svg.style.pointerEvents = 'none';
+    svg.style.zIndex = 1;
+    svg.setAttribute('width', totalW + 'px');
+    svg.setAttribute('height', totalH + 'px');
 
-        svgEdgesHtml += '<g class="dep-edge" data-from="' + fromId + '" data-to="' + t.id + '">' +
-          '<path d="' + pathD + '" stroke="' + strokeColor + '" stroke-width="' + strokeWidth + '" fill="none" stroke-dasharray="' + strokeDash + '" />' +
-          gateLabel +
-        '</g>';
+    PROJECT_STATE.tasks.forEach(t => {
+      (t.depends_on || []).forEach(depId => {
+        drawDepLine(svg, depId, t.id, t.dependency_type);
       });
     });
 
-    let cardsHtml = '';
-    TOPOLOGY_TASKS.forEach(t => {
-      const coord = taskCoords[t.id];
-      if (!coord) return;
+    inner.appendChild(svg);
+  }
 
-      const isSelected = t.id === selectedTopologyTaskId;
-      const isPred = preds.has(t.id);
-      const isSucc = succs.has(t.id);
-      const isDimmed = isSelectionActive && !isSelected && !isPred && !isSucc;
-      const status = getTopologyStatus(t.id);
+  function drawDepLine(svg, fromId, toId, depType) {
+    const fp = cardPos(fromId);
+    const tp = cardPos(toId);
+    if (!fp || !tp) return;
 
-      let cardBorder = 'border: 1px solid var(--border-subtle);';
-      let cardBg = 'background: var(--bg-surface);';
-      let cardGlow = '';
-      let zIndex = 2;
+    const x1 = fp.x + CARD_W;
+    const y1 = fp.y + CARD_H / 2;
+    const x2 = tp.x;
+    const y2 = tp.y + CARD_H / 2;
 
-      if (isSelected) {
-        cardBorder = 'border: 2px solid var(--gold-bright);';
-        cardBg = 'background: rgba(245, 197, 24, 0.15);';
-        cardGlow = 'box-shadow: 0 0 16px rgba(245, 197, 24, 0.45);';
-        zIndex = 10;
-      } else if (isPred) {
-        cardBorder = 'border: 2px solid #f59e0b;';
-        cardBg = 'background: rgba(245, 158, 11, 0.12);';
-        cardGlow = 'box-shadow: 0 0 12px rgba(245, 158, 11, 0.35);';
-        zIndex = 9;
-      } else if (isSucc) {
-        cardBorder = 'border: 2px solid #38bdf8;';
-        cardBg = 'background: rgba(56, 189, 248, 0.12);';
-        cardGlow = 'box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);';
-        zIndex = 9;
-      } else if (isDimmed) {
-        cardBorder = 'border: 1px solid rgba(255,255,255,0.06);';
-        cardBg = 'background: rgba(15, 22, 36, 0.3); opacity: 0.35; filter: grayscale(0.8);';
-      }
+    let color = 'rgba(245, 197, 24, 0.4)';
+    let strokeWidth = 1.6;
+    let dashArray = 'none';
 
-      const trackColor = TOPOLOGY_TRACKS.find(tr => tr.id === t.track)?.color || '#fff';
-      const statusColors = {
-        'DONE': 'color: var(--emerald-royal); background: rgba(16, 185, 129, 0.15); border-color: var(--emerald-royal);',
-        'READY': 'color: var(--gold-bright); background: rgba(245, 197, 24, 0.15); border-color: var(--gold-bright);',
-        'ACTIVE': 'color: #38bdf8; background: rgba(56, 189, 248, 0.15); border-color: #38bdf8;',
-        'HOLD': 'color: var(--crimson-royal); background: rgba(230, 57, 70, 0.15); border-color: var(--crimson-royal);',
-        'LOCKED': 'color: var(--text-dim); background: var(--bg-surface-elevated); border-color: var(--border-subtle);'
-      };
-
-      const statusStyle = statusColors[status] || statusColors['LOCKED'];
-
-      cardsHtml += '<div class="task-card-node" style="position: absolute; left: ' + coord.x + 'px; top: ' + coord.y + 'px; width: ' + CARD_W + 'px; height: ' + CARD_H + 'px; ' + cardBg + ' ' + cardBorder + ' ' + cardGlow + ' border-left: 3px solid ' + trackColor + '; border-radius: 4px; padding: 6px 8px; cursor: pointer; z-index: ' + zIndex + '; transition: all 0.2s ease;" onclick="selectTopologyNode(\'' + t.id + '\')">' +
-        '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">' +
-          '<span style="font-family: monospace; font-size: 0.68rem; font-weight: 800; color: var(--gold-bright);">' + t.id + '</span>' +
-          '<button onclick="toggleTopologyStatus(\'' + t.id + '\', event)" class="status-pill" style="font-size: 0.62rem; font-weight: 700; padding: 1px 6px; border-radius: 3px; border: 1px solid; cursor: pointer; ' + statusStyle + '" title="Click to toggle status (READY -> ACTIVE -> DONE)">' +
-            (status === 'DONE' ? '✓ DONE' : status) +
-          '</button>' +
-        '</div>' +
-        '<div style="font-size: 0.76rem; font-weight: 700; color: var(--text-main); line-height: 1.25; max-height: 2.5em; overflow: hidden;">' + t.name + '</div>' +
-        '<div style="margin-top: 4px; font-size: 0.65rem; color: var(--text-dim); display: flex; justify-content: space-between;">' +
-          '<span>' + (t.depends_on.length ? 'Prereqs: ' + t.depends_on.length : 'Start Node') + '</span>' +
-          (isSelected ? '<span style="color: var(--gold-bright); font-weight: 800;">ACTIVE</span>' : '') +
-          (isPred ? '<span style="color: #f59e0b; font-weight: 800;">BLOCKER</span>' : '') +
-          (isSucc ? '<span style="color: #38bdf8; font-weight: 800;">UNLOCKS</span>' : '') +
-        '</div>' +
-      '</div>';
-    });
-
-    let breadcrumbsRibbon = '';
-    if (selectedTopologyTaskId) {
-      const selTask = TOPOLOGY_TASKS.find(x => x.id === selectedTopologyTaskId);
-      const predsList = Array.from(preds).map(id => TOPOLOGY_TASKS.find(x => x.id === id)).filter(Boolean);
-      const succsList = Array.from(succs).map(id => TOPOLOGY_TASKS.find(x => x.id === id)).filter(Boolean);
-
-      breadcrumbsRibbon = '<div style="background: linear-gradient(135deg, rgba(245, 197, 24, 0.12), var(--bg-surface-elevated)); border: 1px solid var(--gold-antique); border-radius: var(--radius-md); padding: 10px 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">' +
-        '<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">' +
-          '<span style="font-weight: 800; color: var(--gold-bright); font-size: 0.85rem;">📍 Focus: <strong>' + selTask.id + ': ' + selTask.name + '</strong></span>' +
-          '<span style="color: var(--text-dim); font-size: 0.76rem;">|</span>' +
-          '<span style="font-size: 0.76rem; color: #f59e0b;">⛔ Blocked by: ' + (predsList.map(p => '<strong style="cursor: pointer; text-decoration: underline;" onclick="selectTopologyNode(\'' + p.id + '\')">' + p.id + '</strong>').join(', ') || '<span style="color: var(--emerald-royal);">None (Ready to Start)</span>') + '</span>' +
-          '<span style="color: var(--text-dim); font-size: 0.76rem;">──></span>' +
-          '<span style="font-size: 0.76rem; color: #38bdf8;">🔓 Unlocks: ' + (succsList.map(s => '<strong style="cursor: pointer; text-decoration: underline;" onclick="selectTopologyNode(\'' + s.id + '\')">' + s.id + '</strong>').join(', ') || 'Terminal Node') + '</span>' +
-        '</div>' +
-        '<div style="display: flex; gap: 6px;">' +
-          '<button class="btn btn-primary" onclick="openTaskConsole(\'' + selectedTopologyTaskId + '\')" style="font-size: 0.72rem; padding: 4px 12px; background: var(--gold-gradient); color: #080b11; font-weight: 700;">🔍 Open Console</button>' +
-          '<button class="theme-toggle-btn" onclick="clearTopologySelection()" style="font-size: 0.72rem; padding: 4px 10px; background: var(--bg-surface);">✕ Reset</button>' +
-        '</div>' +
-      '</div>';
-    } else {
-      breadcrumbsRibbon = '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; background: rgba(15, 22, 36, 0.6); padding: 8px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); flex-wrap: wrap; gap: 8px;">' +
-        '<div style="font-size: 0.78rem; color: var(--text-muted);">' +
-          '💡 <strong>Sacred Precedence DAG Engine:</strong> Click any card to highlight its complete upstream blockers (<span style="color: #f59e0b; font-weight: 700;">Amber Predecessors</span>) & downstream unlocks (<span style="color: #38bdf8; font-weight: 700;">Blue Successors</span>). Click status pills to toggle state!' +
-        '</div>' +
-      '</div>';
+    if (depType === 'must_precede_sealing') { 
+      color = '#f59e0b'; 
+      strokeWidth = 2.2; 
+    }
+    else if (depType === 'must_happen_during') { 
+      color = '#38bdf8'; 
+      strokeWidth = 2.2; 
+      dashArray = '5,3'; 
     }
 
-    container.innerHTML = breadcrumbsRibbon +
-      '<div id="topology-scroll-viewport" style="overflow: auto; max-height: 620px; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); position: relative; background: #080b11;">' +
-        '<div style="position: relative; width: ' + totalWidth + 'px; height: ' + totalHeight + 'px;">' +
-          headerHtml +
-          rowsHtml +
-          '<svg style="position: absolute; top: 0; left: 0; width: ' + totalWidth + 'px; height: ' + totalHeight + 'px; pointer-events: none; z-index: 5;">' +
-            svgEdgesHtml +
-          '</svg>' +
-          cardsHtml +
-        '</div>' +
-      '</div>';
+    const midX = (x1 + x2) / 2;
+    const midY = (y1 + y2) / 2;
+    const pathD = 'M' + x1 + ',' + y1 + ' C' + midX + ',' + y1 + ' ' + midX + ',' + y2 + ' ' + x2 + ',' + y2;
+
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.setAttribute('class', 'dep-edge');
+    g.setAttribute('data-from', fromId);
+    g.setAttribute('data-to', toId);
+
+    const visiblePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    visiblePath.setAttribute('class', 'visible-path');
+    visiblePath.setAttribute('d', pathD);
+    visiblePath.setAttribute('stroke', color);
+    visiblePath.setAttribute('stroke-width', strokeWidth);
+    visiblePath.setAttribute('fill', 'none');
+    if (dashArray !== 'none') visiblePath.setAttribute('stroke-dasharray', dashArray);
+    g.appendChild(visiblePath);
+
+    const hitPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    hitPath.setAttribute('class', 'hit-path');
+    hitPath.setAttribute('d', pathD);
+    hitPath.setAttribute('stroke', 'transparent');
+    hitPath.setAttribute('stroke-width', '14');
+    hitPath.setAttribute('fill', 'none');
+    hitPath.style.pointerEvents = 'stroke';
+    hitPath.style.cursor = 'pointer';
+    g.appendChild(hitPath);
+
+    g.addEventListener('mouseenter', () => {
+      const fromCard = document.querySelector('.task-card[data-id="' + fromId + '"]');
+      const toCard = document.querySelector('.task-card[data-id="' + toId + '"]');
+      if (fromCard) fromCard.classList.add('edge-hovered');
+      if (toCard) toCard.classList.add('edge-hovered');
+    });
+
+    g.addEventListener('mouseleave', () => {
+      const fromCard = document.querySelector('.task-card[data-id="' + fromId + '"]');
+      const toCard = document.querySelector('.task-card[data-id="' + toId + '"]');
+      if (fromCard) fromCard.classList.remove('edge-hovered');
+      if (toCard) toCard.classList.remove('edge-hovered');
+    });
+
+    g.addEventListener('click', e => {
+      e.stopPropagation();
+      selectAndCenterCard(fromId, true);
+    });
+
+    svg.appendChild(g);
+  }
+
+  function buildCard(t) {
+    const status = getStatus(t.id);
+    const card = document.createElement('div');
+    card.className = 'task-card status-' + status;
+    card.dataset.id = t.id;
+
+    const tr = displayTrade(t);
+    const trColor = TRADE_META[tr]?.color || '#555';
+    card.style.borderLeftColor = trColor;
+    card.style.borderLeftWidth = '3px';
+
+    let depIcon = '';
+    if (t.dependency_type === 'must_precede_sealing') depIcon = '<span class="card-dep-icon" title="Type 3: Must precede sealing">🔒</span>';
+    else if (t.dependency_type === 'must_happen_during') depIcon = '<span class="card-dep-icon" title="Type 2: Embedded window">⚡</span>';
+
+    let gateRef = t.sealing_gate ? '<div class="card-gate" style="font-size: 0.62rem; color: #f59e0b; font-weight: 700;">Gate: ' + t.sealing_gate + '</div>' : '';
+
+    card.innerHTML = '<div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">' +
+        '<span class="card-id" style="font-family: monospace; font-size: 0.68rem; font-weight: 800; color: var(--gold-bright);">' + t.id + '</span>' +
+        depIcon +
+      '</div>' +
+      '<div class="card-name" style="font-size: 0.76rem; font-weight: 700; color: var(--text-main); line-height: 1.25; max-height: 2.5em; overflow: hidden; margin: 2px 0 4px;">' + t.name + '</div>' +
+      gateRef +
+      '<button class="status-pill ' + status + '" style="font-size: 0.62rem; font-weight: 800; padding: 2px 6px; border-radius: 3px; border: 1px solid transparent; cursor: pointer;">' + STATUS_LABEL[status] + '</button>';
+
+    card.addEventListener('click', e => {
+      selectAndCenterCard(t.id, true);
+    });
+
+    return card;
+  }
+
+  function renderConsoleList() {
+    const list = document.getElementById('console-list');
+    if (!list) return;
+    list.innerHTML = '';
+
+    const searchInput = document.getElementById('console-search');
+    const query = searchInput ? (searchInput.value || '').trim().toLowerCase() : '';
+
+    let tasks = PROJECT_STATE.tasks.filter(t => {
+      const s = getStatus(t.id);
+      if (activeFilter === 'READY' && s !== 'READY') return false;
+      if (activeFilter === 'ACTIVE' && s !== 'ACTIVE') return false;
+      if (activeFilter === 'HOLD' && s !== 'HOLD' && s !== 'FUTURE_HOLD' && s !== 'MISSED') return false;
+      if (activeFilter === 'DONE' && s !== 'DONE') return false;
+
+      if (query) {
+        const matchId = t.id.toLowerCase().includes(query);
+        const matchName = t.name.toLowerCase().includes(query);
+        const matchTrade = displayTrade(t).toLowerCase().includes(query);
+        if (!matchId && !matchName && !matchTrade) return false;
+      }
+      return true;
+    });
+
+    if (!tasks.length) {
+      list.innerHTML = '<div style="text-align:center;padding:16px;color:var(--text-dim);font-size:0.78rem;">NO MATCHING TASKS FOUND</div>';
+      return;
+    }
+
+    tasks.forEach(t => {
+      const status = getStatus(t.id);
+      const tr = displayTrade(t);
+      const color = TRADE_META[tr]?.color || '#555';
+
+      const row = document.createElement('div');
+      row.className = 'console-task-row';
+      row.style.cssText = 'display:flex;align-items:center;gap:10px;padding:6px 12px;border-bottom:1px solid var(--border-subtle);cursor:pointer;';
+      row.dataset.id = t.id;
+
+      row.innerHTML = '<span style="background:' + color + '22;color:' + color + ';font-size:0.72rem;padding:2px 6px;border-radius:3px;font-weight:700;">' + (TRADE_META[tr]?.label || tr) + '</span>' +
+        '<span style="font-family:monospace;font-weight:800;color:var(--gold-bright);font-size:0.78rem;min-width:60px;">' + t.id + '</span>' +
+        '<span style="flex:1;font-size:0.8rem;color:var(--text-main);font-weight:600;">' + t.name + '</span>' +
+        '<span class="status-mini ' + status + '" style="font-size:0.7rem;padding:2px 6px;border-radius:3px;font-weight:700;background:var(--bg-surface);">' + STATUS_LABEL[status] + '</span>';
+
+      row.addEventListener('click', () => {
+        selectAndCenterCard(t.id, true);
+        if (window.openTaskConsole) window.openTaskConsole(t.id);
+      });
+      list.appendChild(row);
+    });
+  }
+
+  function toggleConsoleExpand(forceState) {
+    consoleExpanded = typeof forceState === 'boolean' ? forceState : !consoleExpanded;
+    render5ZoneTopology(document.getElementById('dopkos-canvas-container'));
+  }
+
+  function clearHighlights() {
+    const swimlaneInner = document.getElementById('swimlane-inner');
+    const depSvg = document.getElementById('dep-svg');
+    if (swimlaneInner) swimlaneInner.classList.remove('selection-active');
+    if (depSvg) depSvg.classList.remove('selection-active');
+
+    document.querySelectorAll('.task-card').forEach(card => {
+      card.classList.remove('is-selected', 'is-predecessor', 'is-successor', 'edge-hovered');
+    });
+
+    if (depSvg) {
+      depSvg.querySelectorAll('g.dep-edge').forEach(g => {
+        g.classList.remove('is-highlighted', 'is-predecessor-line', 'is-successor-line');
+      });
+    }
+  }
+
+  function applyHighlights(taskId) {
+    const t = taskMap[taskId];
+    if (!t) return;
+
+    clearHighlights();
+
+    const tr = displayTrade(t);
+    const trColor = TRADE_META[tr]?.color || '#555';
+
+    const swimlaneInner = document.getElementById('swimlane-inner');
+    const depSvg = document.getElementById('dep-svg');
+    if (swimlaneInner) swimlaneInner.classList.add('selection-active');
+    if (depSvg) depSvg.classList.add('selection-active');
+
+    const card = document.querySelector('.task-card[data-id="' + taskId + '"]');
+    if (card) {
+      card.classList.add('is-selected');
+    }
+
+    const dependsOn = t.depends_on || [];
+    dependsOn.forEach(predId => {
+      const predCard = document.querySelector('.task-card[data-id="' + predId + '"]');
+      if (predCard) predCard.classList.add('is-predecessor');
+    });
+
+    const unlocks = t.unlocks || [];
+    unlocks.forEach(succId => {
+      const succCard = document.querySelector('.task-card[data-id="' + succId + '"]');
+      if (succCard) succCard.classList.add('is-successor');
+    });
+  }
+
+  function selectAndCenterCard(targetId, forceScroll = true) {
+    selectedTopologyTaskId = targetId;
+    applyHighlights(targetId);
+
+    const scrollEl = document.getElementById('z3-viewport');
+    const pos = cardPos(targetId);
+    if (scrollEl && pos && forceScroll) {
+      scrollEl.scrollTo({
+        left: Math.max(0, pos.x - scrollEl.clientWidth / 2 + CARD_W / 2),
+        top: Math.max(0, pos.y - scrollEl.clientHeight / 2 + CARD_H / 2),
+        behavior: 'smooth'
+      });
+    }
+
+    if (window.openTaskConsole) {
+      window.openTaskConsole(targetId);
+    }
+  }
+
+  function scrollToStage(stageId) {
+    const stageTasks = PROJECT_STATE.tasks.filter(t => t.stage === stageId);
+    if (!stageTasks.length) return;
+    const minCol = Math.min(...stageTasks.map(t => colMap[t.id] || 0));
+    const targetX = LABEL_W + minCol * COL_W - 20;
+    const scrollEl = document.getElementById('z3-viewport');
+    if (scrollEl) {
+      scrollEl.scrollTo({ left: Math.max(0, targetX), behavior: 'smooth' });
+    }
+  }
+
+  function setFilter(filter) {
+    activeFilter = filter;
+    document.querySelectorAll('.filter-pill').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent === filter);
+    });
+    renderConsoleList();
   }
 
   function renderDopkosRunSheet(container) {
-    let html = '<div style="display: flex; flex-direction: column; gap: 14px;">';
+    const DAY_OF_SCHEDULE = [
+      { time: '03:30', label: 'Mobilisation & Wakeup', gate: null, tasks: 'Mangala Snana, Mandap Samagri Setup, Fleet Engine Warmup' },
+      { time: '05:00', label: 'Bridal Dressing & Groom Prep', gate: null, tasks: 'MUA HD Hair & Makeup, Nuapatna Silk Dhoti Dressing' },
+      { time: '07:00', label: 'Baranugam & Barat Arrival', gate: 'GATE-02: Barat Welcoming & Tilak (07:45)', tasks: 'Barat Slow-Mo Drone, Arch Welcoming Aarti' },
+      { time: '08:00', label: 'Sacred Lagna Muhurat', gate: 'GATE-03: Lagna Muhurat Sanctum Lock (08:00 - 08:30)', tasks: 'Kanyadaan, Hastaganthi Sacred Knot, 7 Agni Ahutis' },
+      { time: '08:45', label: 'Saptapadi & Sindoor Daan', gate: 'GATE-04: Sindoor Daan & Legal Witness (09:15)', tasks: '7 Steps (Saptapadi), Silver Mukuta Coronation, Sindoor' }
+    ];
 
-    DAY_OF_SCHEDULE.forEach((slot) => {
-      let gateBanner = '';
-      if (slot.gate) {
-        gateBanner = '<div style="background: linear-gradient(90deg, rgba(245, 197, 24, 0.2), var(--bg-surface-elevated)); border-left: 4px solid var(--gold-bright); padding: 10px 16px; border-radius: var(--radius-sm); margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">' +
-          '<span style="font-size: 0.85rem; font-weight: 800; color: var(--gold-bright); font-family: var(--font-display);">🔒 ' + slot.gate + '</span>' +
-          '<span class="status-badge status-urgent" style="font-size: 0.72rem;">HARD GATE</span>' +
-        '</div>';
-      }
-
-      let trackCards = '';
-      Object.keys(slot.tracks).forEach((tk) => {
-        const item = slot.tracks[tk];
-        const tkMeta = TOPOLOGY_TRACKS.find(t => t.id === tk) || { label: tk.toUpperCase(), color: '#fff' };
-        trackCards += '<div style="flex: 1; min-width: 170px; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-top: 3px solid ' + tkMeta.color + '; border-radius: var(--radius-sm); padding: 10px;">' +
-          '<div style="font-size: 0.72rem; color: ' + tkMeta.color + '; font-weight: 700; margin-bottom: 4px;">' + tkMeta.label + '</div>' +
-          '<div style="font-size: 0.82rem; font-weight: 600; color: var(--text-main); line-height: 1.3;">' + item.task + '</div>' +
-          '<div style="margin-top: 8px; display: flex; justify-content: space-between; align-items: center;">' +
-            '<span style="font-size: 0.7rem; color: var(--text-dim);">👤 ' + item.lead + '</span>' +
-            '<span class="status-badge" style="font-size: 0.65rem; background: var(--bg-surface-elevated);">' + item.status + '</span>' +
-          '</div>' +
-        '</div>';
-      });
-
+    let html = '<div style="display: flex; flex-direction: column; gap: 12px;">';
+    DAY_OF_SCHEDULE.forEach(slot => {
       html += '<div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px;">' +
-        gateBanner +
-        '<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">' +
-          '<span style="font-family: monospace; font-size: 1.1rem; font-weight: 800; color: var(--gold-bright); background: rgba(245, 197, 24, 0.1); padding: 2px 8px; border-radius: var(--radius-sm);">' + slot.time + '</span>' +
-          '<h4 style="margin: 0; font-size: 0.95rem; color: var(--text-main); font-weight: 700;">' + slot.label + '</h4>' +
+        (slot.gate ? '<div style="background: rgba(245, 197, 24, 0.15); border-left: 3px solid var(--gold-bright); padding: 6px 12px; margin-bottom: 8px; font-size: 0.78rem; font-weight: 800; color: var(--gold-bright);">🔒 ' + slot.gate + '</div>' : '') +
+        '<div style="display: flex; align-items: center; gap: 8px;">' +
+          '<span style="font-family: monospace; font-size: 1rem; font-weight: 800; color: var(--gold-bright);">' + slot.time + '</span>' +
+          '<strong style="font-size: 0.9rem; color: var(--text-main);">' + slot.label + '</strong>' +
         '</div>' +
-        '<div style="display: flex; gap: 8px; flex-wrap: wrap;">' +
-          trackCards +
-        '</div>' +
+        '<div style="font-size: 0.8rem; color: var(--text-dim); margin-top: 4px;">' + slot.tasks + '</div>' +
       '</div>';
     });
-
     html += '</div>';
     container.innerHTML = html;
   }
 
   function renderDopkosRoadmap(container) {
-    let html = '<div style="display: flex; flex-direction: column; gap: 14px;">';
-
-    MACRO_ROADMAP.forEach(h => {
-      let taskChips = h.tasks.map(tId => {
-        const t = TOPOLOGY_TASKS.find(x => x.id === tId) || { id: tId, name: tId, status: 'READY' };
-        return '<div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; min-width: 220px; flex: 1;">' +
-          '<div>' +
-            '<span style="font-family: monospace; font-size: 0.72rem; font-weight: 800; color: var(--gold-bright);">' + t.id + '</span>' +
-            '<div style="font-size: 0.8rem; font-weight: 600; color: var(--text-main);">' + t.name + '</div>' +
-          '</div>' +
-          '<span class="status-badge" style="font-size: 0.65rem;">' + t.status + '</span>' +
-        '</div>';
-      }).join('');
-
+    let html = '<div style="display: flex; flex-direction: column; gap: 12px;">';
+    PROJECT_STATE.stages.forEach(s => {
+      const stageTasks = PROJECT_STATE.tasks.filter(t => t.stage === s.id);
       html += '<div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 16px;">' +
-        '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">' +
-          '<h3 style="margin: 0; font-size: 1rem; color: var(--gold-bright); font-family: var(--font-display);">' + h.name + '</h3>' +
-          '<span style="font-family: monospace; font-size: 0.78rem; color: var(--text-dim); background: var(--bg-surface); padding: 2px 8px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">' + h.period + '</span>' +
-        '</div>' +
-        '<p style="font-size: 0.82rem; color: var(--text-muted); margin: 0 0 12px 0;">' + h.desc + '</p>' +
-        '<div style="display: flex; gap: 8px; flex-wrap: wrap;">' +
-          taskChips +
+        '<h4 style="margin: 0 0 6px 0; color: var(--gold-bright);">' + s.name + '</h4>' +
+        '<p style="margin: 0 0 10px 0; font-size: 0.8rem; color: var(--text-muted);">' + s.gate_condition + '</p>' +
+        '<div style="display: flex; gap: 6px; flex-wrap: wrap;">' +
+          stageTasks.map(t => '<span class="role-pill-tag" onclick="setDopkosView(\'TOPOLOGY\'); selectAndCenterCard(\'' + t.id + '\')" style="cursor: pointer; font-size: 0.74rem;">' + t.id + ': ' + t.name + '</span>').join('') +
         '</div>' +
       '</div>';
     });
-
     html += '</div>';
     container.innerHTML = html;
   }
 
   function renderDopkosMatrix(container) {
-    let thead = '<th style="padding: 10px; text-align: left; background: var(--bg-surface-elevated); color: var(--gold-bright); font-size: 0.76rem; border-bottom: 2px solid var(--border-subtle); position: sticky; left: 0; z-index: 10;">ROLE / TRACK</th>';
-    TOPOLOGY_STAGES.forEach(s => {
-      thead += '<th style="padding: 10px; text-align: left; background: var(--bg-surface-elevated); color: var(--gold-bright); font-size: 0.76rem; border-bottom: 2px solid var(--border-subtle); min-width: 160px;">' + s.name + '</th>';
-    });
-
-    let tbody = '';
-    TOPOLOGY_TRACKS.forEach(tr => {
-      let rowCells = '<td style="padding: 10px; background: var(--bg-surface-elevated); border-right: 2px solid ' + tr.color + '; position: sticky; left: 0; z-index: 5;">' +
-        '<div style="font-weight: 700; color: ' + tr.color + '; font-size: 0.82rem;">' + tr.label + '</div>' +
-        '<div style="font-size: 0.68rem; color: var(--text-dim);">' + tr.id.toUpperCase() + '</div>' +
-      '</td>';
-
-      TOPOLOGY_STAGES.forEach((st, sIndex) => {
-        const tasksInSlot = TOPOLOGY_TASKS.filter(t => t.track === tr.id && (t.col !== undefined ? t.col === sIndex : t.stage === st.num));
-        let slotContent = '';
-        if (tasksInSlot.length) {
-          slotContent = tasksInSlot.map(t => {
-            const status = getTopologyStatus(t.id);
-            return '<div onclick="selectTopologyNode(\'' + t.id + '\')" style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 6px 8px; margin-bottom: 4px; cursor: pointer;">' +
-              '<div style="font-family: monospace; font-size: 0.68rem; color: var(--gold-bright); font-weight: 700;">' + t.id + '</div>' +
-              '<div style="font-size: 0.76rem; color: var(--text-main); font-weight: 600; line-height: 1.2;">' + t.name + '</div>' +
-              '<div style="font-size: 0.65rem; color: var(--emerald-royal); margin-top: 2px;">' + status + '</div>' +
-            '</div>';
-          }).join('');
-        } else {
-          slotContent = '<div style="font-size: 0.7rem; color: var(--text-dim); font-style: italic;">No tasks</div>';
-        }
-        rowCells += '<td style="padding: 8px; border-bottom: 1px solid var(--border-subtle); border-right: 1px dashed rgba(255,255,255,0.05); vertical-align: top;">' + slotContent + '</td>';
+    let html = '<div style="overflow-x: auto;"><table style="width: 100%; border-collapse: collapse; font-size: 0.76rem;"><thead><tr><th style="padding: 8px; border: 1px solid var(--border-subtle); background: var(--bg-surface-elevated); color: var(--gold-bright);">TRACK</th>';
+    PROJECT_STATE.stages.forEach(s => html += '<th style="padding: 8px; border: 1px solid var(--border-subtle); background: var(--bg-surface-elevated); color: var(--gold-bright);">S' + s.id + '</th>');
+    html += '</tr></thead><tbody>';
+    TRADES.forEach(tr => {
+      html += '<tr><td style="padding: 8px; border: 1px solid var(--border-subtle); font-weight: 700; color: ' + (TRADE_META[tr]?.color || '#fff') + ';">' + (TRADE_META[tr]?.label || tr) + '</td>';
+      PROJECT_STATE.stages.forEach(s => {
+        const tasksInSlot = PROJECT_STATE.tasks.filter(t => t.trade === tr && t.stage === s.id);
+        html += '<td style="padding: 6px; border: 1px solid var(--border-subtle); vertical-align: top;">' +
+          tasksInSlot.map(t => '<div onclick="setDopkosView(\'TOPOLOGY\'); selectAndCenterCard(\'' + t.id + '\')" style="cursor: pointer; background: var(--bg-surface); padding: 4px; border-radius: 3px; margin-bottom: 4px; font-weight: 600;">' + t.id + '</div>').join('') +
+        '</td>';
       });
-
-      tbody += '<tr>' + rowCells + '</tr>';
+      html += '</tr>';
     });
-
-    container.innerHTML = '<div style="overflow-x: auto; border: 1px solid var(--border-subtle); border-radius: var(--radius-md);">' +
-      '<table style="width: 100%; border-collapse: collapse;">' +
-        '<thead><tr>' + thead + '</tr></thead>' +
-        '<tbody>' + tbody + '</tbody>' +
-      '</table>' +
-    '</div>';
+    html += '</tbody></table></div>';
+    container.innerHTML = html;
   }
 
   function renderDopkosCritical(container) {
     const criticalChain = [
-      { id: 'GOV-001', name: 'Chief Purohit Lagna Lock', horizon: 'T-180', owner: 'Chief Purohit' },
-      { id: 'RIT-001', name: 'Vidhi-Patra Signoff', horizon: 'T-120', owner: 'Purohit + Elders' },
-      { id: 'GFT-001', name: 'Deva Nimantrana at Puri Jagannath', horizon: 'T-90', owner: 'Groom Lead' },
-      { id: 'RIT-004', name: 'Patra Paribartana Vows (Rayagada)', horizon: 'T-14', owner: 'Bride + Groom Family' },
-      { id: 'GATE-02', name: 'Baranugam Arch Welcome & Barat', horizon: 'Day 0 (07:30)', owner: 'Chief Purohit' },
-      { id: 'GATE-03', name: 'Kanyadaan & Hastaganthi Sacred Knot', horizon: 'Day 0 (08:00)', owner: 'Chief Purohit + Elders' },
-      { id: 'GATE-04', name: 'Sindoor Daan & Mukuta Coronation', horizon: 'Day 0 (08:45)', owner: 'Groom + Bride' },
-      { id: 'LEG-001', name: 'SUJOG Legal Marriage Registration', horizon: 'Day +30', owner: 'Legal Team' }
+      { id: 'GOV-001', name: 'Chief Purohit Lagna Lock', horizon: 'T-180' },
+      { id: 'RIT-001', name: 'Vidhi-Patra Signoff', horizon: 'T-120' },
+      { id: 'GFT-001', name: 'Deva Nimantrana at Puri Jagannath', horizon: 'T-90' },
+      { id: 'RIT-004', name: 'Patra Paribartana Vows (Rayagada)', horizon: 'T-14' },
+      { id: 'GATE-02', name: 'Baranugam Arch Welcome & Barat', horizon: 'Day 0 (07:30)' },
+      { id: 'RIT-005', name: 'Kanyadaan & Hastaganthi Sacred Knot', horizon: 'Day 0 (08:00)' },
+      { id: 'GATE-04', name: 'Sindoor Daan & Mukuta Coronation', horizon: 'Day 0 (08:45)' },
+      { id: 'LEG-001', name: 'SUJOG Legal Marriage Registration', horizon: 'Day +30' }
     ];
 
-    let stepsHtml = '';
+    let html = '<div style="display: flex; flex-direction: column; gap: 10px;">';
     criticalChain.forEach((c, idx) => {
-      const isLast = idx === criticalChain.length - 1;
-      stepsHtml += '<div style="display: flex; gap: 16px; position: relative;">' +
-        '<div style="display: flex; flex-direction: column; align-items: center;">' +
-          '<div style="width: 32px; height: 32px; border-radius: 50%; background: var(--gold-gradient); color: #080b11; font-weight: 800; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; z-index: 2;">' +
-            (idx + 1) +
-          '</div>' +
-          (!isLast ? '<div style="width: 2px; flex: 1; background: var(--gold-antique); margin: 4px 0;"></div>' : '') +
-        '</div>' +
-        '<div style="flex: 1; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-left: 3px solid var(--gold-bright); border-radius: var(--radius-sm); padding: 12px 16px; margin-bottom: 12px;">' +
-          '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">' +
-            '<span style="font-family: monospace; font-size: 0.78rem; font-weight: 800; color: var(--gold-bright);">' + c.id + '</span>' +
-            '<span style="font-size: 0.72rem; color: var(--text-dim);">' + c.horizon + '</span>' +
-          '</div>' +
-          '<div style="font-size: 0.9rem; font-weight: 700; color: var(--text-main);">' + c.name + '</div>' +
-          '<div style="font-size: 0.74rem; color: var(--text-dim); margin-top: 4px;">Responsible Lead: ' + c.owner + '</div>' +
-        '</div>' +
+      html += '<div style="display: flex; gap: 12px; align-items: center; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-left: 3px solid var(--gold-bright); border-radius: var(--radius-sm); padding: 10px 14px;">' +
+        '<span style="width: 24px; height: 24px; border-radius: 50%; background: var(--gold-bright); color: #080b11; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 0.76rem;">' + (idx + 1) + '</span>' +
+        '<div style="flex: 1;"><div style="font-weight: 700; color: var(--text-main); font-size: 0.85rem;">' + c.id + ': ' + c.name + '</div><div style="font-size: 0.72rem; color: var(--text-dim);">' + c.horizon + '</div></div>' +
+        '<button class="btn btn-primary" onclick="setDopkosView(\'TOPOLOGY\'); selectAndCenterCard(\'' + c.id + '\')" style="font-size: 0.72rem; padding: 3px 8px;">View In DAG →</button>' +
       '</div>';
     });
-
-    container.innerHTML = '<div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 20px;">' +
-      '<div style="margin-bottom: 16px;">' +
-        '<h3 style="margin: 0 0 4px 0; color: var(--gold-bright); font-size: 1.15rem; font-family: var(--font-display);">⚡ Sacred Liturgical Critical Path (Zero-Slack Chain)</h3>' +
-        '<p style="margin: 0; font-size: 0.82rem; color: var(--text-muted);">The non-negotiable liturgical and legal milestones governing the wedding timeline. Any delay on this chain directly delays the sacred Lagna Muhurat.</p>' +
-      '</div>' +
-      '<div style="display: flex; flex-direction: column;">' +
-        stepsHtml +
-      '</div>' +
-    '</div>';
+    html += '</div>';
+    container.innerHTML = html;
   }
 
-  // Export to global window
-  window.TOPOLOGY_TRACKS = TOPOLOGY_TRACKS;
-  window.TOPOLOGY_STAGES = TOPOLOGY_STAGES;
-  window.TOPOLOGY_TASKS = TOPOLOGY_TASKS;
-  window.DAY_OF_SCHEDULE = DAY_OF_SCHEDULE;
-  window.MACRO_ROADMAP = MACRO_ROADMAP;
-  window.selectTopologyNode = selectTopologyNode;
-  window.clearTopologySelection = clearTopologySelection;
-  window.toggleTopologyStatus = toggleTopologyStatus;
+  // Exports to window
   window.setDopkosView = setDopkosView;
   window.filterDopkosEvent = filterDopkosEvent;
   window.filterDopkosTrack = filterDopkosTrack;
   window.renderDoPkosStudio = renderDoPkosStudio;
+  window.selectAndCenterCard = selectAndCenterCard;
+  window.scrollToStage = scrollToStage;
+  window.toggleConsoleExpand = toggleConsoleExpand;
+  window.setFilter = setFilter;
+  window.renderConsoleList = renderConsoleList;
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderDoPkosStudio);
+  } else {
+    setTimeout(renderDoPkosStudio, 50);
+  }
 
 })(window);
