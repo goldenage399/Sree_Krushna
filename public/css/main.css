@@ -2417,19 +2417,30 @@
     }
 
 
-/* DO_PKOS 5-Zone Monolithic CSS Rules */
+/* DO_PKOS 5-Zone Dedicated Full-Viewport Studio */
 #tab-dopkos {
   display: none;
   flex-direction: column;
-  height: 86vh;
+  height: calc(100vh - 120px);
+  min-height: 580px;
   position: relative;
-  background: var(--bg-surface-elevated, #0f1624);
-  border-radius: var(--radius-lg, 12px);
+  background: #080b11;
+  border-radius: var(--radius-md);
   overflow: hidden;
   border: 1px solid var(--border-subtle, rgba(255,255,255,0.08));
+  padding: 0;
+  margin: 0;
 }
 #tab-dopkos.active {
   display: flex !important;
+}
+.dopkos-canvas-container {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 /* Zone 1 HUD */

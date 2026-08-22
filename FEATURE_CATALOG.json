@@ -21,7 +21,7 @@
       "id": "tab-dopkos",
       "testId": "panel-dopkos",
       "navTestId": "nav-tab-dopkos",
-      "title": "Precedence Topology (DO-PKOS)",
+      "title": "DO-PKOS Studio",
       "required": true
     },
     {

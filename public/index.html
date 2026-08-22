@@ -164,7 +164,7 @@
       <nav class="tab-nav" role="tablist" aria-label="Main Application Modules" data-testid="module-navigation">
         <button class="nav-btn active" role="tab" aria-selected="true" aria-controls="tab-dashboard" data-testid="nav-tab-dashboard" onclick="switchTab('tab-dashboard')">📊 Command Center</button>
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-swimlane" data-testid="nav-tab-swimlane" onclick="switchTab('tab-swimlane')">⏱️ Swimlanes</button>
-        <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-dopkos" data-testid="nav-tab-dopkos" onclick="switchTab('tab-dopkos')">🕸️ Precedence Topology</button>
+        <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-dopkos" data-testid="nav-tab-dopkos" onclick="switchTab('tab-dopkos')">🕸️ DO-PKOS Studio</button>
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-tasks" data-testid="nav-tab-tasks" onclick="switchTab('tab-tasks')">📋 Tasks (CRUD)</button>
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-rituals" data-testid="nav-tab-rituals" onclick="switchTab('tab-rituals')">🕉️ Vedic Liturgy</button>
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-vision" data-testid="nav-tab-vision" onclick="switchTab('tab-vision')">🎨 Vision Studio</button>
@@ -414,64 +414,10 @@
         </div>
       </div>
 
-      <!-- TAB: DO_PKOS SACRED PRECEDENCE TOPOLOGY & MULTI-TRACK STUDIO -->
-      <div id="tab-dopkos" class="tab-content" role="tabpanel" aria-labelledby="nav-tab-dopkos" data-testid="panel-dopkos">
-        <div class="card" data-testid="card-dopkos-studio">
-          
-          <!-- Header Banner -->
-          <div class="card-header" style="flex-wrap: wrap; gap: 12px;">
-            <div>
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <h3 style="margin: 0;">🕸️ Sacred Precedence Topology & DO-PKOS Studio</h3>
-                <span class="status-badge" style="background: rgba(245, 197, 24, 0.15); color: var(--gold-bright); font-size: 0.72rem;">👑 DO-PKOS v3.0</span>
-              </div>
-              <p style="color: var(--text-muted); font-size: 0.82rem; margin: 4px 0 0;">
-                High-density chronological orchestrator: Synchronize long-term milestones (T-180) and minute-by-minute Day-Of execution across all 5 operational tracks.
-              </p>
-            </div>
-
-            <!-- View Switcher Segmented Control -->
-            <div style="display: flex; gap: 6px; background: var(--bg-surface-elevated); padding: 4px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); flex-wrap: wrap;">
-              <button id="btn-view-topology" class="dopkos-view-btn active" onclick="setDopkosView('TOPOLOGY')">🕸️ Sacred Precedence Topology (DAG)</button>
-              <button id="btn-view-threads" class="dopkos-view-btn" onclick="setDopkosView('THREADS')">🧵 Pull-a-Thread (Today's Actions)</button>
-              <button id="btn-view-runsheet" class="dopkos-view-btn" onclick="setDopkosView('RUNSHEET')">⏱️ Day-Of Run Sheet</button>
-              <button id="btn-view-roadmap" class="dopkos-view-btn" onclick="setDopkosView('ROADMAP')">📅 Macro Gantt</button>
-              <button id="btn-view-matrix" class="dopkos-view-btn" onclick="setDopkosView('MATRIX')">📊 2D Role Matrix</button>
-              <button id="btn-view-critical" class="dopkos-view-btn" onclick="setDopkosView('CRITICAL')">⚡ Critical Path</button>
-            </div>
-          </div>
-
-          <!-- Operational Horizon & Track Filters -->
-          <div style="display: flex; justify-content: space-between; align-items: center; margin: 16px 0 12px; flex-wrap: wrap; gap: 10px; background: rgba(15, 22, 36, 0.6); padding: 12px 16px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
-            
-            <!-- Event Milestone Selectors -->
-            <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
-              <span style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; font-weight: 700; margin-right: 4px;">Milestone:</span>
-              <button class="theme-toggle-btn dopkos-event-btn active" data-event="ALL" onclick="filterDopkosEvent('ALL')" style="font-size: 0.74rem; padding: 4px 10px;">All Horizons</button>
-              <button class="theme-toggle-btn dopkos-event-btn" data-event="EVT-001" onclick="filterDopkosEvent('EVT-001')" style="font-size: 0.74rem; padding: 4px 10px;">💍 Rayagada (11 Feb)</button>
-              <button class="theme-toggle-btn dopkos-event-btn" data-event="EVT-004" onclick="filterDopkosEvent('EVT-004')" style="font-size: 0.74rem; padding: 4px 10px;">🕉️ BBSR Wedding (10 Mar)</button>
-              <button class="theme-toggle-btn dopkos-event-btn" data-event="EVT-005" onclick="filterDopkosEvent('EVT-005')" style="font-size: 0.74rem; padding: 4px 10px;">👑 Reception (10 Mar)</button>
-            </div>
-
-            <!-- Role Track Pills -->
-            <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
-              <span style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; font-weight: 700; margin-right: 4px;">Track:</span>
-              <button class="theme-toggle-btn dopkos-track-btn active" data-track="ALL" onclick="filterDopkosTrack('ALL')" style="font-size: 0.74rem; padding: 4px 8px;">All</button>
-              <button class="theme-toggle-btn dopkos-track-btn" data-track="bride" onclick="filterDopkosTrack('bride')" style="font-size: 0.74rem; padding: 4px 8px;">👰 Bride</button>
-              <button class="theme-toggle-btn dopkos-track-btn" data-track="groom" onclick="filterDopkosTrack('groom')" style="font-size: 0.74rem; padding: 4px 8px;">🤵 Groom</button>
-              <button class="theme-toggle-btn dopkos-track-btn" data-track="purohit" onclick="filterDopkosTrack('purohit')" style="font-size: 0.74rem; padding: 4px 8px;">🕉️ Purohit</button>
-              <button class="theme-toggle-btn dopkos-track-btn" data-track="catering" onclick="filterDopkosTrack('catering')" style="font-size: 0.74rem; padding: 4px 8px;">🍲 Food</button>
-              <button class="theme-toggle-btn dopkos-track-btn" data-track="media" onclick="filterDopkosTrack('media')" style="font-size: 0.74rem; padding: 4px 8px;">📸 Media</button>
-              <button class="theme-toggle-btn dopkos-track-btn" data-track="fleet" onclick="filterDopkosTrack('fleet')" style="font-size: 0.74rem; padding: 4px 8px;">🛡️ Security/Fleet</button>
-            </div>
-
-          </div>
-
-          <!-- Quad-View Canvas Render Target -->
-          <div id="dopkos-canvas-container" style="min-height: 480px; position: relative;">
-            <!-- Rendered dynamically by renderDoPkosStudio() -->
-          </div>
-
+      <!-- TAB: DO-PKOS 5-ZONE SACRED PRECEDENCE TOPOLOGY STUDIO -->
+      <div id="tab-dopkos" class="tab-content dopkos-full-studio" role="tabpanel" aria-labelledby="nav-tab-dopkos" data-testid="panel-dopkos">
+        <div id="dopkos-canvas-container" class="dopkos-canvas-container" data-testid="card-dopkos-studio">
+          <!-- Rendered dynamically by renderDoPkosStudio() -->
         </div>
       </div>
 
