@@ -592,144 +592,166 @@
 }
 
 #tab-dopkos #console-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 12px;
-  height: 38px;
-  min-height: 38px;
-  max-height: 38px;
-  background: var(--header-bg);
-  border-bottom: 1px solid var(--border-color);
-  flex-wrap: nowrap;
-  gap: 8px;
-  box-sizing: border-box;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0 12px !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  max-height: 38px !important;
+  background: var(--header-bg) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  flex-wrap: nowrap !important;
+  gap: 8px !important;
+  box-sizing: border-box !important;
 }
 
 #tab-dopkos .console-left-group,
 #tab-dopkos .console-right-group {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  height: 100%;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  height: 100% !important;
+  min-height: 0 !important;
 }
 
 #tab-dopkos #console-search {
-  background: rgba(0, 0, 0, 0.35);
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  padding: 0 8px;
-  font-size: 0.70rem;
-  color: var(--text-primary);
-  outline: none;
-  height: 24px;
-  width: 170px;
-  box-sizing: border-box;
-  display: inline-flex;
-  align-items: center;
+  background: rgba(0, 0, 0, 0.35) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 4px !important;
+  padding: 0 8px !important;
+  font-size: 0.70rem !important;
+  color: var(--text-primary) !important;
+  outline: none !important;
+  height: 24px !important;
+  min-height: 24px !important;
+  max-height: 24px !important;
+  width: 170px !important;
+  max-width: 170px !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
   transition: border-color 0.15s ease;
 }
 
 #tab-dopkos #console-search:focus {
-  border-color: var(--gold-bright, #f5c518);
+  border-color: var(--gold-bright, #f5c518) !important;
 }
 
 #tab-dopkos .console-widget {
-  font-size: 0.64rem;
-  font-weight: 800;
-  padding: 0 7px;
-  height: 24px;
-  line-height: 22px;
-  border-radius: 4px;
-  background: var(--panel-bg);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  cursor: pointer;
-  box-sizing: border-box;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 0.64rem !important;
+  font-weight: 800 !important;
+  padding: 0 7px !important;
+  height: 24px !important;
+  min-height: 24px !important;
+  max-height: 24px !important;
+  line-height: 22px !important;
+  border-radius: 4px !important;
+  background: var(--panel-bg) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   transition: all 0.15s ease;
 }
 
 #tab-dopkos .console-widget.has-issues {
-  background: rgba(239, 68, 68, 0.15);
-  color: var(--status-hold-text);
-  border-color: var(--status-hold-text);
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: var(--status-hold-text) !important;
+  border-color: var(--status-hold-text) !important;
 }
 
 #tab-dopkos .console-widget.has-gates {
-  background: rgba(245, 158, 11, 0.15);
-  color: #f59e0b;
-  border-color: rgba(245, 158, 11, 0.4);
+  background: rgba(245, 158, 11, 0.15) !important;
+  color: #f59e0b !important;
+  border-color: rgba(245, 158, 11, 0.4) !important;
 }
 
-#tab-dopkos .console-segmented-filters {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  background: rgba(0, 0, 0, 0.35);
-  padding: 2px;
-  border-radius: 5px;
-  border: 1px solid var(--border-color);
-  height: 26px;
-  box-sizing: border-box;
+#tab-dopkos .console-segmented-filters,
+#tab-dopkos #console-filters {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 2px !important;
+  background: rgba(0, 0, 0, 0.35) !important;
+  padding: 2px !important;
+  border-radius: 5px !important;
+  border: 1px solid var(--border-color) !important;
+  height: 26px !important;
+  min-height: 26px !important;
+  max-height: 26px !important;
+  box-sizing: border-box !important;
 }
 
-#tab-dopkos .filter-pill {
-  font-size: 0.64rem;
-  font-weight: 700;
-  padding: 0 8px;
-  height: 20px;
-  line-height: 20px;
-  border-radius: 3px;
-  background: transparent;
-  border: none;
-  color: var(--text-secondary);
-  cursor: pointer;
-  box-sizing: border-box;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+#tab-dopkos .filter-pill,
+#tab-dopkos .console-segmented-filters .filter-pill,
+#tab-dopkos #console-filters .filter-pill {
+  font-size: 0.64rem !important;
+  font-weight: 700 !important;
+  padding: 0 8px !important;
+  height: 20px !important;
+  min-height: 20px !important;
+  max-height: 20px !important;
+  line-height: 20px !important;
+  border-radius: 3px !important;
+  background: transparent !important;
+  border: none !important;
+  color: var(--text-secondary) !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  white-space: nowrap !important;
+  margin: 0 !important;
   transition: all 0.15s ease;
 }
 
-#tab-dopkos .filter-pill:hover {
-  color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.06);
+#tab-dopkos .filter-pill:hover,
+#tab-dopkos .console-segmented-filters .filter-pill:hover,
+#tab-dopkos #console-filters .filter-pill:hover {
+  color: var(--text-primary) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
 }
 
-#tab-dopkos .filter-pill.active {
-  background: var(--gold-bright, #f5c518);
-  color: #080b11;
-  font-weight: 800;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+#tab-dopkos .filter-pill.active,
+#tab-dopkos .console-segmented-filters .filter-pill.active,
+#tab-dopkos #console-filters .filter-pill.active {
+  background: var(--gold-bright, #f5c518) !important;
+  color: #080b11 !important;
+  font-weight: 800 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+  border: none !important;
 }
 
 /* Console Generic Action Button (Export / Expand) */
 #tab-dopkos .console-btn {
-  height: 24px;
-  line-height: 22px;
-  padding: 0 10px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  background: var(--panel-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  color: var(--text-primary);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  box-sizing: border-box;
+  height: 24px !important;
+  min-height: 24px !important;
+  max-height: 24px !important;
+  line-height: 22px !important;
+  padding: 0 10px !important;
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  background: var(--panel-bg) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 4px !important;
+  color: var(--text-primary) !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  box-sizing: border-box !important;
   transition: all 0.15s ease;
 }
 
 #tab-dopkos .console-btn:hover {
-  background: var(--card-bg);
-  border-color: var(--gold-bright, #f5c518);
-  color: var(--gold-bright, #f5c518);
+  background: var(--card-bg) !important;
+  border-color: var(--gold-bright, #f5c518) !important;
+  color: var(--gold-bright, #f5c518) !important;
 }
 
 /* Export Dropdown in Console Toolbar */

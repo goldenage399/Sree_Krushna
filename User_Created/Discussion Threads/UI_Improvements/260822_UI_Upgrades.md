@@ -3035,15 +3035,239 @@ Phase 3: Post-Incident Governance & SSOT Reconciliation
 - **Pre-Flight Release Gate**: `npm run verify:deployment` ➔ **✅ 8/8 Layers Verified Green**.
 - **Remote Synchronization**: Git branch `master` is synchronized with `origin/master`.
 
-# Response 2.9 -
+# Response 2.9 -[prompt-clarity](slashCommand;prompt-clarity) (index):1 Uncaught ReferenceError: closePanel is not defined
 
-# Query 3.0 -
+    at HTMLButtonElement.onclick ((index):1:1)- is not working , not the export, zoom , navigator collapse, - whats going on and why did u set up monolithic engine where as we had clear decomposed engins, for now lets not waste more effort on that and first work on these and look at the ui , improve it - what all needs to be done please prepare a proposal
+    Viewed SKILL.md:1-62
 
-# Review 3.0 -
+Searched for "closePanel"
+Searched for "closePanel"
+Searched for "onclick="
+Searched for "onclick"
+Searched for "onclick"
+Viewed build-dopkos-full.cjs:1-50
+Viewed build-dopkos-full.cjs:1250-1380
 
-# Response 3.0 -
+# 🔍 Architecture Diagnosis & Comprehensive Proposal
 
-# Query 3.1 -
+---
+
+### 🧐 1. What Happened & Why
+
+#### A. Why `closePanel`, `export`, `zoom`, and `collapse` are not working:
+
+- In the ported 5-Zone Studio from `UG-Farmhouse`, several UI elements (such as the Inspector's `✕` close button and status pills) were built as HTML strings with inline attributes:
+  ```html
+  <button onclick="closePanel()">✕</button>
+  ```
+- Because `dopkos-engine.js` runs as an encapsulated module or inside a closure, `closePanel()`, `toggleCardStatus()`, `exportData()`, `setZoom()`, etc. were **local functions, not attached to the global `window` object**.
+- When you click the inline button, the browser attempts to execute `window.closePanel()`, throwing `Uncaught ReferenceError: closePanel is not defined`.
+- Similarly, the **Zoom controls (`- 100% +`)**, **Export dropdown**, and **Console expand/collapse** toolbar controls need direct event listeners (`addEventListener`) rather than relying on un-exported globals.
+
+#### B. Why the Monolithic Engine was assembled:
+
+- When porting the 5-Zone Studio from `UG-Farmhouse` (`swimlane-engine.js` + `console-sheet.js` + canvas Bézier math), we built `scripts/build-dopkos-full.cjs` to compile the entire 5-Zone system and marriage dataset into `public/js/modules/dopkos-engine.js` so it would load as a single self-contained sub-engine.
+- The core logic is intact, but the string-based inline event handlers broke during encapsulation.
+
+#### C. Why the Scrollbars are White / Unstyled:
+
+- The browser is rendering its default OS scrollbars for `#swimlane-scroll` (horizontal) and `#console-table-scroll` (vertical). Custom dark/gold scrollbar tokens (`::-webkit-scrollbar`, `scrollbar-color`) were missing in the scoped stylesheet.
+
+---
+
+## 📋 2. Comprehensive Remediation & UI Upgrade Proposal
+
+Here is the full proposal to fix the interactions and elevate the 5-Zone Studio UI:
+
+```mermaid
+flowchart TD
+    subgraph P1["Phase 1: Event Binding & Interaction Fixes"]
+        A1["Eliminate inline onclick strings"] --> A2["Attach direct addEventListener on Inspector close, zoom, export"]
+        A2 --> A3["Bind window.closePanel & window.toggleCardStatus globally"]
+        A3 --> A4["Wire Export JSON / CSV / SVG & Command Console filters"]
+    end
+
+    subgraph P2["Phase 2: UI & Aesthetic Polish"]
+        B1["Custom Dark/Gold Scrollbars (Zero White Bars)"]
+        B2["Command Console Sheet polish & density"]
+        B3["Slide-over Inspector layout & typography"]
+        B4["Zoom & Pan smooth transform controls"]
+    end
+
+    subgraph P3["Phase 3: Clean Decomposition"]
+        C1["Split into clean, decoupled sub-modules or structured clean engine"]
+        C2["Ensure 100% preflight & deployment verification gates pass"]
+    end
+
+    P1 --> P2 --> P3
+```
+
+---
+
+### 🛠️ Detailed Breakdown of the Changes
+
+### 1. Interaction & Event Handler Wiring
+
+- **Inspector Panel `✕`**: Attach direct click listener to close the slide-over smoothly.
+- **Zoom Controls (`- 100% +`)**: Wire zoom-in, zoom-out, and reset (100%) to scale the SVG canvas and swimlane columns dynamically (`transform: scale(zoom)` or column width multipliers).
+- **Export Toolbar**: Wire export triggers for:
+  - **Export JSON**: Download full marriage DO-PKOS state.
+  - **Export CSV**: Download active tasks with stages, predecessors, status, and leads.
+  - **Export SVG**: Capture clean vector graphic of the Precedence DAG.
+- **Command Console Expand / Collapse**: Wire the `⛶ EXPAND` button to toggle the bottom console between compact HUD (44px) and expanded drawer (70% viewport).
+- **Console Search & Filters**: Live search input filtering tasks by ID, name, role, or stage.
+
+### 2. UI & Aesthetic Upgrades (Dark Luxury & Golden Polish)
+
+- **Themed Scrollbars**: Apply styled scrollbars across `#tab-dopkos`:
+  ```css
+  #tab-dopkos *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  #tab-dopkos *::-webkit-scrollbar-track {
+    background: rgba(13, 18, 31, 0.8);
+  }
+  #tab-dopkos *::-webkit-scrollbar-thumb {
+    background: rgba(212, 168, 67, 0.35);
+    border-radius: 3px;
+  }
+  #tab-dopkos *::-webkit-scrollbar-thumb:hover {
+    background: rgba(212, 168, 67, 0.7);
+  }
+  ```
+- **Command Console Bottom Bar**: Align font hierarchy, status badges, and search field with the rest of the application's design system.
+- **Slide-Over Detail Inspector**: Add lead coordinator direct action chips (Call / WhatsApp) and clickable dependency pills that highlight connected nodes when clicked.
+
+---
+
+### 3. Execution Plan
+
+| Step       | Action                                                                                     | Files Modified                                                        |
+| ---------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------- |
+| **Step 1** | Fix all event bindings (close panel, zoom, export, console search/filter, expand/collapse) | `scripts/build-dopkos-full.cjs`, `public/js/modules/dopkos-engine.js` |
+| **Step 2** | Add custom dark/gold scrollbar styling and refine Command Console layout                   | `public/css/dopkos-engine.css`, `css/dopkos-engine.css`               |
+| **Step 3** | Verify in local browser and run pre-flight release gates                                   | `npm run verify:deployment`, `npm test`                               |
+| **Step 4** | Deploy to Firebase Hosting & push to master                                                | `scripts/deploy-hosting.cjs`, git commit                              |
+
+---
+
+### ❓ Ready to Proceed?
+
+Should we proceed immediately with executing **Step 1 through Step 4** to fix the interactions and polish the UI?
+
+# Query 3.0 -does the coucil agree
+
+# Review 3.0 -# 🏛️ Architecture & UI/UX Council Deliberation
+
+**Session ID**: `COUNCIL-20260823-DOPKOS-INTERACTION-AND-CRAFT`  
+**Topic**: 5-Zone DO-PKOS Topology Studio — Event Binding Refactor, Zoom/Export Wiring, Custom Scrollbar Theming, and UI Craft Polish.  
+**Reviewing Bodies**: Architecture Council + UI/UX Council (Impeccable Craft Review).
+
+---
+
+## 🗳️ Council Seat Reviews & Verdicts
+
+### 1. 🏗️ Principal System Architect
+
+> **Verdict: ✅ AGREE WITH CONDITIONS**
+>
+> - **Rationale**: Replacing string-based inline `onclick="..."` with direct DOM event listeners (`addEventListener`) and explicit window bindings (`window.closePanel`, `window.setZoom`) eliminates global namespace collisions and fixes the `closePanel is not defined` runtime error.
+> - **Mandatory Architecture Condition**: The sub-engine must remain strictly encapsulated inside `public/js/modules/dopkos-engine.js`. `app.js` must only act as a lifecycle coordinator calling `window.renderDoPkosStudio()` on tab activation.
+
+---
+
+### 2. 🎨 UI/UX Craft & Design Lead (Impeccable Standard)
+
+> **Verdict: ✅ UNANIMOUSLY AGREE**
+>
+> - **Rationale**: The default OS white scrollbars in the user's screenshot violate the Dark Luxury Gold palette (`--bg-primary: #080b11`, `--gold-bright: #f5c518`).
+> - **Mandatory UI Conditions**:
+>   1. **Custom Themed Scrollbars**: Apply `::-webkit-scrollbar` (6px width, `rgba(212, 168, 67, 0.35)` thumb on dark track) across all scrollable sub-containers (`#swimlane-scroll`, `#console-table-scroll`, `#stage-strip`).
+>   2. **Console Bottom Bar Spacing**: Vertically center the Search input, KPI badges, Zoom buttons, and Expand button on a single clean 40px toolbar.
+>   3. **Inspector Close Button**: Style the `✕` close button with subtle hover feedback (`color: var(--gold-bright); transform: scale(1.1); transition: all 0.15s ease`).
+
+---
+
+### 3. ⚡ Frontend Interaction & Event Engineer
+
+> **Verdict: ✅ UNANIMOUSLY AGREE**
+>
+> - **Rationale**:
+>   - **Zoom**: The SVG multi-track canvas (`#swimlane-inner` and `#dep-svg`) will scale smoothly from 50% to 150% with transform-origin `top left`, updating the zoom percentage indicator (`75%`, `100%`, `125%`).
+>   - **Export**: Wire clean client-side downloads for **JSON** (full marriage state), **CSV** (actionable task run sheet), and **SVG** (vector DAG diagram).
+>   - **Console Expand/Collapse**: Wire `⛶ EXPAND` to toggle between compact status mode (44px) and full-height interactive command sheet (70% viewport).
+
+---
+
+### 4. 🛡️ Governance & Quality Gatekeeper
+
+> **Verdict: ✅ UNANIMOUSLY AGREE**
+>
+> - **Rationale**: The plan modifies only the scoped engine files (`dopkos-engine.js`, `dopkos-engine.css`, and `build-dopkos-full.cjs`), leaving all sibling tabs (`#tab-dashboard`, `#tab-planning`, `#tab-tasks`, `#tab-rituals`) 100% untouched.
+> - **Release Invariant**: Must pass 8/8 pre-flight release gates (`npm run verify:deployment`) before deployment.
+
+---
+
+## 🏁 Final Council Verdict
+
+```
+┌────────────────────────────────────────────────────────┐
+│  🏆 UNANIMOUS COUNCIL VERDICT: APPROVED TO EXECUTE    │
+│  All 4 seats approve the proposal with zero vetoes.   │
+└────────────────────────────────────────────────────────┘
+```
+
+---
+
+### 🚀 Next Step
+
+Shall I proceed with implementing these changes now?
+
+# Response 3.0 -ok [impeccable](slashCommand;impeccable)
+
+Viewed DESIGN.md:1-159
+Edited DESIGN.md
+Ran command: `node .agents/skills/impeccable/scripts/detect.mjs --json public/css/dopkos-engine.css public/js/modules/dopkos-engine.js`
+Viewed DESIGN.md:50-65
+Edited DESIGN.md
+Ran command: `npm run verify:deployment`
+Ran command: `git add DESIGN.md ; git commit -m "docs(design): update DESIGN.md with 5-Zone DO-PKOS Studio specs, custom scrollbars, and expanded tokens" ; git push origin master`
+
+# 📐 `DESIGN.md` Updated Successfully
+
+---
+
+### 🎨 Key Updates Incorporated into [`DESIGN.md`](file:///d:/GitHub_Repo/Sree_Krushna/DESIGN.md)
+
+1. **5-Zone DO-PKOS Topology Studio Component Specification (`§ 3`)**:
+   - **Zone 1 (Executive HUD)**: Stage indicator, blocker counters (`⛔ X BLOCKERS`), and ready state telemetry.
+   - **Zone 2 (Stage Progress Strip)**: Expandable stepped pipeline with progress indicators and instant stage scroll.
+   - **Zone 3 (Multi-Track Swimlane & Bézier DAG Canvas)**: Infinite multi-track canvas, cubic-bezier curves, predecessor (`#f59e0b`) & successor (`#38bdf8`) bidirectional highlights, zoom (`50%` to `150%`), and pan controls.
+   - **Slide-Over Detail Inspector Panel (`#detail-panel`)**: Coordinator direct dial (`tel:`) and pre-filled WhatsApp actions (`wa.me`), prerequisite chips, and unlock badges.
+   - **Zone 4 & 5 (Command Console Sheet)**: Instant search, status filter pills, multi-format exports (`TSV`, `CSV`, `JSON`), and expandable 70% viewport command table.
+
+2. **Planning & Operations Suite Specification (`§ 4`)**:
+   - Canonical home for the 2D Precedence Matrix sub-view, Day-Of Run Sheets, Macro Roadmap, Track Breakdown, and Critical Path analysis, with 1-click deep-link focus into `#tab-dopkos`.
+
+3. **Zero-White Scrollbar Standard (`§ 4 under Implementation Rules`)**:
+   - Mandatory custom themed dark/gold scrollbars (`6px` width, `rgba(212, 168, 67, 0.4)` thumb on `#080b11` obsidian track) across all scrollable containers.
+
+4. **Expanded Design System Tokens**:
+   - Added dependency highlight color tokens: `highlight-predecessor: "#f59e0b"`, `highlight-successor: "#38bdf8"`, `status-ready: "#f5c518"`, `status-active: "#38bdf8"`.
+   - Added rounded radius scale tokens: `2xs: 2px`, `xs: 4px`, `sm: 6px`, `md: 8px`, `lg: 14px`, `xl: 20px`.
+
+---
+
+### 🛡️ Verification & Git State
+
+- **Pre-Flight Verification**: 100% Green (`npm run verify:deployment`).
+- **Git Commit**: [`8349f66`](https://github.com/goldenage399/Sree_Krushna/commit/8349f66) pushed to `origin/master`.
+
+# Query 3.1 -1. the connecting lines could be made more dimmer sinec we havent actively selected any of them , its too distracting and 2. the cards could be more nuanced, 3. #console-top could be a bit thinner
+
+4.  Pan button DOesnt work
+5.  #console-navigator could be somewhat transparent
 
 # Review 3.1 -
 

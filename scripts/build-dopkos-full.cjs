@@ -1121,6 +1121,10 @@ const dopkosEngineCode = `/**
     const inner = document.getElementById('swimlane-inner');
     if (!inner) return;
     inner.innerHTML = '';
+    inner.style.width = (totalW + LABEL_W) + 'px';
+    inner.style.height = totalH + 'px';
+    inner.style.minWidth = (totalW + LABEL_W) + 'px';
+    inner.style.position = 'relative';
 
     inner.addEventListener('click', (e) => {
       if (e.target === inner || e.target.id === 'dep-svg' || e.target.classList.contains('trade-row') || e.target.classList.contains('trade-content')) {
@@ -1133,7 +1137,7 @@ const dopkosEngineCode = `/**
     TRADES.forEach(tr => {
       const row = document.createElement('div');
       row.className = 'trade-row';
-      row.style.cssText = 'display: flex; height: ' + (rowH[tr] || SLOT_H) + 'px; border-bottom: 1px solid var(--border-subtle); position: relative;';
+      row.style.cssText = 'display: flex; width: ' + (totalW + LABEL_W) + 'px; height: ' + (rowH[tr] || SLOT_H) + 'px; border-bottom: 1px solid var(--border-subtle); position: relative;';
       
       const label = document.createElement('div');
       label.className = 'trade-label ' + tr;
@@ -1143,7 +1147,7 @@ const dopkosEngineCode = `/**
       
       const content = document.createElement('div');
       content.className = 'trade-content ' + tr + '-content';
-      content.style.cssText = 'flex: 1; position: relative;';
+      content.style.cssText = 'width: ' + totalW + 'px; flex-shrink: 0; position: relative;';
       row.appendChild(content);
 
       inner.appendChild(row);
@@ -1258,6 +1262,10 @@ const dopkosEngineCode = `/**
     });
 
     g.addEventListener('click', e => {
+      if (window.panMode || spacePanActive || hasDragged) {
+        if (hasDragged) hasDragged = false;
+        return;
+      }
       e.stopPropagation();
       selectAndCenterCard(fromId, true);
       openPanel(fromId);
@@ -1298,7 +1306,10 @@ const dopkosEngineCode = `/**
       '</div>';
 
     card.addEventListener('click', e => {
-      if (hasDragged) return;
+      if (window.panMode || spacePanActive || hasDragged) {
+        if (hasDragged) hasDragged = false;
+        return;
+      }
       e.stopPropagation();
       selectAndCenterCard(t.id, true);
       openPanel(t.id);
@@ -1400,6 +1411,7 @@ const dopkosEngineCode = `/**
         '<span style="font-size: 0.65rem; color: var(--text-dim);">' + (STATUS_LABEL[status] || status) + '</span>';
 
       chip.addEventListener('click', e => {
+        if (window.panMode || spacePanActive || hasDragged) return;
         e.stopPropagation();
         selectAndCenterCard(id, true);
         openPanel(id);
@@ -1432,12 +1444,12 @@ const dopkosEngineCode = `/**
       if (activeFilter === 'ACTIVE' && s !== 'ACTIVE') return false;
       if (activeFilter === 'HOLD' && s !== 'HOLD' && s !== 'FUTURE_HOLD' && s !== 'MISSED') return false;
       if (activeFilter === 'DONE' && s !== 'DONE') return false;
-
       if (query) {
         const matchId = t.id.toLowerCase().includes(query);
         const matchName = t.name.toLowerCase().includes(query);
-        const matchTrade = displayTrade(t).toLowerCase().includes(query);
-        if (!matchId && !matchName && !matchTrade) return false;
+        const matchTrade = (t.trade || '').toLowerCase().includes(query);
+        const matchLead = (t.lead || '').toLowerCase().includes(query);
+        return matchId || matchName || matchTrade || matchLead;
       }
       return true;
     });
@@ -1588,12 +1600,18 @@ const dopkosEngineCode = `/**
     }
   }
 
-  function togglePanMode() {
-    panMode = !panMode;
+  function togglePanMode(forceVal) {
+    panMode = (forceVal !== undefined) ? forceVal : !panMode;
+    window.panMode = panMode;
     const btn = document.getElementById('zoom-pan');
     const scrollEl = document.getElementById('swimlane-scroll');
-    if (btn) btn.classList.toggle('active', panMode);
-    if (scrollEl) scrollEl.classList.toggle('pan-mode', panMode);
+    if (panMode || spacePanActive) {
+      if (btn) btn.classList.add('active');
+      if (scrollEl) scrollEl.classList.add('pan-active', 'pan-mode');
+    } else {
+      if (btn) btn.classList.remove('active');
+      if (scrollEl) scrollEl.classList.remove('pan-active', 'pan-mode');
+    }
   }
 
   // Attach global pan drag listener once
@@ -1606,7 +1624,7 @@ const dopkosEngineCode = `/**
       if (e && e.code === 'Space' && !['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) {
         spacePanActive = true;
         const scrollEl = document.getElementById('swimlane-scroll');
-        if (scrollEl) scrollEl.classList.add('pan-mode');
+        if (scrollEl) scrollEl.classList.add('pan-active', 'pan-mode');
       }
     });
 
@@ -1614,7 +1632,7 @@ const dopkosEngineCode = `/**
       if (e && e.code === 'Space') {
         spacePanActive = false;
         const scrollEl = document.getElementById('swimlane-scroll');
-        if (scrollEl && !panMode) scrollEl.classList.remove('pan-mode');
+        if (scrollEl && !panMode) scrollEl.classList.remove('pan-active', 'pan-mode');
       }
     });
 
@@ -1647,21 +1665,26 @@ const dopkosEngineCode = `/**
 
     ensureGlobalPanListeners();
 
-    if (panMode) scrollContainerEl.classList.add('pan-mode');
+    if (panMode || spacePanActive) {
+      scrollContainerEl.classList.add('pan-active', 'pan-mode');
+    }
 
-    scrollContainerEl.onmousedown = (e) => {
-      if (!e) return;
-      if (panMode || spacePanActive || e.button === 1) {
-        isDragging = true;
-        hasDragged = false;
-        scrollContainerEl.classList.add('dragging');
-        startX = e.clientX || 0;
-        startY = e.clientY || 0;
-        scrollXStart = scrollContainerEl.scrollLeft;
-        scrollYStart = scrollContainerEl.scrollTop;
-        if (e.preventDefault) e.preventDefault();
-      }
-    };
+    if (!scrollContainerEl._panMousedownBound) {
+      scrollContainerEl._panMousedownBound = true;
+      scrollContainerEl.addEventListener('mousedown', (e) => {
+        if (!e) return;
+        if (window.panMode || spacePanActive || e.button === 1) {
+          isDragging = true;
+          hasDragged = false;
+          scrollContainerEl.classList.add('dragging');
+          startX = e.clientX || 0;
+          startY = e.clientY || 0;
+          scrollXStart = scrollContainerEl.scrollLeft;
+          scrollYStart = scrollContainerEl.scrollTop;
+          if (e.preventDefault) e.preventDefault();
+        }
+      }, true);
+    }
   }
 
   function updateScrollSpy() {
