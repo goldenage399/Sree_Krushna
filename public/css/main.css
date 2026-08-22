@@ -2390,3 +2390,28 @@
         opacity: 1;
       }
     }
+
+    /* DO_PKOS Studio View Switcher Buttons */
+    .dopkos-view-btn {
+      font-size: 0.76rem !important;
+      padding: 6px 14px !important;
+      background: var(--bg-surface-elevated, #131b2e) !important;
+      color: var(--text-muted, #94a3b8) !important;
+      border: 1px solid var(--border-subtle, rgba(255,255,255,0.08)) !important;
+      border-radius: var(--radius-sm, 6px) !important;
+      cursor: pointer !important;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      font-weight: 600 !important;
+    }
+    .dopkos-view-btn:hover {
+      background: var(--bg-surface, #0f1624) !important;
+      color: var(--text-main, #f8fafc) !important;
+      border-color: var(--gold-antique, #d4a843) !important;
+    }
+    .dopkos-view-btn.active {
+      background: var(--gold-gradient, linear-gradient(135deg, #f5c518, #d4a843)) !important;
+      color: #080b11 !important;
+      font-weight: 800 !important;
+      border-color: transparent !important;
+      box-shadow: 0 0 14px rgba(245, 197, 24, 0.35) !important;
+    }
