@@ -1541,18 +1541,18 @@
     const x2 = tp.x;
     const y2 = tp.y + CARD_H / 2;
 
-    let color = 'rgba(245, 197, 24, 0.4)';
-    let strokeWidth = 1.6;
+    let color = 'rgba(212, 168, 67, 0.10)';
+    let strokeWidth = 1.1;
     let dashArray = 'none';
 
     if (depType === 'must_precede_sealing') { 
-      color = '#f59e0b'; 
-      strokeWidth = 2.2; 
+      color = 'rgba(245, 158, 11, 0.18)'; 
+      strokeWidth = 1.2; 
     }
     else if (depType === 'must_happen_during') { 
-      color = '#38bdf8'; 
-      strokeWidth = 2.2; 
-      dashArray = '5,3'; 
+      color = 'rgba(56, 189, 248, 0.18)'; 
+      strokeWidth = 1.2; 
+      dashArray = '4,3'; 
     }
 
     const midX = (x1 + x2) / 2;
@@ -1579,7 +1579,7 @@
     hitPath.setAttribute('class', 'hit-path');
     hitPath.setAttribute('d', pathD);
     hitPath.setAttribute('stroke', 'transparent');
-    hitPath.setAttribute('stroke-width', '14');
+    hitPath.setAttribute('stroke-width', '16');
     hitPath.setAttribute('fill', 'none');
     hitPath.setAttribute('data-from', fromId);
     hitPath.setAttribute('data-to', toId);
@@ -1588,6 +1588,8 @@
     g.appendChild(hitPath);
 
     g.addEventListener('mouseenter', () => {
+      visiblePath.setAttribute('stroke', 'var(--gold-bright, #ffd15c)');
+      visiblePath.setAttribute('stroke-width', '2.2');
       const fromCard = document.querySelector('.task-card[data-id="' + fromId + '"]');
       const toCard = document.querySelector('.task-card[data-id="' + toId + '"]');
       if (fromCard) fromCard.classList.add('edge-hovered');
@@ -1595,6 +1597,8 @@
     });
 
     g.addEventListener('mouseleave', () => {
+      visiblePath.setAttribute('stroke', color);
+      visiblePath.setAttribute('stroke-width', strokeWidth);
       const fromCard = document.querySelector('.task-card[data-id="' + fromId + '"]');
       const toCard = document.querySelector('.task-card[data-id="' + toId + '"]');
       if (fromCard) fromCard.classList.remove('edge-hovered');
@@ -1619,25 +1623,30 @@
 
     const tr = displayTrade(t);
     const trColor = TRADE_META[tr]?.color || '#555';
-    card.style.borderLeftColor = trColor;
-    card.style.borderLeftWidth = '3px';
+    const trLabel = TRADE_META[tr]?.label || tr;
 
     let depIcon = '';
-    if (t.dependency_type === 'must_precede_sealing') depIcon = '<span class="card-dep-icon" title="Type 3: Must precede sealing">🔒</span>';
-    else if (t.dependency_type === 'must_happen_during') depIcon = '<span class="card-dep-icon" title="Type 2: Embedded window">⚡</span>';
+    if (t.dependency_type === 'must_precede_sealing') depIcon = '<span class="card-dep-icon" title="Type 3: Must precede sealing" style="font-size: 0.65rem;">🔒</span>';
+    else if (t.dependency_type === 'must_happen_during') depIcon = '<span class="card-dep-icon" title="Type 2: Embedded window" style="font-size: 0.65rem;">⚡</span>';
 
-    let gateRef = t.sealing_gate ? '<div class="card-gate" style="font-size: 0.62rem; color: #f59e0b; font-weight: 700;">Gate: ' + t.sealing_gate + '</div>' : '';
+    let gateRef = t.sealing_gate ? '<div class="card-gate" style="font-size: 0.60rem; color: #f59e0b; font-weight: 700; display: flex; align-items: center; gap: 3px; margin: 1px 0;"><span>⛩️</span> Gate ' + t.sealing_gate + '</div>' : '';
 
-    card.innerHTML = '<div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">' +
-        '<span class="card-id" style="font-family: monospace; font-size: 0.68rem; font-weight: 800; color: var(--gold-bright);">' + t.id + '</span>' +
+    card.innerHTML = '<div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">' +
+        '<div style="display: flex; align-items: center; gap: 4px; overflow: hidden;">' +
+          '<span class="card-trade-pill" style="font-size: 0.58rem; font-weight: 800; color: ' + trColor + '; background: ' + trColor + '18; border: 1px solid ' + trColor + '33; border-radius: 3px; padding: 1px 4px; white-space: nowrap;">' + trLabel + '</span>' +
+          '<span class="card-id" style="font-family: monospace; font-size: 0.66rem; font-weight: 800; color: var(--gold-bright);">' + t.id + '</span>' +
+        '</div>' +
         depIcon +
       '</div>' +
-      '<div class="card-name" style="font-size: 0.76rem; font-weight: 700; color: var(--text-main); line-height: 1.25; max-height: 2.5em; overflow: hidden; margin: 2px 0 4px;">' + t.name + '</div>' +
+      '<div class="card-name" style="font-size: 0.72rem; font-weight: 700; color: var(--text-main); line-height: 1.25; max-height: 2.5em; overflow: hidden; margin: 2px 0 3px;">' + t.name + '</div>' +
       gateRef +
-      '<div class="card-dropdown" id="drop-' + t.id + '"></div>' +
-      '<button class="status-pill ' + status + '" data-action="pill" data-id="' + t.id + '" onclick="toggleCardStatus(\'' + t.id + '\', event)" title="' + (PILL_TITLE[status] || '') + '" style="font-size: 0.62rem; font-weight: 800; padding: 2px 6px; border-radius: 3px; border: 1px solid transparent; cursor: pointer;">' + STATUS_LABEL[status] + '</button>';
+      '<div style="display: flex; justify-content: space-between; align-items: center; margin-top: 3px;">' +
+        '<button class="status-pill ' + status + '" data-action="pill" data-id="' + t.id + '" onclick="toggleCardStatus(\'' + t.id + '\', event)" title="' + (PILL_TITLE[status] || '') + '" style="font-size: 0.58rem; font-weight: 800; padding: 1px 6px; border-radius: 9999px; border: 1px solid transparent; cursor: pointer;">' + STATUS_LABEL[status] + '</button>' +
+        '<span style="font-size: 0.60rem; color: var(--text-dim); font-weight: 600;">S' + t.stage + '</span>' +
+      '</div>';
 
     card.addEventListener('click', e => {
+      if (hasDragged) return;
       e.stopPropagation();
       selectAndCenterCard(t.id, true);
       openPanel(t.id);
@@ -1935,39 +1944,72 @@
     if (scrollEl) scrollEl.classList.toggle('pan-mode', panMode);
   }
 
-  function bindSwimlaneScrollEvents() {
-    const scrollContainerEl = document.getElementById('swimlane-scroll');
-    if (!scrollContainerEl) return;
+  // Attach global pan drag listener once
+  let globalPanInitialized = false;
+  function ensureGlobalPanListeners() {
+    if (globalPanInitialized) return;
+    globalPanInitialized = true;
 
-    scrollContainerEl.addEventListener('mousedown', e => {
-      if (panMode || spacePanActive) {
-        isDragging = true;
-        hasDragged = false;
-        scrollContainerEl.classList.add('dragging');
-        startX = e.clientX;
-        startY = e.clientY;
-        scrollXStart = scrollContainerEl.scrollLeft;
-        scrollYStart = scrollContainerEl.scrollTop;
-        e.preventDefault();
+    window.addEventListener('keydown', e => {
+      if (e && e.code === 'Space' && !['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) {
+        spacePanActive = true;
+        const scrollEl = document.getElementById('swimlane-scroll');
+        if (scrollEl) scrollEl.classList.add('pan-mode');
+      }
+    });
+
+    window.addEventListener('keyup', e => {
+      if (e && e.code === 'Space') {
+        spacePanActive = false;
+        const scrollEl = document.getElementById('swimlane-scroll');
+        if (scrollEl && !panMode) scrollEl.classList.remove('pan-mode');
       }
     });
 
     window.addEventListener('mousemove', e => {
-      if (isDragging && scrollContainerEl) {
-        const dx = e.clientX - startX;
-        const dy = e.clientY - startY;
-        if (Math.abs(dx) > 3 || Math.abs(dy) > 3) hasDragged = true;
-        scrollContainerEl.scrollLeft = scrollXStart - dx;
-        scrollContainerEl.scrollTop = scrollYStart - dy;
+      if (!isDragging || !e) return;
+      const scrollEl = document.getElementById('swimlane-scroll');
+      if (!scrollEl) return;
+      const dx = (e.clientX || 0) - startX;
+      const dy = (e.clientY || 0) - startY;
+      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+        hasDragged = true;
       }
+      scrollEl.scrollLeft = scrollXStart - dx;
+      scrollEl.scrollTop = scrollYStart - dy;
     });
 
     window.addEventListener('mouseup', () => {
-      if (isDragging && scrollContainerEl) {
+      if (isDragging) {
         isDragging = false;
-        scrollContainerEl.classList.remove('dragging');
+        const scrollEl = document.getElementById('swimlane-scroll');
+        if (scrollEl) scrollEl.classList.remove('dragging');
+        setTimeout(() => { hasDragged = false; }, 60);
       }
     });
+  }
+
+  function bindSwimlaneScrollEvents() {
+    const scrollContainerEl = document.getElementById('swimlane-scroll');
+    if (!scrollContainerEl) return;
+
+    ensureGlobalPanListeners();
+
+    if (panMode) scrollContainerEl.classList.add('pan-mode');
+
+    scrollContainerEl.onmousedown = (e) => {
+      if (!e) return;
+      if (panMode || spacePanActive || e.button === 1) {
+        isDragging = true;
+        hasDragged = false;
+        scrollContainerEl.classList.add('dragging');
+        startX = e.clientX || 0;
+        startY = e.clientY || 0;
+        scrollXStart = scrollContainerEl.scrollLeft;
+        scrollYStart = scrollContainerEl.scrollTop;
+        if (e.preventDefault) e.preventDefault();
+      }
+    };
   }
 
   function updateScrollSpy() {
