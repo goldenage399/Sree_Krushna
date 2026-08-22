@@ -121,6 +121,7 @@ Before editing `GEMINI.md` or `.agent/standards-catalog.json`:
   npm run verify:governance-wiring
   ```
 * **Halt Condition**: If either script returns exit code `1` (indicating standard ID collision, duplicate definitions, or unwired artifacts/broken PACT back-links), the registration is BLOCKED. Remap standard IDs or wire triggers, and re-run check until it returns exit code `0`.
+* **Evidence requirement**: Quote the literal output of the passing run in this session — a stated "returned exit code 0" with no pasted output is not verification, it is a claim. If the wording used to report the result does not match any string the script actually prints, that is itself a gate failure, equal in severity to skipping the run.
 
 ### Execution Steps:
 1. **Extend or Create SSOT (`GEMINI.md` / ADR)**: Add the new protocol detailing the constraint and the *Why* behind the rule. Before assuming "extend" — check whether the affected subsystem has an SSoT at all (`docs/protocols/SSOT-001.md` coverage criteria). "Extend" presumes one exists; if it doesn't, this incident is also a documentation-coverage gap, and the missing doc must be created (not just the incident/protocol note), or the same subsystem will keep surfacing as undocumented in future incidents. If extending an existing ADR, apply the **ADR Amendment vs. Supersession standard** defined in [`docs/adr/README.md`](file:///d:/GitHub_Repo/Task-Dashboard/docs/adr/README.md#adr-lifecycle) (amend in-place with a dated blockquote for minor/descriptive changes; write a new superseding ADR for reversals).
@@ -131,8 +132,6 @@ Before editing `GEMINI.md` or `.agent/standards-catalog.json`:
    - Add standard routing entries to `.agent/PREFLIGHT.md`.
    - Add reference pointer to `CLAUDE.md`.
 5. **Process Pattern Gate**: If the incident revealed a *process failure* (an agent workflow was missing a check, a step was consistently skipped, a discovery that should be repeatable) rather than only a code invariant — run `/capture-pattern` to archive the corrective process into `.agent/patterns/`. (For monolith splits or modular coordination changes, see [.agent/patterns/monolith-split-verification-patterns.md](../patterns/monolith-split-verification-patterns.md) for verification guidelines).
-
-   [QSR-repo-local note: this file is synced from Task-Dashboard via `Copy-Item -Force` and will be silently overwritten on the next `/sap-sync` run — this note will not survive that. The durable version of the step below lives in `System Reference/portable/workflows/REF_UPDATE_WORKFLOW.md`, which QSR owns. This whole file is tracked as shared block `std.governance.post-incident` in `PIOperationsMgmt_Firebase/docs/SHARED_ALIGNMENT_PROTOCOL.md` §6 — registered as one unmarked block, not yet split via `<!-- shared:<id>:start/end -->` into shared vs. QSR-local sections. Read that protocol doc before assuming this file's sync behavior.] After capturing a pattern here, also check whether it generalizes to other DO-PKOS projects with no QSR-specific context required — if so, promote it into `System Reference/portable/PATTERN_LIBRARY.md` via `REF_UPDATE_WORKFLOW.md`. A pattern captured only in `.agent/patterns/` reaches this repo and Task-Dashboard-derived repos; it does not reach sibling DO-PKOS projects.
     - See `.agent/patterns/layout-linter-neutrality-gate.md` for the linter neutrality protocol.
     - See `.agent/patterns/css-bridge-specificity-management.md` for the cascade specificity protocol.
     - See `.agent/patterns/service-import-without-write-wiring.md` for the service write-wiring check.
@@ -158,6 +157,8 @@ Before editing `GEMINI.md` or `.agent/standards-catalog.json`:
 
    If any box is unchecked: add the missing back-link or spoke entry before proceeding to Phase 4.
 
+7. **SAP Cross-Repo Propagation (PACT-001)**: If this post-incident governance run captured a new universal pattern (`.agent/patterns/`), updated `.agent/standards-catalog.json`, or modified universal governance workflows/skills, execute `/sap-sync` (or copy updated assets) immediately to ensure newly institutionalized bug guardrails reach canonical `Task-Dashboard` and sibling repositories without waiting for session close.
+
 ---
 
 ## Phase 4 — Coverage Audit
@@ -182,7 +183,7 @@ If a new Structural Invariant was defined, audit the rest of the codebase for ex
 ### 🔍 Validation Gate 3: Viewport & Integration Verification Gate
 Before staging and committing changes:
 * **Halt Condition 1**: If UI changes were made, verify that the walkthrough file (`walkthrough.md`) lists the visual verification evidence (paths to visual verification screenshots at 768px, 1024px, and 1280px).
-* **Halt Condition 2**: If code files were changed, verify that `npm run test:unit:run` and `npm run sg:scan` have run and returned exit code `0`.
+* **Halt Condition 2**: If code files were changed, verify that `npm run test:unit:run` and `npm run sg:scan` have run and returned exit code `0` — quote the actual terminal output as evidence, not a paraphrased or reconstructed summary of what it would say.
 
 ---
 

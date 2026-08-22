@@ -6,6 +6,8 @@
     "verify:governance-wiring": "node scripts/verify-governance-wiring.cjs",
     "verify:governance-wiring:all": "node scripts/verify-governance-wiring.cjs --all",
     "verify:governance-schema": "node scripts/verify-governance-schema.cjs",
+    "verify:deployment": "node scripts/verify-deployment.cjs",
+    "audit:decomposition": "node scripts/forensic-audit.cjs",
     "verify:mobile": "node scripts/verify-mobile.mjs",
     "test:e2e": "npx playwright test",
     "test:e2e:ui": "npx playwright test --ui",

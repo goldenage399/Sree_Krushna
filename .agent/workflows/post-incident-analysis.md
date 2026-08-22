@@ -40,4 +40,4 @@ For each defect in the Pending Incident Queue, execute the 9-step retrospective:
 - **Step 1–5** -> Write formal Case Study to `docs/incidents/INC-XXX.md`.
 - **Step 6–7** -> Update `.agent/standards-catalog.json`, `violation-patterns.json`, and `GEMINI.md`.
 - **Step 8–9** -> Record decisions in `.agent/memory/decisions.md` and update relevant SSOT hubs.
-- **Workflow Delegate** -> For complete lifecycle execution, see [.agent/workflows/post-incident-governance.md](.agent/workflows/post-incident-governance.md).
+- **Workflow Delegate** -> For complete lifecycle execution, see [.agent/workflows/post-incident-governance.md](file:///d:/GitHub_Repo/PIOperationsMgmt_Firebase/.agent/workflows/post-incident-governance.md).

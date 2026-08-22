@@ -62,25 +62,29 @@ window.dataLayer = window.dataLayer || [];
     // Initialize Theme Button
     syncThemeButton();
 
-    // ── Countdown Timer — Real Dates (IST) ──────────────────────────────────
+    // ── Countdown Timer — Real Dates (IST: UTC + 5:30) ──────────────────────
     const CD_EVENTS = {
-      engagement: { label: '💍 Engagement — 11 Feb 2027',  ms: new Date('2027-02-11T10:00:00+05:30').getTime() },
-      wedding:    { label: '👑 Wedding Muhurat — 10 Mar 2027', ms: new Date('2027-03-10T08:00:00+05:30').getTime() },
-      reception:  { label: '🎉 Grand Reception — 10 Mar 2027', ms: new Date('2027-03-10T19:00:00+05:30').getTime() },
+      engagement: { label: '💍 Engagement — 11 Feb 2027',  ms: Date.UTC(2027, 1, 11, 4, 30, 0) },
+      wedding:    { label: '👑 Wedding Muhurat — 10 Mar 2027', ms: Date.UTC(2027, 2, 10, 2, 30, 0) },
+      reception:  { label: '🎉 Grand Reception — 10 Mar 2027', ms: Date.UTC(2027, 2, 10, 13, 30, 0) },
     };
 
     let cdActiveEvent = 'engagement';
 
-    function cdPad(n) { return String(n).padStart(2, '0'); }
+    function cdPad(n) { return String(Math.max(0, n)).padStart(2, '0'); }
 
     function cdFlipNum(el, newVal) {
-      if (el.innerText === newVal) return;
+      if (!el) return;
+      if (el.textContent === newVal) return;
+      el.textContent = newVal;
       el.classList.add('flip');
-      setTimeout(() => { el.innerText = newVal; el.classList.remove('flip'); }, 120);
+      setTimeout(() => {
+        if (el) el.classList.remove('flip');
+      }, 120);
     }
 
     function updateCountdown() {
-      const evt = CD_EVENTS[cdActiveEvent];
+      const evt = CD_EVENTS[cdActiveEvent] || CD_EVENTS.engagement;
       const now  = Date.now();
       const diff = evt.ms - now;
       const labelEl = document.getElementById('cd-next-label');
@@ -967,11 +971,36 @@ window.dataLayer = window.dataLayer || [];
       }
     };
 
-    try {
-      const { onLCP, onINP, onCLS } = await import(
-        "https://esm.sh/web-vitals@4?bundle"
-      );
-      [onLCP, onINP, onCLS].forEach((fn) => fn(reportFn));
-    } catch (err) {
-      console.warn("[RUM] web-vitals load failed:", err.message);
-    }
+    // ── Explicit Global Window Bindings for Inline HTML Handlers ──
+    window.toggleTheme = toggleTheme;
+    window.switchTab = switchTab;
+    window.openTaskConsole = openTaskConsole;
+    window.closeTaskConsole = closeTaskConsole;
+    window.toggleChecklistItem = toggleChecklistItem;
+    window.setTaskStatus = setTaskStatus;
+    window.addNewTask = addNewTask;
+    window.filterTasks = filterTasks;
+    window.filterSwimlane = filterSwimlane;
+    window.showNodeModal = showNodeModal;
+    window.showRitualModal = showRitualModal;
+    window.closeModal = closeModal;
+    window.openInspirationModal = openInspirationModal;
+    window.closeInspirationModal = closeInspirationModal;
+    window.detectPlatform = detectPlatform;
+    window.reframeWithAI = reframeWithAI;
+    window.submitIdea = submitIdea;
+    window.deleteIdea = deleteIdea;
+    window.copyIdeasForDev = copyIdeasForDev;
+    window.updateCountdown = updateCountdown;
+
+    // ── Real User Monitoring (RUM) / Web Vitals (Safe Async IIFE) ──
+    (async function initWebVitals() {
+      try {
+        const { onLCP, onINP, onCLS } = await import(
+          "https://esm.sh/web-vitals@4?bundle"
+        );
+        [onLCP, onINP, onCLS].forEach((fn) => fn(reportFn));
+      } catch (err) {
+        console.warn("[RUM] web-vitals load failed:", err.message);
+      }
+    })();

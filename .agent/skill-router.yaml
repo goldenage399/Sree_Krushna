@@ -139,6 +139,13 @@ skills:
     invoke: /declarative-schema-enforcer
     when: "Enforcing schema-driven writes to eliminate forgotten-field bugs"
 
+  - id: india-corp-compliance-pack
+    repo: [bms, task-dashboard]
+    triggers: ["india corp compliance", "MCA filing", "company secretarial", "GST compliance", "/india-corp-compliance-pack"]
+    cost: medium
+    invoke: /india-corp-compliance-pack
+    when: "Corporate compliance checklists and filing requirements under Indian Companies Act"
+
   - id: frontend-design
     repo: [pio, task-dashboard]
     triggers: ["build web component", "build page", "design UI", "landing page", "dashboard UI", "frontend design"]
@@ -530,28 +537,28 @@ workflows:
     when: "Safely removing 100+ lines of code with dependency checks"
 
   - id: post-incident-governance
-    repo: [capsicum, pio, task-dashboard, sree-krushna, ug-farmhouse]
+    repo: [capsicum, pio, task-dashboard, sree-krushna, ug-farmhouse, qsr, dashboard, inventory_mgmt, supervisorcompliancemonitoring, unified_uploader]
     triggers: ["production bug resolved", "repeated failure", "post-incident", "systemic gap", "we should always", "we should never", "/post-incident-governance"]
     cost: medium
     invoke: read .agent/workflows/post-incident-governance.md
     when: "Routing post-incident learnings through classification gate to persistent invariants"
 
   - id: post-incident-governance-lite
-    repo: [capsicum, pio, task-dashboard, sree-krushna, ug-farmhouse]
+    repo: [capsicum, pio, task-dashboard, sree-krushna, ug-farmhouse, qsr, dashboard, inventory_mgmt, supervisorcompliancemonitoring, unified_uploader]
     triggers: ["post-incident-governance-lite", "/post-incident-governance-lite", "quick post-incident", "rapid incident log"]
     cost: low
     invoke: read .agent/workflows/post-incident-governance-lite.md
     when: "Streamlined post-incident governance logging for single-surface bugs"
 
   - id: post-incident-analysis
-    repo: [task-dashboard, sree-krushna, ug-farmhouse]
+    repo: [task-dashboard, sree-krushna, ug-farmhouse, capsicum, pio, qsr, dashboard, inventory_mgmt, supervisorcompliancemonitoring, unified_uploader]
     triggers: ["post-incident-analysis", "post incident analysis", "/post-incident-analysis", "incident retrospective"]
     cost: medium
     invoke: read .agent/workflows/post-incident-analysis.md
     when: "Performing 9-step post-incident retrospective and writing INC case study"
 
   - id: postmortem
-    repo: [task-dashboard, sree-krushna, ug-farmhouse]
+    repo: [task-dashboard, sree-krushna, ug-farmhouse, capsicum, pio, qsr, dashboard, inventory_mgmt, supervisorcompliancemonitoring, unified_uploader]
     triggers: ["postmortem", "/postmortem", "incident postmortem"]
     cost: medium
     invoke: read .agent/workflows/postmortem.md
@@ -606,6 +613,111 @@ workflows:
     cost: medium
     invoke: workflow:SESSION_CLOSE_WORKFLOW
     when: "Session close workflow in QSR and TestViteJSX"
+
+  - id: external-architecture-consultation
+    repo: [task-dashboard, pio, capsicum, bms, ug-farmhouse, qsr]
+    triggers: ["external architecture", "architecture consultation", "/external-architecture-consultation"]
+    cost: medium
+    invoke: read .agent/workflows/external-architecture-consultation.md
+    when: "Preparing structured architectural artifacts for external review"
+
+  - id: harvest-frontend-knowledge-lite
+    repo: [task-dashboard, pio, capsicum, bms, ug-farmhouse, qsr]
+    triggers: ["harvest frontend knowledge lite", "quick knowledge harvest", "/harvest-frontend-knowledge-lite"]
+    cost: low
+    invoke: read .agent/workflows/harvest-frontend-knowledge-lite.md
+    when: "Streamlined harvesting of UI/UX discoveries and frontend rules"
+
+  - id: ia-uiux-separation
+    repo: [task-dashboard, pio, capsicum, bms, ug-farmhouse, qsr]
+    triggers: ["ia uiux separation", "IUS-001", "information architecture separation", "/ia-uiux-separation"]
+    cost: medium
+    invoke: read .agent/workflows/ia-uiux-separation.md
+    when: "Enforcing hard separation between Information Architecture (What) and UI/UX Architecture (How)"
+
+  - id: shadcn
+    repo: [task-dashboard, pio, capsicum, bms, ug-farmhouse, qsr]
+    triggers: ["shadcn", "shadcn component", "/shadcn"]
+    cost: low
+    invoke: read .agent/workflows/shadcn.md
+    when: "Guidelines and patterns for shadcn/ui component integration"
+
+  - id: ssot-reconciliation-lite
+    repo: [task-dashboard, pio, capsicum, bms, ug-farmhouse, qsr]
+    triggers: ["ssot reconciliation lite", "quick ssot check", "/ssot-reconciliation-lite"]
+    cost: low
+    invoke: read .agent/workflows/ssot-reconciliation-lite.md
+    when: "Rapid SSOT reconciliation for localized doc/code divergence"
+
+  - id: UI_MANUAL_CAPTURE_WORKFLOW
+    repo: [task-dashboard, pio, capsicum, bms, ug-farmhouse, qsr]
+    triggers: ["ui manual capture", "UI_MANUAL_CAPTURE_WORKFLOW", "/ui-manual-capture"]
+    cost: low
+    invoke: read .agent/workflows/UI_MANUAL_CAPTURE_WORKFLOW.md
+    when: "Manual UI capture and annotation pipeline"
+
+  - id: GRAPH_CHANGE_WORKFLOW
+    repo: [task-dashboard, pio, capsicum, bms, ug-farmhouse, qsr]
+    triggers: ["graph change", "GRAPH_CHANGE_WORKFLOW", "/graph-change"]
+    cost: low
+    invoke: read .agent/workflows/GRAPH_CHANGE_WORKFLOW.md
+    when: "Knowledge graph update and validation workflow"
+
+  - id: SSOT_RECONCILIATION_WORKFLOW
+    repo: [task-dashboard, pio, capsicum, bms, ug-farmhouse, qsr]
+    triggers: ["SSOT_RECONCILIATION_WORKFLOW", "ssot recon workflow"]
+    cost: medium
+    invoke: read .agent/workflows/SSOT_RECONCILIATION_WORKFLOW.md
+    when: "SSOT reconciliation workflow variant"
+
+  - id: business-council
+    repo: [bms, task-dashboard]
+    triggers: ["business council", "business-council", "/business-council", "evaluate business model"]
+    cost: high
+    invoke: read .agent/workflows/business-council.md
+    when: "Multi-perspective council review for business model, compliance, and strategy decisions"
+
+  - id: document-conversion
+    repo: [bms, task-dashboard]
+    triggers: ["document conversion", "convert doc", "/document-conversion"]
+    cost: low
+    invoke: read .agent/workflows/document-conversion.md
+    when: "Document conversion and markdown styling workflow"
+
+  - id: kb-compile
+    repo: [bms, task-dashboard]
+    triggers: ["compile kb", "compile knowledge base", "/kb-compile", "build kb"]
+    cost: low
+    invoke: read .agent/workflows/kb-compile.md
+    when: "Knowledge Base compilation and link integrity check"
+
+  - id: package-compile
+    repo: [bms, task-dashboard]
+    triggers: ["compile package", "build package", "/package-compile"]
+    cost: low
+    invoke: read .agent/workflows/package-compile.md
+    when: "Package compilation and bundling workflow"
+
+  - id: DASHBOARD_SYNC_DEPLOY_WORKFLOW
+    repo: [ug-farmhouse, task-dashboard]
+    triggers: ["dashboard sync deploy", "DASHBOARD_SYNC_DEPLOY_WORKFLOW", "/dashboard-sync-deploy"]
+    cost: medium
+    invoke: read .agent/workflows/DASHBOARD_SYNC_DEPLOY_WORKFLOW.md
+    when: "Dashboard sync and deployment workflow in UG-Farmhouse"
+
+  - id: LIVE_STATUS_SYNC_WORKFLOW
+    repo: [ug-farmhouse, task-dashboard]
+    triggers: ["live status sync", "LIVE_STATUS_SYNC_WORKFLOW", "/live-status-sync"]
+    cost: low
+    invoke: read .agent/workflows/LIVE_STATUS_SYNC_WORKFLOW.md
+    when: "Live operational status synchronization workflow in UG-Farmhouse"
+
+  - id: VISUAL_PROGRESS_INGESTION_WORKFLOW
+    repo: [ug-farmhouse, task-dashboard]
+    triggers: ["visual progress ingestion", "VISUAL_PROGRESS_INGESTION_WORKFLOW", "/visual-progress-ingest"]
+    cost: medium
+    invoke: read .agent/workflows/VISUAL_PROGRESS_INGESTION_WORKFLOW.md
+    when: "Visual progress and site inspection ingestion workflow in UG-Farmhouse"
 
   # Shared: pio + task-dashboard
   - id: aos-session
@@ -1020,11 +1132,18 @@ workflows:
     when: "Preparing a 3-part un-anchored external review package (Source SSOT + Context Explainer + Challenge Prompt) for independent evaluation by external reviewers or secondary AI models."
 
   - id: capture-pattern
-    repo: [task-dashboard]
-    triggers: ["capture this pattern", "add this to patterns", "register this approach", "this should be repeatable", "save this for next time", "make this a workflow", "capture pattern"]
+    repo: [task-dashboard, sree-krushna, ug-farmhouse, capsicum, pio, qsr, dashboard, inventory_mgmt, supervisorcompliancemonitoring, unified_uploader]
+    triggers: ["capture this pattern", "add this to patterns", "register this approach", "this should be repeatable", "save this for next time", "make this a workflow", "capture pattern", "/capture-pattern"]
     cost: low
-    invoke: workflow:capture-pattern
+    invoke: read .agent/workflows/capture-pattern.md
     when: "Capturing a discovered design/process/methodology pattern into .agent/patterns/ — the Task-Dashboard equivalent of QSR REF_UPDATE_WORKFLOW. Runs worthiness filter, routes to correct home, updates the originating workflow."
+
+  - id: capture-pattern-lite
+    repo: [task-dashboard, sree-krushna, ug-farmhouse, capsicum, pio, qsr, dashboard, inventory_mgmt, supervisorcompliancemonitoring, unified_uploader]
+    triggers: ["capture pattern lite", "quick pattern", "/capture-pattern-lite"]
+    cost: low
+    invoke: read .agent/workflows/capture-pattern-lite.md
+    when: "Rapid path for capturing a single design/process pattern into .agent/patterns/"
 
   - id: snapshot-update
     repo: [task-dashboard]

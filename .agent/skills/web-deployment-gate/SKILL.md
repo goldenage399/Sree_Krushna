@@ -1,4 +1,4 @@
-﻿---
+---
 name: web-deployment-gate
 description: Universal pre-flight deployment gate, UX resilience auditor, and scaffolding standard for web SPAs. Enforces the 9-domain pre-flight matrix (Session/Tab persistence, Auth loading skeleton, Branded 404, HTTP Security Headers, Service Worker cache invalidation, Mobile-First 300px gate, and Monotonic state mutations).
 triggers: ["deploy web", "pre-flight check", "new web app", "launch site", "verify deployment", "web deployment checklist", "deploy gate", "web audit"]
@@ -39,62 +39,36 @@ Never declare a web deployment ready or complete without verifying each of the 9
 
 ---
 
-## 3. Pre-Flight Verification Script (Copy-Paste Diagnostic)
+## 3. Pre-Flight Verification Script (Automated 6-Layer Programmatic Gate)
 
-Run this diagnostic script in the target repository to mechanically audit the 9 domains:
+Always run the programmatic AST & Call-Graph gate prior to deployment (`npm run verify:deployment` / `node scripts/verify-deployment.cjs`).
 
-```powershell
-Write-Host "=== 🔍 RUNNING WEB DEPLOYMENT PRE-FLIGHT AUDIT ===" -ForegroundColor Cyan
+**Mandatory 6-Layer Checks:**
+1. **Layer 1: JavaScript Runtime Parse & Syntax:** Evaluates all classic script files with `new Function(code)` to guarantee NO top-level `await` or parse errors.
+2. **Layer 2: HTML Inline Event Handlers <-> JS Function Contract:** Scans `index.html` for all `onclick`, `oninput`, `onsubmit` attributes and verifies that 100% of referenced functions exist in `app.js` and are attached to `window`.
+3. **Layer 3: DOM ID Integrity:** Scans `app.js` for all `document.getElementById(...)` references and verifies that every element exists in `index.html`.
+4. **Layer 4: PWA Service Worker Shell Integrity:** Confirms all files in `STATIC_SHELL` exist on disk in `public/`.
+5. **Layer 5: Root <-> Public Distribution Synchronicity:** Guarantees byte-for-byte exact equality between root `index.html` and `public/index.html`.
+6. **Layer 6: Security Headers & 404:** Asserts `public/404.html` exists and `firebase.json` enforces enterprise headers.
 
-# 1. Check 404.html
-if (Test-Path "public/404.html") { Write-Host "✅ [1/7] public/404.html exists" -ForegroundColor Green }
-else { Write-Host "❌ [1/7] MISSING public/404.html" -ForegroundColor Red }
-
-# 2. Check Security Headers in firebase.json
-$fb = Get-Content "firebase.json" -Raw
-if ($fb -match "X-Frame-Options" -and $fb -match "nosniff") { Write-Host "✅ [2/7] Security headers configured in firebase.json" -ForegroundColor Green }
-else { Write-Host "❌ [2/7] Missing security headers in firebase.json" -ForegroundColor Red }
-
-# 3. Check Tab Persistence in index.html
-$idx = Get-Content "index.html" -Raw
-if ($idx -match "sessionStorage\.setItem\('.*active_tab" -and $idx -match "hydrateActiveTab") { Write-Host "✅ [3/7] Tab persistence & deep-link hash sync present in index.html" -ForegroundColor Green }
-else { Write-Host "❌ [3/7] Missing tab persistence or hydration in index.html" -ForegroundColor Red }
-
-# 4. Check Auth Loading Skeleton
-if ($idx -match "id=""authLoadingSkeleton""" -or $idx -match "auth-skeleton-overlay") { Write-Host "✅ [4/7] Auth loading skeleton present in index.html" -ForegroundColor Green }
-else { Write-Host "❌ [4/7] Missing auth loading skeleton (risk of black flash)" -ForegroundColor Red }
-
-# 5. Check Monotonic ID Generation
-if ($idx -match "Math\.max\(.*numericIds") { Write-Host "✅ [5/7] Monotonic ID generation active" -ForegroundColor Green }
-else { Write-Host "⚠️ [5/7] Check task ID generation for length-based collisions" -ForegroundColor Yellow }
-
-# 6. Check SW Cache Version
-if (Test-Path "public/sw.js") {
-  $sw = Get-Content "public/sw.js" -Raw
-  $swVer = [regex]::Match($sw, "CACHE_NAME\s*=\s*'([^']+)'").Groups[1].Value
-  Write-Host "✅ [6/7] Service Worker active with cache version: $swVer" -ForegroundColor Green
-} else { Write-Host "⚠️ [6/7] No service worker found in public/sw.js" -ForegroundColor Yellow }
-
-# 7. Check Sync between index.html and public/index.html
-if ((Get-Item "index.html").Length -eq (Get-Item "public/index.html").Length) {
-  Write-Host "✅ [7/7] root index.html and public/index.html are in exact sync" -ForegroundColor Green
-} else {
-  Write-Host "❌ [7/7] OUT OF SYNC: root index.html != public/index.html. Run: Copy-Item index.html public/index.html -Force" -ForegroundColor Red
-}
-
-Write-Host "=================================================" -ForegroundColor Cyan
+```bash
+# Execute the Automated Pre-Flight Gate:
+npm run verify:deployment
 ```
 
 ---
 
 ## 4. Standard Deploy Sequence
 
-Always execute deployments following the canonical two-step promotion pipeline:
+Always execute deployments following the canonical 3-step promotion pipeline:
 
 ```powershell
 # Step 1: Sync root source to hosting public directory
 Copy-Item index.html public/index.html -Force
 
-# Step 2: Deploy to Firebase Hosting
+# Step 2: Run 6-Layer Programmatic Pre-Flight Gate
+npm run verify:deployment
+
+# Step 3: Deploy to Firebase Hosting
 firebase deploy --only hosting
 ```
