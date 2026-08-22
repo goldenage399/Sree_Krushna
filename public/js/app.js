@@ -165,16 +165,24 @@ window.dataLayer = window.dataLayer || [];
 
     // 1. Unified State Hydration (LocalStorage + Canonical Data Feed)
     const DEFAULT_TASKS = (typeof MARRIAGE_STATE !== 'undefined' && MARRIAGE_STATE.tasks) ? MARRIAGE_STATE.tasks : [];
-    let currentTasks = JSON.parse(localStorage.getItem('sree_krushna_master_tasks_v4')) || DEFAULT_TASKS;
+    let stored = null;
+    try {
+      stored = JSON.parse(localStorage.getItem('sree_krushna_master_tasks_v5'));
+    } catch (e) {}
+    
+    // Automatically seed full canonical master tasks (62 tasks) if cache is missing or stale
+    let currentTasks = (stored && Array.isArray(stored) && stored.length >= 50) 
+      ? stored 
+      : JSON.parse(JSON.stringify(DEFAULT_TASKS));
 
-    // Active View States
-    let activeStageId = 'STAGE_03'; // Default to Barat & Main Wedding Day
+    // Active View States (Default to STAGE_01 Pre-Wedding & Procurement)
+    let activeStageId = 'STAGE_01';
     let activeSwimlaneTrack = 'all';
     let swimlaneSearchQuery = '';
     let activeConsoleTaskId = null;
 
     function saveMasterTasks() {
-      localStorage.setItem('sree_krushna_master_tasks_v4', JSON.stringify(currentTasks));
+      localStorage.setItem('sree_krushna_master_tasks_v5', JSON.stringify(currentTasks));
     }
 
     // ── Zone 1: Global KPI Bar ──────────────────────────────────────
