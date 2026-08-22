@@ -200,13 +200,32 @@ window.dataLayer = window.dataLayer || [];
     const DEFAULT_TASKS = (typeof MARRIAGE_STATE !== 'undefined' && MARRIAGE_STATE.tasks) ? MARRIAGE_STATE.tasks : [];
     let stored = null;
     try {
-      stored = JSON.parse(localStorage.getItem('sree_krushna_master_tasks_v5'));
+      stored = JSON.parse(localStorage.getItem('sree_krushna_master_tasks_v6')) || JSON.parse(localStorage.getItem('sree_krushna_master_tasks_v5'));
     } catch (e) {}
     
-    // Automatically seed full canonical master tasks (62 tasks) if cache is missing or stale
-    let currentTasks = (stored && Array.isArray(stored) && stored.length >= 50) 
-      ? stored 
-      : JSON.parse(JSON.stringify(DEFAULT_TASKS));
+    // Automatically seed full canonical master tasks (62 tasks) with SSOT metadata synced to user state
+    let currentTasks = JSON.parse(JSON.stringify(DEFAULT_TASKS));
+    if (stored && Array.isArray(stored) && stored.length > 0) {
+      const storedMap = new Map(stored.map(t => [t.id, t]));
+      currentTasks.forEach(canonicalTask => {
+        const cached = storedMap.get(canonicalTask.id);
+        if (cached) {
+          canonicalTask.status = cached.status || canonicalTask.status;
+          canonicalTask.done = (cached.status === 'Completed' || !!cached.done);
+          if (Array.isArray(cached.checklist) && Array.isArray(canonicalTask.checklist)) {
+            cached.checklist.forEach((item, idx) => {
+              if (canonicalTask.checklist[idx]) {
+                canonicalTask.checklist[idx].done = !!item.done;
+              }
+            });
+          }
+        }
+      });
+      // Merge any user-created custom tasks
+      stored.filter(t => !currentTasks.some(ct => ct.id === t.id)).forEach(customTask => {
+        currentTasks.push(customTask);
+      });
+    }
 
     // Active View States (Default to STAGE_01 Pre-Wedding & Procurement)
     let activeStageId = 'STAGE_01';
@@ -215,7 +234,7 @@ window.dataLayer = window.dataLayer || [];
     let activeConsoleTaskId = null;
 
     function saveMasterTasks() {
-      localStorage.setItem('sree_krushna_master_tasks_v5', JSON.stringify(currentTasks));
+      localStorage.setItem('sree_krushna_master_tasks_v6', JSON.stringify(currentTasks));
     }
 
     // ── Zone 1: Global KPI Bar ──────────────────────────────────────
