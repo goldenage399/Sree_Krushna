@@ -2665,11 +2665,237 @@ We have upgraded the **5-Zone DO-PKOS Studio** (`#tab-dopkos`) to full viewport 
 - Passed governance wiring audit (`npm run verify:governance-wiring:all`).
 - Deployed live to Firebase Hosting.
 
-# Query 3.2 -
+# Query 3.2 -"D:\GitHub_Repo\UG-Farmhouse\System Reference\portable\engine\console-sheet.css"
 
-# Review 3.2 -
+"D:\GitHub_Repo\UG-Farmhouse\System Reference\portable\engine\console-sheet.js"
+"D:\GitHub_Repo\UG-Farmhouse\System Reference\portable\engine\swimlane-engine.css"
+"D:\GitHub_Repo\UG-Farmhouse\System Reference\portable\engine\swimlane-engine.js"
 
-# Response 3.2 -
+refer to all of these and port everythign accordingly
+
+# Review 3.2 -Viewed console-sheet.css:1-2
+
+Viewed console-sheet.js:1-2
+Viewed swimlane-engine.js:1450-1650
+Viewed swimlane-engine.js:1650-1850
+Viewed swimlane-engine.js:1850-2200
+Viewed swimlane-engine.js:2200-2349
+Viewed build-dopkos-full.cjs:1-100
+Viewed swimlane-engine.css:500-750
+Viewed swimlane-engine.css:750-1100
+Viewed swimlane-engine.css:1100-1400
+Viewed main.css:2440-2731
+Viewed main.css:2730-2784
+Edited main.css
+Viewed build-dopkos-full.cjs:840-980
+Edited build-dopkos-full.cjs
+Ran command: `node scripts/build-dopkos-full.cjs`
+Ran command: `Copy-Item -Path "index.html" -Destination "public/index.html" -Force`
+Ran command: `npm run verify:deployment`
+Listed directory scripts
+Viewed verify-deployment.cjs:90-160
+Viewed verify-deployment.cjs:160-220
+Viewed verify-deployment.cjs:220-280
+Searched for "tab-dopkos"
+Searched for "dopkos"
+Searched for "dopkos-canvas-container"
+Searched for "dopkos-canvas-container"
+Viewed verify-deployment.cjs:1-60
+Viewed .deploymentrc.json:1-75
+Edited .deploymentrc.json
+Ran command: `node scripts/build-dopkos-full.cjs`
+Ran command: `Copy-Item -Path "index.html" -Destination "public/index.html" -Force`
+Ran command: `npm run verify:deployment`
+Ran command: `node scripts/verify-deployment.cjs`
+Ran command: `node scripts/verify-deployment.cjs | Select-String "FAIL"`
+Searched for "setFilter"
+Searched for "HOLD"
+Viewed build-dopkos-full.cjs:860-920
+Viewed build-dopkos-full.cjs:920-950
+Edited build-dopkos-full.cjs
+Viewed build-dopkos-full.cjs:1140-1215
+Viewed build-dopkos-full.cjs:1215-1290
+Viewed build-dopkos-full.cjs:1240-1340
+Viewed build-dopkos-full.cjs:1340-1420
+Edited build-dopkos-full.cjs
+Ran command: `node scripts/build-dopkos-full.cjs`
+Ran command: `Copy-Item -Path "index.html" -Destination "public/index.html" -Force`
+Ran command: `npm run verify:deployment`
+Ran command: `node scripts/verify-deployment.cjs | Select-String "FAIL"`
+Ran command: `node --check public/js/modules/dopkos-engine.js`
+Viewed build-dopkos-full.cjs:1240-1300
+Viewed build-dopkos-full.cjs:1470-1540
+Edited build-dopkos-full.cjs
+Ran command: `node scripts/build-dopkos-full.cjs`
+Ran command: `node --check public/js/modules/dopkos-engine.js`
+Ran command: `Copy-Item -Path "index.html" -Destination "public/index.html" -Force`
+Ran command: `npm run verify:deployment`
+Ran command: `npm test`
+Ran command: `npm run verify:governance-wiring:all`
+Ran command: `node scripts/deploy-hosting.cjs`
+Created walkthrough.md
+Ran command: `git add . ; git commit -m "feat(dopkos): complete monolithic port of UG-Farmhouse DO-PKOS engine including 5 zones, detail panel, and console suite" ; git push origin master`
+
+# 🌟 Full Monolithic Port Completed: UG-Farmhouse DO-PKOS Studio & Unified Console Engine
+
+We have completed the port of all 4 modules and design systems from `D:\GitHub_Repo\UG-Farmhouse\System Reference\portable\engine\` into the **Sree Krushna Marriage OS**:
+
+- `swimlane-engine.js`
+- `swimlane-engine.css`
+- `console-sheet.js`
+- `console-sheet.css`
+
+- **Live Production URL**: [https://sree-krushna-forever.web.app/#tab-dopkos](https://sree-krushna-forever.web.app/#tab-dopkos)
+- **Git Commit**: [`65861d7`](https://github.com/goldenage399/Sree_Krushna/commit/65861d7) on `origin/master`
+
+---
+
+## 🏛️ Comprehensive 5-Zone DO-PKOS Architecture
+
+### 1. Zone 1 — Top Command HUD
+
+- **Project Identity**: `👑 SREE KRUSHNA MARRIAGE OS ▾` with dynamic liturgical stage indicator (`STAGE 1 OF 6 — T-180 SACRED FOUNDATION`).
+- **Live Counter Widgets**:
+  - `⛔ 0 BLOCKERS` (counts and filters `HOLD` and `FUTURE_HOLD` tasks).
+  - `⚠ 4 GATES` (quick-filters liturgical milestone gates).
+  - `✓ READY` (tracks ready-to-execute tasks).
+  - `AS OF 2026-08-22` sync timestamp.
+
+---
+
+### 2. Zone 2 — Stage Progress Strip & Collapsible Summary Bar
+
+- **Interactive Stage Cards**:
+  - Stage number, stage title, and progress bar (% completion).
+  - Multi-tenant trade dots color-coded by trade metadata.
+  - 1-click smooth jump scroll (`scrollToStage`).
+- **Collapsible Summary Mode**:
+  - Toggle between full stage cards and a compact single-line `#stage-summary-bar`.
+
+---
+
+### 3. Zone 3 — Multi-Track Swimlane & Dependency Geometry
+
+- **Sticky Layout Geometry**:
+  - Pinned left trade headers (`🕉️ PUROHIT`, `👰 BRIDE`, `🤵 GROOM`, `🍲 CATERING`, `📸 MEDIA`, `🛡️ FLEET/VAULT`) with trade color accents.
+  - Sticky top stage header bands (`S1`, `S2`, `S3`, etc.) with stage dividers.
+- **Cubic Bézier SVG Dependency Curves**:
+  - SVG Cubic Bézier curves (`C midX,y1 midX,y2 x2,y2`).
+  - Sealing gate 🔒 (Type 3) and embedded window ⚡ (Type 2) dependency indicators.
+  - 14px wide transparent hit-paths for effortless edge hovering and 1-click upstream task selection.
+- **Subgraph Highlighting & Auto-Centering**:
+  - `.selection-active` state machine with opacity dimming for non-connected elements.
+  - **Selected Node**: Gold glowing halo (`box-shadow: 0 0 20px rgba(245, 197, 24, 0.7)`).
+  - **Predecessors (Upstream Blockers)**: Amber glowing halo (`border: 2px solid #f59e0b`).
+  - **Successors (Downstream Unlocks)**: Cyan glowing halo (`border: 2px solid #38bdf8`).
+  - `scrollToHighlightedSubgraph()` smoothly centers the bounding box of the entire dependency cluster in the viewport.
+- **Slide-over Task Detail Drawer (`#detail-panel`)**:
+  - Slides out from the right on card or line click.
+  - Shows task metadata, notes, and direct contact actions (📞 Call / 💬 WhatsApp).
+  - Interactive `UNLOCKS WHEN DONE` and `DEPENDS ON (PREDECESSORS)` chip buttons with 1-click viewport centering.
+- **Pan & Zoom HUD (`#console-navigator`)**:
+  - `✋ PAN` mode (with Space + Drag canvas navigation).
+  - Zoom controls: `−`, `+`, `100%` reset, `FIT` to screen, and `FULLSCREEN` toggle.
+
+---
+
+### 4. Zone 4 & 5 — Unified Command Console Sheet
+
+- **Top Command Console Bar**:
+  - Blocker & Gate quick-filter widgets.
+  - Live multi-field search input (`#console-search`).
+  - Status filter pills (`ALL`, `READY`, `ACTIVE`, `HOLD`, `DONE`).
+  - Export Dropdown: `📋 Copy TSV (Excel / Sheets)`, `📥 Download CSV`, `💾 Download JSON`.
+  - Table Zoom controls (`−`, `+`, `100%`).
+  - `⛶ EXPAND` / `⤡ RESTORE` toggle for full `75vh` modal view.
+- **Compact View**: Interactive row items with trade badges, IDs, names, and status mini-pills.
+- **Expanded Table View**: Sortable data grid with columns: `TRADE`, `ID`, `TASK NAME`, `STAGE`, `STATUS`, `PREDECESSORS`, `UNLOCKS`.
+
+---
+
+## 🛡️ Verification & Governance
+
+- **Pre-flight Deployment Gate**: 100% green across all 8 layers (`npm run verify:deployment`).
+- **Smoke Tests**: 100% green (`npm test`).
+- **Governance Wiring**: All 165 artifacts verified (`npm run verify:governance-wiring:all`).
+- **Live Deployment**: Verified and released on Firebase Hosting.
+
+Detailed implementation logs are available in the [Walkthrough Artifact](file:///C:/Users/Temp/.gemini/antigravity-ide/brain/25ef7845-1d42-4146-96cc-edfeabaedb94/walkthrough.md).
+
+# Response 3.2 -# Walkthrough — Complete Port of UG-Farmhouse Monolithic DO-PKOS Engine
+
+We have completed the monolithic port of all 4 source files from `D:\GitHub_Repo\UG-Farmhouse\System Reference\portable\engine\`:
+
+- `swimlane-engine.js` (Unified portable engine)
+- `swimlane-engine.css` (Unified design tokens, animations, and console styles)
+- `console-sheet.js` (Unified command console integration)
+- `console-sheet.css` (Unified console sheet styles)
+
+---
+
+## 🚀 Ported Architecture & Features
+
+### Zone 1: Top HUD (Zone 1)
+
+- **Project Identity**: `👑 SREE KRUSHNA MARRIAGE OS ▾` with stage counter (`STAGE 1 OF 6 — T-180 SACRED FOUNDATION`).
+- **Live KPI Badges**:
+  - `⛔ 0 BLOCKERS` (auto-updates dynamically with `HOLD` / `FUTURE_HOLD` tasks).
+  - `⚠ 4 GATES` (highlights active liturgical gates).
+  - `✓ READY` (tracks ready-to-execute tasks).
+  - `AS OF 2026-08-22` timestamp.
+
+### Zone 2: Stage Progress Strip (Zone 2)
+
+- **Liturgical Stage Cards**:
+  - Stage number + Stage name.
+  - Stage progress bar (% completion).
+  - Active trade dots colored according to trade metadata.
+  - 1-click stage jump auto-scroll (`scrollToStage`).
+- **Collapsible Stage Strip**:
+  - Toggle between full stage cards and a compact single-line `#stage-summary-bar`.
+
+### Zone 3: Multi-Track Swimlane & Dependency Canvas (Zone 3)
+
+- **Pinned Headers**: Sticky left trade labels (`🕉️ PUROHIT`, `👰 BRIDE`, `🤵 GROOM`, `🍲 CATERING`, `📸 MEDIA`, `🛡️ FLEET/VAULT`) and sticky top stage bands (`S1`, `S2`, `S3`, etc.).
+- **Bézier Curves & Hit-Paths**:
+  - Cubic Bézier SVG lines (`C midX,y1 midX,y2 x2,y2`).
+  - Sealing gate 🔒 and embedded window ⚡ markers.
+  - 14px transparent hit-paths for effortless edge hovering and clicking.
+- **Subgraph Highlighting & Auto-Centering**:
+  - `.selection-active` across cards and SVG canvas.
+  - Selected card: Intense gold halo (`box-shadow: 0 0 20px rgba(245, 197, 24, 0.7)`).
+  - Upstream Predecessors: Amber glowing halo (`#f59e0b`).
+  - Downstream Successors: Cyan glowing halo (`#38bdf8`).
+  - Unconnected nodes automatically dim.
+  - `scrollToHighlightedSubgraph()` smoothly centers the entire connected cluster in the viewport.
+- **Slide-over Task Console Drawer (`#detail-panel`)**:
+  - Opens on card or line click with trade color border.
+  - Displays full task metadata, notes, and coordinator links (📞 Call / 💬 WhatsApp).
+  - Interactive `UNLOCKS WHEN DONE` and `DEPENDS ON` chip buttons with 1-click node centering.
+- **Pan & Zoom HUD**:
+  - Pan mode toggle (`✋ PAN`) with Space + Drag support.
+  - Zoom controls: `−`, `+`, `100%`, `FIT`, `FULLSCREEN`.
+
+### Zone 4 & 5: Unified Command Console Sheet (Zone 4 & 5)
+
+- **Top Command Bar**:
+  - Blocker & Gate risk quick-filter widgets (`⛔ 0 BLOCKERS`, `⚠ 4 GATES`).
+  - Live task search input (`#console-search`).
+  - Filter pills (`ALL`, `READY`, `ACTIVE`, `HOLD`, `DONE`).
+  - Export Dropdown: `📋 Copy TSV (Excel / Sheets)`, `📥 Download CSV`, `💾 Download JSON`.
+  - Table Zoom controls (`−`, `+`, `100%`).
+  - `⛶ EXPAND` / `⤡ RESTORE` toggle for full `75vh` sortable table view.
+- **Compact View**: Interactive row items with trade badges, IDs, names, and status mini-pills.
+- **Expanded View**: Sortable grid table with columns: `TRADE`, `ID`, `TASK NAME`, `STAGE`, `STATUS`, `PREDECESSORS`, `UNLOCKS`.
+
+---
+
+## 🔍 Verification & Parity
+
+- **Pre-flight Deployment Gate**: 100% green across all 8 layers (`npm run verify:deployment`).
+- **Smoke Tests**: 100% green (`npm test`).
+- **Governance Wiring**: All 165 artifacts verified (`npm run verify:governance-wiring:all`).
+- **Hosting Deployment**: Live on Firebase Hosting (`https://sree-krushna-forever.web.app/#tab-dopkos`).
 
 # Query 3.3 -
 
