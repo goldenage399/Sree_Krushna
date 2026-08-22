@@ -1364,7 +1364,7 @@ const dopkosEngineCode = `/**
     container.innerHTML = html;
   }
 
-  let currentPlanningView = 'THREADS';
+  let currentPlanningView = 'MATRIX2D';
 
   function setPlanningView(viewName) {
     currentPlanningView = viewName;
@@ -1382,7 +1382,11 @@ const dopkosEngineCode = `/**
       btn.classList.toggle('active', btn.id === ('btn-plan-' + currentPlanningView.toLowerCase()));
     });
 
-    if (currentPlanningView === 'THREADS') {
+    if (currentPlanningView === 'MATRIX2D') {
+      if (window.renderDopkosTopology) {
+        window.renderDopkosTopology(container);
+      }
+    } else if (currentPlanningView === 'THREADS') {
       if (window.renderDopkosThreads) {
         window.renderDopkosThreads(container);
       } else {

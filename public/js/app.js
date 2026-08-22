@@ -1791,7 +1791,7 @@ window.dataLayer = window.dataLayer || [];
       } else {
         selectedTopologyTaskId = taskId;
       }
-      renderDoPkosStudio();
+      if (window.renderPlanningSuite) window.renderPlanningSuite();
       if (selectedTopologyTaskId) {
         openTaskConsole(taskId);
       }
@@ -1799,7 +1799,7 @@ window.dataLayer = window.dataLayer || [];
 
     function clearTopologySelection() {
       selectedTopologyTaskId = null;
-      renderDoPkosStudio();
+      if (window.renderPlanningSuite) window.renderPlanningSuite();
     }
 
     // ── Topology Status Storage & Dynamic State Machine ────────────
@@ -1828,7 +1828,7 @@ window.dataLayer = window.dataLayer || [];
       try {
         localStorage.setItem(TOPOLOGY_STORAGE_KEY, JSON.stringify(topologyStatusOverrides));
       } catch (e) {}
-      renderDoPkosStudio();
+      if (window.renderPlanningSuite) window.renderPlanningSuite();
     }
 
     function renderDopkosTopology(container) {
@@ -2719,6 +2719,7 @@ window.dataLayer = window.dataLayer || [];
     window.selectTopologyNode = selectTopologyNode;
     window.clearTopologySelection = clearTopologySelection;
     window.toggleTopologyStatus = toggleTopologyStatus;
+    window.renderDopkosTopology = renderDopkosTopology;
     window.renderDoPkosStudio = renderDoPkosStudio;
     window.filterSwimlaneTrack = filterSwimlaneTrack;
     window.filterSwimlane = filterSwimlaneTrack; // alias
