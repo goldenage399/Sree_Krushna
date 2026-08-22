@@ -92,9 +92,10 @@ The tier is a **graduation ladder**: a pattern may start at `reference` and grad
 | [p81-id-registration-process.md](p81-id-registration-process.md) | `reference` | VALIDATED | `INC-016`, `INC-085`, `AGENTS.md` (Modal Rule 5), `PREFLIGHT.md` R13 | universal |
 | [deterministic-ui-manual-capture-and-annotation-pipeline.md](deterministic-ui-manual-capture-and-annotation-pipeline.md) | `reference` | VALIDATED | `UI_MANUAL_CAPTURE_WORKFLOW.md` | universal |
 
-> **SDP-001 note**: Governed by [`docs/protocols/SYSTEM-DISCOVERY-PROTOCOL.md`](../../docs/protocols/SYSTEM-DISCOVERY-PROTOCOL.md) — not a `.agent/patterns/` file. Wired here as a cross-reference so agents checking this index before proposing new systems, schemas, or contracts are pointed to the correct gate.
-
 | [monolithic-css-append-and-all-theme-matrix-sweep.md](monolithic-css-append-and-all-theme-matrix-sweep.md) | `reference` | VALIDATED | `debug-frontend.md`, `THEME-SYSTEM.md` | repo-specific |
+| [monolithic-engine-port-css-scoping-gate.md](monolithic-engine-port-css-scoping-gate.md) | `reference` | VALIDATED | `external-ui-redesign.md`, `CLAUDE.md`, `GEMINI.md` | universal |
+| [localhost-sw-cache-bypass-gate.md](localhost-sw-cache-bypass-gate.md) | `reference` | VALIDATED | `web-deployment-gate.md`, `CLAUDE.md`, `GEMINI.md` | universal |
+| [sub-engine-shadowing-and-tab-reconciliation.md](sub-engine-shadowing-and-tab-reconciliation.md) | `reference` | VALIDATED | `ssot-reconciliation.md`, `CLAUDE.md`, `GEMINI.md` | universal |
 > Update this index whenever a pattern is created or its tier changes via `/capture-pattern`.
 
 ---

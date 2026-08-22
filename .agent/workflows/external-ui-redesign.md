@@ -175,10 +175,9 @@ Gates in Execution mode are signed by the architect, not self-certified by the e
 
 ### Surface Audit Gate (mandatory — runs before Visual Delta Matrix)
 
-> [!CAUTION]
-> **Do not open any production file until this table is complete and architect-approved.**
 > The external JSX is READ-ONLY — it encodes visual intent only. Never adapt it directly.
 > Full protocol: `.agent/patterns/eur-surface-audit.md`
+> When adapting external stylesheets or standalone canvas engines, see `.agent/patterns/monolithic-engine-port-css-scoping-gate.md` for strict container scope isolation.
 
 For every distinct UI element in the approved external design, produce a classification row before writing any code:
 

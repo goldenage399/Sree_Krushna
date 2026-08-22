@@ -106,3 +106,14 @@ Live event handshakes are modeled as **Operational Gates** (`GATE-01` to `GATE-0
 2. **Preconditions & Required Witnesses**
 3. **Go / No-Go Decision Authority**
 4. **Delay Thresholds & Automatic Activation of Playbooks (`CP-001` through `CP-013`)**
+
+---
+
+## 6. Web Application Architecture & Sub-Engine Module Boundaries
+
+The web control plane (`public/`) follows strict separation between shell orchestration and feature engines:
+1. **Host App Shell (`public/js/app.js`):** Acts exclusively as the top-level lifecycle coordinator (Authentication, Tab Navigation, Theme Toggling, Drawer Mounting, GA4 Web Vitals). It MUST NEVER contain duplicate rendering logic of sub-modules (`STD-MOD-SHADOW-001`).
+2. **5-Zone Precedence DAG Studio (`public/js/modules/dopkos-engine.js`):** Standalone canonical engine for `#tab-dopkos` (Executive HUD, Stage Strip, Infinite Multi-Track Swimlane, Bézier Precedence DAG, Slide-over Inspector, Command Console Sheet) and `#tab-planning` (Planning Suite 2D Matrix).
+3. **CSS Scoping Isolation (`public/css/dopkos-engine.css`):** All studio styling is 100% namespace-scoped under `#tab-dopkos #dopkos-5zone-frame`. Global element resets (`*`, `html`, `body`) are strictly forbidden (`STD-CSS-SCOPE-001`).
+4. **Localhost Service Worker Bypass (`public/sw.js`):** Development on `localhost` / `127.0.0.1` automatically bypasses cache to guarantee zero stale cache during development cycles (`STD-PWA-DEV-001`).
+

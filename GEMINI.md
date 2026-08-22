@@ -129,7 +129,11 @@ This repository implements the following universal patterns:
 - `.agent/patterns/triage-anomalies-first.md`
 - `.agent/patterns/typography-weight-and-bridge-token-enforcement.md`
 - `.agent/patterns/ui-primitive-codebase-wide-standardization.md`
+- `.agent/patterns/localhost-sw-cache-bypass-gate.md`
+- `.agent/patterns/monolithic-engine-port-css-scoping-gate.md`
+- `.agent/patterns/sub-engine-shadowing-and-tab-reconciliation.md`
 - `.agent/patterns/verifiable-implementation-before-adr-promotion.md`
 - `.agent/patterns/web-deployment-gate.md`
 - `.agent/patterns/write-site-contract-verification.md`
 - `.agent/patterns/write-without-reader.md`
+
