@@ -1796,6 +1796,35 @@ window.dataLayer = window.dataLayer || [];
       renderDoPkosStudio();
     }
 
+    // ── Topology Status Storage & Dynamic State Machine ────────────
+    const TOPOLOGY_STORAGE_KEY = 'sree_krushna_topology_status_v1';
+    let topologyStatusOverrides = {};
+    try {
+      topologyStatusOverrides = JSON.parse(localStorage.getItem(TOPOLOGY_STORAGE_KEY) || '{}');
+    } catch (e) {}
+
+    function getTopologyStatus(taskId) {
+      if (topologyStatusOverrides[taskId]) return topologyStatusOverrides[taskId];
+      const t = TOPOLOGY_TASKS.find(x => x.id === taskId);
+      if (!t) return 'LOCKED';
+      if (t.status === 'DONE') return 'DONE';
+      if (!t.depends_on || !t.depends_on.length) return 'READY';
+      const allPrereqsDone = t.depends_on.every(depId => getTopologyStatus(depId) === 'DONE');
+      return allPrereqsDone ? 'READY' : 'LOCKED';
+    }
+
+    function toggleTopologyStatus(taskId, event) {
+      if (event) event.stopPropagation();
+      const current = getTopologyStatus(taskId);
+      const nextMap = { 'LOCKED': 'READY', 'READY': 'ACTIVE', 'ACTIVE': 'DONE', 'DONE': 'READY', 'HOLD': 'READY' };
+      const nextStatus = nextMap[current] || 'READY';
+      topologyStatusOverrides[taskId] = nextStatus;
+      try {
+        localStorage.setItem(TOPOLOGY_STORAGE_KEY, JSON.stringify(topologyStatusOverrides));
+      } catch (e) {}
+      renderDoPkosStudio();
+    }
+
     function renderDopkosTopology(container) {
       const CARD_W = 158;
       const CARD_H = 78;
@@ -1856,7 +1885,7 @@ window.dataLayer = window.dataLayer || [];
         `;
       });
 
-      // Render SVG Dependency Edges
+      // Render SVG Dependency Edges with Micro-Legends
       let svgEdgesHtml = '';
       TOPOLOGY_TASKS.forEach(t => {
         const toCoord = taskCoords[t.id];
@@ -1871,6 +1900,7 @@ window.dataLayer = window.dataLayer || [];
           const x2 = toCoord.x;
           const y2 = toCoord.y + CARD_H / 2;
           const midX = (x1 + x2) / 2;
+          const midY = (y1 + y2) / 2;
           const pathD = `M ${x1} ${y1} C ${midX} ${y1}, ${midX} ${y2}, ${x2} ${y2}`;
 
           const isEdgeActive = isSelectionActive && (
@@ -1882,17 +1912,27 @@ window.dataLayer = window.dataLayer || [];
 
           const strokeColor = isEdgeActive 
             ? (succs.has(t.id) ? '#38bdf8' : '#f59e0b') 
-            : (isSelectionActive ? 'rgba(255,255,255,0.08)' : 'rgba(245, 197, 24, 0.35)');
-          const strokeWidth = isEdgeActive ? 3 : 1.5;
-          const strokeDash = isEdgeActive ? 'none' : (t.is_gate ? '4,3' : 'none');
+            : (isSelectionActive ? 'rgba(255,255,255,0.06)' : 'rgba(245, 197, 24, 0.35)');
+          const strokeWidth = isEdgeActive ? 3.2 : 1.5;
+          const strokeDash = isEdgeActive ? 'none' : (t.is_gate ? '5,3' : 'none');
+
+          let gateLabel = '';
+          if (t.is_gate && (isEdgeActive || !isSelectionActive)) {
+            gateLabel = `
+              <text x="${midX}" y="${midY - 5}" font-size="9" fill="#f59e0b" font-weight="700" text-anchor="middle" letter-spacing="0.5">🔒 SEALING GATE</text>
+            `;
+          }
 
           svgEdgesHtml += `
-            <path d="${pathD}" stroke="${strokeColor}" stroke-width="${strokeWidth}" fill="none" stroke-dasharray="${strokeDash}" />
+            <g class="dep-edge" data-from="${fromId}" data-to="${t.id}">
+              <path d="${pathD}" stroke="${strokeColor}" stroke-width="${strokeWidth}" fill="none" stroke-dasharray="${strokeDash}" />
+              ${gateLabel}
+            </g>
           `;
         });
       });
 
-      // Render Task Cards
+      // Render Task Cards with Dynamic Status Machine
       let cardsHtml = '';
       TOPOLOGY_TASKS.forEach(t => {
         const coord = taskCoords[t.id];
@@ -1902,6 +1942,7 @@ window.dataLayer = window.dataLayer || [];
         const isPred = preds.has(t.id);
         const isSucc = succs.has(t.id);
         const isDimmed = isSelectionActive && !isSelected && !isPred && !isSucc;
+        const status = getTopologyStatus(t.id);
 
         let cardBorder = 'border: 1px solid var(--border-subtle);';
         let cardBg = 'background: var(--bg-surface);';
@@ -1911,17 +1952,17 @@ window.dataLayer = window.dataLayer || [];
         if (isSelected) {
           cardBorder = 'border: 2px solid var(--gold-bright);';
           cardBg = 'background: rgba(245, 197, 24, 0.15);';
-          cardGlow = 'box-shadow: 0 0 16px rgba(245, 197, 24, 0.4);';
+          cardGlow = 'box-shadow: 0 0 16px rgba(245, 197, 24, 0.45);';
           zIndex = 10;
         } else if (isPred) {
           cardBorder = 'border: 2px solid #f59e0b;';
           cardBg = 'background: rgba(245, 158, 11, 0.12);';
-          cardGlow = 'box-shadow: 0 0 12px rgba(245, 158, 11, 0.3);';
+          cardGlow = 'box-shadow: 0 0 12px rgba(245, 158, 11, 0.35);';
           zIndex = 9;
         } else if (isSucc) {
           cardBorder = 'border: 2px solid #38bdf8;';
           cardBg = 'background: rgba(56, 189, 248, 0.12);';
-          cardGlow = 'box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);';
+          cardGlow = 'box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);';
           zIndex = 9;
         } else if (isDimmed) {
           cardBorder = 'border: 1px solid rgba(255,255,255,0.06);';
@@ -1929,13 +1970,23 @@ window.dataLayer = window.dataLayer || [];
         }
 
         const trackColor = TOPOLOGY_TRACKS.find(tr => tr.id === t.track)?.color || '#fff';
-        const gateBadge = t.is_gate ? `<span style="font-size: 0.62rem; color: #f59e0b; font-weight: 800;">🛡️ GATE</span>` : '';
+        const statusColors = {
+          'DONE': 'color: var(--emerald-royal); background: rgba(16, 185, 129, 0.15); border-color: var(--emerald-royal);',
+          'READY': 'color: var(--gold-bright); background: rgba(245, 197, 24, 0.15); border-color: var(--gold-bright);',
+          'ACTIVE': 'color: #38bdf8; background: rgba(56, 189, 248, 0.15); border-color: #38bdf8;',
+          'HOLD': 'color: var(--crimson-royal); background: rgba(230, 57, 70, 0.15); border-color: var(--crimson-royal);',
+          'LOCKED': 'color: var(--text-dim); background: var(--bg-surface-elevated); border-color: var(--border-subtle);'
+        };
+
+        const statusStyle = statusColors[status] || statusColors['LOCKED'];
 
         cardsHtml += `
           <div class="task-card-node" style="position: absolute; left: ${coord.x}px; top: ${coord.y}px; width: ${CARD_W}px; height: ${CARD_H}px; ${cardBg} ${cardBorder} ${cardGlow} border-left: 3px solid ${trackColor}; border-radius: 4px; padding: 6px 8px; cursor: pointer; z-index: ${zIndex}; transition: all 0.2s ease;" onclick="selectTopologyNode('${t.id}')">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
               <span style="font-family: monospace; font-size: 0.68rem; font-weight: 800; color: var(--gold-bright);">${t.id}</span>
-              ${gateBadge || `<span style="font-size: 0.62rem; color: ${t.status === 'DONE' ? 'var(--emerald-royal)' : 'var(--text-dim)'};">${t.status}</span>`}
+              <button onclick="toggleTopologyStatus('${t.id}', event)" class="status-pill" style="font-size: 0.62rem; font-weight: 700; padding: 1px 6px; border-radius: 3px; border: 1px solid; cursor: pointer; ${statusStyle}" title="Click to toggle status (READY -> ACTIVE -> DONE)">
+                ${status === 'DONE' ? '✓ DONE' : status}
+              </button>
             </div>
             <div style="font-size: 0.76rem; font-weight: 700; color: var(--text-main); line-height: 1.25; max-height: 2.5em; overflow: hidden;">${t.name}</div>
             <div style="margin-top: 4px; font-size: 0.65rem; color: var(--text-dim); display: flex; justify-content: space-between;">
@@ -1948,19 +1999,41 @@ window.dataLayer = window.dataLayer || [];
         `;
       });
 
-      // Canvas Instruction Bar
-      const instructionBar = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; background: rgba(15, 22, 36, 0.6); padding: 8px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); flex-wrap: wrap; gap: 8px;">
-          <div style="font-size: 0.78rem; color: var(--text-muted);">
-            💡 <strong>UG-Farmhouse Topology Engine:</strong> Click any card to highlight its complete upstream blockers (<span style="color: #f59e0b; font-weight: 700;">Amber Predecessors</span>) & downstream unlocks (<span style="color: #38bdf8; font-weight: 700;">Blue Successors</span>).
+      // Interactive Breadcrumbs Ribbon
+      let breadcrumbsRibbon = '';
+      if (selectedTopologyTaskId) {
+        const selTask = TOPOLOGY_TASKS.find(x => x.id === selectedTopologyTaskId);
+        const predsList = Array.from(preds).map(id => TOPOLOGY_TASKS.find(x => x.id === id)).filter(Boolean);
+        const succsList = Array.from(succs).map(id => TOPOLOGY_TASKS.find(x => x.id === id)).filter(Boolean);
+
+        breadcrumbsRibbon = `
+          <div style="background: linear-gradient(135deg, rgba(245, 197, 24, 0.12), var(--bg-surface-elevated)); border: 1px solid var(--gold-antique); border-radius: var(--radius-md); padding: 10px 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span style="font-weight: 800; color: var(--gold-bright); font-size: 0.85rem;">📍 Focus: <strong>${selTask.id}: ${selTask.name}</strong></span>
+              <span style="color: var(--text-dim); font-size: 0.76rem;">|</span>
+              <span style="font-size: 0.76rem; color: #f59e0b;">⛔ Blocked by: ${predsList.map(p => `<strong style="cursor: pointer; text-decoration: underline;" onclick="selectTopologyNode('${p.id}')">${p.id}</strong>`).join(', ') || '<span style="color: var(--emerald-royal);">None (Ready to Start)</span>'}</span>
+              <span style="color: var(--text-dim); font-size: 0.76rem;">──></span>
+              <span style="font-size: 0.76rem; color: #38bdf8;">🔓 Unlocks: ${succsList.map(s => `<strong style="cursor: pointer; text-decoration: underline;" onclick="selectTopologyNode('${s.id}')">${s.id}</strong>`).join(', ') || 'Terminal Node'}</span>
+            </div>
+            <div style="display: flex; gap: 6px;">
+              <button class="btn btn-primary" onclick="openTaskConsole('${selectedTopologyTaskId}')" style="font-size: 0.72rem; padding: 4px 12px; background: var(--gold-gradient); color: #080b11; font-weight: 700;">🔍 Open Console</button>
+              <button class="theme-toggle-btn" onclick="clearTopologySelection()" style="font-size: 0.72rem; padding: 4px 10px; background: var(--bg-surface);">✕ Reset</button>
+            </div>
           </div>
-          ${selectedTopologyTaskId ? `<button class="theme-toggle-btn" onclick="clearTopologySelection()" style="font-size: 0.72rem; padding: 4px 10px; background: var(--bg-surface-elevated);">✕ Reset Highlight</button>` : ''}
-        </div>
-      `;
+        `;
+      } else {
+        breadcrumbsRibbon = `
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; background: rgba(15, 22, 36, 0.6); padding: 8px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); flex-wrap: wrap; gap: 8px;">
+            <div style="font-size: 0.78rem; color: var(--text-muted);">
+              💡 <strong>Sacred Precedence DAG Engine:</strong> Click any card to highlight its complete upstream blockers (<span style="color: #f59e0b; font-weight: 700;">Amber Predecessors</span>) & downstream unlocks (<span style="color: #38bdf8; font-weight: 700;">Blue Successors</span>). Click status pills to toggle state!
+            </div>
+          </div>
+        `;
+      }
 
       // Full Assembly
       container.innerHTML = `
-        ${instructionBar}
+        ${breadcrumbsRibbon}
         <div id="topology-scroll-viewport" style="overflow: auto; max-height: 620px; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); position: relative; background: #080b11;">
           <div style="position: relative; width: ${totalWidth}px; height: ${totalHeight}px;">
             ${headerHtml}
@@ -1973,7 +2046,6 @@ window.dataLayer = window.dataLayer || [];
         </div>
       `;
     }
-
 
     // View 1: ⏱️ Day-Of Live Multi-Track Run Sheet
     function renderDopkosRunSheet(container) {
@@ -2640,6 +2712,7 @@ window.dataLayer = window.dataLayer || [];
     window.selectDopkosThread = selectDopkosThread;
     window.selectTopologyNode = selectTopologyNode;
     window.clearTopologySelection = clearTopologySelection;
+    window.toggleTopologyStatus = toggleTopologyStatus;
     window.renderDoPkosStudio = renderDoPkosStudio;
     window.filterSwimlaneTrack = filterSwimlaneTrack;
     window.filterSwimlane = filterSwimlaneTrack; // alias
