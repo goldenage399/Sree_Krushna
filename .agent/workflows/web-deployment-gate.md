@@ -51,8 +51,7 @@ Verify that the application layout satisfies Protocol 19:
 
 ---
 
-## Step 4 — Service Worker Cache Version Bump & Localhost Bypass
-> See `.agent/patterns/localhost-sw-cache-bypass-gate.md` for the development cache-bypass standard.
+## Step 4 — Service Worker Cache Version Bump
 
 If this deployment contains structural changes or bug fixes:
 1. Open `public/sw.js`.

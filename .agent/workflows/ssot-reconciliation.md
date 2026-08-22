@@ -228,7 +228,6 @@ Identify any components depending on current behavior.
 ---
 
 ## Step 4 — Authority Resolution
-> For sub-engine module boundary and shell delegation conflicts, see `.agent/patterns/sub-engine-shadowing-and-tab-reconciliation.md`.
 
 **Purpose**: Make an explicit decision on what is correct.
 

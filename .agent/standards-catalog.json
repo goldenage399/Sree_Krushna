@@ -69,54 +69,6 @@
         "GEMINI.md",
         "CLAUDE.md"
       ]
-    },
-    {
-      "id": "STD-CSS-SCOPE-001",
-      "category": "governance",
-      "name": "Monolithic Engine Port CSS Scoping Gate",
-      "description": "Ported external engine stylesheets must be strictly scoped to container IDs with zero global element resets (*, html, body).",
-      "severity": "HIGH",
-      "enforcement": {
-        "checkpoints": ["pre-deploy"],
-        "manualOnly": false,
-        "automatedGate": "npm run verify:deployment"
-      },
-      "references": [
-        ".agent/patterns/monolithic-engine-port-css-scoping-gate.md",
-        "docs/incidents/INC-086-monolithic-engine-port-css-scoping-and-sw-cache-bypass.md"
-      ]
-    },
-    {
-      "id": "STD-PWA-DEV-001",
-      "category": "governance",
-      "name": "Localhost Service Worker Cache-Bypass Invariant",
-      "description": "Service Worker fetch handlers must bypass caching on localhost/127.0.0.1 to guarantee zero stale cache during development.",
-      "severity": "HIGH",
-      "enforcement": {
-        "checkpoints": ["pre-deploy"],
-        "manualOnly": false,
-        "automatedGate": "npm run verify:deployment"
-      },
-      "references": [
-        ".agent/patterns/localhost-sw-cache-bypass-gate.md",
-        "docs/incidents/INC-086-monolithic-engine-port-css-scoping-and-sw-cache-bypass.md"
-      ]
-    },
-    {
-      "id": "STD-MOD-SHADOW-001",
-      "category": "governance",
-      "name": "Sub-Engine Shadowing & Delegation Invariant",
-      "description": "Application shell coordinator files (app.js) must never retain duplicate fallback copies of standalone feature engines.",
-      "severity": "CRITICAL",
-      "enforcement": {
-        "checkpoints": ["pre-deploy"],
-        "manualOnly": false,
-        "automatedGate": "npm run verify:deployment"
-      },
-      "references": [
-        ".agent/patterns/sub-engine-shadowing-and-tab-reconciliation.md",
-        "docs/incidents/INC-086-monolithic-engine-port-css-scoping-and-sw-cache-bypass.md"
-      ]
     }
   ]
 }

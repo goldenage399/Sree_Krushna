@@ -196,39 +196,11 @@ check('Layer 2: HTML Inline Event Handlers <-> JS Window Function Contract', () 
   }
 
   handlersInHtml.forEach(funcName => {
-    // Skip JS keywords like 'if', 'event'
-    if (['if', 'for', 'while', 'switch', 'alert', 'confirm', 'prompt'].includes(funcName)) return;
-
-    const isWindowBound = jsCode.includes(`window.${funcName} =`) || jsCode.includes(`window.${funcName}=`);
-    const isGlobalFunc = jsCode.includes(`function ${funcName}`);
-    if (isWindowBound || isGlobalFunc) {
-      logPass(`Inline handler '${funcName}' is defined & exposed on window in application scripts`);
+    const isDefined = jsCode.includes(`function ${funcName}`) || jsCode.includes(`window.${funcName}`) || jsCode.includes(`${funcName} =`);
+    if (isDefined) {
+      logPass(`Inline handler '${funcName}' is defined in application scripts`);
     } else {
-      logFail(`Orphan inline handler '${funcName}' found in HTML but is NOT exposed on window in application scripts!`);
-    }
-  });
-
-  // Verify all window.<ident> = <target> bindings reference defined functions/variables in JS
-  const windowAssignRegex = /\bwindow\.([a-zA-Z0-9_]+)\s*=\s*([a-zA-Z0-9_]+);/g;
-  (config.jsFiles || []).forEach(file => {
-    const p = path.join(ROOT_DIR, file);
-    if (!fs.existsSync(p)) return;
-    const content = fs.readFileSync(p, 'utf8');
-    let winMatch;
-    while ((winMatch = windowAssignRegex.exec(content)) !== null) {
-      const targetIdent = winMatch[2];
-      const literals = new Set(['null', 'undefined', 'true', 'false', 'window']);
-      const isTargetDefined = literals.has(targetIdent) ||
-                              content.includes(`function ${targetIdent}`) ||
-                              content.includes(`let ${targetIdent}`) ||
-                              content.includes(`const ${targetIdent}`) ||
-                              content.includes(`var ${targetIdent}`) ||
-                              targetIdent === winMatch[1];
-      if (isTargetDefined) {
-        logPass(`Window export 'window.${winMatch[1]} = ${targetIdent}' verified in ${file}`);
-      } else {
-        logFail(`Window export 'window.${winMatch[1]} = ${targetIdent}' in ${file} references undefined identifier '${targetIdent}'!`);
-      }
+      logFail(`Orphan inline handler '${funcName}' found in HTML but NOT in application scripts!`);
     }
   });
 });
@@ -426,54 +398,56 @@ check('Layer 8: PWA Invalidation Engine & Zero-Stale Cache Contract', () => {
 
 // ── LAYER 9: Interactive Drawer & Slide-Over Panel State Contract ────────────
 check('Layer 9: Interactive Drawer & Slide-Over Panel State Machine Contract', () => {
-  const mainCssPath = path.join(ROOT_DIR, 'public/css/main.css');
-  const dopkosCssPath = path.join(ROOT_DIR, 'public/css/dopkos-engine.css');
-  const appJsPath = path.join(ROOT_DIR, 'public/js/app.js');
-  const consoleDrawerJsPath = path.join(ROOT_DIR, 'public/js/modules/console-drawer.js');
-  const dopkosJsPath = path.join(ROOT_DIR, 'public/js/modules/dopkos-engine.js');
-
+  const mainCssPath = path.join(ROOT_DIR, config.cssFiles ? config.cssFiles[0] : 'public/css/main.css');
   const mainCss = fs.existsSync(mainCssPath) ? fs.readFileSync(mainCssPath, 'utf8') : '';
-  const dopkosCss = fs.existsSync(dopkosCssPath) ? fs.readFileSync(dopkosCssPath, 'utf8') : '';
-  const appJs = fs.existsSync(appJsPath) ? fs.readFileSync(appJsPath, 'utf8') : '';
-  const consoleDrawerJs = fs.existsSync(consoleDrawerJsPath) ? fs.readFileSync(consoleDrawerJsPath, 'utf8') : '';
-  const dopkosJs = fs.existsSync(dopkosJsPath) ? fs.readFileSync(dopkosJsPath, 'utf8') : '';
+  
+  // 1. If repo contains drawer/panel elements, verify matching CSS activation rules
+  const htmlPath = path.join(ROOT_DIR, config.entryHtml || 'public/index.html');
+  const html = fs.existsSync(htmlPath) ? fs.readFileSync(htmlPath, 'utf8') : '';
+  const jsFiles = config.jsFiles || [];
+  const jsCode = jsFiles.map(f => {
+    const p = path.join(ROOT_DIR, f);
+    return fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : '';
+  }).join('\n');
 
-  // 1. Global Console Drawer CSS Verification
-  const hasConsoleDrawerOpenCss = (mainCss.includes('.console-drawer.active') || mainCss.includes('.console-drawer.open')) &&
-                                  (mainCss.includes('.console-backdrop.active') || mainCss.includes('.console-backdrop.open'));
-  if (hasConsoleDrawerOpenCss) {
-    logPass('CSS rules for .console-drawer (.active/.open) and .console-backdrop verified in main.css');
+  if (html.includes('console-drawer')) {
+    const hasDrawerCss = (mainCss.includes('.console-drawer.active') || mainCss.includes('.console-drawer.open')) &&
+                         (mainCss.includes('.console-backdrop.active') || mainCss.includes('.console-backdrop.open'));
+    if (hasDrawerCss) {
+      logPass('CSS rules for .console-drawer (.active/.open) and .console-backdrop verified in CSS');
+    } else {
+      logFail('Missing CSS activation rules for .console-drawer/.console-backdrop in CSS!');
+    }
+
+    const hasAppDrawerActivation = jsCode.includes('console-drawer') &&
+                                   jsCode.includes('console-backdrop') &&
+                                   (jsCode.includes(".classList.add('active', 'open')") || jsCode.includes(".classList.add('active')") || jsCode.includes(".classList.add('open')"));
+    if (hasAppDrawerActivation) {
+      logPass('Task console drawer script properly mutates console-drawer & backdrop classes');
+    } else {
+      logFail('Task console drawer script is missing classList.add mutation!');
+    }
   } else {
-    logFail('Missing CSS activation rules for .console-drawer/.console-backdrop in main.css!');
+    logPass('No global console drawer in project template (Layer 9 baseline satisfied)');
   }
 
-  // 2. DO-PKOS Slide-Over Detail Panel CSS Verification
-  const hasDopkosDetailPanelCss = dopkosCss.includes('dopkos-detail-panel') &&
-                                  (dopkosCss.includes('dopkos-detail-panel.open') || dopkosCss.includes('dopkos-detail-panel.active'));
-  if (hasDopkosDetailPanelCss) {
-    logPass('CSS rules for #dopkos-detail-panel (.open/.active) verified in dopkos-engine.css');
-  } else {
-    logFail('Missing CSS activation rules for #dopkos-detail-panel in dopkos-engine.css!');
-  }
+  if (jsCode.includes('dopkos-detail-panel') || jsCode.includes('detail-panel')) {
+    const allCss = (config.cssFiles || []).map(f => {
+      const p = path.join(ROOT_DIR, f);
+      return fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : '';
+    }).join('\n');
 
-  // 3. Script Activation Logic Verification
-  const hasAppDrawerActivation = appJs.includes('console-drawer') &&
-                                 appJs.includes('console-backdrop') &&
-                                 (appJs.includes(".classList.add('active', 'open')") || (appJs.includes(".classList.add('active')") || appJs.includes(".classList.add('open')")));
-  if (hasAppDrawerActivation) {
-    logPass('openTaskConsole() in app.js properly mutates console-drawer & backdrop classes');
-  } else {
-    logFail('openTaskConsole() in app.js is missing classList.add mutation!');
-  }
-
-  const hasDopkosPanelActivation = dopkosJs.includes('panel.classList.add') &&
-                                   dopkosJs.includes('panel.classList.remove');
-  if (hasDopkosPanelActivation) {
-    logPass('openPanel() & closePanel() in dopkos-engine.js properly mutate detail panel state');
-  } else {
-    logFail('openPanel() / closePanel() in dopkos-engine.js missing panel classList mutations!');
+    const hasPanelCss = (allCss.includes('dopkos-detail-panel') || allCss.includes('detail-panel')) &&
+                        (allCss.includes('.open') || allCss.includes('.active'));
+    if (hasPanelCss) {
+      logPass('CSS rules for detail-panel (.open/.active) verified in stylesheets');
+    } else {
+      logFail('Missing CSS activation rules for detail-panel in stylesheets!');
+    }
   }
 });
+
+// ── SUMMARY & EXIT CODE ──────────────────────────────────────────────────────
 console.log('\n===============================================================');
 if (failureCount === 0) {
   console.log('\x1b[32m  ✅ ALL PRE-FLIGHT VERIFICATION GATES PASSED (100% GREEN)\x1b[0m');

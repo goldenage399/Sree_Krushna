@@ -67,6 +67,9 @@ Review relevant ecosystem patterns:
 - `.agent/patterns/web-deployment-gate.md`
 - `.agent/patterns/write-site-contract-verification.md`
 - `.agent/patterns/write-without-reader.md`
+- `.agent/patterns/localhost-sw-cache-bypass-gate.md`
+- `.agent/patterns/monolithic-engine-port-css-scoping-gate.md`
+- `.agent/patterns/sub-engine-shadowing-and-tab-reconciliation.md`
 
 
 ## When to Use

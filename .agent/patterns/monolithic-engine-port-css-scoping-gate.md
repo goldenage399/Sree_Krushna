@@ -5,11 +5,10 @@ canonical_source: task-dashboard
 status: VALIDATED
 consumed_by:
   - file: CLAUDE.md
-    at: "Pattern Activation & PACT-001 Cross-References"
-  - file: GEMINI.md
-    at: "Pattern Activation & PACT-001 Cross-References"
-  - file: .agent/workflows/external-ui-redesign.md
-    at: "Step 2: External CSS Adaptation & Scope Isolation"
+    at: "Pattern Activation and PACT-001 Cross-References"
+  - file: .agent/workflows/plan.md
+    at: "Step 0.1: Universal Patterns Reference Check"
+
 triggers: []
 guard: ""
 portability: universal
