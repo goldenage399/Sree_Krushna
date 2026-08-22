@@ -387,17 +387,25 @@
               <div class="filter-pill" data-track="fleet" data-testid="filter-lane-fleet" onclick="filterSwimlaneTrack('fleet')">🚗 Fleet</div>
             </div>
             
-            <!-- Sub-Toolbar: Active Stage Indicator, Reset Button & Search Bar -->
-            <div class="swimlane-sub-bar" data-testid="swimlane-sub-bar">
-              <div class="sub-bar-left">
+            <!-- Sub-Toolbar: Active Stage Indicator, Reset Button, Sort Controls & Search Bar -->
+            <div class="swimlane-sub-bar" data-testid="swimlane-sub-bar" style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <div class="sub-bar-left" style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
                 <span id="active-stage-indicator" class="active-stage-indicator">📍 Viewing <strong>STAGE 03: Barat & Grand Reception</strong> (16:00 to 19:30)</span>
                 <button class="stage-reset-btn" id="btn-show-all-stages" onclick="selectStage('ALL')" style="display: none;" aria-label="View All 6 Stages">
                   <span>✨</span> View All Stages
                 </button>
               </div>
-              <div class="swimlane-search-wrap">
-                <span class="swimlane-search-icon" aria-hidden="true">🔍</span>
-                <input type="text" id="swimlane-search-input" placeholder="Search tasks, leads, WBS..." oninput="onSwimlaneSearch(this.value)" aria-label="Search operational tasks" />
+              <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                <div class="swimlane-sort-group" data-testid="swimlane-sort-group" role="group" aria-label="Sort Matrix Nodes">
+                  <button class="swimlane-sort-btn active" data-sort="TIMELINE" data-testid="btn-sort-timeline" onclick="setSwimlaneSortMode('TIMELINE')" title="Sort by Chronological Timeline (T-Timeline & Day-Of Hours)">⏱️ Timeline</button>
+                  <button class="swimlane-sort-btn" data-sort="URGENCY" data-testid="btn-sort-urgency" onclick="setSwimlaneSortMode('URGENCY')" title="Sort by Urgency (Critical First)">⚡ Urgency</button>
+                  <button class="swimlane-sort-btn" data-sort="WBS" data-testid="btn-sort-wbs" onclick="setSwimlaneSortMode('WBS')" title="Sort by WBS Code">🔢 WBS</button>
+                  <button class="swimlane-sort-btn" data-sort="STATUS" data-testid="btn-sort-status" onclick="setSwimlaneSortMode('STATUS')" title="Sort by Execution Status">📊 Status</button>
+                </div>
+                <div class="swimlane-search-wrap">
+                  <span class="swimlane-search-icon" aria-hidden="true">🔍</span>
+                  <input type="text" id="swimlane-search-input" placeholder="Search tasks, leads, WBS..." oninput="onSwimlaneSearch(this.value)" aria-label="Search operational tasks" />
+                </div>
               </div>
             </div>
 

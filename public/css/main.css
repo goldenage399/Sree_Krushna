@@ -1380,12 +1380,43 @@
       box-shadow: var(--shadow-elevation-2);
     }
 
+    .swimlane-sort-group {
+      display: inline-flex;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 100px;
+      padding: 2px;
+      gap: 2px;
+    }
+    .swimlane-sort-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      font-size: 0.74rem;
+      font-weight: 600;
+      padding: 5px 11px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .swimlane-sort-btn:hover {
+      color: var(--gold-bright);
+    }
+    .swimlane-sort-btn.active {
+      background: var(--gold-gradient);
+      color: #080b11;
+      font-weight: 700;
+      box-shadow: var(--shadow-elevation-1);
+    }
+
     .swimlane-search-wrap {
       position: relative;
       display: flex;
       align-items: center;
-      min-width: 240px;
-      max-width: 320px;
+      min-width: 200px;
+      max-width: 280px;
       flex: 1;
     }
     .swimlane-search-wrap input {

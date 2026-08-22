@@ -329,6 +329,130 @@ window.dataLayer = window.dataLayer || [];
       renderSwimlaneMatrix();
     }
 
+    // ── Temporal Timeline & Urgency Sorting Engine ─────────────────
+    let currentSwimlaneSortMode = 'TIMELINE'; // 'TIMELINE' | 'URGENCY' | 'WBS' | 'STATUS'
+
+    function parseTaskTimelineMinutes(t) {
+      if (!t) return 0;
+      const str = String(t.timeTag || '').toLowerCase().trim();
+
+      // 1. Stage Baseline Offset (Minutes from Day 0 00:00)
+      const stageBaseOffset = {
+        'STAGE_01': -120 * 1440, // ~ -172,800 mins
+        'STAGE_02': -2 * 1440,   // ~ -2,880 mins
+        'STAGE_03': 16 * 60,     // 16:00 Day 0 = +960 mins
+        'STAGE_04': 19.5 * 60,   // 19:30 Day 0 = +1,170 mins
+        'STAGE_05': 19.5 * 60,   // 19:30 Day 0 = +1,170 mins
+        'STAGE_06': 1 * 1440     // Day +1 = +1,440 mins
+      };
+
+      // 2. Parse explicit T-Days (e.g. "T-180 Days", "T-90", "T - 45", "T-2 Days")
+      const tDaysMatch = str.match(/t\s*-\s*(\d+)\s*(?:days?|d)?/i);
+      if (tDaysMatch) {
+        const days = parseInt(tDaysMatch[1], 10);
+        return -(days * 1440);
+      }
+
+      // 3. Parse explicit T-Hours (e.g. "T - 4 Hours", "T-4h")
+      const tHoursMatch = str.match(/t\s*-\s*(\d+)\s*hours?/i);
+      if (tHoursMatch) {
+        const hours = parseInt(tHoursMatch[1], 10);
+        return -(hours * 60);
+      }
+
+      // 4. Parse Day +Days (e.g. "Day +1", "Day +4", "Day +7 to Day +30")
+      const dayPlusMatch = str.match(/day\s*\+\s*(\d+)/i);
+      if (dayPlusMatch) {
+        const days = parseInt(dayPlusMatch[1], 10);
+        return days * 1440;
+      }
+
+      // 5. Parse 24-hr clock times on Day 0 (e.g. "15:00", "17:00 to 19:30", "19:30 to 22:30")
+      const timeClockMatch = str.match(/(\d{1,2}):(\d{2})/);
+      if (timeClockMatch) {
+        const hours = parseInt(timeClockMatch[1], 10);
+        const mins = parseInt(timeClockMatch[2], 10);
+        return (hours * 60) + mins;
+      }
+
+      // 6. Day 0 - T+0 or Day-Of
+      if (str.includes('t+0') || str.includes('day-of') || str.includes('day 0')) {
+        return stageBaseOffset[t.stage] || 0;
+      }
+
+      // Fallback to stage default
+      return stageBaseOffset[t.stage] || 0;
+    }
+
+    function getTaskPriorityWeight(t) {
+      const p = String(t.priority || '').toLowerCase();
+      if (p === 'critical') return 1;
+      if (p === 'high') return 2;
+      if (p === 'medium') return 3;
+      if (p === 'low' || p === 'planned') return 4;
+      return 3;
+    }
+
+    function getTaskStageOrder(stageId) {
+      const map = { 'STAGE_01': 1, 'STAGE_02': 2, 'STAGE_03': 3, 'STAGE_04': 4, 'STAGE_05': 5, 'STAGE_06': 6 };
+      return map[stageId] || 99;
+    }
+
+    function sortSwimlaneTasks(tasks) {
+      return [...tasks].sort((a, b) => {
+        if (currentSwimlaneSortMode === 'URGENCY') {
+          // Priority first
+          const pA = getTaskPriorityWeight(a);
+          const pB = getTaskPriorityWeight(b);
+          if (pA !== pB) return pA - pB;
+          // Then chronological timeline
+          const timeA = parseTaskTimelineMinutes(a);
+          const timeB = parseTaskTimelineMinutes(b);
+          if (timeA !== timeB) return timeA - timeB;
+          return String(a.id).localeCompare(String(b.id), undefined, { numeric: true });
+        } else if (currentSwimlaneSortMode === 'WBS') {
+          return String(a.wbs || a.id).localeCompare(String(b.wbs || b.id), undefined, { numeric: true });
+        } else if (currentSwimlaneSortMode === 'STATUS') {
+          const statusOrder = { 'In-Progress': 1, 'Planned': 2, 'Completed': 3 };
+          const sA = statusOrder[a.status] || 2;
+          const sB = statusOrder[b.status] || 2;
+          if (sA !== sB) return sA - sB;
+          return parseTaskTimelineMinutes(a) - parseTaskTimelineMinutes(b);
+        } else {
+          // DEFAULT: TIMELINE (Chronological Stage + TimeTag + Urgency)
+          // 1. Stage Order
+          const stageA = getTaskStageOrder(a.stage);
+          const stageB = getTaskStageOrder(b.stage);
+          if (stageA !== stageB) return stageA - stageB;
+
+          // 2. Timeline Minutes
+          const timeA = parseTaskTimelineMinutes(a);
+          const timeB = parseTaskTimelineMinutes(b);
+          if (timeA !== timeB) return timeA - timeB;
+
+          // 3. Priority Urgency Tie-breaker
+          const pA = getTaskPriorityWeight(a);
+          const pB = getTaskPriorityWeight(b);
+          if (pA !== pB) return pA - pB;
+
+          // 4. ID Natural Sort
+          return String(a.id).localeCompare(String(b.id), undefined, { numeric: true });
+        }
+      });
+    }
+
+    function setSwimlaneSortMode(mode) {
+      currentSwimlaneSortMode = mode;
+      document.querySelectorAll('.swimlane-sort-btn').forEach(btn => {
+        if (btn.dataset.sort === mode) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      renderSwimlaneMatrix();
+    }
+
     function updateTrackFilterCounts() {
       if (typeof MARRIAGE_STATE === 'undefined') return;
       
@@ -357,7 +481,7 @@ window.dataLayer = window.dataLayer || [];
       headerRow.innerHTML = `
         <div class="matrix-track-col-header">OPERATIONAL TRACK</div>
         <div class="matrix-time-bands-header">
-          <span>SYNCHRONIZED ACTIVITIES & DELIVERABLES &bull; ${activeStageId !== 'ALL' ? `${activeStageId}` : 'ALL 6 STAGES'}</span>
+          <span>SYNCHRONIZED ACTIVITIES & DELIVERABLES &bull; ${activeStageId !== 'ALL' ? `${activeStageId}` : 'ALL 6 STAGES'} (${currentSwimlaneSortMode === 'URGENCY' ? '⚡ Urgency Sorted' : currentSwimlaneSortMode === 'WBS' ? '🔢 WBS Sorted' : currentSwimlaneSortMode === 'STATUS' ? '📊 Status Sorted' : '⏱️ Chronological Timeline'})</span>
           <span style="font-size: 0.74rem; font-weight: 500; color: var(--gold-bright);">Click node to inspect & checklist ↗</span>
         </div>
       `;
@@ -382,6 +506,9 @@ window.dataLayer = window.dataLayer || [];
             (t.desc && t.desc.toLowerCase().includes(swimlaneSearchQuery))
           );
         }
+
+        // Apply strict Chronological Timeline & Urgency Sorting
+        trackTasks = sortSwimlaneTasks(trackTasks);
 
         const row = document.createElement('div');
         row.className = `matrix-row matrix-row-${tr.id}`;
@@ -415,19 +542,21 @@ window.dataLayer = window.dataLayer || [];
         } else {
           trackTasks.forEach(t => {
             const isDone = (t.status === 'Completed' || t.done);
+            const isCritical = (t.priority === 'Critical');
             const totalChecks = (t.checklist && t.checklist.length) || 0;
             const doneChecks = totalChecks > 0 ? t.checklist.filter(c => c.done).length : (isDone ? 1 : 0);
 
             const node = document.createElement('div');
             node.className = `event-node ${isDone ? 'is-completed' : ''}`;
-            node.style.borderLeft = `3px solid ${tr.color}`;
+            node.style.borderLeft = `3px solid ${isCritical ? 'var(--crimson-royal, #ef4444)' : tr.color}`;
             node.setAttribute('data-testid', `swimlane-node-${t.id}`);
             node.onclick = () => openTaskConsole(t.id);
 
             node.innerHTML = `
               <div class="node-top">
-                <span class="node-time">${t.timeTag || 'Day-Of'}</span>
+                <span class="node-time" style="${isCritical ? 'font-weight: 700; color: var(--gold-bright);' : ''}">${t.timeTag || 'Day-Of'}</span>
                 <div style="display: flex; gap: 4px; align-items: center;">
+                  ${isCritical ? '<span class="status-badge status-urgent" style="font-size: 0.62rem; padding: 1px 5px; letter-spacing: 0.2px;">⚡ Critical</span>' : ''}
                   ${t.gate ? `<span class="gate-badge" data-testid="gate-badge-${t.gate}">${t.gate}</span>` : ''}
                   <span class="node-id-badge">${t.id}</span>
                 </div>
@@ -2723,6 +2852,7 @@ window.dataLayer = window.dataLayer || [];
     window.renderDoPkosStudio = renderDoPkosStudio;
     window.filterSwimlaneTrack = filterSwimlaneTrack;
     window.filterSwimlane = filterSwimlaneTrack; // alias
+    window.setSwimlaneSortMode = setSwimlaneSortMode;
     window.onSwimlaneSearch = onSwimlaneSearch;
     window.showEventDetails = showEventDetails;
     window.showNodeModal = showEventDetails; // alias
