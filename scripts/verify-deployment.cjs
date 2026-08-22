@@ -79,6 +79,7 @@ check('Layer 1: JavaScript Runtime Parse, AST Syntax & Sandbox Execution', () =>
   const listeners = [];
   const createMockEl = () => ({
     style: {},
+    dataset: {},
     classList: { add: () => {}, remove: () => {}, contains: () => false },
     setAttribute: () => {},
     getAttribute: () => '',

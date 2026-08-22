@@ -282,6 +282,51 @@
   color: var(--gold-bright, #f5c518);
 }
 
+/* Stage Header Band — matches portable engine reference */
+#tab-dopkos .stage-header-band {
+  position: absolute;
+  top: 0;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary, rgba(212,168,67,0.55));
+  border-right: 1px solid var(--border-color, rgba(212,168,67,0.15));
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease;
+  user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#tab-dopkos .stage-header-band:hover {
+  color: var(--gold-bright, #f5c518);
+  background: rgba(245,197,24,0.06);
+}
+
+#tab-dopkos .stage-header-band.s-active {
+  color: var(--gold-bright, #f5c518);
+  border-bottom: 2px solid var(--gold-bright, #f5c518);
+}
+
+#tab-dopkos .stage-header-band.s-complete {
+  color: var(--status-done-text, #4ade80);
+  opacity: 0.65;
+}
+
+/* Zoom-transform origin for header bands (matches reference engine applyZoom) */
+#tab-dopkos #dopkos-stage-header-bands-inner,
+#tab-dopkos #stage-header-bands-inner {
+  position: relative;
+  height: 100%;
+  transform-origin: top left;
+  transition: transform 0.1s ease;
+}
+
 #tab-dopkos #dopkos-swimlane-inner,
 #tab-dopkos .dopkos-swimlane-inner,
 #tab-dopkos #swimlane-inner {

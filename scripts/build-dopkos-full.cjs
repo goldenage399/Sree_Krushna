@@ -1103,30 +1103,35 @@ const dopkosEngineCode = `/**
   }
 
   function renderStageHeaderBands() {
-    const inner = document.getElementById('stage-header-bands-inner');
+    const inner = document.getElementById('dopkos-stage-header-bands-inner') || document.getElementById('stage-header-bands-inner');
     if (!inner) return;
     inner.innerHTML = '';
+    const activeStage = (PROJECT_STATE.project && PROJECT_STATE.project.active_stage) || 1;
     const stages = PROJECT_STATE.stages || [];
     const stageCols = [];
-    stages.forEach((s, idx) => {
+    stages.forEach((s) => {
       const stageTasks = PROJECT_STATE.tasks.filter(t => t.stage === s.id);
       if (!stageTasks.length) return;
       const minCol = Math.min(...stageTasks.map(t => colMap[t.id] || 0));
       const maxCol = Math.max(...stageTasks.map(t => colMap[t.id] || 0));
-      stageCols.push({ stage: s, minCol, maxCol, idx });
+      stageCols.push({ stage: s, minCol, maxCol });
     });
 
     stageCols.forEach((sc, i) => {
       const s = sc.stage;
+      const stageTasks = PROJECT_STATE.tasks.filter(t => t.stage === s.id);
+      const allDone = stageTasks.length > 0 && stageTasks.every(t => getStatus(t.id) === 'DONE');
+      const isActive = s.id === activeStage;
       const band = document.createElement('div');
-      band.className = 'stage-header-band';
+      band.className = 'stage-header-band' + (allDone ? ' s-complete' : isActive ? ' s-active' : '');
+      band.dataset.stage = s.id;
+
       const startCol = sc.minCol;
       const nextStage = stageCols[i + 1];
       const endCol = nextStage ? nextStage.minCol : (sc.maxCol + 1);
-      
+
       band.style.left = (startCol * COL_W) + 'px';
       band.style.width = ((endCol - startCol) * COL_W) + 'px';
-      band.style.cssText = 'position: absolute; top: 0; height: 32px; display: flex; align-items: center; padding: 0 12px; font-size: 0.72rem; font-weight: 800; color: var(--gold-bright); border-right: 1px solid var(--border-subtle); cursor: pointer; left: ' + (startCol * COL_W) + 'px; width: ' + ((endCol - startCol) * COL_W) + 'px;';
       band.textContent = 'S' + s.id + '  ' + s.name.toUpperCase();
       band.addEventListener('click', () => scrollToStage(s.id));
       inner.appendChild(band);
