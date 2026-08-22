@@ -595,25 +595,39 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2px 10px;
-  min-height: 32px;
-  height: 34px;
+  padding: 0 12px;
+  height: 38px;
+  min-height: 38px;
+  max-height: 38px;
   background: var(--header-bg);
   border-bottom: 1px solid var(--border-color);
   flex-wrap: nowrap;
+  gap: 8px;
+  box-sizing: border-box;
+}
+
+#tab-dopkos .console-left-group,
+#tab-dopkos .console-right-group {
+  display: flex;
+  align-items: center;
   gap: 6px;
+  height: 100%;
 }
 
 #tab-dopkos #console-search {
   background: rgba(0, 0, 0, 0.35);
   border: 1px solid var(--border-color);
   border-radius: 4px;
-  padding: 2px 8px;
+  padding: 0 8px;
   font-size: 0.70rem;
   color: var(--text-primary);
   outline: none;
-  height: 22px;
+  height: 24px;
   width: 170px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  transition: border-color 0.15s ease;
 }
 
 #tab-dopkos #console-search:focus {
@@ -623,13 +637,18 @@
 #tab-dopkos .console-widget {
   font-size: 0.64rem;
   font-weight: 800;
-  padding: 1px 6px;
-  line-height: 18px;
-  border-radius: 3px;
+  padding: 0 7px;
+  height: 24px;
+  line-height: 22px;
+  border-radius: 4px;
   background: var(--panel-bg);
   border: 1px solid var(--border-color);
   color: var(--text-primary);
   cursor: pointer;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.15s ease;
 }
 
@@ -645,40 +664,79 @@
   border-color: rgba(245, 158, 11, 0.4);
 }
 
-#tab-dopkos #console-filters {
-  display: flex;
-  gap: 3px;
+#tab-dopkos .console-segmented-filters {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 2px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  height: 26px;
+  box-sizing: border-box;
 }
 
 #tab-dopkos .filter-pill {
   font-size: 0.64rem;
   font-weight: 700;
-  padding: 1px 6px;
-  line-height: 18px;
+  padding: 0 8px;
+  height: 20px;
+  line-height: 20px;
   border-radius: 3px;
-  background: var(--panel-bg);
-  border: 1px solid var(--border-color);
+  background: transparent;
+  border: none;
   color: var(--text-secondary);
   cursor: pointer;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.15s ease;
 }
 
 #tab-dopkos .filter-pill:hover {
-  border-color: var(--gold-bright, #f5c518);
   color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 #tab-dopkos .filter-pill.active {
   background: var(--gold-bright, #f5c518);
   color: #080b11;
   font-weight: 800;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Console Generic Action Button (Export / Expand) */
+#tab-dopkos .console-btn {
+  height: 24px;
+  line-height: 22px;
+  padding: 0 10px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  box-sizing: border-box;
+  transition: all 0.15s ease;
+}
+
+#tab-dopkos .console-btn:hover {
+  background: var(--card-bg);
   border-color: var(--gold-bright, #f5c518);
+  color: var(--gold-bright, #f5c518);
 }
 
 /* Export Dropdown in Console Toolbar */
 #tab-dopkos .console-export-container {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
 }
 
 #tab-dopkos .console-export-dropdown {
@@ -702,12 +760,12 @@
 }
 
 #tab-dopkos .console-export-item {
-  padding: 8px 12px;
+  padding: 7px 12px;
   background: transparent;
   border: none;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   color: var(--text-primary);
-  font-size: 0.72rem;
+  font-size: 0.70rem;
   font-weight: 700;
   text-align: left;
   cursor: pointer;
@@ -734,16 +792,23 @@
   border: 1px solid var(--border-color);
   border-radius: 4px;
   overflow: hidden;
+  height: 24px;
+  box-sizing: border-box;
 }
 
 #tab-dopkos .console-zoom-btn {
-  padding: 3px 8px;
+  padding: 0 7px;
+  height: 22px;
+  line-height: 22px;
   background: transparent;
   border: none;
   color: var(--text-primary);
-  font-size: 0.75rem;
+  font-size: 0.74rem;
   font-weight: 800;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.15s ease;
 }
 
@@ -754,11 +819,17 @@
 
 #tab-dopkos .console-zoom-val {
   font-family: monospace;
-  font-size: 0.7rem;
-  min-width: 38px;
+  font-size: 0.68rem;
+  min-width: 36px;
+  height: 22px;
+  line-height: 22px;
   text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-left: 1px solid var(--border-color);
   border-right: 1px solid var(--border-color);
+  color: var(--text-primary);
 }
 
 #tab-dopkos #console-list {

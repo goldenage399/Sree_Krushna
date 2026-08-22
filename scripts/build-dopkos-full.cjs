@@ -930,33 +930,35 @@ const dopkosEngineCode = `/**
       '<div id="console-backdrop" onclick="toggleConsoleExpand(false)"></div>' +
       '<div id="z45" class="' + (consoleExpanded ? 'expanded' : '') + '">' +
         '<div id="console-top">' +
-          '<div style="display: flex; align-items: center; gap: 8px;">' +
-            '<span style="font-size: 0.76rem; font-weight: 800; color: var(--gold-bright); font-family: var(--font-display);">⚡ COMMAND CONSOLE</span>' +
+          '<div class="console-left-group" style="display: flex; align-items: center; gap: 6px;">' +
+            '<span class="console-title" style="font-size: 0.74rem; font-weight: 800; color: var(--gold-bright); font-family: var(--font-display); white-space: nowrap; margin-right: 2px;">⚡ COMMAND CONSOLE</span>' +
             '<button id="console-blockers-widget" class="console-widget" onclick="setFilter(\\\'HOLD\\\')">⛔ 0 BLOCKERS</button>' +
             '<button id="console-gates-widget" class="console-widget has-gates" onclick="setFilter(\\\'ALL\\\')">⚠ 4 GATES</button>' +
-            '<input type="text" id="console-search" placeholder="Search tasks, roles, tags..." oninput="renderConsoleList()" />' +
+            '<input type="text" id="console-search" placeholder="Search tasks, roles..." oninput="renderConsoleList()" />' +
           '</div>' +
-          '<div id="console-filters">' +
+          '<div id="console-filters" class="console-segmented-filters">' +
             '<button class="filter-pill ' + (activeFilter === 'ALL' ? 'active' : '') + '" data-filter="ALL" onclick="setFilter(\\\'ALL\\\')">ALL</button>' +
             '<button class="filter-pill ' + (activeFilter === 'READY' ? 'active' : '') + '" data-filter="READY" onclick="setFilter(\\\'READY\\\')">READY</button>' +
             '<button class="filter-pill ' + (activeFilter === 'ACTIVE' ? 'active' : '') + '" data-filter="ACTIVE" onclick="setFilter(\\\'ACTIVE\\\')">ACTIVE</button>' +
             '<button class="filter-pill ' + (activeFilter === 'HOLD' ? 'active' : '') + '" data-filter="HOLD" onclick="setFilter(\\\'HOLD\\\')">HOLD</button>' +
             '<button class="filter-pill ' + (activeFilter === 'DONE' ? 'active' : '') + '" data-filter="DONE" onclick="setFilter(\\\'DONE\\\')">DONE</button>' +
           '</div>' +
-          '<div class="console-export-container">' +
-            '<button id="console-export-btn" class="header-action-btn" onclick="toggleExportMenu(event)" style="font-size: 0.72rem; padding: 2px 8px;">EXPORT ▾</button>' +
-            '<div id="console-export-dropdown" class="console-export-dropdown">' +
-              '<button id="btn-export-tsv" class="console-export-item" onclick="copyConsoleTasksTSV()">📋 Copy TSV (Excel / Sheets)</button>' +
-              '<button id="btn-export-csv" class="console-export-item" onclick="downloadConsoleTasksCSV()">📥 Download CSV</button>' +
-              '<button id="btn-export-json" class="console-export-item" onclick="downloadConsoleTasksJSON()">💾 Download JSON</button>' +
+          '<div class="console-right-group" style="display: flex; align-items: center; gap: 6px;">' +
+            '<div class="console-export-container">' +
+              '<button id="console-export-btn" class="console-btn" onclick="toggleExportMenu(event)">EXPORT ▾</button>' +
+              '<div id="console-export-dropdown" class="console-export-dropdown">' +
+                '<button id="btn-export-tsv" class="console-export-item" onclick="copyConsoleTasksTSV()">📋 Copy TSV (Excel / Sheets)</button>' +
+                '<button id="btn-export-csv" class="console-export-item" onclick="downloadConsoleTasksCSV()">📥 Download CSV</button>' +
+                '<button id="btn-export-json" class="console-export-item" onclick="downloadConsoleTasksJSON()">💾 Download JSON</button>' +
+              '</div>' +
             '</div>' +
+            '<div class="console-zoom-group">' +
+              '<button id="console-table-zoom-out" class="console-zoom-btn" onclick="applyTableZoom(tableZoomLevel - 0.1)">−</button>' +
+              '<span id="console-table-zoom-reset" class="console-zoom-val" onclick="applyTableZoom(1.0)">' + Math.round(tableZoomLevel * 100) + '%</span>' +
+              '<button id="console-table-zoom-in" class="console-zoom-btn" onclick="applyTableZoom(tableZoomLevel + 0.1)">+</button>' +
+            '</div>' +
+            '<button id="console-expand-toggle-btn" class="console-btn btn-expand" onclick="toggleConsoleExpand()">' + (consoleExpanded ? '⤡ RESTORE' : '⛶ EXPAND') + '</button>' +
           '</div>' +
-          '<div class="console-zoom-group">' +
-            '<button id="console-table-zoom-out" class="console-zoom-btn" onclick="applyTableZoom(tableZoomLevel - 0.1)">−</button>' +
-            '<span id="console-table-zoom-reset" class="console-zoom-btn console-zoom-val" onclick="applyTableZoom(1.0)">' + Math.round(tableZoomLevel * 100) + '%</span>' +
-            '<button id="console-table-zoom-in" class="console-zoom-btn" onclick="applyTableZoom(tableZoomLevel + 0.1)">+</button>' +
-          '</div>' +
-          '<button id="console-expand-toggle-btn" class="theme-toggle-btn" onclick="toggleConsoleExpand()" style="font-size: 0.72rem; padding: 3px 8px; font-weight: 700;">' + (consoleExpanded ? '⤡ RESTORE' : '⛶ EXPAND') + '</button>' +
         '</div>' +
         '<div id="console-list"></div>' +
       '</div>' +
