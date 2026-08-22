@@ -18,7 +18,8 @@
     "public/js/app.js"
   ],
   "cssFiles": [
-    "public/css/main.css"
+    "public/css/main.css",
+    "public/css/dopkos-engine.css"
   ],
   "serviceWorker": "public/sw.js",
   "errorPage": "public/404.html",

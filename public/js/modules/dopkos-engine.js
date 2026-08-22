@@ -2132,7 +2132,7 @@
         '<h4 style="margin: 0 0 6px 0; color: var(--gold-bright);">' + s.name + '</h4>' +
         '<p style="margin: 0 0 10px 0; font-size: 0.8rem; color: var(--text-muted);">' + s.gate_condition + '</p>' +
         '<div style="display: flex; gap: 6px; flex-wrap: wrap;">' +
-          stageTasks.map(t => '<span class="role-pill-tag" onclick="setDopkosView(\'TOPOLOGY\'); selectAndCenterCard(\'' + t.id + '\')" style="cursor: pointer; font-size: 0.74rem;">' + t.id + ': ' + t.name + '</span>').join('') +
+          stageTasks.map(t => '<span class="role-pill-tag" onclick="switchTab(\'tab-dopkos\'); selectAndCenterCard(\'' + t.id + '\')" style="cursor: pointer; font-size: 0.74rem;">' + t.id + ': ' + t.name + '</span>').join('') +
         '</div>' +
       '</div>';
     });
@@ -2149,7 +2149,7 @@
       PROJECT_STATE.stages.forEach(s => {
         const tasksInSlot = PROJECT_STATE.tasks.filter(t => t.trade === tr && t.stage === s.id);
         html += '<td style="padding: 6px; border: 1px solid var(--border-subtle); vertical-align: top;">' +
-          tasksInSlot.map(t => '<div onclick="setDopkosView(\'TOPOLOGY\'); selectAndCenterCard(\'' + t.id + '\')" style="cursor: pointer; background: var(--bg-surface); padding: 4px; border-radius: 3px; margin-bottom: 4px; font-weight: 600;">' + t.id + '</div>').join('') +
+          tasksInSlot.map(t => '<div onclick="switchTab(\'tab-dopkos\'); selectAndCenterCard(\'' + t.id + '\')" style="cursor: pointer; background: var(--bg-surface); padding: 4px; border-radius: 3px; margin-bottom: 4px; font-weight: 600;">' + t.id + '</div>').join('') +
         '</td>';
       });
       html += '</tr>';
@@ -2175,7 +2175,7 @@
       html += '<div style="display: flex; gap: 12px; align-items: center; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-left: 3px solid var(--gold-bright); border-radius: var(--radius-sm); padding: 10px 14px;">' +
         '<span style="width: 24px; height: 24px; border-radius: 50%; background: var(--gold-bright); color: #080b11; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 0.76rem;">' + (idx + 1) + '</span>' +
         '<div style="flex: 1;"><div style="font-weight: 700; color: var(--text-main); font-size: 0.85rem;">' + c.id + ': ' + c.name + '</div><div style="font-size: 0.72rem; color: var(--text-dim);">' + c.horizon + '</div></div>' +
-        '<button class="btn btn-primary" onclick="setDopkosView(\'TOPOLOGY\'); selectAndCenterCard(\'' + c.id + '\')" style="font-size: 0.72rem; padding: 3px 8px;">View In DAG →</button>' +
+        '<button class="btn btn-primary" onclick="switchTab(\'tab-dopkos\'); selectAndCenterCard(\'' + c.id + '\')" style="font-size: 0.72rem; padding: 3px 8px;">View In DAG →</button>' +
       '</div>';
     });
     html += '</div>';

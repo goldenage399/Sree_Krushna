@@ -3,12 +3,13 @@
  * Strategy: Stale-While-Revalidate for UI shell; Network-First for Auth & Dynamic APIs.
  */
 
-const CACHE_NAME = 'sree-krushna-os-v3.0.0';
+const CACHE_NAME = 'sree-krushna-os-v4.1.0';
 const STATIC_SHELL = [
   '/',
   '/index.html',
   '/manifest.json',
   '/css/main.css',
+  '/css/dopkos-engine.css',
   '/js/config.js',
   '/js/theme-init.js',
   '/js/auth.js',
@@ -46,6 +47,11 @@ self.addEventListener('activate', (event) => {
 
 // Fetch Event: Stale-While-Revalidate with Network Fallback
 self.addEventListener('fetch', (event) => {
+  // Always bypass cache in local development
+  if (self.location.hostname === 'localhost' || self.location.hostname === '127.0.0.1') {
+    return;
+  }
+
   // Do not cache Firebase auth / Identity Toolkit / Google APIs
   if (
     event.request.url.includes('identitytoolkit.googleapis.com') ||
