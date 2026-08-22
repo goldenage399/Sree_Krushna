@@ -18,6 +18,13 @@
       "required": true
     },
     {
+      "id": "tab-planning",
+      "testId": "panel-planning",
+      "navTestId": "nav-tab-planning",
+      "title": "Planning & Operations",
+      "required": true
+    },
+    {
       "id": "tab-dopkos",
       "testId": "panel-dopkos",
       "navTestId": "nav-tab-dopkos",

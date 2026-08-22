@@ -2443,6 +2443,29 @@
   min-height: 0;
 }
 
+/* Planning & Operations Segmented Control */
+.planning-view-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.planning-view-btn:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.05);
+}
+.planning-view-btn.active {
+  background: var(--bg-surface);
+  color: var(--gold-bright);
+  border-color: var(--border-subtle);
+  box-shadow: var(--shadow-sm);
+}
+
 /* Zone 1 HUD */
 #z1 {
   display: flex;

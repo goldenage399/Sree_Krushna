@@ -164,6 +164,7 @@
       <nav class="tab-nav" role="tablist" aria-label="Main Application Modules" data-testid="module-navigation">
         <button class="nav-btn active" role="tab" aria-selected="true" aria-controls="tab-dashboard" data-testid="nav-tab-dashboard" onclick="switchTab('tab-dashboard')">📊 Command Center</button>
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-swimlane" data-testid="nav-tab-swimlane" onclick="switchTab('tab-swimlane')">⏱️ Swimlanes</button>
+        <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-planning" data-testid="nav-tab-planning" onclick="switchTab('tab-planning')">🗓️ Planning & Operations</button>
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-dopkos" data-testid="nav-tab-dopkos" onclick="switchTab('tab-dopkos')">🕸️ Precedence DAG</button>
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-tasks" data-testid="nav-tab-tasks" onclick="switchTab('tab-tasks')">📋 Tasks (CRUD)</button>
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-rituals" data-testid="nav-tab-rituals" onclick="switchTab('tab-rituals')">🕉️ Vedic Liturgy</button>
@@ -411,6 +412,34 @@
             </div>
           </div>
 
+        </div>
+      </div>
+
+      <!-- TAB: PLANNING & OPERATIONS (5 CLUBBED VIEWS) -->
+      <div id="tab-planning" class="tab-content" role="tabpanel" aria-labelledby="nav-tab-planning" data-testid="panel-planning">
+        <div class="card" data-testid="card-planning-ops">
+          <div class="card-header" style="flex-wrap: wrap; gap: 12px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <h3 style="margin: 0;">🗓️ Planning & Operations Suite</h3>
+                <span class="status-badge" style="background: rgba(245, 197, 24, 0.15); color: var(--gold-bright); font-size: 0.72rem;">👑 DO-PKOS Operations</span>
+              </div>
+              <p style="color: var(--text-muted); font-size: 0.82rem; margin: 4px 0 0;">
+                Synchronized chronological workflows: Macro roadmap, day-of liturgical run sheet, 2D matrix, and thread journeys.
+              </p>
+            </div>
+            <!-- Segmented Control matching user's screenshot -->
+            <div style="display: flex; gap: 6px; background: var(--bg-surface-elevated); padding: 4px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); flex-wrap: wrap;">
+              <button id="btn-plan-threads" class="planning-view-btn active" onclick="setPlanningView('THREADS')">🧵 Pull-a-Thread (Today's Actions)</button>
+              <button id="btn-plan-runsheet" class="planning-view-btn" onclick="setPlanningView('RUNSHEET')">⏱️ Day-Of Run Sheet</button>
+              <button id="btn-plan-roadmap" class="planning-view-btn" onclick="setPlanningView('ROADMAP')">📅 Macro Gantt</button>
+              <button id="btn-plan-matrix" class="planning-view-btn" onclick="setPlanningView('MATRIX')">📊 2D Role Matrix</button>
+              <button id="btn-plan-critical" class="planning-view-btn" onclick="setPlanningView('CRITICAL')">⚡ Critical Path</button>
+            </div>
+          </div>
+          <div id="planning-canvas-container" style="min-height: 480px; padding: 16px;">
+            <!-- Rendered dynamically by renderPlanningSuite() -->
+          </div>
         </div>
       </div>
 

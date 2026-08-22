@@ -719,6 +719,12 @@ window.dataLayer = window.dataLayer || [];
       if (updateHash && window.location.hash !== `#${targetId}`) {
         history.replaceState(null, null, `#${targetId}`);
       }
+
+      if (targetId === 'tab-dopkos' && window.renderDoPkosStudio) {
+        window.renderDoPkosStudio();
+      } else if (targetId === 'tab-planning' && window.renderPlanningSuite) {
+        window.renderPlanningSuite();
+      }
     }
 
     function hydrateActiveTab() {

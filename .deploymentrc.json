@@ -11,6 +11,10 @@
     "public/js/marriage-state.js",
     "public/js/theme-init.js",
     "public/js/auth.js",
+    "public/js/modules/console-drawer.js",
+    "public/js/modules/threads-engine.js",
+    "public/js/modules/intake-engine.js",
+    "public/js/modules/dopkos-engine.js",
     "public/js/app.js"
   ],
   "cssFiles": [
@@ -19,7 +23,16 @@
   "serviceWorker": "public/sw.js",
   "errorPage": "public/404.html",
   "firebaseConfig": "firebase.json",
-  "ignoredDomIds": [],
+  "ignoredDomIds": [
+    "z1-kpis",
+    "stage-strip-strip",
+    "stage-header-bands-inner",
+    "swimlane-inner",
+    "console-list",
+    "console-search",
+    "dep-svg",
+    "z3-viewport"
+  ],
   "securityHeaders": [
     "X-Frame-Options",
     "cleanUrls"

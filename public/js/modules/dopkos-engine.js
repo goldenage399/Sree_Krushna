@@ -1714,11 +1714,48 @@
     container.innerHTML = html;
   }
 
+  let currentPlanningView = 'THREADS';
+
+  function setPlanningView(viewName) {
+    currentPlanningView = viewName;
+    document.querySelectorAll('.planning-view-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.id === ('btn-plan-' + viewName.toLowerCase()));
+    });
+    renderPlanningSuite();
+  }
+
+  function renderPlanningSuite() {
+    const container = document.getElementById('planning-canvas-container');
+    if (!container) return;
+
+    document.querySelectorAll('.planning-view-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.id === ('btn-plan-' + currentPlanningView.toLowerCase()));
+    });
+
+    if (currentPlanningView === 'THREADS') {
+      if (window.renderDopkosThreads) {
+        window.renderDopkosThreads(container);
+      } else {
+        container.innerHTML = '<div style="color: var(--text-dim); padding: 20px;">Loading Threads...</div>';
+      }
+    } else if (currentPlanningView === 'RUNSHEET') {
+      renderDopkosRunSheet(container);
+    } else if (currentPlanningView === 'ROADMAP') {
+      renderDopkosRoadmap(container);
+    } else if (currentPlanningView === 'MATRIX') {
+      renderDopkosMatrix(container);
+    } else if (currentPlanningView === 'CRITICAL') {
+      renderDopkosCritical(container);
+    }
+  }
+
   // Exports to window
   window.setDopkosView = setDopkosView;
   window.filterDopkosEvent = filterDopkosEvent;
   window.filterDopkosTrack = filterDopkosTrack;
   window.renderDoPkosStudio = renderDoPkosStudio;
+  window.setPlanningView = setPlanningView;
+  window.renderPlanningSuite = renderPlanningSuite;
   window.selectAndCenterCard = selectAndCenterCard;
   window.scrollToStage = scrollToStage;
   window.toggleConsoleExpand = toggleConsoleExpand;
@@ -1726,9 +1763,15 @@
   window.renderConsoleList = renderConsoleList;
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', renderDoPkosStudio);
+    document.addEventListener('DOMContentLoaded', () => {
+      renderDoPkosStudio();
+      renderPlanningSuite();
+    });
   } else {
-    setTimeout(renderDoPkosStudio, 50);
+    setTimeout(() => {
+      renderDoPkosStudio();
+      renderPlanningSuite();
+    }, 50);
   }
 
 })(window);
