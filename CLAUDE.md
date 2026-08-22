@@ -58,11 +58,12 @@ Before any task work, review:
 | Governance compliance workflow | `.agent/workflows/governance-workflow.md` |
 | Synchronize universal patterns | `.agent/workflows/sap-sync.md` |
 | Architecture Council Review | `.agent/workflows/architecture-council.md` |
-| UI/UX Council Review | `.agent/workflows/ui-council.md` |
+| UI/UX Council Review | `.agent/workflows/ui-council.md` (featuring `impeccable` as Core Craft Auditor) |
 | Ingest / Adapt External Design (EUR v2) | `.agent/workflows/external-ui-redesign.md` |
 | Mobile UI Engineering (300px) | `.agent/workflows/mobile-ui-engineering.md` |
-| UI Design & Token Validation | `.agent/skills/ui-design-validator/SKILL.md` & `.claude/skills/impeccable/SKILL.md` |
+| UI Craft, Polish & Token Validation | `.claude/skills/impeccable/SKILL.md` & `.agent/skills/ui-design-validator/SKILL.md` |
 | Advanced UI/UX Design System | `.agent/skills/ui-ux-pro-max/SKILL.md` & `.agent/skills/frontend-design/SKILL.md` |
+| Post-Incident Governance & Analysis | `.agent/workflows/post-incident-governance.md` & `.agent/workflows/post-incident-analysis.md` |
 | Site Architecture & Navigation | `.claude/skills/site-architecture/SKILL.md` |
 | Governance verification | `npm run verify:governance-wiring:all` |
 
