@@ -453,6 +453,8 @@
 /* ==========================================================================
    SLIDE-OVER DETAIL / INSPECTOR PANEL
    ========================================================================== */
+#tab-dopkos #dopkos-detail-panel,
+#tab-dopkos .dopkos-detail-panel,
 #tab-dopkos #detail-panel {
   position: absolute;
   top: 0;
@@ -468,7 +470,12 @@
   transition: right 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-#tab-dopkos #detail-panel.open {
+#tab-dopkos #dopkos-detail-panel.open,
+#tab-dopkos #dopkos-detail-panel.active,
+#tab-dopkos .dopkos-detail-panel.open,
+#tab-dopkos .dopkos-detail-panel.active,
+#tab-dopkos #detail-panel.open,
+#tab-dopkos #detail-panel.active {
   right: 0;
 }
 

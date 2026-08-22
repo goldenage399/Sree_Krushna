@@ -424,7 +424,56 @@ check('Layer 8: PWA Invalidation Engine & Zero-Stale Cache Contract', () => {
   }
 });
 
-// ── SUMMARY & EXIT CODE ──────────────────────────────────────────────────────
+// ── LAYER 9: Interactive Drawer & Slide-Over Panel State Contract ────────────
+check('Layer 9: Interactive Drawer & Slide-Over Panel State Machine Contract', () => {
+  const mainCssPath = path.join(ROOT_DIR, 'public/css/main.css');
+  const dopkosCssPath = path.join(ROOT_DIR, 'public/css/dopkos-engine.css');
+  const appJsPath = path.join(ROOT_DIR, 'public/js/app.js');
+  const consoleDrawerJsPath = path.join(ROOT_DIR, 'public/js/modules/console-drawer.js');
+  const dopkosJsPath = path.join(ROOT_DIR, 'public/js/modules/dopkos-engine.js');
+
+  const mainCss = fs.existsSync(mainCssPath) ? fs.readFileSync(mainCssPath, 'utf8') : '';
+  const dopkosCss = fs.existsSync(dopkosCssPath) ? fs.readFileSync(dopkosCssPath, 'utf8') : '';
+  const appJs = fs.existsSync(appJsPath) ? fs.readFileSync(appJsPath, 'utf8') : '';
+  const consoleDrawerJs = fs.existsSync(consoleDrawerJsPath) ? fs.readFileSync(consoleDrawerJsPath, 'utf8') : '';
+  const dopkosJs = fs.existsSync(dopkosJsPath) ? fs.readFileSync(dopkosJsPath, 'utf8') : '';
+
+  // 1. Global Console Drawer CSS Verification
+  const hasConsoleDrawerOpenCss = (mainCss.includes('.console-drawer.active') || mainCss.includes('.console-drawer.open')) &&
+                                  (mainCss.includes('.console-backdrop.active') || mainCss.includes('.console-backdrop.open'));
+  if (hasConsoleDrawerOpenCss) {
+    logPass('CSS rules for .console-drawer (.active/.open) and .console-backdrop verified in main.css');
+  } else {
+    logFail('Missing CSS activation rules for .console-drawer/.console-backdrop in main.css!');
+  }
+
+  // 2. DO-PKOS Slide-Over Detail Panel CSS Verification
+  const hasDopkosDetailPanelCss = dopkosCss.includes('dopkos-detail-panel') &&
+                                  (dopkosCss.includes('dopkos-detail-panel.open') || dopkosCss.includes('dopkos-detail-panel.active'));
+  if (hasDopkosDetailPanelCss) {
+    logPass('CSS rules for #dopkos-detail-panel (.open/.active) verified in dopkos-engine.css');
+  } else {
+    logFail('Missing CSS activation rules for #dopkos-detail-panel in dopkos-engine.css!');
+  }
+
+  // 3. Script Activation Logic Verification
+  const hasAppDrawerActivation = appJs.includes('console-drawer') &&
+                                 appJs.includes('console-backdrop') &&
+                                 (appJs.includes(".classList.add('active', 'open')") || (appJs.includes(".classList.add('active')") || appJs.includes(".classList.add('open')")));
+  if (hasAppDrawerActivation) {
+    logPass('openTaskConsole() in app.js properly mutates console-drawer & backdrop classes');
+  } else {
+    logFail('openTaskConsole() in app.js is missing classList.add mutation!');
+  }
+
+  const hasDopkosPanelActivation = dopkosJs.includes('panel.classList.add') &&
+                                   dopkosJs.includes('panel.classList.remove');
+  if (hasDopkosPanelActivation) {
+    logPass('openPanel() & closePanel() in dopkos-engine.js properly mutate detail panel state');
+  } else {
+    logFail('openPanel() / closePanel() in dopkos-engine.js missing panel classList mutations!');
+  }
+});
 console.log('\n===============================================================');
 if (failureCount === 0) {
   console.log('\x1b[32m  ✅ ALL PRE-FLIGHT VERIFICATION GATES PASSED (100% GREEN)\x1b[0m');

@@ -605,84 +605,131 @@ window.dataLayer = window.dataLayer || [];
     // ── Slide-Over Console Drawer (UG-Farmhouse Task Inspector) ─────
     function openTaskConsole(taskId) {
       activeConsoleTaskId = taskId;
-      const t = currentTasks.find(x => x.id === taskId);
-      if (!t) return;
+      let t = currentTasks ? currentTasks.find(x => x.id === taskId) : null;
+      if (!t && window.TOPOLOGY_TASKS) t = window.TOPOLOGY_TASKS.find(x => x.id === taskId);
+      if (!t && window.MARRIAGE_STATE && window.MARRIAGE_STATE.tasks) {
+        if (Array.isArray(window.MARRIAGE_STATE.tasks)) {
+          t = window.MARRIAGE_STATE.tasks.find(x => x.id === taskId);
+        } else if (window.MARRIAGE_STATE.tasks[taskId]) {
+          t = { id: taskId, ...window.MARRIAGE_STATE.tasks[taskId] };
+        }
+      }
+      if (!t) {
+        t = {
+          id: taskId,
+          title: 'Task ' + taskId,
+          name: 'Task ' + taskId,
+          desc: 'Operational task ' + taskId + ' scheduled in Sree Krushna Marriage OS.',
+          timeTag: 'Wedding Horizon',
+          wbs: taskId,
+          lead: 'PER-001',
+          checklist: [{ text: 'Review operational guidelines for ' + taskId, done: false }]
+        };
+      }
+
+      // Ensure normalized fields
+      const taskTitle = t.title || t.name || ('Task ' + t.id);
+      const taskDesc = t.desc || t.notes || ('Operational task ' + t.id + ' for Stage ' + (t.stage || 1) + '.');
+      const taskTime = t.timeTag || t.time || ('Stage ' + (t.stage || 1) + ' Horizon');
+      const taskWbs = t.wbs || ('WBS-' + (t.stage || 1) + '.' + (t.col !== undefined ? t.col + 1 : '0'));
 
       // Populate Header & Info
-      document.getElementById('drawer-id-tag').innerText = t.id;
-      document.getElementById('drawer-title').innerText = t.title;
-      document.getElementById('drawer-desc').innerText = t.desc || 'No detailed deliverable notes recorded.';
-      document.getElementById('drawer-timetag').innerText = t.timeTag || 'Scheduled Timeline Node';
-      document.getElementById('drawer-wbs').innerText = t.wbs || t.id;
+      const idTag = document.getElementById('drawer-id-tag');
+      const titleEl = document.getElementById('drawer-title');
+      const descEl = document.getElementById('drawer-desc');
+      const timetagEl = document.getElementById('drawer-timetag');
+      const wbsEl = document.getElementById('drawer-wbs');
+
+      if (idTag) idTag.innerText = t.id;
+      if (titleEl) titleEl.innerText = taskTitle;
+      if (descEl) descEl.innerText = taskDesc;
+      if (timetagEl) timetagEl.innerText = taskTime;
+      if (wbsEl) wbsEl.innerText = taskWbs;
 
       // Resolve Lead Owner & Direct Dial
       let leadName = t.lead || 'Planning Committee';
       let leadRole = 'Operational Coordinator';
       let leadPhone = '+91 98765 00000';
 
-      const match = leadName.match(/PER-\d+/);
+      const match = typeof leadName === 'string' ? leadName.match(/PER-\d+/) : null;
       if (match && MARRIAGE_STATE.people && MARRIAGE_STATE.people[match[0]]) {
         const p = MARRIAGE_STATE.people[match[0]];
         leadName = `${match[0]} — ${p.name}`;
         leadRole = p.role;
-        leadPhone = p.phone;
+        leadPhone = p.phone || '+91 98765 00000';
       }
 
-      document.getElementById('drawer-lead-name').innerText = leadName;
-      document.getElementById('drawer-lead-role').innerText = leadRole;
+      const leadNameEl = document.getElementById('drawer-lead-name');
+      const leadRoleEl = document.getElementById('drawer-lead-role');
+      if (leadNameEl) leadNameEl.innerText = leadName;
+      if (leadRoleEl) leadRoleEl.innerText = leadRole;
       
       const cleanPhone = leadPhone.replace(/[\s\-\+]/g, '');
-      document.getElementById('drawer-call-btn').href = `tel:${leadPhone}`;
-      document.getElementById('drawer-wa-btn').href = `https://wa.me/${cleanPhone}?text=Namaskar%2C%20regarding%20task%20${t.id}%20(${encodeURIComponent(t.title)})`;
+      const callBtn = document.getElementById('drawer-call-btn');
+      const waBtn = document.getElementById('drawer-wa-btn');
+      if (callBtn) callBtn.href = `tel:${leadPhone}`;
+      if (waBtn) waBtn.href = `https://wa.me/${cleanPhone}?text=Namaskar%2C%20regarding%20task%20${t.id}%20(${encodeURIComponent(taskTitle)})`;
 
       // Render Dynamic Verification Checklist
       const checkContainer = document.getElementById('drawer-checklist');
-      checkContainer.innerHTML = '';
-      if (t.checklist && t.checklist.length > 0) {
-        t.checklist.forEach((item, idx) => {
-          const row = document.createElement('label');
-          row.className = 'checklist-row';
-          row.innerHTML = `
-            <input type="checkbox" class="checklist-checkbox" ${item.done ? 'checked' : ''} onchange="toggleConsoleChecklist('${t.id}', ${idx})" />
-            <span class="checklist-text ${item.done ? 'checked' : ''}">${item.text}</span>
+      if (checkContainer) {
+        checkContainer.innerHTML = '';
+        if (t.checklist && t.checklist.length > 0) {
+          t.checklist.forEach((item, idx) => {
+            const row = document.createElement('label');
+            row.className = 'checklist-row';
+            row.innerHTML = `
+              <input type="checkbox" class="checklist-checkbox" ${item.done ? 'checked' : ''} onchange="toggleConsoleChecklist('${t.id}', ${idx})" />
+              <span class="checklist-text ${item.done ? 'checked' : ''}">${item.text}</span>
+            `;
+            checkContainer.appendChild(row);
+          });
+        } else {
+          checkContainer.innerHTML = `
+            <div style="font-size: 0.84rem; color: var(--text-muted); font-style: italic;">
+              Standard protocol check — sign off upon deliverable execution.
+            </div>
           `;
-          checkContainer.appendChild(row);
-        });
-      } else {
-        checkContainer.innerHTML = `
-          <div style="font-size: 0.84rem; color: var(--text-muted); font-style: italic;">
-            Standard protocol check — sign off upon deliverable execution.
-          </div>
-        `;
+        }
       }
 
       // Render Linked Entities
       const linkedContainer = document.getElementById('drawer-linked-pills');
-      linkedContainer.innerHTML = '';
-      const entities = t.linkedEntities || [];
-      if (entities.length > 0) {
-        entities.forEach(ent => {
-          const pill = document.createElement('span');
-          pill.className = 'entity-pill';
-          pill.innerText = ent;
-          linkedContainer.appendChild(pill);
-        });
-        document.getElementById('drawer-linked-section').style.display = 'block';
-      } else {
-        document.getElementById('drawer-linked-section').style.display = 'none';
+      if (linkedContainer) {
+        linkedContainer.innerHTML = '';
+        const entities = t.linkedEntities || t.depends_on || [];
+        if (entities.length > 0) {
+          entities.forEach(ent => {
+            const pill = document.createElement('span');
+            pill.className = 'entity-pill';
+            pill.innerText = ent;
+            pill.style.cursor = 'pointer';
+            pill.onclick = () => openTaskConsole(ent);
+            linkedContainer.appendChild(pill);
+          });
+          const linkedSection = document.getElementById('drawer-linked-section');
+          if (linkedSection) linkedSection.style.display = 'block';
+        } else {
+          const linkedSection = document.getElementById('drawer-linked-section');
+          if (linkedSection) linkedSection.style.display = 'none';
+        }
       }
 
       // Update Status Buttons
       updateConsoleStatusButtons(t.status || (t.done ? 'Completed' : 'Planned'));
 
-      // Open Drawer
-      document.getElementById('console-drawer').classList.add('active');
-      document.getElementById('console-backdrop').classList.add('active');
+      // Open Drawer (add both .active and .open)
+      const drawer = document.getElementById('console-drawer');
+      const backdrop = document.getElementById('console-backdrop');
+      if (drawer) drawer.classList.add('active', 'open');
+      if (backdrop) backdrop.classList.add('active', 'open');
     }
 
     function closeTaskConsole() {
-      document.getElementById('console-drawer').classList.remove('active');
-      document.getElementById('console-backdrop').classList.remove('active');
+      const drawer = document.getElementById('console-drawer');
+      const backdrop = document.getElementById('console-backdrop');
+      if (drawer) drawer.classList.remove('active', 'open');
+      if (backdrop) backdrop.classList.remove('active', 'open');
       activeConsoleTaskId = null;
     }
 

@@ -68,15 +68,15 @@
     renderConsoleChecklist(task);
     renderConsoleLinkedPills(task);
 
-    drawer.classList.add('open');
-    if (backdrop) backdrop.classList.add('open');
+    drawer.classList.add('open', 'active');
+    if (backdrop) backdrop.classList.add('open', 'active');
   }
 
   function closeTaskConsole() {
     const drawer = document.getElementById('console-drawer');
     const backdrop = document.getElementById('console-backdrop');
-    if (drawer) drawer.classList.remove('open');
-    if (backdrop) backdrop.classList.remove('open');
+    if (drawer) drawer.classList.remove('open', 'active');
+    if (backdrop) backdrop.classList.remove('open', 'active');
     currentConsoleTaskId = null;
   }
 

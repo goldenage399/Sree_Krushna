@@ -1404,7 +1404,7 @@ const dopkosEngineCode = `/**
       }
     }
 
-    if (panel) panel.classList.add('open');
+    if (panel) panel.classList.add('open', 'active');
   }
 
   function buildPanelSection(title, items) {
@@ -1443,7 +1443,7 @@ const dopkosEngineCode = `/**
 
   function closePanel() {
     const panel = getDopkosPanelEl();
-    if (panel) panel.classList.remove('open');
+    if (panel) panel.classList.remove('open', 'active');
     activePanelTaskId = null;
   }
 
