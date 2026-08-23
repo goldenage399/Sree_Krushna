@@ -70,3 +70,17 @@ status: "Propagated | Revalidated | Closed"
 - [x] Broadcast WhatsApp update to Tier 4 guest list with updated Google Maps pin
 - [x] Re-confirm generator backup with new venue management
 ```
+
+---
+
+## 4. Digital Change Requests (`CR-###`) & Multi-Device Real-Time Sync
+
+In addition to formal governance records (`CHG-###`), operational and design suggestions from remote family members (e.g. bride & groom in different locations) are captured digitally via the **Universal Proposal & Intent Studio** (`public/js/app.js` + `public/js/modules/firestore-client.js`):
+
+### A. Digital Change Request Lifecycle
+1. **Submission (`fsDispatchChangeRequest`)**: A proposal is submitted via the web app. An atomic sequence counter (`counters/change_requests`) mints an incremental `CR-###` identifier inside a Firestore transaction, preventing multi-device ID collisions.
+2. **Real-Time Distribution (`fsListenChangeRequests`)**: Submissions are synchronized live across all active devices within seconds using Firestore listeners backed by IndexedDB offline cache (`persistentLocalCache`).
+3. **Consensus & 1-Click Graduation (`fsUpdateChangeRequestStatus`)**:
+   - **Approved (`Approved_Merged`)**: Status update persists to Firestore. The request graduates into an active operational Task (`TSK-###`).
+   - **Withdrawn (`Withdrawn`)**: Non-destructive archival with recorded reason.
+4. **Audit Immutability**: Firestore Security Rules strictly prohibit document deletion (`allow delete: if false`), ensuring an immutable digital paper trail.

@@ -70,3 +70,14 @@ Every data field (e.g., vendor price, arrival timestamp, guest phone number, rit
 | **Transaction Amount & Mode** | `06_FINANCE_COMMERCIALS/ledger/PAY-xxx.md` | `budget_master.md`, Tax/CA file | Bank counter slips alone |
 | **Day-of Petty Cash Custody** | `06_FINANCE_COMMERCIALS/cash_logistics.md` | Cash envelope holder, Decision makers | Day coordinators |
 | **Received Shagun & Gifts** | `06_FINANCE_COMMERCIALS/gifts_and_shagun/` | Thank you note pipeline | Random gift desk diaries |
+
+---
+
+### F. Digital Change Request & Task Status Entities (`CR-###` / `task_status`)
+
+| Attribute | Canonical SSOT Location | Permitted Consumers / References | Prohibited Duplicate Write Locations |
+| :--- | :--- | :--- | :--- |
+| **Digital Change Request (`CR-###`)** | Firestore `change_requests` collection (`sree-krushna-forever`) | Web App Shell (`#tab-intake`, `#intakeLedgerModal`), CLI Triage Script | Per-device `localStorage` isolated keys, un-synced spreadsheets |
+| **CR Sequence Counter** | Firestore `counters/change_requests` doc | `firestore-client.js` atomic transactions | Client-calculated local array lengths (`CR-00x` collision risk) |
+| **Mutable Task Status Overlay** | Firestore `task_status/{taskId}` collection | Command Center, Task CRUD Table, DO-PKOS DAG Studio, Swimlanes | Direct overwrites of static `marriage-state.js` git repo code |
+| **Static Task Hierarchy & Dependencies** | `00_GOVERNANCE/tasks/` & `public/js/data/marriage-state.js` | DO-PKOS Studio DAG layout, Gantt timelines, WBS blueprints | Ephemeral browser storage |

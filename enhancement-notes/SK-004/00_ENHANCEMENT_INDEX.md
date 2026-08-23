@@ -1,10 +1,21 @@
 # SK-004: Firestore Cross-Device Sync for Change Requests & Task Status
 
 - **Cluster**: `[INFRA]`
-- **Status**: `PLANNING`
+- **Status**: `IMPLEMENTED` (pending `firebase deploy --only firestore:rules` + Firestore API enable — see §6)
 - **Owner**: goldenage399
 - **Depends On**: None (Foundational)
 - **Target Release**: v1.0.0
+
+> **Correction after implementation**: this doc originally targeted `intake-engine.js`'s
+> `dispatchChangeRequest`/schema (`sourceType`, `PROPOSED`/`MERGED` statuses). Reading
+> `app.js` closely during implementation found that file is **dead code** — `app.js`
+> defines its own complete, later-loaded `dispatchChangeRequest`/`approveChangeRequest`/
+> `rejectChangeRequest`/`renderIntakeLedger`, each re-exported onto `window.*`, which
+> silently shadows `intake-engine.js`'s exports (script load order: intake-engine.js
+> then app.js — last writer to `window.x` wins). The actual live schema uses
+> `intentType`/`targetEvent`/`Pending_Review`/`Approved_Merged`/`Withdrawn`, not what
+> was drafted below. All code in §3/§4/§5 has been corrected to match; `intake-engine.js`
+> itself was left untouched (still dead/shadowed — flagged, not fixed; out of scope).
 
 ## 🎯 Purpose
 
@@ -32,225 +43,55 @@ Firestore API has never been enabled on `sree-krushna-forever` (confirmed via `f
 
 | Collection | Doc ID | Fields |
 |---|---|---|
-| `change_requests` | `"CR-004"` style (unchanged format) | `title` str ≤200, `targetDomain` enum, `sourceType` str ≤60, `submitter` str ≤80, `submitterEmail` str (= auth email), `submittedAt` timestamp, `status` enum(`PROPOSED`\|`APPROVED`\|`REJECTED`\|`MERGED`), `payload.rawNotes` str ≤4000, `mergedBy`/`withdrawnBy` str optional |
+| `change_requests` | `"CR-004"` style (unchanged format) | `title` str ≤200, `targetDomain` enum(VISION/VENDORS/RITUALS/CUSTODY/TASKS/OPERATIONS), `intentType` enum(PROPOSE_TASK/ADJUST_RITUAL/NOMINATE_VENDOR/PROPOSE_ASSET/DROP_INSPIRATION), `submitter` str ≤80 (display name), `submitterEmail` str (= auth email), `targetEvent` str ≤60, `submittedAt` ISO string, `status` enum(`Pending_Review`\|`Approved_Merged`\|`Withdrawn`), `payload` map (keys ⊆ rawNotes/category/mediaUrl/platform/suggestedOwner), `mergedAt`/`mergedBy`/`withdrawnAt`/`withdrawnBy` optional |
 | `task_status` | task's canonical id (`"TSK-001"`, `"RIT-005"`, …) — matches `marriage-state.js` | `status` enum(`Planned`\|`In-Progress`\|`Completed`), `done` bool, `checklist` list\<bool\> ≤30, `updatedBy` str (= auth email), `updatedAt` timestamp |
 | `counters` | `"change_requests"` (singleton) | `seq` number — minted via transaction, kills the cross-device id-collision bug |
 
-## 3. Security Rules — `firestore.rules` (replaces current file)
+Field names/enums above match the **live** dispatcher in `app.js` (`intentType`/`targetEvent`/`Pending_Review` etc.), not `intake-engine.js`'s dead-code shape.
+
+## 3. Security Rules
+
+Implemented in full at [firestore.rules](../../firestore.rules) (repo root) — not duplicated here to avoid drift. Summary: `isAllowedUser()` gates every collection to the 3 emails in `allowed_users.js`; `change_requests` create/update are schema-validated via `isValidChangeRequest()` with immutable-field protection on update, delete is hard-denied (audit trail); `task_status` accepts EITHER of two shapes (`isValidTaskStatusOverlay` — status/done/checklist/unlocks for a task with a canonical or already-adopted source, OR `isValidAdhocTask` — a full task record including title/event/owner/priority/track/dependency_type/depends_on/unlocks for a task with no canonical entry); `counters/{counterId}` (both `change_requests` and `tasks`) only accepts exactly `previous seq + 1`; a default-deny catch-all closes everything else. Deployed twice — once for the base schema, again after the ad-hoc-task extension — both compiled and released clean.
 
 > Prototype rules, reviewed against the standard attack checklist (ownership hijack, schema pollution, resource exhaustion, immutable-field tampering, counter replay) — no open read/write paths remain. Still, review before treating this as final.
 
-```
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
+## 4. Client Bridge
 
-    // ===============================================================
-    // Assumed Data Model — SK-004 Firestore Cross-Device Sync
-    // ===============================================================
-    //
-    // change_requests/{requestId}   e.g. "CR-004"
-    //   title            string  required immutable  <= 200 chars
-    //   targetDomain     string  required immutable  in [VISION,VENDORS,RITUALS,CUSTODY,GOVERNANCE]
-    //   sourceType       string  required            <= 60 chars
-    //   submitter        string  required            <= 80 chars (display name)
-    //   submitterEmail   string  required immutable  must equal request.auth.token.email
-    //   submittedAt      timestamp required immutable
-    //   status           string  required            in [PROPOSED,APPROVED,REJECTED,MERGED]
-    //   payload          map     required immutable  only key 'rawNotes' (string <= 4000 chars)
-    //   mergedBy         string  optional            <= 80 chars
-    //   withdrawnBy      string  optional            <= 80 chars
-    //
-    // task_status/{taskId}   e.g. "TSK-001" (matches marriage-state.js task ids)
-    //   status       string    required  in [Planned, In-Progress, Completed]
-    //   done         bool      required
-    //   checklist    list      optional  <= 30 items, each item a bool
-    //   updatedBy    string    required  must equal request.auth.token.email
-    //   updatedAt    timestamp required  must equal request.time (server-set)
-    //
-    // counters/change_requests   singleton doc
-    //   seq   number  required, each write must be exactly (previous seq + 1)
-    // ===============================================================
+Implemented at [public/js/modules/firestore-client.js](../../public/js/modules/firestore-client.js). `type="module"`, loaded in `index.html` right after `auth.js` (same `getApps()`-guarded init pattern auth.js already uses). Exposes `window.fsDispatchChangeRequest`, `fsUpdateChangeRequestStatus`, `fsListenChangeRequests`, `fsSetTaskStatus`, `fsCreateAdhocTask`, `fsListenTaskStatus` — plain classic scripts (`app.js`, `intake-engine.js`) call these directly, no module rewrite needed. Uses Firestore's built-in `persistentLocalCache` (IndexedDB) for offline support instead of hand-rolled localStorage sync. `change_requests.submittedAt` is written as a plain ISO string (not `serverTimestamp()`) because existing render code calls `.split('T')` on it — `task_status.updatedAt` uses real `serverTimestamp()`/`request.time` since it's a new field with no legacy dependency. Id minting (`CR-###`/`TSK-###`) is shared through one `mintId(counterName, prefix)` helper, transaction-based against `counters/{name}` — kills the classic two-devices-mint-the-same-id bug for both change requests and ad-hoc tasks.
 
-    function isAuthenticated() {
-      return request.auth != null;
-    }
+**Load-order note**: `type="module"` scripts execute after all classic scripts but before `DOMContentLoaded`. `app.js`'s top-level listener registration (`fsListenChangeRequests`/`fsListenTaskStatus`) is wrapped in a `document.addEventListener('DOMContentLoaded', …)` for this reason — calling `window.fsListenTaskStatus` directly at top-level would silently no-op on first load (function doesn't exist yet at that point in script execution).
 
-    function isAllowedUser() {
-      return isAuthenticated() && request.auth.token.email != null &&
-        request.auth.token.email.lower() in [
-          'goldenage399@gmail.com',
-          'sreesubha18@gmail.com',
-          'krushna.s.panda@gmail.com'
-        ];
-    }
+## 5. What Actually Changed in `app.js`
 
-    function isValidChangeRequest(d) {
-      return d.keys().hasAll(['title','targetDomain','sourceType','submitter','submitterEmail','submittedAt','status','payload']) &&
-        d.keys().hasOnly(['title','targetDomain','sourceType','submitter','submitterEmail','submittedAt','status','payload','mergedBy','withdrawnBy']) &&
-        d.title is string && d.title.size() > 0 && d.title.size() <= 200 &&
-        d.targetDomain in ['VISION','VENDORS','RITUALS','CUSTODY','GOVERNANCE'] &&
-        d.sourceType is string && d.sourceType.size() <= 60 &&
-        d.submitter is string && d.submitter.size() <= 80 &&
-        d.submitterEmail == request.auth.token.email &&
-        d.submittedAt is timestamp &&
-        d.status in ['PROPOSED','APPROVED','REJECTED','MERGED'] &&
-        d.payload is map && d.payload.keys().hasOnly(['rawNotes']) &&
-        (!('rawNotes' in d.payload) || (d.payload.rawNotes is string && d.payload.rawNotes.size() <= 4000)) &&
-        (!('mergedBy' in d) || (d.mergedBy is string && d.mergedBy.size() <= 80)) &&
-        (!('withdrawnBy' in d) || (d.withdrawnBy is string && d.withdrawnBy.size() <= 80));
-    }
+`intake-engine.js` was **left untouched** — confirmed dead/shadowed code (see correction note above), not worth touching for this enhancement.
 
-    function changeRequestImmutableFieldsUnchanged() {
-      return request.resource.data.title == resource.data.title &&
-        request.resource.data.targetDomain == resource.data.targetDomain &&
-        request.resource.data.submitterEmail == resource.data.submitterEmail &&
-        request.resource.data.submittedAt == resource.data.submittedAt &&
-        request.resource.data.payload == resource.data.payload;
-    }
+All real state lived in `app.js`'s own `SPEC-ARCH-INTENT-DISPATCH-001` block, which had **two live bugs** independent of Firestore, both fixed as a side effect of this rewrite (root-caused, not patched around):
+- `approveChangeRequest`/`rejectChangeRequest` referenced `STORAGE_KEYS.CHANGE_REQUESTS` — `STORAGE_KEYS` is never declared in `app.js` (it's `intake-engine.js`-local). Every Approve/Reject click threw a `ReferenceError`, silently swallowed by the surrounding `catch` — status changes never actually persisted.
+- `approveChangeRequest`'s TASKS-domain branch called `renderTaskTable()`, which doesn't exist (the real function is `renderTasks()`) — an uncaught throw that aborted the rest of the approval flow for that domain.
 
-    match /change_requests/{requestId} {
-      allow read: if isAllowedUser();
-      allow create: if isAllowedUser() && isValidChangeRequest(request.resource.data);
-      allow update: if isAllowedUser() && isValidChangeRequest(request.resource.data) && changeRequestImmutableFieldsUnchanged();
-      allow delete: if false; // change requests are an audit trail — never deleted
-    }
+Changes:
+- `changeRequestsList` seed/hydrate + `saveChangeRequests()` → replaced with `window.fsListenChangeRequests(...)` wired on `DOMContentLoaded`; `renderIntakeLedger()` re-renders on every snapshot.
+- `dispatchChangeRequest()` → `async`, delegates id-minting + persistence to `window.fsDispatchChangeRequest(...)`; the VISION-domain `ideasList` mirror side effect is preserved unchanged (stays localStorage, out of scope).
+- `approveChangeRequest()` / `rejectChangeRequest()` → persistence swapped for `window.fsUpdateChangeRequestStatus(cr.requestId, {...})`; both bugs above fixed inline.
+- `withdrawIdea()`'s change-request status sync → same `fsUpdateChangeRequestStatus` swap.
+- Task hydrate block → `currentTasks` still seeds from canonical `MARRIAGE_STATE.tasks`; the `localStorage`-based overlay merge is replaced with `window.fsListenTaskStatus(...)` wired on `DOMContentLoaded`.
+- `saveMasterTasks()` → now takes an optional task argument and does a per-task `fsSetTaskStatus` write (was a whole-array `localStorage.setItem`). Its call inside `renderTasks()` (a read path, fired on every render — including the one `fsListenTaskStatus`'s own callback triggers) was **removed**, not converted — converting it would have caused an infinite write→snapshot→render→write loop. The 3 genuine mutation points (`toggleConsoleChecklist`, `setTaskStatus`, `toggleMasterTask`) already call it themselves with the changed task.
 
-    function isValidTaskStatus(d) {
-      return d.keys().hasAll(['status','done','updatedBy','updatedAt']) &&
-        d.keys().hasOnly(['status','done','checklist','updatedBy','updatedAt']) &&
-        d.status in ['Planned','In-Progress','Completed'] &&
-        d.done is bool &&
-        (!('checklist' in d) || (d.checklist is list && d.checklist.size() <= 30)) &&
-        d.updatedBy == request.auth.token.email &&
-        d.updatedAt == request.time;
-    }
+**Gap closed (was "known gap, not built" above)**: a concurrent session had already added a predecessor picker to the intake modal (`#idea-predecessor`, `submitIdea()`'s `payload.dependsOn`) and wired real `depends_on`/reciprocal-`unlocks` values into the new task object — but only in-memory, no persistence path for that structural data. Closed by:
+- `fsCreateAdhocTask(task)` (new, firestore-client.js) — mints a real id via `counters/tasks` (same atomic-transaction fix as `CR-###`) and writes the **full** task record (title/event/owner/priority/track/dependency_type/depends_on/unlocks/checklist) in one `setDoc`, since this task has no git-tracked source to read metadata from later.
+- `approveChangeRequest()` → `async`, calls `fsCreateAdhocTask` instead of the old local-only `generateNextTaskId()` (removed, now dead — its only caller). The reciprocal `predTask.unlocks.push(...)` loop now also persists via `fsSetTaskStatus(predId, {status, done, unlocks})` — a merge write that stays valid whether the predecessor is canonical or itself an ad-hoc task.
+- `fsListenTaskStatus`'s callback (app.js) gained a second pass: any cloud doc whose id isn't in `currentTasks` yet, and that carries a `title` field (the ad-hoc-shape discriminator), gets adopted as a full new task — this is what makes the ad-hoc task actually appear on other devices, not just its edges.
+- `saveMasterTasks()` now sends full `{text,done}` checklist objects (was bools) — an ad-hoc task's checklist text has nowhere else to live, so bools-only would have destroyed it on the next status toggle.
+- `firestore.rules`' `task_status` now validates **either** `isValidTaskStatusOverlay` (status/done/checklist/unlocks — existing shape, `unlocks` added as optional) **or** `isValidAdhocTask` (the full record above). `counters/change_requests` generalized to `counters/{counterId}` to cover the new `counters/tasks` singleton too.
 
-    match /task_status/{taskId} {
-      allow read: if isAllowedUser();
-      allow write: if isAllowedUser() && isValidTaskStatus(request.resource.data);
-    }
-
-    match /counters/change_requests {
-      allow read: if isAllowedUser();
-      allow create: if isAllowedUser() &&
-        request.resource.data.keys().hasOnly(['seq']) &&
-        request.resource.data.seq == 1;
-      allow update: if isAllowedUser() &&
-        request.resource.data.keys().hasOnly(['seq']) &&
-        request.resource.data.seq == resource.data.seq + 1;
-    }
-
-    // Marriage Proposals Collection (pre-existing, unchanged)
-    match /proposals/{proposalId} {
-      allow create, read: if true;
-      allow update, delete: if isAuthenticated();
-    }
-
-    // Default deny everything else
-    match /{document=**} {
-      allow read, write: if false;
-    }
-  }
-}
-```
-
-## 4. Client Bridge — new file `public/js/modules/firestore-client.js`
-
-`intake-engine.js` and `app.js` are plain classic `<script>`s (not ES modules) — same split `auth.js` already lives with. This new module follows the exact pattern `auth.js` uses (`getApps()` guard, `window.currentUser` bridge): it owns the Firestore SDK import and exposes a handful of `window.fs*` functions the existing scripts call directly, no rewrite of their module system needed.
-
-Load order in `index.html`: after `auth.js`, before `intake-engine.js`/`app.js`.
-
-```javascript
-/**
- * firestore-client.js — SK-004 Firestore bridge for Sree Krushna Marriage OS.
- * type="module". Loaded after auth.js, before intake-engine.js/app.js.
- */
-import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-import {
-  initializeFirestore, persistentLocalCache,
-  collection, doc, setDoc, updateDoc, runTransaction, onSnapshot, serverTimestamp,
-} from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
-
-const app = getApps().length ? getApps()[0] : initializeApp(window.firebaseConfig);
-// persistentLocalCache = Firestore's built-in IndexedDB offline cache — replaces
-// the hand-rolled localStorage sync entirely, no custom offline code needed.
-const db = initializeFirestore(app, { localCache: persistentLocalCache() });
-
-async function fsDispatchChangeRequest(record) {
-  const counterRef = doc(db, "counters", "change_requests");
-  const crId = await runTransaction(db, async (tx) => {
-    const snap = await tx.get(counterRef);
-    const next = snap.exists() ? snap.data().seq + 1 : 1;
-    tx.set(counterRef, { seq: next });
-    return "CR-" + String(next).padStart(3, "0");
-  });
-  const fullRecord = {
-    title: record.title || "Untitled Change Request",
-    targetDomain: record.targetDomain || "VISION",
-    sourceType: record.sourceType || "UNIVERSAL_INTAKE",
-    submitter: record.submitter || window.getAuthenticatedSubmitterName(),
-    submitterEmail: window.currentUser.email,
-    submittedAt: serverTimestamp(),
-    status: "PROPOSED",
-    payload: record.payload || {},
-  };
-  await setDoc(doc(db, "change_requests", crId), fullRecord);
-  return { requestId: crId, ...fullRecord };
-}
-
-function fsUpdateChangeRequestStatus(requestId, patch) {
-  return updateDoc(doc(db, "change_requests", requestId), patch);
-}
-
-function fsListenChangeRequests(callback) {
-  return onSnapshot(collection(db, "change_requests"), (snap) => {
-    const list = snap.docs
-      .map((d) => ({ requestId: d.id, ...d.data() }))
-      .sort((a, b) => (b.submittedAt?.toMillis?.() || 0) - (a.submittedAt?.toMillis?.() || 0));
-    callback(list);
-  });
-}
-
-function fsSetTaskStatus(taskId, patch) {
-  return setDoc(doc(db, "task_status", taskId), {
-    ...patch,
-    updatedBy: window.currentUser.email,
-    updatedAt: serverTimestamp(),
-  }, { merge: true });
-}
-
-function fsListenTaskStatus(callback) {
-  return onSnapshot(collection(db, "task_status"), (snap) => {
-    const map = {};
-    snap.docs.forEach((d) => { map[d.id] = d.data(); });
-    callback(map);
-  });
-}
-
-Object.assign(window, {
-  fsDispatchChangeRequest, fsUpdateChangeRequestStatus, fsListenChangeRequests,
-  fsSetTaskStatus, fsListenTaskStatus,
-});
-```
-
-## 5. Integration Diffs (apply after this manifest is reviewed — not yet applied)
-
-**`intake-engine.js`**
-- Delete the local seed array + `localStorage.getItem(STORAGE_KEYS.CHANGE_REQUESTS)` hydrate block (current lines 12–56). Replace with `let changeRequestsList = [];` and, once the DOM/auth is ready, `window.fsListenChangeRequests(list => { changeRequestsList = list; renderIntakeLedger(); });`
-- `dispatchChangeRequest()` becomes `async`, body becomes `const record = await window.fsDispatchChangeRequest(request); showChangeRequestReceipt(record); return record;` — no more manual `unshift`/`localStorage.setItem`; the live listener above re-renders the ledger for every device automatically.
-
-**`app.js`**
-- Merge/withdraw handlers (~line 1553, 1603) swap `localStorage.setItem(STORAGE_KEYS.CHANGE_REQUESTS, …)` for `window.fsUpdateChangeRequestStatus(cr.requestId, { status: cr.status, mergedBy: cr.mergedBy })` (or `withdrawnBy`).
-- The `stored = JSON.parse(localStorage.getItem('sree_krushna_master_tasks_v6'))` hydrate block (~lines 199–224) is replaced with a boot-time `window.fsListenTaskStatus(statusMap => { currentTasks.forEach(t => { const cloud = statusMap[t.id]; if (!cloud) return; t.status = cloud.status; t.done = cloud.done; if (cloud.checklist) t.checklist?.forEach((c, i) => c.done = !!cloud.checklist[i]); }); renderTasks(); renderStageStrip(); renderSwimlaneMatrix(); });`
-- `setTaskStatus()`: after mutating `t.status`/`t.done`/`t.checklist` in memory, `saveMasterTasks()`'s `localStorage.setItem('sree_krushna_tasks_v1', …)` call is replaced with `window.fsSetTaskStatus(t.id, { status: t.status, done: t.done, checklist: (t.checklist || []).map(c => !!c.done) })`.
+Redeployed (`firebase deploy --only firestore:rules`) — compiled and released clean both times.
 
 ## 6. Rollout & Verification
 
-1. `firebase deploy --only firestore:rules` — provisions the default Standard database + rules. Safe with zero client changes live (collections stay empty).
-2. Ship `firestore-client.js` + the two integration diffs behind a manual 2-browser smoke test: submit a CR in Browser A (or Sree's phone), confirm it appears in Browser B within ~1s without refresh; toggle a task's status in A, confirm B's task table/swimlane/DAG update live.
-3. `firebase emulators:start --only firestore` + the Emulator UI to sanity-check the rules reject an unauthenticated write and a schema-polluted document before deploying to prod.
-4. Once confirmed stable for a few days, delete the now-dead `localStorage` write paths (`sree_krushna_change_requests_v1`, `sree_krushna_master_tasks_v6`) — keep them only as an emergency read-only fallback for one release if you want a safety net.
+1. ✅ **Done**: Firestore API enabled, default Standard database provisioned, rules deployed — twice (base schema, then the ad-hoc-task extension). Both compiled with zero errors.
+2. **Still open**: manual 2-browser smoke test — submit a CR in Browser A, confirm it appears in Browser B within ~1s without refresh; toggle a task's status in A, confirm B updates live; approve a TASKS-domain CR with a predecessor picked, confirm the new task **and** the predecessor's updated Unlocks badge both show up on B.
+3. `firebase emulators:start --only firestore` + the Emulator UI to sanity-check the rules reject an unauthenticated write and a schema-polluted document — not yet run.
+4. The old `sree_krushna_change_requests_v1` / `sree_krushna_master_tasks_v6` localStorage keys are no longer written to by this flow — nothing further to clean up there.
 
 ## 7. Deploy Commands
 

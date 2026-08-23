@@ -578,6 +578,13 @@ workflows:
     invoke: read .agent/workflows/ssot-reconciliation.md
     when: "Investigating and resolving doc/code conflicts when SSOT is unclear"
 
+  - id: task-graph-reconciliation
+    repo: [sree-krushna]
+    triggers: ["task dependency", "rewire the dag", "add a dependency", "depends_on", "task graph", "why is this task locked", "/task-graph-reconciliation"]
+    cost: low
+    invoke: read .agent/workflows/task-graph-reconciliation.md
+    when: "Adding, removing, or rewiring task dependency edges (depends_on/unlocks) in PROJECT_STATE.tasks or wiring a new Change-Request-created task into the sequence"
+
   - id: ingest-recurring-checklist
     repo: [task-dashboard]
     triggers: ["ingest checklist", "operations manual", "ingest SOP", "new recurring checklist", "checklist ingestion", "/ingest-recurring-checklist"]

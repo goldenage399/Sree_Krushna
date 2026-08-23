@@ -116,4 +116,20 @@ The web control plane (`public/`) follows strict separation between shell orches
 2. **5-Zone Precedence DAG Studio (`public/js/modules/dopkos-engine.js`):** Standalone canonical engine for `#tab-dopkos` (Executive HUD, Stage Strip, Infinite Multi-Track Swimlane, Bézier Precedence DAG, Slide-over Inspector, Command Console Sheet) and `#tab-planning` (Planning Suite 2D Matrix).
 3. **CSS Scoping Isolation (`public/css/dopkos-engine.css`):** All studio styling is 100% namespace-scoped under `#tab-dopkos #dopkos-5zone-frame`. Global element resets (`*`, `html`, `body`) are strictly forbidden (`STD-CSS-SCOPE-001`).
 4. **Localhost Service Worker Bypass (`public/sw.js`):** Development on `localhost` / `127.0.0.1` automatically bypasses cache to guarantee zero stale cache during development cycles (`STD-PWA-DEV-001`).
+5. **Sub-Engine Shadowing Guard (`STD-MOD-SHADOW-001`):** Sub-engine modules must not duplicate shell controllers. Notice: Universal Intake & Change Request dispatching is canonically unified in `public/js/app.js` and backed by `public/js/modules/firestore-client.js`; legacy `intake-engine.js` is deprecated and shadowed.
 
+---
+
+## 7. Real-Time Cloud Synchronization & Data Layer (SK-004)
+
+To enable remote collaboration between distributed family leads (e.g. bride & groom across different cities/venues), mutable operational data is synchronized in real time via Firebase Firestore with IndexedDB offline caching (`persistentLocalCache`):
+
+| Firestore Collection | Document ID | Purpose & Data Model |
+| :--- | :--- | :--- |
+| `change_requests` | `CR-###` (e.g. `CR-004`) | Digital proposals & change requests (`title`, `targetDomain`, `intentType`, `submitterEmail`, `submittedAt`, `status`, `payload`). Gated against immutable field tampering and hard-denied deletions for audit trail preservation. |
+| `task_status` | `TSK-###` (matches `marriage-state.js`) | Mutable overlay for operational tasks (`status`, `done`, `checklist`, `updatedBy`, `updatedAt`). Static WBS hierarchy and dependencies remain git-tracked in `marriage-state.js`. |
+| `counters/change_requests` | `change_requests` (singleton) | Atomic monotonic sequence (`seq`) incremented via Firestore transactions (`runTransaction`), preventing multi-device ID collisions. |
+
+**Client Bridge (`public/js/modules/firestore-client.js`):**
+- Uses `initializeFirestore(app, { localCache: persistentLocalCache() })` to provide automatic IndexedDB offline-readiness.
+- Exposes `window.fsDispatchChangeRequest`, `fsUpdateChangeRequestStatus`, `fsListenChangeRequests`, `fsSetTaskStatus`, and `fsListenTaskStatus` for UI script consumption without requiring ES module refactoring across the entire web app.
