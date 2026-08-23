@@ -513,10 +513,12 @@
                   <th style="width: 44px;">Done</th>
                   <th>Task ID</th>
                   <th>Action Title</th>
-                  <th>Event Scope</th>
+                  <th style="cursor: pointer;" onclick="sortTasksBy('stage')" title="Sort by event scope">Event Scope ⇅</th>
                   <th>Assigned Owner</th>
-                  <th>Priority</th>
+                  <th style="cursor: pointer;" onclick="sortTasksBy('priority')" title="Sort by urgency">Priority ⇅</th>
                   <th>Status</th>
+                  <th>Predecessors</th>
+                  <th>Unlocks</th>
                   <th style="min-width: 120px; text-align: center;">Proposal / Change</th>
                 </tr>
               </thead>
@@ -978,6 +980,14 @@
             <option value="EVT-005">🎉 EVT-005: Grand Wedding Reception</option>
             <option value="EVT-006">🏡 EVT-006: Grihapravesh</option>
             <option value="EVT-007">🍛 EVT-007: Astamangala Feast</option>
+          </select>
+        </div>
+
+        <!-- Predecessor / Blocker Task (only applies when the proposal graduates into an Operational Task) -->
+        <div>
+          <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Predecessor / Blocker Task (optional)</label>
+          <select id="idea-predecessor" style="width: 100%; padding: 10px 12px; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); color: var(--text-main); font-size: 0.88rem;">
+            <option value="">— None (no known blocker) —</option>
           </select>
         </div>
 

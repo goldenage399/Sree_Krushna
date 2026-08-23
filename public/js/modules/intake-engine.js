@@ -1,8 +1,15 @@
 /**
  * Sree Krushna Marriage OS — Universal Intake & Change Request Engine
  * Module: js/modules/intake-engine.js
+ *
+ * ⚠️ DEPRECATED / SHADOWED MODULE (STD-MOD-SHADOW-001 / SK-004):
+ * Active Change Request dispatching, ledger rendering, and real-time Firestore
+ * synchronization are canonically owned by `public/js/app.js` (SPEC-ARCH-INTENT-DISPATCH-001)
+ * and `public/js/modules/firestore-client.js`. This file is shadowed by app.js's
+ * subsequent load on `window.*`. Do not modify this file expecting live changes.
  */
 (function(window) {
+
   'use strict';
 
   const STORAGE_KEYS = {
@@ -265,7 +272,15 @@
         'Verify resource allocation and operational signoff',
         'Physical milestone verification on-site'
       ],
-      linked_tasks: ['GOV-001']
+      // Schema-matched to PROJECT_STATE/dopkos-engine.js's DAG fields (see
+      // .agent/workflows/task-graph-reconciliation.md) so this task can be
+      // wired into the dependency graph later instead of floating as an
+      // orphan. cr.payload doesn't carry structured predecessor/priority
+      // picks yet — the intake modal is freeform notes only — so these start
+      // empty/default rather than guessing at a dependency that isn't there.
+      dependency_type: 'standard',
+      depends_on: (cr.payload && cr.payload.dependsOn) || [],
+      unlocks: []
     };
 
     if (window.currentTasks) window.currentTasks.unshift(newTask);

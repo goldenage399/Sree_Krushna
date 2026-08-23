@@ -196,36 +196,138 @@ window.dataLayer = window.dataLayer || [];
     // UNIFIED TASK & SWIMLANE 3-ZONE ENGINE (UG-FARMHOUSE SPECIFICATION)
     // ══════════════════════════════════════════════════════════════════════════
 
-    // 1. Unified State Hydration (LocalStorage + Canonical Data Feed)
-    const DEFAULT_TASKS = (typeof MARRIAGE_STATE !== 'undefined' && MARRIAGE_STATE.tasks) ? MARRIAGE_STATE.tasks : [];
-    let stored = null;
-    try {
-      stored = JSON.parse(localStorage.getItem('sree_krushna_master_tasks_v6')) || JSON.parse(localStorage.getItem('sree_krushna_master_tasks_v5'));
-    } catch (e) {}
-    
-    // Automatically seed full canonical master tasks (62 tasks) with SSOT metadata synced to user state
-    let currentTasks = JSON.parse(JSON.stringify(DEFAULT_TASKS));
-    if (stored && Array.isArray(stored) && stored.length > 0) {
-      const storedMap = new Map(stored.map(t => [t.id, t]));
-      currentTasks.forEach(canonicalTask => {
-        const cached = storedMap.get(canonicalTask.id);
-        if (cached) {
-          canonicalTask.status = cached.status || canonicalTask.status;
-          canonicalTask.done = (cached.status === 'Completed' || !!cached.done);
-          if (Array.isArray(cached.checklist) && Array.isArray(canonicalTask.checklist)) {
-            cached.checklist.forEach((item, idx) => {
-              if (canonicalTask.checklist[idx]) {
-                canonicalTask.checklist[idx].done = !!item.done;
-              }
-            });
-          }
-        }
-      });
-      // Merge any user-created custom tasks
-      stored.filter(t => !currentTasks.some(ct => ct.id === t.id)).forEach(customTask => {
-        currentTasks.push(customTask);
+    // 1. Unified State Hydration (Firestore SK-004 + Canonical Data Feed)
+    // Static task metadata (title/stage/lead) stays in git-tracked
+    // MARRIAGE_STATE.tasks. Only the mutable status/done/checklist overlay is
+    // synced cross-device via task_status/{taskId} docs (see firestore-client.js).
+    //
+    // MARRIAGE_STATE.tasks has no depends_on/unlocks wiring (never authored).
+    // PROJECT_STATE.tasks (dopkos-engine.js) does — it's the wedding-day DAG
+    // shown on the DO-PKOS canvas. Merge it in here so those real dependency
+    // edges are also visible in the Task Manager table, not just the canvas.
+    // ponytail: priority below is inferred from dependency_type (a gate-blocking
+    // task reads as higher-stakes than a sequential one) since PROJECT_STATE
+    // tasks don't carry their own priority field — a heuristic label, not a
+    // human judgment call. Reconcile with the Purohit/family if it reads wrong.
+    function normalizeDagTask(t) {
+      const STATUS_TO_CRUD = { complete: 'Completed', in_progress: 'In-Progress' };
+      const inferredPriority = t.dependency_type === 'must_precede_sealing' ? 'Critical'
+        : t.dependency_type === 'must_happen_during' ? 'High' : 'Medium';
+      return Object.assign({}, t, {
+        title: t.name || t.title,
+        stage: 'STAGE_' + String(t.stage || 1).padStart(2, '0'),
+        track: t.trade ? t.trade.replace('role-', '') : t.track, // trade "role-purohit" -> track "purohit", matches MARRIAGE_STATE.tracks[].id exactly
+        status: STATUS_TO_CRUD[t.status] || 'Planned',
+        priority: t.priority || inferredPriority,
+        checklist: (t.checklist || []).map(c => typeof c === 'string' ? { text: c, done: t.status === 'complete' } : c)
       });
     }
+    const DAG_TASKS = (window.PROJECT_STATE && window.PROJECT_STATE.tasks) ? window.PROJECT_STATE.tasks.map(normalizeDagTask) : [];
+
+    // ponytail: MARRIAGE_STATE.tasks has never had depends_on/unlocks authored
+    // (unlike PROJECT_STATE.tasks above). The real liturgical/procurement order
+    // is domain knowledge for the family/Purohit to confirm, not something to
+    // invent here (see .agent/workflows/task-graph-reconciliation.md Step 2) —
+    // so this only derives a MECHANICAL placeholder chain from data that
+    // already exists: each task depends on the previous task within its own
+    // stage (existing array order), and each stage's first task depends on the
+    // previous stage's last task. It's a structural scaffold so the graph has
+    // *some* edges to sort/validate/display, not an authored sequence — treat
+    // every edge here as "needs human confirmation," not fact. Upgrade path:
+    // replace individual edges with real ones as the family reviews them.
+    function deriveStageBoundarySequencing(tasks) {
+      const byStage = {};
+      tasks.forEach(t => { (byStage[t.stage] = byStage[t.stage] || []).push(t); });
+      let prevStageLastTask = null;
+      Object.keys(byStage).sort().forEach(stageId => {
+        const stageTasks = byStage[stageId];
+        stageTasks.forEach((t, i) => {
+          const predecessor = i === 0 ? prevStageLastTask : stageTasks[i - 1];
+          t.depends_on = predecessor ? [predecessor.id] : [];
+          t.unlocks = [];
+          t.dependency_type = t.dependency_type || 'standard';
+        });
+        prevStageLastTask = stageTasks[stageTasks.length - 1];
+      });
+      const byId = new Map(tasks.map(t => [t.id, t]));
+      tasks.forEach(t => {
+        (t.depends_on || []).forEach(depId => {
+          const dep = byId.get(depId);
+          if (dep && !dep.unlocks.includes(t.id)) dep.unlocks.push(t.id);
+        });
+      });
+      return tasks;
+    }
+    const PLANNING_TASKS = deriveStageBoundarySequencing(
+      JSON.parse(JSON.stringify((typeof MARRIAGE_STATE !== 'undefined' && MARRIAGE_STATE.tasks) ? MARRIAGE_STATE.tasks : []))
+    );
+
+    // One grounded override on top of the generic placeholder chain: TSK-502..507
+    // are titled "Track A/B/C/D/E/F — ..." in marriage-state.js itself, and
+    // TSK-501 is "GATE-01 Pre-Event Readiness Sign-off" — that's the six-track
+    // convergence into the gate described in 260822_ChangeReqDB.md, read
+    // directly off the tasks' own titles rather than invented. Overrides the
+    // generic single-predecessor chain for this cluster with a real fan-in.
+    (function wireGateConvergence(tasks) {
+      const byId = new Map(tasks.map(t => [t.id, t]));
+      const gate = byId.get('TSK-501');
+      const feeders = ['TSK-502', 'TSK-503', 'TSK-504', 'TSK-505', 'TSK-506', 'TSK-507'].filter(id => byId.has(id));
+      if (!gate || !feeders.length) return;
+      gate.depends_on = feeders.slice();
+      feeders.forEach(fid => {
+        const feeder = byId.get(fid);
+        if (!feeder.unlocks.includes('TSK-501')) feeder.unlocks.push('TSK-501');
+      });
+    })(PLANNING_TASKS);
+
+    const DEFAULT_TASKS = PLANNING_TASKS.concat(DAG_TASKS);
+    let currentTasks = JSON.parse(JSON.stringify(DEFAULT_TASKS));
+    // firestore-client.js is a type="module" script — it executes after this
+    // classic script but before DOMContentLoaded, so window.fsListenTaskStatus
+    // isn't defined yet at this exact line. Defer registration to DOMContentLoaded.
+    document.addEventListener('DOMContentLoaded', () => {
+      window.fsListenTaskStatus((statusMap) => {
+        // Pass 1: overlay status/checklist/unlocks onto tasks already known
+        // locally (canonical, or an ad-hoc task adopted in a prior snapshot).
+        currentTasks.forEach((t) => {
+          const cloud = statusMap[t.id];
+          if (!cloud) return;
+          t.status = cloud.status || t.status;
+          t.done = (cloud.status === 'Completed' || !!cloud.done);
+          if (Array.isArray(cloud.checklist) && Array.isArray(t.checklist)) {
+            cloud.checklist.forEach((item, idx) => {
+              if (t.checklist[idx]) t.checklist[idx].done = !!(item && item.done);
+            });
+          }
+          if (Array.isArray(cloud.unlocks)) t.unlocks = cloud.unlocks;
+        });
+        // Pass 2: adopt ad-hoc tasks (full record in Firestore, no canonical
+        // entry here yet) — created via CR graduation, possibly on another
+        // device. 'title' only appears on the ad-hoc shape (see firestore.rules).
+        Object.keys(statusMap).forEach((taskId) => {
+          if (currentTasks.some(t => t.id === taskId)) return;
+          const cloud = statusMap[taskId];
+          if (!cloud.title) return;
+          currentTasks.unshift({
+            id: taskId,
+            title: cloud.title,
+            event: cloud.event,
+            owner: cloud.owner,
+            priority: cloud.priority,
+            status: cloud.status,
+            done: !!cloud.done,
+            track: cloud.track,
+            checklist: cloud.checklist || [],
+            depends_on: cloud.depends_on || [],
+            unlocks: cloud.unlocks || [],
+            dependency_type: cloud.dependency_type || 'standard',
+          });
+        });
+        renderTasks();
+        renderStageStrip();
+        renderSwimlaneMatrix();
+      });
+    });
 
     // Active View States (Default to STAGE_01 Pre-Wedding & Procurement)
     let activeStageId = 'STAGE_01';
@@ -233,8 +335,19 @@ window.dataLayer = window.dataLayer || [];
     let swimlaneSearchQuery = '';
     let activeConsoleTaskId = null;
 
-    function saveMasterTasks() {
-      localStorage.setItem('sree_krushna_master_tasks_v6', JSON.stringify(currentTasks));
+    function saveMasterTasks(t) {
+      // Per-task Firestore write (SK-004) — pass the specific task that changed.
+      // Called with no args = no-op (e.g. from a render pass, not a mutation).
+      if (t && window.fsSetTaskStatus) {
+        window.fsSetTaskStatus(t.id, {
+          status: t.status,
+          done: !!t.done,
+          // Full {text,done} objects, not just bools — an ad-hoc task's
+          // checklist has no local canonical source elsewhere, so its text
+          // has to round-trip through Firestore too, not just its done-flags.
+          checklist: (t.checklist || []).map(c => ({ text: c.text || '', done: !!c.done })),
+        });
+      }
     }
 
     // ── Zone 1: Global KPI Bar ──────────────────────────────────────
@@ -750,7 +863,7 @@ window.dataLayer = window.dataLayer || [];
         t.done = false;
       }
 
-      saveMasterTasks();
+      saveMasterTasks(t);
       updateConsoleStatusButtons(t.status);
       renderStageStrip();
       renderSwimlaneMatrix();
@@ -790,7 +903,7 @@ window.dataLayer = window.dataLayer || [];
         t.checklist.forEach(c => { c.done = (newStatus === 'Completed'); });
       }
 
-      saveMasterTasks();
+      saveMasterTasks(t);
       updateConsoleStatusButtons(newStatus);
       renderStageStrip();
       renderSwimlaneMatrix();
@@ -799,13 +912,43 @@ window.dataLayer = window.dataLayer || [];
     }
 
     // ── Sync with CRUD Task Manager (tab-tasks) ─────────────────────
+    // Urgency = priority rank first, dependency-gate tasks (must_precede_sealing)
+    // next, alphabetical id as a stable tiebreaker. No due-date field exists on
+    // tasks yet, so "soonest" is approximated by priority — swap for a real
+    // date compare once tasks carry one.
+    const TASK_PRIORITY_RANK = { Critical: 0, High: 1, Medium: 2, Low: 3 };
+    let taskSortKey = null; // null = insertion order, 'priority' | 'stage'
+    let taskSortDir = 1;
+    function sortTasksBy(key) {
+      taskSortDir = (taskSortKey === key) ? taskSortDir * -1 : 1;
+      taskSortKey = key;
+      renderTasks();
+    }
+    window.sortTasksBy = sortTasksBy;
+
     function renderTasks() {
       const tbody = document.getElementById('task-table-body');
       if (!tbody) return;
 
+      const rows = currentTasks.slice();
+      if (taskSortKey === 'priority') {
+        rows.sort((a, b) => taskSortDir * ((TASK_PRIORITY_RANK[a.priority] ?? 2) - (TASK_PRIORITY_RANK[b.priority] ?? 2)));
+      } else if (taskSortKey === 'stage') {
+        rows.sort((a, b) => taskSortDir * String(a.stage || '').localeCompare(String(b.stage || '')));
+      }
+
       tbody.innerHTML = '';
-      currentTasks.forEach((t, index) => {
+      rows.forEach((t) => {
+        const index = currentTasks.indexOf(t); // toggleMasterTask mutates currentTasks by index, not the sorted copy
         const isDone = (t.status === 'Completed' || t.done);
+        const depsOn = t.depends_on || [];
+        const unlocksIds = t.unlocks || [];
+        const depBadges = depsOn.length
+          ? depsOn.map(id => `<span class="role-pill-tag" style="background: rgba(212,168,67,0.12); color: var(--gold-bright); font-size: 0.68rem; padding: 2px 6px; margin: 1px;">← ${id}</span>`).join('')
+          : '<span style="color: var(--text-dim); font-size: 0.72rem;">—</span>';
+        const unlockBadges = unlocksIds.length
+          ? unlocksIds.map(id => `<span class="role-pill-tag" style="background: rgba(59,130,246,0.12); color: var(--sapphire-royal); font-size: 0.68rem; padding: 2px 6px; margin: 1px;">→ ${id}</span>`).join('')
+          : '<span style="color: var(--text-dim); font-size: 0.72rem;">—</span>';
         const tr = document.createElement('tr');
         tr.setAttribute('data-testid', `task-row-${t.id}`);
         tr.setAttribute('data-task-id', t.id);
@@ -817,13 +960,20 @@ window.dataLayer = window.dataLayer || [];
           <td><strong data-testid="task-owner-${t.id}" style="white-space: nowrap;">${t.lead || 'Committee'}</strong></td>
           <td><span style="color: ${t.priority === 'Critical' ? 'var(--crimson-royal)' : t.priority === 'High' ? 'var(--gold-bright)' : 'var(--text-muted)'}; font-weight: 700;" data-testid="task-priority-${t.id}">${t.priority || 'Medium'}</span></td>
           <td><span class="status-badge ${isDone ? 'status-completed' : t.status === 'In-Progress' ? 'status-progress' : 'status-planned'}" data-testid="task-status-${t.id}">${t.status || 'Planned'}</span></td>
+          <td data-testid="task-depends-${t.id}">${depBadges}</td>
+          <td data-testid="task-unlocks-${t.id}">${unlockBadges}</td>
           <td style="text-align: center;"><button class="header-action-btn" data-testid="task-propose-update-${t.id}" aria-label="Propose update for task ${t.id}" onclick="proposeTaskUpdate('${t.id}')" style="min-height: 28px; padding: 3px 10px; font-size: 0.74rem; background: rgba(212, 168, 67, 0.12); border: 1px solid rgba(212, 168, 67, 0.38); color: var(--gold-bright); border-radius: var(--radius-sm, 6px); cursor: pointer; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;"><span>💡</span><span>Propose Update</span></button></td>
         `;
         tbody.appendChild(tr);
       });
 
       updateSwimlaneKPIs();
-      saveMasterTasks();
+      // No save here — renderTasks() is a read path, not a mutation. The 3
+      // real mutation points (toggleConsoleChecklist, setTaskStatus,
+      // toggleMasterTask) already call saveMasterTasks(t) themselves. Saving
+      // here too would fire a Firestore write on every render, including the
+      // one triggered by fsListenTaskStatus's own snapshot callback — an
+      // infinite write/read loop.
     }
 
     function toggleMasterTask(index) {
@@ -833,7 +983,7 @@ window.dataLayer = window.dataLayer || [];
       if (t.checklist) {
         t.checklist.forEach(c => { c.done = t.done; });
       }
-      saveMasterTasks();
+      saveMasterTasks(t);
       renderTasks();
       renderStageStrip();
       renderSwimlaneMatrix();
@@ -858,16 +1008,6 @@ window.dataLayer = window.dataLayer || [];
 
     function submitTaskForm() {
       addNewTask();
-    }
-
-    function generateNextTaskId() {
-      if (!currentTasks || currentTasks.length === 0) return 'TSK-001';
-      const numericIds = currentTasks.map(t => {
-        const match = String(t.id).match(/TSK-(\d+)/);
-        return match ? parseInt(match[1], 10) : 0;
-      });
-      const maxId = Math.max(0, ...numericIds);
-      return 'TSK-' + String(maxId + 1).padStart(3, '0');
     }
 
     function addNewTask() {
@@ -972,64 +1112,21 @@ window.dataLayer = window.dataLayer || [];
     // ==========================================================================
     // UNIVERSAL WRITE-INTENT & CHANGE REQUEST DISPATCHER (SPEC-ARCH-INTENT-DISPATCH-001)
     // ==========================================================================
-    let changeRequestsList = JSON.parse(localStorage.getItem('sree_krushna_change_requests_v1')) || [
-      {
-        requestId: 'CR-001',
-        targetDomain: 'VISION',
-        intentType: 'DROP_INSPIRATION',
-        submitter: 'Sree (Bride)',
-        targetEvent: 'EVT-004',
-        title: 'Mandap Decor: Suspended Tuberose Dome with Hanging Temple Bells',
-        payload: {
-          rawNotes: 'Suspended tuberose floral dome over mandap with traditional brass bells and warm fairy lights',
-          mediaUrl: 'https://www.instagram.com/reel/C3example1/',
-          platform: 'Instagram'
-        },
-        status: 'Pending_Review',
-        submittedAt: '2026-08-22T02:35:00Z'
-      },
-      {
-        requestId: 'CR-002',
-        targetDomain: 'VISION',
-        intentType: 'DROP_INSPIRATION',
-        submitter: 'Krushna (Groom)',
-        targetEvent: 'EVT-005',
-        title: 'Reception Entry: Cinematic Stage Walk with Cold Pyros & Live Flute',
-        payload: {
-          rawNotes: 'Cold pyrotechnics on grand stage walk with live classical flute fusion for reception entry',
-          mediaUrl: 'https://youtube.com/shorts/example2',
-          platform: 'YouTube'
-        },
-        status: 'Pending_Review',
-        submittedAt: '2026-08-22T02:35:00Z'
-      }
-    ];
-
-    function saveChangeRequests() {
-      localStorage.setItem('sree_krushna_change_requests_v1', JSON.stringify(changeRequestsList));
-    }
-
-    function dispatchChangeRequest({ targetDomain, intentType, title, payload, targetEvent = 'Master_Planning', submitter = 'Family Lead' }) {
-      const numericIds = changeRequestsList.map(item => {
-        const match = String(item.requestId).match(/CR-(\d+)/);
-        return match ? parseInt(match[1], 10) : 0;
+    // SK-004: change_requests now lives in Firestore (cross-device), not
+    // localStorage. Populated live by the listener below — no local seed data.
+    let changeRequestsList = [];
+    document.addEventListener('DOMContentLoaded', () => {
+      window.fsListenChangeRequests((list) => {
+        changeRequestsList = list;
+        renderIntakeLedger();
       });
-      const nextId = 'CR-' + String(Math.max(0, ...numericIds) + 1).padStart(3, '0');
+    });
 
-      const cr = {
-        requestId: nextId,
-        targetDomain: targetDomain,
-        intentType: intentType,
-        submitter: submitter,
-        targetEvent: targetEvent,
-        title: title,
-        payload: payload,
-        status: 'Pending_Review',
-        submittedAt: new Date().toISOString()
-      };
-
-      changeRequestsList.unshift(cr);
-      saveChangeRequests();
+    async function dispatchChangeRequest({ targetDomain, intentType, title, payload, targetEvent = 'Master_Planning', submitter = 'Family Lead' }) {
+      // SK-004: id minting + persistence now happens in Firestore via an atomic
+      // counter transaction (kills the old per-device id-collision bug where two
+      // devices could both compute the same 'CR-004' from a local array length).
+      const cr = await window.fsDispatchChangeRequest({ targetDomain, intentType, title, payload, targetEvent, submitter });
 
       // If domain is VISION, also mirror to ideasList for Tab 5 visual display
       if (targetDomain === 'VISION') {
@@ -1047,7 +1144,7 @@ window.dataLayer = window.dataLayer || [];
           reframedTitle: title,
           mediaUrl: payload.mediaUrl || '',
           platform: payload.platform || 'Web Note',
-          suggestedAction: `Evaluate proposal #${nextId} during next planning sync with ${submitter}.`,
+          suggestedAction: `Evaluate proposal #${cr.requestId} during next planning sync with ${submitter}.`,
           status: 'Staged',
           timestamp: new Date().toISOString().split('T')[0]
         });
@@ -1143,6 +1240,14 @@ window.dataLayer = window.dataLayer || [];
       if (options.event) {
         const evtSelect = document.getElementById('idea-event');
         if (evtSelect) evtSelect.value = options.event;
+      }
+
+      // 3b. Populate predecessor picker from the live task list every time the
+      // modal opens (currentTasks can grow between opens as CRs graduate).
+      const predSelect = document.getElementById('idea-predecessor');
+      if (predSelect) {
+        predSelect.innerHTML = '<option value="">— None (no known blocker) —</option>' +
+          currentTasks.map(t => `<option value="${t.id}">${t.id} — ${t.title}</option>`).join('');
       }
 
       // 4. Render Context Ribbon
@@ -1307,6 +1412,8 @@ window.dataLayer = window.dataLayer || [];
       const event = document.getElementById('idea-event').value;
       const urlEl = document.getElementById('idea-url');
       const url = urlEl ? urlEl.value.trim() : '';
+      const predecessorEl = document.getElementById('idea-predecessor');
+      const predecessorId = predecessorEl ? predecessorEl.value : '';
 
       let platform = 'Web Note';
       if (url.includes('instagram.com')) platform = 'Instagram';
@@ -1351,13 +1458,15 @@ window.dataLayer = window.dataLayer || [];
           category: category,
           rawNotes: notes,
           mediaUrl: url,
-          platform: platform
+          platform: platform,
+          dependsOn: predecessorId ? [predecessorId] : []
         }
       });
 
       // Reset form
       notesEl.value = '';
       if (urlEl) urlEl.value = '';
+      if (predecessorEl) predecessorEl.value = '';
       const badge = document.getElementById('idea-platform-badge');
       if (badge) badge.innerHTML = '';
       const preview = document.getElementById('idea-ai-preview');
@@ -1387,7 +1496,8 @@ window.dataLayer = window.dataLayer || [];
       const matchedCr = changeRequestsList.find(cr => cr.requestId === idea.id || (cr.title && cr.title === idea.reframedTitle));
       if (matchedCr) {
         matchedCr.status = idea.status === 'Withdrawn' ? 'Withdrawn' : 'Pending_Review';
-        saveChangeRequests();
+        window.fsUpdateChangeRequestStatus(matchedCr.requestId, { status: matchedCr.status })
+          .catch(e => console.warn('Change request sync failed:', e.message));
       }
 
       saveIdeas();
@@ -1586,7 +1696,7 @@ window.dataLayer = window.dataLayer || [];
       renderRows(tabTbody);
     }
 
-    function approveChangeRequest(requestId) {
+    async function approveChangeRequest(requestId) {
       const cr = changeRequestsList.find(r => r.requestId === requestId);
       if (!cr) return;
 
@@ -1603,33 +1713,63 @@ window.dataLayer = window.dataLayer || [];
 
       // Automated SSOT State Mutation for Tasks
       if (cr.targetDomain === 'TASKS' || cr.intentType === 'PROPOSE_TASK') {
-        const nextId = generateNextTaskId();
-        createdEntityId = nextId;
-        const newTask = {
-          id: nextId,
+        // Real predecessor pick from the intake modal's dropdown (see
+        // submitIdea's payload.dependsOn), not fabricated. Empty when the
+        // proposer left it on "None" — same honest '—' treatment as the
+        // un-authored MARRIAGE_STATE tasks.
+        const predecessorIds = (cr.payload && cr.payload.dependsOn) || [];
+
+        // fsCreateAdhocTask mints a real cross-device-unique id (counters/tasks
+        // transaction, same fix as the old CR-### collision bug) and persists
+        // the full task record — this task has no canonical MARRIAGE_STATE/
+        // PROJECT_STATE entry, so its static metadata has to live in Firestore
+        // itself, not just a status overlay. Other devices adopt it via
+        // fsListenTaskStatus's pass-2 (see the DOMContentLoaded listener above).
+        const newTask = await window.fsCreateAdhocTask({
           title: cr.title.replace(/^Task Proposal:\s*/, '').replace(/^Tasks:\s*/, ''),
           event: cr.targetEvent || 'Master_Planning',
           owner: cr.payload ? (cr.payload.suggestedOwner || cr.submitter) : cr.submitter,
           priority: 'High',
           status: 'Planned',
           track: 'purohit',
+          depends_on: predecessorIds,
+          unlocks: [],
+          dependency_type: 'standard',
           checklist: [
             { text: `Review proposal requirements: ${cr.payload ? (cr.payload.rawNotes || cr.title) : cr.title}`, done: false },
             { text: 'Confirm operational lead and execution window', done: false }
           ]
-        };
+        });
+        createdEntityId = newTask.id;
         currentTasks.unshift(newTask);
-        renderTaskTable();
+
+        // Symmetry: reflect + persist the new task in its predecessor's
+        // unlocks list (matches scripts/validate-task-graph.cjs's edge-
+        // symmetry check). Persisted as a task_status overlay write — works
+        // whether the predecessor is canonical or itself an ad-hoc task,
+        // since a merge write onto either shape stays valid (see
+        // isValidTaskStatusOverlay/isValidAdhocTask in firestore.rules).
+        predecessorIds.forEach(predId => {
+          const predTask = currentTasks.find(x => x.id === predId);
+          if (predTask) {
+            predTask.unlocks = predTask.unlocks || [];
+            if (!predTask.unlocks.includes(newTask.id)) predTask.unlocks.push(newTask.id);
+            window.fsSetTaskStatus(predId, {
+              status: predTask.status, done: !!predTask.done, unlocks: predTask.unlocks,
+            }).catch(e => console.warn('Predecessor unlocks sync failed:', e.message));
+          }
+        });
+
+        renderTasks();
         renderSwimlaneMatrix();
       }
 
-      // Persist changes
-      try {
-        localStorage.setItem(STORAGE_KEYS.CHANGE_REQUESTS, JSON.stringify(changeRequestsList));
-        localStorage.setItem('sree_krushna_tasks_v1', JSON.stringify(currentTasks));
-      } catch (e) {
-        console.warn('Storage sync failed:', e.message);
-      }
+      // Persist status change to Firestore (SK-004 — was a broken localStorage
+      // write before: STORAGE_KEYS was undefined in this file's scope, so this
+      // silently threw and got swallowed by the catch on every approve click).
+      window.fsUpdateChangeRequestStatus(cr.requestId, {
+        status: cr.status, mergedAt: cr.mergedAt, mergedBy: cr.mergedBy,
+      }).catch(e => console.warn('Change request sync failed:', e.message));
 
       renderIntakeLedger();
       renderIdeas();
@@ -1649,11 +1789,9 @@ window.dataLayer = window.dataLayer || [];
       cr.withdrawnAt = new Date().toISOString();
       cr.withdrawnBy = getAuthenticatedSubmitterName();
 
-      try {
-        localStorage.setItem(STORAGE_KEYS.CHANGE_REQUESTS, JSON.stringify(changeRequestsList));
-      } catch (e) {
-        console.warn('Storage sync failed:', e.message);
-      }
+      window.fsUpdateChangeRequestStatus(cr.requestId, {
+        status: cr.status, withdrawnAt: cr.withdrawnAt, withdrawnBy: cr.withdrawnBy,
+      }).catch(e => console.warn('Change request sync failed:', e.message));
 
       renderIntakeLedger();
       renderIdeas();

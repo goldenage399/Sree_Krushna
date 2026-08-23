@@ -1,23 +1,175 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    
-    // Helper: Authenticated User
+
+    // ===============================================================
+    // Assumed Data Model — SK-004 Firestore Cross-Device Sync
+    // ===============================================================
+    //
+    // change_requests/{requestId}   e.g. "CR-004"
+    //   title            string  required immutable  <= 200 chars
+    //   targetDomain     string  required immutable  in [VISION,VENDORS,RITUALS,CUSTODY,TASKS,OPERATIONS]
+    //   intentType       string  required immutable  in [PROPOSE_TASK,ADJUST_RITUAL,NOMINATE_VENDOR,PROPOSE_ASSET,DROP_INSPIRATION]
+    //   submitter        string  required            <= 80 chars (display name, e.g. "Sree (Bride)")
+    //   submitterEmail   string  required immutable  must equal request.auth.token.email
+    //   targetEvent      string  required immutable  <= 60 chars
+    //   submittedAt      string  required immutable  ISO 8601 (kept as string — legacy render code calls .split('T') on it)
+    //   status           string  required            in [Pending_Review,Approved_Merged,Withdrawn]
+    //   payload          map     required immutable  keys subset of [rawNotes,category,mediaUrl,platform,suggestedOwner], each string, size-capped
+    //   mergedAt         string  optional  ISO 8601
+    //   mergedBy         string  optional  <= 80 chars
+    //   withdrawnAt      string  optional  ISO 8601
+    //   withdrawnBy      string  optional  <= 80 chars
+    //
+    // task_status/{taskId} has TWO valid shapes:
+    //
+    // Shape A — status overlay, for a task whose static metadata already
+    // exists locally (canonical MARRIAGE_STATE/PROJECT_STATE task, or an
+    // already-adopted ad-hoc task). e.g. "TSK-001" / "RIT-005":
+    //   status       string    required  in [Planned, In-Progress, Completed]
+    //   done         bool      required
+    //   checklist    list      optional  <= 30 items ({text,done} objects)
+    //   unlocks      list      optional  <= 20 items (string task ids) — set
+    //                          when another task graduates naming this one
+    //                          as a predecessor (see Shape B depends_on)
+    //   updatedBy    string    required  must equal request.auth.token.email
+    //   updatedAt    timestamp required  must equal request.time (server-set)
+    //
+    // Shape B — full ad-hoc task record, for a task with NO canonical entry
+    // (created via Change Request graduation — approveChangeRequest's
+    // TASKS-domain branch). Carries the static metadata a canonical task
+    // would normally get from git-tracked marriage-state.js/dopkos-engine.js,
+    // since this task has no such source. e.g. "TSK-014":
+    //   status, done, updatedBy, updatedAt   — same as Shape A
+    //   title            string  required  <= 200 chars
+    //   event            string  required  <= 60 chars
+    //   owner            string  required  <= 80 chars
+    //   priority         string  required  in [Critical, High, Medium]
+    //   track            string  required  <= 40 chars
+    //   dependency_type  string  required  in [standard, must_precede_sealing, must_happen_during]
+    //   depends_on       list    required  <= 20 items (string task ids) — real
+    //                            predecessors picked in the intake form, not fabricated
+    //   unlocks          list    required  <= 20 items (string task ids)
+    //   checklist        list    optional  <= 15 items ({text,done} objects)
+    //
+    // counters/{change_requests|tasks}   singleton docs
+    //   seq   number  required, each write must be exactly (previous seq + 1)
+    // ===============================================================
+
     function isAuthenticated() {
       return request.auth != null;
     }
-    
-    // Universal Change Requests / Intent Queue (SPEC-ARCH-INTENT-DISPATCH-001)
-    match /change_requests/{requestId} {
-      allow create: if true;
-      allow read: if true;
-      allow update, delete: if isAuthenticated();
+
+    function isAllowedUser() {
+      return isAuthenticated() && request.auth.token.email != null &&
+        request.auth.token.email.lower() in [
+          'goldenage399@gmail.com',
+          'sreesubha18@gmail.com',
+          'krushna.s.panda@gmail.com'
+        ];
     }
 
-    // Marriage Proposals Collection
+    function isValidPayload(p) {
+      return p is map &&
+        p.keys().hasOnly(['rawNotes','category','mediaUrl','platform','suggestedOwner','dependsOn','predecessors']) &&
+        (!('rawNotes' in p) || (p.rawNotes is string && p.rawNotes.size() <= 4000)) &&
+        (!('category' in p) || (p.category is string && p.category.size() <= 300)) &&
+        (!('mediaUrl' in p) || (p.mediaUrl is string && p.mediaUrl.size() <= 300)) &&
+        (!('platform' in p) || (p.platform is string && p.platform.size() <= 300)) &&
+        (!('suggestedOwner' in p) || (p.suggestedOwner is string && p.suggestedOwner.size() <= 300)) &&
+        (!('dependsOn' in p) || (p.dependsOn is list && p.dependsOn.size() <= 20)) &&
+        (!('predecessors' in p) || (p.predecessors is list && p.predecessors.size() <= 20));
+    }
+
+    function isValidChangeRequest(d) {
+      return d.keys().hasAll(['title','targetDomain','intentType','submitter','submitterEmail','targetEvent','submittedAt','status','payload']) &&
+        d.keys().hasOnly(['title','targetDomain','intentType','submitter','submitterEmail','targetEvent','submittedAt','status','payload','mergedAt','mergedBy','withdrawnAt','withdrawnBy']) &&
+        d.title is string && d.title.size() > 0 && d.title.size() <= 200 &&
+        d.targetDomain in ['VISION','VENDORS','RITUALS','CUSTODY','TASKS','OPERATIONS'] &&
+        d.intentType in ['PROPOSE_TASK','ADJUST_RITUAL','NOMINATE_VENDOR','PROPOSE_ASSET','DROP_INSPIRATION'] &&
+        d.submitter is string && d.submitter.size() <= 80 &&
+        d.submitterEmail == request.auth.token.email &&
+        d.targetEvent is string && d.targetEvent.size() <= 60 &&
+        d.submittedAt is string && d.submittedAt.size() <= 40 &&
+        d.status in ['Pending_Review','Approved_Merged','Withdrawn'] &&
+        isValidPayload(d.payload) &&
+        (!('mergedAt' in d) || (d.mergedAt is string && d.mergedAt.size() <= 40)) &&
+        (!('mergedBy' in d) || (d.mergedBy is string && d.mergedBy.size() <= 80)) &&
+        (!('withdrawnAt' in d) || (d.withdrawnAt is string && d.withdrawnAt.size() <= 40)) &&
+        (!('withdrawnBy' in d) || (d.withdrawnBy is string && d.withdrawnBy.size() <= 80));
+    }
+
+    function changeRequestImmutableFieldsUnchanged() {
+      return request.resource.data.title == resource.data.title &&
+        request.resource.data.targetDomain == resource.data.targetDomain &&
+        request.resource.data.intentType == resource.data.intentType &&
+        request.resource.data.submitterEmail == resource.data.submitterEmail &&
+        request.resource.data.targetEvent == resource.data.targetEvent &&
+        request.resource.data.submittedAt == resource.data.submittedAt &&
+        request.resource.data.payload == resource.data.payload;
+    }
+
+    match /change_requests/{requestId} {
+      allow read: if isAllowedUser();
+      allow create: if isAllowedUser() && isValidChangeRequest(request.resource.data);
+      allow update: if isAllowedUser() && isValidChangeRequest(request.resource.data) && changeRequestImmutableFieldsUnchanged();
+      allow delete: if false; // change requests are an audit trail — never deleted
+    }
+
+    function isValidTaskStatusOverlay(d) {
+      return d.keys().hasAll(['status','done','updatedBy','updatedAt']) &&
+        d.keys().hasOnly(['status','done','checklist','unlocks','updatedBy','updatedAt']) &&
+        d.status in ['Planned','In-Progress','Completed'] &&
+        d.done is bool &&
+        (!('checklist' in d) || (d.checklist is list && d.checklist.size() <= 30)) &&
+        (!('unlocks' in d) || (d.unlocks is list && d.unlocks.size() <= 20)) &&
+        d.updatedBy == request.auth.token.email &&
+        d.updatedAt == request.time;
+    }
+
+    function isValidAdhocTask(d) {
+      return d.keys().hasAll(['status','done','updatedBy','updatedAt','title','event','owner','priority','track','dependency_type','depends_on','unlocks']) &&
+        d.keys().hasOnly(['status','done','updatedBy','updatedAt','title','event','owner','priority','track','dependency_type','depends_on','unlocks','checklist']) &&
+        d.status in ['Planned','In-Progress','Completed'] &&
+        d.done is bool &&
+        d.updatedBy == request.auth.token.email &&
+        d.updatedAt == request.time &&
+        d.title is string && d.title.size() > 0 && d.title.size() <= 200 &&
+        d.event is string && d.event.size() <= 60 &&
+        d.owner is string && d.owner.size() <= 80 &&
+        d.priority in ['Critical','High','Medium'] &&
+        d.track is string && d.track.size() <= 40 &&
+        d.dependency_type in ['standard','must_precede_sealing','must_happen_during'] &&
+        d.depends_on is list && d.depends_on.size() <= 20 &&
+        d.unlocks is list && d.unlocks.size() <= 20 &&
+        (!('checklist' in d) || (d.checklist is list && d.checklist.size() <= 15));
+    }
+
+    match /task_status/{taskId} {
+      allow read: if isAllowedUser();
+      allow write: if isAllowedUser() &&
+        (isValidTaskStatusOverlay(request.resource.data) || isValidAdhocTask(request.resource.data));
+    }
+
+    match /counters/{counterId} {
+      allow read: if isAllowedUser();
+      allow create: if isAllowedUser() &&
+        request.resource.data.keys().hasOnly(['seq']) &&
+        request.resource.data.seq == 1;
+      allow update: if isAllowedUser() &&
+        request.resource.data.keys().hasOnly(['seq']) &&
+        request.resource.data.seq == resource.data.seq + 1;
+    }
+
+    // Marriage Proposals Collection (pre-existing, unchanged)
     match /proposals/{proposalId} {
       allow create, read: if true;
       allow update, delete: if isAuthenticated();
+    }
+
+    // Default deny everything else
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
 }
