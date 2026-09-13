@@ -14,7 +14,14 @@
 - [Brand & Stationery: Monogram & Identity](./brand_and_stationery/monogram_and_identity.md)
 - [Photography & Media Production Spec](./photography/photo_production_spec.md)
 - [Shopping & Trousseau Master](./shopping_and_trousseau/shopping_master.md)
+- [Decorator Evaluation Questionnaire](./decor_and_design/decorator_selection_questionnaire.md)
+- [Engagement Decor Specification](./decor_and_design/rayagada_decor_spec.md)
+- [Decorator Negotiation Cockpit & Battlecard](./decor_and_design/decorator_negotiation_cockpit_spec.md)
+- [Open-Ground Marquee & Modular Base Decor Spec](./decor_and_design/open_ground_marquee_modular_base_spec.md)
+- [Decor Visual Generation Prompt Catalog](./decor_and_design/DECOR_IMAGE_PROMPT_CATALOG.md)
+- [Master Decor Decision Roadmap Spec](./decor_and_design/MASTER_DECOR_DECISION_ROADMAP_SPEC.md)
 
 ### Entity Directories
 - Vendors: `04_PROCUREMENT_VENDORS/vendors/` (`VDR-###`)
 - Contracts: `04_PROCUREMENT_VENDORS/contracts/` (`CTR-###`)
+  - [Open-Ground Marquee Contract Tender Rider (`CTR-DECOR-RIDER-001`)](./contracts/DECORATOR_RFP_RIDER_GROUND_MARQUEE.md)

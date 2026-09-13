@@ -8,6 +8,7 @@
 - [Operational Gates Model](./day_of_run_sheets/operational_gates_model.md)
 - [Hotel Room & Accommodation Mapping](./accommodation/hotel_room_mapping.md)
 - [Venue Template](./venue_template.md)
+- [Open-Ground Marquee Spatial Zoning & Climate Spec](./venues/open_ground_spatial_zoning.md)
 
 ### Entity Directories
 - Venues: `05_OPERATIONS_LOGISTICS/venues/` (`VEN-###`)
