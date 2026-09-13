@@ -98,11 +98,13 @@ Before creating any folder or writing to any cluster file, confirm the enhanceme
 > 8. **Hidden assumptions**: What is being assumed that hasn't been validated?
 > 9. **Net justification**: After all trade-offs, is this enhancement still warranted?
 >
-> If fewer than 6 of 9 items can be answered, use **Template 2 (Gear 2)** from `User_Created/Docs/PROMPT-LIBRARY.md` to complete the analysis before proceeding.
+> If fewer than 6 of 9 items can be answered, use **Template 2 (Gear 2)** from the Reusable Prompt Library (`User_Created/Docs/PROMPT-LIBRARY.md` — Task-Dashboard only) to complete the analysis before proceeding.
+>
+> _Items 2–9 above are Gear 2's eight trade-off questions, lightly reworded; item 1 (Dependency Lookup) is a repo-specific addition. If you revise either list, reconcile the other — the canonical wording for items 2–9 lives in Template 2._
 
 **Gate rule**: If the user says "skip" or the enhancement is trivially simple (≤ 2 hours, single-file change), this check may be deferred and logged as a note in the lean entry. For all other enhancements, it must be answered before Step 3.
 
-> **Gate mapping**: This Gear 2 check is the **ideation gate** ("should we build this at all?"). The downstream **execution gate** is the [5 Lenses Check in plan-review](../workflows/plan-review.md#the-5-lenses-check-feasibility--impact) ("is this specific plan sound before we execute?"). Same five dimensions, different stage — do not consolidate.
+> **Gate mapping**: This **Trade-Off & Dependency Checklist** is the **ideation gate** ("should we build this at all?"). The downstream **execution gate** is the [5 Lenses Check in plan-review](../../workflows/plan-review.md#the-5-lenses-check-feasibility--impact) ("is this specific plan sound before we execute?"). They derive from Gear 2 and Gear 1 of the Reusable Prompt Library respectively; the gear numbers denote analytical depth, not running order — this heavier Gear 2 analysis runs once at ideation, the lighter Gear 1 check runs per plan. Same five dimensions, different stage — do not consolidate.
 
 ---
 

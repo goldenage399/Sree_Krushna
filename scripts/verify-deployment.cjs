@@ -79,7 +79,6 @@ check('Layer 1: JavaScript Runtime Parse, AST Syntax & Sandbox Execution', () =>
   const listeners = [];
   const createMockEl = () => ({
     style: {},
-    dataset: {},
     classList: { add: () => {}, remove: () => {}, contains: () => false },
     setAttribute: () => {},
     getAttribute: () => '',
@@ -89,7 +88,8 @@ check('Layer 1: JavaScript Runtime Parse, AST Syntax & Sandbox Execution', () =>
     addEventListener: () => {},
     querySelectorAll: () => [],
     querySelector: () => null,
-    appendChild: () => {}
+    appendChild: () => {},
+    dataset: {}
   });
 
   const sandbox = {
@@ -117,7 +117,9 @@ check('Layer 1: JavaScript Runtime Parse, AST Syntax & Sandbox Execution', () =>
     setInterval: setInterval,
     clearInterval: clearInterval,
     alert: () => {},
-    confirm: () => true
+    confirm: () => true,
+    fsListenTaskStatus: () => () => {},
+    fsListenChangeRequests: () => () => {}
   };
   sandbox.window = sandbox;
   sandbox.addEventListener = (event, cb) => { listeners.push({ event, cb }); };

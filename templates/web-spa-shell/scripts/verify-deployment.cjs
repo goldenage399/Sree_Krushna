@@ -99,6 +99,7 @@ check('Layer 1: JavaScript Runtime Parse, AST Syntax & Sandbox Execution', () =>
       querySelectorAll: () => [],
       querySelector: () => null,
       createElement: () => createMockEl(),
+      createElementNS: () => createMockEl(),
       body: { classList: { add: () => {}, remove: () => {}, contains: () => false } },
       addEventListener: (event, cb) => { listeners.push({ event, cb }); }
     },

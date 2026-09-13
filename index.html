@@ -773,8 +773,9 @@
               <span class="role-pill-tag" style="background: var(--bg-surface-elevated); color: var(--text-muted); border: 1px solid var(--border-subtle);">💐 Decor: 3D Concepts Pending</span>
               <span class="role-pill-tag" style="background: var(--bg-surface-elevated); color: var(--text-muted); border: 1px solid var(--border-subtle);">💄 MUA: Trial Scheduling</span>
             </div>
-            <div style="margin-top: 20px;">
+            <div style="margin-top: 20px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
               <button class="btn-return" style="padding: 10px 22px; font-size: 0.88rem; cursor: pointer; border: none;" onclick="openVendorNominationModal()">🤝 Nominate Vendor / Submit Quote →</button>
+              <a href="/decorator-cockpit.html" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; padding: 10px 22px; font-size: 0.88rem; cursor: pointer; border-radius: 8px; background: linear-gradient(135deg, #f59e0b, #d97706); color: #000; font-weight: 700; text-decoration: none; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);">🌺 Launch Decorator Cockpit (Dual-Lens HUD) ↗</a>
             </div>
           </div>
 
@@ -978,6 +979,12 @@
             <option value="EVT-005">🎉 EVT-005: Grand Wedding Reception</option>
             <option value="EVT-006">🏡 EVT-006: Grihapravesh</option>
             <option value="EVT-007">🍛 EVT-007: Astamangala Feast</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Predecessor / Blocker Task (Optional)</label>
+          <select id="idea-predecessor" style="width: 100%; padding: 10px 12px; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); color: var(--text-main); font-size: 0.88rem;">
+            <option value="">— None (no known blocker) —</option>
           </select>
         </div>
 

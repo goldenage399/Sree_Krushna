@@ -3,6 +3,12 @@ name: prompt-clarity
 description: Scan ambiguous user requests and present 2-3 reframed interpretations before starting work. Use when a request could be read multiple ways, is missing a load-bearing constraint (scope, format, which file/system), or uses vague referents like "it" or "the usual way".
 ---
 
+<!-- SYNC-MIRROR — exact copy maintained in two locations:
+       .claude/skills/prompt-clarity/SKILL.md   (CANONICAL — loaded by the Claude Code Skill tool)
+       .agent/skills/prompt-clarity/SKILL.md    (mirror for the .agent/ ecosystem)
+     Edit the canonical copy, then propagate to the mirror in the SAME commit.
+     Verify:  diff -rq .claude/skills/prompt-clarity .agent/skills/prompt-clarity   (must print nothing) -->
+
 # Prompt Clarity Skill
 
 Use this skill at the start of handling any non-trivial user request in this
@@ -36,8 +42,12 @@ guidance against inventing ambiguity).
    own way".) This clarify step takes precedence over any general bias
    against pausing to ask questions — that is the point of the skill.
 3. Wait for the user's pick (an option, or their own restatement).
-4. Once clarified, restate the chosen intent in one line as the working spec:
-   - **Routing & Hard-Stop Gate**: If the chosen option named a required workflow/council (per "Notes specific to this repo"), or if answering/executing it safely requires verifying unvetted infrastructure, **do not implement directly**. Route into the governing workflow (`/role-activation` / `cos-invoke.md` / `architecture-council.md` / `plan.md`), **present the implementation plan / course of action, and HARD-STOP**. Do not execute code or modify files until the user explicitly reviews and approves the plan.
+4. Once clarified, emit the **Clarification & Intent Record** (per `meta-prompt.md`
+   Step 3) — a compact block capturing the ambiguity, the question asked, the
+   options offered, the user's resolution, and the resolved scope. State the
+   resolved scope as a numbered checklist when the request bundles multiple
+   deliverables ("X and Y and Z"), so no part is silently dropped.
+   - **Routing & Hard-Stop Gate**: If the chosen option named a required workflow/council (per "Notes specific to this repo"), or if answering/executing it safely requires verifying unvetted infrastructure, **do not implement directly**. Route into the governing workflow (`/role-activation` / `cos-invoke.md` / `architecture-council.md` / `plan.md`), **present the implementation plan / course of action, and HARD-STOP**. Do not execute code or modify files until the user explicitly reviews and approves the plan. The resolved-scope checklist records *what* was asked for; it is not an execution mandate.
    - **Direct Execution**: Only if the clarified task has clear single scope, verified prerequisites, and requires no council/governance routing, proceed with the task directly.
 
 ## Notes specific to this repo

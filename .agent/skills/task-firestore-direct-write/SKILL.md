@@ -3,6 +3,7 @@ name: task-firestore-direct-write
 description: Write a task doc directly into the tasks collection via an admin script (bypassing the app UI/wizard) so it passes firestore.rules and matches the real schema on first try. Use when asked to "create a task for X", "log this as a task", "add a task in the dashboard" via script/CLI rather than the browser UI.
 ---
 
+<!-- shared:skill.task-firestore-direct-write.core:start -->
 # Direct Firestore Task Write
 
 The app's task-creation wizard (`TaskCreationWizard` → `TaskValidationService`
@@ -130,3 +131,4 @@ If the task should be creatable by a normal user through the browser UI
 goes through `firestore.rules` for real. This skill is specifically for
 "create a task via script because no one's going to click through the
 wizard for this."
+<!-- shared:skill.task-firestore-direct-write.core:end -->

@@ -1,5 +1,12 @@
 # Prompt Clarity Layer — Core Instructions (SSOT)
 
+<!-- SYNC-MIRROR — exact copy maintained in two locations:
+       .claude/skills/prompt-clarity/meta-prompt.md   (CANONICAL — loaded by the Claude Code Skill tool)
+       .agent/skills/prompt-clarity/meta-prompt.md    (mirror for the .agent/ ecosystem)
+     Edit the canonical copy, then propagate to the mirror in the SAME commit.
+     Verify:  diff -rq .claude/skills/prompt-clarity .agent/skills/prompt-clarity   (must print nothing)
+     The "three surfaces" note below governs CLI/skill/system-prompt; THIS note governs the .claude <-> .agent mirror. -->
+
 This is the single logic definition for the prompt-clarity system. The CLI tool,
 the Claude Code skill, and the standalone system-prompt are three surfaces —
 they all point back to this file. Edit behavior here; don't fork it three ways.
@@ -76,8 +83,31 @@ warning plus proceeding is fine.
 Do not produce the substantive answer in the same turn as the reframe. Wait
 for the user's pick. Once they respond:
 
-- Restate the chosen version/intent in one line.
-- **Routing & Hard-Stop Gate**: Clarifying intent does NOT authorize blind implementation.
+- **Emit the Clarification & Intent Record.** The reframe menu and its result
+  are otherwise ephemeral — this block makes the resolved ambiguity part of the
+  durable record. Keep it compact (the five bullets below, one line each):
+
+  ```markdown
+  ### Clarification & Intent Record
+  - **Ambiguity detected**: <what was unclear / which Step 1 trigger fired>
+  - **Question asked**: <the exact framing put to the user>
+  - **Options offered**: A) <one line> · B) <one line> · C) <one line>
+  - **User resolution**: <the pick, or the verbatim write-in>
+  - **Resolved scope**: <the working spec — see enumeration rule below>
+  ```
+
+  Emit it only when Step 2 actually ran (ambiguity was flagged). A write-in
+  rather than a clean A/B/C pick means the menu missed — note that; it is
+  feedback for framing the next clarification.
+- **Resolved scope — working-spec enumeration.** State the clarified intent so
+  someone could act on it with zero extra context. If the resolved request is a
+  conjunction of deliverables ("X *and* Y *and* Z", "all of them + web +
+  council"), write it as a **numbered checklist, not a flattened sentence** —
+  one line per deliverable — so downstream execution (or the user reviewing the
+  plan at a hard-stop) can check off every part and none is silently dropped.
+- **Routing & Hard-Stop Gate**: Clarifying intent does NOT authorize blind
+  implementation. "Resolved scope" records *what* was asked for — it is not an
+  execution mandate.
   - If the chosen option named a governing workflow/council (e.g. `/role-activation`, `cos-invoke.md`, `architecture-council.md`, `plan.md`), or if executing it requires verifying unvetted assumptions/infrastructure, **route into that workflow, share the plan of action, and HARD-STOP**. Do NOT execute code or modify files until the user explicitly approves the plan.
   - If the request is self-contained with verified prerequisites and requires no governance gate, answer/execute normally.
 - If the user describes it their own way instead: treat that as the clarified prompt and apply the same routing check.

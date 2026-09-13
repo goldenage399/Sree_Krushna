@@ -9,6 +9,7 @@ Review relevant ecosystem patterns:
 - `.agent/patterns/anti-masking-fallback-layers.md`
 - `.agent/patterns/call-graph-and-rules-ast-verification-gate.md`
 - `.agent/patterns/centralized-mutation-delegation.md`
+- `.agent/patterns/consumer-path-integration-verification.md`
 - `.agent/patterns/css-bridge-specificity-management.md`
 - `.agent/patterns/css-color-mix-gradient-silence.md`
 - `.agent/patterns/data-layer-verification-first.md`
@@ -40,6 +41,7 @@ Review relevant ecosystem patterns:
 - `.agent/patterns/page-anchors-neutrality.md`
 - `.agent/patterns/page-width-ownership.md`
 - `.agent/patterns/performative-council-and-telemetry-gate.md`
+- `.agent/patterns/plan-to-execution-reconciliation.md`
 - `.agent/patterns/playwright-e2e-testing-protocol.md`
 - `.agent/patterns/playwright-indexeddb-auth-session-capture.md`
 - `.agent/patterns/playwright-spa-e2e-testing-best-practices.md`
@@ -60,6 +62,7 @@ Review relevant ecosystem patterns:
 - `.agent/patterns/ssot-preservation-template-guard.md`
 - `.agent/patterns/subcollection-write-cache-atomicity.md`
 - `.agent/patterns/theme-button-opt-out-contract.md`
+- `.agent/patterns/three-way-schema-alignment.md`
 - `.agent/patterns/triage-anomalies-first.md`
 - `.agent/patterns/typography-weight-and-bridge-token-enforcement.md`
 - `.agent/patterns/ui-primitive-codebase-wide-standardization.md`

@@ -65,6 +65,7 @@ Before any task work, review:
 | Advanced UI/UX Design System | `.agent/skills/ui-ux-pro-max/SKILL.md` & `.agent/skills/frontend-design/SKILL.md` |
 | Post-Incident Governance & Analysis | `.agent/workflows/post-incident-governance.md` & `.agent/workflows/post-incident-analysis.md` |
 | SSOT Conflict & Drift Reconciliation | `.agent/workflows/ssot-reconciliation.md` & `.agent/skills/ssot-domain-mapper/SKILL.md` |
+| Task dependency graph edits (depends_on/unlocks rewiring) | `.agent/workflows/task-graph-reconciliation.md` |
 | Site Architecture & Navigation | `.claude/skills/site-architecture/SKILL.md` |
 | Governance verification | `npm run verify:governance-wiring:all` |
 
@@ -75,6 +76,7 @@ This repository implements the following universal patterns:
 - `.agent/patterns/anti-masking-fallback-layers.md`
 - `.agent/patterns/call-graph-and-rules-ast-verification-gate.md`
 - `.agent/patterns/centralized-mutation-delegation.md`
+- `.agent/patterns/consumer-path-integration-verification.md`
 - `.agent/patterns/css-bridge-specificity-management.md`
 - `.agent/patterns/css-color-mix-gradient-silence.md`
 - `.agent/patterns/data-layer-verification-first.md`
@@ -106,6 +108,7 @@ This repository implements the following universal patterns:
 - `.agent/patterns/page-anchors-neutrality.md`
 - `.agent/patterns/page-width-ownership.md`
 - `.agent/patterns/performative-council-and-telemetry-gate.md`
+- `.agent/patterns/plan-to-execution-reconciliation.md`
 - `.agent/patterns/playwright-e2e-testing-protocol.md`
 - `.agent/patterns/playwright-indexeddb-auth-session-capture.md`
 - `.agent/patterns/playwright-spa-e2e-testing-best-practices.md`
@@ -126,6 +129,7 @@ This repository implements the following universal patterns:
 - `.agent/patterns/ssot-preservation-template-guard.md`
 - `.agent/patterns/subcollection-write-cache-atomicity.md`
 - `.agent/patterns/theme-button-opt-out-contract.md`
+- `.agent/patterns/three-way-schema-alignment.md`
 - `.agent/patterns/triage-anomalies-first.md`
 - `.agent/patterns/typography-weight-and-bridge-token-enforcement.md`
 - `.agent/patterns/ui-primitive-codebase-wide-standardization.md`
@@ -136,3 +140,4 @@ This repository implements the following universal patterns:
 - `.agent/patterns/localhost-sw-cache-bypass-gate.md`
 - `.agent/patterns/monolithic-engine-port-css-scoping-gate.md`
 - `.agent/patterns/sub-engine-shadowing-and-tab-reconciliation.md`
+- `.agent/patterns/sdca-pre-emit-syntax-gate.md`

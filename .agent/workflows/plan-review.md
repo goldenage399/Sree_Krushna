@@ -188,7 +188,7 @@ Instead of multiple review rounds, evaluate from all angles:
 
 ### The 5 Lenses Check (Feasibility & Impact)
 
-*(Note: This planning-stage check is complementary to the ideation-stage Gear 2 check in the enhancement scaffolder. While Gear 2 decides whether to build a feature at the ideation gate, this check evaluates if the proposed implementation design itself is sound before execution.)*
+*(This is the **execution-stage** feasibility gate — "is this specific plan sound before we build it?" Its **ideation-stage** counterpart, run earlier at "should we build this at all?", is the Trade-Off & Dependency Checklist in enhancement-scaffolder Step 2.7. Both come from the Reusable Prompt Library: this check is Gear 1, the scaffolder check is Gear 2. The gear numbers denote analytical depth, not running order — the heavier Gear 2 analysis runs once at ideation; this lighter Gear 1 re-check runs per plan. Same five dimensions; do not consolidate.)*
 
 - [ ] **User Experience (UX)**: Does this design improve, maintain, or degrade user interaction?
 - [ ] **Workflow Efficiency**: Does the proposed flow save steps or introduce friction?
@@ -297,4 +297,4 @@ This workflow integrates with:
 
 ---
 
-_Ported from Task-Dashboard: 2025-12-30_
+_Source of truth: Task-Dashboard. Ported to PIOperationsMgmt_Firebase, BMS, and Capsicum on 2025-12-30 via `/sap-sync` (those copies carry a `Ported from Task-Dashboard` footer)._
