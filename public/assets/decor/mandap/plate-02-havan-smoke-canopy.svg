@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <linearGradient id="bgGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b132b"/>
+      <stop offset="100%" stop-color="#1c2541"/>
+    </linearGradient>
+    <linearGradient id="hoodGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffd166" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#b3821a" stop-opacity="0.6"/>
+    </linearGradient>
+    <linearGradient id="exhaustGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#cbd5e0" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#60a5fa" stop-opacity="0.7"/>
+    </linearGradient>
+    <filter id="flameBlur">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#bgGrad2)" rx="8"/>
+  <rect x="20" y="20" width="760" height="460" fill="none" stroke="#2a3b5c" stroke-width="1.5" stroke-dasharray="6,4" rx="6"/>
+
+  <text x="40" y="55" fill="#f59e0b" font-family="'Cinzel', Georgia, serif" font-size="20" font-weight="700" letter-spacing="1">THERMODYNAMIC EXTRACTION SCHEMATIC — PLATE 02</text>
+  <text x="40" y="75" fill="#a0aec0" font-family="'Plus Jakarta Sans', sans-serif" font-size="12">NEGATIVE-PRESSURE HAVAN HOOD &amp; AC ENVIRONMENT EXHAUST ROUTE | ZERO SMOKE LEAKAGE</text>
+
+  <!-- Marquee Ceiling & Wall Boundaries -->
+  <line x1="80" y1="110" x2="720" y2="110" stroke="#64748b" stroke-width="2" stroke-dasharray="4,4"/>
+  <text x="730" y="114" fill="#64748b" font-family="monospace" font-size="10">MARQUEE ROOF TRUSS</text>
+
+  <line x1="720" y1="110" x2="720" y2="430" stroke="#64748b" stroke-width="2"/>
+  <text x="710" y="240" fill="#64748b" font-family="monospace" font-size="10" transform="rotate(-90 710 240)">EXTERNAL GABLE WALL</text>
+
+  <!-- Havan Stage Base -->
+  <rect x="180" y="420" width="360" height="20" fill="#334155" stroke="#cbd5e0" stroke-width="1"/>
+  <!-- 2mm Galvanized Zinc Plate -->
+  <rect x="220" y="413" width="280" height="7" fill="#94a3b8" stroke="#f1f5f9" stroke-width="1"/>
+  <text x="510" y="419" fill="#ffd166" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="bold">2mm ZINC SHIELD</text>
+
+  <!-- Copper Havan Kund -->
+  <polygon points="280,413 440,413 420,370 300,370" fill="#c2410c" stroke="#fed7aa" stroke-width="2"/>
+  <!-- Fire -->
+  <path d="M 360 370 Q 375 320 360 300 Q 345 320 360 370 Z" fill="#ef4444" filter="url(#flameBlur)"/>
+  <path d="M 360 370 Q 370 330 360 315 Q 350 330 360 370 Z" fill="#fbbf24"/>
+
+  <!-- Smoke Plume rising into hood -->
+  <path d="M 340 340 Q 330 270 320 230 L 400 230 Q 390 270 380 340 Z" fill="url(#exhaustGrad)" opacity="0.5"/>
+
+  <!-- Extraction Hood (Suspended Polycarbonate / Hammered Brass Cowl) -->
+  <polygon points="260,230 460,230 390,160 330,160" fill="url(#hoodGrad)" stroke="#ffd166" stroke-width="2"/>
+  <text x="360" y="200" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="bold" text-anchor="middle">POLYCARBONATE / BRASS EXTRACTION HOOD</text>
+  <text x="360" y="215" fill="#fef08a" font-family="monospace" font-size="9" text-anchor="middle">SUSPENDED 6'-6" ABOVE ALTAR</text>
+
+  <!-- Suspension Steel Wire Ropes -->
+  <line x1="280" y1="160" x2="280" y2="110" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="2,2"/>
+  <line x1="440" y1="160" x2="440" y2="110" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="2,2"/>
+  <text x="250" y="135" fill="#94a3b8" font-family="monospace" font-size="9">AIRCRAFT WIRE (SAFETY)</text>
+
+  <!-- Inline Exhaust Fan Unit (Negative Pressure Blower) -->
+  <rect x="420" y="140" width="70" height="40" fill="#1e293b" stroke="#38bdf8" stroke-width="2" rx="4"/>
+  <text x="455" y="158" fill="#38bdf8" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="bold" text-anchor="middle">INLINE FAN</text>
+  <text x="455" y="172" fill="#bae6fd" font-family="monospace" font-size="8" text-anchor="middle">1200 CFM</text>
+
+  <!-- Flexible Insulated Exhaust Duct (150mm / 6") -->
+  <path d="M 360 160 L 420 160" stroke="#60a5fa" stroke-width="12" fill="none"/>
+  <path d="M 490 160 L 720 160 L 760 160" stroke="#60a5fa" stroke-width="12" fill="none"/>
+  <!-- Duct Ribbing Texture -->
+  <path d="M 490 160 L 750 160" stroke="#0284c7" stroke-width="12" stroke-dasharray="3,3" fill="none"/>
+
+  <!-- Airflow Velocity Arrows -->
+  <g fill="#38bdf8">
+    <polygon points="530,160 520,154 520,166"/>
+    <polygon points="610,160 600,154 600,166"/>
+    <polygon points="690,160 680,154 680,166"/>
+  </g>
+
+  <!-- External Discharge Cowl -->
+  <path d="M 720 145 L 750 135 L 750 185 L 720 175 Z" fill="#475569" stroke="#cbd5e0" stroke-width="1.5"/>
+  <text x="740" y="205" fill="#38bdf8" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="bold" text-anchor="middle">OUTDOOR EJECTION</text>
+
+  <!-- AC Sanctuary Environment Comparison Box -->
+  <rect x="50" y="160" width="160" height="95" fill="#0f172a" stroke="#3b82f6" stroke-width="1" rx="4"/>
+  <text x="60" y="180" fill="#60a5fa" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="bold">SANCTUARY HVAC</text>
+  <text x="60" y="198" fill="#e2e8f0" font-family="monospace" font-size="10">• 40T AC Active (24°C)</text>
+  <text x="60" y="214" fill="#e2e8f0" font-family="monospace" font-size="10">• Zero Smoke Recirc.</text>
+  <text x="60" y="230" fill="#e2e8f0" font-family="monospace" font-size="10">• Odor Free Air Quality</text>
+  <text x="60" y="246" fill="#34d399" font-family="monospace" font-size="9">✓ Camera Lens Clear</text>
+
+  <!-- Contractual Warning -->
+  <rect x="40" y="435" width="720" height="28" fill="#ef4444" fill-opacity="0.15" stroke="#ef4444" stroke-width="1" rx="4"/>
+  <text x="400" y="454" fill="#fca5a5" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="bold" text-anchor="middle">⚠️ CONTRACT PENALTY: ₹25,000 DEDUCTION IF HAVAN SMOKE DISPERSES INTO AC SANCTUARY</text>
+</svg>

@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <linearGradient id="sangeetBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#141d2e"/>
+    </linearGradient>
+    <linearGradient id="ledScreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b"/>
+      <stop offset="50%" stop-color="#312e81"/>
+      <stop offset="100%" stop-color="#4338ca"/>
+    </linearGradient>
+    <linearGradient id="lightCone" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#sangeetBg)" rx="8"/>
+  <rect x="20" y="20" width="760" height="460" fill="none" stroke="#2a3b5c" stroke-width="1.5" stroke-dasharray="6,4" rx="6"/>
+
+  <text x="40" y="55" fill="#818cf8" font-family="'Cinzel', Georgia, serif" font-size="20" font-weight="700" letter-spacing="1">TECHNICAL PRODUCTION SCHEMATIC — PLATE 03</text>
+  <text x="40" y="75" fill="#a0aec0" font-family="'Plus Jakarta Sans', sans-serif" font-size="12">SANGEET 36FT PERFORMANCE RIGGING, CRI &gt; 95 CINEMA LIGHTS &amp; ACOUSTIC MASKING | ZONE A</text>
+
+  <!-- Overhead Aluminum Box Truss (36ft span) -->
+  <!-- Top & Bottom Chords -->
+  <line x1="80" y1="120" x2="720" y2="120" stroke="#cbd5e0" stroke-width="3"/>
+  <line x1="80" y1="145" x2="720" y2="145" stroke="#cbd5e0" stroke-width="3"/>
+  <!-- Webbing Lacing -->
+  <path d="M 80 120 L 105 145 L 130 120 L 155 145 L 180 120 L 205 145 L 230 120 L 255 145 L 280 120 L 305 145 L 330 120 L 355 145 L 380 120 L 405 145 L 430 120 L 455 145 L 480 120 L 505 145 L 530 120 L 555 145 L 580 120 L 605 145 L 630 120 L 655 145 L 680 120 L 705 145 L 720 130" stroke="#94a3b8" stroke-width="1.5" fill="none"/>
+
+  <!-- Vertical Truss Towers -->
+  <rect x="90" y="145" width="24" height="255" fill="#334155" stroke="#cbd5e0" stroke-width="1.5"/>
+  <rect x="686" y="145" width="24" height="255" fill="#334155" stroke="#cbd5e0" stroke-width="1.5"/>
+
+  <!-- Center P3 High-Definition LED Screen (24ft x 12ft) -->
+  <rect x="220" y="160" width="360" height="180" fill="url(#ledScreen)" stroke="#6366f1" stroke-width="2" rx="4"/>
+  <text x="400" y="240" fill="#e0e7ff" font-family="'Cinzel', Georgia, serif" font-size="18" font-weight="700" text-anchor="middle" letter-spacing="2">KRUSHNA &amp; SREE</text>
+  <text x="400" y="260" fill="#a5b4fc" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" text-anchor="middle">P3 HIGH-REFRESH INDOOR LED WALL (3840Hz)</text>
+
+  <!-- Side Acoustic Velour Masking Drapes (Blackout) -->
+  <rect x="120" y="150" width="90" height="240" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+  <text x="165" y="270" fill="#64748b" font-family="monospace" font-size="10" text-anchor="middle" transform="rotate(-90 165 270)">ACOUSTIC VELOUR</text>
+
+  <rect x="590" y="150" width="90" height="240" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+  <text x="635" y="270" fill="#64748b" font-family="monospace" font-size="10" text-anchor="middle" transform="rotate(-90 635 270)">ACOUSTIC VELOUR</text>
+
+  <!-- Rigged Cinema Fixtures (CRI > 95 Warm White) -->
+  <!-- Fixture 1 -->
+  <rect x="250" y="145" width="16" height="20" fill="#f59e0b" rx="2"/>
+  <polygon points="250,165 190,390 320,390 266,165" fill="url(#lightCone)"/>
+  <!-- Fixture 2 -->
+  <rect x="350" y="145" width="16" height="20" fill="#f59e0b" rx="2"/>
+  <polygon points="350,165 290,390 420,390 366,165" fill="url(#lightCone)"/>
+  <!-- Fixture 3 -->
+  <rect x="434" y="145" width="16" height="20" fill="#f59e0b" rx="2"/>
+  <polygon points="434,165 380,390 510,390 450,165" fill="url(#lightCone)"/>
+  <!-- Fixture 4 -->
+  <rect x="534" y="145" width="16" height="20" fill="#f59e0b" rx="2"/>
+  <polygon points="534,165 480,390 610,390 550,165" fill="url(#lightCone)"/>
+
+  <!-- Raised Dance & Performance Stage -->
+  <rect x="110" y="390" width="580" height="35" fill="#1e293b" stroke="#818cf8" stroke-width="2"/>
+  <text x="400" y="412" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" text-anchor="middle">36'-0" × 16'-0" REINFORCED CHOREOGRAPHY STAGE (3ft ELEVATION)</text>
+
+  <!-- Subwoofer Enclosures (Sub-stage arrays) -->
+  <rect x="130" y="425" width="60" height="25" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+  <text x="160" y="441" fill="#94a3b8" font-family="monospace" font-size="9" text-anchor="middle">SUB DUAL 18"</text>
+
+  <rect x="610" y="425" width="60" height="25" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+  <text x="640" y="441" fill="#94a3b8" font-family="monospace" font-size="9" text-anchor="middle">SUB DUAL 18"</text>
+
+  <!-- Technical Standards Callout Box -->
+  <rect x="560" y="45" width="195" height="28" fill="#6366f1" fill-opacity="0.15" stroke="#6366f1" stroke-width="1.2" rx="4"/>
+  <text x="657" y="64" fill="#a5b4fc" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" text-anchor="middle">CRI &gt; 95 CINEMA SPECIFIED</text>
+
+  <!-- Bottom Rider Note -->
+  <text x="400" y="475" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" text-anchor="middle">Zero 120fps video banding on Sony FX3 cinema cameras. No generic disco-RGB pars on ceremony/couple face.</text>
+</svg>
