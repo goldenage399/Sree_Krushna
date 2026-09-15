@@ -1113,14 +1113,23 @@ window.dataLayer = window.dataLayer || [];
           // 3. Extract and execute scripts sequentially
           const scripts = doc.querySelectorAll('script');
           for (const oldScript of scripts) {
-            const newScript = document.createElement('script');
-            if (oldScript.type) newScript.type = oldScript.type;
-            if (oldScript.src) {
-              newScript.src = oldScript.src;
-            } else {
-              newScript.textContent = oldScript.textContent;
-            }
-            document.body.appendChild(newScript);
+            await new Promise((resolve) => {
+              const newScript = document.createElement('script');
+              if (oldScript.type) newScript.type = oldScript.type;
+              if (oldScript.src) {
+                newScript.src = oldScript.src;
+                newScript.onload = () => resolve();
+                newScript.onerror = (e) => {
+                  console.warn('Script failed to load:', oldScript.src, e);
+                  resolve();
+                };
+                document.body.appendChild(newScript);
+              } else {
+                newScript.textContent = oldScript.textContent;
+                document.body.appendChild(newScript);
+                resolve();
+              }
+            });
           }
         } else {
           frame.innerHTML = fragmentText;

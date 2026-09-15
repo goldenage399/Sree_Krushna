@@ -121,13 +121,14 @@
     // URL DEEP LINK & QUERY PARAM PARSER (P-DEEP-LINK-001)
     // ========================================================================
     function parseUrlParams() {
+      if (typeof URLSearchParams === 'undefined') return;
       const params = new URLSearchParams(window.location.search);
 
       // Mode check: ?mode=family
       if (params.get('mode') === 'family') {
         isFamilyMode = true;
-        familyWelcomeBanner.classList.add('active');
-        executiveHeader.style.display = 'none';
+        if (familyWelcomeBanner) familyWelcomeBanner.classList.add('active');
+        if (executiveHeader) executiveHeader.style.display = 'none';
       }
 
       // Event check: ?event=wedding | sangeet | mehendi | haldi | infrastructure

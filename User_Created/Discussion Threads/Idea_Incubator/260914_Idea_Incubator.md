@@ -4106,11 +4106,224 @@ This plan addresses all requirements:
 
 *Awaiting your review to begin execution of the plan.*
 
-# Query 3.1 -
+# Query 3.1 -ok proceed
 
-# Review 3.1 -
+# Review 3.1 -Created 260915_arch_council_dual_surface_family_survey_and_trousseau_decision_gates.md
+Viewed Council_Ledger.md:20-33
 
-# Response 3.1 -
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: e656fc33-c127-4430-b3c4-9e2e1aa37e30-1619-2010)
+
+Edited Council_Ledger.md
+Ran command: `npm run test:shopping`
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: e656fc33-c127-4430-b3c4-9e2e1aa37e30-1625-2010)
+
+Ran command: `npm run verify:modular-architecture`
+Ran command: `npm run verify:governance-wiring`
+Ran command: `npm run verify:mobile`
+Ran command: `npm run verify:deployment`
+Ran command: `git status -s`
+Ran command: `git diff --stat`
+Ran command: `git diff index.html public/js/app.js`
+Ran command: `git diff js/app.js public/js/app.js`
+Searched for files: app.js
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: e656fc33-c127-4430-b3c4-9e2e1aa37e30-1645-2010)
+
+Ran command: `git diff decision_registry_src/scripts/controller.js`
+Ran command: `npm run test:decision-registry`
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: e656fc33-c127-4430-b3c4-9e2e1aa37e30-1651-2010)
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: e656fc33-c127-4430-b3c4-9e2e1aa37e30-1653-2010)
+
+Ran command: `git status -s`
+Ran command: `git log -n 5 --oneline`
+Ran command: `git show --stat 49541d5`
+Ran command: `node -e "const fs=require('fs'); console.log(fs.readFileSync('index.html').equals(fs.readFileSync('public/index.html')) ? 'INDEX PARITY MATCH' : 'MISMATCH');"`
+Ran command: `node -e "const fs=require('fs'); console.log('decision-registry:', fs.readFileSync('decision-registry.html').equals(fs.readFileSync('public/decision-registry.html'))); console.log('decision-registry-fragment:', fs.readFileSync('decision-registry-fragment.html').equals(fs.readFileSync('public/decision-registry-fragment.html')));"`
+Ran command: `git add index.html public/index.html public/js/app.js decision_registry_src/scripts/controller.js decision-registry.html public/decision-registry.html decision-registry-fragment.html public/decision-registry-fragment.html`
+Ran command: `git commit -m "feat(decision-registry): sequential fragment script rehydration, null-safety guards, and global dataset mounting"`
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: e656fc33-c127-4430-b3c4-9e2e1aa37e30-1669-2010)
+
+Ran command: `git status -s`
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: e656fc33-c127-4430-b3c4-9e2e1aa37e30-1673-2010)
+
+Ran command: `git diff "User_Created/Discussion Threads/DecoratorDiscussion/260913_DecoratorDiscussion.md"`
+Ran command: `git add "User_Created/Discussion Threads/DecoratorDiscussion/260913_DecoratorDiscussion.md" "User_Created/Discussion Threads/Idea_Incubator/260914_Idea_Incubator.md"`
+Ran command: `git commit -m "docs(threads): synchronize DecoratorDiscussion and Idea_Incubator deliberation records"`
+
+Error: Model produced invalid output.
+
+Ran command: `git status -s`
+Ran command: `npm run verify:governance-wiring`
+Ran command: `npm run test:shopping`
+Ran command: `npm run verify:modular-architecture`
+Ran command: `git add docs/references/A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md docs/DOCUMENTATION-INDEX.md CLAUDE.md GEMINI.md js/shopping-data.js public/js/shopping-data.js shopping_src/components/body.html shopping_src/scripts/controller.js shopping_src/styles/04_toast_and_print.css shopping-registry.html public/shopping-registry.html scripts/test-shopping-registry.cjs "User_Created/Discussion Threads/Council/Council_Ledger.md" "User_Created/Discussion Threads/Council/260915_arch_council_dual_surface_family_survey_and_trousseau_decision_gates.md"`
+Ran command: `git status`
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: e656fc33-c127-4430-b3c4-9e2e1aa37e30-1695-2010)
+
+Ran command: `git commit -m "feat(shopping): implement A4 printable family survey, Odia cultural heirlooms, and tailoring decision gates (AC-DEC-2026-022)"`
+Ran command: `git status`
+Viewed walkthrough.md:1-43
+Created walkthrough.md
+Ran command: `git status`
+
+### 🏛️ Dual-Surface Family Consultation Survey & Odia Cultural Heirlooms Shipped (`AC-DEC-2026-022`)
+
+All three pillars of the family survey and cultural trousseau requirements are complete, verified, and committed.
+
+---
+
+### 1. What Was Delivered
+
+#### 📄 Pillar 1: Standalone Ink-Friendly Physical A4 Consultation Dossier
+* **File**: [A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md](file:///d:/GitHub_Repo/Sree_Krushna/docs/references/A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md)
+* **Design**: Designed specifically for non-digital family members (elders, grandparents, mothers, in-laws) who will not use the app.
+* **Key Components**:
+  * **Tentative Budget Allocation Matrix**: Radio checkboxes `[ ]` across conservative, balanced, and premium tiers per shopping domain.
+  * **Section 1 (Bridal Sanctum Trousseau)**: 8 items including Nuapatna Khandua Pata and explicit bridal blouse embroidery (*Maggam/Aari*) **7–10 day turnaround warning** (fabric must be dropped off on Day 1).
+  * **Section 2 (Groom Ceremonial Wardrobe)**: 9 items including the **Ashok Nagar Master Tailoring vs. Manyavar/Tasva Readymade Decision Gate** (bespoke fit for ₹12,000–₹16,500 vs ₹35,000–₹55,000 readymade; ~55–65% commercial savings).
+  * **Section 3 (Ornaments, Silver Filigree & Balakati Kansa)**: 10 items including pure silver Cuttack Tarakasi *Sindura Phuda* & *Pana Batta* and hand-cast Balakati bell-metal dinner set.
+  * **Section 4 (In-Laws "Sara" Gifting Bundles)**: 7 items including Sambalpuri Groom Joda & Dhoti.
+  * **Section 5 (Bhubaneswar Artisan & Tailor Market Directory)**: Curated map of Boyanika, Priyadarshini, Khimji, Ashok Nagar Gents Tailors, Saheed Nagar Boutiques, and Balakati bell-metal artisans.
+  * **Section 6 (Family Sign-Off & Allocation Ledger)**: Physical approval and signature blocks.
+
+---
+
+#### 🌐 Pillar 2: Native Web App Print Engine (`shopping_src/`)
+* **1-Click Print Affordance**: Added **`[📝 Print Family Survey]`** in the top action bar of `shopping-registry.html` (and `public/shopping-registry.html`).
+* **Clean Print View**: Clicking this button or invoking `window.printFamilySurvey()` renders `#familySurveyDossierPrintView` using dedicated `@media print` CSS rules in `04_toast_and_print.css` (high-contrast monochrome, no app navigation chrome, proper page-breaks).
+* **Zero Monolithic UI Script Invariant (`STD-MOD-COMP-001`)**: Built cleanly through the SDCA assembler with 100% byte parity across root and `public/`.
+
+---
+
+#### 🪔 Pillar 3: Canonical Cultural Invariants & Enriched Data Layer
+* **Item Expansion**: Increased dataset from 30 to **34 canonical items** in `js/shopping-data.js` and `public/js/shopping-data.js`:
+  1. `TRS-OD-01`: **Nuapatna Khandua Pata** (consecrated silk saree with *Gita Govinda* calligraphic verses for *Diya Mangula Puja*).
+  2. `TRS-OD-02`: **Balakati Hand-Cast Kansa Set** (traditional bell-metal dinner set for newlywed couple's first meal).
+  3. `TRS-OD-03`: **Cuttack Tarakasi Silver Sindura Phuda & Pana Batta** (pure silver filigree ritual containers; gold strictly avoided on feet/ritual vessels).
+  4. `TRS-OD-04`: **Sambalpuri Groom Joda & Silk Dhoti** (traditional handloom groom attire).
+
+---
+
+### 2. Verification Gate Summary
+
+| Suite / Gate | Command | Result | Details |
+|---|---|---|---|
+| **Shopping Registry Smoke & Schema** | `npm run test:shopping` | **✅ PASS** | 100% Green (34/34 items verified across 4 chapters). |
+| **Modular Component Architecture** | `npm run verify:modular-architecture` | **✅ PASS** | 44/44 checks passed. Zero monolithic builder scripts >500 lines. |
+| **Governance Wiring Gate** | `npm run verify:governance-wiring` | **✅ PASS** | 0 broken links, 0 schema violations, 0 warnings. |
+| **Mobile Standards Gate** | `npm run verify:mobile` | **✅ PASS** | 16/16 checks passed (viewport, touch targets $\ge 44\text{px}$, responsive tables). |
+| **Pre-Flight Deployment Gate** | `npm run verify:deployment` | **✅ PASS** | All 9 pre-flight layers 100% green. |
+
+---
+
+### 3. Governance Records & Git Commits
+- **Council Decision Record**: [260915_arch_council_dual_surface_family_survey_and_trousseau_decision_gates.md](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/260915_arch_council_dual_surface_family_survey_and_trousseau_decision_gates.md)
+- **Council Ledger**: Appended `AC-DEC-2026-022` / `UI-DEC-2026-018` to [Council_Ledger.md](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/Council_Ledger.md).
+- **Phased Commits**:
+  - `473d2d8`: `feat(decision-registry): sequential fragment script rehydration, null-safety guards, and global dataset mounting`
+  - `4775776`: `docs(threads): synchronize DecoratorDiscussion and Idea_Incubator deliberation records`
+  - `56ce4c6`: `feat(shopping): implement A4 printable family survey, Odia cultural heirlooms, and tailoring decision gates (AC-DEC-2026-022)`
+
+---
+
+### 4. How to Conduct the Survey
+
+1. **For Paper Survey**: Print [A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md](file:///d:/GitHub_Repo/Sree_Krushna/docs/references/A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md) or click **`[📝 Print Family Survey]`** on the Shopping Registry page.
+2. **Family Consultation**: Gather elder and in-law feedback on the budget brackets, Khandua Pata vs. Kanjeevaram priorities, and bespoke master tailoring options.
+3. **Trip Readiness**: With fabric drop-off scheduled on Day 1 in Bhubaneswar, the 7–10 day tailoring buffer will be secured without delaying wedding week preparations.
+
+# Response 3.1 -# Walkthrough: Dual-Surface Family Consultation Survey, Odia Cultural Heirlooms & Trousseau Decision Gates
+
+**Architecture & UI Reference:** `AC-DEC-2026-022` / `UI-DEC-2026-018`  
+**Pattern Standard:** `P-SURVEY-PRINT-001` (Dual-Surface Offline-First Family Survey & Heritage Invariant)  
+**Parent Framework:** `SPEC-PROC-TROUSSEAU-001` & `STD-MOD-COMP-001` (Modular Component Architecture)
+
+---
+
+## 1. Executive Summary
+
+To prepare for the in-person shopping expedition in Bhubaneswar with the Bride's family (*Kanyapaksha*), we solved the dual challenge of:
+1. **Engaging Non-Digital Family Elders**: Senior relatives, parents, and aunts who will not log into or navigate a digital web app.
+2. **Culturally Authentic Odia Heirlooms & Economics**: Incorporating essential Odia ceremonial items and explicit custom tailoring vs. off-the-shelf decision gates.
+
+We delivered the **Dual-Surface Family Survey Engine**:
+- **Surface 1 (Physical)**: An ink-friendly, high-contrast monochrome printable A4 Consultation Dossier with checkboxes `[ ]`, budget allocation brackets, and physical signature approval blocks.
+- **Surface 2 (Digital/Web)**: An in-app 1-click `[📝 Print Family Survey]` engine in the Shopping Registry (`shopping_src/`), enabling instant browser printout formatted cleanly for A4 paper.
+- **Data & Decision Gates**: Expanded the catalog to 34 items including 4 sacred Odia heirlooms and custom gents tailoring lead-time/economics gates.
+
+---
+
+## 2. Key Shipped Deliverables
+
+### A. Standalone Physical A4 Consultation Dossier
+- **File**: [A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md](file:///d:/GitHub_Repo/Sree_Krushna/docs/references/A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md)
+- **Features**:
+  - **Budget Allocation Grid**: Selectable ranges for each category (e.g. ₹75k–₹1.2L for Bridal Sanctum).
+  - **Section 1 (Bridal Sanctum Trousseau)**: 8 items, including the Nuapatna Khandua Pata silk saree and Maggam blouse 7–10 day turnaround warning.
+  - **Section 2 (Groom Wardrobe & Custom Tailoring)**: 9 items, including the Ashok Nagar custom tailoring vs Manyavar readymade cost-benefit comparison (saving ~₹20,000–₹35,000).
+  - **Section 3 (Bridal Ornaments, Silver Filigree & Balakati Kansa)**: 10 items, including pure silver Cuttack Tarakasi *Sindura Phuda* & *Pana Batta*, and hand-cast Balakati bell-metal dinner set.
+  - **Section 4 (In-Laws "Sara" Gifting Bundles)**: 7 items, including Sambalpuri Groom Joda and Samandhi Vastra.
+  - **Section 5 (Bhubaneswar Artisan & Tailor Market Directory)**: Boyanika, Priyadarshini, Khimji, Ashok Nagar Gents Master Tailors, Saheed Nagar Bridal Boutiques, and Balakati Bell-Metal Artisan Hubs.
+  - **Section 6 (Family Sign-Off & Allocation Ledger)**: Physical signature approval blocks for Family Elder, Groom, Bride, and In-Laws.
+
+### B. Enriched Cultural Data Layer (`js/shopping-data.js` & `public/js/shopping-data.js`)
+- Enriched dataset from 30 to **34 items** with 100% byte parity:
+  - `TRS-OD-01`: **Nuapatna Khandua Pata** (Traditional Odia Bridal Sacred Silk consecrated during Diya Mangula Puja).
+  - `TRS-OD-02`: **Balakati Hand-Cast Kansa Set** (Traditional Bell-Metal Dinner Set for couple's first meal).
+  - `TRS-OD-03`: **Cuttack Tarakasi Silver Sindura Phuda & Pana Batta** (Pure Silver Filigree Ritual Containers).
+  - `TRS-OD-04`: **Sambalpuri Groom Joda & Silk Dhoti** (Traditional Handloom Groom Attire).
+- Embedded custom tailoring economics on `TRS-GR-03` (Barat Sherwani):
+  - Bespoke Custom Tailoring: ₹12,000–₹16,500 | 7–10 days buffer.
+  - Readymade Branded: ₹35,000–₹55,000 | 1–2 days buffer.
+
+### C. Web App Modular Print Engine (`shopping_src/`)
+- **[body.html](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/components/body.html)**:
+  - Added `[📝 Print Family Survey]` toolbar button in the shopping header.
+  - Injected `#familySurveyDossierPrintView` containing structured questionnaire tables, checkboxes, and budget allocation grids.
+- **[04_toast_and_print.css](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/styles/04_toast_and_print.css)**:
+  - Enforced `body[data-print-target="survey"]` print styles.
+  - Pure monochrome ink-saving typography, forced table borders, hidden web chrome (stepper, carousels, drawers, headers).
+- **[controller.js](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/scripts/controller.js)**:
+  - Exposed `window.printFamilySurvey()` hook which sets the print target, opens native browser print dialog, and cleans up afterwards.
+- **Compiled Output**: Rebuilt via `scripts/build-shopping-html.cjs` into `shopping-registry.html` and `public/shopping-registry.html` (125,779 bytes, 100% byte parity).
+
+### D. Governance & Council Ledger Certification
+- **Deliberation Record**: [260915_arch_council_dual_surface_family_survey_and_trousseau_decision_gates.md](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/260915_arch_council_dual_surface_family_survey_and_trousseau_decision_gates.md)
+- **Council Ledger**: Appended `AC-DEC-2026-022` / `UI-DEC-2026-018` to [Council_Ledger.md](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/Council_Ledger.md).
+- **Master Documentation Index**: Registered in [DOCUMENTATION-INDEX.md](file:///d:/GitHub_Repo/Sree_Krushna/docs/DOCUMENTATION-INDEX.md), [CLAUDE.md](file:///d:/GitHub_Repo/Sree_Krushna/CLAUDE.md), and [GEMINI.md](file:///d:/GitHub_Repo/Sree_Krushna/GEMINI.md).
+
+---
+
+## 3. Verification & Compliance Matrix
+
+| Test Suite / Gate | Command | Status | Coverage |
+|---|---|---|---|
+| **Shopping Registry Smoke & Schema** | `npm run test:shopping` | **✅ PASS** | 100% Green (34/34 items verified across 4 chapters). |
+| **Modular Component Architecture** | `npm run verify:modular-architecture` | **✅ PASS** | 44/44 checks passed. Zero monolithic scripts >500 lines. |
+| **Governance Wiring Gate** | `npm run verify:governance-wiring` | **✅ PASS** | 0 broken link errors, 0 schema violations, 0 warnings. |
+| **Mobile Standards Gate** | `npm run verify:mobile` | **✅ PASS** | 16/16 checks passed. WCAG 2.5.8 touch targets, responsive tables. |
+| **Pre-Flight Deployment Gate** | `npm run verify:deployment` | **✅ PASS** | All 9 pre-flight layers 100% green. |
+
+---
+
+## 4. How to Use & Test
+
+1. **For In-Person Family Meeting (Physical Paper Survey)**:
+   - Print [A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md](file:///d:/GitHub_Repo/Sree_Krushna/docs/references/A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md) directly, or
+   - Open `shopping-registry.html` (or [http://localhost:5000/shopping-registry.html](http://localhost:5000/shopping-registry.html)) in any browser.
+   - Click the **`[📝 Print Family Survey]`** button in the top action bar.
+   - Print dialog opens pre-configured for crisp monochrome A4 output.
+2. **Reviewing Cultural Items in the Web Portal**:
+   - Filter by **`👰 Bridal Sanctum`**: View `TRS-OD-01` (Nuapatna Khandua Pata).
+   - Filter by **`👑 Groom Wardrobe`**: View `TRS-OD-04` (Sambalpuri Joda) and `TRS-GR-03` with custom tailoring economics comparison.
+   - Filter by **`✨ Ornaments & Silver`**: View `TRS-OD-02` (Balakati Kansa) and `TRS-OD-03` (Cuttack Tarakasi).
+
 
 # Query 3.2 -
 

@@ -18,7 +18,8 @@
   transition: opacity 0.25s ease, visibility 0.25s ease;
 }
 
-.sk-drawer-backdrop.is-active {
+.sk-drawer-backdrop.is-active,
+.sk-drawer-backdrop:has(.sk-comments-drawer.is-active) {
   opacity: 1;
   visibility: visible;
 }
@@ -42,7 +43,8 @@
   box-sizing: border-box;
 }
 
-.sk-drawer-backdrop.is-active .sk-comments-drawer {
+.sk-drawer-backdrop.is-active .sk-comments-drawer,
+.sk-comments-drawer.is-active {
   transform: translateX(0);
 }
 
@@ -396,7 +398,8 @@
     transform: translateY(100%);
   }
 
-  .sk-drawer-backdrop.is-active .sk-comments-drawer {
+  .sk-drawer-backdrop.is-active .sk-comments-drawer,
+  .sk-comments-drawer.is-active {
     transform: translateY(0);
   }
 }

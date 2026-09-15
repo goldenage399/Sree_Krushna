@@ -136,6 +136,22 @@
     },
 
     /**
+     * Close Collaborative Comments Drawer
+     */
+    closeComments: function() {
+      if (global.SKCommentsEngine) {
+        global.SKCommentsEngine.closeDrawer();
+      } else if (global.closeCommentsDrawer) {
+        global.closeCommentsDrawer();
+      } else {
+        const backdrop = document.getElementById('skCommentsDrawerBackdrop');
+        if (backdrop) backdrop.classList.remove('is-active');
+        const drawer = document.getElementById('skCommentsDrawer');
+        if (drawer) drawer.classList.remove('is-active');
+      }
+    },
+
+    /**
      * Get comment count for an option
      * @param {string} optionId 
      * @returns {number}

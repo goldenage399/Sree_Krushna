@@ -9915,9 +9915,195 @@ The **Master Decision Registry & Event Stepper** has been mounted natively into 
    - In the header of the Decision Registry, click **`🏛️ Open Cockpit`** $\to$ observe smooth in-app tab switch directly into **`🎪 Decorator Cockpit`** (`#tab-cockpit`).
 
 
-# Query 6.5 -
+# Query 6.5 -the decisions Registry isnt loading http://localhost:5000/#tab-decision-registry
+VM46:1072 Uncaught TypeError: Cannot read properties of undefined (reading 'icon')
+    at renderMilestones (<anonymous>:1072:50)
+    at initDecisionRegistry (<anonymous>:1902:7)
+    at <anonymous>:1910:5
+    at <anonymous>:1911:5
+    at mountDecisionRegistryTab (app.js:1206:27)
+VM46:1072 Uncaught TypeError: Cannot read properties of undefined (reading 'icon')
+    at renderMilestones (<anonymous>:1072:50)
+    at initDecisionRegistry (<anonymous>:1902:7)
+    at app.js:1215:20
 
-# Review 6.5 -
+
+# Review 6.5 -Searched for "renderMilestones"
+Searched for "renderMilestones"
+Viewed controller.js:160-220
+Viewed app.js:1180-1225
+Searched for "<script"
+Viewed build.cjs:400-470
+Viewed controller.js:215-300
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: 3fb7fb82-7291-4f65-98d1-c9737c55764a-2585-2010)
+
+Viewed index.html:1220-1255
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: 3fb7fb82-7291-4f65-98d1-c9737c55764a-2589-2010)
+
+Viewed index.html:1224-1235
+Edited index.html
+Edited index.html
+Viewed app.js:1195-1235
+Viewed controller.js:35-70
+Searched for "renderMilestones"
+Searched for "renderMilestones"
+Viewed controller.js:160-210
+Viewed controller.js:980-1026
+Viewed app.js:1175-1215
+Viewed decision-registry-fragment.html:4930-4961
+Searched for "<script"
+Searched for "script"
+Viewed .gitignore:1-10
+Viewed decision-registry-fragment.html:3930-3960
+Viewed decision-registry-fragment.html:3880-3935
+Viewed decision-registry-fragment.html:3840-3880
+Viewed decision-registry-fragment.html:3700-3750
+Viewed build.cjs:1-150
+Viewed build.cjs:151-206
+Searched for "mountCockpitTab"
+Searched for "mount"
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: 3fb7fb82-7291-4f65-98d1-c9737c55764a-2636-2010)
+
+Viewed app.js:1150-1235
+Searched for files: *app.js
+Searched for files: *decision-registry-data*
+Viewed index.html:510-560
+Viewed index.html:1220-1263
+Ran command: `powershell -Command "(Get-Item index.html).Length; (Get-Item public/index.html).Length"`
+Viewed decision-registry-data.js:1-60
+Viewed controller.js:1-160
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: 3fb7fb82-7291-4f65-98d1-c9737c55764a-2654-2010)
+
+Viewed controller.js:210-350
+Viewed controller.js:351-450
+Viewed controller.js:451-580
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: 3fb7fb82-7291-4f65-98d1-c9737c55764a-2662-2010)
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: 3fb7fb82-7291-4f65-98d1-c9737c55764a-2664-2010)
+
+Viewed controller.js:40-75
+Viewed controller.js:205-235
+Viewed controller.js:370-455
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: 3fb7fb82-7291-4f65-98d1-c9737c55764a-2672-2010)
+
+Edited controller.js
+Viewed controller.js:165-240
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: 3fb7fb82-7291-4f65-98d1-c9737c55764a-2678-2010)
+
+Edited controller.js
+Viewed controller.js:380-475
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: 3fb7fb82-7291-4f65-98d1-c9737c55764a-2684-2010)
+
+Viewed controller.js:470-500
+Viewed controller.js:240-255
+Viewed controller.js:255-275
+Viewed controller.js:1020-1052
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: 3fb7fb82-7291-4f65-98d1-c9737c55764a-2694-2010)
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: 3fb7fb82-7291-4f65-98d1-c9737c55764a-2696-2010)
+
+Edited controller.js
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: 3fb7fb82-7291-4f65-98d1-c9737c55764a-2700-2010)
+
+Viewed controller.js:260-275
+Viewed controller.js:395-485
+Edited controller.js
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: 3fb7fb82-7291-4f65-98d1-c9737c55764a-2708-2010)
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: 3fb7fb82-7291-4f65-98d1-c9737c55764a-2710-2010)
+
+Viewed controller.js:395-485
+Edited controller.js
+Viewed app.js:1190-1235
+Edited app.js
+Ran command: `npm run build:decision-registry`
+Ran command: `git status --short`
+Ran command: `powershell -Command "(Get-Item index.html).Length -eq (Get-Item public/index.html).Length; (Get-Item decision-registry.html).Length -eq (Get-Item public/decision-registry.html).Length; (Get-Item decision-registry-fragment.html).Length -eq (Get-Item public/decision-registry-fragment.html).Length"`
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: 3fb7fb82-7291-4f65-98d1-c9737c55764a-2726-2010)
+
+Ran command: `npm run test:decision-registry`
+Ran command: `npm run verify:modular-architecture`
+Ran command: `npm run test:cockpit`
+Ran command: `npm run verify:mobile`
+Ran command: `npm run verify:deployment`
+Viewed package.json:1-49
+Created d:\GitHub_Repo\Sree_Krushna\scratch\probe_tab_decision_registry.cjs
+Created probe_tab_decision_registry.cjs
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: 3fb7fb82-7291-4f65-98d1-c9737c55764a-2744-2010)
+
+Error: The stream was interrupted. Please continue the task you were working on. (Error ID: 3fb7fb82-7291-4f65-98d1-c9737c55764a-2746-2010)
+
+Error: Our servers are experiencing high traffic right now, please try again in a minute. (Error ID: 3fb7fb82-7291-4f65-98d1-c9737c55764a-2748-2010)
+
+Ran command: `node C:\Users\TEMP\.gemini\antigravity\brain\facad75f-3205-40bc-a3d6-78fe4f71e2bf\scratch\probe_tab_decision_registry.cjs`
+Ran command: `powershell -Command "Test-Path node_modules/jsdom"`
+Ran command: `powershell -Command "Get-ChildItem node_modules -Depth 0 | Select-Object -ExpandProperty Name"`
+Viewed test-decision-registry.cjs:1-46
+Viewed test-cockpit-smoke.cjs:120-165
+Viewed test-cockpit-smoke.cjs:190-240
+Viewed test-decision-registry.cjs:30-46
+Edited test-decision-registry.cjs
+Ran command: `npm run test:decision-registry`
+Viewed controller.js:110-130
+Edited controller.js
+Ran command: `npm run build:decision-registry`
+Viewed test-decision-registry.cjs:70-95
+Edited test-decision-registry.cjs
+Ran command: `npm run test:decision-registry`
+Listed 1 task
+Created check_endpoints.cjs
+Ran command: `node C:\Users\TEMP\.gemini\antigravity\brain\facad75f-3205-40bc-a3d6-78fe4f71e2bf\scratch\check_endpoints.cjs`
+Checked task Run check_endpoints.cjs
+Ran command: `npm test`
+Ran command: `npm run test:shopping`
+Ran command: `npm run verify:governance-wiring:all`
+Ran command: `npm run verify:governance-wiring`
+Viewed walkthrough.md:1-59
+Created walkthrough.md
+
+The runtime crash when accessing `http://localhost:5000/#tab-decision-registry` has been resolved.
+
+### Root Cause
+1. **Asynchronous Script Execution Race (`public/js/app.js`)**: In `mountDecisionRegistryTab()`, scripts from `decision-registry-fragment.html` were appended synchronously. Appending `<script src="/js/decision-registry-data.js">` triggered an asynchronous network fetch, while the subsequent inline controller script executed immediately before `window.DECISION_REGISTRY_DATA` finished loading.
+2. **Static Scope Binding & Missing Null Guards (`decision_registry_src/scripts/controller.js`)**: The controller captured empty arrays in `const` variables at module evaluation time. When `renderMilestones()` ran, `chronologicalEvents` was empty, causing `activeEvtObj` to be `undefined` and throwing `Cannot read properties of undefined (reading 'icon')`.
+
+---
+
+### Key Fixes Applied
+1. **Sequential Script Await in [`public/js/app.js`](file:///d:/GitHub_Repo/Sree_Krushna/public/js/app.js#L1196-L1220)**:
+   - Updated `mountDecisionRegistryTab()` to await `onload` for external `src` scripts before appending subsequent scripts.
+2. **Reactive Data Binding & Null Guards in [`decision_registry_src/scripts/controller.js`](file:///d:/GitHub_Repo/Sree_Krushna/decision_registry_src/scripts/controller.js#L42-L65)**:
+   - Replaced static `const` array closures with `let` and added `refreshData()`, invoked automatically by `initDecisionRegistry()`.
+   - Hardened `renderMilestones()`, `renderClusterPods()`, `renderCarouselCards()`, and button event listeners with defensive null guards.
+3. **Artifact Compilation & Parity**:
+   - Rebuilt `decision-registry.html` and `decision-registry-fragment.html` via `npm run build:decision-registry`.
+   - Maintained 100% byte parity across root and public artifacts (`index.html`, `decision-registry.html`, `decision-registry-fragment.html`).
+4. **Sandboxed Automated Verification in [`scripts/test-decision-registry.cjs`](file:///d:/GitHub_Repo/Sree_Krushna/scripts/test-decision-registry.cjs#L43-L115)**:
+   - Added a Node VM execution test simulating uninitialized dynamic loading (asserting zero exceptions), followed by asynchronous data hydration into the DOM.
+
+---
+
+### Verification
+- `npm run test:decision-registry` — **✅ PASS** (Data integrity, async script await contract, VM sandbox hydration).
+- `npm run verify:modular-architecture` — **✅ PASS** (44/44 checks compliant with `STD-MOD-COMP-001`).
+- `npm run verify:mobile` — **✅ PASS** (16/16 mobile viewport and touch targets checks).
+- `npm run verify:deployment` — **✅ PASS** (All 9 pre-flight layers green).
+- `npm test` — **✅ PASS** (Local dev server endpoints probe HTTP 200 OK).
+
+You can now refresh [http://localhost:5000/#tab-decision-registry](http://localhost:5000/#tab-decision-registry) to view the live Event Stepper, Clustered Decision Pods, Carousel Plates, and Decision Grid. See the [walkthrough](file:///C:/Users/TEMP/.gemini/antigravity/brain/facad75f-3205-40bc-a3d6-78fe4f71e2bf/walkthrough.md) for full details.
 
 # Response 6.5 -
 

@@ -108,51 +108,88 @@
     _initDomListeners() {
       if (typeof document === 'undefined') return;
 
-      document.addEventListener('DOMContentLoaded', () => {
-        const backdrop = document.getElementById('skCommentsDrawerBackdrop');
-        const closeBtn = document.getElementById('skBtnCloseComments');
-        const postBtn = document.getElementById('skBtnPostComment');
-        const filtersWrap = document.getElementById('skStakeholderFilters');
+      const bind = () => this._bindDomEvents();
 
-        if (closeBtn) closeBtn.onclick = () => this.closeDrawer();
-        if (backdrop) {
-          backdrop.onclick = (e) => {
-            if (e.target === backdrop) this.closeDrawer();
-          };
-        }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bind);
+      } else {
+        bind();
+      }
 
-        if (postBtn) {
-          postBtn.onclick = () => this._handlePostSubmit();
-        }
-
-        // Reaction buttons
-        ['love', 'approve', 'doubt', 'blocker'].forEach(type => {
-          const btn = document.querySelector(`.sk-reaction-btn[data-reaction="${type}"]`);
-          if (btn) {
-            btn.onclick = () => this._handleReactionClick(type);
+      // Universal Escape key listener
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          const backdrop = document.getElementById('skCommentsDrawerBackdrop');
+          const drawer = document.getElementById('skCommentsDrawer');
+          if ((backdrop && backdrop.classList.contains('is-active')) || (drawer && drawer.classList.contains('is-active'))) {
+            this.closeDrawer();
           }
-        });
-
-        // Filter pills
-        if (filtersWrap) {
-          filtersWrap.addEventListener('click', (e) => {
-            const pill = e.target.closest('.sk-role-pill');
-            if (!pill) return;
-            filtersWrap.querySelectorAll('.sk-role-pill').forEach(p => p.classList.remove('is-active'));
-            pill.classList.add('is-active');
-            this.activeFilterRole = pill.dataset.role || 'all';
-            this.renderCommentsList();
-          });
         }
       });
     }
 
+    _bindDomEvents() {
+      const backdrop = document.getElementById('skCommentsDrawerBackdrop');
+      const drawer = document.getElementById('skCommentsDrawer');
+      const closeBtn = document.getElementById('skBtnCloseComments');
+      const postBtn = document.getElementById('skBtnPostComment');
+      const filtersWrap = document.getElementById('skStakeholderFilters');
+
+      if (closeBtn) {
+        closeBtn.onclick = (e) => {
+          if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+          this.closeDrawer();
+        };
+      }
+
+      if (backdrop) {
+        backdrop.onclick = (e) => {
+          if (e.target === backdrop) {
+            if (e) {
+              e.preventDefault();
+              e.stopPropagation();
+            }
+            this.closeDrawer();
+          }
+        };
+      }
+
+      if (postBtn) {
+        postBtn.onclick = () => this._handlePostSubmit();
+      }
+
+      // Reaction buttons
+      ['love', 'approve', 'doubt', 'blocker'].forEach(type => {
+        const btn = document.querySelector(`.sk-reaction-btn[data-reaction="${type}"]`);
+        if (btn) {
+          btn.onclick = () => this._handleReactionClick(type);
+        }
+      });
+
+      // Filter pills
+      if (filtersWrap) {
+        filtersWrap.onclick = (e) => {
+          const pill = e.target.closest('.sk-role-pill');
+          if (!pill) return;
+          filtersWrap.querySelectorAll('.sk-role-pill').forEach(p => p.classList.remove('is-active'));
+          pill.classList.add('is-active');
+          this.activeFilterRole = pill.dataset.role || 'all';
+          this.renderCommentsList();
+        };
+      }
+    }
+
     openDrawer(optionId, meta = {}) {
+      this._bindDomEvents();
       this.activeOptionId = optionId;
       this.activeFilterRole = 'all';
 
       const backdrop = document.getElementById('skCommentsDrawerBackdrop');
-      if (!backdrop) return;
+      const drawer = document.getElementById('skCommentsDrawer');
+      if (!backdrop && !drawer) return;
 
       const titleEl = document.getElementById('skCommentsDrawerTitle');
       const badgeEl = document.getElementById('skCommentsOptionBadge');
@@ -174,12 +211,16 @@
 
       this.renderReactions();
       this.renderCommentsList();
-      backdrop.classList.add('is-active');
+      if (backdrop) backdrop.classList.add('is-active');
+      if (drawer) drawer.classList.add('is-active');
     }
 
     closeDrawer() {
       const backdrop = document.getElementById('skCommentsDrawerBackdrop');
       if (backdrop) backdrop.classList.remove('is-active');
+      const drawer = document.getElementById('skCommentsDrawer');
+      if (drawer) drawer.classList.remove('is-active');
+      this.activeOptionId = null;
     }
 
     renderReactions() {
@@ -315,6 +356,16 @@
   global.openCommentsDrawer = function(optionId, meta) {
     if (global.SKCommentsEngine) {
       global.SKCommentsEngine.openDrawer(optionId, meta);
+    }
+  };
+  global.closeCommentsDrawer = function() {
+    if (global.SKCommentsEngine) {
+      global.SKCommentsEngine.closeDrawer();
+    } else {
+      const backdrop = document.getElementById('skCommentsDrawerBackdrop');
+      if (backdrop) backdrop.classList.remove('is-active');
+      const drawer = document.getElementById('skCommentsDrawer');
+      if (drawer) drawer.classList.remove('is-active');
     }
   };
 })(typeof window !== 'undefined' ? window : this);

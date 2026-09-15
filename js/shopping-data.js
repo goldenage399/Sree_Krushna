@@ -514,10 +514,10 @@ window.SHOPPING_REGISTRY_DATA = {
       "category": "groom",
       "chapterId": "chapter_groom_wear",
       "role": "Day 2 Morning Barat Procession",
-      "spec": "Raw Silk / Jacquard with zardozi collar and matching churidar. [Decision Gate: Custom Tailor (Fabric from Janpath + Ashok Nagar Tailor: ₹12k–₹16k, 7-10d) vs Readymade Manyavar (₹35k–₹55k)]",
+      "spec": "Raw Silk / Jacquard with zardozi collar and matching churidar",
       "suggestedColor": "Ivory, Champagne Gold, or Pearl",
-      "store": "Manyavar (Janpath) / Ashok Nagar Master Tailors",
-      "priceRange": "₹12,000 - ₹45,000",
+      "store": "Manyavar (Janpath) / Sherwani House",
+      "priceRange": "₹35,000 - ₹55,000",
       "status": "Shortlisted",
       "approvals": {
         "bride": true,
