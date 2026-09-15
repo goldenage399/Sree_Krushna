@@ -20,23 +20,16 @@ async function getAccessToken() {
   if (!fs.existsSync(cfgPath)) {
     throw new Error(`Firebase credentials not found at ${cfgPath}.`);
   }
-  const cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf8'));
+  let cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf8'));
   let token = cfg.tokens && cfg.tokens.access_token;
-  if (cfg.tokens && cfg.tokens.expires_at && Date.now() > cfg.tokens.expires_at - 60000) {
-    const refreshRes = await fetch('https://oauth2.googleapis.com/token', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({
-        client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho85qd6.apps.googleusercontent.com',
-        refresh_token: cfg.tokens.refresh_token,
-        grant_type: 'refresh_token'
-      })
-    });
-    const refreshData = await refreshRes.json();
-    if (refreshData.access_token) {
-      token = refreshData.access_token;
-      cfg.tokens.access_token = token;
-      fs.writeFileSync(cfgPath, JSON.stringify(cfg, null, 2), 'utf8');
+  if (cfg.tokens && (!cfg.tokens.expires_at || Date.now() > cfg.tokens.expires_at - 60000)) {
+    try {
+      const fbCmd = process.platform === 'win32' ? 'firebase.cmd' : 'firebase';
+      require('child_process').execSync(`${fbCmd} projects:list`, { stdio: 'ignore' });
+      cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf8'));
+      token = cfg.tokens && cfg.tokens.access_token;
+    } catch (e) {
+      console.warn('  ⚠️ Warning: Auto-refresh via Firebase CLI failed:', e.message);
     }
   }
   return token;
