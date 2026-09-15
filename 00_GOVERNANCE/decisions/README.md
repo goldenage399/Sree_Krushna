@@ -12,7 +12,8 @@ This directory contains formal **Decision Records (`DEC-###`)** for all major ch
 
 | ID | Title | Date Decided | Status | Financial Impact (₹) | Deciders |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| *Template* | [`DEC-000_sample_decision.md`](file:///d:/GitHub_Repo/Sree_Krushna/00_GOVERNANCE/decisions/DEC-000_sample_decision.md) | YYYY-MM-DD | Frozen | ₹ 0 | Couple & Parents |
+| [`DEC-002`](./DEC-002_hotel_baseline_inspection_and_printable_checklist.md) | Ratification of On-Site Hotel Inspection Checklist & Printable 4-Page Field Audit Dossier | 2026-09-13 | Approved | ₹ 0 | Architecture Council, Ops Lead, Logistics Lead |
+| [`DEC-003`](./DEC-003_dynamic_ui_lifecycle_and_modal_dismissibility_contract.md) | Dynamic UI Lifecycle, Script Sequencing, and 3-Trigger Modal Dismissibility Standard (STD-UI-LIFECYCLE-001) | 2026-09-15 | Approved | ₹ 0 | Architecture Council, UI/UX Council, Lead Architect |
 
 ---
 

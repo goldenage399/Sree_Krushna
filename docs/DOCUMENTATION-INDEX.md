@@ -17,3 +17,10 @@ Welcome to the **Sree Krushna Marriage OS** documentation catalog.
 ## Reference Specs
 - [SPEC-PROC-TROUSSEAU-001.md](./references/SPEC-PROC-TROUSSEAU-001.md) — Canonical Trousseau & Bridal Shopping Specification
 - [A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md](./references/A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md) — Physical-Digital Dual Surface Family Trousseau & 'Sara' Decision Survey Dossier
+
+---
+
+## Incidents & Case Studies
+- [INC-087-linear-asset-ingestion-index-separation-and-consensus-gap.md](./incidents/INC-087-linear-asset-ingestion-index-separation-and-consensus-gap.md) — Linear Asset Ingestion Index Separation & Friction-Heavy Voting Architecture
+- [INC-088-dynamic-script-injection-race-and-spa-dead-domcontentloaded-trap.md](./incidents/INC-088-dynamic-script-injection-race-and-spa-dead-domcontentloaded-trap.md) — Dynamic Script Injection Race & SPA Zombie DOMContentLoaded Trap (STD-UI-LIFECYCLE-001 / DEC-003)
+
