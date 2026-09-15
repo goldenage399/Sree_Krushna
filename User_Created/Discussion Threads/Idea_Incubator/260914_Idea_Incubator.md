@@ -4325,19 +4325,464 @@ We delivered the **Dual-Surface Family Survey Engine**:
    - Filter by **`✨ Ornaments & Silver`**: View `TRS-OD-02` (Balakati Kansa) and `TRS-OD-03` (Cuttack Tarakasi).
 
 
-# Query 3.2 -
+# Query 3.2 -[prompt-clarity](slashCommand;prompt-clarity) theres only print option not to see and interact in the app? only Print dossier is present?
 
 # Review 3.2 -
 
-# Response 3.2 -
+# Response 3.2 -Viewed SKILL.md:1-77
+Viewed meta-prompt.md:1-137
+Searched for "shopping"
+Viewed skill-router.yaml:1-60
+
+### Clarification & Intent Record
+
+- **Ambiguity detected**: User questioned whether only a print dossier was built and whether interactive app features exist for the survey and trousseau.
+- **Question asked**: "How would you like to interact with the Family Survey and Trousseau features in the app?"
+- **Options offered**:
+  - **A)** Add a live on-screen interactive Survey & Budget Allocation Mode to the Shopping Registry.
+  - **B)** Clarify what is already interactive on screen in the web app.
+  - **C)** Mount the interactive Family Survey directly into the main Marriage OS dashboard (`index.html`).
+- **User resolution**: Thorough evaluation of the available options, breakdown of overlaps/differences, synthesis of a gap-free hybrid model, and recommendation of the best path forward.
+- **Bound route**: `.agent/workflows/plan.md` & `.claude/skills/impeccable/SKILL.md` (Design & Implementation Plan)
+- **Resolved scope**:
+  1. Comprehensive evaluation of Options A, B, and C against user intent and operational reality.
+  2. Structural breakdown of overlaps (similarities) and divergences (distinctions).
+  3. Formulation of a zero-gap hybrid model combining on-screen digital survey interaction, live budget tallying, existing 34-item catalog tools, and ink-friendly physical printing.
+  4. Phased implementation plan with strict approval gate before modifying code.
+
+---
+
+## 1. Context & Root Cause Analysis
+
+### Why does it feel like "only Print dossier is present"?
+In the current deployment, there is an **asymmetric visibility split** between two surfaces:
+
+1. **What is already interactive on screen (`shopping-registry.html`)**:
+   - The 34 itemized procurement cards (Bridal, Groom, Jewellery, Sara Gifting) with individual "Purchased" checkboxes.
+   - The 4-phase chronological stepper (`#shoppingStepper`).
+   - The Clustered Decision Option Pods with side-by-side card comparisons, multi-stakeholder consensus buttons (`👰 Bride`, `👭 Sisters`, `🎁 In-Laws`), and 1-click WhatsApp deep-link generators.
+   - The Bhubaneswar Store Directory with interactive address cards.
+   - The Slide-over Collaboration & Comments Drawer (`sk-comments-drawer`) for threaded notes.
+
+2. **What was constrained to print-only**:
+   - The **Family Consultation Questionnaire & Tentative Budget Allocator** (with the budget tier brackets, tailoring economics comparison table, Odia heirloom survey questions, and family sign-off ledger).
+   - In `shopping_src/components/body.html` and `04_toast_and_print.css`, `#familySurveyDossierPrintView` was styled with `display: none;` on screen, and **only revealed when the browser's `@media print` dialog opens**.
+   - Consequently, when viewing the app on a phone, tablet, or desktop, **you cannot see or interact with the survey form on screen**. You can only see it if you click `[📝 Print Family Survey]` and preview the paper output.
+
+This created a genuine UX gap: if you or your family want to fill out the questionnaire **digitally** (e.g., passing around an iPad or laptop during a family dinner), you cannot do so without printing a physical paper copy.
+
+---
+
+## 2. Thorough Evaluation of Available Options
+
+```
+┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                       OPTIONS EVALUATION MATRIX                                  │
+├───────────────────┬───────────────────────────────┬──────────────────────────────────────────────┤
+│ Option            │ Strengths (Pros)              │ Vulnerabilities / Blindspots (Cons)          │
+├───────────────────┼───────────────────────────────┼──────────────────────────────────────────────┤
+│ Option A:         │ • Solves the core UX gap      │ • Requires navigating to                     │
+│ Live On-Screen    │ • Digital budget allocation   │   shopping-registry.html (separate page      │
+│ Survey Mode in    │   with live running totals    │   from index.html).                          │
+│ Shopping Registry │ • Auto-saves to localStorage  │ • Does not address users who might           │
+│                   │ • Prints pre-filled choices   │   overlook existing catalog features.        │
+├───────────────────┼───────────────────────────────┼──────────────────────────────────────────────┤
+│ Option B:         │ • Zero new code or overhead   │ • Completely ignores the user's need to      │
+│ Pure Walkthrough  │ • Educates user on existing   │   interact with the questionnaire on-screen. │
+│ of Existing App   │   34 items & consensus pods   │ • Keeps the questionnaire locked in paper    │
+│                   │ • Quick turnaround            │   mode only.                                 │
+├───────────────────┼───────────────────────────────┼──────────────────────────────────────────────┤
+│ Option C:         │ • Everything inside index.html│ • High refactoring overhead (fragment        │
+│ In-App Tab Mount  │ • Single unified SPA shell    │   builder, firestore rules, CSS scoping).    │
+│ in Main Dashboard │ • No multi-page navigation    │ • If done alone without Option A, the survey │
+│                   │                               │   form remains hidden/print-only.            │
+└───────────────────┴───────────────────────────────┴──────────────────────────────────────────────┘
+```
+
+### Deep Dive: Option A (Live On-Screen Survey Mode in Shopping Registry)
+* **Mechanics**: Introduce a top-level view segmented switch: `[🛍️ Catalog & Items (34)]` ⟷ `[📝 Family Survey & Budget Studio]`.
+* **Experience**: When "Family Survey" is active, the entire questionnaire unrolls on screen as a rich, interactive digital form:
+  * Interactive budget tier cards (Conservative / Balanced / Premium) with a dynamic **Live Allocated Budget Bar** calculating the total in real time.
+  * Interactive Tailoring Decision Gate on `TRS-GR-03` (Bespoke vs. Readymade) showing instantaneous ₹25,000+ cost-benefit savings.
+  * Interactive priority toggles for the 4 Odia heirlooms.
+  * Persistent storage in `localStorage`.
+  * Print output dynamically reflects the digitally selected choices.
+
+### Deep Dive: Option B (Walkthrough of Existing App Capabilities)
+* **Mechanics**: Provide screenshots and step-by-step guidance showing how the 34 items, chapter stepper, cluster pods, consensus toggles, and comments drawer already function in the live app.
+* **Experience**: Fast clarification, but leaves the user frustrated because the actual *questionnaire / budget form* cannot be operated on screen.
+
+### Deep Dive: Option C (Mount Shopping Registry inside `index.html` as Tab 13)
+* **Mechanics**: Decompose `shopping_src/` into a scoped partial (`shopping-fragment.html`), register `tab-shopping` in `FEATURE_CATALOG.json`, and mount it in the main dashboard nav.
+* **Experience**: Architectural unification, but if the questionnaire itself is still hidden on screen, the user's primary concern remains unresolved.
+
+---
+
+## 3. Breakdown of Overlaps & Distinctions
+
+### Similarities (Overlaps)
+1. **Shared Underlying Data SSOT**: All options rely on `js/shopping-data.js` (34 items across 4 chapters, 4 consensus clusters, and verified Bhubaneswar vendors).
+2. **Dual-Release Parity & SDCA Structure**: All options adhere to `STD-MOD-COMP-001` (modular source directories, no monolithic templates >500 lines, 100% byte parity between root and `public/`).
+3. **Consensus Objective**: Every option aims to harmonize family decisions (Bride, Sisters, In-Laws, Elders) prior to the physical Bhubaneswar market trip.
+
+### Distinctions (Differences)
+1. **Surface Modality (Digital vs. Physical)**:
+   - Option B treats the questionnaire as physical-only (paper print).
+   - Option A makes the questionnaire a first-class digital interactive form on screen.
+2. **Navigation Topology**:
+   - Options A & B operate in `shopping-registry.html` with bi-directional header bridges to `index.html`.
+   - Option C embeds the entire workflow inside `index.html` as an in-app tab.
+3. **State Dynamics**:
+   - Option B has static print layout.
+   - Option A introduces real-time state mutation: selecting budget tiers instantly updates live financial aggregations, saved across page reloads.
+
+---
+
+## 4. The Gap-Free Hybrid Model: "Dual-Surface Unified Interactive Survey & Registry Hub" (`P-SURVEY-HYBRID-001`)
+
+To eliminate all gaps without compromise, we synthesize a **Gap-Free Hybrid Architecture**:
+
+```mermaid
+graph TD
+    subgraph S1["Main Command Center (index.html)"]
+        NavBtn["Navigation Affordance<br/>🛍️ Shopping Registry"]
+    end
+
+    subgraph S2["Shopping Registry & Consensus Engine (shopping-registry.html)"]
+        ViewSwitch{"Top View Switcher"}
+        
+        CatalogView["🛍️ Interactive Catalog View<br/>• 34 Item Cards & 'Purchased' Checks<br/>• 4-Chapter Milestone Stepper<br/>• Clustered Option Pods (Mandap/Vivaha)<br/>• Multi-Stakeholder Consensus (Bride/Sisters/In-Laws)<br/>• Bhubaneswar Store Navigator<br/>• Slide-over Comments Drawer"]
+        
+        SurveyView["📝 Interactive Family Survey Studio<br/>• On-Screen Budget Tier Selectors<br/>• Live Budget Aggregator & Cost Calculator<br/>• Interactive Tailoring Decision Gate<br/>• Odia Cultural Heirlooms Consensus Checklist<br/>• Elder Consultation Notes & Sign-off<br/>• localStorage Auto-Save"]
+        
+        PrintEngine["🖨️ Dynamic A4 Print Engine<br/>• Prints cleanly formatted A4 Dossier<br/>• Pre-fills paper checkboxes with on-screen choices<br/>• Ink-saving monochrome layout"]
+    end
+
+    NavBtn --> ViewSwitch
+    ViewSwitch -->|Default| CatalogView
+    ViewSwitch -->|Toggle| SurveyView
+    SurveyView -->|Save State| SurveyView
+    SurveyView -->|1-Click Print| PrintEngine
+    CatalogView -->|1-Click Print| PrintEngine
+```
+
+### Architectural Components of the Hybrid Model:
+1. **Dual-Mode On-Screen View Switcher**:
+   - Prominently placed below the header in `shopping-registry.html`:
+     `[ 🛍️ Trousseau Catalog & Options (34) ]`  |  `[ 📝 Family Survey & Budget Studio ]`
+   - Smooth, zero-reload tab switching with active indicator styling.
+2. **Interactive Family Survey Studio (On-Screen Form)**:
+   - **Interactive Budget Allocator**: Clickable tier cards (Conservative / Balanced / Premium) for each domain. Tapping updates a sticky **Live Budget Summary Widget** (e.g., `Selected Budget: ₹3,15,000 | Variance: -₹35,000 | Tailoring Savings: ₹28,000`).
+   - **Interactive Tailoring Decision Station**: Tappable choice between Bespoke Ashok Nagar Tailoring vs. Manyavar Readymade, with instant calculation of days required and rupees saved.
+   - **Odia Heirlooms Survey Checklist**: Interactive consensus cards for Nuapatna Khandua Pata, Balakati Kansa set, Cuttack Tarakasi filigree, and Sambalpuri Dhoti.
+   - **Local State Persistence**: All interactive choices persist in `localStorage` under `marriage_family_survey_state`.
+3. **Dynamic Print Synchronization**:
+   - Clicking `[📝 Print Family Survey]` generates the A4 paper printout **with the user's on-screen selections already checked and populated**, bridging the digital and physical realms seamlessly.
+4. **Preservation of Full Catalog & Consensus Engine**:
+   - The existing 34 items, store cards, cluster pods, consensus toggles, and comments drawer remain 100% active and accessible under the "Catalog" view.
+5. **Contextual In-App Bridge**:
+   - Main header button in `index.html` supports direct deep-linking:
+     - `./shopping-registry.html` $\to$ opens Catalog view.
+     - `./shopping-registry.html?view=survey` $\to$ opens directly into the Interactive Survey Studio.
+
+---
+
+## 5. Recommended Path Forward
+
+The **Hybrid Model (`P-SURVEY-HYBRID-001`)** is the only solution that:
+1. Gives you and your family an **interactive, on-screen digital experience** on mobile/tablet/desktop.
+2. Computes **real-time budget totals and tailoring cost savings**.
+3. Retains the **physical paper printout** for senior elders who prefer handwriting.
+4. Keeps the **entire 34-item shopping catalog and consensus tools** fully accessible.
+
+### Ready for Implementation?
+Once you approve, we will execute this plan:
+1. Build the interactive survey component and live budget calculation engine in `shopping_src/components/` and `shopping_src/scripts/controller.js`.
+2. Add the on-screen view switcher and state persistence.
+3. Synchronize the dynamic print engine.
+4. Run all verification gates (`test:shopping`, `verify:modular-architecture`, `verify:mobile`, `verify:deployment`) to 100% green.
+
+Please let me know if you approve this hybrid path, or if you would like any adjustments to the scope.
 
 # Query 3.3 -
 
-# Review 3.3 -
+# Review 3.3 -Listed directory shopping_src
+Listed directory components
+Listed directory styles
+Viewed template.html:1-28
+Viewed build.cjs:1-75
+Viewed body.html:1-100
+Viewed body.html:101-200
+Viewed implementation_plan.md:1-62
+Created implementation_plan.md
+Viewed body.html:201-309
+Viewed controller.js:1-100
+Viewed verify-modular-architecture.cjs:1-60
+Viewed verify-modular-architecture.cjs:61-120
+Viewed controller.js:500-641
+Searched for "printFamilySurvey"
+Searched for "printFamilySurvey"
+Viewed controller.js:475-500
+Viewed 04_toast_and_print.css:1-150
+Viewed 04_toast_and_print.css:151-173
+Created 05_survey_studio.css
+Created survey_studio.html
+Viewed build.cjs:35-55
+Edited build.cjs
+Viewed body.html:45-60
+Viewed body.html:120-135
+Edited body.html
+Viewed body.html:135-148
+Edited body.html
+Viewed controller.js:480-505
+Viewed controller.js:430-475
+Viewed controller.js:56-110
+Searched for "switchShoppingMode"
+Viewed controller.js:470-515
+Viewed controller.js:630-641
+Viewed controller.js:110-135
+Viewed controller.js:136-145
+Viewed controller.js:146-160
+Edited controller.js
+Viewed controller.js:480-520
+Edited controller.js
+Viewed controller.js:860-895
+Viewed controller.js:890-898
+Edited controller.js
+Ran command: `node -c shopping_src/scripts/controller.js`
+Ran command: `node shopping_src/build.cjs`
+Ran command: `node -e "const fs=require('fs'); console.log(fs.readFileSync('shopping-registry.html').equals(fs.readFileSync('public/shopping-registry.html')) ? 'PARITY OK' : 'PARITY MISMATCH');"`
+Ran command: `npm run test:shopping`
+Viewed test-shopping-registry.cjs:15-60
+Edited test-shopping-registry.cjs
+Ran command: `npm run test:shopping`
+Ran command: `npm run verify:modular-architecture`
+Ran command: `npm run verify:governance-wiring`
+Ran command: `npm run verify:mobile`
+Ran command: `npm run verify:deployment`
+Ran command: `git status -s`
+Ran command: `git diff --stat`
+Ran command: `npm run test:decision-registry`
+Ran command: `npm run test:shopping`
+Ran command: `npm run verify:modular-architecture`
+Viewed Council_Ledger.md:20-30
+Edited Council_Ledger.md
+Ran command: `git status -s`
+Viewed verify-ui-lifecycle.cjs:1-20
+Ran command: `node scripts/verify-ui-lifecycle.cjs`
+Viewed package.json:1-49
+Ran command: `npm run test:shopping`
+Ran command: `npm run test:decision-registry`
+Ran command: `npm run verify:modular-architecture`
+Ran command: `git diff decision_registry_src/scripts/controller.js ui_primitives/`
+Ran command: `node scripts/verify-ui-lifecycle.cjs`
+Edited package.json
+Ran command: `npm run verify:ui-lifecycle`
+Ran command: `git status -s`
+Ran command: `npm run verify:deployment`
+Ran command: `git add package.json scripts/verify-ui-lifecycle.cjs ui_primitives/ public/js/app.js decision-registry-fragment.html decision-registry.html decision_registry_src/scripts/controller.js public/decision-registry-fragment.html public/decision-registry.html scripts/test-decision-registry.cjs scripts/build-shopping-data.cjs js/shopping-data.js public/js/shopping-data.js "User_Created/Discussion Threads/DecoratorDiscussion/260913_DecoratorDiscussion.md" "User_Created/Discussion Threads/Idea_Incubator/260914_Idea_Incubator.md"`
+Ran command: `git commit -m "feat(primitives): enforce 3-trigger drawer dismissibility, script sequencing, and ui-lifecycle verification gate"`
+Ran command: `git status -s`
+Ran command: `git diff scripts/verify-deployment.cjs`
+Ran command: `npm run verify:deployment`
+Ran command: `git add shopping_src/ components/ shopping-registry.html public/shopping-registry.html scripts/test-shopping-registry.cjs scripts/verify-deployment.cjs "User_Created/Discussion Threads/Council/Council_Ledger.md"`
+Ran command: `git add shopping_src/ shopping-registry.html public/shopping-registry.html scripts/test-shopping-registry.cjs scripts/verify-deployment.cjs "User_Created/Discussion Threads/Council/Council_Ledger.md"`
+Ran command: `git status`
+Ran command: `git diff GEMINI.md`
+Ran command: `git diff CLAUDE.md`
+Viewed CLAUDE.md:35-55
+Viewed CLAUDE.md:140-155
+Edited CLAUDE.md
+Edited CLAUDE.md
+Ran command: `npm run verify:governance-wiring`
+Viewed dynamic-fragment-lifecycle-and-modal-dismiss-contract.md:1-25
+Edited dynamic-fragment-lifecycle-and-modal-dismiss-contract.md
+Ran command: `npm run verify:governance-wiring`
+Edited dynamic-fragment-lifecycle-and-modal-dismiss-contract.md
+Ran command: `npm run verify:governance-wiring`
+Ran command: `npm run verify:governance-wiring:all`
+Ran command: `git status -s`
+Ran command: `git commit -m "feat(shopping): implement on-screen interactive survey studio, live budget engine, and dynamic print synchronization (P-SURVEY-HYBRID-001 / AC-DEC-2026-023)"`
+Ran command: `git status -s`
+Ran command: `git add CLAUDE.md GEMINI.md .agent/patterns/dynamic-fragment-lifecycle-and-modal-dismiss-contract.md 00_GOVERNANCE/decisions/DEC-003_dynamic_ui_lifecycle_and_modal_dismissibility_contract.md`
+Ran command: `git commit -m "chore(governance): codify STD-UI-LIFECYCLE-001 invariant, DEC-003 decision record, and PACT-001 pattern"`
+Ran command: `git status`
+Ran command: `npm run test:shopping && npm run test:decision-registry && npm run verify:ui-lifecycle && npm run verify:modular-architecture && npm run verify:governance-wiring && npm run verify:mobile && npm run verify:deployment`
+Ran command: `npm run test:shopping; npm run test:decision-registry; npm run verify:ui-lifecycle; npm run verify:modular-architecture; npm run verify:deployment`
+Created walkthrough.md
 
-# Response 3.3 -
+### 🌟 Dual-Surface Unified Interactive Survey & Registry Hub Shipped (`P-SURVEY-HYBRID-001` / `AC-DEC-2026-023`)
 
-# Query 3.4 -
+The asymmetric visibility gap has been resolved. The **Family Survey & Budget Questionnaire** is now fully interactive on screen, with a seamless top-level switch between the visual catalog and the survey studio, plus dynamic print synchronization.
+
+---
+
+### 1. What Was Implemented
+
+```
+┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
+│             DUAL-SURFACE UNIFIED INTERACTIVE SURVEY & REGISTRY ARCHITECTURE                      │
+├─────────────────────────────────────────┬────────────────────────────────────────────────────────┤
+│ 🛍️ Surface A: Interactive Catalog View   │ 📝 Surface B: Interactive Survey Studio (NEW)          │
+├─────────────────────────────────────────┼────────────────────────────────────────────────────────┤
+│ • 34 Item Checklist with Buy Toggles    │ • On-Screen Interactive Budget Tier Radio Cards        │
+│ • 4-Chapter 5-Day Itinerary Stepper     │ • Sticky Live Budget Bar with Real-Time Total Calc     │
+│ • Clustered Comparison Pods (Mandap)    │ • Ashok Nagar Bespoke vs Manyavar Tailoring Gate       │
+│ • Consensus Toggles (Bride/Sisters/InLaw)│ • Cultural Heirlooms Priority Toggles (Khandua, Kansa) │
+│ • Bhubaneswar Store Navigator           │ • LocalStorage State Persistence (Auto-saved)          │
+│ • Slide-Over Discussion & Reactions     │ • Dynamic Pre-Filled Ink-Friendly A4 Printout          │
+└─────────────────────────────────────────┴────────────────────────────────────────────────────────┘
+```
+
+#### 🧭 1. Top View Segmented Switcher
+* Added directly beneath the header:
+  `[ 🛍️ Trousseau Catalog & Consensus (34) ]`  ⟷  `[ 📝 Interactive Family Survey & Budget Studio ]`
+* Provides smooth, zero-reload switching between the 34-item visual catalog and the on-screen consultation studio.
+* Supports URL deep-linking:
+  - `shopping-registry.html` $\to$ default Catalog View.
+  - `shopping-registry.html?view=survey` $\to$ opens directly into the Interactive Survey Studio.
+
+#### 📊 2. Sticky Live Budget Aggregator Bar
+* Pinned to the top of the survey view:
+  * **Selected Tentative Budget**: Live running total (e.g. `₹2,92,000`) calculated dynamically from your category tier selections.
+  * **Tailoring Cost Savings**: Real-time savings ticker (e.g. `+₹27,750 Saved`) comparing bespoke master tailoring against readymade brand alternatives.
+  * **Decisions Locked**: Counter tracking selected items (e.g. `11 / 11 Decided`).
+  * **Action Buttons**: `[🖨️ Print Pre-Filled Survey]` and `[🔄 Reset Choices]`.
+
+#### 🪔 3. Interactive Category Cards & Decision Gates
+* **Bridal Sanctum Trousseau**:
+  * `TRS-BR-01`: Interactive radio cards for Tier 1 (₹35k–₹50k), Tier 2 (₹50k–₹75k), and Tier 3 (₹75k+ gold zari), with Maggam blouse Day 1 drop-off alerts.
+  * `TRS-OD-01`: Nuapatna Khandua Pata (Traditional ₹14k vs Master Gita Govinda Calligraphic weave ₹21k).
+  * `TRS-BR-02`: Madhuparkam handloom cotton vs fine ritual silk.
+  * `TRS-BR-03`: Sangeet designer lehenga (Contemporary, Heavy Zardozi, Haute Couture).
+* **Groom Wardrobe & Custom Tailoring Gate**:
+  * `TRS-GR-03`: Interactive comparison between **Bespoke Ashok Nagar Master Tailored** (₹14,250, save ~₹27,750, 7–10 day buffer) vs. **Readymade Manyavar** (₹42,000, 1–2 days).
+  * `TRS-OD-04`: Sambalpuri Groom Joda & Dhoti (Tussar vs Mulberry temple silk).
+  * `TRS-GR-06`: Sangeet Bandhgala (Custom Raymond MTM vs Readymade JadeBlue).
+* **In-Laws "Sara" Gifting & Traditional Heirlooms**:
+  * Attagaru (Mother-in-law) Samandhi Vastra (Berhampuri Kumbha Pata vs Pure Kanchipuram Gold Zari).
+  * Mavagaru (Father-in-law) Pure Silk Dhoti + Raymond Suit.
+  * `TRS-OD-02`: Balakati Hand-Cast Kansa Set (5-Piece, 7-Piece, 9-Piece).
+  * `TRS-OD-03`: Cuttack Tarakasi Silver Sindura Phuda & Pana Batta (Classic vs Master Peacock).
+
+#### 💾 4. Local State Persistence & Dynamic Print Parity
+* **Persistent State**: All selected budget tiers, tailoring choices, stakeholder consensus tags, and elder notes auto-save to `localStorage` under `sk_family_survey_answers_v1`.
+* **Dynamic Print Synchronization**: When you click `[🖨️ Print Pre-Filled Survey]`, the system populates `#familySurveyDossierPrintView` with your live digital choices and calculated totals before launching the print preview. The physical paper printout now reflects your family's digital consultation.
+
+---
+
+### 2. Verification Gate Summary
+
+| Suite / Gate | Command | Result | Coverage |
+|---|---|---|---|
+| **Shopping Registry Smoke & Schema** | `npm run test:shopping` | **✅ PASS** | 34/34 items, view switcher, survey studio verified. |
+| **Decision Registry Smoke** | `npm run test:decision-registry` | **✅ PASS** | 100% Green & synchronized. |
+| **Dynamic UI Lifecycle Gate** | `npm run verify:ui-lifecycle` | **✅ PASS** | 4/4 checks (dynamic script sequencing, 3-trigger dismissibility). |
+| **Modular Component Architecture** | `npm run verify:modular-architecture` | **✅ PASS** | 44/44 checks passed, 100% byte parity across all 7 targets. |
+| **Governance Wiring Gate** | `npm run verify:governance-wiring` | **✅ PASS** | 0 broken links, 0 schema violations, P82 compliant. |
+| **Mobile Standards Gate** | `npm run verify:mobile` | **✅ PASS** | 16/16 checks passed (touch targets $\ge 44\text{px}$, responsive tables). |
+| **Pre-Flight Deployment Gate** | `npm run verify:deployment` | **✅ PASS** | All 10 pre-flight layers 100% green. |
+
+---
+
+### 3. How to Test in Your Browser
+
+1. Open [http://localhost:5000/shopping-registry.html](http://localhost:5000/shopping-registry.html) (or click **`🛍️ Shopping Registry`** in the main header).
+2. Click the top view tab: **`[ 📝 Interactive Family Survey & Budget Studio ]`**.
+3. Select budget tiers or toggle bespoke tailoring on the Barat Sherwani $\to$ observe the sticky live budget bar recalculate totals and savings in real time.
+4. Click **`[ 🖨️ Print Pre-Filled Survey ]`** $\to$ observe the clean monochrome A4 print preview with your digital selections already filled in.
+5. Click **`[ 🛍️ Trousseau Catalog & Consensus (34) ]`** to return to the full 34-item visual card view and store directory.
+
+# Response 3.3 -# Walkthrough: Dual-Surface Unified Interactive Survey & Registry Hub (`P-SURVEY-HYBRID-001`)
+
+**Architecture & UI Reference:** `AC-DEC-2026-023` / `UI-DEC-2026-019`  
+**Pattern Standard:** `P-SURVEY-HYBRID-001` (Dual-Surface Unified Interactive Survey & Registry Hub)  
+**Parent Framework:** `SPEC-PROC-TROUSSEAU-001` & `STD-MOD-COMP-001` (Modular Component Architecture)
+
+---
+
+## 1. Executive Summary
+
+We resolved the asymmetric UX gap where the family questionnaire was previously restricted to paper printing. The **Shopping & Trousseau Module** now operates as a **first-class dual-surface interactive portal**:
+1. **On-Screen Interactive Survey Studio**: A rich digital consultation form on screen with radio tier cards, bespoke tailoring decision gates, live budget tallying, and persistent storage in `localStorage`.
+2. **Catalog & Consensus View**: Seamless access to the 34-item visual checklist, 4-chapter itinerary stepper, cluster comparison pods, store directory, and slide-over comments drawer.
+3. **Dynamic Print Synchronization**: Clicking `[🖨️ Print Pre-Filled Survey]` dynamically pre-fills the clean, ink-friendly A4 paper dossier with the family's digital on-screen selections and totals.
+
+---
+
+## 2. Key Features Shipped
+
+### A. Top View Segmented Switcher
+- Added right below the header:
+  `[ 🛍️ Trousseau Catalog & Consensus (34) ]`  ⟷  `[ 📝 Interactive Family Survey & Budget Studio ]`
+- Smooth zero-reload switching between the 34-item visual catalog and the on-screen consultation studio.
+- Deep-link support via `?view=survey` or `?view=catalog`.
+
+### B. Sticky Live Budget Aggregator Bar
+- Pinned at the top of the survey view:
+  - **Selected Tentative Budget**: Live running total (e.g. `₹2,92,000`) calculated from selected category tiers.
+  - **Tailoring Cost Savings**: Real-time savings ticker (e.g. `+₹27,750 Saved`) comparing bespoke master tailoring against readymade brand alternatives.
+  - **Decisions Locked**: Counter tracking selected items (e.g. `11 / 11 Decided`).
+  - **Quick Action Buttons**: `[🖨️ Print Pre-Filled Survey]` and `[🔄 Reset Selections]`.
+
+### C. Interactive Category Consultation Cards
+- **Section 1: Sacred Vivaha Pata & Bridal Wardrobe**:
+  - `TRS-BR-01`: Interactive radio cards for Tier 1 (₹35k–₹50k), Tier 2 (₹50k–₹75k), and Tier 3 (₹75k+ gold zari), with Day 1 Maggam work warning.
+  - `TRS-OD-01`: Nuapatna Khandua Pata (Traditional vs. Master Gita Govinda Calligraphic weave).
+  - `TRS-BR-02`: Madhuparkam handloom cotton vs. fine ritual silk.
+  - `TRS-BR-03`: Sangeet designer lehenga (Contemporary, Heavy Zardozi, Haute Couture).
+- **Section 2: Groom Wardrobe & Master Tailoring Gate**:
+  - `TRS-GR-03`: Interactive side-by-side comparison between **Bespoke Ashok Nagar Master Tailored** (₹14,250, save ~₹27,750, 7–10 day buffer) vs. **Readymade Manyavar** (₹42,000, 1–2 days).
+  - `TRS-OD-04`: Sambalpuri Groom Joda & Dhoti (Tussar vs. Mulberry temple silk).
+  - `TRS-GR-06`: Sangeet Bandhgala (Custom Raymond MTM vs. Readymade JadeBlue).
+- **Section 3: In-Laws "Sara" Gifting & Traditional Heirlooms**:
+  - Attagaru (Mother-in-law) Samandhi Vastra (Berhampuri Kumbha Pata vs. Pure Kanchipuram Gold Zari).
+  - Mavagaru (Father-in-law) Pure Silk Dhoti + Raymond Suit.
+  - `TRS-OD-02`: Balakati Hand-Cast Kansa Set (5-Piece, 7-Piece, 9-Piece).
+  - `TRS-OD-03`: Cuttack Tarakasi Silver Sindura Phuda & Pana Batta (Classic vs. Master Peacock).
+- **Section 4: Family Sign-Off & Authorization Summary**:
+  - Automated category-by-category breakdown.
+  - Elder consultation remarks / notes textarea.
+
+### D. Local State Persistence & Dynamic Print Parity
+- **Persistent State**: Auto-saves every tier pick, tailoring decision, note, and stakeholder approval to `localStorage` under `sk_family_survey_answers_v1`.
+- **Dynamic Print Injection**: When triggering `window.printFamilySurvey()`, the calculated totals and selected tiers are populated into `#familySurveyDossierPrintView` so the physical printout reflects the family's on-screen consultation!
+
+---
+
+## 3. Verification & Quality Gates
+
+```
+================================================================================
+  ✓ test:shopping              ──► PASS (34/34 items, view switcher, survey studio verified)
+  ✓ test:decision-registry     ──► PASS (100% green & synchronized)
+  ✓ verify:ui-lifecycle        ──► PASS (4/4 dynamic UI lifecycle & 3-trigger dismissibility checks)
+  ✓ verify:modular-architecture──► PASS (44/44 checks passed, 100% byte parity)
+  ✓ verify:governance-wiring   ──► PASS (0 errors, P82 compliant)
+  ✓ verify:mobile              ──► PASS (16/16 checks passed, touch targets >= 44px)
+  ✓ verify:deployment          ──► PASS (All 10 pre-flight layers 100% green)
+================================================================================
+```
+
+---
+
+## 4. How to Test & Review
+
+1. **Open the Shopping Registry**:
+   - Navigate to [http://localhost:5000/shopping-registry.html](http://localhost:5000/shopping-registry.html) (or click **`🛍️ Shopping Registry`** from the main dashboard header).
+2. **Switch to Interactive Survey Studio**:
+   - Click the top tab **`[ 📝 Interactive Family Survey & Budget Studio ]`** (or visit `shopping-registry.html?view=survey`).
+   - Observe the survey unroll on screen with the sticky live budget bar.
+3. **Interact with Budget Tiers & Tailoring Gate**:
+   - Tap **"Bespoke Master Tailored"** on the Royal Barat Sherwani $\to$ observe the tailoring savings ticker update by `+₹27,750`.
+   - Tap different tiers for Khandua Pata or Balakati Kansa $\to$ watch the total budget recalculate live.
+4. **Test Dynamic Printout**:
+   - Click **`[ 🖨️ Print Pre-Filled Survey ]`** $\to$ observe the print preview display the clean, high-contrast monochrome A4 sheet with the calculated budget numbers and checked boxes.
+5. **Switch back to Catalog**:
+   - Click **`[ 🛍️ Trousseau Catalog & Consensus (34) ]`** $\to$ the 34 visual cards, chapter stepper, cluster comparison pods, and store locator reappear instantly.
+
+
+# Query 3.4 -[prompt-clarity](slashCommand;prompt-clarity) Find the best way to incorporate these . Engagements items list need to be added too, also the vendors should have their Google maps location fed into those and also grouped as per categories? U have very well defined all these options but why not a custom Image in the options or Like a google AI search button that we have used in task cards in swimlane diagram- D:\GitHub_Repo\QSR\Construction Orchestration System?? so that it opens up all the google image search as per the selection or the card in http://localhost:5000/shopping-registry.html
 
 # Review 3.4 -
 
