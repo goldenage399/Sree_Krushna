@@ -17,7 +17,7 @@ skills:
 
   - id: cockpit-intake
     repo: [sree-krushna]
-    triggers: ["cockpit intake", "ingest into cockpit", "update cockpit", "sync cockpit", "decorator cockpit update", "/cockpit-intake"]
+    triggers: ["cockpit intake", "ingest into cockpit", "update cockpit", "sync cockpit", "decorator cockpit update", "/cockpit-intake", "std-mod-comp-001", "modular component architecture"]
     cost: low
     invoke: /cockpit-intake
     when: "Ingesting decorator discussion threads, vendor meeting clarifications, and layout briefs into the Decorator Cockpit (SDCA)"

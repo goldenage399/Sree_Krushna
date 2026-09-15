@@ -1,14 +1,14 @@
 {
   "version": "1.0.0",
-  "lastUpdated": "2026-09-01",
+  "lastUpdated": "2026-09-15",
   "metadata": {
     "projectName": "Sree_Krushna",
     "owner": "goldenage399",
     "targetEnvironment": "Multi-Repo SAP Spoke",
     "governanceModel": "AI-Driven Development (Antigravity Agent)",
     "sourceOfTruth": "GEMINI.md",
-    "totalStandards": 4,
-    "lastUpdated": "2026-09-01"
+    "totalStandards": 5,
+    "lastUpdated": "2026-09-15"
   },
   "categories": {
     "governance": "Process and workflow controls",
@@ -68,6 +68,27 @@
       "references": [
         "GEMINI.md",
         "CLAUDE.md"
+      ]
+    },
+    {
+      "id": "STD-MOD-COMP-001",
+      "category": "governance",
+      "name": "Modular Component Architecture & SDCA Standard",
+      "description": "Zero monolithic UI scripts. No web module or HTML assembler may exceed 500 lines or embed raw monolithic HTML/CSS templates inline. All UI features must follow the Static Decoupled Component Assembler (SDCA) directory structure and consume centralized primitives from ui_primitives/.",
+      "severity": "CRITICAL",
+      "enforcement": {
+        "checkpoints": [
+          "pre-commit",
+          "CI"
+        ],
+        "manualOnly": false,
+        "automatedGate": "npm run verify:modular-architecture"
+      },
+      "references": [
+        "User_Created/Discussion Threads/Council/260915_arch_council_modular_component_architecture_and_sdca_standard.md",
+        "GEMINI.md",
+        "CLAUDE.md",
+        "scripts/verify-modular-architecture.cjs"
       ]
     }
   ]

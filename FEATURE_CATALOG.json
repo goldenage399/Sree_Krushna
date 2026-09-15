@@ -53,6 +53,20 @@
       "required": true
     },
     {
+      "id": "tab-decision-registry",
+      "testId": "panel-decision-registry",
+      "navTestId": "nav-tab-decision-registry",
+      "title": "Decision Registry",
+      "required": true
+    },
+    {
+      "id": "tab-cockpit",
+      "testId": "panel-cockpit",
+      "navTestId": "nav-tab-cockpit",
+      "title": "Decorator Cockpit",
+      "required": true
+    },
+    {
       "id": "tab-procurement",
       "testId": "panel-procurement",
       "navTestId": "nav-tab-procurement",
@@ -91,6 +105,18 @@
       "id": "openCockpitBtn",
       "testId": "open-cockpit-btn",
       "label": "Decorator Cockpit Launch CTA",
+      "required": true
+    },
+    {
+      "id": "openDecisionRegistryBtn",
+      "testId": "open-decision-registry-btn",
+      "label": "Master Decision Registry Link",
+      "required": true
+    },
+    {
+      "id": "openShoppingRegistryBtn",
+      "testId": "open-shopping-registry-btn",
+      "label": "Bhubaneswar Shopping Registry Link",
       "required": true
     },
     {
