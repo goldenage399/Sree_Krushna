@@ -1,0 +1,2695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sree Krushna Marriage OS — Master Decision Registry & Event Stepper</title>
+  <meta name="description" content="Single-window executive dashboard for event-by-event decision locking, visual option comparison, and family consensus across Sree Krushna Marriage OS.">
+  <meta name="theme-color" content="#0f1117">
+  <link rel="icon" href="./assets/icons/icon-192x192.png" type="image/png">
+  <style>
+    /* ==========================================================================
+       DECISION REGISTRY & EVENT STEPPER SCOPED CSS (INC-086 COMPLIANT)
+       All rules are prefixed with #decisionRegistryRoot, #drLightboxModal, or .dr-*
+       to ensure zero global cascade bleed when embedded into the main host app.
+       ========================================================================== */
+    :root {
+      --dr-bg: #0f1117;
+      --dr-surface: #181b24;
+      --dr-surface-elevated: #222634;
+      --dr-border: #2d3245;
+      --dr-border-focus: #e5a93c;
+      --dr-text-primary: #f3f4f6;
+      --dr-text-secondary: #9ca3af;
+      --dr-text-muted: #6b7280;
+      --dr-gold: #e5a93c;
+      --dr-gold-glow: rgba(229, 169, 60, 0.15);
+      --dr-gold-subtle: rgba(229, 169, 60, 0.08);
+      --dr-emerald: #10b981;
+      --dr-emerald-glow: rgba(16, 185, 129, 0.15);
+      --dr-amber: #f59e0b;
+      --dr-amber-glow: rgba(245, 158, 11, 0.15);
+      --dr-rose: #f43f5e;
+      --dr-rose-glow: rgba(244, 63, 94, 0.15);
+      --dr-purple: #a855f7;
+      --dr-purple-glow: rgba(168, 85, 247, 0.15);
+      --dr-blue: #3b82f6;
+      --dr-blue-glow: rgba(59, 130, 246, 0.15);
+      --dr-radius-sm: 6px;
+      --dr-radius-md: 10px;
+      --dr-radius-lg: 16px;
+      --dr-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+      --dr-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--dr-bg);
+      color: var(--dr-text-primary);
+      font-family: var(--dr-font-sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #decisionRegistryRoot {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px 20px 80px;
+      box-sizing: border-box;
+    }
+
+    /* Family Review Welcome Banner (when ?mode=family is active) */
+    .dr-family-banner {
+      display: none;
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(229, 169, 60, 0.15) 100%);
+      border: 1px solid rgba(229, 169, 60, 0.4);
+      border-radius: var(--dr-radius-md);
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .dr-family-banner.active {
+      display: flex;
+    }
+
+    .dr-family-banner-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .dr-family-banner-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .dr-family-banner-sub {
+      font-size: 13px;
+      color: var(--dr-text-secondary);
+      margin: 3px 0 0;
+    }
+
+    /* Executive Topbar */
+    .dr-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--dr-border);
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .dr-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .dr-logo-monogram {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #e5a93c 0%, #b88226 100%);
+      color: #0f1117;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 18px;
+      box-shadow: 0 0 15px rgba(229, 169, 60, 0.4);
+    }
+
+    .dr-title-group h1 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+
+    .dr-title-group p {
+      margin: 4px 0 0;
+      font-size: 13px;
+      color: var(--dr-text-secondary);
+    }
+
+    .dr-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dr-btn {
+      background: var(--dr-surface-elevated);
+      border: 1px solid var(--dr-border);
+      color: var(--dr-text-primary);
+      padding: 8px 16px;
+      border-radius: var(--dr-radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .dr-btn:hover {
+      background: var(--dr-border);
+      border-color: var(--dr-gold);
+      color: #ffffff;
+    }
+
+    .dr-btn-primary {
+      background: linear-gradient(135deg, #e5a93c, #c58a23);
+      color: #0f1117;
+      border: none;
+      font-weight: 700;
+    }
+
+    .dr-btn-primary:hover {
+      background: linear-gradient(135deg, #f0b548, #d6982f);
+      box-shadow: 0 0 12px rgba(229, 169, 60, 0.4);
+    }
+
+    .dr-btn-whatsapp {
+      background: #128c7e;
+      color: #ffffff;
+      border: none;
+      font-weight: 700;
+    }
+
+    .dr-btn-whatsapp:hover {
+      background: #25d366;
+      box-shadow: 0 0 12px rgba(37, 211, 102, 0.4);
+    }
+
+    /* ==========================================================================
+       CHRONOLOGICAL EVENT STEPPER (P-EVENT-STEPPER-001)
+       ========================================================================== */
+    .dr-stepper-container {
+      background: var(--dr-surface);
+      border: 1px solid var(--dr-border);
+      border-radius: var(--dr-radius-lg);
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      box-shadow: var(--dr-shadow);
+    }
+
+    .dr-stepper-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .dr-stepper-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dr-stepper-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .dr-stepper-desc {
+      font-size: 12px;
+      color: var(--dr-text-secondary);
+      margin: 2px 0 0;
+    }
+
+    .dr-stepper-nav-btns {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Horizontal Milestone Track */
+    .dr-milestone-track {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    @media (max-width: 900px) {
+      .dr-milestone-track {
+        grid-template-columns: repeat(5, minmax(180px, 1fr));
+      }
+    }
+
+    .dr-milestone-node {
+      background: var(--dr-surface-elevated);
+      border: 1px solid var(--dr-border);
+      border-radius: var(--dr-radius-md);
+      padding: 12px 14px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .dr-milestone-node:hover {
+      border-color: var(--dr-border-focus);
+      transform: translateY(-2px);
+    }
+
+    .dr-milestone-node.active {
+      border-color: var(--dr-gold);
+      background: linear-gradient(180deg, rgba(229, 169, 60, 0.12) 0%, var(--dr-surface-elevated) 100%);
+      box-shadow: 0 0 15px rgba(229, 169, 60, 0.2);
+    }
+
+    .dr-milestone-node.locked-state {
+      border-color: var(--dr-emerald);
+    }
+
+    .dr-milestone-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .dr-milestone-phase {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--dr-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .dr-milestone-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--dr-text-muted);
+    }
+
+    .dr-milestone-node.active .dr-milestone-badge {
+      background: var(--dr-gold);
+      color: #0f1117;
+    }
+
+    .dr-milestone-node.locked-state .dr-milestone-badge {
+      background: var(--dr-emerald);
+      color: #ffffff;
+    }
+
+    .dr-milestone-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.3;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dr-milestone-time {
+      font-size: 11px;
+      color: var(--dr-text-secondary);
+    }
+
+    /* Active Event Banner & Lock CTA */
+    .dr-event-action-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(229, 169, 60, 0.05);
+      border: 1px dashed rgba(229, 169, 60, 0.3);
+      border-radius: var(--dr-radius-md);
+      padding: 12px 18px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .dr-event-action-info {
+      font-size: 13px;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dr-lock-event-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      border: none;
+      color: #ffffff;
+      padding: 7px 16px;
+      border-radius: var(--dr-radius-sm);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .dr-lock-event-btn:hover {
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+      transform: scale(1.02);
+    }
+
+    /* ==========================================================================
+       MULTI-OPTION CLUSTER POD (P-OPTION-POD-001)
+       ========================================================================== */
+    .dr-cluster-pod-container {
+      margin-bottom: 28px;
+    }
+
+    .dr-cluster-card {
+      background: var(--dr-surface);
+      border: 1px solid var(--dr-gold);
+      border-radius: var(--dr-radius-lg);
+      padding: 22px 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .dr-cluster-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #e5a93c, #a855f7);
+    }
+
+    .dr-cluster-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .dr-cluster-title-wrap h2 {
+      margin: 0 0 4px;
+      font-size: 18px;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dr-cluster-title-wrap p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--dr-text-secondary);
+    }
+
+    .dr-cluster-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Side-by-Side N-Option Grid */
+    .dr-pod-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .dr-pod-option-card {
+      background: var(--dr-surface-elevated);
+      border: 2px solid var(--dr-border);
+      border-radius: var(--dr-radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .dr-pod-option-card:hover {
+      border-color: var(--dr-gold);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .dr-pod-option-card.selected {
+      border-color: var(--dr-gold);
+      background: linear-gradient(180deg, rgba(229, 169, 60, 0.1) 0%, var(--dr-surface-elevated) 100%);
+      box-shadow: 0 0 20px rgba(229, 169, 60, 0.3);
+    }
+
+    .dr-pod-media {
+      height: 180px;
+      position: relative;
+      background: #000000;
+      overflow: hidden;
+    }
+
+    .dr-pod-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .dr-pod-option-card:hover .dr-pod-img {
+      transform: scale(1.04);
+    }
+
+    .dr-pod-badge-bar {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .dr-pod-body {
+      padding: 14px 16px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .dr-pod-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 4px;
+    }
+
+    .dr-pod-dims {
+      font-size: 11px;
+      color: var(--dr-gold);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .dr-pod-highlight {
+      font-size: 12px;
+      color: var(--dr-text-secondary);
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+
+    .dr-pod-radio-btn {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: var(--dr-radius-sm);
+      border: 1px solid var(--dr-border);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--dr-text-primary);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+    }
+
+    .dr-pod-option-card.selected .dr-pod-radio-btn {
+      background: var(--dr-gold);
+      color: #0f1117;
+      border-color: var(--dr-gold);
+    }
+
+    /* WhatsApp & Consensus Footer Bar */
+    .dr-cluster-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 14px;
+      margin-top: 16px;
+      border-top: 1px solid var(--dr-border);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .dr-consensus-tally {
+      font-size: 12px;
+      color: var(--dr-purple);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Carousel Section (Single Plates) */
+    .dr-carousel-section {
+      background: var(--dr-surface);
+      border: 1px solid var(--dr-border);
+      border-radius: var(--dr-radius-lg);
+      padding: 22px 20px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dr-carousel-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #e5a93c, #a855f7, #3b82f6);
+    }
+
+    .dr-carousel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .dr-carousel-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .dr-carousel-icon-box {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--dr-radius-sm);
+      background: var(--dr-gold-glow);
+      color: var(--dr-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .dr-carousel-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+      letter-spacing: -0.01em;
+    }
+
+    .dr-carousel-subtitle {
+      font-size: 12px;
+      color: var(--dr-text-secondary);
+      margin: 2px 0 0;
+    }
+
+    .dr-carousel-nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dr-carousel-indicator {
+      font-size: 12px;
+      color: var(--dr-text-muted);
+      font-weight: 600;
+      padding: 4px 8px;
+      background: var(--dr-surface-elevated);
+      border-radius: var(--dr-radius-sm);
+      border: 1px solid var(--dr-border);
+    }
+
+    .dr-carousel-arrow {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--dr-surface-elevated);
+      border: 1px solid var(--dr-border);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.15s ease;
+    }
+
+    .dr-carousel-arrow:hover {
+      background: var(--dr-gold);
+      color: #0f1117;
+      border-color: var(--dr-gold);
+    }
+
+    /* Carousel Scroll Track */
+    .dr-carousel-track {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      padding: 4px 2px 14px;
+      margin: 0;
+      scrollbar-width: thin;
+      scrollbar-color: var(--dr-gold) var(--dr-surface-elevated);
+    }
+
+    .dr-carousel-track::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .dr-carousel-track::-webkit-scrollbar-track {
+      background: var(--dr-surface-elevated);
+      border-radius: 3px;
+    }
+
+    .dr-carousel-track::-webkit-scrollbar-thumb {
+      background: var(--dr-gold);
+      border-radius: 3px;
+    }
+
+    /* Plate Card */
+    .dr-plate-card {
+      scroll-snap-align: start;
+      min-width: 320px;
+      max-width: 340px;
+      background: var(--dr-surface-elevated);
+      border: 1px solid var(--dr-border);
+      border-radius: var(--dr-radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+    }
+
+    .dr-plate-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--dr-gold);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+    }
+
+    .dr-plate-media {
+      position: relative;
+      width: 100%;
+      height: 180px;
+      background: #000000;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .dr-plate-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .dr-plate-media:hover .dr-plate-img {
+      transform: scale(1.05);
+    }
+
+    .dr-plate-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.75) 100%);
+      display: flex;
+      align-items: flex-end;
+      padding: 10px 12px;
+      opacity: 0.9;
+      transition: opacity 0.2s ease;
+    }
+
+    .dr-plate-tag-bar {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      pointer-events: none;
+    }
+
+    .dr-plate-id-badge {
+      font-family: monospace;
+      font-size: 11px;
+      font-weight: 700;
+      background: rgba(15, 17, 23, 0.85);
+      backdrop-filter: blur(4px);
+      color: var(--dr-gold);
+      border: 1px solid var(--dr-gold);
+      padding: 2px 7px;
+      border-radius: var(--dr-radius-sm);
+    }
+
+    .dr-plate-status-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .dr-plate-status-badge.locked { background: rgba(16, 185, 129, 0.85); color: #ffffff; }
+    .dr-plate-status-badge.pending { background: rgba(245, 158, 11, 0.85); color: #000000; }
+    .dr-plate-status-badge.shortlisted { background: rgba(168, 85, 247, 0.85); color: #ffffff; }
+    .dr-plate-status-badge.evaluating { background: rgba(59, 130, 246, 0.85); color: #ffffff; }
+
+    .dr-plate-event-label {
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    }
+
+    .dr-plate-body {
+      padding: 14px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+
+    .dr-plate-card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 6px;
+      line-height: 1.35;
+    }
+
+    .dr-plate-dim-tag {
+      font-size: 11px;
+      color: var(--dr-gold);
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .dr-plate-notes-clamp {
+      font-size: 12px;
+      color: var(--dr-text-secondary);
+      line-height: 1.45;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .dr-plate-footer-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 10px;
+      border-top: 1px solid var(--dr-border);
+      flex-wrap: wrap;
+    }
+
+    .dr-plate-btn-action {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--dr-border);
+      color: #ffffff;
+      padding: 6px 10px;
+      border-radius: var(--dr-radius-sm);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+    }
+
+    .dr-plate-btn-action:hover {
+      background: var(--dr-border);
+      border-color: var(--dr-gold);
+      color: var(--dr-gold);
+    }
+
+    .dr-plate-btn-action.highlight {
+      background: var(--dr-gold-glow);
+      border-color: var(--dr-gold);
+      color: var(--dr-gold);
+    }
+
+    /* Filter & Search Toolbar */
+    .dr-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .dr-filter-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .dr-pill {
+      background: var(--dr-surface);
+      border: 1px solid var(--dr-border);
+      color: var(--dr-text-secondary);
+      padding: 7px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .dr-pill:hover {
+      background: var(--dr-surface-elevated);
+      color: #ffffff;
+      border-color: var(--dr-gold);
+    }
+
+    .dr-pill.active {
+      background: var(--dr-gold);
+      color: #0f1117;
+      border-color: var(--dr-gold);
+      font-weight: 700;
+      box-shadow: 0 0 10px rgba(229, 169, 60, 0.3);
+    }
+
+    .dr-pill-count {
+      background: rgba(0, 0, 0, 0.25);
+      padding: 2px 7px;
+      border-radius: 12px;
+      font-size: 11px;
+    }
+
+    .dr-pill.active .dr-pill-count {
+      background: rgba(0, 0, 0, 0.4);
+      color: #ffffff;
+    }
+
+    .dr-search-box {
+      position: relative;
+      min-width: 260px;
+    }
+
+    .dr-search-input {
+      width: 100%;
+      background: var(--dr-surface);
+      border: 1px solid var(--dr-border);
+      padding: 8px 14px 8px 34px;
+      border-radius: 20px;
+      color: #ffffff;
+      font-size: 13px;
+      box-sizing: border-box;
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+
+    .dr-search-input:focus {
+      border-color: var(--dr-gold);
+      box-shadow: 0 0 0 2px var(--dr-gold-glow);
+    }
+
+    .dr-search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--dr-text-muted);
+      font-size: 14px;
+      pointer-events: none;
+    }
+
+    /* Decision Cards Grid */
+    .dr-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+      gap: 18px;
+    }
+
+    @media (max-width: 500px) {
+      .dr-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .dr-card {
+      background: var(--dr-surface);
+      border: 1px solid var(--dr-border);
+      border-radius: var(--dr-radius-md);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dr-card:hover {
+      border-color: var(--dr-border-focus);
+      box-shadow: var(--dr-shadow);
+    }
+
+    .dr-card.target-highlight {
+      border-color: var(--dr-gold) !important;
+      box-shadow: 0 0 25px rgba(229, 169, 60, 0.6) !important;
+      transform: scale(1.01);
+    }
+
+    .dr-card-strip {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
+
+    .dr-card.decor_pending .dr-card-strip { background: var(--dr-amber); }
+    .dr-card.decor_vendor .dr-card-strip { background: var(--dr-rose); }
+    .dr-card.idea_incubator .dr-card-strip { background: var(--dr-purple); }
+    .dr-card.decor_locked .dr-card-strip { background: var(--dr-emerald); }
+    .dr-card.governance .dr-card-strip { background: var(--dr-blue); }
+
+    .dr-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      gap: 12px;
+    }
+
+    .dr-badge-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .dr-id-badge {
+      font-family: monospace;
+      font-weight: 700;
+      font-size: 12px;
+      background: var(--dr-surface-elevated);
+      color: var(--dr-gold);
+      border: 1px solid var(--dr-border);
+      padding: 3px 8px;
+      border-radius: var(--dr-radius-sm);
+    }
+
+    .dr-category-badge {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--dr-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .dr-status-pill {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .dr-status-pill.pending { background: var(--dr-amber-glow); color: var(--dr-amber); border: 1px solid rgba(245, 158, 11, 0.3); }
+    .dr-status-pill.vendor { background: var(--dr-rose-glow); color: var(--dr-rose); border: 1px solid rgba(244, 63, 94, 0.3); }
+    .dr-status-pill.incubating { background: var(--dr-purple-glow); color: var(--dr-purple); border: 1px solid rgba(168, 85, 247, 0.3); }
+    .dr-status-pill.locked { background: var(--dr-emerald-glow); color: var(--dr-emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+
+    .dr-card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 8px;
+      line-height: 1.35;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dr-dilemma-box {
+      font-size: 13px;
+      color: var(--dr-text-secondary);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .dr-benchmark-note {
+      background: rgba(255, 255, 255, 0.02);
+      border-left: 2px solid var(--dr-gold);
+      padding: 8px 12px;
+      font-size: 12px;
+      color: #d1d5db;
+      border-radius: 0 var(--dr-radius-sm) var(--dr-radius-sm) 0;
+      margin-bottom: 14px;
+      line-height: 1.45;
+    }
+
+    .dr-benchmark-note strong {
+      color: var(--dr-gold);
+    }
+
+    /* Decision Card Visual Preview Attachment */
+    .dr-card-media-attachment {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--dr-border);
+      border-radius: var(--dr-radius-sm);
+      padding: 10px 12px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .dr-card-media-attachment:hover {
+      border-color: var(--dr-gold);
+      background: var(--dr-gold-subtle);
+    }
+
+    .dr-card-media-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow: hidden;
+    }
+
+    .dr-card-thumb-img {
+      width: 46px;
+      height: 46px;
+      border-radius: var(--dr-radius-sm);
+      object-fit: cover;
+      background: #000000;
+      flex-shrink: 0;
+      border: 1px solid var(--dr-border);
+    }
+
+    .dr-card-media-text {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .dr-card-media-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .dr-card-media-sub {
+      font-size: 11px;
+      color: var(--dr-gold);
+      font-weight: 600;
+    }
+
+    .dr-card-media-action {
+      font-size: 11px;
+      color: var(--dr-text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      font-weight: 600;
+    }
+
+    .dr-card-media-attachment:hover .dr-card-media-action {
+      color: var(--dr-gold);
+    }
+
+    /* Options & Interactive Actions */
+    .dr-options-container {
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .dr-option-row {
+      background: var(--dr-surface-elevated);
+      border: 1px solid var(--dr-border);
+      border-radius: var(--dr-radius-sm);
+      padding: 10px 12px;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      transition: all 0.15s ease;
+    }
+
+    .dr-option-row:hover {
+      border-color: var(--dr-gold);
+      background: rgba(229, 169, 60, 0.05);
+    }
+
+    .dr-option-row.selected {
+      border-color: var(--dr-gold);
+      background: rgba(229, 169, 60, 0.12);
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .dr-radio-circle {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid var(--dr-border);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+
+    .dr-option-row.selected .dr-radio-circle {
+      border-color: var(--dr-gold);
+      background: var(--dr-gold);
+    }
+
+    .dr-radio-inner {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #0f1117;
+      display: none;
+    }
+
+    .dr-option-row.selected .dr-radio-inner {
+      display: block;
+    }
+
+    /* Vendor Deliverable Banner */
+    .dr-vendor-box {
+      background: rgba(244, 63, 94, 0.06);
+      border: 1px dashed rgba(244, 63, 94, 0.35);
+      border-radius: var(--dr-radius-sm);
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #fda4af;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dr-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 12px;
+      color: var(--dr-text-muted);
+    }
+
+    .dr-plate-link {
+      color: var(--dr-gold);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .dr-plate-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Toast Notification */
+    .dr-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #181b24;
+      border: 1px solid var(--dr-gold);
+      color: #ffffff;
+      padding: 12px 18px;
+      border-radius: var(--dr-radius-md);
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      display: none;
+      align-items: center;
+      gap: 10px;
+      z-index: 10000;
+      animation: drFadeIn 0.2s ease;
+    }
+
+    .dr-toast.active {
+      display: flex;
+    }
+
+    @keyframes drFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==========================================================================
+       UNIVERSAL LIGHTBOX & STAGE COMPARATOR MODAL (#drLightboxModal)
+       ========================================================================== */
+    #drLightboxModal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(5, 7, 10, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    #drLightboxModal.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .dr-lightbox-dialog {
+      background: var(--dr-surface);
+      border: 1px solid var(--dr-border);
+      border-radius: var(--dr-radius-lg);
+      width: 100%;
+      max-width: 1100px;
+      max-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+      position: relative;
+    }
+
+    .dr-lightbox-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--dr-border);
+      background: var(--dr-surface-elevated);
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .dr-lightbox-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .dr-lightbox-title-wrap h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .dr-lightbox-title-wrap p {
+      margin: 2px 0 0;
+      font-size: 12px;
+      color: var(--dr-text-secondary);
+    }
+
+    .dr-lightbox-header-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dr-lightbox-toggle-btn {
+      background: var(--dr-surface);
+      border: 1px solid var(--dr-border);
+      color: var(--dr-text-secondary);
+      padding: 6px 12px;
+      border-radius: var(--dr-radius-sm);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .dr-lightbox-toggle-btn:hover {
+      border-color: var(--dr-gold);
+      color: #ffffff;
+    }
+
+    .dr-lightbox-toggle-btn.active {
+      background: var(--dr-gold);
+      color: #0f1117;
+      border-color: var(--dr-gold);
+      font-weight: 700;
+    }
+
+    .dr-lightbox-close-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--dr-surface);
+      border: 1px solid var(--dr-border);
+      color: var(--dr-text-secondary);
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .dr-lightbox-close-btn:hover {
+      background: var(--dr-rose);
+      border-color: var(--dr-rose);
+      color: #ffffff;
+    }
+
+    /* Lightbox Stage Area */
+    .dr-lightbox-stage-container {
+      position: relative;
+      background: #000000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 360px;
+      max-height: 55vh;
+      overflow: hidden;
+    }
+
+    .dr-lightbox-view-asset {
+      max-width: 100%;
+      max-height: 55vh;
+      object-fit: contain;
+      display: block;
+      transition: opacity 0.2s ease;
+    }
+
+    .dr-lightbox-nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(15, 17, 23, 0.75);
+      border: 1px solid var(--dr-border);
+      color: #ffffff;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      z-index: 10;
+    }
+
+    .dr-lightbox-nav-arrow:hover {
+      background: var(--dr-gold);
+      color: #0f1117;
+      border-color: var(--dr-gold);
+      box-shadow: 0 0 12px rgba(229, 169, 60, 0.4);
+    }
+
+    .dr-lightbox-nav-arrow.prev { left: 16px; }
+    .dr-lightbox-nav-arrow.next { right: 16px; }
+
+    /* Comparison Split View Inside Lightbox */
+    .dr-lightbox-compare-stage {
+      display: none;
+      width: 100%;
+      padding: 16px;
+      box-sizing: border-box;
+      gap: 16px;
+      overflow-x: auto;
+    }
+
+    .dr-lightbox-compare-stage.active {
+      display: flex;
+    }
+
+    .dr-compare-card {
+      flex: 1;
+      min-width: 280px;
+      background: var(--dr-surface-elevated);
+      border: 1px solid var(--dr-border);
+      border-radius: var(--dr-radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dr-compare-card.current {
+      border-color: var(--dr-gold);
+      box-shadow: 0 0 15px rgba(229, 169, 60, 0.25);
+    }
+
+    .dr-compare-card-media {
+      height: 180px;
+      position: relative;
+      background: #000000;
+    }
+
+    .dr-compare-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .dr-compare-card-body {
+      padding: 12px 14px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Lightbox Meta Details & Drawer */
+    .dr-lightbox-meta-drawer {
+      padding: 16px 20px;
+      background: var(--dr-surface);
+      border-top: 1px solid var(--dr-border);
+      overflow-y: auto;
+      max-height: 24vh;
+    }
+
+    .dr-lightbox-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 12px;
+    }
+
+    .dr-meta-item strong {
+      color: var(--dr-text-muted);
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 2px;
+    }
+
+    .dr-meta-item span {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .dr-lightbox-notes-box {
+      font-size: 12px;
+      color: var(--dr-text-secondary);
+      line-height: 1.5;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 10px 14px;
+      border-radius: var(--dr-radius-sm);
+      border-left: 3px solid var(--dr-gold);
+    }
+
+    /* Lightbox Bottom Thumbnail Bar */
+    .dr-lightbox-thumbs-bar {
+      display: flex;
+      gap: 8px;
+      padding: 10px 20px;
+      background: #090b0e;
+      border-top: 1px solid var(--dr-border);
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+
+    .dr-lightbox-thumb {
+      width: 60px;
+      height: 40px;
+      border-radius: var(--dr-radius-sm);
+      overflow: hidden;
+      cursor: pointer;
+      opacity: 0.6;
+      border: 2px solid transparent;
+      flex-shrink: 0;
+      transition: all 0.15s ease;
+      background: #000000;
+    }
+
+    .dr-lightbox-thumb:hover {
+      opacity: 0.9;
+    }
+
+    .dr-lightbox-thumb.active {
+      opacity: 1;
+      border-color: var(--dr-gold);
+      box-shadow: 0 0 8px rgba(229, 169, 60, 0.4);
+    }
+
+    .dr-lightbox-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Print Dossier Optimization */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      #decisionRegistryRoot {
+        padding: 0;
+        max-width: 100%;
+      }
+      .dr-btn, .dr-toolbar, .dr-carousel-section, .dr-stepper-container, #drLightboxModal, .dr-family-banner {
+        display: none !important;
+      }
+      .dr-cluster-card, .dr-card {
+        border: 1px solid #cccccc !important;
+        background: #ffffff !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+        margin-bottom: 15px;
+      }
+      .dr-card-title, .dr-cluster-title-wrap h2 {
+        color: #000000 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="decisionRegistryRoot">
+  <!-- Family Consensus Mode Welcome Banner -->
+  <div class="dr-family-banner" id="familyWelcomeBanner">
+    <div class="dr-family-banner-left">
+      <span style="font-size: 28px;">🌺</span>
+      <div>
+        <h2 class="dr-family-banner-title">Welcome to the Sree Krushna Family Decor Review!</h2>
+        <p class="dr-family-banner-sub">Please review the shortlisted Mandap and Sangeet Stage options below, tap your preferred choice, and share your vote with the family.</p>
+      </div>
+    </div>
+    <button class="dr-btn dr-btn-primary" onclick="window.switchViewMode('executive')">
+      <span>👑</span> Executive Host View
+    </button>
+  </div>
+
+  <!-- Executive Header -->
+  <header class="dr-header" id="executiveHeader">
+    <div class="dr-brand">
+      <div class="dr-logo-monogram">SK</div>
+      <div class="dr-title-group">
+        <h1>Master Decision Registry & Event Stepper</h1>
+        <p>Sree Krushna Marriage OS — Consolidated Executive Review Surface (Standard P-DECISION-REG-001)</p>
+      </div>
+    </div>
+    <div class="dr-header-actions">
+      <button class="dr-btn dr-btn-whatsapp" id="btnShareFamilyMode" title="Copy Family WhatsApp Link">
+        <span>📱</span> Share with Family
+      </button>
+      <button class="dr-btn" id="btnExportJson" title="Export current decisions state">
+        <span>💾</span> Export JSON
+      </button>
+      <button class="dr-btn" id="btnPrintDossier" title="Print Executive Meeting Dossier">
+        <span>🖨️</span> Print Dossier
+      </button>
+      <a href="./decorator-cockpit.html" class="dr-btn dr-btn-primary" title="Open Decorator Negotiation Cockpit">
+        <span>🏛️</span> Open Cockpit
+      </a>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       CHRONOLOGICAL EVENT STEPPER COMPONENT (P-EVENT-STEPPER-001)
+       ========================================================================== -->
+  <section class="dr-stepper-container" id="eventStepperSection">
+    <div class="dr-stepper-header">
+      <div class="dr-stepper-title-wrap">
+        <span style="font-size: 20px;">🧭</span>
+        <div>
+          <h2 class="dr-stepper-title">Chronological Event Decision Flow</h2>
+          <p class="dr-stepper-desc">Walk through the wedding timeline step-by-step. Select an event milestone to review its decor clusters and lock decisions.</p>
+        </div>
+      </div>
+      <div class="dr-stepper-nav-controls">
+        <button class="dr-btn dr-btn-sm" id="btnStepperPrev">‹ Previous Event</button>
+        <button class="dr-btn dr-btn-sm" id="btnStepperNext">Next Event ›</button>
+      </div>
+    </div>
+
+    <!-- Milestone Track (5 Event Chapters) -->
+    <div class="dr-milestone-track" id="milestoneTrack">
+      <!-- Injected dynamically by JavaScript -->
+    </div>
+
+    <!-- Active Event Action Bar -->
+    <div class="dr-event-action-bar" id="eventActionBar">
+      <div class="dr-event-action-info">
+        <span id="activeEventIcon">🪔</span>
+        <span id="activeEventSummary">Currently Viewing: <strong>Day 2 Vedic Vivaha</strong> (Muhurtham 10:15)</span>
+      </div>
+      <button class="dr-lock-event-btn" id="btnLockActiveEvent">
+        <span>🔒</span> Freeze & Lock This Event's Choices
+      </button>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       MULTI-OPTION CLUSTER PODS (P-OPTION-POD-001)
+       ========================================================================== -->
+  <section class="dr-cluster-pod-container" id="clusterPodsContainer">
+    <!-- Clustered side-by-side option pods injected dynamically -->
+  </section>
+
+  <!-- ==========================================================================
+       VISUAL CONCEPT LOOKBOOK CAROUSEL (Individual Plates)
+       ========================================================================== -->
+  <section class="dr-carousel-section" id="visualShowcaseSection">
+    <div class="dr-carousel-header">
+      <div class="dr-carousel-title-group">
+        <div class="dr-carousel-icon-box">📸</div>
+        <div>
+          <h2 class="dr-carousel-title">Individual Visual Plate Lookbook</h2>
+          <p class="dr-carousel-subtitle">All 12 registered scenic fabrication plates from the Marquee Decor Tender (SSOT: assets/decor/registry.json).</p>
+        </div>
+      </div>
+      <div class="dr-carousel-nav-controls">
+        <span class="dr-carousel-indicator" id="carouselCounterIndicator">Showing 12 Plates</span>
+        <button class="dr-carousel-arrow" id="btnCarouselPrev" title="Previous plate">‹</button>
+        <button class="dr-carousel-arrow" id="btnCarouselNext" title="Next plate">›</button>
+      </div>
+    </div>
+
+    <!-- Scroll-Snap Horizontal Track -->
+    <div class="dr-carousel-track" id="carouselTrack">
+      <!-- Injected dynamically by JavaScript -->
+    </div>
+  </section>
+
+  <!-- Filter & Search Toolbar for Decisions Grid -->
+  <div class="dr-toolbar">
+    <div class="dr-filter-pills" id="filterPillsContainer">
+      <button class="dr-pill active" data-filter="all_pending">
+        All Actionable <span class="dr-pill-count" id="countPillActionable">17</span>
+      </button>
+      <button class="dr-pill" data-filter="decor_pending">
+        Decor Choices <span class="dr-pill-count" id="countPillDecor">6</span>
+      </button>
+      <button class="dr-pill" data-filter="decor_vendor">
+        Vendor Deliverables <span class="dr-pill-count" id="countPillVendor">4</span>
+      </button>
+      <button class="dr-pill" data-filter="idea_incubator">
+        💡 Idea Incubator <span class="dr-pill-count" id="countPillIdeas">7</span>
+      </button>
+      <button class="dr-pill" data-filter="decor_locked">
+        🔒 Certified Locked <span class="dr-pill-count" id="countPillLocked">10</span>
+      </button>
+      <button class="dr-pill" data-filter="all">
+        Full Registry <span class="dr-pill-count" id="countPillAll">28</span>
+      </button>
+    </div>
+    <div class="dr-search-box">
+      <span class="dr-search-icon">🔍</span>
+      <input type="text" id="searchInput" class="dr-search-input" placeholder="Search decisions, specs, keywords...">
+    </div>
+  </div>
+
+  <!-- Decisions & Ideas Grid -->
+  <main class="dr-grid" id="decisionsGrid">
+    <!-- Rendered dynamically by JavaScript from DECISION_REGISTRY_DATA -->
+  </main>
+</div>
+
+<!-- Toast Notification -->
+<div class="dr-toast" id="drToast">
+  <span id="toastIcon">📋</span>
+  <span id="toastMsg">Notification message</span>
+</div>
+
+<!-- ==========================================================================
+     UNIVERSAL LIGHTBOX & COMPARISON MODAL (#drLightboxModal)
+     ========================================================================== -->
+<div id="drLightboxModal" role="dialog" aria-modal="true">
+  <div class="dr-lightbox-dialog">
+    <!-- Modal Header -->
+    <div class="dr-lightbox-header">
+      <div class="dr-lightbox-header-left">
+        <span class="dr-id-badge" id="modalPlateId">PLATE-01</span>
+        <div class="dr-lightbox-title-wrap">
+          <h3 id="modalPlateTitle">Vedic Lotus Mandap & Elevated Altar</h3>
+          <p id="modalPlateSub">Zone A — Sacred Sanctuary • SPEC-PROC-DECOR-MARQUEE-001</p>
+        </div>
+      </div>
+      <div class="dr-lightbox-header-right">
+        <div id="modalBlueprintToggleWrap" style="display: none;">
+          <button class="dr-lightbox-toggle-btn active" id="btnViewPhoto">📷 Photo</button>
+          <button class="dr-lightbox-toggle-btn" id="btnViewCad">📐 CAD Vector</button>
+        </div>
+        <button class="dr-lightbox-toggle-btn" id="btnToggleCompare" style="display: none;">⚖️ Compare Alternatives</button>
+        <button class="dr-lightbox-close-btn" id="btnCloseLightbox" title="Close (Esc)">✕</button>
+      </div>
+    </div>
+
+    <!-- Stage Viewport (Single Asset View) -->
+    <div class="dr-lightbox-stage-container" id="modalSingleStage">
+      <button class="dr-lightbox-nav-arrow prev" id="btnModalPrev">‹</button>
+      <img id="modalImg" class="dr-lightbox-view-asset" src="" alt="Decor Inspiration Plate">
+      <object id="modalSvgObject" class="dr-lightbox-view-asset" type="image/svg+xml" style="display: none; width: 90%; height: 50vh;"></object>
+      <button class="dr-lightbox-nav-arrow next" id="btnModalNext">›</button>
+    </div>
+
+    <!-- Comparison Viewport (Multi-Option View) -->
+    <div class="dr-lightbox-compare-stage" id="modalCompareStage">
+      <!-- Dynamically filled with Option Cards -->
+    </div>
+
+    <!-- Meta Details & Specs Drawer -->
+    <div class="dr-lightbox-meta-drawer">
+      <div class="dr-lightbox-meta-grid">
+        <div class="dr-meta-item">
+          <strong>Dimensions & Elevation</strong>
+          <span id="modalDimensions">—</span>
+        </div>
+        <div class="dr-meta-item">
+          <strong>Event & Zone</strong>
+          <span id="modalEventZone">—</span>
+        </div>
+        <div class="dr-meta-item">
+          <strong>Contract Rider Clause</strong>
+          <span id="modalClause">—</span>
+        </div>
+        <div class="dr-meta-item">
+          <strong>Linked Decisions</strong>
+          <span id="modalLinkedDecisions">—</span>
+        </div>
+      </div>
+      <div class="dr-lightbox-notes-box" id="modalNotesBox">
+        <!-- Notes text -->
+      </div>
+    </div>
+
+    <!-- Bottom Thumbnail Hop Bar -->
+    <div class="dr-lightbox-thumbs-bar" id="modalThumbsBar">
+      <!-- 12 thumbnails injected dynamically -->
+    </div>
+  </div>
+</div>
+
+<!-- Load Unified Data Layer -->
+<script src="./js/decision-registry-data.js"></script>
+
+<script>
+  (function() {
+    'use strict';
+
+    const STORAGE_KEY_SELECTIONS = 'sk_decision_registry_v2';
+    const STORAGE_KEY_LOCKED_EVENTS = 'sk_locked_events_v2';
+    const STORAGE_KEY_FAMILY_VOTES = 'sk_family_votes_v2';
+
+    let currentEvent = 'wedding'; // default active event in stepper
+    let currentFilter = 'all_pending';
+    let searchQuery = '';
+    let isFamilyMode = false;
+    let userSelections = {};
+    let lockedEvents = {};
+    let familyVotes = {};
+    let activeModalPlateIndex = 0;
+    let isCompareMode = false;
+    let isCadMode = false;
+
+    // Read stored state
+    try {
+      const s = localStorage.getItem(STORAGE_KEY_SELECTIONS);
+      if (s) userSelections = JSON.parse(s);
+      const l = localStorage.getItem(STORAGE_KEY_LOCKED_EVENTS);
+      if (l) lockedEvents = JSON.parse(l);
+      const f = localStorage.getItem(STORAGE_KEY_FAMILY_VOTES);
+      if (f) familyVotes = JSON.parse(f);
+    } catch (e) {
+      console.warn('Storage read error:', e);
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY_SELECTIONS, JSON.stringify(userSelections));
+        localStorage.setItem(STORAGE_KEY_LOCKED_EVENTS, JSON.stringify(lockedEvents));
+        localStorage.setItem(STORAGE_KEY_FAMILY_VOTES, JSON.stringify(familyVotes));
+      } catch (e) {
+        console.warn('Storage write error:', e);
+      }
+    }
+
+    const data = window.DECISION_REGISTRY_DATA || { items: [], plates: [], events: [], clusters: [] };
+    const plates = data.plates || [];
+    const items = data.items || [];
+    const events = data.events || [];
+    const clusters = data.clusters || [];
+
+    // Chronological event chapters list (excluding 'all')
+    const chronologicalEvents = events.filter(e => e.id !== 'all');
+
+    // DOM Elements
+    const grid = document.getElementById('decisionsGrid');
+    const searchInput = document.getElementById('searchInput');
+    const filterPills = document.querySelectorAll('.dr-pill');
+    const btnExportJson = document.getElementById('btnExportJson');
+    const btnPrintDossier = document.getElementById('btnPrintDossier');
+    const btnShareFamilyMode = document.getElementById('btnShareFamilyMode');
+    const familyWelcomeBanner = document.getElementById('familyWelcomeBanner');
+    const executiveHeader = document.getElementById('executiveHeader');
+    const drToast = document.getElementById('drToast');
+    const toastIcon = document.getElementById('toastIcon');
+    const toastMsg = document.getElementById('toastMsg');
+
+    // Stepper DOM
+    const milestoneTrack = document.getElementById('milestoneTrack');
+    const btnStepperPrev = document.getElementById('btnStepperPrev');
+    const btnStepperNext = document.getElementById('btnStepperNext');
+    const activeEventIcon = document.getElementById('activeEventIcon');
+    const activeEventSummary = document.getElementById('activeEventSummary');
+    const btnLockActiveEvent = document.getElementById('btnLockActiveEvent');
+    const clusterPodsContainer = document.getElementById('clusterPodsContainer');
+
+    // Carousel DOM
+    const carouselTrack = document.getElementById('carouselTrack');
+    const carouselCounterIndicator = document.getElementById('carouselCounterIndicator');
+    const btnCarouselPrev = document.getElementById('btnCarouselPrev');
+    const btnCarouselNext = document.getElementById('btnCarouselNext');
+
+    // Lightbox DOM
+    const modal = document.getElementById('drLightboxModal');
+    const btnCloseLightbox = document.getElementById('btnCloseLightbox');
+    const btnModalPrev = document.getElementById('btnModalPrev');
+    const btnModalNext = document.getElementById('btnModalNext');
+    const modalPlateId = document.getElementById('modalPlateId');
+    const modalPlateTitle = document.getElementById('modalPlateTitle');
+    const modalPlateSub = document.getElementById('modalPlateSub');
+    const modalImg = document.getElementById('modalImg');
+    const modalSvgObject = document.getElementById('modalSvgObject');
+    const modalSingleStage = document.getElementById('modalSingleStage');
+    const modalCompareStage = document.getElementById('modalCompareStage');
+    const btnToggleCompare = document.getElementById('btnToggleCompare');
+    const modalBlueprintToggleWrap = document.getElementById('modalBlueprintToggleWrap');
+    const btnViewPhoto = document.getElementById('btnViewPhoto');
+    const btnViewCad = document.getElementById('btnViewCad');
+    const modalDimensions = document.getElementById('modalDimensions');
+    const modalEventZone = document.getElementById('modalEventZone');
+    const modalClause = document.getElementById('modalClause');
+    const modalLinkedDecisions = document.getElementById('modalLinkedDecisions');
+    const modalNotesBox = document.getElementById('modalNotesBox');
+    const modalThumbsBar = document.getElementById('modalThumbsBar');
+
+    function showToast(msg, icon = '📋') {
+      toastIcon.textContent = icon;
+      toastMsg.textContent = msg;
+      drToast.classList.add('active');
+      setTimeout(() => {
+        drToast.classList.remove('active');
+      }, 3500);
+    }
+
+    // ========================================================================
+    // URL DEEP LINK & QUERY PARAM PARSER (P-DEEP-LINK-001)
+    // ========================================================================
+    function parseUrlParams() {
+      const params = new URLSearchParams(window.location.search);
+
+      // Mode check: ?mode=family
+      if (params.get('mode') === 'family') {
+        isFamilyMode = true;
+        familyWelcomeBanner.classList.add('active');
+        executiveHeader.style.display = 'none';
+      }
+
+      // Event check: ?event=wedding | sangeet | mehendi | haldi | infrastructure
+      const paramEvent = params.get('event');
+      if (paramEvent && chronologicalEvents.some(e => e.id === paramEvent)) {
+        currentEvent = paramEvent;
+      }
+
+      // Cluster check: ?cluster=mandap | stage
+      const paramCluster = params.get('cluster');
+      if (paramCluster) {
+        const cl = clusters.find(c => c.id === paramCluster);
+        if (cl) {
+          currentEvent = cl.event;
+          setTimeout(() => {
+            const firstPlateIdx = plates.findIndex(p => p.id === cl.options[0].plateId);
+            if (firstPlateIdx >= 0) window.openLightbox(firstPlateIdx, true);
+          }, 200);
+        }
+      }
+
+      // Plate direct check: ?plate=PLATE-09
+      const paramPlate = params.get('plate');
+      if (paramPlate) {
+        const pIdx = plates.findIndex(p => p.id === paramPlate);
+        if (pIdx >= 0) {
+          setTimeout(() => window.openLightbox(pIdx), 200);
+        }
+      }
+    }
+
+    window.switchViewMode = function(mode) {
+      if (mode === 'executive') {
+        const url = new URL(window.location.href);
+        url.searchParams.delete('mode');
+        window.location.href = url.toString();
+      }
+    };
+
+    // ========================================================================
+    // STEPPER & EVENT CHAPTER ENGINE
+    // ========================================================================
+    function renderMilestones() {
+      milestoneTrack.innerHTML = chronologicalEvents.map((evt, idx) => {
+        const isActive = (evt.id === currentEvent);
+        const isLocked = !!lockedEvents[evt.id];
+        const eventItems = items.filter(i => i.event === evt.id);
+        const lockedCount = eventItems.filter(i => userSelections[i.id] || i.status === 'locked').length;
+
+        return `
+          <div class="dr-milestone-node ${isActive ? 'active' : ''} ${isLocked ? 'locked-state' : ''}" onclick="window.selectEventMilestone('${evt.id}')">
+            <div class="dr-milestone-top">
+              <span class="dr-milestone-phase">Phase ${idx + 1}</span>
+              <span class="dr-milestone-badge">${isLocked ? '✓ Locked' : `${lockedCount}/${eventItems.length}`}</span>
+            </div>
+            <div class="dr-milestone-label">
+              <span>${evt.icon}</span> <span>${evt.label.replace('Day 1 ', '').replace('Day 2 ', '')}</span>
+            </div>
+            <div class="dr-milestone-time">${evt.timing || ''}</div>
+          </div>
+        `;
+      }).join('');
+
+      // Update Active Action Bar
+      const activeEvtObj = chronologicalEvents.find(e => e.id === currentEvent) || chronologicalEvents[3];
+      activeEventIcon.textContent = activeEvtObj.icon;
+      activeEventSummary.innerHTML = `Currently Reviewing: <strong>${activeEvtObj.label}</strong> (${activeEvtObj.timing})`;
+      
+      const isEventLocked = !!lockedEvents[currentEvent];
+      btnLockActiveEvent.innerHTML = isEventLocked 
+        ? '<span>✓</span> Event Choices Certified & Locked' 
+        : '<span>🔒</span> Freeze & Lock This Event\'s Choices';
+      btnLockActiveEvent.style.background = isEventLocked 
+        ? 'rgba(16, 185, 129, 0.4)' 
+        : 'linear-gradient(135deg, #10b981, #059669)';
+    }
+
+    window.selectEventMilestone = function(eventId) {
+      currentEvent = eventId;
+      renderMilestones();
+      renderClusterPods();
+      renderCarouselCards();
+      renderGrid();
+    };
+
+    // Stepper Navigation
+    btnStepperPrev.addEventListener('click', () => {
+      const idx = chronologicalEvents.findIndex(e => e.id === currentEvent);
+      if (idx > 0) {
+        window.selectEventMilestone(chronologicalEvents[idx - 1].id);
+      }
+    });
+
+    btnStepperNext.addEventListener('click', () => {
+      const idx = chronologicalEvents.findIndex(e => e.id === currentEvent);
+      if (idx < chronologicalEvents.length - 1) {
+        window.selectEventMilestone(chronologicalEvents[idx + 1].id);
+      }
+    });
+
+    // Lock Active Event
+    btnLockActiveEvent.addEventListener('click', () => {
+      lockedEvents[currentEvent] = !lockedEvents[currentEvent];
+      saveState();
+      renderMilestones();
+      showToast(
+        lockedEvents[currentEvent] 
+          ? `Event ${currentEvent.toUpperCase()} successfully frozen & ratified!` 
+          : `Event ${currentEvent.toUpperCase()} unlocked for edits.`,
+        lockedEvents[currentEvent] ? '🔒' : '🔓'
+      );
+    });
+
+    // ========================================================================
+    // MULTI-OPTION CLUSTER POD ENGINE (P-OPTION-POD-001)
+    // ========================================================================
+    function renderClusterPods() {
+      // Find clusters belonging to active event
+      const activeClusters = clusters.filter(c => c.event === currentEvent);
+
+      if (activeClusters.length === 0) {
+        clusterPodsContainer.innerHTML = '';
+        return;
+      }
+
+      clusterPodsContainer.innerHTML = activeClusters.map(cluster => {
+        const decisionItem = items.find(i => i.id === cluster.decisionId) || {};
+        const savedChoice = userSelections[cluster.decisionId] || 'A';
+        const votes = familyVotes[cluster.id] || {};
+
+        return `
+          <div class="dr-cluster-card" id="cluster-${cluster.id}">
+            <div class="dr-cluster-header">
+              <div class="dr-cluster-title-wrap">
+                <h2>
+                  <span>🏛️</span> 
+                  <span>${cluster.title}</span>
+                  <span class="dr-id-badge">${cluster.clusterId}</span>
+                </h2>
+                <p>${cluster.description}</p>
+              </div>
+              <div class="dr-cluster-actions">
+                <button class="dr-btn dr-btn-whatsapp" onclick="window.shareClusterWhatsApp('${cluster.id}')" title="Share this option comparison to WhatsApp">
+                  <span>📱</span> Share for Family Vote
+                </button>
+                <button class="dr-btn" onclick="window.openLightboxByPlateId('${cluster.options[0].plateId}', true)" title="Open Fullscreen Comparison">
+                  <span>⚖️</span> Compare Fullscreen
+                </button>
+              </div>
+            </div>
+
+            <!-- Side-by-Side N-Option Grid -->
+            <div class="dr-pod-grid">
+              ${cluster.options.map(opt => {
+                const plate = plates.find(p => p.id === opt.plateId);
+                if (!plate) return '';
+                const isSelected = (savedChoice === opt.optionId);
+                const voteCount = votes[opt.optionId] || 0;
+
+                return `
+                  <div class="dr-pod-option-card ${isSelected ? 'selected' : ''}" onclick="window.selectClusterOption('${cluster.decisionId}', '${opt.optionId}', '${cluster.id}')">
+                    <div class="dr-pod-media">
+                      <img class="dr-pod-img" src="${plate.photoSrc}" alt="${opt.label}" loading="lazy" onerror="this.src='./assets/decor/marquee/photo-luxury-marquee-chandeliers.jpg'">
+                      <div class="dr-pod-badge-bar">
+                        <span class="dr-plate-id-badge">${plate.id}</span>
+                        <span class="dr-plate-status-badge ${plate.status}">${plate.statusBadge}</span>
+                      </div>
+                    </div>
+                    <div class="dr-pod-body">
+                      <div>
+                        <h4 class="dr-pod-title">${opt.label}</h4>
+                        <div class="dr-pod-dims">📐 ${plate.dimensions}</div>
+                        <div class="dr-pod-highlight">${opt.highlight}</div>
+                      </div>
+                      <button class="dr-pod-radio-btn" type="button">
+                        <span>${isSelected ? '🔘' : '⚪'}</span>
+                        <span>${isSelected ? 'Chosen Concept (Active)' : 'Select This Concept'}</span>
+                        ${voteCount > 0 ? `<span style="margin-left: auto; color: var(--dr-purple);">(${voteCount} votes)</span>` : ''}
+                      </button>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+
+            <div class="dr-cluster-footer">
+              <div class="dr-consensus-tally">
+                <span>📊</span> 
+                <span><strong>Family Consensus Tally:</strong> ${formatVoteTally(votes, cluster.options)}</span>
+              </div>
+              <span style="font-size: 11px; color: var(--dr-text-muted);">
+                Governs Contract Specification: ${decisionItem.phase || 'Phase III Scenic Fabrication'}
+              </span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function formatVoteTally(votes, options) {
+      const tallyParts = options.map(opt => {
+        const count = votes[opt.optionId] || 0;
+        return `${opt.optionId}: ${count}`;
+      });
+      return tallyParts.join(' | ');
+    }
+
+    window.selectClusterOption = function(decisionId, optionId, clusterId) {
+      userSelections[decisionId] = optionId;
+      
+      // Record vote locally
+      if (!familyVotes[clusterId]) familyVotes[clusterId] = {};
+      familyVotes[clusterId][optionId] = (familyVotes[clusterId][optionId] || 0) + 1;
+
+      saveState();
+      renderClusterPods();
+      renderMilestones();
+      renderGrid();
+      showToast(`Concept Option ${optionId} locked for ${decisionId}!`, '✓');
+    };
+
+    // 1-Click WhatsApp Consensus Generator (P-WHATSAPP-SHARE-001)
+    window.shareClusterWhatsApp = function(clusterId) {
+      const cluster = clusters.find(c => c.id === clusterId);
+      if (!cluster) return;
+
+      const baseUrl = window.location.origin + window.location.pathname;
+      const shareUrl = `${baseUrl}?event=${cluster.event}&cluster=${cluster.id}&mode=family`;
+      const msg = cluster.whatsappTemplate.replace('{url}', shareUrl);
+
+      // Copy to clipboard
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(msg).then(() => {
+          showToast('WhatsApp invitation text copied to clipboard! Paste into your family chat.', '📲');
+        });
+      } else {
+        // Fallback
+        prompt('Copy WhatsApp Message:', msg);
+      }
+    };
+
+    // Share Entire Family Mode Link
+    btnShareFamilyMode.addEventListener('click', () => {
+      const baseUrl = window.location.origin + window.location.pathname;
+      const shareUrl = `${baseUrl}?event=${currentEvent}&mode=family`;
+      const text = `🌺 *Sree Krushna Marriage OS — Family Decor Review*\nHelp us review and vote on our wedding decor concepts!\n👉 Tap to review: ${shareUrl}`;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('Family review link copied! Paste into WhatsApp.', '📱');
+        });
+      } else {
+        prompt('Copy Family Link:', text);
+      }
+    });
+
+    // ========================================================================
+    // CAROUSEL COMPONENT ENGINE (Filtered by Active Stepper Event)
+    // ========================================================================
+    function renderCarouselCards() {
+      const visiblePlates = plates.filter(p => p.events && p.events.includes(currentEvent));
+      carouselCounterIndicator.textContent = `Showing ${visiblePlates.length} Plates (${currentEvent.toUpperCase()})`;
+
+      if (visiblePlates.length === 0) {
+        carouselTrack.innerHTML = `
+          <div style="padding: 40px; color: var(--dr-text-muted); text-align: center; width: 100%;">
+            No individual visual plates registered for this event.
+          </div>
+        `;
+        return;
+      }
+
+      carouselTrack.innerHTML = visiblePlates.map(plate => {
+        const globalIndex = plates.findIndex(p => p.id === plate.id);
+        const hasAlternatives = (plate.clusterId !== null);
+        const primaryDecision = plate.linkedDecisions && plate.linkedDecisions.length > 0 ? plate.linkedDecisions[0] : null;
+
+        return `
+          <article class="dr-plate-card" data-plate-id="${plate.id}">
+            <div class="dr-plate-media" onclick="window.openLightbox(${globalIndex})">
+              <img class="dr-plate-img" src="${plate.photoSrc}" alt="${plate.title}" loading="lazy" onerror="this.src='./assets/decor/marquee/photo-luxury-marquee-chandeliers.jpg'">
+              <div class="dr-plate-tag-bar">
+                <span class="dr-plate-id-badge">${plate.id}</span>
+                <span class="dr-plate-status-badge ${plate.status}">${plate.statusBadge}</span>
+              </div>
+              <div class="dr-plate-overlay">
+                <span class="dr-plate-event-label">${plate.eventLabel}</span>
+              </div>
+            </div>
+            <div class="dr-plate-body">
+              <div>
+                <h3 class="dr-plate-card-title">${plate.title}</h3>
+                <div class="dr-plate-dim-tag">
+                  <span>📐</span> <span>${plate.dimensions}</span>
+                </div>
+                <div class="dr-plate-notes-clamp">${plate.notes}</div>
+              </div>
+              <div class="dr-plate-footer-actions">
+                <button class="dr-plate-btn-action" onclick="window.openLightbox(${globalIndex})" title="Inspect Fullscreen Image & CAD">
+                  <span>🔍</span> Inspect
+                </button>
+                ${hasAlternatives ? `
+                  <button class="dr-plate-btn-action highlight" onclick="window.openLightbox(${globalIndex}, true)" title="Compare with Alternative Options">
+                    <span>⚖️</span> Compare
+                  </button>
+                ` : ''}
+                ${primaryDecision ? `
+                  <button class="dr-plate-btn-action" onclick="window.jumpToDecision('${primaryDecision}')" title="Scroll to Linked Decision">
+                    <span>⚡</span> ${primaryDecision}
+                  </button>
+                ` : ''}
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    btnCarouselPrev.addEventListener('click', () => {
+      carouselTrack.scrollBy({ left: -340, behavior: 'smooth' });
+    });
+
+    btnCarouselNext.addEventListener('click', () => {
+      carouselTrack.scrollBy({ left: 340, behavior: 'smooth' });
+    });
+
+    // ========================================================================
+    // DECISIONS GRID ENGINE
+    // ========================================================================
+    function renderGrid() {
+      const q = searchQuery.toLowerCase().trim();
+      const filtered = items.filter(item => {
+        // Event check: in stepper mode, show active event's decisions unless 'all' is selected
+        if (currentEvent !== 'all' && item.event !== currentEvent) return false;
+
+        // Category / Status Filter
+        let matchesFilter = false;
+        if (currentFilter === 'all') {
+          matchesFilter = true;
+        } else if (currentFilter === 'all_pending') {
+          matchesFilter = (item.category === 'decor_pending' || item.category === 'decor_vendor' || item.category === 'idea_incubator');
+        } else {
+          matchesFilter = (item.category === currentFilter);
+        }
+
+        if (!matchesFilter) return false;
+
+        if (!q) return true;
+        const text = (item.id + ' ' + item.title + ' ' + (item.dilemma || '') + ' ' + (item.benchmark || '') + ' ' + (item.zone || '') + ' ' + (item.plateRef || '')).toLowerCase();
+        return text.includes(q);
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 50px 20px; color: var(--dr-text-muted);">
+            <div style="font-size: 32px; margin-bottom: 8px;">🔍</div>
+            <h3 style="margin: 0 0 6px; color: #ffffff;">No matching decisions for ${currentEvent.toUpperCase()}</h3>
+            <p style="margin: 0; font-size: 13px;">Try switching to another filter pill or clicking another event in the stepper above.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(item => {
+        const categoryClass = item.category;
+        const savedChoice = userSelections[item.id];
+
+        let mediaAttachmentHtml = '';
+        if (item.plateRef) {
+          const refPlate = plates.find(p => p.id === item.plateRef);
+          if (refPlate) {
+            const plateIndex = plates.findIndex(p => p.id === item.plateRef);
+            mediaAttachmentHtml = `
+              <div class="dr-card-media-attachment" onclick="window.openLightbox(${plateIndex})" title="Click to view in Lightbox">
+                <div class="dr-card-media-left">
+                  <img class="dr-card-thumb-img" src="${refPlate.photoSrc}" alt="${refPlate.title}" loading="lazy" onerror="this.src='./assets/decor/marquee/photo-luxury-marquee-chandeliers.jpg'">
+                  <div class="dr-card-media-text">
+                    <span class="dr-card-media-title">${refPlate.title}</span>
+                    <span class="dr-card-media-sub">${item.plateRef} • ${refPlate.dimensions}</span>
+                  </div>
+                </div>
+                <div class="dr-card-media-action">
+                  <span>Inspect</span> <span>🔍</span>
+                </div>
+              </div>
+            `;
+          }
+        }
+
+        let optionsHtml = '';
+        if (item.options && item.options.length > 0) {
+          optionsHtml = `
+            <div class="dr-options-container">
+              ${item.options.map(opt => {
+                const isSelected = savedChoice ? (savedChoice === opt.id) : opt.selected;
+                return `
+                  <div class="dr-option-row ${isSelected ? 'selected' : ''}" onclick="window.selectDecisionOption('${item.id}', '${opt.id}')">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <div class="dr-radio-circle">
+                        <div class="dr-radio-inner"></div>
+                      </div>
+                      <span>${opt.text}</span>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          `;
+        }
+
+        let vendorBoxHtml = '';
+        if (item.vendorDeliverable) {
+          vendorBoxHtml = `
+            <div class="dr-vendor-box">
+              <span>⚠️</span>
+              <span><strong>Deliverable Due:</strong> ${item.vendorDeliverable}</span>
+            </div>
+          `;
+        }
+
+        let statusClass = 'pending';
+        if (item.status === 'vendor') statusClass = 'vendor';
+        if (item.status === 'incubating') statusClass = 'incubating';
+        if (item.status === 'locked') statusClass = 'locked';
+
+        return `
+          <article class="dr-card ${categoryClass}" id="card-${item.id}">
+            <div class="dr-card-strip"></div>
+            <div>
+              <div class="dr-card-header">
+                <div class="dr-badge-group">
+                  <span class="dr-id-badge">${item.id}</span>
+                  <span class="dr-category-badge">${item.categoryLabel}</span>
+                </div>
+                <span class="dr-status-pill ${statusClass}">${item.statusLabel}</span>
+              </div>
+              <h2 class="dr-card-title">
+                <span>${item.domainIcon || '📌'}</span>
+                <span>${item.title}</span>
+              </h2>
+              <div class="dr-dilemma-box">${item.dilemma || ''}</div>
+              ${item.benchmark ? `
+                <div class="dr-benchmark-note">
+                  <strong>Luxury Standard:</strong> ${item.benchmark}
+                </div>
+              ` : ''}
+              ${mediaAttachmentHtml}
+              ${optionsHtml}
+              ${vendorBoxHtml}
+            </div>
+            <div class="dr-card-footer">
+              <span>${item.zone || item.targetEvent || 'Marriage OS Scope'}</span>
+              ${item.plateRef ? `
+                <span class="dr-plate-link" onclick="window.openLightbox(${plates.findIndex(p => p.id === item.plateRef)})">
+                  <span>🖼️</span> ${item.plateRef}
+                </span>
+              ` : (item.estimatedCost ? `<span style="color: var(--dr-purple); font-weight: 600;">Est: ${item.estimatedCost}</span>` : '')}
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    window.selectDecisionOption = function(itemId, optionId) {
+      userSelections[itemId] = optionId;
+      saveState();
+      renderGrid();
+    };
+
+    window.jumpToDecision = function(decisionId) {
+      const item = items.find(i => i.id === decisionId);
+      if (!item) return;
+
+      if (currentEvent !== item.event) {
+        currentEvent = item.event;
+        renderMilestones();
+        renderClusterPods();
+        renderCarouselCards();
+      }
+
+      renderGrid();
+
+      setTimeout(() => {
+        const cardEl = document.getElementById('card-' + decisionId);
+        if (cardEl) {
+          cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          cardEl.classList.add('target-highlight');
+          setTimeout(() => cardEl.classList.remove('target-highlight'), 2500);
+        }
+      }, 60);
+    };
+
+    filterPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        filterPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        currentFilter = pill.getAttribute('data-filter');
+        renderGrid();
+      });
+    });
+
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      renderGrid();
+    });
+
+    // ========================================================================
+    // LIGHTBOX MODAL ENGINE
+    // ========================================================================
+    window.openLightbox = function(index, startInCompareMode = false) {
+      if (index < 0 || index >= plates.length) index = 0;
+      activeModalPlateIndex = index;
+      isCompareMode = !!startInCompareMode;
+      isCadMode = false;
+      updateLightboxContent();
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    };
+
+    window.openLightboxByPlateId = function(plateId, startInCompareMode = false) {
+      const idx = plates.findIndex(p => p.id === plateId);
+      if (idx >= 0) window.openLightbox(idx, startInCompareMode);
+    };
+
+    function closeLightbox() {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+      isCompareMode = false;
+    }
+
+    function updateLightboxContent() {
+      const plate = plates[activeModalPlateIndex];
+      if (!plate) return;
+
+      modalPlateId.textContent = plate.id;
+      modalPlateTitle.textContent = plate.title;
+      modalPlateSub.textContent = `${plate.eventLabel} • ${plate.zone} • ${plate.spec}`;
+      modalDimensions.textContent = plate.dimensions;
+      modalEventZone.textContent = `${plate.eventLabel} (${plate.zone})`;
+      modalClause.textContent = plate.clause || 'CTR-DECOR-RIDER-001';
+      modalLinkedDecisions.textContent = plate.linkedDecisions ? plate.linkedDecisions.join(', ') : 'None';
+      modalNotesBox.innerHTML = `
+        <div style="margin-bottom: 6px;"><strong>Architectural & Scenic Spec:</strong> ${plate.notes}</div>
+        ${plate.prompt ? `
+          <details style="margin-top: 8px; font-size: 11px; color: var(--dr-text-muted);">
+            <summary style="cursor: pointer; color: var(--dr-gold); font-weight: 600;">✨ View AI Generative Prompt</summary>
+            <div style="margin-top: 6px; padding: 8px; background: rgba(0,0,0,0.3); border-radius: 4px; line-height: 1.4;">${plate.prompt}</div>
+          </details>
+        ` : ''}
+      `;
+
+      if (plate.blueprintSrc) {
+        modalBlueprintToggleWrap.style.display = 'flex';
+        btnViewPhoto.classList.toggle('active', !isCadMode);
+        btnViewCad.classList.toggle('active', isCadMode);
+      } else {
+        modalBlueprintToggleWrap.style.display = 'none';
+        isCadMode = false;
+      }
+
+      const altPlateIds = getAlternativesForPlate(plate.id);
+      if (altPlateIds.length > 1) {
+        btnToggleCompare.style.display = 'inline-flex';
+        btnToggleCompare.classList.toggle('active', isCompareMode);
+        btnToggleCompare.textContent = isCompareMode ? '📷 Single View' : `⚖️ Compare (${altPlateIds.length})`;
+      } else {
+        btnToggleCompare.style.display = 'none';
+        isCompareMode = false;
+      }
+
+      if (isCompareMode && altPlateIds.length > 1) {
+        modalSingleStage.style.display = 'none';
+        modalCompareStage.classList.add('active');
+        renderCompareStage(altPlateIds);
+      } else {
+        modalSingleStage.style.display = 'flex';
+        modalCompareStage.classList.remove('active');
+
+        if (isCadMode && plate.blueprintSrc) {
+          modalImg.style.display = 'none';
+          modalSvgObject.style.display = 'block';
+          modalSvgObject.data = plate.blueprintSrc;
+        } else {
+          modalSvgObject.style.display = 'none';
+          modalImg.style.display = 'block';
+          modalImg.src = plate.photoSrc;
+        }
+      }
+
+      renderLightboxThumbs();
+    }
+
+    function getAlternativesForPlate(plateId) {
+      if (plateId === 'PLATE-01' || plateId === 'PLATE-10' || plateId === 'PLATE-11') {
+        return ['PLATE-01', 'PLATE-10', 'PLATE-11'];
+      }
+      if (plateId === 'PLATE-03' || plateId === 'PLATE-12') {
+        return ['PLATE-03', 'PLATE-12'];
+      }
+      return [plateId];
+    }
+
+    function renderCompareStage(plateIds) {
+      modalCompareStage.innerHTML = plateIds.map(id => {
+        const p = plates.find(item => item.id === id);
+        if (!p) return '';
+        const isCurrent = (p.id === plates[activeModalPlateIndex].id);
+        return `
+          <div class="dr-compare-card ${isCurrent ? 'current' : ''}">
+            <div class="dr-compare-card-media">
+              <img class="dr-compare-card-img" src="${p.photoSrc}" alt="${p.title}">
+              <div class="dr-plate-tag-bar">
+                <span class="dr-plate-id-badge">${p.id}</span>
+                <span class="dr-plate-status-badge ${p.status}">${p.statusBadge}</span>
+              </div>
+            </div>
+            <div class="dr-compare-card-body">
+              <div>
+                <h4 style="margin: 0 0 4px; font-size: 13px; color: #ffffff;">${p.title}</h4>
+                <div style="font-size: 11px; color: var(--dr-gold); margin-bottom: 8px;">${p.dimensions}</div>
+                <div style="font-size: 11px; color: var(--dr-text-secondary); line-height: 1.4;">${p.notes}</div>
+              </div>
+              <button class="dr-plate-btn-action ${isCurrent ? 'highlight' : ''}" style="margin-top: 10px;" onclick="window.selectCompareTarget('${p.id}')">
+                ${isCurrent ? '✓ Active Option' : 'Select This Option'}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.selectCompareTarget = function(plateId) {
+      const idx = plates.findIndex(p => p.id === plateId);
+      if (idx >= 0) {
+        activeModalPlateIndex = idx;
+        isCompareMode = false;
+        updateLightboxContent();
+      }
+    };
+
+    function renderLightboxThumbs() {
+      modalThumbsBar.innerHTML = plates.map((p, idx) => {
+        const isActive = (idx === activeModalPlateIndex);
+        return `
+          <div class="dr-lightbox-thumb ${isActive ? 'active' : ''}" onclick="window.openLightbox(${idx}, ${isCompareMode})" title="${p.id}: ${p.title}">
+            <img src="${p.photoSrc}" alt="${p.id}" onerror="this.src='./assets/decor/marquee/photo-luxury-marquee-chandeliers.jpg'">
+          </div>
+        `;
+      }).join('');
+
+      const activeThumb = modalThumbsBar.querySelector('.dr-lightbox-thumb.active');
+      if (activeThumb) {
+        activeThumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+    }
+
+    btnCloseLightbox.addEventListener('click', closeLightbox);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeLightbox();
+    });
+
+    btnModalPrev.addEventListener('click', () => {
+      activeModalPlateIndex = (activeModalPlateIndex - 1 + plates.length) % plates.length;
+      updateLightboxContent();
+    });
+
+    btnModalNext.addEventListener('click', () => {
+      activeModalPlateIndex = (activeModalPlateIndex + 1) % plates.length;
+      updateLightboxContent();
+    });
+
+    btnViewPhoto.addEventListener('click', () => {
+      isCadMode = false;
+      updateLightboxContent();
+    });
+
+    btnViewCad.addEventListener('click', () => {
+      isCadMode = true;
+      updateLightboxContent();
+    });
+
+    btnToggleCompare.addEventListener('click', () => {
+      isCompareMode = !isCompareMode;
+      updateLightboxContent();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!modal.classList.contains('active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') {
+        activeModalPlateIndex = (activeModalPlateIndex - 1 + plates.length) % plates.length;
+        updateLightboxContent();
+      }
+      if (e.key === 'ArrowRight') {
+        activeModalPlateIndex = (activeModalPlateIndex + 1) % plates.length;
+        updateLightboxContent();
+      }
+    });
+
+    // Export JSON
+    btnExportJson.addEventListener('click', () => {
+      const exportPayload = {
+        exported_at: new Date().toISOString(),
+        selections: userSelections,
+        locked_events: lockedEvents,
+        family_votes: familyVotes,
+        registry: data
+      };
+      const blob = new Blob([JSON.stringify(exportPayload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `sree-krushna-decisions-export-${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    btnPrintDossier.addEventListener('click', () => window.print());
+
+    // Initialize
+    parseUrlParams();
+    renderMilestones();
+    renderClusterPods();
+    renderCarouselCards();
+    renderGrid();
+  })();
+</script>
+
+</body>
+</html>
