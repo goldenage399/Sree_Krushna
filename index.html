@@ -118,11 +118,23 @@
             <span class="btn-text">Intake Ledger</span>
           </button>
 
-          <!-- Decorator Cockpit Launch CTA (Milestone 1 Bridge) -->
-          <button id="openCockpitBtn" class="header-action-btn btn-gold" data-testid="open-cockpit-btn" aria-label="Open Decorator Negotiation Cockpit" onclick="window.open('decorator-cockpit.html','_blank')">
+          <!-- Decorator Cockpit Launch CTA -->
+          <button id="openCockpitBtn" class="header-action-btn btn-gold" data-testid="open-cockpit-btn" aria-label="Open Decorator Negotiation Cockpit" onclick="switchTab('tab-cockpit')">
             <span class="btn-icon">🎪</span>
-            <span class="btn-text">Decorator Cockpit ↗</span>
+            <span class="btn-text">Decorator Cockpit</span>
           </button>
+
+          <!-- Master Decision Registry Link -->
+          <a href="./decision-registry.html" id="openDecisionRegistryBtn" class="header-action-btn btn-ghost" data-testid="open-decision-registry-btn" aria-label="Open Master Decision Registry" style="text-decoration: none;">
+            <span class="btn-icon">⚖️</span>
+            <span class="btn-text">Decisions</span>
+          </a>
+
+          <!-- Bhubaneswar Shopping Registry Link -->
+          <a href="./shopping-registry.html" id="openShoppingRegistryBtn" class="header-action-btn btn-ghost" data-testid="open-shopping-registry-btn" aria-label="Open Bhubaneswar Shopping Registry" style="text-decoration: none;">
+            <span class="btn-icon">🛍️</span>
+            <span class="btn-text">Shopping</span>
+          </a>
 
           <!-- Theme Switcher Toggle -->
           <button id="themeToggleBtn" class="header-action-btn btn-ghost theme-toggle-btn" data-testid="theme-toggle-button" aria-label="Toggle Bright/Dark Theme" onclick="toggleTheme()">
@@ -176,6 +188,8 @@
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-tasks" data-testid="nav-tab-tasks" onclick="switchTab('tab-tasks')">📋 Tasks (CRUD)</button>
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-rituals" data-testid="nav-tab-rituals" onclick="switchTab('tab-rituals')">🕉️ Vedic Liturgy</button>
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-vision" data-testid="nav-tab-vision" onclick="switchTab('tab-vision')">🎨 Vision Studio</button>
+        <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-decision-registry" data-testid="nav-tab-decision-registry" onclick="switchTab('tab-decision-registry')">⚖️ Decisions</button>
+        <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-cockpit" data-testid="nav-tab-cockpit" onclick="switchTab('tab-cockpit')">🎪 Decorator Cockpit</button>
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-procurement" data-testid="nav-tab-procurement" onclick="switchTab('tab-procurement')">🤝 Vendors</button>
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-governance" data-testid="nav-tab-governance" onclick="switchTab('tab-governance')">🛡️ Custody</button>
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-intake" data-testid="nav-tab-intake" onclick="switchTab('tab-intake')">📨 Intake Ledger</button>
@@ -756,6 +770,40 @@
           </div>
         </div>
       </div>
+ 
+      <!-- TAB: DECISION REGISTRY & EVENT STEPPER -->
+      <div id="tab-decision-registry" class="tab-content" role="tabpanel" aria-labelledby="nav-tab-decision-registry" data-testid="panel-decision-registry">
+        <div id="decisionRegistryFrame">
+          <div id="decisionRegistryLoadingPlaceholder" style="padding: 48px 20px; text-align: center; color: var(--gold-bright);">
+            <div style="font-size: 2.5rem; margin-bottom: 12px; animation: pulse 1.5s infinite;">⚖️</div>
+            <h3 style="font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 6px;">Loading Master Decision Registry & Event Stepper...</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Hydrating chronological timeline, cluster pods, and family consensus.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: DECORATOR COCKPIT -->
+      <div id="tab-cockpit" class="tab-content" role="tabpanel" aria-labelledby="nav-tab-cockpit" data-testid="panel-cockpit">
+        <div class="vendor-context-ribbon" id="cockpitVendorRibbon">
+          <div class="ribbon-left">
+            <span class="ribbon-tag">🎨 VDR-002: Mandap & Tentage Decorators</span>
+            <span class="ribbon-status status-negotiating">Tender & Negotiation Active</span>
+          </div>
+          <div class="ribbon-right">
+            <span class="ribbon-spec">Governing Rider: CTR-DECOR-RIDER-001</span>
+            <button class="ribbon-action-btn" onclick="switchTab('tab-procurement')">Vendor Profile</button>
+            <button id="cockpitPresentationToggleBtn" class="ribbon-action-btn ribbon-focus-btn" onclick="toggleCockpitPresentationMode(true)" title="Enter distraction-free presentation mode for vendor meetings">🖥️ Presentation Mode</button>
+          </div>
+        </div>
+        <button id="cockpitExitPresentationBtn" class="cockpit-exit-focus-btn" onclick="toggleCockpitPresentationMode(false)" title="Exit presentation mode (Esc)">✕ Exit Presentation</button>
+        <div id="cockpitFrame">
+          <div id="cockpitLoadingPlaceholder" style="padding: 48px 20px; text-align: center; color: var(--gold-bright);">
+            <div style="font-size: 2.5rem; margin-bottom: 12px; animation: pulse 1.5s infinite;">🎪</div>
+            <h3 style="font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 6px;">Loading Decorator Negotiation Cockpit...</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Hydrating battlecards, 4-tier quote model, and master decisions.</p>
+          </div>
+        </div>
+      </div>
 
       <!-- TAB 6: VENDORS & PROCUREMENT -->
       <div id="tab-procurement" class="tab-content" role="tabpanel" aria-labelledby="nav-tab-procurement" data-testid="panel-procurement">
@@ -781,7 +829,7 @@
             </div>
             <div style="margin-top: 20px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
               <button class="btn-return" style="padding: 10px 22px; font-size: 0.88rem; cursor: pointer; border: none;" onclick="openVendorNominationModal()">🤝 Nominate Vendor / Submit Quote →</button>
-              <a href="/decorator-cockpit.html" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; padding: 10px 22px; font-size: 0.88rem; cursor: pointer; border-radius: 8px; background: linear-gradient(135deg, #f59e0b, #d97706); color: #000; font-weight: 700; text-decoration: none; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);">🌺 Launch Decorator Cockpit (Dual-Lens HUD) ↗</a>
+              <button style="display: inline-flex; align-items: center; gap: 6px; padding: 10px 22px; font-size: 0.88rem; cursor: pointer; border-radius: 8px; background: linear-gradient(135deg, #f59e0b, #d97706); color: #000; font-weight: 700; border: none; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);" onclick="switchTab('tab-cockpit')">🎨 Open Decorator Cockpit (In-App Tab) →</button>
             </div>
           </div>
 
@@ -798,9 +846,17 @@
                 </tr>
               </thead>
               <tbody>
+                <tr style="background: rgba(245, 158, 11, 0.05);">
+                  <td><span class="role-pill-tag" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3);">💐 Decor & Tentage</span></td>
+                  <td><strong>VDR-002</strong></td>
+                  <td>Mandap & Luxury Tentage RFP</td>
+                  <td><span class="status-badge" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; cursor: pointer;" onclick="switchTab('tab-cockpit')">Quote Received ↗</span></td>
+                  <td><code>CTR-DECOR-RIDER-001</code></td>
+                  <td>PER-001 / PER-006</td>
+                </tr>
                 <tr>
-                  <td colspan="6" style="text-align: center; color: var(--text-dim); padding: 28px 16px; font-style: italic;">
-                    No formal vendor agreements executed yet. Vendor register will populate upon contract signing.
+                  <td colspan="6" style="text-align: center; color: var(--text-dim); padding: 18px 16px; font-style: italic;">
+                    Remaining vendor categories in active evaluation. Vendor register will populate upon contract signing.
                   </td>
                 </tr>
               </tbody>

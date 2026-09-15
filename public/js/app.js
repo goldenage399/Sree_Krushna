@@ -1059,8 +1059,214 @@ window.dataLayer = window.dataLayer || [];
         window.renderDoPkosStudio();
       } else if (targetId === 'tab-planning' && window.renderPlanningSuite) {
         window.renderPlanningSuite();
+      } else if (targetId === 'tab-decision-registry') {
+        mountDecisionRegistryTab();
+      } else if (targetId === 'tab-cockpit') {
+        mountCockpitTab();
       }
     }
+
+    let cockpitMounted = false;
+    let cockpitMounting = false;
+    async function mountCockpitTab() {
+      const frame = document.getElementById('cockpitFrame');
+      if (!frame) return;
+
+      if (cockpitMounted) {
+        if (typeof window.renderDecoratorCockpit === 'function') {
+          window.renderDecoratorCockpit();
+        }
+        return;
+      }
+
+      if (cockpitMounting) return;
+      cockpitMounting = true;
+
+      try {
+        const res = await fetch('cockpit-fragment.html');
+        if (!res.ok) throw new Error(`HTTP ${res.status} fetching cockpit-fragment.html`);
+        const fragmentText = await res.text();
+
+        if (typeof DOMParser !== 'undefined') {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(fragmentText, 'text/html');
+
+          // 1. Transfer <style> tags to <head> if not already added
+          const styles = doc.querySelectorAll('style');
+          styles.forEach(st => {
+            const styleEl = document.createElement('style');
+            styleEl.setAttribute('data-source', 'cockpit-fragment');
+            styleEl.textContent = st.textContent;
+            document.head.appendChild(styleEl);
+          });
+
+          // 2. Transfer DOM structure
+          const fragFrame = doc.querySelector('#cockpitFrame');
+          if (fragFrame) {
+            frame.innerHTML = fragFrame.innerHTML;
+          } else {
+            const bodyChildren = Array.from(doc.body.children).filter(el => el.tagName !== 'SCRIPT' && el.tagName !== 'STYLE');
+            frame.innerHTML = '';
+            bodyChildren.forEach(child => frame.appendChild(child));
+          }
+
+          // 3. Extract and execute scripts sequentially
+          const scripts = doc.querySelectorAll('script');
+          for (const oldScript of scripts) {
+            const newScript = document.createElement('script');
+            if (oldScript.type) newScript.type = oldScript.type;
+            if (oldScript.src) {
+              newScript.src = oldScript.src;
+            } else {
+              newScript.textContent = oldScript.textContent;
+            }
+            document.body.appendChild(newScript);
+          }
+        } else {
+          frame.innerHTML = fragmentText;
+        }
+
+        cockpitMounted = true;
+        setTimeout(() => {
+          if (typeof window.renderDecoratorCockpit === 'function') {
+            window.renderDecoratorCockpit();
+          }
+        }, 50);
+
+      } catch (err) {
+        console.error('❌ Failed to mount Decorator Cockpit fragment:', err);
+        frame.innerHTML = `
+          <div style="padding: 32px 20px; text-align: center; color: var(--crimson-royal);">
+            <div style="font-size: 2rem; margin-bottom: 8px;">⚠️</div>
+            <h3 style="font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 6px;">Failed to Load Decorator Cockpit</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 14px;">${err.message}</p>
+            <button class="nav-btn active" style="margin: 0 auto; display: inline-flex;" onclick="cockpitMounted=false; mountCockpitTab()">Retry Mount ↻</button>
+          </div>
+        `;
+      } finally {
+        cockpitMounting = false;
+      }
+    }
+    window.mountCockpitTab = mountCockpitTab;
+
+    let decisionRegistryMounted = false;
+    let decisionRegistryMounting = false;
+    async function mountDecisionRegistryTab() {
+      const frame = document.getElementById('decisionRegistryFrame');
+      if (!frame) return;
+
+      if (decisionRegistryMounted) {
+        if (typeof window.renderDecisionRegistry === 'function') {
+          window.renderDecisionRegistry();
+        }
+        return;
+      }
+
+      if (decisionRegistryMounting) return;
+      decisionRegistryMounting = true;
+
+      try {
+        const res = await fetch('decision-registry-fragment.html');
+        if (!res.ok) throw new Error(`HTTP ${res.status} fetching decision-registry-fragment.html`);
+        const fragmentText = await res.text();
+
+        if (typeof DOMParser !== 'undefined') {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(fragmentText, 'text/html');
+
+          // 1. Transfer <style> tags to <head> if not already added
+          const styles = doc.querySelectorAll('style');
+          styles.forEach(st => {
+            const styleEl = document.createElement('style');
+            styleEl.setAttribute('data-source', 'decision-registry-fragment');
+            styleEl.textContent = st.textContent;
+            document.head.appendChild(styleEl);
+          });
+
+          // 2. Transfer DOM structure
+          const fragFrame = doc.querySelector('#decisionRegistryFrame');
+          if (fragFrame) {
+            frame.innerHTML = fragFrame.innerHTML;
+          } else {
+            const bodyChildren = Array.from(doc.body.children).filter(el => el.tagName !== 'SCRIPT' && el.tagName !== 'STYLE');
+            frame.innerHTML = '';
+            bodyChildren.forEach(child => frame.appendChild(child));
+          }
+
+          // 3. Extract and execute scripts sequentially
+          const scripts = doc.querySelectorAll('script');
+          for (const oldScript of scripts) {
+            const newScript = document.createElement('script');
+            if (oldScript.type) newScript.type = oldScript.type;
+            if (oldScript.src) {
+              newScript.src = oldScript.src;
+            } else {
+              newScript.textContent = oldScript.textContent;
+            }
+            document.body.appendChild(newScript);
+          }
+        } else {
+          frame.innerHTML = fragmentText;
+        }
+
+        decisionRegistryMounted = true;
+        setTimeout(() => {
+          if (typeof window.renderDecisionRegistry === 'function') {
+            window.renderDecisionRegistry();
+          }
+        }, 50);
+
+      } catch (err) {
+        console.error('❌ Failed to mount Decision Registry fragment:', err);
+        frame.innerHTML = `
+          <div style="padding: 32px 20px; text-align: center; color: var(--crimson-royal);">
+            <div style="font-size: 2rem; margin-bottom: 8px;">⚠️</div>
+            <h3 style="font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 6px;">Failed to Load Decision Registry</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 14px;">${err.message}</p>
+            <button class="nav-btn active" style="margin: 0 auto; display: inline-flex;" onclick="decisionRegistryMounted=false; mountDecisionRegistryTab()">Retry Mount ↻</button>
+          </div>
+        `;
+      } finally {
+        decisionRegistryMounting = false;
+      }
+    }
+    window.mountDecisionRegistryTab = mountDecisionRegistryTab;
+
+    function toggleCockpitPresentationMode(active) {
+      if (!document || !document.body) return;
+      if (active) {
+        if (typeof document.body.setAttribute === 'function') {
+          document.body.setAttribute('data-cockpit-presentation', 'true');
+        }
+        if (document.documentElement && typeof document.documentElement.requestFullscreen === 'function') {
+          document.documentElement.requestFullscreen().catch(() => {});
+        } else if (document.documentElement && typeof document.documentElement.webkitRequestFullscreen === 'function') {
+          document.documentElement.webkitRequestFullscreen().catch(() => {});
+        }
+        const cockpitTab = document.getElementById('tab-cockpit');
+        if (cockpitTab && typeof cockpitTab.scrollIntoView === 'function') {
+          cockpitTab.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      } else {
+        if (typeof document.body.removeAttribute === 'function') {
+          document.body.removeAttribute('data-cockpit-presentation');
+        }
+        if (document.fullscreenElement) {
+          if (typeof document.exitFullscreen === 'function') {
+            document.exitFullscreen().catch(() => {});
+          } else if (typeof document.webkitExitFullscreen === 'function') {
+            document.webkitExitFullscreen().catch(() => {});
+          }
+        }
+      }
+    }
+    window.toggleCockpitPresentationMode = toggleCockpitPresentationMode;
+
+    document.addEventListener('keydown', (e) => {
+      if (e && e.key === 'Escape' && document.body && typeof document.body.getAttribute === 'function' && document.body.getAttribute('data-cockpit-presentation') === 'true') {
+        toggleCockpitPresentationMode(false);
+      }
+    });
 
     function hydrateActiveTab() {
       const hashTab = window.location.hash.replace('#', '');

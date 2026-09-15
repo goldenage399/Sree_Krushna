@@ -31,6 +31,13 @@ All entities must use standardized 3-digit padded identifiers:
 - Spoke documents contain detailed domain specifications and declare parent hub in frontmatter.
 - Master entities are canonical; all views (run sheets, dashboards, trackers) are derived views.
 
+### 4. Modular Component Architecture Invariant (`STD-MOD-COMP-001` / `P-MOD-COMP-001`)
+- **Zero Monolithic UI Scripts**: No web module, dashboard, or HTML assembler script may exceed 500 lines or embed raw monolithic HTML/CSS templates inline.
+- **Mandatory SDCA Structure**: All web modules must follow the Static Decoupled Component Assembler pattern (`_src/components/`, `_src/styles/`, `_src/scripts/controller.js`, `_src/template.html`, `_src/build.cjs`).
+- **Shared Primitives First**: Cross-cutting UI components (Carousel, Lightbox, Stepper, Option Pod, WhatsApp Share, Toast, Theme Tokens) must be imported from `ui_primitives/`.
+- **Dual-Release Byte Parity**: Root (`/`) and Public (`/public`) artifacts must maintain 100% byte parity and pass `npm run verify:modular-architecture`.
+- **Collaborative Options Model**: See [PROP-20260915-collaborative-options-and-comments-model.md](./docs/proposals/PROP-20260915-collaborative-options-and-comments-model.md).
+
 ---
 
 ## 2. Session Startup Gate (MANDATORY)
