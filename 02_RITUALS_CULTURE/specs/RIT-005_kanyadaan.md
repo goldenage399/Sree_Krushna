@@ -5,6 +5,7 @@ name: "Kanyadaan & Hastaganthi"
 event_id: "EVT-004"
 tradition: "Odia Hindu / Brahmin Vedic Liturgy"
 duration_mins: 60
+muhurat_time: "12:00 IST (Noon)"
 priest_required: true
 lead_priest_id: "PER-080"
 key_participants:

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sree Krushna Wedding OS — VEN-001 Hotel Inspection Dossier</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 8mm 8mm 8mm 8mm;
+    }
+    *, *:before, *:after {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      font-size: 8.5pt;
+      line-height: 1.25;
+      color: #111;
+      background: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    .page {
+      width: 100%;
+      height: 275mm;
+      max-height: 275mm;
+      padding: 0;
+      margin: 0;
+      page-break-after: always;
+      break-after: page;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .page:last-child {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+    .header {
+      border-bottom: 2px solid #000;
+      padding-bottom: 4px;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .header-left h1 {
+      font-size: 13pt;
+      font-weight: 800;
+      margin: 0 0 2px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .header-left .sub {
+      font-size: 8pt;
+      font-weight: 600;
+      color: #333;
+    }
+    .header-right {
+      text-align: right;
+      font-size: 7.5pt;
+      font-weight: 500;
+      color: #444;
+    }
+    .badge {
+      display: inline-block;
+      background: #000;
+      color: #fff;
+      padding: 1px 5px;
+      font-weight: bold;
+      font-size: 7.5pt;
+      border-radius: 2px;
+      margin-left: 4px;
+    }
+    .meta-strip {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 6px;
+      background: #f3f4f6;
+      border: 1px solid #d1d5db;
+      padding: 4px 6px;
+      font-size: 7.5pt;
+      margin-bottom: 6px;
+    }
+    .meta-item strong {
+      font-weight: 700;
+      color: #000;
+    }
+    h2 {
+      font-size: 9.5pt;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin: 4px 0 3px 0;
+      padding-bottom: 2px;
+      border-bottom: 1px solid #000;
+      display: flex;
+      justify-content: space-between;
+    }
+    h2 span.note {
+      font-size: 7pt;
+      font-weight: normal;
+      text-transform: none;
+      color: #555;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 7.5pt;
+      margin-bottom: 4px;
+    }
+    th, td {
+      border: 1px solid #333;
+      padding: 3px 3px;
+      text-align: left;
+      vertical-align: middle;
+    }
+    th {
+      background-color: #e5e7eb;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 7pt;
+      text-align: center;
+    }
+    td.center {
+      text-align: center;
+    }
+    .box {
+      display: inline-block;
+      width: 11px;
+      height: 11px;
+      border: 1.2px solid #000;
+      margin: 0 auto;
+      vertical-align: middle;
+      background: #fff;
+    }
+    .footer {
+      border-top: 1px solid #777;
+      padding-top: 3px;
+      font-size: 7pt;
+      color: #555;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+    }
+    .legend {
+      display: flex;
+      gap: 12px;
+      font-size: 7pt;
+      background: #fafafa;
+      border: 1px solid #ccc;
+      padding: 3px 6px;
+      margin-bottom: 4px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .section-block {
+      border: 1px solid #333;
+      padding: 5px 6px;
+      margin-bottom: 6px;
+      background: #fff;
+    }
+    .section-title {
+      font-size: 8.5pt;
+      font-weight: 800;
+      text-transform: uppercase;
+      background: #e5e7eb;
+      margin: -5px -6px 4px -6px;
+      padding: 2px 6px;
+      border-bottom: 1px solid #333;
+      display: flex;
+      justify-content: space-between;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 4px;
+      font-size: 7.5pt;
+      margin-bottom: 3px;
+      line-height: 1.2;
+    }
+    .checklist-item .box {
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+    .notes-lines {
+      height: 34px;
+      border-bottom: 1px dashed #777;
+      margin-top: 2px;
+    }
+    .fill-box {
+      border: 1px solid #444;
+      background: #fafafa;
+      padding: 3px 5px;
+      margin-bottom: 4px;
+      font-size: 7.5pt;
+    }
+    .fill-box strong {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 7.5pt;
+    }
+    .fill-line {
+      border-bottom: 1px solid #333;
+      height: 14px;
+      margin-top: 2px;
+    }
+    .sign-table {
+      width: 100%;
+      margin-top: 6px;
+    }
+    .sign-table td {
+      height: 52px;
+      vertical-align: top;
+      font-size: 7.5pt;
+      padding: 4px 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== PAGE 1 ==================== -->
+  <div class="page">
+    <div>
+      <div class="header">
+        <div class="header-left">
+          <h1>Sree Krushna Wedding OS &bull; Hotel Baseline Audit</h1>
+          <div class="sub">PROPERTY INSPECTION &amp; 35-ROOM FEASIBILITY DOSSIER &bull; SPEC-OPS-ACC-001</div>
+        </div>
+        <div class="header-right">
+          <div>VENUE CODE: <strong>VEN-001</strong> <span class="badge">CONFIDENTIAL</span></div>
+          <div>DATE: <strong>13-SEP-2026</strong> &bull; TARGET: <strong>35 ROOMS</strong></div>
+        </div>
+      </div>
+
+      <div class="meta-strip">
+        <div class="meta-item"><strong>Property:</strong> Rayagada Convention &amp; Hotel</div>
+        <div class="meta-item"><strong>Lead Auditor:</strong> Host Operations Team</div>
+        <div class="meta-item"><strong>Accompanied By:</strong> Hotel GM / Owner SPOC</div>
+        <div class="meta-item"><strong>Event Muhurat:</strong> 11-FEB-2027 (Peak Load)</div>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item"><span class="box"></span> = Verified Operational (Pass)</div>
+        <div class="legend-item"><strong style="color:#b91c1c;">[P0]</strong> = Dealbreaker (No AC/Water/Lock - Must fix in 14d)</div>
+        <div class="legend-item"><strong style="color:#b45309;">[P1]</strong> = Major Defect (Low pressure/Stain - Fix in 21d)</div>
+        <div class="legend-item"><strong>[P2]</strong> = Event Polish</div>
+      </div>
+
+      <h2>PART 1: 35-ROOM PHYSICAL AUDIT &bull; BLOCK A (ROOMS 101 &ndash; 118) <span class="note">Tick (&check;) if Passed | Write P0/P1/P2 in Defect column</span></h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 38px;">Room #</th>
+            <th style="width: 48px;">Category</th>
+            <th style="width: 30px;">Key / Lock</th>
+            <th style="width: 42px;">AC Chilling (&lt;90s)</th>
+            <th style="width: 40px;">AC Noise / Drip</th>
+            <th style="width: 40px;">Geyser Hot (&lt;45s)</th>
+            <th style="width: 44px;">Pressure &amp; Flush</th>
+            <th style="width: 40px;">Sewer / Odor</th>
+            <th style="width: 40px;">Linen &amp; Matt.</th>
+            <th style="width: 36px;">Sockets</th>
+            <th style="width: 48px;">Defect Code</th>
+            <th>Observed Defect / Action Required</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="center"><strong>101 (VIP)</strong></td><td>Pres. Ste</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>102 (VIP)</strong></td><td>Exec. Ste</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>103 (VIP)</strong></td><td>Deluxe Ste</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>104 (VIP)</strong></td><td>Deluxe Ste</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>105</strong></td><td>Exec. Dlx</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>106</strong></td><td>Exec. Dlx</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>107</strong></td><td>Exec. Dlx</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>108</strong></td><td>Exec. Dlx</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>109</strong></td><td>Dlx Double</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>110</strong></td><td>Dlx Double</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>111</strong></td><td>Dlx Double</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>112</strong></td><td>Dlx Double</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>113</strong></td><td>Dlx Twin</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>114</strong></td><td>Dlx Twin</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>115</strong></td><td>Dlx Twin</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>116</strong></td><td>Dlx Twin</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>117</strong></td><td>Superior</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>118</strong></td><td>Superior</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer">
+      <div>Sree Krushna Marriage OS &bull; Governance Track: DEC-001 / DEC-002</div>
+      <div>Page 1 of 4 (Block A: Rooms 101&ndash;118)</div>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 2 ==================== -->
+  <div class="page">
+    <div>
+      <div class="header">
+        <div class="header-left">
+          <h1>Sree Krushna Wedding OS &bull; Hotel Baseline Audit</h1>
+          <div class="sub">35-ROOM PHYSICAL AUDIT &bull; BLOCK B (ROOMS 201 &ndash; 311) &amp; FLOOR SUMMARY</div>
+        </div>
+        <div class="header-right">
+          <div>VENUE CODE: <strong>VEN-001</strong></div>
+          <div>INSPECTOR: _______________________</div>
+        </div>
+      </div>
+
+      <h2>PART 1 (CONTINUED): 35-ROOM AUDIT &bull; BLOCK B (ROOMS 201 &ndash; 311)</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 38px;">Room #</th>
+            <th style="width: 48px;">Category</th>
+            <th style="width: 30px;">Key / Lock</th>
+            <th style="width: 42px;">AC Chilling (&lt;90s)</th>
+            <th style="width: 40px;">AC Noise / Drip</th>
+            <th style="width: 40px;">Geyser Hot (&lt;45s)</th>
+            <th style="width: 44px;">Pressure &amp; Flush</th>
+            <th style="width: 40px;">Sewer / Odor</th>
+            <th style="width: 40px;">Linen &amp; Matt.</th>
+            <th style="width: 36px;">Sockets</th>
+            <th style="width: 48px;">Defect Code</th>
+            <th>Observed Defect / Action Required</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="center"><strong>201</strong></td><td>Exec. Dlx</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>202</strong></td><td>Exec. Dlx</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>203</strong></td><td>Exec. Dlx</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>204</strong></td><td>Exec. Dlx</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>205</strong></td><td>Dlx Double</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>206</strong></td><td>Dlx Double</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>207</strong></td><td>Dlx Double</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>208</strong></td><td>Dlx Double</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>209</strong></td><td>Dlx Double</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>210</strong></td><td>Dlx Double</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>301</strong></td><td>Dlx Twin</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>302</strong></td><td>Dlx Twin</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>303</strong></td><td>Dlx Twin</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>304</strong></td><td>Dlx Twin</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>305</strong></td><td>Superior</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>306</strong></td><td>Superior</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+          <tr><td class="center"><strong>311</strong></td><td>Superior</td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"><span class="box"></span></td><td class="center"></td><td></td></tr>
+        </tbody>
+      </table>
+
+      <div class="grid-2">
+        <div class="section-block">
+          <div class="section-title"><span>Defect Tally by Severity</span></div>
+          <table style="margin: 0;">
+            <tr><td><strong>Critical (P0) - Safety/AC/Water</strong></td><td style="width: 50px; text-align: right;">_____ / 35</td></tr>
+            <tr><td><strong>Major (P1) - Pressure/Aesthetic</strong></td><td style="text-align: right;">_____ / 35</td></tr>
+            <tr><td><strong>Minor (P2) - Polish/Amenities</strong></td><td style="text-align: right;">_____ / 35</td></tr>
+            <tr><td><strong>Total Rooms 100% Ready Today</strong></td><td style="text-align: right;"><strong>_____ / 35</strong></td></tr>
+          </table>
+        </div>
+
+        <div class="section-block">
+          <div class="section-title"><span>Floor-Wise Common Area Checks</span></div>
+          <div class="checklist-item"><span class="box"></span> Corridor lighting 100% operational without flickering bulbs</div>
+          <div class="checklist-item"><span class="box"></span> Fire extinguishers in corridors with active pressure gauges</div>
+          <div class="checklist-item"><span class="box"></span> Stairwells clear of debris, scrap furniture, or linen bags</div>
+          <div class="checklist-item"><span class="box"></span> Elevator floor leveling flush with hallway (trip-hazard safe)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>Sree Krushna Marriage OS &bull; Governance Track: DEC-001 / DEC-002</div>
+      <div>Page 2 of 4 (Block B: Rooms 201&ndash;311 &amp; Floor Tally)</div>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 3 ==================== -->
+  <div class="page">
+    <div>
+      <div class="header">
+        <div class="header-left">
+          <h1>Sree Krushna Wedding OS &bull; Hotel Baseline Audit</h1>
+          <div class="sub">CORE MEP, UTILITIES, HOUSEKEEPING &amp; BANQUET STRESS-TEST</div>
+        </div>
+        <div class="header-right">
+          <div>ENGINEERING AUDIT</div>
+          <div>DATE: <strong>13-SEP-2026</strong></div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="section-block">
+          <div class="section-title"><span>1. Power, DG &amp; Electrical Load</span></div>
+          <div class="checklist-item"><span class="box"></span> <strong>DG Capacity Verified:</strong> Rating Plate: _______ kVA (Min 82.5 kVA required)</div>
+          <div class="checklist-item"><span class="box"></span> <strong>AMF Auto-Switch Test:</strong> Simulated grid cutoff switchover time: _______ sec (&lt;15s)</div>
+          <div class="checklist-item"><span class="box"></span> <strong>DG Full Circuit Check:</strong> Does DG power AC compressors in 35 rooms simultaneously? [ ] Yes [ ] Partial [ ] No</div>
+          <div class="checklist-item"><span class="box"></span> <strong>Diesel Reserve:</strong> Dedicated fuel in tank: _______ Liters (Min 12 hrs run)</div>
+          <div class="checklist-item"><span class="box"></span> <strong>DG Battery Health:</strong> Clean terminals, verified charger voltage &ge;12.6V</div>
+          <div class="checklist-item"><span class="box"></span> <strong>Stage/PA Dedicated Phase:</strong> Separate circuit to prevent DJ trip</div>
+        </div>
+
+        <div class="section-block">
+          <div class="section-title"><span>2. Water Reserves &amp; Morning Concurrency</span></div>
+          <div class="checklist-item"><span class="box"></span> <strong>Total Storage:</strong> Sump: ________ L + Overhead: ________ L (&ge;18,000L)</div>
+          <div class="checklist-item"><span class="box"></span> <strong>Peak Concurrency Stress:</strong> 5 rooms flushed simultaneously: water pressure maintained at 3rd floor (&gt;1.5 bar)? [ ] Yes [ ] Drops</div>
+          <div class="checklist-item"><span class="box"></span> <strong>Standby Water Pump:</strong> Dual pump system with auto-changeover valve</div>
+          <div class="checklist-item"><span class="box"></span> <strong>Central Water Heating:</strong> Solar loop / Boiler recovery time: _____ mins</div>
+          <div class="checklist-item"><span class="box"></span> <strong>Tank Sanitization Log:</strong> Date of last chemical tank clean: ___________</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="section-block">
+          <div class="section-title"><span>3. Housekeeping &amp; Linen PAR Capacity</span></div>
+          <div class="checklist-item"><span class="box"></span> <strong>Linen PAR Ratio:</strong> Physical count shows 3-PAR inventory (105 sets white sheets/pillowcases/towels)? [ ] 3-PAR [ ] 2-PAR [ ] Under-stocked</div>
+          <div class="checklist-item"><span class="box"></span> <strong>Linen Crispness:</strong> Stained, yellowed, or frayed linen culled? [ ] Yes [ ] No</div>
+          <div class="checklist-item"><span class="box"></span> <strong>Staff Roster for Check-in:</strong> Dedicated housekeepers committed for 35 rooms on event day: _______ staff (Min 5 required)</div>
+          <div class="checklist-item"><span class="box"></span> <strong>Luggage Handlers:</strong> Bellboys committed for check-in: _____ (Min 3)</div>
+          <div class="checklist-item"><span class="box"></span> <strong>Garment Steamers:</strong> Heavy-duty ethnic attire press capacity: _____ units</div>
+        </div>
+
+        <div class="section-block">
+          <div class="section-title"><span>4. Banquet Hall, Kitchen &amp; Logistics</span></div>
+          <div class="checklist-item"><span class="box"></span> <strong>Acoustic Decibel Test:</strong> Hall music playing &rarr; 1st floor rooms reading: ______ dB (Max 45 dB permitted in elderly VIP wings)</div>
+          <div class="checklist-item"><span class="box"></span> <strong>Breakfast Throughput:</strong> Dining capacity: _____ seats; can serve 80 guests in 90 mins without running out of hot tea/coffee/milk?</div>
+          <div class="checklist-item"><span class="box"></span> <strong>Cold Storage &amp; Kitchen Hygiene:</strong> Walk-in freezers clean, food segregated, zero pest activity observed</div>
+          <div class="checklist-item"><span class="box"></span> <strong>Separate Service Route:</strong> Luggage &amp; catering trolleys do not block main guest lobby during arrivals</div>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <div class="section-title"><span>5. Lead Auditor Immediate Field Notes &amp; Infrastructure Red Flags</span></div>
+        <div class="notes-lines"></div>
+        <div class="notes-lines"></div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>Sree Krushna Marriage OS &bull; Governance Track: DEC-001 / DEC-002</div>
+      <div>Page 3 of 4 (MEP, Utilities, Linen PAR &amp; Banquet Logistics)</div>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 4 ==================== -->
+  <div class="page">
+    <div>
+      <div class="header">
+        <div class="header-left">
+          <h1>Sree Krushna Wedding OS &bull; Hotel Baseline Audit</h1>
+          <div class="sub">MANAGEMENT INTERVIEW, RECTIFICATION ORDER &amp; BI-WEEKLY SLA AGREEMENT</div>
+        </div>
+        <div class="header-right">
+          <div>GOVERNANCE BINDING</div>
+          <div>DATE: <strong>13-SEP-2026</strong></div>
+        </div>
+      </div>
+
+      <h2>PART 3: PROPRIETOR / GENERAL MANAGER INTERVIEW RECORD</h2>
+
+      <div class="fill-box">
+        <strong>Q1. Historical Peak Occupancy &amp; Pinch Points:</strong> When did the hotel last operate at 100% capacity for an in-house wedding? What were the staff/plumbing bottlenecks?
+        <div class="fill-line"></div>
+      </div>
+
+      <div class="fill-box">
+        <strong>Q2. Dedicated Event SPOC:</strong> Who will be on-site 24/7 with full operational authority to order emergency repairs/linen?
+        <div>Name: __________________________________ Designation: ______________________ Direct Phone: ___________________________</div>
+      </div>
+
+      <div class="fill-box">
+        <strong>Q3. Surge Staffing Commitment:</strong> Will management hire temporary outsourced housekeepers/valets or use existing shift staff?
+        <div class="fill-line"></div>
+      </div>
+
+      <h2>PART 4: CAPEX VS OPEX RECTIFICATION ORDER (OWNER COMMITMENT)</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 25px;">#</th>
+            <th style="width: 60px;">Category</th>
+            <th>Required Rectification Work</th>
+            <th style="width: 80px;">Cost Allocation</th>
+            <th style="width: 75px;">Target Date</th>
+            <th style="width: 60px;">Owner Initials</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="center">1</td><td>P0 - MEP</td><td>Overhaul defective AC compressors &amp; clean fan coils in candidate rooms</td><td class="center"><strong>100% Hotel Capex</strong></td><td class="center">27-SEP-2026</td><td class="center"></td></tr>
+          <tr><td class="center">2</td><td>P0 - Plumbing</td><td>Replace faulty geyser thermostats &amp; clear sewer floor traps</td><td class="center"><strong>100% Hotel Capex</strong></td><td class="center">27-SEP-2026</td><td class="center"></td></tr>
+          <tr><td class="center">3</td><td>P1 - Linen</td><td>Procure 105 sets of fresh, unblemished white bed linen &amp; bath towels (3-PAR)</td><td class="center"><strong>100% Hotel Capex</strong></td><td class="center">11-OCT-2026</td><td class="center"></td></tr>
+          <tr><td class="center">4</td><td>P1 - Safety</td><td>Complete lift AMC servicing &amp; test AMF auto-generator panel under live load</td><td class="center"><strong>100% Hotel Capex</strong></td><td class="center">11-OCT-2026</td><td class="center"></td></tr>
+          <tr><td class="center">5</td><td>P2 - Polish</td><td>Provide extra garment steamers, lobby luggage tags &amp; hamper placement</td><td class="center">Host Opex / Joint</td><td class="center">04-FEB-2027</td><td class="center"></td></tr>
+        </tbody>
+      </table>
+
+      <h2>PART 5: BI-WEEKLY VERIFICATION MILESTONES &amp; DROP-DEAD GATE</h2>
+
+      <div class="section-block" style="font-size: 7.5pt; line-height: 1.35;">
+        <strong>Drop-Dead Contingency Clause (Invariant P-VEN-03):</strong> Management acknowledges that a joint follow-up audit will occur bi-weekly. If all Critical P0 and Major P1 defects are not verified as remediated by <strong>T-30 Days (11-JAN-2027)</strong>, the Host reserves the unilateral right to downscale the room block to 15 rooms and reallocate 20 rooms to secondary backup properties without penalty.
+      </div>
+
+      <table class="sign-table">
+        <tr>
+          <td style="width: 50%;">
+            <strong>FOR HOTEL MANAGEMENT / PROPRIETOR:</strong><br><br>
+            Signature: __________________________________________<br>
+            Name: _____________________________________________ Date: ______________<br>
+            Official Hotel Stamp:
+          </td>
+          <td style="width: 50%;">
+            <strong>FOR WEDDING HOST / LOGISTICS LEAD:</strong><br><br>
+            Signature: __________________________________________<br>
+            Name: _____________________________________________ Date: ______________<br>
+            Decision Record Binding: <code>DEC-001</code> / <code>DEC-002</code>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="footer">
+      <div>Sree Krushna Marriage OS &bull; Governance Track: DEC-001 / DEC-002</div>
+      <div>Page 4 of 4 (Management Commitments &amp; Remediation Sign-Off)</div>
+    </div>
+  </div>
+
+</body>
+</html>
