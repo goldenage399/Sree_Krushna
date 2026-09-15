@@ -39,14 +39,23 @@
       }
     }
 
-    const data = window.DECISION_REGISTRY_DATA || { items: [], plates: [], events: [], clusters: [] };
-    const plates = data.plates || [];
-    const items = data.items || [];
-    const events = data.events || [];
-    const clusters = data.clusters || [];
+    let data = window.DECISION_REGISTRY_DATA || { items: [], plates: [], events: [], clusters: [] };
+    let plates = data.plates || [];
+    let items = data.items || [];
+    let events = data.events || [];
+    let clusters = data.clusters || [];
+    let chronologicalEvents = events.filter(e => e.id !== 'all');
 
-    // Chronological event chapters list (excluding 'all')
-    const chronologicalEvents = events.filter(e => e.id !== 'all');
+    function refreshData() {
+      if (window.DECISION_REGISTRY_DATA) {
+        data = window.DECISION_REGISTRY_DATA;
+        plates = data.plates || [];
+        items = data.items || [];
+        events = data.events || [];
+        clusters = data.clusters || [];
+        chronologicalEvents = events.filter(e => e.id !== 'all');
+      }
+    }
 
     // DOM Elements
     const grid = document.getElementById('decisionsGrid');
@@ -162,6 +171,13 @@
     // STEPPER & EVENT CHAPTER ENGINE
     // ========================================================================
     function renderMilestones() {
+      if (!milestoneTrack) return;
+      if (!chronologicalEvents || !chronologicalEvents.length) {
+        milestoneTrack.innerHTML = '';
+        if (activeEventSummary) activeEventSummary.textContent = 'Loading events...';
+        return;
+      }
+
       milestoneTrack.innerHTML = chronologicalEvents.map((evt, idx) => {
         const isActive = (evt.id === currentEvent);
         const isLocked = !!lockedEvents[evt.id];
@@ -175,7 +191,7 @@
               <span class="dr-milestone-badge">${isLocked ? '✓ Locked' : `${lockedCount}/${eventItems.length}`}</span>
             </div>
             <div class="dr-milestone-label">
-              <span>${evt.icon}</span> <span>${evt.label.replace('Day 1 ', '').replace('Day 2 ', '')}</span>
+              <span>${evt.icon || '📌'}</span> <span>${(evt.label || evt.id).replace('Day 1 ', '').replace('Day 2 ', '')}</span>
             </div>
             <div class="dr-milestone-time">${evt.timing || ''}</div>
           </div>
@@ -183,17 +199,21 @@
       }).join('');
 
       // Update Active Action Bar
-      const activeEvtObj = chronologicalEvents.find(e => e.id === currentEvent) || chronologicalEvents[3];
-      activeEventIcon.textContent = activeEvtObj.icon;
-      activeEventSummary.innerHTML = `Currently Reviewing: <strong>${activeEvtObj.label}</strong> (${activeEvtObj.timing})`;
+      const activeEvtObj = chronologicalEvents.find(e => e.id === currentEvent) || chronologicalEvents[0];
+      if (!activeEvtObj) return;
+
+      if (activeEventIcon) activeEventIcon.textContent = activeEvtObj.icon || '📌';
+      if (activeEventSummary) activeEventSummary.innerHTML = `Currently Reviewing: <strong>${activeEvtObj.label || activeEvtObj.id}</strong> (${activeEvtObj.timing || ''})`;
       
       const isEventLocked = !!lockedEvents[currentEvent];
-      btnLockActiveEvent.innerHTML = isEventLocked 
-        ? '<span>✓</span> Event Choices Certified & Locked' 
-        : '<span>🔒</span> Freeze & Lock This Event\'s Choices';
-      btnLockActiveEvent.style.background = isEventLocked 
-        ? 'rgba(16, 185, 129, 0.4)' 
-        : 'linear-gradient(135deg, #10b981, #059669)';
+      if (btnLockActiveEvent) {
+        btnLockActiveEvent.innerHTML = isEventLocked 
+          ? '<span>✓</span> Event Choices Certified & Locked' 
+          : '<span>🔒</span> Freeze & Lock This Event\'s Choices';
+        btnLockActiveEvent.style.background = isEventLocked 
+          ? 'rgba(16, 185, 129, 0.4)' 
+          : 'linear-gradient(135deg, #10b981, #059669)';
+      }
     }
 
     window.selectEventMilestone = function(eventId) {
@@ -205,37 +225,44 @@
     };
 
     // Stepper Navigation
-    btnStepperPrev.addEventListener('click', () => {
-      const idx = chronologicalEvents.findIndex(e => e.id === currentEvent);
-      if (idx > 0) {
-        window.selectEventMilestone(chronologicalEvents[idx - 1].id);
-      }
-    });
+    if (btnStepperPrev) {
+      btnStepperPrev.addEventListener('click', () => {
+        const idx = chronologicalEvents.findIndex(e => e.id === currentEvent);
+        if (idx > 0) {
+          window.selectEventMilestone(chronologicalEvents[idx - 1].id);
+        }
+      });
+    }
 
-    btnStepperNext.addEventListener('click', () => {
-      const idx = chronologicalEvents.findIndex(e => e.id === currentEvent);
-      if (idx < chronologicalEvents.length - 1) {
-        window.selectEventMilestone(chronologicalEvents[idx + 1].id);
-      }
-    });
+    if (btnStepperNext) {
+      btnStepperNext.addEventListener('click', () => {
+        const idx = chronologicalEvents.findIndex(e => e.id === currentEvent);
+        if (idx < chronologicalEvents.length - 1) {
+          window.selectEventMilestone(chronologicalEvents[idx + 1].id);
+        }
+      });
+    }
 
     // Lock Active Event
-    btnLockActiveEvent.addEventListener('click', () => {
-      lockedEvents[currentEvent] = !lockedEvents[currentEvent];
-      saveState();
-      renderMilestones();
-      showToast(
-        lockedEvents[currentEvent] 
-          ? `Event ${currentEvent.toUpperCase()} successfully frozen & ratified!` 
-          : `Event ${currentEvent.toUpperCase()} unlocked for edits.`,
-        lockedEvents[currentEvent] ? '🔒' : '🔓'
-      );
-    });
+    if (btnLockActiveEvent) {
+      btnLockActiveEvent.addEventListener('click', () => {
+        lockedEvents[currentEvent] = !lockedEvents[currentEvent];
+        saveState();
+        renderMilestones();
+        showToast(
+          lockedEvents[currentEvent] 
+            ? `Event ${currentEvent.toUpperCase()} successfully frozen & ratified!` 
+            : `Event ${currentEvent.toUpperCase()} unlocked for edits.`,
+          lockedEvents[currentEvent] ? '🔒' : '🔓'
+        );
+      });
+    }
 
     // ========================================================================
     // MULTI-OPTION CLUSTER POD ENGINE (P-OPTION-POD-001)
     // ========================================================================
     function renderClusterPods() {
+      if (!clusterPodsContainer) return;
       // Find clusters belonging to active event
       const activeClusters = clusters.filter(c => c.event === currentEvent);
 
@@ -370,26 +397,31 @@
     };
 
     // Share Entire Family Mode Link
-    btnShareFamilyMode.addEventListener('click', () => {
-      const baseUrl = window.location.origin + window.location.pathname;
-      const shareUrl = `${baseUrl}?event=${currentEvent}&mode=family`;
-      const text = `🌺 *Sree Krushna Marriage OS — Family Decor Review*\nHelp us review and vote on our wedding decor concepts!\n👉 Tap to review: ${shareUrl}`;
+    if (btnShareFamilyMode) {
+      btnShareFamilyMode.addEventListener('click', () => {
+        const baseUrl = window.location.origin + window.location.pathname;
+        const shareUrl = `${baseUrl}?event=${currentEvent}&mode=family`;
+        const text = `🌺 *Sree Krushna Marriage OS — Family Decor Review*\nHelp us review and vote on our wedding decor concepts!\n👉 Tap to review: ${shareUrl}`;
 
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(() => {
-          showToast('Family review link copied! Paste into WhatsApp.', '📱');
-        });
-      } else {
-        prompt('Copy Family Link:', text);
-      }
-    });
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(() => {
+            showToast('Family review link copied! Paste into WhatsApp.', '📱');
+          });
+        } else {
+          prompt('Copy Family Link:', text);
+        }
+      });
+    }
 
     // ========================================================================
     // CAROUSEL COMPONENT ENGINE (Filtered by Active Stepper Event)
     // ========================================================================
     function renderCarouselCards() {
+      if (!carouselTrack) return;
       const visiblePlates = plates.filter(p => p.events && p.events.includes(currentEvent));
-      carouselCounterIndicator.textContent = `Showing ${visiblePlates.length} Plates (${currentEvent.toUpperCase()})`;
+      if (carouselCounterIndicator) {
+        carouselCounterIndicator.textContent = `Showing ${visiblePlates.length} Plates (${currentEvent.toUpperCase()})`;
+      }
 
       if (visiblePlates.length === 0) {
         carouselTrack.innerHTML = `
@@ -446,13 +478,17 @@
       }).join('');
     }
 
-    btnCarouselPrev.addEventListener('click', () => {
-      carouselTrack.scrollBy({ left: -340, behavior: 'smooth' });
-    });
+    if (btnCarouselPrev) {
+      btnCarouselPrev.addEventListener('click', () => {
+        if (carouselTrack) carouselTrack.scrollBy({ left: -340, behavior: 'smooth' });
+      });
+    }
 
-    btnCarouselNext.addEventListener('click', () => {
-      carouselTrack.scrollBy({ left: 340, behavior: 'smooth' });
-    });
+    if (btnCarouselNext) {
+      btnCarouselNext.addEventListener('click', () => {
+        if (carouselTrack) carouselTrack.scrollBy({ left: 340, behavior: 'smooth' });
+      });
+    }
 
     // ========================================================================
     // DECISIONS GRID ENGINE
@@ -1013,6 +1049,7 @@
 
     // Initialize
     function initDecisionRegistry() {
+      refreshData();
       parseUrlParams();
       renderMilestones();
       renderClusterPods();
