@@ -50,3 +50,124 @@
         color: #000000 !important;
       }
     }
+
+    /* Family Consultation Survey Styles (P-SURVEY-PRINT-001) */
+    .family-survey-dossier {
+      background: #ffffff;
+      color: #000000;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+    .survey-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #000000;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+    .survey-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .survey-monogram {
+      width: 44px;
+      height: 44px;
+      border: 2px solid #000000;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .survey-brand h2 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 800;
+      color: #000000;
+    }
+    .survey-brand p {
+      margin: 2px 0 0 0;
+      font-size: 11px;
+      color: #444444;
+    }
+    .survey-meta-box {
+      font-size: 11px;
+      text-align: right;
+      line-height: 1.4;
+    }
+    .survey-intro-card {
+      background: #f4f4f5;
+      border: 1px solid #d4d4d8;
+      padding: 8px 12px;
+      margin-bottom: 14px;
+      font-size: 11px;
+      color: #18181b;
+      line-height: 1.4;
+    }
+    .survey-section {
+      margin-bottom: 16px;
+      break-inside: avoid;
+    }
+    .survey-section-title {
+      font-size: 13px;
+      font-weight: 800;
+      border-bottom: 1.5px solid #000000;
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+      color: #000000;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .survey-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      margin-bottom: 12px;
+    }
+    .survey-table th, .survey-table td {
+      border: 1px solid #333333;
+      padding: 6px 8px;
+      text-align: left;
+      vertical-align: top;
+      color: #000000;
+    }
+    .survey-table th {
+      background: #e4e4e7;
+      font-weight: 700;
+    }
+    .survey-tally-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+    .survey-signatures {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+      font-size: 12px;
+      padding-top: 10px;
+    }
+
+    /* Print Target Switcher */
+    body[data-print-target="survey"] #familySurveyDossierPrintView {
+      display: block !important;
+    }
+    body[data-print-target="survey"] .shop-header,
+    body[data-print-target="survey"] .shop-kpis,
+    body[data-print-target="survey"] .shop-stepper,
+    body[data-print-target="survey"] .shop-clusters,
+    body[data-print-target="survey"] .shop-store-navigator,
+    body[data-print-target="survey"] .shop-toolbar,
+    body[data-print-target="survey"] .shop-items-grid,
+    body[data-print-target="survey"] .shop-welcome-banner,
+    body[data-print-target="survey"] .shop-toast,
+    body[data-print-target="survey"] .dr-comments-backdrop,
+    body[data-print-target="survey"] .dr-lightbox-backdrop,
+    body[data-print-target="survey"] .sk-intake-backdrop {
+      display: none !important;
+    }

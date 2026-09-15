@@ -1752,6 +1752,127 @@
         color: #000000 !important;
       }
     }
+
+    /* Family Consultation Survey Styles (P-SURVEY-PRINT-001) */
+    .family-survey-dossier {
+      background: #ffffff;
+      color: #000000;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+    .survey-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #000000;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+    .survey-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .survey-monogram {
+      width: 44px;
+      height: 44px;
+      border: 2px solid #000000;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .survey-brand h2 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 800;
+      color: #000000;
+    }
+    .survey-brand p {
+      margin: 2px 0 0 0;
+      font-size: 11px;
+      color: #444444;
+    }
+    .survey-meta-box {
+      font-size: 11px;
+      text-align: right;
+      line-height: 1.4;
+    }
+    .survey-intro-card {
+      background: #f4f4f5;
+      border: 1px solid #d4d4d8;
+      padding: 8px 12px;
+      margin-bottom: 14px;
+      font-size: 11px;
+      color: #18181b;
+      line-height: 1.4;
+    }
+    .survey-section {
+      margin-bottom: 16px;
+      break-inside: avoid;
+    }
+    .survey-section-title {
+      font-size: 13px;
+      font-weight: 800;
+      border-bottom: 1.5px solid #000000;
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+      color: #000000;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .survey-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      margin-bottom: 12px;
+    }
+    .survey-table th, .survey-table td {
+      border: 1px solid #333333;
+      padding: 6px 8px;
+      text-align: left;
+      vertical-align: top;
+      color: #000000;
+    }
+    .survey-table th {
+      background: #e4e4e7;
+      font-weight: 700;
+    }
+    .survey-tally-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+    .survey-signatures {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+      font-size: 12px;
+      padding-top: 10px;
+    }
+
+    /* Print Target Switcher */
+    body[data-print-target="survey"] #familySurveyDossierPrintView {
+      display: block !important;
+    }
+    body[data-print-target="survey"] .shop-header,
+    body[data-print-target="survey"] .shop-kpis,
+    body[data-print-target="survey"] .shop-stepper,
+    body[data-print-target="survey"] .shop-clusters,
+    body[data-print-target="survey"] .shop-store-navigator,
+    body[data-print-target="survey"] .shop-toolbar,
+    body[data-print-target="survey"] .shop-items-grid,
+    body[data-print-target="survey"] .shop-welcome-banner,
+    body[data-print-target="survey"] .shop-toast,
+    body[data-print-target="survey"] .dr-comments-backdrop,
+    body[data-print-target="survey"] .dr-lightbox-backdrop,
+    body[data-print-target="survey"] .sk-intake-backdrop {
+      display: none !important;
+    }
   </style>
 </head>
 <body>
@@ -1792,6 +1913,9 @@
       </button>
       <button class="shop-btn" id="btnPrintRunSheet" title="Print A4 Shopping Checklist">
         <span>🖨️</span> Print Run Sheet
+      </button>
+      <button class="shop-btn shop-btn-primary" id="btnPrintFamilySurvey" onclick="window.printFamilySurvey()" title="Print Ink-Friendly A4 Family Consultation & Budget Survey Form">
+        <span>📝</span> Print Family Survey
       </button>
       <button class="shop-btn" id="btnExportJson" title="Export Shopping State JSON">
         <span>💾</span> Export JSON
@@ -1865,11 +1989,11 @@
   <!-- Filter & Search Toolbar -->
   <div class="shop-toolbar">
     <div class="shop-filter-pills" id="shopFilterPills">
-      <button class="shop-pill active" data-filter="all">All Items (30)</button>
-      <button class="shop-pill" data-filter="bridal">🪔 Bridal Trousseau (7)</button>
-      <button class="shop-pill" data-filter="groom">👑 Groom Attire (8)</button>
-      <button class="shop-pill" data-filter="jewellery">💎 Jewellery & Silver (9)</button>
-      <button class="shop-pill" data-filter="sara">🎁 In-Laws 'Sara' (6)</button>
+      <button class="shop-pill active" data-filter="all">All Items (34)</button>
+      <button class="shop-pill" data-filter="bridal">🪔 Bridal Trousseau (8)</button>
+      <button class="shop-pill" data-filter="groom">👑 Groom Attire (9)</button>
+      <button class="shop-pill" data-filter="jewellery">💎 Jewellery & Silver (10)</button>
+      <button class="shop-pill" data-filter="sara">🎁 In-Laws 'Sara' (7)</button>
       <button class="shop-pill" data-filter="purchased">✓ Purchased</button>
     </div>
     <div class="shop-search-box">
@@ -1882,6 +2006,177 @@
   <main class="shop-items-grid" id="itemsGrid">
     <!-- Rendered dynamically by JS -->
   </main>
+
+  <!-- Printable Family Consultation Survey Dossier (P-SURVEY-PRINT-001) -->
+  <section id="familySurveyDossierPrintView" class="family-survey-dossier" style="display: none;">
+    <div class="survey-header">
+      <div class="survey-brand">
+        <span class="survey-monogram">SK</span>
+        <div>
+          <h2>Sree Krushna Marriage OS — Family Shopping &amp; Budget Consultation Survey</h2>
+          <p>Pre-Trip Decision Gates, Traditional Heirlooms &amp; Custom Tailoring Review (SPEC-PROC-TROUSSEAU-001)</p>
+        </div>
+      </div>
+      <div class="survey-meta-box">
+        <div><strong>Expedition Window:</strong> Next 10 Days</div>
+        <div><strong>Primary Location:</strong> Bhubaneswar, Odisha</div>
+        <div><strong>Participants:</strong> Bride, Groom, Groom's Sisters, In-Laws &amp; Parents</div>
+      </div>
+    </div>
+
+    <div class="survey-intro-card">
+      <p><strong>Instructions for Family Members:</strong> Please review each category below, tick your preferred budget decision gate, select custom tailoring or readymade preferences, and write specific color or heirloom preferences in the notes column before our shopping trip begins.</p>
+    </div>
+
+    <!-- Section 1 -->
+    <div class="survey-section">
+      <h3 class="survey-section-title">1. Sacred Vivaha Pata &amp; Bridal Wardrobe Portfolio</h3>
+      <table class="survey-table">
+        <thead>
+          <tr>
+            <th style="width: 30%;">Item &amp; Description</th>
+            <th style="width: 30%;">Budget Decision Gates</th>
+            <th style="width: 25%;">Color / Motif &amp; Notes</th>
+            <th style="width: 15%;">Consensus</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>TRS-BR-01: Sacred Vivaha Pata</strong><br><small>Hastaganthi Mandap Silk Saree</small></td>
+            <td>[ ] Tier 1: ₹35k - ₹50k<br>[ ] Tier 2: ₹50k - ₹75k<br>[ ] Tier 3: ₹75k+ (Gold Zari)</td>
+            <td>[ ] Crimson [ ] Mustard<br><em>*Drop off Day 1 for Maggam work</em></td>
+            <td>[ ] Bride<br>[ ] Sisters<br>[ ] In-Laws</td>
+          </tr>
+          <tr>
+            <td><strong>TRS-BR-02: Madhuparkam Saree</strong><br><small>Jeelakarra-Bellam Ritual Handloom</small></td>
+            <td>[ ] Handloom Cotton: ₹3k - ₹5k<br>[ ] Handloom Silk: ₹6k - ₹9.5k</td>
+            <td>[ ] Off-White / Red Border<br>[ ] Yellow / Crimson Edge</td>
+            <td>[ ] Bride<br>[ ] Sisters<br>[ ] In-Laws</td>
+          </tr>
+          <tr>
+            <td><strong>TRS-OD-01: Nuapatna Khandua Pata</strong><br><small>Diya Mangula &amp; Sacred Morning Pujas</small></td>
+            <td>[ ] Value Silk: ₹12k - ₹16k<br>[ ] Gita Govinda Calligraphy: ₹18k - ₹24k</td>
+            <td>[ ] Sun Orange [ ] Temple Red<br><em>*Lord Jagannath blessed silk</em></td>
+            <td>[ ] Bride<br>[ ] Sisters<br>[ ] In-Laws</td>
+          </tr>
+          <tr>
+            <td><strong>TRS-BR-03: Sangeet Designer Lehenga</strong><br><small>Celebration &amp; Dance Performance</small></td>
+            <td>[ ] Tier 1: ₹30k - ₹45k<br>[ ] Tier 2: ₹45k - ₹70k<br>[ ] Tier 3: ₹70k+ (Bespoke)</td>
+            <td>Color: ____________________<br><em>*Coordinate with Groom Tux</em></td>
+            <td>[ ] Bride<br>[ ] Sisters<br>[ ] In-Laws</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="survey-section">
+      <h3 class="survey-section-title">2. Groom Mandap &amp; Royal Attire (Tailor vs Readymade Gate)</h3>
+      <table class="survey-table">
+        <thead>
+          <tr>
+            <th style="width: 30%;">Item &amp; Description</th>
+            <th style="width: 35%;">Sourcing Decision Gate</th>
+            <th style="width: 20%;">Store / Master Tailor</th>
+            <th style="width: 15%;">Consensus</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>TRS-GR-01: Mandap Madhuparkam Pancha</strong><br><small>Jeelakarra-Bellam Dhoti &amp; Angavastram</small></td>
+            <td>[ ] Handloom Cotton: ₹2.5k - ₹4.5k<br>[ ] Pure Mulberry Silk: ₹6k - ₹10k</td>
+            <td>Boyanika / Sambalpuri Bastralaya (Janpath)</td>
+            <td>[ ] Groom<br>[ ] Sisters<br>[ ] In-Laws</td>
+          </tr>
+          <tr>
+            <td><strong>TRS-OD-04: Sambalpuri Groom Joda</strong><br><small>Traditional Odia Sacred Wedding Joda</small></td>
+            <td>[ ] Pure Tussar Silk: ₹6.5k - ₹9.5k<br>[ ] Mulberry Temple Joda: ₹10k - ₹14k</td>
+            <td>Boyanika (Master Canteen)</td>
+            <td>[ ] Groom<br>[ ] Sisters<br>[ ] In-Laws</td>
+          </tr>
+          <tr>
+            <td><strong>TRS-GR-03: Barat Royal Sherwani</strong><br><small>Barat Entry &amp; Reception Wear</small></td>
+            <td>[ ] <strong>Custom Tailored</strong> (₹12k - ₹16.5k, save ~60%)<br>[ ] <strong>Readymade Manyavar</strong> (₹35k - ₹55k)</td>
+            <td>Ashok Nagar Tailor vs Manyavar (Janpath)</td>
+            <td>[ ] Groom<br>[ ] Sisters<br>[ ] In-Laws</td>
+          </tr>
+          <tr>
+            <td><strong>TRS-GR-06: Sangeet Bandhgala / Suit</strong><br><small>Sangeet Celebration</small></td>
+            <td>[ ] <strong>Custom Raymond MTM</strong> (₹16k - ₹24k)<br>[ ] <strong>Readymade JadeBlue</strong> (₹22k - ₹38k)</td>
+            <td>Raymond (Janpath) / JadeBlue</td>
+            <td>[ ] Groom<br>[ ] Sisters<br>[ ] In-Laws</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Section 3 -->
+    <div class="survey-section">
+      <h3 class="survey-section-title">3. In-Laws Traditional 'Sara' Gifting &amp; Sacred Heirlooms</h3>
+      <table class="survey-table">
+        <thead>
+          <tr>
+            <th style="width: 30%;">Recipient / Sacred Article</th>
+            <th style="width: 30%;">Required Garment / Article</th>
+            <th style="width: 25%;">Budget Bracket</th>
+            <th style="width: 15%;">Consensus</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Mother-in-Law (Attagaru)</strong><br><small>Samandhi Vastra Hub 1</small></td>
+            <td>1 Heirloom Kanchipuram / Berhampuri Kumbha Patta + 2 Festive Silks</td>
+            <td>[ ] ₹25k - ₹38k<br>[ ] ₹38k - ₹55k</td>
+            <td>[ ] In-Laws<br>[ ] Groom Side</td>
+          </tr>
+          <tr>
+            <td><strong>Father-in-Law (Mavagaru)</strong><br><small>Samandhi Vastra Hub 2</small></td>
+            <td>1 Pure Silk Dhoti-Kurta Set + 1 Raymond Suit Piece</td>
+            <td>[ ] ₹12k - ₹18k<br>[ ] ₹18k - ₹28k</td>
+            <td>[ ] In-Laws<br>[ ] Groom Side</td>
+          </tr>
+          <tr>
+            <td><strong>Sisters of Groom (Adapaduchu)</strong><br><small>Adapaduchu Katnam</small></td>
+            <td>2 Festive Ensembles each (Designer Lehenga + Silk Saree)</td>
+            <td>[ ] ₹35k - ₹50k each<br>[ ] ₹50k - ₹75k each</td>
+            <td>[ ] Sisters<br>[ ] In-Laws</td>
+          </tr>
+          <tr>
+            <td><strong>TRS-OD-02: Balakati Kansa Dinner Set</strong><br><small>Hand-cast 7-Piece Service</small></td>
+            <td>Ayurvedic Bell-Metal Thali, 3 Katoris, Glass, Bowl, Spoon</td>
+            <td>[ ] 5-Piece: ₹7.5k<br>[ ] 7-Piece: ₹11k<br>[ ] 9-Piece: ₹15k</td>
+            <td>[ ] Sourced<br>[ ] Approved</td>
+          </tr>
+          <tr>
+            <td><strong>TRS-OD-03: Cuttack Tarakasi Silver</strong><br><small>Sindura Phuda &amp; Pana Batta</small></td>
+            <td>Pure 925 Silver Filigree Vermilion Casket &amp; Betel Box</td>
+            <td>[ ] Classic: ₹12k - ₹16k<br>[ ] Master: ₹18k - ₹25k</td>
+            <td>[ ] Sourced<br>[ ] Approved</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Section 4: Budget Tally & Signatures -->
+    <div class="survey-section survey-signoff-box">
+      <h3 class="survey-section-title">4. Family Tentative Budget Tally &amp; Authorization</h3>
+      <div class="survey-tally-grid">
+        <div>1. Bridal Wardrobe Total: <strong>₹_________________</strong></div>
+        <div>2. Groom Wardrobe Total: <strong>₹_________________</strong></div>
+        <div>3. In-Laws 'Sara' Total: <strong>₹_________________</strong></div>
+        <div>4. Silverware &amp; Heirlooms: <strong>₹_________________</strong></div>
+      </div>
+      <div style="margin-top: 14px; font-size: 15px; font-weight: 700; border-top: 1px solid #000; padding-top: 8px;">
+        Approved Tentative Budget Ceiling: <strong>₹___________________________</strong>
+      </div>
+      <div class="survey-signatures">
+        <div>Bride: _______________________</div>
+        <div>Groom: _______________________</div>
+        <div>Sisters: ______________________</div>
+        <div>In-Laws: ______________________</div>
+      </div>
+    </div>
+  </section>
 </div>
 
 <!-- Toast Notification -->
@@ -3454,7 +3749,26 @@
       }
     });
 
-    btnPrintRunSheet.addEventListener('click', () => window.print());
+    btnPrintRunSheet.addEventListener('click', () => {
+      document.body.removeAttribute('data-print-target');
+      window.print();
+    });
+
+    window.printFamilySurvey = function() {
+      document.body.setAttribute('data-print-target', 'survey');
+      window.print();
+      window.addEventListener('afterprint', () => {
+        document.body.removeAttribute('data-print-target');
+      }, { once: true });
+      setTimeout(() => {
+        document.body.removeAttribute('data-print-target');
+      }, 2500);
+    };
+
+    const btnPrintFamilySurvey = document.getElementById('btnPrintFamilySurvey');
+    if (btnPrintFamilySurvey) {
+      btnPrintFamilySurvey.addEventListener('click', window.printFamilySurvey);
+    }
 
     btnExportJson.addEventListener('click', () => {
       const payload = {

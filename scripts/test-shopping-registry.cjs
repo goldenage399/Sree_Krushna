@@ -52,6 +52,10 @@ const dataChecks = [
   'TRS-JW-07',
   'TRS-SA-01',
   'TRS-SA-02',
+  'TRS-OD-01',
+  'TRS-OD-02',
+  'TRS-OD-03',
+  'TRS-OD-04',
   'cluster_vivaha_pata',
   'cluster_groom_mandap',
   'cluster_bridal_lehenga',
@@ -64,26 +68,26 @@ dataChecks.forEach(check => {
   console.log(`  ✓ [PASS] Data layer contains contract: ${check}`);
 });
 
-console.log('▶ [4/4] Verifying 30/30 Item Count & Category Distribution...');
+console.log('▶ [4/4] Verifying 34/34 Item Count & Category Distribution...');
 const jsonMatch = rootData.match(/\{[\s\S]*\}/);
 assert(jsonMatch, 'Could not extract JSON data from shopping-data.js');
 const data = JSON.parse(jsonMatch[0]);
 assert.strictEqual(data.chapters.length, 4, 'Must have exactly 4 shopping chapters');
 assert.strictEqual(data.clusters.length, 4, 'Must have exactly 4 consensus clusters');
 assert.strictEqual(data.stores.length, 8, 'Must have exactly 8 verified Bhubaneswar stores');
-assert.strictEqual(data.items.length, 30, 'Must have exactly 30 itemized shopping records');
+assert.strictEqual(data.items.length, 34, 'Must have exactly 34 itemized shopping records');
 
 const bridalCount = data.items.filter(i => i.category === 'bridal').length;
 const groomCount = data.items.filter(i => i.category === 'groom').length;
 const jewelleryCount = data.items.filter(i => i.category === 'jewellery').length;
 const saraCount = data.items.filter(i => i.category === 'sara').length;
 
-assert.strictEqual(bridalCount, 7, 'Must have 7 bridal items');
-assert.strictEqual(groomCount, 8, 'Must have 8 groom items');
-assert.strictEqual(jewelleryCount, 9, 'Must have 9 jewellery items');
-assert.strictEqual(saraCount, 6, 'Must have 6 sara gifting items');
+assert.strictEqual(bridalCount, 8, 'Must have 8 bridal items');
+assert.strictEqual(groomCount, 9, 'Must have 9 groom items');
+assert.strictEqual(jewelleryCount, 10, 'Must have 10 jewellery items');
+assert.strictEqual(saraCount, 7, 'Must have 7 sara gifting items');
 
-console.log(`  ✓ [PASS] Total 30 items verified: Bridal (${bridalCount}), Groom (${groomCount}), Jewellery (${jewelleryCount}), Sara Gifting (${saraCount})`);
+console.log(`  ✓ [PASS] Total 34 items verified: Bridal (${bridalCount}), Groom (${groomCount}), Jewellery (${jewelleryCount}), Sara Gifting (${saraCount})`);
 
 console.log('\n════════════════════════════════════════════════════════════════════════════════');
 console.log('🎉 SHOPPING REGISTRY & CONSENSUS GATE PASSED: 100% GREEN & READY FOR BHUBANESWAR TRIP!');

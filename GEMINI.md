@@ -37,6 +37,7 @@ All entities must use standardized 3-digit padded identifiers:
 - **Shared Primitives First**: Cross-cutting UI components (Carousel, Lightbox, Stepper, Option Pod, WhatsApp Share, Toast, Theme Tokens) must be imported from `ui_primitives/`.
 - **Dual-Release Byte Parity**: Root (`/`) and Public (`/public`) artifacts must maintain 100% byte parity and pass `npm run verify:modular-architecture`.
 - **Collaborative Options Model**: See [PROP-20260915-collaborative-options-and-comments-model.md](./docs/proposals/PROP-20260915-collaborative-options-and-comments-model.md).
+- **Family Consultation Dossier**: See [A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md](./docs/references/A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md).
 
 ---
 

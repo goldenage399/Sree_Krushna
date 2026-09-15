@@ -1,4 +1,4 @@
-﻿# Documentation Index
+# Documentation Index
 
 Welcome to the **Sree Krushna Marriage OS** documentation catalog.
 
@@ -16,3 +16,4 @@ Welcome to the **Sree Krushna Marriage OS** documentation catalog.
 
 ## Reference Specs
 - [SPEC-PROC-TROUSSEAU-001.md](./references/SPEC-PROC-TROUSSEAU-001.md) — Canonical Trousseau & Bridal Shopping Specification
+- [A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md](./references/A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md) — Physical-Digital Dual Surface Family Trousseau & 'Sara' Decision Survey Dossier

@@ -476,7 +476,26 @@
       }
     });
 
-    btnPrintRunSheet.addEventListener('click', () => window.print());
+    btnPrintRunSheet.addEventListener('click', () => {
+      document.body.removeAttribute('data-print-target');
+      window.print();
+    });
+
+    window.printFamilySurvey = function() {
+      document.body.setAttribute('data-print-target', 'survey');
+      window.print();
+      window.addEventListener('afterprint', () => {
+        document.body.removeAttribute('data-print-target');
+      }, { once: true });
+      setTimeout(() => {
+        document.body.removeAttribute('data-print-target');
+      }, 2500);
+    };
+
+    const btnPrintFamilySurvey = document.getElementById('btnPrintFamilySurvey');
+    if (btnPrintFamilySurvey) {
+      btnPrintFamilySurvey.addEventListener('click', window.printFamilySurvey);
+    }
 
     btnExportJson.addEventListener('click', () => {
       const payload = {

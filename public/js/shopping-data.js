@@ -26,7 +26,7 @@ window.SHOPPING_REGISTRY_DATA = {
       "icon": "🪔",
       "dayTimeline": "Day 1 (10:00 - 19:30)",
       "primaryZone": "Master Canteen & Janpath",
-      "itemCount": 7
+      "itemCount": 8
     },
     {
       "id": "chapter_groom_wear",
@@ -36,7 +36,7 @@ window.SHOPPING_REGISTRY_DATA = {
       "icon": "👑",
       "dayTimeline": "Day 2 (10:30 - 19:30)",
       "primaryZone": "Janpath & Ashok Nagar (BMC Keshari)",
-      "itemCount": 8
+      "itemCount": 9
     },
     {
       "id": "chapter_jewellery",
@@ -46,7 +46,7 @@ window.SHOPPING_REGISTRY_DATA = {
       "icon": "💎",
       "dayTimeline": "Day 3 (10:30 - 20:00)",
       "primaryZone": "Janpath Retail Strip & Master Canteen",
-      "itemCount": 9
+      "itemCount": 10
     },
     {
       "id": "chapter_sara_gifting",
@@ -56,7 +56,7 @@ window.SHOPPING_REGISTRY_DATA = {
       "icon": "🎁",
       "dayTimeline": "Day 4 & 5 (11:00 - 20:00)",
       "primaryZone": "Saheed Nagar & Market Building Unit-2",
-      "itemCount": 6
+      "itemCount": 7
     }
   ],
   "clusters": [
@@ -514,10 +514,10 @@ window.SHOPPING_REGISTRY_DATA = {
       "category": "groom",
       "chapterId": "chapter_groom_wear",
       "role": "Day 2 Morning Barat Procession",
-      "spec": "Raw Silk / Jacquard with zardozi collar and matching churidar",
+      "spec": "Raw Silk / Jacquard with zardozi collar and matching churidar. [Decision Gate: Custom Tailor (Fabric from Janpath + Ashok Nagar Tailor: ₹12k–₹16k, 7-10d) vs Readymade Manyavar (₹35k–₹55k)]",
       "suggestedColor": "Ivory, Champagne Gold, or Pearl",
-      "store": "Manyavar (Janpath) / Sherwani House",
-      "priceRange": "₹35,000 - ₹55,000",
+      "store": "Manyavar (Janpath) / Ashok Nagar Master Tailors",
+      "priceRange": "₹12,000 - ₹45,000",
       "status": "Shortlisted",
       "approvals": {
         "bride": true,
@@ -880,6 +880,78 @@ window.SHOPPING_REGISTRY_DATA = {
       "suggestedColor": "Gold Wrapped Decorative Trays",
       "store": "Saheed Nagar / Nimapada Sweets / Janpath",
       "priceRange": "₹15,000 - ₹25,000",
+      "status": "Planned",
+      "approvals": {
+        "bride": true,
+        "sisters": true,
+        "inlaws": true
+      }
+    },
+    {
+      "id": "TRS-OD-01",
+      "code": "OD-01",
+      "title": "Nuapatna Khandua Pata Silk (Diya Mangula & Puja)",
+      "category": "bridal",
+      "chapterId": "chapter_bridal_silks",
+      "role": "Sacred Jagannath Blessing & Temple Mangula Ritual",
+      "spec": "Pure Mulberry Silk Nuapatna Handloom with Gita Govinda verses & sacred lotus motifs",
+      "suggestedColor": "Auspicious Vermilion Red / Sun Orange",
+      "store": "Boyanika (Master Canteen) / Utkalika",
+      "priceRange": "₹12,000 - ₹22,000",
+      "status": "Planned",
+      "approvals": {
+        "bride": true,
+        "sisters": true,
+        "inlaws": true
+      }
+    },
+    {
+      "id": "TRS-OD-02",
+      "code": "OD-02",
+      "title": "Balakati Hand-Cast Bell-Metal (Kansa) 7-Piece Dining Service",
+      "category": "sara",
+      "chapterId": "chapter_sara_gifting",
+      "role": "Newlywed Couple's First Ritual Feast & Ayurvedic Longevity Gift",
+      "spec": "Hand-beaten bell-metal Thali, 3 Katoris, Water Glass, Dessert Bowl, and Spoon (Ayurvedic dosha-balancing)",
+      "suggestedColor": "Polished Golden Bronze / Bell Metal",
+      "store": "Balakati Bell Metal Co-op / Utkalika (Janpath)",
+      "priceRange": "₹8,500 - ₹15,000",
+      "status": "Planned",
+      "approvals": {
+        "bride": true,
+        "sisters": true,
+        "inlaws": true
+      }
+    },
+    {
+      "id": "TRS-OD-03",
+      "code": "OD-03",
+      "title": "Cuttack Tarakasi Silver Filigree Sindura Phuda & Pana Batta",
+      "category": "jewellery",
+      "chapterId": "chapter_jewellery",
+      "role": "Auspicious Mandap Vermilion & Respected Guest Welcome Regalia",
+      "spec": "Handcrafted 925 Sterling Silver Cuttack filigree peacock Sindoor casket + floral Pana Batta",
+      "suggestedColor": "Polished 925 Pure Silver",
+      "store": "Khimji Jewellers / Cuttack Tarakasi Artisans",
+      "priceRange": "₹12,000 - ₹24,000",
+      "status": "Planned",
+      "approvals": {
+        "bride": true,
+        "sisters": true,
+        "inlaws": true
+      }
+    },
+    {
+      "id": "TRS-OD-04",
+      "code": "OD-04",
+      "title": "Sambalpuri Handloom Groom Joda & Silk Dhoti Set",
+      "category": "groom",
+      "chapterId": "chapter_groom_wear",
+      "role": "Traditional Odia Sacred Mandap Ceremony & Satyanarayana Puja",
+      "spec": "Pure Sambalpuri Pattu Dhoti + matching Angavastram (Uttariya) with traditional temple border",
+      "suggestedColor": "Tussar Gold with Maroon/Black Kumbha Border",
+      "store": "Sambalpuri Bastralaya (Janpath) / Boyanika",
+      "priceRange": "₹6,500 - ₹12,500",
       "status": "Planned",
       "approvals": {
         "bride": true,
