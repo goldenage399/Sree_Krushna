@@ -262,12 +262,20 @@ const ENTRY_POINTS = ['CLAUDE.md', 'GEMINI.md', 'AGENTS.md'];
 const ENTRY_POINT_ANCHOR = 'frontend-knowledge-hub';
 
 function checkEntryPointParity() {
+  const fklHubPath = path.join(ROOT, 'docs/ssot/ui-design/FRONTEND-KNOWLEDGE-HUB.md');
+  const fklIndexPath = path.join(ROOT, 'docs/frontend/frontend-knowledge-index.jsonl');
+  // If this repository does not use the Frontend Knowledge Layer (FKL), entry point parity is not applicable
+  if (!fs.existsSync(fklHubPath) && !fs.existsSync(fklIndexPath)) {
+    return [];
+  }
+
   const failing = [];
   
   if (GRAPH_DATA) {
     const nodes = GRAPH_DATA.nodes || [];
     const edges = GRAPH_DATA.edges || [];
     for (const ep of ENTRY_POINTS) {
+      if (!fs.existsSync(path.join(ROOT, ep))) continue;
       const epNodeId = pathToId(ep);
       const epNode = nodes.find(n => n.id === epNodeId);
       if (!epNode) {
@@ -283,6 +291,7 @@ function checkEntryPointParity() {
   }
 
   for (const ep of ENTRY_POINTS) {
+    if (!fs.existsSync(path.join(ROOT, ep))) continue;
     const content = readFile(ep).toLowerCase();
     if (!content) failing.push({ ep, reason: 'entry-point file is absent' });
     else if (!content.includes(ENTRY_POINT_ANCHOR))
@@ -678,7 +687,24 @@ function checkPatternWiring(artifact, consumption) {
         fix: 'Run `python scratch/finalize_graph.py` to index new patterns.'
       });
     } else {
-      const tier = node.activation_tier || 'reference';
+      const VALID_TIERS = ['reference', 'routed', 'guarded'];
+      const tier = node.activation_tier;
+      if (!tier) {
+        findings.push({
+          severity: 'error',
+          consumptionFile: file,
+          message: 'Missing Pattern Activation Contract — no activation_tier in graph node (PACT-001 via graph)',
+          fix: `Specify activation_tier in frontmatter of ${file} and rebuild graph.`
+        });
+      } else if (!VALID_TIERS.includes(tier)) {
+        findings.push({
+          severity: 'error',
+          consumptionFile: file,
+          message: `Invalid activation_tier "${tier}" — expected reference | routed | guarded (Verified via graph)`,
+          fix: 'Set activation_tier to one of: reference, routed, guarded'
+        });
+      }
+
       const consumedByEdges = edges.filter(e => e.source === patternNodeId && e.relation === 'consumed_by');
       
       if (consumedByEdges.length === 0) {
@@ -716,6 +742,14 @@ function checkPatternWiring(artifact, consumption) {
       }
       
       if (tier === 'routed') {
+        if (!node.triggers || (Array.isArray(node.triggers) && node.triggers.length === 0)) {
+          findings.push({
+            severity: 'error',
+            consumptionFile: file,
+            message: `activation_tier "routed" requires non-empty triggers so the pattern surfaces on its own keywords (Verified via graph)`,
+            fix: `Add triggers: [...] in frontmatter of ${file}`
+          });
+        }
         const inRouter = edges.some(e => e.target === patternNodeId && e.relation === 'references_pattern' && e.source.includes('skill_router'));
         const isRouted = inRouter || isReferenced(consumption.skillRouter, `patterns/${ref}.md`);
         if (!isRouted) {
@@ -725,6 +759,32 @@ function checkPatternWiring(artifact, consumption) {
             message: `activation_tier "${tier}" requires a skill-router entry (Verified via graph)`,
             fix: `Add to .agent/skill-router.yaml references to patterns/${ref}.md`
           });
+        }
+      }
+
+      if (tier === 'guarded') {
+        const guard = node.guard;
+        if (!guard) {
+          findings.push({
+            severity: 'error',
+            consumptionFile: file,
+            message: `activation_tier "guarded" requires a guard command (Verified via graph)`,
+            fix: `Add guard: "npm run <script>" in frontmatter of ${file}`
+          });
+        } else {
+          const scripts = loadPackageScripts();
+          const match = guard.match(/npm\s+run\s+([a-zA-Z0-9:_-]+)/);
+          if (match) {
+            const scriptName = match[1];
+            if (!Object.prototype.hasOwnProperty.call(scripts, scriptName)) {
+              findings.push({
+                severity: 'error',
+                consumptionFile: file,
+                message: `guard references "npm run ${scriptName}" but no such script exists in package.json (Verified via graph)`,
+                fix: `Define "${scriptName}" under "scripts" in package.json.`
+              });
+            }
+          }
         }
       }
     }
@@ -1072,6 +1132,11 @@ function emitGraph(artifactResults, standardResults, consumption, outRel) {
 function checkFrontendKnowledgeIndex(changedFiles) {
   const findings = { errors: [], warnings: [], passing: [] };
   const indexPath = path.join(ROOT, 'docs/frontend/frontend-knowledge-index.jsonl');
+  const fklHubPath = path.join(ROOT, 'docs/ssot/ui-design/FRONTEND-KNOWLEDGE-HUB.md');
+  if (!fs.existsSync(indexPath) && !fs.existsSync(fklHubPath)) {
+    // FKL not utilized in this repository
+    return findings;
+  }
   if (!fs.existsSync(indexPath)) {
     findings.errors.push({
       message: "docs/frontend/frontend-knowledge-index.jsonl is missing",

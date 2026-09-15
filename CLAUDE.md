@@ -51,6 +51,7 @@ Before any task work, review:
 | Plan review & validation | `.agent/workflows/plan-review.md` |
 | Systematic problem diagnosis | `.agent/workflows/portable/systematic-debugging.md` & `.agent/skills/systematic-debugger/SKILL.md` |
 | Clarify ambiguous prompt | `.agent/skills/prompt-clarity/SKILL.md` |
+| Idea incubation & concept proposals | `.agent/workflows/idea-incubator.md` & `.agent/skills/idea-incubator/SKILL.md` |
 | Domain mapping & entity linking | `.agent/skills/ssot-domain-mapper/SKILL.md` |
 | Flowchart & architecture visuals | `.agent/skills/mermaid-skill/SKILL.md` |
 | Capture new pattern | `.agent/workflows/capture-pattern.md` / `.agent/workflows/capture-pattern-lite.md` |
@@ -140,3 +141,6 @@ This repository implements the following universal patterns:
 - `.agent/patterns/localhost-sw-cache-bypass-gate.md`
 - `.agent/patterns/monolithic-engine-port-css-scoping-gate.md`
 - `.agent/patterns/sub-engine-shadowing-and-tab-reconciliation.md`
+- `.agent/patterns/sdca-pre-emit-syntax-gate.md`
+- `.agent/patterns/declarative-option-clustering-and-consensus.md`
+

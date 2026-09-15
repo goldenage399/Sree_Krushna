@@ -15,6 +15,30 @@
 
 skills:
 
+  - id: cockpit-intake
+    repo: [sree-krushna]
+    triggers: ["cockpit intake", "ingest into cockpit", "update cockpit", "sync cockpit", "decorator cockpit update", "/cockpit-intake"]
+    cost: low
+    invoke: /cockpit-intake
+    when: "Ingesting decorator discussion threads, vendor meeting clarifications, and layout briefs into the Decorator Cockpit (SDCA)"
+    related_skills: [ssot-domain-mapper, prompt-clarity]
+
+  - id: excel-multisheet-processor
+    repo: [sree-krushna, bms, task-dashboard]
+    triggers: ["process excel", "process multiple sheets", "excel multi-sheet", "convert excel", "excel sheets", "excel consolidate", "/excel-multisheet-processor"]
+    cost: low
+    invoke: /excel-multisheet-processor
+    when: "Processing, converting, inspecting, or consolidating multi-sheet Excel (.xlsx, .xls) workbooks into structured Markdown or tabular datasets"
+    related_skills: [prompt-clarity, cockpit-intake]
+
+  - id: idea-incubator
+    repo: [sree-krushna]
+    triggers: ["idea incubator", "incubate idea", "bounce idea", "brainstorm idea", "add to proposals", "analyze idea for list", "/idea-incubator"]
+    cost: low
+    invoke: /idea-incubator
+    when: "Brainstorming and stress-testing experiential or decorative ideas and logging them into proposals without touching production code or confusing with immediate implementation requirements"
+    related_skills: [prompt-clarity, cockpit-intake]
+
   - id: web-deployment-gate
     repo: [task-dashboard, sree-krushna, bms, capsicum, pio, ug-farmhouse, qsr]
     triggers: ["deploy web", "pre-flight check", "new web app", "launch site", "verify deployment", "web deployment checklist", "deploy gate", "web audit", "/web-deployment-gate"]

@@ -35,9 +35,9 @@ guidance against inventing ambiguity).
 
 1. Read `meta-prompt.md` (same directory as this file) — it is the full
    logic definition. Apply its Step 1 ambiguity scan to the user's message.
-2. If ambiguous: present the 2–3 reframings via the `AskUserQuestion` tool —
+2. If ambiguous: present the 2–3 reframings via the harness's interactive question tool (`AskUserQuestion` in Claude Code / `ask_question` in Antigravity / formatted text menu if no interactive tool is available) —
    one option per interpretation, with the resolved assumption as each
-   option's description. Do not print a text menu, and do not start
+   option's description. Do not print a plain text menu if an interactive tool is available, and do not start
    implementation. (The tool's built-in "Other" covers "describe it your
    own way".) This clarify step takes precedence over any general bias
    against pausing to ask questions — that is the point of the skill.
@@ -52,12 +52,17 @@ guidance against inventing ambiguity).
 
 ## Notes specific to this repo
 
-- Before writing the reframed options, check `.agent/skill-router.yaml` —
-  it maps task keywords to this repo's workflows and skills. If different
-  interpretations of the request would route to different workflows, name
-  the workflow in each option (e.g. "...following
-  `.agent/workflows/enhancement-protocol.md`"). Don't rebuild routing logic
-  here; the router is the source of truth.
+- **Mandatory Skill-Router Query**:
+  Before drafting options, search `.agent/skill-router.yaml` (and `.agent/standards-catalog.json`) for keywords matching each interpretation.
+- **Option Route Binding (Cross-Harness)**:
+  Every option presented MUST carry an explicit route tag (`— *routes to: <skill, workflow path, or council>*`, or `— *routes to: direct surgical execution*` if no workflow applies). Format according to the active harness:
+  - **Claude Code (`AskUserQuestion`)**: Keep `label` short (1–5 words restating the option), and place the resolved assumptions plus route tag in `description`:
+    `description: "<Assumptions> — *routes to: <target>*"`
+  - **Antigravity (`ask_question`)**: Format each entry in `options: string[]` as a single compound string:
+    `"(Recommended) <Restatement> — assumes: <Assumptions> — *routes to: <target>*"`
+  - **Schema drift**: the two payload shapes above are documented from each harness's self-reported tool declaration, not from an external spec — if the harness's actual interactive-question tool takes a different shape than shown here, follow the real tool's schema and still carry the route tag in whichever field fits (prefer a description/detail field over a short label). Never fail the call to match this text literally.
+- When the user selects an option, extract the declared route and record it in the `- **Bound route**:` field of the Clarification & Intent Record.
+- If the chosen option routes to a council or governing workflow, enter that workflow and present the plan hard-stop before taking any modifying action.
 - If the ambiguity is "which system does this touch" (e.g. Architecture vs
   UI council, or which dashboard component), include that as one of the
   axes of difference between reframed options — don't just vary phrasing.

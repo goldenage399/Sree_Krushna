@@ -73,6 +73,7 @@ Review relevant ecosystem patterns:
 - `.agent/patterns/localhost-sw-cache-bypass-gate.md`
 - `.agent/patterns/monolithic-engine-port-css-scoping-gate.md`
 - `.agent/patterns/sub-engine-shadowing-and-tab-reconciliation.md`
+- `.agent/patterns/declarative-option-clustering-and-consensus.md`
 
 
 ## When to Use

@@ -98,6 +98,7 @@ The tier is a **graduation ladder**: a pattern may start at `reference` and grad
 > **SDP-001 note**: Governed by [`docs/protocols/SYSTEM-DISCOVERY-PROTOCOL.md`](../../docs/protocols/SYSTEM-DISCOVERY-PROTOCOL.md) — not a `.agent/patterns/` file. Wired here as a cross-reference so agents checking this index before proposing new systems, schemas, or contracts are pointed to the correct gate.
 
 | [monolithic-css-append-and-all-theme-matrix-sweep.md](monolithic-css-append-and-all-theme-matrix-sweep.md) | `reference` | VALIDATED | `debug-frontend.md`, `THEME-SYSTEM.md` | repo-specific |
+| [declarative-option-clustering-and-consensus.md](declarative-option-clustering-and-consensus.md) | `reference` | VALIDATED | `plan.md` (Step 0.1) | universal |
 > Update this index whenever a pattern is created or its tier changes via `/capture-pattern`.
 
 ---

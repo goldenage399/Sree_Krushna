@@ -93,6 +93,7 @@ for the user's pick. Once they respond:
   - **Question asked**: <the exact framing put to the user>
   - **Options offered**: A) <one line> · B) <one line> · C) <one line>
   - **User resolution**: <the pick, or the verbatim write-in>
+  - **Bound route**: <workflow/skill/council path, or "direct surgical execution">
   - **Resolved scope**: <the working spec — see enumeration rule below>
   ```
 
@@ -108,8 +109,8 @@ for the user's pick. Once they respond:
 - **Routing & Hard-Stop Gate**: Clarifying intent does NOT authorize blind
   implementation. "Resolved scope" records *what* was asked for — it is not an
   execution mandate.
-  - If the chosen option named a governing workflow/council (e.g. `/role-activation`, `cos-invoke.md`, `architecture-council.md`, `plan.md`), or if executing it requires verifying unvetted assumptions/infrastructure, **route into that workflow, share the plan of action, and HARD-STOP**. Do NOT execute code or modify files until the user explicitly approves the plan.
-  - If the request is self-contained with verified prerequisites and requires no governance gate, answer/execute normally.
+  - If the resolved intent or chosen option declared a bound workflow or council (e.g. `/role-activation`, `cos-invoke.md`, `architecture-council.md`, `plan.md`), or if executing it requires verifying unvetted assumptions/infrastructure, **route into that workflow, share the plan of action, and HARD-STOP**. Do NOT execute code or modify files until the user explicitly approves the plan.
+  - If the request has clear single scope, verified prerequisites, and the bound route is "direct surgical execution", proceed with the task directly.
 - If the user describes it their own way instead: treat that as the clarified prompt and apply the same routing check.
 
 ## Step 4 — Escape hatches (don't over-trigger)

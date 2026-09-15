@@ -23,7 +23,16 @@
     "triage:requests": "node scripts/triage-requests.cjs",
     "pre-deploy": "npm run verify:deployment",
     "query": "node tools/query-cli/cli.cjs",
-    "verify:cross-repo-parity": "node scripts/verify-cross-repo-parity.cjs"
+    "verify:cross-repo-parity": "node scripts/verify-cross-repo-parity.cjs",
+    "build:cockpit": "node cockpit_src/build.cjs",
+    "build:cockpit:fragment": "node cockpit_src/build.cjs --fragment",
+    "build:cockpit:all": "node cockpit_src/build.cjs --all",
+    "test:cockpit": "node scripts/test-cockpit-smoke.cjs",
+    "build:decision-registry": "node scripts/build-decision-registry-data.cjs && node scripts/build-decision-registry-html.cjs",
+    "test:decision-registry": "node scripts/test-decision-registry.cjs",
+    "seed:cockpit": "node scripts/seed-cockpit-firestore.cjs",
+    "inspect:cockpit": "node scripts/db-inspect-cockpit.cjs",
+    "deploy:cockpit-rules": "firebase.cmd deploy --only firestore:rules --non-interactive"
   },
   "keywords": [
     "marriage-os",
