@@ -1,0 +1,283 @@
+/* Store Directory Strip */
+    .shop-store-section {
+      background: var(--shop-surface);
+      border: 1px solid var(--shop-border);
+      border-radius: var(--shop-radius-md);
+      padding: 18px 20px;
+      margin-bottom: 28px;
+    }
+
+    .shop-store-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .shop-store-card {
+      background: var(--shop-bg);
+      border: 1px solid var(--shop-border);
+      border-radius: var(--shop-radius-sm);
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .shop-store-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .shop-store-zone {
+      font-size: 11px;
+      color: var(--shop-gold);
+      font-weight: 600;
+    }
+
+    .shop-store-specialty {
+      font-size: 11px;
+      color: var(--shop-text-secondary);
+      line-height: 1.4;
+    }
+
+    .shop-store-phone {
+      font-size: 11px;
+      color: var(--shop-emerald);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Itemized Checklist Grid & Toolbar */
+    .shop-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .shop-filter-pills {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .shop-pill {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--shop-surface);
+      border: 1px solid var(--shop-border);
+      color: var(--shop-text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .shop-pill:hover {
+      border-color: var(--shop-border-focus);
+      color: #ffffff;
+    }
+
+    .shop-pill.active {
+      background: var(--shop-gold);
+      color: #0f1117;
+      border-color: var(--shop-gold);
+    }
+
+    .shop-search-box {
+      position: relative;
+      min-width: 260px;
+    }
+
+    .shop-search-input {
+      width: 100%;
+      background: var(--shop-surface);
+      border: 1px solid var(--shop-border);
+      padding: 8px 14px 8px 34px;
+      border-radius: 20px;
+      color: #ffffff;
+      font-size: 13px;
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    .shop-search-input:focus {
+      border-color: var(--shop-gold);
+    }
+
+    .shop-search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--shop-text-muted);
+      font-size: 13px;
+      pointer-events: none;
+    }
+
+    .shop-items-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+      gap: 16px;
+    }
+
+    @media (max-width: 500px) {
+      .shop-items-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .shop-item-card {
+      background: var(--shop-surface);
+      border: 1px solid var(--shop-border);
+      border-radius: var(--shop-radius-md);
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .shop-item-card:hover {
+      border-color: var(--shop-border-focus);
+      box-shadow: var(--shop-shadow);
+    }
+
+    .shop-item-card.purchased {
+      border-color: var(--shop-emerald);
+      background: rgba(16, 185, 129, 0.04);
+    }
+
+    .shop-item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      gap: 10px;
+    }
+
+    .shop-id-badge {
+      font-family: monospace;
+      font-weight: 700;
+      font-size: 11px;
+      background: var(--shop-surface-elevated);
+      color: var(--shop-gold);
+      border: 1px solid var(--shop-border);
+      padding: 2px 7px;
+      border-radius: var(--shop-radius-sm);
+    }
+
+    .shop-item-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 4px;
+    }
+
+    .shop-item-role {
+      font-size: 12px;
+      color: var(--shop-text-secondary);
+      margin-bottom: 10px;
+    }
+
+    .shop-spec-box {
+      font-size: 12px;
+      color: var(--shop-text-primary);
+      background: rgba(255, 255, 255, 0.02);
+      border-left: 3px solid var(--shop-gold);
+      padding: 8px 12px;
+      border-radius: var(--shop-radius-sm);
+      margin-bottom: 12px;
+      line-height: 1.45;
+    }
+
+    .shop-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 11px;
+      color: var(--shop-text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .shop-meta-tag {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Multi-Stakeholder Voting Bar */
+    .shop-stakeholder-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: var(--shop-bg);
+      border-radius: var(--shop-radius-sm);
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .shop-vote-pill {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: var(--shop-radius-sm);
+      border: 1px solid var(--shop-border);
+      cursor: pointer;
+      background: var(--shop-surface);
+      color: var(--shop-text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+    }
+
+    .shop-vote-pill:hover {
+      border-color: var(--shop-border-focus);
+    }
+
+    .shop-vote-pill.approved {
+      background: var(--shop-emerald-glow);
+      border-color: var(--shop-emerald);
+      color: #ffffff;
+    }
+
+    .shop-item-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 12px;
+    }
+
+    .shop-check-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--shop-text-secondary);
+      user-select: none;
+    }
+
+    .shop-check-label input {
+      accent-color: var(--shop-emerald);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }

@@ -10,10 +10,10 @@
 window.DECISION_REGISTRY_DATA = {
   meta: {
     title: "Sree Krushna Marriage OS — Unified Decision & Ideation Registry",
-    version: "2.2.0",
+    version: "2.1.0",
     updated_at: "2026-09-15T08:35:00+05:30",
     governance_ref: "AC-DEC-2026-017",
-    standard: "P-DECISION-REG-001 / P-VISUAL-CAROUSEL-001 / P-COMPARE-SHARE-001 / CRDF-001"
+    standard: "P-DECISION-REG-001 / P-VISUAL-CAROUSEL-001 / P-COMPARE-SHARE-001"
   },
   summary: {
     totalItems: 31,
@@ -1225,7 +1225,8 @@ window.DECISION_REGISTRY_DATA = {
       "PLATE-01"
     ],
     "plateTitle": "Grand Couple Entry Atmospheric Production",
-    "event": "sangeet"
+    "event": "sangeet",
+    "clusterId": "entry"
   },
   {
     "id": "DEC-22",
@@ -1298,11 +1299,11 @@ window.DECISION_REGISTRY_DATA = {
     "actionType": "host_vote",
     "plateRef": "PLATE-03",
     "alternativePlates": [
-      "PLATE-08",
       "PLATE-12"
     ],
     "plateTitle": "Sangeet Concert & Performance Stage",
-    "event": "sangeet"
+    "event": "sangeet",
+    "clusterId": "stage"
   }
 ]
 };

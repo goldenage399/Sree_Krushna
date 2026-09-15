@@ -1,0 +1,33 @@
+/* ==========================================================================
+       DECISION REGISTRY & EVENT STEPPER SCOPED CSS (INC-086 COMPLIANT)
+       All rules are prefixed with #decisionRegistryRoot, #drLightboxModal, or .dr-*
+       to ensure zero global cascade bleed when embedded into the main host app.
+       ========================================================================== */
+    :root {
+      --dr-bg: #0f1117;
+      --dr-surface: #181b24;
+      --dr-surface-elevated: #222634;
+      --dr-border: #2d3245;
+      --dr-border-focus: #e5a93c;
+      --dr-text-primary: #f3f4f6;
+      --dr-text-secondary: #9ca3af;
+      --dr-text-muted: #6b7280;
+      --dr-gold: #e5a93c;
+      --dr-gold-glow: rgba(229, 169, 60, 0.15);
+      --dr-gold-subtle: rgba(229, 169, 60, 0.08);
+      --dr-emerald: #10b981;
+      --dr-emerald-glow: rgba(16, 185, 129, 0.15);
+      --dr-amber: #f59e0b;
+      --dr-amber-glow: rgba(245, 158, 11, 0.15);
+      --dr-rose: #f43f5e;
+      --dr-rose-glow: rgba(244, 63, 94, 0.15);
+      --dr-purple: #a855f7;
+      --dr-purple-glow: rgba(168, 85, 247, 0.15);
+      --dr-blue: #3b82f6;
+      --dr-blue-glow: rgba(59, 130, 246, 0.15);
+      --dr-radius-sm: 6px;
+      --dr-radius-md: 10px;
+      --dr-radius-lg: 16px;
+      --dr-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+      --dr-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }

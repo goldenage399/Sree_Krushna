@@ -1,0 +1,52 @@
+/* Toast */
+    .shop-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #181b24;
+      border: 1px solid var(--shop-gold);
+      color: #ffffff;
+      padding: 12px 18px;
+      border-radius: var(--shop-radius-md);
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      display: none;
+      align-items: center;
+      gap: 10px;
+      z-index: 10000;
+    }
+
+    .shop-toast.active {
+      display: flex;
+    }
+
+    /* Print Dossier Optimization */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      #shoppingRegistryRoot {
+        padding: 0;
+        max-width: 100%;
+      }
+      .shop-btn, .shop-toolbar, .shop-welcome-banner, .shop-toast {
+        display: none !important;
+      }
+      .shop-item-card, .shop-cluster-card, .shop-store-card {
+        border: 1px solid #cccccc !important;
+        background: #ffffff !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+        margin-bottom: 12px;
+      }
+      .shop-item-title, .shop-cluster-title-wrap h2, .shop-store-name {
+        color: #000000 !important;
+      }
+      .shop-spec-box {
+        border-left: 3px solid #000000 !important;
+        background: #f9f9f9 !important;
+        color: #000000 !important;
+      }
+    }

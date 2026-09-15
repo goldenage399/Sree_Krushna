@@ -1,0 +1,229 @@
+<div id="decisionRegistryRoot">
+  <!-- Family Consensus Mode Welcome Banner -->
+  <div class="dr-family-banner" id="familyWelcomeBanner">
+    <div class="dr-family-banner-left">
+      <span style="font-size: 28px;">🌺</span>
+      <div>
+        <h2 class="dr-family-banner-title">Welcome to the Sree Krushna Family Decor Review!</h2>
+        <p class="dr-family-banner-sub">Please review the shortlisted Mandap and Sangeet Stage options below, tap your preferred choice, and share your vote with the family.</p>
+      </div>
+    </div>
+    <button class="dr-btn dr-btn-primary" onclick="window.switchViewMode('executive')">
+      <span>👑</span> Executive Host View
+    </button>
+  </div>
+
+  <!-- Executive Header -->
+  <header class="dr-header" id="executiveHeader">
+    <div class="dr-brand">
+      <div class="dr-logo-monogram">SK</div>
+      <div class="dr-title-group">
+        <h1>Master Decision Registry & Event Stepper</h1>
+        <p>Sree Krushna Marriage OS — Consolidated Executive Review Surface (Standard P-DECISION-REG-001)</p>
+      </div>
+    </div>
+    <div class="dr-header-actions">
+      <button class="dr-btn dr-btn-whatsapp" id="btnShareFamilyMode" title="Copy Family WhatsApp Link">
+        <span>📱</span> Share with Family
+      </button>
+      <button class="dr-btn dr-btn-primary" id="btnOpenOptionIntake" title="Add Option from Google Drive or Camera">
+        <span>➕</span> Add Option
+      </button>
+      <button class="dr-btn" id="btnExportJson" title="Export current decisions state">
+        <span>💾</span> Export JSON
+      </button>
+      <button class="dr-btn" id="btnPrintDossier" title="Print Executive Meeting Dossier">
+        <span>🖨️</span> Print Dossier
+      </button>
+      <button class="dr-btn dr-btn-primary" onclick="window.switchTab ? window.switchTab('tab-cockpit') : window.location.href='./#tab-cockpit'" title="Open Decorator Negotiation Cockpit">
+        <span>🏛️</span> Open Cockpit
+      </button>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       CHRONOLOGICAL EVENT STEPPER COMPONENT (P-EVENT-STEPPER-001)
+       ========================================================================== -->
+  <section class="dr-stepper-container" id="eventStepperSection">
+    <div class="dr-stepper-header">
+      <div class="dr-stepper-title-wrap">
+        <span style="font-size: 20px;">🧭</span>
+        <div>
+          <h2 class="dr-stepper-title">Chronological Event Decision Flow</h2>
+          <p class="dr-stepper-desc">Walk through the wedding timeline step-by-step. Select an event milestone to review its decor clusters and lock decisions.</p>
+        </div>
+      </div>
+      <div class="dr-stepper-nav-controls">
+        <button class="dr-btn dr-btn-sm" id="btnStepperPrev">‹ Previous Event</button>
+        <button class="dr-btn dr-btn-sm" id="btnStepperNext">Next Event ›</button>
+      </div>
+    </div>
+
+    <!-- Milestone Track (5 Event Chapters) -->
+    <div class="dr-milestone-track" id="milestoneTrack">
+      <!-- Injected dynamically by JavaScript -->
+    </div>
+
+    <!-- Active Event Action Bar -->
+    <div class="dr-event-action-bar" id="eventActionBar">
+      <div class="dr-event-action-info">
+        <span id="activeEventIcon">🪔</span>
+        <span id="activeEventSummary">Currently Viewing: <strong>Day 2 Vedic Vivaha</strong> (Muhurtham 10:15)</span>
+      </div>
+      <button class="dr-lock-event-btn" id="btnLockActiveEvent">
+        <span>🔒</span> Freeze & Lock This Event's Choices
+      </button>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       MULTI-OPTION CLUSTER PODS (P-OPTION-POD-001)
+       ========================================================================== -->
+  <section class="dr-cluster-pod-container" id="clusterPodsContainer">
+    <!-- Clustered side-by-side option pods injected dynamically -->
+  </section>
+
+  <!-- ==========================================================================
+       VISUAL CONCEPT LOOKBOOK CAROUSEL (Individual Plates)
+       ========================================================================== -->
+  <section class="dr-carousel-section" id="visualShowcaseSection">
+    <div class="dr-carousel-header">
+      <div class="dr-carousel-title-group">
+        <div class="dr-carousel-icon-box">📸</div>
+        <div>
+          <h2 class="dr-carousel-title">Individual Visual Plate Lookbook</h2>
+          <p class="dr-carousel-subtitle">All 12 registered scenic fabrication plates from the Marquee Decor Tender (SSOT: assets/decor/registry.json).</p>
+        </div>
+      </div>
+      <div class="dr-carousel-nav-controls">
+        <span class="dr-carousel-indicator" id="carouselCounterIndicator">Showing 12 Plates</span>
+        <button class="dr-carousel-arrow" id="btnCarouselPrev" title="Previous plate">‹</button>
+        <button class="dr-carousel-arrow" id="btnCarouselNext" title="Next plate">›</button>
+      </div>
+    </div>
+
+    <!-- Scroll-Snap Horizontal Track -->
+    <div class="dr-carousel-track" id="carouselTrack">
+      <!-- Injected dynamically by JavaScript -->
+    </div>
+  </section>
+
+  <!-- Filter & Search Toolbar for Decisions Grid -->
+  <div class="dr-toolbar">
+    <div class="dr-filter-pills" id="filterPillsContainer">
+      <button class="dr-pill active" data-filter="all_pending">
+        All Actionable <span class="dr-pill-count" id="countPillActionable">17</span>
+      </button>
+      <button class="dr-pill" data-filter="decor_pending">
+        Decor Choices <span class="dr-pill-count" id="countPillDecor">6</span>
+      </button>
+      <button class="dr-pill" data-filter="decor_vendor">
+        Vendor Deliverables <span class="dr-pill-count" id="countPillVendor">4</span>
+      </button>
+      <button class="dr-pill" data-filter="idea_incubator">
+        💡 Idea Incubator <span class="dr-pill-count" id="countPillIdeas">7</span>
+      </button>
+      <button class="dr-pill" data-filter="decor_locked">
+        🔒 Certified Locked <span class="dr-pill-count" id="countPillLocked">10</span>
+      </button>
+      <button class="dr-pill" data-filter="all">
+        Full Registry <span class="dr-pill-count" id="countPillAll">28</span>
+      </button>
+    </div>
+    <div class="dr-search-box">
+      <span class="dr-search-icon">🔍</span>
+      <input type="text" id="searchInput" class="dr-search-input" placeholder="Search decisions, specs, keywords...">
+    </div>
+  </div>
+
+  <!-- Decisions & Ideas Grid -->
+  <main class="dr-grid" id="decisionsGrid">
+    <!-- Rendered dynamically by JavaScript from DECISION_REGISTRY_DATA -->
+  </main>
+</div>
+
+<!-- Toast Notification -->
+<div class="dr-toast" id="drToast">
+  <span id="toastIcon">📋</span>
+  <span id="toastMsg">Notification message</span>
+</div>
+
+<!-- ==========================================================================
+     UNIVERSAL LIGHTBOX & COMPARISON MODAL (#drLightboxModal)
+     ========================================================================== -->
+<div id="drLightboxModal" role="dialog" aria-modal="true">
+  <div class="dr-lightbox-dialog">
+    <!-- Modal Header -->
+    <div class="dr-lightbox-header">
+      <div class="dr-lightbox-header-left">
+        <span class="dr-id-badge" id="modalPlateId">PLATE-01</span>
+        <div class="dr-lightbox-title-wrap">
+          <h3 id="modalPlateTitle">Vedic Lotus Mandap & Elevated Altar</h3>
+          <p id="modalPlateSub">Zone A — Sacred Sanctuary • SPEC-PROC-DECOR-MARQUEE-001</p>
+        </div>
+      </div>
+      <div class="dr-lightbox-header-right">
+        <div id="modalBlueprintToggleWrap" style="display: none;">
+          <button class="dr-lightbox-toggle-btn active" id="btnViewPhoto">📷 Photo</button>
+          <button class="dr-lightbox-toggle-btn" id="btnViewCad">📐 CAD Vector</button>
+        </div>
+        <button class="dr-lightbox-toggle-btn" id="btnToggleCompare" style="display: none;">⚖️ Compare Alternatives</button>
+        <button class="dr-lightbox-close-btn" id="btnCloseLightbox" title="Close (Esc)">✕</button>
+      </div>
+    </div>
+
+    <!-- Stage Viewport (Single Asset View) -->
+    <div class="dr-lightbox-stage-container" id="modalSingleStage">
+      <button class="dr-lightbox-nav-arrow prev" id="btnModalPrev">‹</button>
+      <img id="modalImg" class="dr-lightbox-view-asset" src="" alt="Decor Inspiration Plate" draggable="false">
+      <object id="modalSvgObject" class="dr-lightbox-view-asset" type="image/svg+xml" style="display: none; width: 90%; height: 50vh;"></object>
+      <button class="dr-lightbox-nav-arrow next" id="btnModalNext">›</button>
+
+      <!-- Floating Micro-Inspection Toolbar (Adapted from PIO UniversalViewer) -->
+      <div class="sk-zoom-toolbar" id="skLightboxToolbar" role="toolbar" aria-label="Image zoom and pan controls">
+        <button type="button" class="sk-zoom-btn" id="skBtnZoomOut" title="Zoom Out (Ctrl+-)" aria-label="Zoom out">−</button>
+        <span class="sk-zoom-badge" id="skZoomBadge" title="Current zoom level">100%</span>
+        <button type="button" class="sk-zoom-btn" id="skBtnZoomIn" title="Zoom In (Ctrl++)" aria-label="Zoom in">+</button>
+        <button type="button" class="sk-zoom-btn" id="skBtnFit" title="Fit to Screen (0)" aria-label="Fit image to screen">⤢</button>
+        <button type="button" class="sk-zoom-btn" id="skBtnReset" title="Reset (R)" aria-label="Reset zoom and position">↺</button>
+      </div>
+    </div>
+
+    <!-- Comparison Viewport (Multi-Option View) -->
+    <div class="dr-lightbox-compare-stage" id="modalCompareStage">
+      <!-- Dynamically filled with Option Cards -->
+    </div>
+
+    <!-- Meta Details & Specs Drawer -->
+    <div class="dr-lightbox-meta-drawer">
+      <div class="dr-lightbox-meta-grid">
+        <div class="dr-meta-item">
+          <strong>Dimensions & Elevation</strong>
+          <span id="modalDimensions">—</span>
+        </div>
+        <div class="dr-meta-item">
+          <strong>Event & Zone</strong>
+          <span id="modalEventZone">—</span>
+        </div>
+        <div class="dr-meta-item">
+          <strong>Contract Rider Clause</strong>
+          <span id="modalClause">—</span>
+        </div>
+        <div class="dr-meta-item">
+          <strong>Linked Decisions</strong>
+          <span id="modalLinkedDecisions">—</span>
+        </div>
+      </div>
+      <div class="dr-lightbox-notes-box" id="modalNotesBox">
+        <!-- Notes text -->
+      </div>
+    </div>
+
+    <!-- Bottom Thumbnail Hop Bar -->
+    <div class="dr-lightbox-thumbs-bar" id="modalThumbsBar">
+      <!-- 12 thumbnails injected dynamically -->
+    </div>
+  </div>
+</div>
+
+<!-- Load Unified Data Layer -->

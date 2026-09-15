@@ -8,6 +8,1017 @@
   <meta name="theme-color" content="#0f1117">
   <link rel="icon" href="./assets/icons/icon-192x192.png" type="image/png">
   <style>
+/**
+ * Sree Krushna Marriage OS — Universal Design Tokens Base
+ * Standard: STD-MOD-COMP-001 | Ruling: AC-DEC-2026-019
+ * Scope: Baseline design system variables for luxury dark mode interfaces
+ */
+
+:root {
+  /* Surface & Background */
+  --sk-bg: #0f1117;
+  --sk-surface: #181b24;
+  --sk-surface-elevated: #222634;
+  --sk-surface-card: rgba(24, 27, 36, 0.85);
+  
+  /* Borders */
+  --sk-border: #2d3245;
+  --sk-border-subtle: rgba(255, 255, 255, 0.08);
+  --sk-border-focus: #e5a93c;
+  
+  /* Typography */
+  --sk-text-primary: #f3f4f6;
+  --sk-text-secondary: #9ca3af;
+  --sk-text-muted: #6b7280;
+  
+  /* Accent Colors */
+  --sk-gold: #e5a93c;
+  --sk-gold-glow: rgba(229, 169, 60, 0.15);
+  --sk-gold-subtle: rgba(229, 169, 60, 0.08);
+  
+  --sk-emerald: #10b981;
+  --sk-emerald-glow: rgba(16, 185, 129, 0.15);
+  --sk-emerald-subtle: rgba(16, 185, 129, 0.08);
+  
+  --sk-amber: #f59e0b;
+  --sk-amber-glow: rgba(245, 158, 11, 0.15);
+  
+  --sk-rose: #f43f5e;
+  --sk-rose-glow: rgba(244, 63, 94, 0.15);
+  
+  --sk-purple: #a855f7;
+  --sk-purple-glow: rgba(168, 85, 247, 0.15);
+  
+  --sk-blue: #3b82f6;
+  --sk-blue-glow: rgba(59, 130, 246, 0.15);
+
+  /* Geometry & Shadows */
+  --sk-radius-sm: 6px;
+  --sk-radius-md: 10px;
+  --sk-radius-lg: 16px;
+  --sk-radius-full: 9999px;
+  --sk-shadow-card: 0 4px 20px rgba(0, 0, 0, 0.35);
+  --sk-shadow-popover: 0 10px 35px rgba(0, 0, 0, 0.65);
+  --sk-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+
+    /**
+ * Sree Krushna Marriage OS — Universal UI Primitives Styles
+ * Standard: STD-MOD-COMP-001 | Ruling: AC-DEC-2026-019
+ * Scope: Base layout, scroll-snap carousels, full-screen lightbox, steppers, and modals
+ */
+
+/* Responsive Base Container */
+.sk-primitive-container {
+  box-sizing: border-box;
+  font-family: var(--sk-font-sans);
+}
+
+/* 1. Universal Visual Carousel */
+.sk-carousel-shell {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--sk-radius-lg);
+  background: var(--sk-surface);
+  border: 1px solid var(--sk-border);
+}
+
+.sk-carousel-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.sk-carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.sk-carousel-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  position: relative;
+  min-height: 240px;
+}
+
+.sk-carousel-controls {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 12px;
+  pointer-events: none;
+}
+
+.sk-carousel-btn {
+  pointer-events: auto;
+  background: rgba(15, 17, 23, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--sk-border);
+  color: var(--sk-text-primary);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sk-carousel-btn:hover {
+  background: var(--sk-gold);
+  color: #000;
+  border-color: var(--sk-gold);
+}
+
+/* 2. Universal Lightbox Modal */
+.sk-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 12, 16, 0.88);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.sk-modal-backdrop.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.sk-modal-card {
+  background: var(--sk-surface-elevated);
+  border: 1px solid var(--sk-border);
+  border-radius: var(--sk-radius-lg);
+  box-shadow: var(--sk-shadow-popover);
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: auto;
+  position: relative;
+  padding: 24px;
+}
+
+/* 3. Universal Stepper Track */
+.sk-stepper-track {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 12px 0;
+  scrollbar-width: none;
+}
+
+.sk-stepper-track::-webkit-scrollbar {
+  display: none;
+}
+
+.sk-step-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--sk-surface);
+  border: 1px solid var(--sk-border);
+  border-radius: var(--sk-radius-full);
+  color: var(--sk-text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sk-step-pill.is-active {
+  background: var(--sk-gold-glow);
+  border-color: var(--sk-gold);
+  color: var(--sk-gold);
+}
+
+.sk-step-pill.is-locked {
+  border-color: var(--sk-emerald);
+  color: var(--sk-emerald);
+}
+
+/* 4. Tactile Feedback Toast */
+.sk-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(30px);
+  background: var(--sk-surface-elevated);
+  border: 1px solid var(--sk-gold);
+  color: var(--sk-text-primary);
+  padding: 10px 20px;
+  border-radius: var(--sk-radius-full);
+  box-shadow: var(--sk-shadow-popover);
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 100000;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sk-toast.is-visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+
+    /**
+ * Sree Krushna Marriage OS — Zoom/Pan & Option Intake Primitive Styles
+ * Standard: STD-MOD-COMP-001 | Ruling: AC-DEC-2026-022
+ * Scope: Floating zoom toolbar, micro-inspection badge, proof card, and intake modal
+ */
+
+/* Lightbox Micro-Inspection Stage */
+.sk-lightbox-card {
+  width: 95vw;
+  max-width: 1100px;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px;
+  box-sizing: border-box;
+}
+
+.sk-lightbox-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--sk-border);
+}
+
+.sk-lightbox-header-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sk-lightbox-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--sk-text-primary);
+}
+
+.sk-lightbox-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--sk-radius-full);
+  background: rgba(212, 175, 55, 0.12);
+  color: var(--sk-gold);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.sk-lightbox-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  margin-top: 12px;
+}
+
+.sk-lightbox-media-container {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  min-height: 300px;
+  background: #07090e;
+  border-radius: var(--sk-radius-md);
+  border: 1px solid var(--sk-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.sk-lightbox-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  pointer-events: auto;
+  user-select: none;
+}
+
+/* Floating Zoom/Pan Toolbar (Adapted from PIO UniversalViewer) */
+.sk-zoom-toolbar {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(15, 17, 23, 0.88);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--sk-border);
+  border-radius: var(--sk-radius-full);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 60;
+}
+
+.sk-zoom-btn {
+  background: transparent;
+  border: none;
+  color: var(--sk-text-primary);
+  font-size: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sk-zoom-btn:hover {
+  background: var(--sk-surface);
+  color: var(--sk-gold);
+}
+
+.sk-zoom-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--sk-gold);
+  min-width: 44px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  padding: 2px 6px;
+}
+
+.sk-lightbox-caption {
+  padding-top: 10px;
+  font-size: 13px;
+  color: var(--sk-text-secondary);
+}
+
+/* Option Intake Modal Styles */
+.sk-intake-card {
+  width: 95vw;
+  max-width: 580px;
+  padding: 20px;
+}
+
+.sk-intake-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.sk-intake-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--sk-text-primary);
+}
+
+.sk-intake-tabs {
+  display: flex;
+  gap: 12px;
+  border-bottom: 1px solid var(--sk-border);
+  margin-bottom: 16px;
+}
+
+.sk-intake-tab {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--sk-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sk-intake-tab.is-active {
+  color: var(--sk-gold);
+  border-bottom-color: var(--sk-gold);
+}
+
+.sk-intake-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--sk-text-secondary);
+  margin-bottom: 6px;
+}
+
+.sk-input-group {
+  display: flex;
+  gap: 8px;
+}
+
+.sk-intake-input, .sk-intake-select {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--sk-surface);
+  border: 1px solid var(--sk-border);
+  border-radius: var(--sk-radius-md);
+  color: var(--sk-text-primary);
+  font-size: 13px;
+  box-sizing: border-box;
+}
+
+.sk-intake-input:focus, .sk-intake-select:focus {
+  outline: none;
+  border-color: var(--sk-gold);
+}
+
+.sk-intake-hint {
+  display: block;
+  font-size: 11px;
+  color: var(--sk-text-tertiary, #94a3b8);
+  margin-top: 6px;
+}
+
+.sk-proof-preview-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: var(--sk-radius-md);
+  margin-top: 12px;
+}
+
+.sk-proof-thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--sk-radius-sm);
+  object-fit: cover;
+  border: 1px solid var(--sk-border);
+}
+
+.sk-proof-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sk-proof-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--sk-emerald);
+}
+
+.sk-proof-id {
+  font-size: 11px;
+  color: var(--sk-text-secondary);
+}
+
+.sk-dropzone {
+  border: 2px dashed var(--sk-border);
+  border-radius: var(--sk-radius-md);
+  padding: 24px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  background: var(--sk-surface);
+}
+
+.sk-dropzone-icon {
+  font-size: 28px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.sk-dropzone-text {
+  margin: 0;
+  font-size: 12px;
+  color: var(--sk-text-secondary);
+}
+
+.sk-file-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.sk-intake-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+@media (max-width: 480px) {
+  .sk-intake-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sk-intake-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  border-top: 1px solid var(--sk-border);
+  padding-top: 14px;
+}
+
+
+    /**
+ * Sree Krushna Marriage OS — Collaborative Comments Drawer Styles
+ * Standard: STD-MOD-COMP-001 | Ruling: AC-DEC-2026-021 / UI-DEC-2026-017
+ * Scope: Slide-over drawer, mobile bottom sheet, reactions bar, stakeholder filters, and composer
+ */
+
+/* Drawer Backdrop */
+.sk-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(8, 10, 15, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 100000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.sk-drawer-backdrop.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Slide-Over Drawer Shell (Desktop) */
+.sk-comments-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 440px;
+  max-width: 92vw;
+  height: 100vh;
+  background: var(--sk-surface-elevated, #131620);
+  border-left: 1px solid var(--sk-border, rgba(255, 255, 255, 0.12));
+  box-shadow: -10px 0 36px rgba(0, 0, 0, 0.55);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+.sk-drawer-backdrop.is-active .sk-comments-drawer {
+  transform: translateX(0);
+}
+
+/* Drawer Header */
+.sk-drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--sk-border, rgba(255, 255, 255, 0.1));
+}
+
+.sk-drawer-title-wrap {
+  flex: 1;
+  padding-right: 12px;
+}
+
+.sk-drawer-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.sk-drawer-opt-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--sk-radius-full, 9999px);
+  background: rgba(212, 175, 55, 0.15);
+  color: var(--sk-gold, #d4af37);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.sk-drawer-align-pill {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--sk-radius-full, 9999px);
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--sk-emerald, #10b981);
+}
+
+.sk-drawer-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--sk-text-primary, #ffffff);
+  line-height: 1.3;
+}
+
+.sk-drawer-sub {
+  margin: 3px 0 0;
+  font-size: 11px;
+  color: var(--sk-text-secondary, #94a3b8);
+}
+
+.sk-drawer-close-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--sk-border, rgba(255, 255, 255, 0.12));
+  color: var(--sk-text-secondary, #94a3b8);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sk-drawer-close-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+/* Quick Reactions Bar */
+.sk-reactions-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--sk-border, rgba(255, 255, 255, 0.08));
+}
+
+.sk-reactions-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--sk-text-secondary, #94a3b8);
+  white-space: nowrap;
+}
+
+.sk-reactions-group {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+}
+
+.sk-reaction-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--sk-surface, rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--sk-border, rgba(255, 255, 255, 0.1));
+  border-radius: 16px;
+  padding: 4px 10px;
+  font-size: 12px;
+  color: var(--sk-text-primary, #ffffff);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sk-reaction-btn:hover {
+  background: rgba(212, 175, 55, 0.12);
+  border-color: var(--sk-gold, #d4af37);
+  transform: translateY(-1px);
+}
+
+.sk-reaction-btn.user-reacted {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: var(--sk-gold, #d4af37);
+  color: var(--sk-gold, #d4af37);
+}
+
+/* Stakeholder Filter Strip */
+.sk-stakeholder-strip {
+  display: flex;
+  gap: 6px;
+  padding: 10px 20px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--sk-border, rgba(255, 255, 255, 0.06));
+}
+
+.sk-stakeholder-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.sk-role-pill {
+  background: transparent;
+  border: 1px solid var(--sk-border, rgba(255, 255, 255, 0.1));
+  border-radius: var(--sk-radius-full, 9999px);
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--sk-text-secondary, #94a3b8);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.sk-role-pill:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.sk-role-pill.is-active {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: var(--sk-gold, #d4af37);
+  color: var(--sk-gold, #d4af37);
+}
+
+/* Comments Stream */
+.sk-comments-stream {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sk-comment-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--sk-border, rgba(255, 255, 255, 0.08));
+  border-radius: var(--sk-radius-md, 8px);
+  padding: 12px 14px;
+  transition: background 0.2s ease;
+}
+
+.sk-comment-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.sk-comment-card.is-internal {
+  border-left: 3px solid #8b5cf6;
+  background: rgba(139, 92, 246, 0.04);
+}
+
+.sk-comment-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.sk-comment-author-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sk-comment-avatar {
+  font-size: 18px;
+}
+
+.sk-comment-author {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--sk-text-primary, #ffffff);
+}
+
+.sk-comment-role-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--sk-text-secondary, #94a3b8);
+}
+
+.sk-comment-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sk-comment-tier-tag {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(139, 92, 246, 0.15);
+  color: #a78bfa;
+}
+
+.sk-comment-time {
+  font-size: 10px;
+  color: var(--sk-text-tertiary, #64748b);
+}
+
+.sk-comment-text {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--sk-text-secondary, #cbd5e1);
+}
+
+/* Empty State */
+.sk-comments-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--sk-text-tertiary, #64748b);
+}
+
+.sk-comments-empty-icon {
+  font-size: 32px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Sticky Post Composer */
+.sk-composer-container {
+  padding: 14px 20px;
+  border-top: 1px solid var(--sk-border, rgba(255, 255, 255, 0.1));
+  background: rgba(10, 12, 18, 0.95);
+  backdrop-filter: blur(8px);
+}
+
+.sk-composer-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.sk-composer-role-select {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--sk-text-secondary, #94a3b8);
+}
+
+.sk-select-sm {
+  background: var(--sk-surface, #1e2230);
+  border: 1px solid var(--sk-border, rgba(255, 255, 255, 0.15));
+  border-radius: 6px;
+  color: #fff;
+  font-size: 11px;
+  padding: 3px 6px;
+}
+
+.sk-composer-tier-toggle label {
+  font-size: 11px;
+  color: #a78bfa;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.sk-composer-input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.sk-textarea-sm {
+  flex: 1;
+  background: var(--sk-surface, #1e2230);
+  border: 1px solid var(--sk-border, rgba(255, 255, 255, 0.15));
+  border-radius: 6px;
+  color: #fff;
+  font-size: 12px;
+  padding: 8px 10px;
+  resize: none;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.sk-textarea-sm:focus {
+  outline: none;
+  border-color: var(--sk-gold, #d4af37);
+}
+
+.sk-btn-post {
+  padding: 0 16px;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Mobile Responsive Bottom Sheet (< 768px) */
+@media (max-width: 767px) {
+  .sk-comments-drawer {
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 100%;
+    height: 85vh;
+    border-left: none;
+    border-top: 1px solid var(--sk-border, rgba(255, 255, 255, 0.15));
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    transform: translateY(100%);
+  }
+
+  .sk-drawer-backdrop.is-active .sk-comments-drawer {
+    transform: translateY(0);
+  }
+}
+
+
+    /* ==========================================================================
+       DECISION REGISTRY & EVENT STEPPER SCOPED CSS (INC-086 COMPLIANT)
+       All rules are prefixed with #decisionRegistryRoot, #drLightboxModal, or .dr-*
+       to ensure zero global cascade bleed when embedded into the main host app.
+       ========================================================================== */
+    :root {
+      --dr-bg: #0f1117;
+      --dr-surface: #181b24;
+      --dr-surface-elevated: #222634;
+      --dr-border: #2d3245;
+      --dr-border-focus: #e5a93c;
+      --dr-text-primary: #f3f4f6;
+      --dr-text-secondary: #9ca3af;
+      --dr-text-muted: #6b7280;
+      --dr-gold: #e5a93c;
+      --dr-gold-glow: rgba(229, 169, 60, 0.15);
+      --dr-gold-subtle: rgba(229, 169, 60, 0.08);
+      --dr-emerald: #10b981;
+      --dr-emerald-glow: rgba(16, 185, 129, 0.15);
+      --dr-amber: #f59e0b;
+      --dr-amber-glow: rgba(245, 158, 11, 0.15);
+      --dr-rose: #f43f5e;
+      --dr-rose-glow: rgba(244, 63, 94, 0.15);
+      --dr-purple: #a855f7;
+      --dr-purple-glow: rgba(168, 85, 247, 0.15);
+      --dr-blue: #3b82f6;
+      --dr-blue-glow: rgba(59, 130, 246, 0.15);
+      --dr-radius-sm: 6px;
+      --dr-radius-md: 10px;
+      --dr-radius-lg: 16px;
+      --dr-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+      --dr-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    /* ==========================================================================
+       DECISION REGISTRY & EVENT STEPPER SCOPED CSS (INC-086 COMPLIANT)
+       All rules are prefixed with #decisionRegistryRoot, #drLightboxModal, or .dr-*
+       to ensure zero global cascade bleed when embedded into the main host app.
+       ========================================================================== */
+    :root {
+      --dr-bg: #0f1117;
+      --dr-surface: #181b24;
+      --dr-surface-elevated: #222634;
+      --dr-border: #2d3245;
+      --dr-border-focus: #e5a93c;
+      --dr-text-primary: #f3f4f6;
+      --dr-text-secondary: #9ca3af;
+      --dr-text-muted: #6b7280;
+      --dr-gold: #e5a93c;
+      --dr-gold-glow: rgba(229, 169, 60, 0.15);
+      --dr-gold-subtle: rgba(229, 169, 60, 0.08);
+      --dr-emerald: #10b981;
+      --dr-emerald-glow: rgba(16, 185, 129, 0.15);
+      --dr-amber: #f59e0b;
+      --dr-amber-glow: rgba(245, 158, 11, 0.15);
+      --dr-rose: #f43f5e;
+      --dr-rose-glow: rgba(244, 63, 94, 0.15);
+      --dr-purple: #a855f7;
+      --dr-purple-glow: rgba(168, 85, 247, 0.15);
+      --dr-blue: #3b82f6;
+      --dr-blue-glow: rgba(59, 130, 246, 0.15);
+      --dr-radius-sm: 6px;
+      --dr-radius-md: 10px;
+      --dr-radius-lg: 16px;
+      --dr-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+      --dr-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    
+
+    
+
+    
+
     /* ==========================================================================
        DECISION REGISTRY & EVENT STEPPER SCOPED CSS (INC-086 COMPLIANT)
        All rules are prefixed with #decisionRegistryRoot, #drLightboxModal, or .dr-*
@@ -1651,15 +2662,18 @@
       <button class="dr-btn dr-btn-whatsapp" id="btnShareFamilyMode" title="Copy Family WhatsApp Link">
         <span>📱</span> Share with Family
       </button>
+      <button class="dr-btn dr-btn-primary" id="btnOpenOptionIntake" title="Add Option from Google Drive or Camera">
+        <span>➕</span> Add Option
+      </button>
       <button class="dr-btn" id="btnExportJson" title="Export current decisions state">
         <span>💾</span> Export JSON
       </button>
       <button class="dr-btn" id="btnPrintDossier" title="Print Executive Meeting Dossier">
         <span>🖨️</span> Print Dossier
       </button>
-      <a href="./decorator-cockpit.html" class="dr-btn dr-btn-primary" title="Open Decorator Negotiation Cockpit">
+      <button class="dr-btn dr-btn-primary" onclick="window.switchTab ? window.switchTab('tab-cockpit') : window.location.href='./#tab-cockpit'" title="Open Decorator Negotiation Cockpit">
         <span>🏛️</span> Open Cockpit
-      </a>
+      </button>
     </div>
   </header>
 
@@ -1797,9 +2811,18 @@
     <!-- Stage Viewport (Single Asset View) -->
     <div class="dr-lightbox-stage-container" id="modalSingleStage">
       <button class="dr-lightbox-nav-arrow prev" id="btnModalPrev">‹</button>
-      <img id="modalImg" class="dr-lightbox-view-asset" src="" alt="Decor Inspiration Plate">
+      <img id="modalImg" class="dr-lightbox-view-asset" src="" alt="Decor Inspiration Plate" draggable="false">
       <object id="modalSvgObject" class="dr-lightbox-view-asset" type="image/svg+xml" style="display: none; width: 90%; height: 50vh;"></object>
       <button class="dr-lightbox-nav-arrow next" id="btnModalNext">›</button>
+
+      <!-- Floating Micro-Inspection Toolbar (Adapted from PIO UniversalViewer) -->
+      <div class="sk-zoom-toolbar" id="skLightboxToolbar" role="toolbar" aria-label="Image zoom and pan controls">
+        <button type="button" class="sk-zoom-btn" id="skBtnZoomOut" title="Zoom Out (Ctrl+-)" aria-label="Zoom out">−</button>
+        <span class="sk-zoom-badge" id="skZoomBadge" title="Current zoom level">100%</span>
+        <button type="button" class="sk-zoom-btn" id="skBtnZoomIn" title="Zoom In (Ctrl++)" aria-label="Zoom in">+</button>
+        <button type="button" class="sk-zoom-btn" id="skBtnFit" title="Fit to Screen (0)" aria-label="Fit image to screen">⤢</button>
+        <button type="button" class="sk-zoom-btn" id="skBtnReset" title="Reset (R)" aria-label="Reset zoom and position">↺</button>
+      </div>
     </div>
 
     <!-- Comparison Viewport (Multi-Option View) -->
@@ -1840,10 +2863,1061 @@
 </div>
 
 <!-- Load Unified Data Layer -->
+
+<!-- Universal Option Intake Modal Primitive (Adapted from PIO ImageUploadWidget) -->
+<div class="sk-modal-backdrop" id="skOptionIntakeBackdrop" role="dialog" aria-modal="true" aria-labelledby="skOptionIntakeTitle">
+  <div class="sk-modal-card sk-intake-card">
+    <div class="sk-intake-header">
+      <h3 id="skOptionIntakeTitle" class="sk-intake-title">Add Shopping / Decor Option</h3>
+      <button type="button" class="sk-modal-close" id="skOptionIntakeClose" aria-label="Close modal">✕</button>
+    </div>
+
+    <!-- Tabbed Intake Selector -->
+    <div class="sk-intake-tabs" role="tablist">
+      <button type="button" class="sk-intake-tab is-active" id="skTabDriveLink" role="tab" aria-selected="true" data-tab="drive">📎 Google Drive Link</button>
+      <button type="button" class="sk-intake-tab" id="skTabDeviceUpload" role="tab" aria-selected="false" data-tab="device">📷 Device / Camera</button>
+    </div>
+
+    <div class="sk-intake-body">
+      <!-- Tab Pane 1: Drive Link -->
+      <div class="sk-tab-pane is-active" id="skPaneDrive">
+        <label class="sk-intake-label" for="skDriveUrlInput">Google Drive or Image URL</label>
+        <div class="sk-input-group">
+          <input type="url" class="sk-intake-input" id="skDriveUrlInput" placeholder="https://drive.google.com/file/d/..." autocomplete="off">
+          <button type="button" class="sk-btn sk-btn-secondary" id="skBtnVerifyDrive">Verify Link</button>
+        </div>
+        <small class="sk-intake-hint">Shared Google Drive links automatically render with high-res zero-CORS previews.</small>
+        
+        <!-- Live Proof Preview Card (Adapted from PIO ProofPreviewWidget) -->
+        <div class="sk-proof-preview-card" id="skDriveProofCard" style="display: none;">
+          <img id="skDriveProofImg" class="sk-proof-thumb" src="" alt="Thumbnail Preview">
+          <div class="sk-proof-info">
+            <span class="sk-proof-badge" id="skDriveProofBadge">✓ Valid Drive Asset</span>
+            <span class="sk-proof-id" id="skDriveFileId">ID: —</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Pane 2: Local Device / Camera -->
+      <div class="sk-tab-pane" id="skPaneDevice" style="display: none;">
+        <label class="sk-intake-label" for="skFileInput">Upload Photo or Open Camera</label>
+        <div class="sk-dropzone" id="skDropzone">
+          <span class="sk-dropzone-icon">📷</span>
+          <p class="sk-dropzone-text">Tap to take photo or drag & drop image here</p>
+          <input type="file" id="skFileInput" accept="image/*" class="sk-file-input">
+        </div>
+      </div>
+
+      <!-- Option Metadata Fields -->
+      <div class="sk-intake-grid">
+        <div class="sk-form-group">
+          <label class="sk-intake-label" for="skOptionTitle">Option Name / Description</label>
+          <input type="text" class="sk-intake-input" id="skOptionTitle" placeholder="e.g. Royal Maroon Silk Saree">
+        </div>
+        <div class="sk-form-group">
+          <label class="sk-intake-label" for="skOptionCategory">Category</label>
+          <select class="sk-intake-select" id="skOptionCategory">
+            <option value="saree">Saree & Attire</option>
+            <option value="kurta">Kurta & Pajama</option>
+            <option value="lehenga">Lehenga & Choli</option>
+            <option value="jewelry">Jewelry & Ornaments</option>
+            <option value="mandap">Mandap Decor</option>
+            <option value="stage">Stage Decor</option>
+            <option value="other">General / Other</option>
+          </select>
+        </div>
+        <div class="sk-form-group">
+          <label class="sk-intake-label" for="skOptionPrice">Estimated Price (₹)</label>
+          <input type="number" class="sk-intake-input" id="skOptionPrice" placeholder="e.g. 18500">
+        </div>
+        <div class="sk-form-group">
+          <label class="sk-intake-label" for="skOptionVendor">Vendor / Boutique</label>
+          <input type="text" class="sk-intake-input" id="skOptionVendor" placeholder="e.g. Utkalika, Bhubaneswar">
+        </div>
+      </div>
+    </div>
+
+    <div class="sk-intake-footer">
+      <button type="button" class="sk-btn sk-btn-secondary" id="skBtnCancelIntake">Cancel</button>
+      <button type="button" class="sk-btn sk-btn-primary" id="skBtnSubmitOption">Add Option to Review</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Universal Multi-Tier Collaborative Comments Drawer Primitive (STD-MOD-COMP-001 / AC-DEC-2026-021) -->
+<div class="sk-drawer-backdrop" id="skCommentsDrawerBackdrop" role="dialog" aria-modal="true" aria-labelledby="skCommentsDrawerTitle">
+  <div class="sk-comments-drawer" id="skCommentsDrawer">
+    
+    <!-- Drawer Header -->
+    <div class="sk-drawer-header">
+      <div class="sk-drawer-title-wrap">
+        <div class="sk-drawer-badge-row">
+          <span class="sk-drawer-opt-badge" id="skCommentsOptionBadge">OPT-01</span>
+          <span class="sk-drawer-align-pill" id="skCommentsAlignmentPill">✨ Open for Family Remarks</span>
+        </div>
+        <h3 class="sk-drawer-title" id="skCommentsDrawerTitle">Option Discussion</h3>
+        <p class="sk-drawer-sub" id="skCommentsDrawerSub">Bhubaneswar Shopping & Decor Review</p>
+      </div>
+      <button type="button" class="sk-drawer-close-btn" id="skBtnCloseComments" aria-label="Close discussion drawer">✕</button>
+    </div>
+
+    <!-- Quick Emoji Reaction Bar (AC-DEC-2026-021) -->
+    <div class="sk-reactions-bar">
+      <span class="sk-reactions-label">Quick Reactions:</span>
+      <div class="sk-reactions-group">
+        <button type="button" class="sk-reaction-btn" data-reaction="love" id="skReactionLove" title="Love it!">
+          <span>❤️</span> <strong class="count">0</strong>
+        </button>
+        <button type="button" class="sk-reaction-btn" data-reaction="approve" id="skReactionApprove" title="Looks great, approved!">
+          <span>👍</span> <strong class="count">0</strong>
+        </button>
+        <button type="button" class="sk-reaction-btn" data-reaction="doubt" id="skReactionDoubt" title="Have questions or doubts">
+          <span>🤔</span> <strong class="count">0</strong>
+        </button>
+        <button type="button" class="sk-reaction-btn" data-reaction="blocker" id="skReactionBlocker" title="Concern / Blocker">
+          <span>🚫</span> <strong class="count">0</strong>
+        </button>
+      </div>
+    </div>
+
+    <!-- Stakeholder Perspective Filter Strip -->
+    <div class="sk-stakeholder-strip" id="skStakeholderFilters">
+      <button type="button" class="sk-role-pill is-active" data-role="all">All Opinions (<span id="skCountAll">0</span>)</button>
+      <button type="button" class="sk-role-pill" data-role="bride">👰 Bride</button>
+      <button type="button" class="sk-role-pill" data-role="sisters">👭 Sisters</button>
+      <button type="button" class="sk-role-pill" data-role="inlaws">🎁 In-Laws</button>
+      <button type="button" class="sk-role-pill" data-role="elders">🪔 Elders</button>
+      <button type="button" class="sk-role-pill" data-role="host">👑 Host/Groom</button>
+    </div>
+
+    <!-- Comments & Remarks Stream -->
+    <div class="sk-comments-stream" id="skCommentsStream">
+      <!-- Injected dynamically by comments_engine.js -->
+    </div>
+
+    <!-- Sticky Post Composer (Tier 1 vs Tier 2 Visibility) -->
+    <div class="sk-composer-container">
+      <div class="sk-composer-controls">
+        <div class="sk-composer-role-select">
+          <label for="skCommentRoleSelect">Posting as:</label>
+          <select id="skCommentRoleSelect" class="sk-select-sm">
+            <option value="bride">👰 Bride (Sree)</option>
+            <option value="sisters" selected>👭 Sister (Family)</option>
+            <option value="inlaws">🎁 In-Laws (Bride Side)</option>
+            <option value="elders">🪔 Elder (Advisory)</option>
+            <option value="host">👑 Groom / Executive Host</option>
+          </select>
+        </div>
+        <div class="sk-composer-tier-toggle">
+          <label title="Host Internal is only visible to the groom and parents; Family Public is visible to everyone.">
+            <input type="checkbox" id="skCommentIsInternal">
+            <span>🔒 Host Internal</span>
+          </label>
+        </div>
+      </div>
+      <div class="sk-composer-input-row">
+        <textarea id="skCommentInput" class="sk-textarea-sm" rows="2" placeholder="Share your opinion, suggestion, or question on this option..."></textarea>
+        <button type="button" id="skBtnPostComment" class="sk-btn sk-btn-primary sk-btn-post">
+          <span>💬</span> Post
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- Embedded Data Layer -->
 <script src="./js/decision-registry-data.js"></script>
 
+<!-- Application Logic -->
 <script>
-  (function() {
+/**
+ * Sree Krushna Marriage OS — Drive Normalizer & Zero-CORS CDN Engine
+ * Standard: STD-MOD-COMP-001 | Ruling: AC-DEC-2026-022
+ * Adapted from: PIOperationsMgmt_Firebase UniversalViewer & ImageUploadWidget
+ * Scope: Extract Google Drive IDs, build high-speed zero-CORS CDN URLs, and manage LRU cache.
+ */
+
+(function(global) {
+  'use strict';
+
+  // Static LRU Cache for resolved Drive image metadata
+  class DriveLRUCache {
+    constructor(maxSize = 20) {
+      this.maxSize = maxSize;
+      this.cache = new Map();
+    }
+
+    get(key) {
+      if (!this.cache.has(key)) return null;
+      const val = this.cache.get(key);
+      this.cache.delete(key);
+      this.cache.set(key, val);
+      return val;
+    }
+
+    set(key, value) {
+      if (this.cache.has(key)) {
+        this.cache.delete(key);
+      } else if (this.cache.size >= this.maxSize) {
+        const oldestKey = this.cache.keys().next().value;
+        this.cache.delete(oldestKey);
+      }
+      this.cache.set(key, value);
+    }
+
+    has(key) {
+      return this.cache.has(key);
+    }
+
+    clear() {
+      this.cache.clear();
+    }
+
+    get size() {
+      return this.cache.size;
+    }
+  }
+
+  const driveCache = new DriveLRUCache(20);
+
+  const DriveNormalizer = {
+    cache: driveCache,
+
+    /**
+     * Regex patterns for Google Drive IDs (sourced from PIO UniversalViewer)
+     */
+    PATTERNS: [
+      /\/file\/d\/([a-zA-Z0-9_-]{25,})/,
+      /id=([a-zA-Z0-9_-]{25,})/,
+      /\/open\?id=([a-zA-Z0-9_-]{25,})/,
+      /drive\.google\.com.*\/([a-zA-Z0-9_-]{25,})/
+    ],
+
+    /**
+     * Extract Drive File ID from any Google Drive link or return raw ID
+     * @param {string} url 
+     * @returns {string|null}
+     */
+    extractDriveId: function(url) {
+      if (!url || typeof url !== 'string') return null;
+      const trimmed = url.trim();
+      if (/^[-\w]{25,}$/.test(trimmed)) return trimmed;
+
+      for (const pattern of this.PATTERNS) {
+        const match = trimmed.match(pattern);
+        if (match && match[1]) return match[1];
+      }
+      return null;
+    },
+
+    /**
+     * Test if a given string or URL is a Google Drive reference
+     * @param {string} url 
+     * @returns {boolean}
+     */
+    isDriveUrl: function(url) {
+      if (!url || typeof url !== 'string') return false;
+      return url.includes('drive.google.com') ||
+             url.includes('docs.google.com') ||
+             /^[-\w]{25,}$/.test(url.trim());
+    },
+
+    /**
+     * Tier 1: Official Zero-CORS Google Thumbnail CDN endpoint with arbitrary width
+     * @param {string} driveId 
+     * @param {number} [width=1200] 
+     * @returns {string}
+     */
+    getThumbnailUrl: function(driveId, width = 1200) {
+      return `https://drive.google.com/thumbnail?id=${encodeURIComponent(driveId)}&sz=w${width}`;
+    },
+
+    /**
+     * Tier 2: Direct High-Speed Usercontent CDN failover
+     * @param {string} driveId 
+     * @returns {string}
+     */
+    getDirectCdnUrl: function(driveId) {
+      return `https://lh3.googleusercontent.com/d/${encodeURIComponent(driveId)}`;
+    },
+
+    /**
+     * Tier 3: Standard Iframe Preview URL for PDFs or documents
+     * @param {string} driveId 
+     * @returns {string}
+     */
+    getPreviewUrl: function(driveId) {
+      return `https://drive.google.com/file/d/${encodeURIComponent(driveId)}/preview`;
+    },
+
+    /**
+     * Direct browser viewing URL (external fallback)
+     * @param {string} driveId 
+     * @returns {string}
+     */
+    getViewUrl: function(driveId) {
+      return `https://drive.google.com/file/d/${encodeURIComponent(driveId)}/view`;
+    },
+
+    /**
+     * Resolve any URL into normalized asset descriptor with zero-CORS CDN URLs
+     * @param {string} url 
+     * @param {Object} [options]
+     * @param {number} [options.cardWidth=600]
+     * @param {number} [options.zoomWidth=1600]
+     * @returns {Object}
+     */
+    resolveAsset: function(url, options = {}) {
+      if (!url) return { isDrive: false, url: '' };
+
+      const cardWidth = options.cardWidth || 600;
+      const zoomWidth = options.zoomWidth || 1600;
+
+      const driveId = this.extractDriveId(url);
+      if (!driveId) {
+        return {
+          isDrive: false,
+          driveId: null,
+          url: url,
+          cardThumbnail: url,
+          zoomUrl: url
+        };
+      }
+
+      // Check LRU cache
+      const cached = this.cache.get(driveId);
+      if (cached) return cached;
+
+      const result = {
+        isDrive: true,
+        driveId: driveId,
+        url: url,
+        cardThumbnail: this.getThumbnailUrl(driveId, cardWidth),
+        zoomUrl: this.getThumbnailUrl(driveId, zoomWidth),
+        cdnUrl: this.getDirectCdnUrl(driveId),
+        previewUrl: this.getPreviewUrl(driveId),
+        viewUrl: this.getViewUrl(driveId)
+      };
+
+      this.cache.set(driveId, result);
+      return result;
+    }
+  };
+
+  global.SKDriveNormalizer = DriveNormalizer;
+})(typeof window !== 'undefined' ? window : this);
+
+
+/**
+ * Sree Krushna Marriage OS — Modular Zoom & Pan Engine
+ * Standard: STD-MOD-COMP-001 | Ruling: AC-DEC-2026-022
+ * Adapted from: PIOperationsMgmt_Firebase UniversalViewer v2.0
+ * Scope: High-res fabric & jewelry micro-inspection with mousewheel, drag-to-pan, and mobile pinch-to-zoom.
+ */
+
+(function(global) {
+  'use strict';
+
+  class ZoomPanEngine {
+    constructor(targetElement, options = {}) {
+      this.target = typeof targetElement === 'string' ? document.querySelector(targetElement) : targetElement;
+      this.container = this.target ? this.target.parentElement : null;
+      
+      this.options = Object.assign({
+        minScale: 1,
+        maxScale: 5,
+        step: 0.3,
+        onTransformChange: null
+      }, options);
+
+      this.scale = 1;
+      this.pointX = 0;
+      this.pointY = 0;
+      this.panning = false;
+      this.startX = 0;
+      this.startY = 0;
+
+      // Touch pinch state
+      this.initialPinchDistance = 0;
+      this.initialScaleOnPinch = 1;
+
+      // Bound handlers for cleanup
+      this._onMouseDown = this._handleMouseDown.bind(this);
+      this._onMouseMove = this._handleMouseMove.bind(this);
+      this._onMouseUp = this._handleMouseUp.bind(this);
+      this._onWheel = this._handleWheel.bind(this);
+      this._onTouchStart = this._handleTouchStart.bind(this);
+      this._onTouchMove = this._handleTouchMove.bind(this);
+      this._onTouchEnd = this._handleTouchEnd.bind(this);
+      this._onKeyDown = this._handleKeyDown.bind(this);
+
+      if (this.target && this.container) {
+        this.init();
+      }
+    }
+
+    init() {
+      this.container.style.overflow = 'hidden';
+      this.container.style.position = 'relative';
+      this.container.style.cursor = 'grab';
+      this.target.style.transformOrigin = 'center center';
+      this.target.style.transition = 'transform 0.05s ease-out';
+      this.target.style.userSelect = 'none';
+
+      // Mouse & Wheel Listeners
+      this.container.addEventListener('mousedown', this._onMouseDown);
+      window.addEventListener('mousemove', this._onMouseMove);
+      window.addEventListener('mouseup', this._onMouseUp);
+      this.container.addEventListener('wheel', this._onWheel, { passive: false });
+
+      // Mobile Touch Listeners
+      this.container.addEventListener('touchstart', this._onTouchStart, { passive: false });
+      this.container.addEventListener('touchmove', this._onTouchMove, { passive: false });
+      this.container.addEventListener('touchend', this._onTouchEnd);
+
+      // Keyboard shortcuts
+      window.addEventListener('keydown', this._onKeyDown);
+      this.updateTransform();
+    }
+
+    updateTransform() {
+      if (!this.target) return;
+      this.target.style.transform = `translate(${this.pointX}px, ${this.pointY}px) scale(${this.scale})`;
+      if (this.container) {
+        this.container.style.cursor = this.panning ? 'grabbing' : (this.scale > 1 ? 'grab' : 'default');
+      }
+      if (typeof this.options.onTransformChange === 'function') {
+        this.options.onTransformChange({
+          scale: this.scale,
+          pointX: this.pointX,
+          pointY: this.pointY,
+          zoomPercent: Math.round(this.scale * 100)
+        });
+      }
+    }
+
+    zoomIn() {
+      this.scale = Math.min(this.options.maxScale, +(this.scale + this.options.step).toFixed(2));
+      this.updateTransform();
+    }
+
+    zoomOut() {
+      this.scale = Math.max(this.options.minScale, +(this.scale - this.options.step).toFixed(2));
+      if (this.scale <= 1) {
+        this.pointX = 0;
+        this.pointY = 0;
+      }
+      this.updateTransform();
+    }
+
+    fit() {
+      this.scale = 1;
+      this.pointX = 0;
+      this.pointY = 0;
+      this.updateTransform();
+    }
+
+    reset() {
+      this.fit();
+    }
+
+    _handleMouseDown(e) {
+      if (e.button !== 0) return; // Only primary mouse button
+      e.preventDefault();
+      this.panning = true;
+      this.startX = e.clientX - this.pointX;
+      this.startY = e.clientY - this.pointY;
+      if (this.container) this.container.style.cursor = 'grabbing';
+    }
+
+    _handleMouseMove(e) {
+      if (!this.panning) return;
+      e.preventDefault();
+      this.pointX = e.clientX - this.startX;
+      this.pointY = e.clientY - this.startY;
+      this.updateTransform();
+    }
+
+    _handleMouseUp() {
+      if (this.panning) {
+        this.panning = false;
+        if (this.container) this.container.style.cursor = this.scale > 1 ? 'grab' : 'default';
+      }
+    }
+
+    _handleWheel(e) {
+      e.preventDefault();
+      const delta = e.deltaY < 0 ? this.options.step : -this.options.step;
+      const newScale = Math.min(this.options.maxScale, Math.max(this.options.minScale, +(this.scale + delta).toFixed(2)));
+      
+      if (newScale <= 1) {
+        this.pointX = 0;
+        this.pointY = 0;
+      }
+      this.scale = newScale;
+      this.updateTransform();
+    }
+
+    _getTouchDistance(touch1, touch2) {
+      const dx = touch1.clientX - touch2.clientX;
+      const dy = touch1.clientY - touch2.clientY;
+      return Math.hypot(dx, dy);
+    }
+
+    _handleTouchStart(e) {
+      if (e.touches.length === 1) {
+        this.panning = true;
+        this.startX = e.touches[0].clientX - this.pointX;
+        this.startY = e.touches[0].clientY - this.pointY;
+      } else if (e.touches.length === 2) {
+        this.panning = false;
+        this.initialPinchDistance = this._getTouchDistance(e.touches[0], e.touches[1]);
+        this.initialScaleOnPinch = this.scale;
+      }
+    }
+
+    _handleTouchMove(e) {
+      if (e.touches.length === 1 && this.panning && this.scale > 1) {
+        e.preventDefault();
+        this.pointX = e.touches[0].clientX - this.startX;
+        this.pointY = e.touches[0].clientY - this.startY;
+        this.updateTransform();
+      } else if (e.touches.length === 2 && this.initialPinchDistance > 0) {
+        e.preventDefault();
+        const currentDist = this._getTouchDistance(e.touches[0], e.touches[1]);
+        const factor = currentDist / this.initialPinchDistance;
+        const newScale = Math.min(this.options.maxScale, Math.max(this.options.minScale, +(this.initialScaleOnPinch * factor).toFixed(2)));
+        this.scale = newScale;
+        if (this.scale <= 1) {
+          this.pointX = 0;
+          this.pointY = 0;
+        }
+        this.updateTransform();
+      }
+    }
+
+    _handleTouchEnd(e) {
+      if (e.touches.length === 0) {
+        this.panning = false;
+        this.initialPinchDistance = 0;
+      }
+    }
+
+    _handleKeyDown(e) {
+      if (e.ctrlKey || e.metaKey) {
+        if (e.key === '=' || e.key === '+') {
+          e.preventDefault();
+          this.zoomIn();
+        } else if (e.key === '-') {
+          e.preventDefault();
+          this.zoomOut();
+        } else if (e.key === '0') {
+          e.preventDefault();
+          this.fit();
+        }
+      } else if ((e.key === 'r' || e.key === 'R') && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+        this.reset();
+      }
+    }
+
+    destroy() {
+      if (this.container) {
+        this.container.removeEventListener('mousedown', this._onMouseDown);
+        this.container.removeEventListener('wheel', this._onWheel);
+        this.container.removeEventListener('touchstart', this._onTouchStart);
+        this.container.removeEventListener('touchmove', this._onTouchMove);
+        this.container.removeEventListener('touchend', this._onTouchEnd);
+      }
+      window.removeEventListener('mousemove', this._onMouseMove);
+      window.removeEventListener('mouseup', this._onMouseUp);
+      window.removeEventListener('keydown', this._onKeyDown);
+    }
+  }
+
+  global.SKZoomPanEngine = ZoomPanEngine;
+})(typeof window !== 'undefined' ? window : this);
+
+
+/**
+ * Sree Krushna Marriage OS — Collaborative Comments & Opinions Engine
+ * Standard: STD-MOD-COMP-001 | Ruling: AC-DEC-2026-021 / UI-DEC-2026-017
+ * Scope: Multi-tier comments, emoji reactions, stakeholder filtering, and persistent discussion threads.
+ */
+
+(function(global) {
+  'use strict';
+
+  const STORAGE_KEY_COMMENTS = 'sk_option_comments_v1';
+  const STORAGE_KEY_REACTIONS = 'sk_option_reactions_v1';
+
+  // Seed sample comments for realistic family review out-of-the-box
+  const SEED_COMMENTS = {
+    'PLATE-01': [
+      {
+        id: 'c-01',
+        author: 'Sree (Bride)',
+        role: 'bride',
+        roleIcon: '👰',
+        text: 'The layered lotus petals and central brass kalasam are breathtaking! Can we ensure genuine bell metal vilakku lamps?',
+        timestamp: 'Today at 09:15 AM',
+        isInternal: false
+      },
+      {
+        id: 'c-02',
+        author: 'Sunita (Sister)',
+        role: 'sisters',
+        roleIcon: '👭',
+        text: 'Looks exceptionally grand for photography! Make sure the havan pit has high smoke exhaust so eyes don’t sting during the 2-hour Vedic purnahuti.',
+        timestamp: 'Today at 10:40 AM',
+        isInternal: false
+      },
+      {
+        id: 'c-03',
+        author: 'Krushna (Host/Groom)',
+        role: 'host',
+        roleIcon: '👑',
+        text: 'Tentage contractor verified that the 24ft lotus dome easily fits inside the Marquee hall with 4ft aisle clearance.',
+        timestamp: 'Today at 11:05 AM',
+        isInternal: true
+      }
+    ],
+    'cluster_vivaha_pata': [
+      {
+        id: 'c-10',
+        author: 'Sree (Bride)',
+        role: 'bride',
+        roleIcon: '👰',
+        text: 'The crimson red Berhampuri Patta with temple border is timeless. Utkalika confirmed they have 3 fresh handloom pieces ready for our Day 1 visit.',
+        timestamp: 'Yesterday at 04:30 PM',
+        isInternal: false
+      },
+      {
+        id: 'c-11',
+        author: 'Aparna (Sister)',
+        role: 'sisters',
+        roleIcon: '👭',
+        text: 'Let us definitely pair it with a contrast mustard-gold pure raw silk blouse piece. Master Canteen weavers have antique zari options.',
+        timestamp: 'Yesterday at 05:12 PM',
+        isInternal: false
+      },
+      {
+        id: 'c-12',
+        author: 'Patra Family (In-Laws)',
+        role: 'inlaws',
+        roleIcon: '🎁',
+        text: 'Traditional Berhampuri silk is deeply auspicious for Telugu and Odia Vedic rites. We fully approve Option A.',
+        timestamp: 'Yesterday at 06:45 PM',
+        isInternal: false
+      }
+    ]
+  };
+
+  const SEED_REACTIONS = {
+    'PLATE-01': { love: 4, approve: 2, doubt: 1, blocker: 0, userReactions: ['love'] },
+    'cluster_vivaha_pata': { love: 5, approve: 3, doubt: 0, blocker: 0, userReactions: ['love', 'approve'] }
+  };
+
+  class CommentsEngine {
+    constructor() {
+      this.comments = this._loadData(STORAGE_KEY_COMMENTS, SEED_COMMENTS);
+      this.reactions = this._loadData(STORAGE_KEY_REACTIONS, SEED_REACTIONS);
+      this.activeOptionId = null;
+      this.activeFilterRole = 'all';
+
+      this._initDomListeners();
+    }
+
+    _loadData(key, seed) {
+      try {
+        const raw = localStorage.getItem(key);
+        if (raw) return JSON.parse(raw);
+      } catch (e) {
+        console.warn('Storage read error for', key, e);
+      }
+      return Object.assign({}, seed);
+    }
+
+    _saveData(key, data) {
+      try {
+        localStorage.setItem(key, JSON.stringify(data));
+      } catch (e) {
+        console.warn('Storage write error for', key, e);
+      }
+    }
+
+    _initDomListeners() {
+      if (typeof document === 'undefined') return;
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const backdrop = document.getElementById('skCommentsDrawerBackdrop');
+        const closeBtn = document.getElementById('skBtnCloseComments');
+        const postBtn = document.getElementById('skBtnPostComment');
+        const filtersWrap = document.getElementById('skStakeholderFilters');
+
+        if (closeBtn) closeBtn.onclick = () => this.closeDrawer();
+        if (backdrop) {
+          backdrop.onclick = (e) => {
+            if (e.target === backdrop) this.closeDrawer();
+          };
+        }
+
+        if (postBtn) {
+          postBtn.onclick = () => this._handlePostSubmit();
+        }
+
+        // Reaction buttons
+        ['love', 'approve', 'doubt', 'blocker'].forEach(type => {
+          const btn = document.querySelector(`.sk-reaction-btn[data-reaction="${type}"]`);
+          if (btn) {
+            btn.onclick = () => this._handleReactionClick(type);
+          }
+        });
+
+        // Filter pills
+        if (filtersWrap) {
+          filtersWrap.addEventListener('click', (e) => {
+            const pill = e.target.closest('.sk-role-pill');
+            if (!pill) return;
+            filtersWrap.querySelectorAll('.sk-role-pill').forEach(p => p.classList.remove('is-active'));
+            pill.classList.add('is-active');
+            this.activeFilterRole = pill.dataset.role || 'all';
+            this.renderCommentsList();
+          });
+        }
+      });
+    }
+
+    openDrawer(optionId, meta = {}) {
+      this.activeOptionId = optionId;
+      this.activeFilterRole = 'all';
+
+      const backdrop = document.getElementById('skCommentsDrawerBackdrop');
+      if (!backdrop) return;
+
+      const titleEl = document.getElementById('skCommentsDrawerTitle');
+      const badgeEl = document.getElementById('skCommentsOptionBadge');
+      const subEl = document.getElementById('skCommentsDrawerSub');
+      const pillEl = document.getElementById('skCommentsAlignmentPill');
+
+      if (titleEl) titleEl.textContent = meta.title || `Option ${optionId}`;
+      if (badgeEl) badgeEl.textContent = meta.badge || optionId;
+      if (subEl) subEl.textContent = meta.sub || 'Family Consensus & Remarks';
+      if (pillEl) pillEl.textContent = meta.alignment || '✨ Open for Remarks';
+
+      // Reset filters
+      const filtersWrap = document.getElementById('skStakeholderFilters');
+      if (filtersWrap) {
+        filtersWrap.querySelectorAll('.sk-role-pill').forEach(p => {
+          p.classList.toggle('is-active', p.dataset.role === 'all');
+        });
+      }
+
+      this.renderReactions();
+      this.renderCommentsList();
+      backdrop.classList.add('is-active');
+    }
+
+    closeDrawer() {
+      const backdrop = document.getElementById('skCommentsDrawerBackdrop');
+      if (backdrop) backdrop.classList.remove('is-active');
+    }
+
+    renderReactions() {
+      if (!this.activeOptionId) return;
+      const data = this.reactions[this.activeOptionId] || { love: 0, approve: 0, doubt: 0, blocker: 0, userReactions: [] };
+
+      ['love', 'approve', 'doubt', 'blocker'].forEach(type => {
+        const btn = document.querySelector(`.sk-reaction-btn[data-reaction="${type}"]`);
+        if (!btn) return;
+        const countEl = btn.querySelector('.count');
+        if (countEl) countEl.textContent = data[type] || 0;
+        const hasReacted = (data.userReactions || []).includes(type);
+        btn.classList.toggle('user-reacted', hasReacted);
+      });
+    }
+
+    _handleReactionClick(type) {
+      if (!this.activeOptionId) return;
+      if (!this.reactions[this.activeOptionId]) {
+        this.reactions[this.activeOptionId] = { love: 0, approve: 0, doubt: 0, blocker: 0, userReactions: [] };
+      }
+      const data = this.reactions[this.activeOptionId];
+      if (!data.userReactions) data.userReactions = [];
+
+      const idx = data.userReactions.indexOf(type);
+      if (idx >= 0) {
+        data.userReactions.splice(idx, 1);
+        data[type] = Math.max(0, (data[type] || 1) - 1);
+      } else {
+        data.userReactions.push(type);
+        data[type] = (data[type] || 0) + 1;
+      }
+
+      this._saveData(STORAGE_KEY_REACTIONS, this.reactions);
+      this.renderReactions();
+    }
+
+    renderCommentsList() {
+      const stream = document.getElementById('skCommentsStream');
+      if (!stream) return;
+
+      const list = this.comments[this.activeOptionId] || [];
+      const filtered = (this.activeFilterRole === 'all')
+        ? list
+        : list.filter(c => c.role === this.activeFilterRole);
+
+      // Update total count
+      const countEl = document.getElementById('skCountAll');
+      if (countEl) countEl.textContent = list.length;
+
+      if (filtered.length === 0) {
+        stream.innerHTML = `
+          <div class="sk-comments-empty">
+            <span class="sk-comments-empty-icon">💭</span>
+            <p>No opinions posted yet under this filter.</p>
+            <p style="font-size: 11px;">Be the first to share your recommendation!</p>
+          </div>
+        `;
+        return;
+      }
+
+      stream.innerHTML = filtered.map(c => `
+        <div class="sk-comment-card ${c.isInternal ? 'is-internal' : ''}">
+          <div class="sk-comment-top">
+            <div class="sk-comment-author-wrap">
+              <span class="sk-comment-avatar">${c.roleIcon || '👤'}</span>
+              <span class="sk-comment-author">${c.author}</span>
+              <span class="sk-comment-role-badge">${c.role ? c.role.toUpperCase() : 'FAMILY'}</span>
+            </div>
+            <div class="sk-comment-meta">
+              ${c.isInternal ? '<span class="sk-comment-tier-tag">🔒 HOST ONLY</span>' : ''}
+              <span class="sk-comment-time">${c.timestamp}</span>
+            </div>
+          </div>
+          <p class="sk-comment-text">${c.text}</p>
+        </div>
+      `).join('');
+    }
+
+    _handlePostSubmit() {
+      const input = document.getElementById('skCommentInput');
+      const roleSelect = document.getElementById('skCommentRoleSelect');
+      const internalCheck = document.getElementById('skCommentIsInternal');
+      if (!input || !this.activeOptionId) return;
+
+      const text = input.value.trim();
+      if (!text) return;
+
+      const role = roleSelect ? roleSelect.value : 'sisters';
+      const isInternal = internalCheck ? internalCheck.checked : false;
+
+      const roleMap = {
+        bride: { label: 'Sree (Bride)', icon: '👰' },
+        sisters: { label: 'Sister (Family)', icon: '👭' },
+        inlaws: { label: 'Patra Family (In-Laws)', icon: '🎁' },
+        elders: { label: 'Elder (Mama/Mami)', icon: '🪔' },
+        host: { label: 'Krushna (Host/Groom)', icon: '👑' }
+      };
+
+      const authorInfo = roleMap[role] || { label: 'Family Member', icon: '👤' };
+
+      const newComment = {
+        id: 'c-' + Date.now(),
+        author: authorInfo.label,
+        role: role,
+        roleIcon: authorInfo.icon,
+        text: text,
+        timestamp: 'Just now',
+        isInternal: isInternal
+      };
+
+      if (!this.comments[this.activeOptionId]) {
+        this.comments[this.activeOptionId] = [];
+      }
+      this.comments[this.activeOptionId].push(newComment);
+      this._saveData(STORAGE_KEY_COMMENTS, this.comments);
+
+      input.value = '';
+      this.renderCommentsList();
+
+      if (global.SKPrimitives && global.SKPrimitives.showToast) {
+        global.SKPrimitives.showToast('Opinion posted and saved!', 2000);
+      }
+    }
+
+    getCommentCount(optionId) {
+      const list = this.comments[optionId] || [];
+      return list.length;
+    }
+  }
+
+  global.SKCommentsEngine = new CommentsEngine();
+  global.openCommentsDrawer = function(optionId, meta) {
+    if (global.SKCommentsEngine) {
+      global.SKCommentsEngine.openDrawer(optionId, meta);
+    }
+  };
+})(typeof window !== 'undefined' ? window : this);
+
+
+/**
+ * Sree Krushna Marriage OS — Universal UI Primitives Core Helper Library
+ * Standard: STD-MOD-COMP-001 | Ruling: AC-DEC-2026-019 / AC-DEC-2026-022
+ * Scope: Zero-dependency DOM helpers for carousels, modals, toasts, Drive CDN normalization, and zoom/pan.
+ */
+
+(function(global) {
+  'use strict';
+
+  const SKPrimitives = {
+    /**
+     * Display a transient tactile toast message
+     * @param {string} msg - The message to display
+     * @param {number} duration - Milliseconds to stay visible (default: 2500)
+     */
+    showToast: function(msg, duration = 2500) {
+      const toastEl = document.getElementById('skGlobalToast') || document.querySelector('.sk-toast');
+      const textEl = document.getElementById('skToastMessage') || (toastEl ? toastEl.querySelector('.sk-toast-text') : null);
+      if (!toastEl) return;
+      
+      if (textEl) textEl.textContent = msg;
+      else toastEl.textContent = msg;
+      
+      toastEl.classList.add('is-visible');
+      if (toastEl._timer) clearTimeout(toastEl._timer);
+      toastEl._timer = setTimeout(function() {
+        toastEl.classList.remove('is-visible');
+      }, duration);
+    },
+
+    /**
+     * Safely copy text to clipboard with modern fallback
+     * @param {string} text - Text to copy
+     * @returns {Promise<boolean>}
+     */
+    copyToClipboard: async function(text) {
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } else {
+          const textArea = document.createElement('textarea');
+          textArea.value = text;
+          textArea.style.position = 'fixed';
+          textArea.style.left = '-999999px';
+          document.body.appendChild(textArea);
+          textArea.focus();
+          textArea.select();
+          const successful = document.execCommand('copy');
+          document.body.removeChild(textArea);
+          return successful;
+        }
+      } catch (err) {
+        console.error('Failed to copy to clipboard:', err);
+        return false;
+      }
+    },
+
+    /**
+     * Bind basic modal open/close accessibility triggers
+     * @param {HTMLElement|string} modalElement - Backdrop element or selector
+     * @param {Function} [onCloseCallback]
+     */
+    initModal: function(modalElement, onCloseCallback) {
+      const el = typeof modalElement === 'string' ? document.querySelector(modalElement) : modalElement;
+      if (!el) return;
+      
+      el.addEventListener('click', function(e) {
+        if (e.target === el || e.target.classList.contains('sk-modal-close') || e.target.closest('.sk-modal-close')) {
+          el.classList.remove('is-active');
+          if (typeof onCloseCallback === 'function') onCloseCallback();
+        }
+      });
+      
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && el.classList.contains('is-active')) {
+          el.classList.remove('is-active');
+          if (typeof onCloseCallback === 'function') onCloseCallback();
+        }
+      });
+    },
+
+    /**
+     * Bind Zoom/Pan Engine to a Lightbox Image and Toolbar
+     * @param {HTMLElement|string} imgElement 
+     * @param {Object} [toolbarSelectors]
+     * @returns {Object|null}
+     */
+    initLightboxZoom: function(imgElement, toolbarSelectors = {}) {
+      const img = typeof imgElement === 'string' ? document.querySelector(imgElement) : imgElement;
+      if (!img || !global.SKZoomPanEngine) return null;
+
+      const badge = document.querySelector(toolbarSelectors.badge || '#skZoomBadge');
+      
+      const engine = new global.SKZoomPanEngine(img, {
+        onTransformChange: function(state) {
+          if (badge) badge.textContent = state.zoomPercent + '%';
+        }
+      });
+
+      const btnZoomIn = document.querySelector(toolbarSelectors.zoomIn || '#skBtnZoomIn');
+      const btnZoomOut = document.querySelector(toolbarSelectors.zoomOut || '#skBtnZoomOut');
+      const btnFit = document.querySelector(toolbarSelectors.fit || '#skBtnFit');
+      const btnReset = document.querySelector(toolbarSelectors.reset || '#skBtnReset');
+
+      if (btnZoomIn) btnZoomIn.onclick = () => engine.zoomIn();
+      if (btnZoomOut) btnZoomOut.onclick = () => engine.zoomOut();
+      if (btnFit) btnFit.onclick = () => engine.fit();
+      if (btnReset) btnReset.onclick = () => engine.reset();
+
+      return engine;
+    },
+
+    /**
+     * Resolve Google Drive link to high-speed CDN assets
+     * @param {string} url 
+     * @param {Object} [options]
+     * @returns {Object}
+     */
+    resolveDriveAsset: function(url, options) {
+      if (global.SKDriveNormalizer) {
+        return global.SKDriveNormalizer.resolveAsset(url, options);
+      }
+      return { isDrive: false, url: url, cardThumbnail: url, zoomUrl: url };
+    },
+
+    /**
+     * Open Collaborative Comments Drawer
+     * @param {string} optionId 
+     * @param {Object} [meta]
+     */
+    openComments: function(optionId, meta) {
+      if (global.SKCommentsEngine) {
+        global.SKCommentsEngine.openDrawer(optionId, meta);
+      }
+    },
+
+    /**
+     * Get comment count for an option
+     * @param {string} optionId 
+     * @returns {number}
+     */
+    getCommentCount: function(optionId) {
+      if (global.SKCommentsEngine) {
+        return global.SKCommentsEngine.getCommentCount(optionId);
+      }
+      return 0;
+    }
+  };
+
+  global.SKPrimitives = SKPrimitives;
+})(typeof window !== 'undefined' ? window : this);
+
+
+(function() {
     'use strict';
 
     const STORAGE_KEY_SELECTIONS = 'sk_decision_registry_v2';
@@ -1860,6 +3934,7 @@
     let activeModalPlateIndex = 0;
     let isCompareMode = false;
     let isCadMode = false;
+    let lightboxZoomEngine = null;
 
     // Read stored state
     try {
@@ -2108,6 +4183,9 @@
                 <button class="dr-btn dr-btn-whatsapp" onclick="window.shareClusterWhatsApp('${cluster.id}')" title="Share this option comparison to WhatsApp">
                   <span>📱</span> Share for Family Vote
                 </button>
+                <button class="dr-btn" onclick="window.openCommentsDrawer('${cluster.options[0].plateId}', { title: '${cluster.title.replace(/'/g, "\\'")}', badge: '${cluster.clusterId}', sub: '${cluster.description.replace(/'/g, "\\'")}' })" title="Open Discussion Thread">
+                  <span>💬</span> Family Opinions
+                </button>
                 <button class="dr-btn" onclick="window.openLightboxByPlateId('${cluster.options[0].plateId}', true)" title="Open Fullscreen Comparison">
                   <span>⚖️</span> Compare Fullscreen
                 </button>
@@ -2121,9 +4199,10 @@
                 if (!plate) return '';
                 const isSelected = (savedChoice === opt.optionId);
                 const voteCount = votes[opt.optionId] || 0;
+                const commentCount = (window.SKPrimitives && window.SKPrimitives.getCommentCount) ? window.SKPrimitives.getCommentCount(plate.id) : 0;
 
                 return `
-                  <div class="dr-pod-option-card ${isSelected ? 'selected' : ''}" onclick="window.selectClusterOption('${cluster.decisionId}', '${opt.optionId}', '${cluster.id}')">
+                  <div class="dr-pod-option-card ${isSelected ? 'selected' : ''}" data-option-id="${opt.optionId}" data-plate-id="${plate.id}" id="card-plate-${plate.id}" onclick="window.selectClusterOption('${cluster.decisionId}', '${opt.optionId}', '${cluster.id}')">
                     <div class="dr-pod-media">
                       <img class="dr-pod-img" src="${plate.photoSrc}" alt="${opt.label}" loading="lazy" onerror="this.src='./assets/decor/marquee/photo-luxury-marquee-chandeliers.jpg'">
                       <div class="dr-pod-badge-bar">
@@ -2137,11 +4216,16 @@
                         <div class="dr-pod-dims">📐 ${plate.dimensions}</div>
                         <div class="dr-pod-highlight">${opt.highlight}</div>
                       </div>
-                      <button class="dr-pod-radio-btn" type="button">
-                        <span>${isSelected ? '🔘' : '⚪'}</span>
-                        <span>${isSelected ? 'Chosen Concept (Active)' : 'Select This Concept'}</span>
-                        ${voteCount > 0 ? `<span style="margin-left: auto; color: var(--dr-purple);">(${voteCount} votes)</span>` : ''}
-                      </button>
+                      <div style="display: flex; gap: 6px; margin-top: 10px; align-items: stretch;">
+                        <button class="dr-pod-radio-btn" type="button" style="flex: 1; margin-top: 0;">
+                          <span>${isSelected ? '🔘' : '⚪'}</span>
+                          <span>${isSelected ? 'Chosen Concept' : 'Select Concept'}</span>
+                          ${voteCount > 0 ? `<span style="margin-left: auto; color: var(--dr-purple);">(${voteCount})</span>` : ''}
+                        </button>
+                        <button class="dr-btn" type="button" onclick="event.stopPropagation(); window.openCommentsDrawer('${plate.id}', { title: '${opt.label.replace(/'/g, "\\'")}', badge: '${plate.id}', sub: '${cluster.title.replace(/'/g, "\\'")}', alignment: '${isSelected ? '✓ Active Host Choice' : 'Open for Remarks'}' })" title="Open Family Opinions & Remarks" style="padding: 4px 10px; font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; border-color: rgba(212, 175, 55, 0.4); color: var(--dr-gold);">
+                          <span>💬</span> <span>${commentCount}</span>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 `;
@@ -2545,10 +4629,15 @@
           modalImg.style.display = 'none';
           modalSvgObject.style.display = 'block';
           modalSvgObject.data = plate.blueprintSrc;
+          if (lightboxZoomEngine) lightboxZoomEngine.fit();
         } else {
           modalSvgObject.style.display = 'none';
           modalImg.style.display = 'block';
-          modalImg.src = plate.photoSrc;
+          const resolved = (window.SKPrimitives && window.SKPrimitives.resolveDriveAsset)
+            ? window.SKPrimitives.resolveDriveAsset(plate.photoSrc, { zoomWidth: 1600 })
+            : { zoomUrl: plate.photoSrc };
+          modalImg.src = resolved.zoomUrl || plate.photoSrc;
+          if (lightboxZoomEngine) lightboxZoomEngine.fit();
         }
       }
 
@@ -2681,13 +4770,178 @@
     });
 
     btnPrintDossier.addEventListener('click', () => window.print());
+ 
+    // Initialize Lightbox Zoom/Pan Engine (STD-MOD-COMP-001)
+    if (window.SKPrimitives && window.SKPrimitives.initLightboxZoom && modalImg) {
+      lightboxZoomEngine = window.SKPrimitives.initLightboxZoom(modalImg, {
+        badge: '#skZoomBadge',
+        zoomIn: '#skBtnZoomIn',
+        zoomOut: '#skBtnZoomOut',
+        fit: '#skBtnFit',
+        reset: '#skBtnReset'
+      });
+    }
+
+    // Wire Option Intake Modal (Adapted from PIO ImageUploadWidget)
+    const btnOpenOptionIntake = document.getElementById('btnOpenOptionIntake');
+    const intakeBackdrop = document.getElementById('skOptionIntakeBackdrop');
+    const btnCloseIntake = document.getElementById('skOptionIntakeClose');
+    const btnCancelIntake = document.getElementById('skBtnCancelIntake');
+    const btnSubmitOption = document.getElementById('skBtnSubmitOption');
+    const tabDrive = document.getElementById('skTabDriveLink');
+    const tabDevice = document.getElementById('skTabDeviceUpload');
+    const paneDrive = document.getElementById('skPaneDrive');
+    const paneDevice = document.getElementById('skPaneDevice');
+    const driveInput = document.getElementById('skDriveUrlInput');
+    const btnVerifyDrive = document.getElementById('skBtnVerifyDrive');
+    const proofCard = document.getElementById('skDriveProofCard');
+    const proofImg = document.getElementById('skDriveProofImg');
+    const proofId = document.getElementById('skDriveFileId');
+
+    if (btnOpenOptionIntake && intakeBackdrop) {
+      btnOpenOptionIntake.addEventListener('click', () => {
+        intakeBackdrop.classList.add('is-active');
+      });
+
+      const closeIntake = () => {
+        intakeBackdrop.classList.remove('is-active');
+      };
+
+      if (btnCloseIntake) btnCloseIntake.addEventListener('click', closeIntake);
+      if (btnCancelIntake) btnCancelIntake.addEventListener('click', closeIntake);
+
+      if (tabDrive && tabDevice) {
+        tabDrive.addEventListener('click', () => {
+          tabDrive.classList.add('is-active');
+          tabDevice.classList.remove('is-active');
+          if (paneDrive) paneDrive.style.display = 'block';
+          if (paneDevice) paneDevice.style.display = 'none';
+        });
+
+        tabDevice.addEventListener('click', () => {
+          tabDevice.classList.add('is-active');
+          tabDrive.classList.remove('is-active');
+          if (paneDevice) paneDevice.style.display = 'block';
+          if (paneDrive) paneDrive.style.display = 'none';
+        });
+      }
+
+      const verifyDriveLink = () => {
+        const url = driveInput ? driveInput.value.trim() : '';
+        if (!url) return;
+        const resolved = (window.SKPrimitives && window.SKPrimitives.resolveDriveAsset)
+          ? window.SKPrimitives.resolveDriveAsset(url, { cardWidth: 200 })
+          : null;
+        if (resolved && resolved.isDrive) {
+          if (proofCard) proofCard.style.display = 'flex';
+          if (proofImg) proofImg.src = resolved.cardThumbnail;
+          if (proofId) proofId.textContent = 'Drive ID: ' + resolved.driveId;
+          showToast('Google Drive asset recognized with zero-CORS preview!', '✓');
+        } else {
+          showToast('Direct URL registered.', '✓');
+        }
+      };
+
+      if (btnVerifyDrive) btnVerifyDrive.addEventListener('click', verifyDriveLink);
+      if (driveInput) driveInput.addEventListener('change', verifyDriveLink);
+
+      if (btnSubmitOption) {
+        btnSubmitOption.addEventListener('click', () => {
+          const title = document.getElementById('skOptionTitle')?.value.trim() || 'New Option';
+          const price = document.getElementById('skOptionPrice')?.value.trim() || '—';
+          const category = document.getElementById('skOptionCategory')?.value || 'other';
+          showToast(`Option "${title}" added to ${category.toUpperCase()}!`, '🎉');
+          closeIntake();
+        });
+      }
+    }
+
+    // URL Query Param Parser & Deep-Link Wiring
+    function parseUrlParams() {
+      const params = new URLSearchParams(window.location.search);
+      const mode = params.get('mode');
+      if (mode === 'family') {
+        isFamilyMode = true;
+        if (familyWelcomeBanner) familyWelcomeBanner.classList.add('active');
+        if (executiveHeader) executiveHeader.style.display = 'none';
+      }
+
+      const paramEvent = params.get('event');
+      if (paramEvent && events.some(e => e.id === paramEvent)) {
+        currentEvent = paramEvent;
+      }
+
+      const paramCluster = params.get('cluster');
+      if (paramCluster) {
+        const matchedCluster = clusters.find(c => c.id === paramCluster || c.clusterId === paramCluster);
+        if (matchedCluster && matchedCluster.event) {
+          currentEvent = matchedCluster.event;
+        }
+        setTimeout(() => {
+          const el = document.getElementById('cluster-' + paramCluster) || (matchedCluster && document.getElementById('cluster-' + matchedCluster.id));
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (params.get('comments') === 'true' || params.get('drawer') === 'true') {
+              const optId = (matchedCluster && matchedCluster.options && matchedCluster.options[0]) ? matchedCluster.options[0].plateId : paramCluster;
+              if (window.SKPrimitives && window.SKPrimitives.openComments) {
+                window.SKPrimitives.openComments(optId, {
+                  title: matchedCluster ? matchedCluster.title : paramCluster,
+                  badge: matchedCluster ? matchedCluster.clusterId : 'CLUSTER',
+                  sub: matchedCluster ? matchedCluster.description : ''
+                });
+              }
+            }
+          }
+        }, 350);
+      }
+
+      const paramOption = params.get('option') || params.get('plate');
+      if (paramOption) {
+        let matchedCluster = null;
+        const matchedPlate = plates.find(p => p.id === paramOption);
+        for (const c of clusters) {
+          if (c.options && c.options.some(o => o.optionId === paramOption || o.plateId === paramOption)) {
+            matchedCluster = c;
+            break;
+          }
+        }
+        if (matchedCluster && matchedCluster.event) {
+          currentEvent = matchedCluster.event;
+        }
+        setTimeout(() => {
+          const optionCard = document.querySelector(`[data-plate-id="${paramOption}"]`) || document.querySelector(`[data-option-id="${paramOption}"]`) || document.getElementById('card-plate-' + paramOption);
+          if (optionCard) {
+            optionCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            optionCard.style.outline = '2px solid var(--dr-gold, #d4a843)';
+            setTimeout(() => { optionCard.style.outline = ''; }, 3000);
+          } else if (matchedCluster) {
+            const clusterEl = document.getElementById('cluster-' + matchedCluster.id);
+            if (clusterEl) clusterEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+          if (window.SKPrimitives && window.SKPrimitives.openComments) {
+            const optMeta = matchedPlate || (matchedCluster ? { title: matchedCluster.title, id: paramOption, description: matchedCluster.description } : { title: paramOption, id: paramOption, description: '' });
+            window.SKPrimitives.openComments(paramOption, {
+              title: optMeta.title || paramOption,
+              badge: optMeta.id || optMeta.badge || paramOption,
+              sub: optMeta.description || optMeta.sub || ''
+            });
+          }
+        }, 350);
+      }
+    }
 
     // Initialize
-    parseUrlParams();
-    renderMilestones();
-    renderClusterPods();
-    renderCarouselCards();
-    renderGrid();
+    function initDecisionRegistry() {
+      parseUrlParams();
+      renderMilestones();
+      renderClusterPods();
+      renderCarouselCards();
+      renderGrid();
+    }
+    window.renderDecisionRegistry = initDecisionRegistry;
+    window.initDecisionRegistry = initDecisionRegistry;
+
+    initDecisionRegistry();
   })();
 </script>
 

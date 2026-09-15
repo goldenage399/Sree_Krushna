@@ -1,0 +1,135 @@
+<div id="shoppingRegistryRoot">
+  <!-- Family / Stakeholder Welcome Banner -->
+  <div class="shop-welcome-banner" id="shopWelcomeBanner">
+    <div class="shop-welcome-left">
+      <span style="font-size: 28px;" id="welcomeBannerIcon">🌺</span>
+      <div>
+        <h2 class="shop-welcome-title" id="welcomeBannerTitle">Welcome to Sree & Krushna Wedding Shopping Review!</h2>
+        <p class="shop-welcome-sub" id="welcomeBannerSub">Review the shortlisted sarees, lehengas, groomswear, and gifting bundles for our Bhubaneswar shopping trip.</p>
+      </div>
+    </div>
+    <button class="shop-btn shop-btn-primary" onclick="window.switchShoppingMode('executive')">
+      <span>👑</span> Executive Host View
+    </button>
+  </div>
+
+  <!-- Header -->
+  <header class="shop-header" id="shopHeader">
+    <div class="shop-brand">
+      <div class="shop-logo-monogram">SK</div>
+      <div class="shop-title-group">
+        <h1>Wedding Trousseau, 'Sara' & Bhubaneswar Shopping Registry</h1>
+        <p>Sree Krushna Marriage OS — Multi-Stakeholder Consensus & Market Navigator (SPEC-PROC-TROUSSEAU-001)</p>
+      </div>
+    </div>
+    <div class="shop-header-actions">
+      <button class="shop-btn shop-btn-whatsapp" id="btnShareFamily" title="Share with Family on WhatsApp">
+        <span>📱</span> Share with Family
+      </button>
+      <button class="shop-btn shop-btn-primary" id="btnOpenShoppingIntake" title="Add Item/Option from Google Drive or Camera">
+        <span>➕</span> Add Option
+      </button>
+      <button class="shop-btn" id="btnShareSisters" title="Share Sisters' Selection Link">
+        <span>👭</span> Share with Sisters
+      </button>
+      <button class="shop-btn" id="btnPrintRunSheet" title="Print A4 Shopping Checklist">
+        <span>🖨️</span> Print Run Sheet
+      </button>
+      <button class="shop-btn" id="btnExportJson" title="Export Shopping State JSON">
+        <span>💾</span> Export JSON
+      </button>
+      <a href="./decision-registry.html" class="shop-btn" title="Back to Decision Registry">
+        <span>⚖️</span> Decision Registry
+      </a>
+    </div>
+  </header>
+
+  <!-- KPI Metrics Banner -->
+  <section class="shop-kpis" id="shopKpis">
+    <div class="shop-kpi-card">
+      <span class="shop-kpi-label">Total Shopping Items</span>
+      <span class="shop-kpi-val" id="kpiTotalItems">30</span>
+      <span class="shop-kpi-sub">Across 4 Chapters</span>
+    </div>
+    <div class="shop-kpi-card">
+      <span class="shop-kpi-label">Consensus Aligned</span>
+      <span class="shop-kpi-val" style="color: var(--shop-emerald);" id="kpiAlignedItems">18</span>
+      <span class="shop-kpi-sub">Approved by Bride/Sisters</span>
+    </div>
+    <div class="shop-kpi-card">
+      <span class="shop-kpi-label">Items Purchased</span>
+      <span class="shop-kpi-val" style="color: var(--shop-gold);" id="kpiPurchasedItems">0 / 30</span>
+      <span class="shop-kpi-sub">In Hand / Bagged</span>
+    </div>
+    <div class="shop-kpi-card">
+      <span class="shop-kpi-label">Bhubaneswar Stores</span>
+      <span class="shop-kpi-val" style="color: var(--shop-purple);" id="kpiStoresCount">8</span>
+      <span class="shop-kpi-sub">Janpath, Saheed Nagar, Unit-2</span>
+    </div>
+  </section>
+
+  <!-- 4-Stage Itinerary Stepper -->
+  <section class="shop-stepper-section" id="shoppingStepper">
+    <div class="shop-stepper-header">
+      <div class="shop-stepper-title">
+        <h2><span>🧭</span> 5-Day Bhubaneswar Shopping Itinerary</h2>
+        <p>Follow the daily shopping itinerary chapter-by-chapter as the Bride's family arrives in Bhubaneswar.</p>
+      </div>
+      <div>
+        <button class="shop-btn shop-btn-sm" id="btnFilterAllChapters">Show All Chapters</button>
+      </div>
+    </div>
+    <div class="shop-milestone-track" id="chapterMilestoneTrack">
+      <!-- Injected dynamically by JS -->
+    </div>
+  </section>
+
+  <!-- Clustered Option Pods (Side-by-Side Alternatives) -->
+  <section class="shop-cluster-section" id="shoppingClusterPods">
+    <!-- Injected dynamically by JS -->
+  </section>
+
+  <!-- Bhubaneswar Store Navigator Strip -->
+  <section class="shop-store-section" id="shoppingStoreNavigator">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+      <div>
+        <h3 style="margin: 0; font-size: 15px; color: #ffffff; display: flex; align-items: center; gap: 6px;">
+          <span>📍</span> Bhubaneswar Retail Directory & Market Hubs
+        </h3>
+        <p style="margin: 3px 0 0; font-size: 12px; color: var(--shop-text-secondary);">Verified stores for authentic handlooms, hallmarked gold, sherwanis, and packaging.</p>
+      </div>
+    </div>
+    <div class="shop-store-grid" id="storesGrid">
+      <!-- Injected dynamically by JS -->
+    </div>
+  </section>
+
+  <!-- Filter & Search Toolbar -->
+  <div class="shop-toolbar">
+    <div class="shop-filter-pills" id="shopFilterPills">
+      <button class="shop-pill active" data-filter="all">All Items (30)</button>
+      <button class="shop-pill" data-filter="bridal">🪔 Bridal Trousseau (7)</button>
+      <button class="shop-pill" data-filter="groom">👑 Groom Attire (8)</button>
+      <button class="shop-pill" data-filter="jewellery">💎 Jewellery & Silver (9)</button>
+      <button class="shop-pill" data-filter="sara">🎁 In-Laws 'Sara' (6)</button>
+      <button class="shop-pill" data-filter="purchased">✓ Purchased</button>
+    </div>
+    <div class="shop-search-box">
+      <span class="shop-search-icon">🔍</span>
+      <input type="text" id="shopSearchInput" class="shop-search-input" placeholder="Search items, fabrics, stores...">
+    </div>
+  </div>
+
+  <!-- Itemized Checklist Grid -->
+  <main class="shop-items-grid" id="itemsGrid">
+    <!-- Rendered dynamically by JS -->
+  </main>
+</div>
+
+<!-- Toast Notification -->
+<div class="shop-toast" id="shopToast">
+  <span id="toastIcon">📋</span>
+  <span id="toastMsg">Notification message</span>
+</div>
+
+<!-- Embedded Data Layer -->

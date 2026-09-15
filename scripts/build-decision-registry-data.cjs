@@ -83,6 +83,22 @@ const clusters = [
       { plateId: "PLATE-03", optionId: "A", label: "Option A: Concert Stage & LED Wall", highlight: "36ft elevated performance deck with 24x12ft LED wall & box truss cinema spots" },
       { plateId: "PLATE-12", optionId: "B", label: "Option B: Midnight Blooms Mirror Stage", highlight: "40ft high-gloss black reflective runway, crystal chandeliers & wisteria arch" }
     ]
+  },
+  {
+    id: "entry",
+    clusterId: "CLUSTER-ENTRY",
+    title: "Grand Couple Entry Atmospheric Production",
+    event: "sangeet",
+    eventLabel: "🌙 Day 1 Sangeet & Vivaha Aisle",
+    zone: "Zone B — Arrival & Processional Aisle",
+    decisionId: "DEC-21",
+    description: "Special atmospheric and visual effects for couple grand entrances at Sangeet and Daytime Varmala.",
+    whatsappTemplate: "✨ *Sree Krushna Marriage OS — Grand Entry Effects Review*\nHelp us choose our wedding entry special effects! Please review the options:\n• *Option A:* Low-Lying Dry-Ice Cloud Fog + Shimmering Bubbles\n• *Option B:* Pyrotechnic Cold Spark Fountains (Gerb Units)\n• *Option C:* Mechanical Fresh Rose Petal Cannons & Floral Shower\n👉 Compare & vote on your phone: {url}",
+    options: [
+      { plateId: "PLATE-05", optionId: "A", label: "Option A: Dry-Ice Cloud Fog & Bubbles", highlight: "Safe indoor/marquee cloud fog with zero smoke alarm triggers or chemical residue (PROP-05)" },
+      { plateId: "PLATE-09", optionId: "B", label: "Option B: Cold Spark Pyrotechnics", highlight: "Theatrical concert-style spark fountains along the aisle for high-energy walk-in (PROP-03)" },
+      { plateId: "PLATE-01", optionId: "C", label: "Option C: Fresh Rose Petal Cannons", highlight: "Traditional sacred floral rain shower cascading over the couple at stage reveal (PROP-04)" }
+    ]
   }
 ];
 
@@ -91,7 +107,7 @@ const eventTaxonomy = [
   { id: 'haldi', label: 'Day 1 Haldi & Arrival', icon: '☀️', count: enrichedPlates.filter(p => p.events.includes('haldi')).length, phase: 1, timing: "Day 1 Morning (09:00 - 13:00)" },
   { id: 'mehendi', label: 'Day 1 Mehendi', icon: '🌿', count: enrichedPlates.filter(p => p.events.includes('mehendi')).length, phase: 2, timing: "Day 1 Afternoon (14:30 - 17:00)" },
   { id: 'sangeet', label: 'Day 1 Sangeet & Party', icon: '🌙', count: enrichedPlates.filter(p => p.events.includes('sangeet')).length, phase: 3, timing: "Day 1 Night (19:00 - 23:30)" },
-  { id: 'wedding', label: 'Day 2 Vedic Vivaha', icon: '🪔', count: enrichedPlates.filter(p => p.events.includes('wedding')).length, phase: 4, timing: "Day 2 Morning (06:00 - 14:00, Muhurtham 10:15)" },
+  { id: 'wedding', label: 'Day 2 Vedic Vivaha', icon: '🪔', count: enrichedPlates.filter(p => p.events.includes('wedding')).length, phase: 4, timing: "Day 2 Daytime Vivaha (09:30 - 16:30, Hastaganthi 12:00 Noon)" },
   { id: 'infrastructure', label: 'Venue Infrastructure', icon: '🏗️', count: enrichedPlates.filter(p => p.events.includes('infrastructure')).length, phase: 5, timing: "Whole-Venue Backbone & Shell" }
 ];
 
@@ -124,6 +140,9 @@ const itemEventMap = {
   'DEC-05': { event: 'infrastructure', plateRef: 'PLATE-07', plateTitle: 'BOH Satellite Finishing Kitchen' },
   'DEC-19': { event: 'infrastructure', plateRef: 'PLATE-04', plateTitle: 'Marquee Technical & Fire Safety' },
   'DEC-20': { event: 'wedding', clusterId: 'mandap', plateRef: 'PLATE-01', alternativePlates: ['PLATE-10', 'PLATE-11'], plateTitle: 'Mandap Mock-Up Verification Bay' },
+  'DEC-21': { event: 'sangeet', clusterId: 'entry', plateRef: 'PLATE-05', alternativePlates: ['PLATE-09', 'PLATE-01'], plateTitle: 'Grand Couple Entry Atmospheric Production' },
+  'DEC-22': { event: 'wedding', plateRef: 'PLATE-09', alternativePlates: ['PLATE-05'], plateTitle: 'Starlit Aisle Canopy & Illuminated Floral Walkway' },
+  'DEC-23': { event: 'sangeet', clusterId: 'stage', plateRef: 'PLATE-03', alternativePlates: ['PLATE-12'], plateTitle: 'Sangeet Concert & Performance Stage' },
   'PROP-01': { event: 'wedding', plateRef: 'PLATE-09', plateTitle: 'Starlit Aisle Canopy & Illuminated Floral Walkway' },
   'PROP-02': { event: 'sangeet', clusterId: 'stage', plateRef: 'PLATE-03', videoRef: 'ref-sangeet-stage-balloon-drop.mp4', plateTitle: 'Sangeet Production Stage (Balloon Drop Ref)' },
   'PROP-03': { event: 'wedding', plateRef: 'PLATE-09', plateTitle: 'Starlit Aisle Canopy (Guard of Honour)' },

@@ -1,0 +1,253 @@
+/* 4-Stage Itinerary Stepper */
+    .shop-stepper-section {
+      background: var(--shop-surface);
+      border: 1px solid var(--shop-border);
+      border-radius: var(--shop-radius-md);
+      padding: 18px 20px;
+      margin-bottom: 24px;
+    }
+
+    .shop-stepper-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .shop-stepper-title h2 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .shop-stepper-title p {
+      font-size: 12px;
+      color: var(--shop-text-secondary);
+      margin: 3px 0 0;
+    }
+
+    .shop-milestone-track {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+    }
+
+    .shop-milestone-node {
+      background: var(--shop-bg);
+      border: 1px solid var(--shop-border);
+      border-radius: var(--shop-radius-sm);
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .shop-milestone-node:hover {
+      border-color: var(--shop-border-focus);
+      transform: translateY(-2px);
+    }
+
+    .shop-milestone-node.active {
+      border-color: var(--shop-gold);
+      background: var(--shop-gold-glow);
+      box-shadow: 0 0 14px rgba(229, 169, 60, 0.2);
+    }
+
+    .shop-milestone-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .shop-milestone-phase {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--shop-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .shop-milestone-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 10px;
+      background: var(--shop-surface-elevated);
+      color: var(--shop-text-secondary);
+    }
+
+    .shop-milestone-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .shop-milestone-time {
+      font-size: 11px;
+      color: var(--shop-text-muted);
+    }
+
+    /* Clustered Option Pods */
+    .shop-cluster-section {
+      margin-bottom: 28px;
+    }
+
+    .shop-cluster-card {
+      background: var(--shop-surface);
+      border: 1px solid var(--shop-border);
+      border-radius: var(--shop-radius-md);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .shop-cluster-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .shop-cluster-title-wrap h2 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .shop-cluster-title-wrap p {
+      margin: 4px 0 0;
+      font-size: 12px;
+      color: var(--shop-text-secondary);
+    }
+
+    .shop-cluster-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .shop-pod-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .shop-pod-option-card {
+      background: var(--shop-surface-elevated);
+      border: 1px solid var(--shop-border);
+      border-radius: var(--shop-radius-md);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .shop-pod-option-card:hover {
+      border-color: var(--shop-border-focus);
+    }
+
+    .shop-pod-option-card.selected {
+      border-color: var(--shop-gold);
+      background: linear-gradient(180deg, rgba(229, 169, 60, 0.08) 0%, rgba(24, 27, 36, 0.9) 100%);
+      box-shadow: 0 0 16px rgba(229, 169, 60, 0.2);
+    }
+
+    .shop-pod-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      gap: 8px;
+    }
+
+    .shop-pod-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .shop-pod-price {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--shop-gold);
+      background: rgba(229, 169, 60, 0.1);
+      padding: 2px 8px;
+      border-radius: var(--shop-radius-sm);
+    }
+
+    .shop-pod-color {
+      font-size: 11px;
+      color: var(--shop-purple);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .shop-pod-highlight {
+      font-size: 12px;
+      color: var(--shop-text-secondary);
+      line-height: 1.45;
+      margin-bottom: 14px;
+    }
+
+    .shop-pod-store {
+      font-size: 11px;
+      color: var(--shop-text-muted);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 14px;
+    }
+
+    .shop-pod-radio-btn {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: var(--shop-radius-sm);
+      border: 1px solid var(--shop-border);
+      background: var(--shop-bg);
+      color: var(--shop-text-secondary);
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .shop-pod-option-card.selected .shop-pod-radio-btn {
+      background: var(--shop-gold);
+      color: #0f1117;
+      border-color: var(--shop-gold);
+    }
+
+    .shop-cluster-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 12px;
+      color: var(--shop-text-secondary);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
