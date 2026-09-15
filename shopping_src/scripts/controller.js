@@ -157,6 +157,13 @@
           }
         }, 350);
       }
+
+      const paramView = params.get('view') || params.get('tab');
+      if (paramView === 'survey') {
+        setTimeout(() => {
+          if (window.switchShoppingView) window.switchShoppingView('survey');
+        }, 100);
+      }
     }
 
     window.switchShoppingMode = function(mode) {
@@ -481,7 +488,257 @@
       window.print();
     });
 
+    // ========================================================================
+    // VIEW SWITCHER & SHOPPING MODES (P-SURVEY-HYBRID-001)
+    // ========================================================================
+    window.currentShoppingView = 'catalog';
+
+    window.switchShoppingMode = function(mode) {
+      if (mode === 'executive') {
+        isFamilyMode = false;
+        if (shopWelcomeBanner) shopWelcomeBanner.classList.remove('active');
+        if (shopHeader) shopHeader.style.display = 'flex';
+      }
+    };
+
+    window.switchShoppingView = function(viewMode) {
+      window.currentShoppingView = viewMode;
+      const tabCatalog = document.getElementById('tabCatalogView');
+      const tabSurvey = document.getElementById('tabSurveyView');
+      const catalogSection = document.getElementById('catalogViewSection');
+      const surveyStudio = document.getElementById('interactiveSurveyStudio');
+
+      if (viewMode === 'survey') {
+        if (tabCatalog) tabCatalog.classList.remove('active');
+        if (tabSurvey) tabSurvey.classList.add('active');
+        if (catalogSection) catalogSection.style.display = 'none';
+        if (surveyStudio) surveyStudio.style.display = 'flex';
+        window.updateSurveyUI();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        if (tabCatalog) tabCatalog.classList.add('active');
+        if (tabSurvey) tabSurvey.classList.remove('active');
+        if (catalogSection) catalogSection.style.display = 'block';
+        if (surveyStudio) surveyStudio.style.display = 'none';
+      }
+    };
+
+    // ========================================================================
+    // INTERACTIVE FAMILY SURVEY & BUDGET ENGINE (P-SURVEY-HYBRID-001)
+    // ========================================================================
+    const defaultSurveyState = {
+      tiers: {
+        'TRS-BR-01': { tier: 't2', price: 62500 },
+        'TRS-OD-01': { tier: 't2', price: 21000 },
+        'TRS-BR-02': { tier: 't2', price: 7750 },
+        'TRS-BR-03': { tier: 't2', price: 57500 },
+        'TRS-OD-04': { tier: 't1', price: 8000 },
+        'SARA-MIL': { tier: 't1', price: 31500 },
+        'SARA-FIL': { tier: 't1', price: 15000 },
+        'TRS-OD-02': { tier: 't2', price: 11000 },
+        'TRS-OD-03': { tier: 't1', price: 14000 }
+      },
+      tailoring: {
+        'TRS-GR-03': { choice: 'bespoke', cost: 14250, savings: 27750 },
+        'TRS-GR-06': { choice: 'bespoke', cost: 18000, savings: 8000 }
+      },
+      stakeholders: {
+        'TRS-BR-01': ['bride', 'sisters'],
+        'TRS-OD-01': ['bride', 'sisters', 'inlaws'],
+        'TRS-BR-02': ['bride', 'inlaws'],
+        'TRS-BR-03': ['bride', 'sisters'],
+        'TRS-GR-03': ['bride', 'sisters', 'inlaws'],
+        'TRS-OD-04': ['bride', 'inlaws']
+      },
+      notes: {},
+      remarks: ''
+    };
+
+    let surveyState = JSON.parse(localStorage.getItem('sk_family_survey_answers_v1') || 'null') || defaultSurveyState;
+
+    function saveSurveyState() {
+      localStorage.setItem('sk_family_survey_answers_v1', JSON.stringify(surveyState));
+      window.updateSurveyUI();
+    }
+
+    window.selectSurveyTier = function(itemId, tierId, price) {
+      if (!surveyState.tiers) surveyState.tiers = {};
+      surveyState.tiers[itemId] = { tier: tierId, price: Number(price) };
+      saveSurveyState();
+    };
+
+    window.selectTailoringChoice = function(itemId, choiceId, cost, savings) {
+      if (!surveyState.tailoring) surveyState.tailoring = {};
+      surveyState.tailoring[itemId] = { choice: choiceId, cost: Number(cost), savings: Number(savings) };
+      saveSurveyState();
+    };
+
+    window.toggleSurveyStakeholder = function(itemId, role) {
+      if (!surveyState.stakeholders) surveyState.stakeholders = {};
+      if (!surveyState.stakeholders[itemId]) surveyState.stakeholders[itemId] = [];
+      const list = surveyState.stakeholders[itemId];
+      const idx = list.indexOf(role);
+      if (idx >= 0) {
+        list.splice(idx, 1);
+      } else {
+        list.push(role);
+      }
+      saveSurveyState();
+    };
+
+    window.saveSurveyNote = function(itemId, note) {
+      if (!surveyState.notes) surveyState.notes = {};
+      surveyState.notes[itemId] = note;
+      localStorage.setItem('sk_family_survey_answers_v1', JSON.stringify(surveyState));
+    };
+
+    window.saveSurveyRemarks = function(remarks) {
+      surveyState.remarks = remarks;
+      localStorage.setItem('sk_family_survey_answers_v1', JSON.stringify(surveyState));
+    };
+
+    window.resetSurveyChoices = function() {
+      surveyState = JSON.parse(JSON.stringify(defaultSurveyState));
+      saveSurveyState();
+      showToast('Survey selections reset to default.', '🔄');
+    };
+
+    window.updateSurveyUI = function() {
+      if (!surveyState || !surveyState.tiers) return;
+
+      // 1. Calculate category totals
+      let bridalTotal = 0;
+      ['TRS-BR-01', 'TRS-OD-01', 'TRS-BR-02', 'TRS-BR-03'].forEach(id => {
+        if (surveyState.tiers[id]) bridalTotal += surveyState.tiers[id].price;
+      });
+
+      let groomTotal = 0;
+      if (surveyState.tailoring && surveyState.tailoring['TRS-GR-03']) groomTotal += surveyState.tailoring['TRS-GR-03'].cost;
+      if (surveyState.tailoring && surveyState.tailoring['TRS-GR-06']) groomTotal += surveyState.tailoring['TRS-GR-06'].cost;
+      if (surveyState.tiers['TRS-OD-04']) groomTotal += surveyState.tiers['TRS-OD-04'].price;
+
+      let saraTotal = 0;
+      ['SARA-MIL', 'SARA-FIL'].forEach(id => {
+        if (surveyState.tiers[id]) saraTotal += surveyState.tiers[id].price;
+      });
+
+      let heirloomsTotal = 0;
+      ['TRS-OD-02', 'TRS-OD-03'].forEach(id => {
+        if (surveyState.tiers[id]) heirloomsTotal += surveyState.tiers[id].price;
+      });
+
+      const grandTotal = bridalTotal + groomTotal + saraTotal + heirloomsTotal;
+
+      let totalSavings = 0;
+      Object.values(surveyState.tailoring || {}).forEach(t => {
+        if (t.savings) totalSavings += t.savings;
+      });
+
+      const totalDecisions = Object.keys(surveyState.tiers || {}).length + Object.keys(surveyState.tailoring || {}).length;
+
+      // Update Live Bar
+      const elLiveTotal = document.getElementById('surveyLiveTotal');
+      const elLiveSavings = document.getElementById('surveyLiveSavings');
+      const elLiveProgress = document.getElementById('surveyLiveProgress');
+      if (elLiveTotal) elLiveTotal.textContent = '₹' + grandTotal.toLocaleString('en-IN');
+      if (elLiveSavings) elLiveSavings.textContent = '+₹' + totalSavings.toLocaleString('en-IN') + ' Saved';
+      if (elLiveProgress) elLiveProgress.textContent = `${totalDecisions} Decided`;
+
+      // Update Summary Card
+      const elSummaryBridal = document.getElementById('summaryBridalTotal');
+      const elSummaryGroom = document.getElementById('summaryGroomTotal');
+      const elSummarySara = document.getElementById('summarySaraTotal');
+      const elSummaryHeirlooms = document.getElementById('summaryHeirloomsTotal');
+      const elSummaryGrand = document.getElementById('summaryGrandTotal');
+      const elSummarySavings = document.getElementById('summarySavingsTotal');
+      if (elSummaryBridal) elSummaryBridal.textContent = '₹' + bridalTotal.toLocaleString('en-IN');
+      if (elSummaryGroom) elSummaryGroom.textContent = '₹' + groomTotal.toLocaleString('en-IN');
+      if (elSummarySara) elSummarySara.textContent = '₹' + saraTotal.toLocaleString('en-IN');
+      if (elSummaryHeirlooms) elSummaryHeirlooms.textContent = '₹' + heirloomsTotal.toLocaleString('en-IN');
+      if (elSummaryGrand) elSummaryGrand.textContent = '₹' + grandTotal.toLocaleString('en-IN');
+      if (elSummarySavings) elSummarySavings.textContent = '+₹' + totalSavings.toLocaleString('en-IN');
+
+      const elRemarks = document.getElementById('surveyFamilyRemarks');
+      if (elRemarks && surveyState.remarks) elRemarks.value = surveyState.remarks;
+
+      // Update visual tier cards
+      document.querySelectorAll('.survey-tier-card').forEach(card => {
+        const itemId = card.getAttribute('data-item');
+        const tierId = card.getAttribute('data-tier');
+        const isSelected = (surveyState.tiers[itemId] && surveyState.tiers[itemId].tier === tierId);
+        card.classList.toggle('selected', isSelected);
+        const radio = card.querySelector('input[type="radio"]');
+        if (radio) radio.checked = isSelected;
+      });
+
+      // Update tailoring cards
+      document.querySelectorAll('.survey-tailor-card').forEach(card => {
+        const itemId = card.getAttribute('data-item');
+        const choiceId = card.getAttribute('data-choice');
+        const isSelected = (surveyState.tailoring && surveyState.tailoring[itemId] && surveyState.tailoring[itemId].choice === choiceId);
+        card.classList.toggle('selected', isSelected);
+      });
+
+      // Update stakeholder approval buttons
+      document.querySelectorAll('.survey-stakeholder-btn').forEach(btn => {
+        const row = btn.closest('.survey-item-row');
+        if (!row) return;
+        const itemId = row.id.replace('srow-', '');
+        const roleMatch = btn.textContent.toLowerCase();
+        let role = 'bride';
+        if (roleMatch.includes('sister')) role = 'sisters';
+        if (roleMatch.includes('in-law') || roleMatch.includes('inlaws')) role = 'inlaws';
+        const isApproved = (surveyState.stakeholders && surveyState.stakeholders[itemId] && surveyState.stakeholders[itemId].includes(role));
+        btn.classList.toggle('approved', !!isApproved);
+      });
+
+      // Update notes
+      Object.entries(surveyState.notes || {}).forEach(([itemId, note]) => {
+        const row = document.getElementById('srow-' + itemId);
+        if (row) {
+          const input = row.querySelector('.survey-note-input');
+          if (input && document.activeElement !== input) input.value = note;
+        }
+      });
+    };
+
     window.printFamilySurvey = function() {
+      // Dynamic Print Synchronization: sync computed survey totals into print view
+      const printDossier = document.getElementById('familySurveyDossierPrintView');
+      if (printDossier && surveyState) {
+        let bridalTotal = 0;
+        ['TRS-BR-01', 'TRS-OD-01', 'TRS-BR-02', 'TRS-BR-03'].forEach(id => {
+          if (surveyState.tiers[id]) bridalTotal += surveyState.tiers[id].price;
+        });
+        let groomTotal = 0;
+        if (surveyState.tailoring && surveyState.tailoring['TRS-GR-03']) groomTotal += surveyState.tailoring['TRS-GR-03'].cost;
+        if (surveyState.tailoring && surveyState.tailoring['TRS-GR-06']) groomTotal += surveyState.tailoring['TRS-GR-06'].cost;
+        if (surveyState.tiers['TRS-OD-04']) groomTotal += surveyState.tiers['TRS-OD-04'].price;
+        let saraTotal = 0;
+        ['SARA-MIL', 'SARA-FIL'].forEach(id => {
+          if (surveyState.tiers[id]) saraTotal += surveyState.tiers[id].price;
+        });
+        let heirloomsTotal = 0;
+        ['TRS-OD-02', 'TRS-OD-03'].forEach(id => {
+          if (surveyState.tiers[id]) heirloomsTotal += surveyState.tiers[id].price;
+        });
+        const grandTotal = bridalTotal + groomTotal + saraTotal + heirloomsTotal;
+
+        const tallyGrid = printDossier.querySelector('.survey-tally-grid');
+        if (tallyGrid) {
+          tallyGrid.innerHTML = `
+            <div>1. Bridal Wardrobe Total: <strong>₹${bridalTotal.toLocaleString('en-IN')}</strong></div>
+            <div>2. Groom Wardrobe Total: <strong>₹${groomTotal.toLocaleString('en-IN')}</strong></div>
+            <div>3. In-Laws 'Sara' Total: <strong>₹${saraTotal.toLocaleString('en-IN')}</strong></div>
+            <div>4. Silverware &amp; Heirlooms: <strong>₹${heirloomsTotal.toLocaleString('en-IN')}</strong></div>
+          `;
+        }
+        const ceilingEl = printDossier.querySelector('.survey-signoff-box strong:last-of-type');
+        if (ceilingEl) {
+          ceilingEl.textContent = '₹' + grandTotal.toLocaleString('en-IN');
+        }
+      }
+
       document.body.setAttribute('data-print-target', 'survey');
       window.print();
       window.addEventListener('afterprint', () => {
@@ -638,4 +895,5 @@
     renderClusters();
     renderStores();
     renderItems();
+    window.updateSurveyUI();
   })();

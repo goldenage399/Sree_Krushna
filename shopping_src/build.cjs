@@ -32,8 +32,13 @@ const moduleCss = styleFiles.map(f => fs.readFileSync(path.join(stylesDir, f), '
 
 const combinedCss = primCss + '\n\n    ' + moduleCss;
 
-// Read Body Component and Shared Modals (Lightbox + Intake Modal)
+// Read Body Component and Shared Modals (Lightbox + Intake Modal + Survey Studio)
 let bodyHtml = fs.readFileSync(path.join(baseDir, 'components', 'body.html'), 'utf8');
+
+const surveyStudioPath = path.join(baseDir, 'components', 'survey_studio.html');
+if (fs.existsSync(surveyStudioPath)) {
+  bodyHtml += '\n\n' + fs.readFileSync(surveyStudioPath, 'utf8');
+}
 
 const lightboxModalPath = path.join(rootDir, 'ui_primitives', 'components', 'lightbox.html');
 if (fs.existsSync(lightboxModalPath)) {

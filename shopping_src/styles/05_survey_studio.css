@@ -1,0 +1,417 @@
+/* ==========================================================================
+   INTERACTIVE FAMILY SURVEY & BUDGET STUDIO (P-SURVEY-HYBRID-001)
+   On-screen interactive styles for family budget & trousseau consultation
+   ========================================================================== */
+
+/* Top View Segmented Switcher */
+.shop-view-switcher {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0 24px;
+  background: rgba(18, 20, 29, 0.85);
+  border: 1px solid var(--shop-border);
+  padding: 6px;
+  border-radius: var(--shop-radius-lg);
+  backdrop-filter: blur(12px);
+  position: relative;
+  z-index: 10;
+}
+
+.shop-view-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--shop-radius-md);
+  color: var(--shop-text-secondary);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.shop-view-tab:hover {
+  color: var(--shop-text-primary);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.shop-view-tab.active {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.18), rgba(212, 175, 55, 0.08));
+  border-color: rgba(212, 175, 55, 0.4);
+  color: var(--shop-gold);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+/* Interactive Survey Studio Container */
+.survey-studio-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+/* Sticky Live Budget Bar */
+.survey-live-bar {
+  position: sticky;
+  top: 16px;
+  z-index: 90;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  background: rgba(24, 27, 36, 0.95);
+  border: 1px solid var(--shop-gold);
+  border-radius: var(--shop-radius-lg);
+  padding: 14px 20px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(16px);
+}
+
+.survey-live-metrics {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.survey-metric-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.survey-metric-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--shop-text-secondary);
+  font-weight: 700;
+}
+
+.survey-metric-val {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--shop-gold);
+  line-height: 1.2;
+}
+
+.survey-metric-val.savings {
+  color: var(--shop-emerald);
+}
+
+.survey-metric-val.subtle {
+  font-size: 15px;
+  color: var(--shop-text-primary);
+}
+
+.survey-live-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Studio Section Cards */
+.survey-studio-card {
+  background: var(--shop-surface);
+  border: 1px solid var(--shop-border);
+  border-radius: var(--shop-radius-lg);
+  padding: 24px;
+  box-shadow: var(--shop-shadow-card);
+}
+
+.survey-studio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--shop-border);
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+}
+
+.survey-studio-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--shop-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.survey-studio-header p {
+  margin: 4px 0 0 0;
+  font-size: 13px;
+  color: var(--shop-text-secondary);
+}
+
+/* Survey Item Row */
+.survey-item-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: rgba(15, 17, 23, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--shop-radius-md);
+  padding: 16px;
+  margin-bottom: 16px;
+  transition: border-color 0.2s;
+}
+
+.survey-item-row:hover {
+  border-color: rgba(212, 175, 55, 0.3);
+}
+
+.survey-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.survey-item-info strong {
+  font-size: 15px;
+  color: var(--shop-text-primary);
+}
+
+.survey-item-info small {
+  display: block;
+  font-size: 12px;
+  color: var(--shop-text-secondary);
+  margin-top: 2px;
+}
+
+.survey-heirloom-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: var(--shop-gold);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+
+/* Interactive Option Tiers (Radio Cards) */
+.survey-tiers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.survey-tier-card {
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--shop-radius-sm);
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.survey-tier-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+.survey-tier-card.selected {
+  background: rgba(212, 175, 55, 0.14);
+  border-color: var(--shop-gold);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.25);
+}
+
+.survey-tier-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--shop-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.survey-tier-price {
+  font-size: 12px;
+  color: var(--shop-gold);
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.survey-tier-sub {
+  font-size: 11px;
+  color: var(--shop-text-secondary);
+  margin-top: 2px;
+}
+
+/* Tailoring Comparison Dual Cards */
+.survey-tailor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.survey-tailor-card {
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--shop-radius-md);
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.survey-tailor-card:hover {
+  border-color: var(--shop-gold);
+}
+
+.survey-tailor-card.selected {
+  background: rgba(212, 175, 55, 0.12);
+  border-color: var(--shop-gold);
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.2);
+}
+
+.survey-tailor-badge {
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.survey-tailor-badge.bespoke {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--shop-emerald);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.survey-tailor-badge.readymade {
+  background: rgba(168, 85, 247, 0.2);
+  color: var(--shop-purple);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+}
+
+.survey-tailor-cost {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--shop-gold);
+  margin: 4px 0;
+}
+
+.survey-tailor-detail {
+  font-size: 11.5px;
+  color: var(--shop-text-secondary);
+  line-height: 1.4;
+}
+
+/* Consensus & Preference Row */
+.survey-interactive-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+  padding-top: 10px;
+}
+
+.survey-stakeholder-toggles {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.survey-stakeholder-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--shop-text-secondary);
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.survey-stakeholder-btn:hover {
+  color: var(--shop-text-primary);
+  border-color: var(--shop-gold);
+}
+
+.survey-stakeholder-btn.approved {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: var(--shop-emerald);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.survey-note-input {
+  flex: 1;
+  min-width: 200px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--shop-text-primary);
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: var(--shop-radius-sm);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.survey-note-input:focus {
+  border-color: var(--shop-gold);
+}
+
+/* Sign-off Tally Box */
+.survey-tally-summary-card {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(15, 17, 23, 0.9));
+  border: 1.5px solid var(--shop-gold);
+  border-radius: var(--shop-radius-lg);
+  padding: 24px;
+}
+
+.survey-tally-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 14px;
+}
+
+.survey-tally-row.grand-total {
+  border-bottom: none;
+  border-top: 2px solid var(--shop-gold);
+  padding-top: 14px;
+  margin-top: 8px;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--shop-gold);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .survey-live-bar {
+    position: static;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .survey-live-actions {
+    justify-content: stretch;
+  }
+  .survey-live-actions .shop-btn {
+    flex: 1;
+  }
+  .survey-tiers-grid, .survey-tailor-grid {
+    grid-template-columns: 1fr;
+  }
+}

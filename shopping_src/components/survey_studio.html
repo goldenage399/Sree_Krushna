@@ -1,0 +1,440 @@
+  <!-- Interactive Family Survey Studio (P-SURVEY-HYBRID-001) -->
+  <section id="interactiveSurveyStudio" class="survey-studio-container" style="display: none;">
+    
+    <!-- Sticky Live Budget Bar -->
+    <div class="survey-live-bar" id="surveyLiveBudgetBar">
+      <div class="survey-live-metrics">
+        <div class="survey-metric-item">
+          <span class="survey-metric-label">Selected Tentative Budget</span>
+          <span class="survey-metric-val" id="surveyLiveTotal">₹3,15,000</span>
+        </div>
+        <div class="survey-metric-item">
+          <span class="survey-metric-label">Tailoring Cost Savings</span>
+          <span class="survey-metric-val savings" id="surveyLiveSavings">+₹27,500 Saved</span>
+        </div>
+        <div class="survey-metric-item">
+          <span class="survey-metric-label">Decisions Selected</span>
+          <span class="survey-metric-val subtle" id="surveyLiveProgress">0 / 11 Locked</span>
+        </div>
+      </div>
+      <div class="survey-live-actions">
+        <button class="shop-btn shop-btn-primary" onclick="window.printFamilySurvey()" title="Print Ink-Friendly A4 Survey Form with Selected Choices Pre-filled">
+          <span>🖨️</span> Print Pre-Filled Survey
+        </button>
+        <button class="shop-btn" onclick="window.resetSurveyChoices()" title="Reset all survey selections to default">
+          <span>🔄</span> Reset
+        </button>
+      </div>
+    </div>
+
+    <!-- Section 1: Sacred Vivaha Pata & Bridal Wardrobe Portfolio -->
+    <div class="survey-studio-card">
+      <div class="survey-studio-header">
+        <div>
+          <h3><span>🪔</span> 1. Sacred Vivaha Pata &amp; Bridal Wardrobe Portfolio</h3>
+          <p>Select preferred budget tiers, ritual motifs, and consensus approval for the Bride's ceremonial attire.</p>
+        </div>
+        <span class="survey-heirloom-tag">4 Key Articles</span>
+      </div>
+
+      <!-- Item 1: TRS-BR-01 -->
+      <div class="survey-item-row" id="srow-TRS-BR-01">
+        <div class="survey-item-top">
+          <div class="survey-item-info">
+            <strong>TRS-BR-01: Sacred Vivaha Pata (Hastaganthi Mandap Silk Saree)</strong>
+            <small>Mandatory Sacred Silk for 12:00 PM Muhurtham | Store: Boyanika / Kalamandir (Janpath)</small>
+          </div>
+          <span class="survey-heirloom-tag">⚠️ Drop off Day 1 for Maggam Work</span>
+        </div>
+        <div class="survey-tiers-grid">
+          <div class="survey-tier-card" onclick="window.selectSurveyTier('TRS-BR-01', 't1', 42500)" data-item="TRS-BR-01" data-tier="t1">
+            <span class="survey-tier-name"><input type="radio" name="tier-TRS-BR-01" value="t1"> Tier 1: Classic</span>
+            <span class="survey-tier-price">₹35,000 – ₹50,000</span>
+            <span class="survey-tier-sub">Authentic handloom silk with traditional zari</span>
+          </div>
+          <div class="survey-tier-card" onclick="window.selectSurveyTier('TRS-BR-01', 't2', 62500)" data-item="TRS-BR-01" data-tier="t2">
+            <span class="survey-tier-name"><input type="radio" name="tier-TRS-BR-01" value="t2"> Tier 2: Heritage</span>
+            <span class="survey-tier-price">₹50,000 – ₹75,000</span>
+            <span class="survey-tier-sub">Pure Mulberry silk, intricate korvai borders</span>
+          </div>
+          <div class="survey-tier-card" onclick="window.selectSurveyTier('TRS-BR-01', 't3', 90000)" data-item="TRS-BR-01" data-tier="t3">
+            <span class="survey-tier-name"><input type="radio" name="tier-TRS-BR-01" value="t3"> Tier 3: Royal Bespoke</span>
+            <span class="survey-tier-price">₹75,000+ (Gold Zari)</span>
+            <span class="survey-tier-sub">Heavy real gold zari, bridal heirloom weave</span>
+          </div>
+        </div>
+        <div class="survey-interactive-footer">
+          <div class="survey-stakeholder-toggles">
+            <span style="font-size: 11px; color: var(--shop-text-secondary); margin-right: 4px;">Consensus:</span>
+            <button class="survey-stakeholder-btn" onclick="window.toggleSurveyStakeholder('TRS-BR-01', 'bride')">👰 Bride</button>
+            <button class="survey-stakeholder-btn" onclick="window.toggleSurveyStakeholder('TRS-BR-01', 'sisters')">👭 Sisters</button>
+            <button class="survey-stakeholder-btn" onclick="window.toggleSurveyStakeholder('TRS-BR-01', 'inlaws')">🎁 In-Laws</button>
+          </div>
+          <input type="text" class="survey-note-input" placeholder="Color / Motif preference (e.g. Temple Crimson, Peacock motif)..." onchange="window.saveSurveyNote('TRS-BR-01', this.value)">
+        </div>
+      </div>
+
+      <!-- Item 2: TRS-OD-01 -->
+      <div class="survey-item-row" id="srow-TRS-OD-01">
+        <div class="survey-item-top">
+          <div class="survey-item-info">
+            <strong>TRS-OD-01: Nuapatna Khandua Pata (Lord Jagannath Sacred Silk)</strong>
+            <small>Blessed silk with Gita Govinda calligraphy for Diya Mangula Puja | Store: Boyanika / Priyadarshini</small>
+          </div>
+          <span class="survey-heirloom-tag">🪔 Odia Cultural Heirloom</span>
+        </div>
+        <div class="survey-tiers-grid">
+          <div class="survey-tier-card" onclick="window.selectSurveyTier('TRS-OD-01', 't1', 14000)" data-item="TRS-OD-01" data-tier="t1">
+            <span class="survey-tier-name"><input type="radio" name="tier-TRS-OD-01" value="t1"> Traditional Khandua</span>
+            <span class="survey-tier-price">₹12,000 – ₹16,000</span>
+            <span class="survey-tier-sub">Classic temple red/yellow with floral borders</span>
+          </div>
+          <div class="survey-tier-card" onclick="window.selectSurveyTier('TRS-OD-01', 't2', 21000)" data-item="TRS-OD-01" data-tier="t2">
+            <span class="survey-tier-name"><input type="radio" name="tier-TRS-OD-01" value="t2"> Master Calligraphic Weave</span>
+            <span class="survey-tier-price">₹18,000 – ₹24,000</span>
+            <span class="survey-tier-sub">Full Gita Govinda shloka woven bandha body</span>
+          </div>
+        </div>
+        <div class="survey-interactive-footer">
+          <div class="survey-stakeholder-toggles">
+            <span style="font-size: 11px; color: var(--shop-text-secondary); margin-right: 4px;">Consensus:</span>
+            <button class="survey-stakeholder-btn" onclick="window.toggleSurveyStakeholder('TRS-OD-01', 'bride')">👰 Bride</button>
+            <button class="survey-stakeholder-btn" onclick="window.toggleSurveyStakeholder('TRS-OD-01', 'sisters')">👭 Sisters</button>
+            <button class="survey-stakeholder-btn" onclick="window.toggleSurveyStakeholder('TRS-OD-01', 'inlaws')">🎁 In-Laws</button>
+          </div>
+          <input type="text" class="survey-note-input" placeholder="Color: Sun Orange or Temple Crimson..." onchange="window.saveSurveyNote('TRS-OD-01', this.value)">
+        </div>
+      </div>
+
+      <!-- Item 3: TRS-BR-02 -->
+      <div class="survey-item-row" id="srow-TRS-BR-02">
+        <div class="survey-item-top">
+          <div class="survey-item-info">
+            <strong>TRS-BR-02: Madhuparkam Saree (Jeelakarra-Bellam Ritual Handloom)</strong>
+            <small>Auspicious cotton/silk saree dipped in turmeric water | Store: Kalamandir / Boyanika</small>
+          </div>
+          <span class="survey-heirloom-tag">Vedic Ritual Wear</span>
+        </div>
+        <div class="survey-tiers-grid">
+          <div class="survey-tier-card" onclick="window.selectSurveyTier('TRS-BR-02', 't1', 4000)" data-item="TRS-BR-02" data-tier="t1">
+            <span class="survey-tier-name"><input type="radio" name="tier-TRS-BR-02" value="t1"> Handloom Pure Cotton</span>
+            <span class="survey-tier-price">₹3,000 – ₹5,000</span>
+            <span class="survey-tier-sub">Traditional auspicious unbleached cotton</span>
+          </div>
+          <div class="survey-tier-card" onclick="window.selectSurveyTier('TRS-BR-02', 't2', 7750)" data-item="TRS-BR-02" data-tier="t2">
+            <span class="survey-tier-name"><input type="radio" name="tier-TRS-BR-02" value="t2"> Fine Mulberry Ritual Silk</span>
+            <span class="survey-tier-price">₹6,000 – ₹9,500</span>
+            <span class="survey-tier-sub">Soft luster silk with temple red border</span>
+          </div>
+        </div>
+        <div class="survey-interactive-footer">
+          <div class="survey-stakeholder-toggles">
+            <span style="font-size: 11px; color: var(--shop-text-secondary); margin-right: 4px;">Consensus:</span>
+            <button class="survey-stakeholder-btn" onclick="window.toggleSurveyStakeholder('TRS-BR-02', 'bride')">👰 Bride</button>
+            <button class="survey-stakeholder-btn" onclick="window.toggleSurveyStakeholder('TRS-BR-02', 'sisters')">👭 Sisters</button>
+            <button class="survey-stakeholder-btn" onclick="window.toggleSurveyStakeholder('TRS-BR-02', 'inlaws')">🎁 In-Laws</button>
+          </div>
+          <input type="text" class="survey-note-input" placeholder="Off-white with red or yellow border..." onchange="window.saveSurveyNote('TRS-BR-02', this.value)">
+        </div>
+      </div>
+
+      <!-- Item 4: TRS-BR-03 -->
+      <div class="survey-item-row" id="srow-TRS-BR-03">
+        <div class="survey-item-top">
+          <div class="survey-item-info">
+            <strong>TRS-BR-03: Sangeet Celebration Designer Lehenga</strong>
+            <small>High-energy stage performance ensemble | Store: Mohey Manyavar / Forum Esplanade</small>
+          </div>
+          <span class="survey-heirloom-tag">Party / Sangeet</span>
+        </div>
+        <div class="survey-tiers-grid">
+          <div class="survey-tier-card" onclick="window.selectSurveyTier('TRS-BR-03', 't1', 37500)" data-item="TRS-BR-03" data-tier="t1">
+            <span class="survey-tier-name"><input type="radio" name="tier-TRS-BR-03" value="t1"> Tier 1: Contemporary</span>
+            <span class="survey-tier-price">₹30,000 – ₹45,000</span>
+            <span class="survey-tier-sub">Lightweight georgette/raw silk with sequins</span>
+          </div>
+          <div class="survey-tier-card" onclick="window.selectSurveyTier('TRS-BR-03', 't2', 57500)" data-item="TRS-BR-03" data-tier="t2">
+            <span class="survey-tier-name"><input type="radio" name="tier-TRS-BR-03" value="t2"> Tier 2: Heavy Bridal Zardozi</span>
+            <span class="survey-tier-price">₹45,000 – ₹70,000</span>
+            <span class="survey-tier-sub">Rich velvet/silk flare with intricate dori embroidery</span>
+          </div>
+          <div class="survey-tier-card" onclick="window.selectSurveyTier('TRS-BR-03', 't3', 85000)" data-item="TRS-BR-03" data-tier="t3">
+            <span class="survey-tier-name"><input type="radio" name="tier-TRS-BR-03" value="t3"> Tier 3: Haute Couture</span>
+            <span class="survey-tier-price">₹70,000+ (Bespoke)</span>
+            <span class="survey-tier-sub">Custom designer silhouette with double dupatta</span>
+          </div>
+        </div>
+        <div class="survey-interactive-footer">
+          <div class="survey-stakeholder-toggles">
+            <span style="font-size: 11px; color: var(--shop-text-secondary); margin-right: 4px;">Consensus:</span>
+            <button class="survey-stakeholder-btn" onclick="window.toggleSurveyStakeholder('TRS-BR-03', 'bride')">👰 Bride</button>
+            <button class="survey-stakeholder-btn" onclick="window.toggleSurveyStakeholder('TRS-BR-03', 'sisters')">👭 Sisters</button>
+            <button class="survey-stakeholder-btn" onclick="window.toggleSurveyStakeholder('TRS-BR-03', 'inlaws')">🎁 In-Laws</button>
+          </div>
+          <input type="text" class="survey-note-input" placeholder="Preferred color (coordinate with groom tux)..." onchange="window.saveSurveyNote('TRS-BR-03', this.value)">
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: Groom Mandap & Royal Attire (Custom Tailoring vs Readymade Gate) -->
+    <div class="survey-studio-card">
+      <div class="survey-studio-header">
+        <div>
+          <h3><span>👑</span> 2. Groom Ceremonial Wardrobe &amp; Master Tailoring Decisions</h3>
+          <p>Decide between bespoke master tailoring (Ashok Nagar / Rajmahal) versus branded readymade ensembles (Manyavar / Tasva).</p>
+        </div>
+        <span class="survey-heirloom-tag">Major Cost-Saving Opportunity</span>
+      </div>
+
+      <!-- Item 5: TRS-GR-03 Tailoring Decision -->
+      <div class="survey-item-row" id="srow-TRS-GR-03">
+        <div class="survey-item-top">
+          <div class="survey-item-info">
+            <strong>TRS-GR-03: Royal Barat Sherwani &amp; Reception Ensemble</strong>
+            <small>Key decision: Custom tailoring vs readymade brand</small>
+          </div>
+          <span class="survey-heirloom-tag" style="background: rgba(16, 185, 129, 0.2); border-color: var(--shop-emerald);">Save up to ₹35,000</span>
+        </div>
+        <div class="survey-tailor-grid">
+          <div class="survey-tailor-card selected" onclick="window.selectTailoringChoice('TRS-GR-03', 'bespoke', 14250, 27750)" data-item="TRS-GR-03" data-choice="bespoke">
+            <span class="survey-tailor-badge bespoke">Recommended: Bespoke Master Tailored</span>
+            <span class="survey-tailor-cost">₹12,000 – ₹16,500</span>
+            <span class="survey-tailor-detail">
+              • Sourcing: Raw silk from Janpath fabric stores.<br>
+              • Master Tailor: Ashok Nagar / Rajmahal.<br>
+              • Turnaround: <strong>7–10 days buffer required (Drop off on Day 1)</strong>.<br>
+              • Fit: Bespoke made-to-measure tailored to groom physique.
+            </span>
+          </div>
+          <div class="survey-tailor-card" onclick="window.selectTailoringChoice('TRS-GR-03', 'readymade', 42000, 0)" data-item="TRS-GR-03" data-choice="readymade">
+            <span class="survey-tailor-badge readymade">Off-the-Shelf: Branded Readymade</span>
+            <span class="survey-tailor-cost">₹35,000 – ₹55,000</span>
+            <span class="survey-tailor-detail">
+              • Stores: Manyavar, Tasva, Sherwani House (Janpath).<br>
+              • Turnaround: Instant off-the-shelf + 1–2 days minor alteration.<br>
+              • Fit: Standard off-the-rack sizing (38, 40, 42).<br>
+              • Premium: Branded markup.
+            </span>
+          </div>
+        </div>
+        <div class="survey-interactive-footer">
+          <div class="survey-stakeholder-toggles">
+            <span style="font-size: 11px; color: var(--shop-text-secondary); margin-right: 4px;">Consensus:</span>
+            <button class="survey-stakeholder-btn" onclick="window.toggleSurveyStakeholder('TRS-GR-03', 'bride')">👰 Bride</button>
+            <button class="survey-stakeholder-btn" onclick="window.toggleSurveyStakeholder('TRS-GR-03', 'sisters')">👭 Sisters</button>
+            <button class="survey-stakeholder-btn" onclick="window.toggleSurveyStakeholder('TRS-GR-03', 'inlaws')">🎁 In-Laws</button>
+          </div>
+          <input type="text" class="survey-note-input" placeholder="Color: Ivory, Champagne, or Royal Navy..." onchange="window.saveSurveyNote('TRS-GR-03', this.value)">
+        </div>
+      </div>
+
+      <!-- Item 6: TRS-OD-04 -->
+      <div class="survey-item-row" id="srow-TRS-OD-04">
+        <div class="survey-item-top">
+          <div class="survey-item-info">
+            <strong>TRS-OD-04: Sambalpuri Groom Joda &amp; Silk Dhoti</strong>
+            <small>Traditional Odia sacred wedding joda for groom morning rituals | Store: Boyanika (Master Canteen)</small>
+          </div>
+          <span class="survey-heirloom-tag">🪔 Odia Cultural Heirloom</span>
+        </div>
+        <div class="survey-tiers-grid">
+          <div class="survey-tier-card" onclick="window.selectSurveyTier('TRS-OD-04', 't1', 8000)" data-item="TRS-OD-04" data-tier="t1">
+            <span class="survey-tier-name"><input type="radio" name="tier-TRS-OD-04" value="t1"> Pure Tussar Handloom</span>
+            <span class="survey-tier-price">₹6,500 – ₹9,500</span>
+            <span class="survey-tier-sub">Authentic Sambalpuri Bandha border, unbleached tusser</span>
+          </div>
+          <div class="survey-tier-card" onclick="window.selectSurveyTier('TRS-OD-04', 't2', 12000)" data-item="TRS-OD-04" data-tier="t2">
+            <span class="survey-tier-name"><input type="radio" name="tier-TRS-OD-04" value="t2"> Mulberry Temple Silk Joda</span>
+            <span class="survey-tier-price">₹10,000 – ₹14,000</span>
+            <span class="survey-tier-sub">Rich luster Mulberry silk with Pasapalli borders</span>
+          </div>
+        </div>
+        <div class="survey-interactive-footer">
+          <div class="survey-stakeholder-toggles">
+            <span style="font-size: 11px; color: var(--shop-text-secondary); margin-right: 4px;">Consensus:</span>
+            <button class="survey-stakeholder-btn" onclick="window.toggleSurveyStakeholder('TRS-OD-04', 'bride')">👰 Bride</button>
+            <button class="survey-stakeholder-btn" onclick="window.toggleSurveyStakeholder('TRS-OD-04', 'sisters')">👭 Sisters</button>
+            <button class="survey-stakeholder-btn" onclick="window.toggleSurveyStakeholder('TRS-OD-04', 'inlaws')">🎁 In-Laws</button>
+          </div>
+          <input type="text" class="survey-note-input" placeholder="Pattern: Pasapalli or Classic Bichitrapuri..." onchange="window.saveSurveyNote('TRS-OD-04', this.value)">
+        </div>
+      </div>
+
+      <!-- Item 7: TRS-GR-06 -->
+      <div class="survey-item-row" id="srow-TRS-GR-06">
+        <div class="survey-item-top">
+          <div class="survey-item-info">
+            <strong>TRS-GR-06: Sangeet Evening Tuxedo / Bandhgala</strong>
+            <small>Evening formal wear for Sangeet dance celebration</small>
+          </div>
+        </div>
+        <div class="survey-tailor-grid">
+          <div class="survey-tailor-card" onclick="window.selectTailoringChoice('TRS-GR-06', 'bespoke', 18000, 8000)" data-item="TRS-GR-06" data-choice="bespoke">
+            <span class="survey-tailor-badge bespoke">Custom Raymond MTM</span>
+            <span class="survey-tailor-cost">₹16,000 – ₹24,000</span>
+            <span class="survey-tailor-detail">Raymond Made-to-Measure (Janpath), 7-day delivery</span>
+          </div>
+          <div class="survey-tailor-card" onclick="window.selectTailoringChoice('TRS-GR-06', 'readymade', 26000, 0)" data-item="TRS-GR-06" data-choice="readymade">
+            <span class="survey-tailor-badge readymade">Readymade JadeBlue / Blackberrys</span>
+            <span class="survey-tailor-cost">₹22,000 – ₹38,000</span>
+            <span class="survey-tailor-detail">Instant off-the-shelf purchase, minor cuff adjustments</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: In-Laws Traditional 'Sara' Gifting & Sacred Heirlooms -->
+    <div class="survey-studio-card">
+      <div class="survey-studio-header">
+        <div>
+          <h3><span>🎁</span> 3. In-Laws Traditional 'Sara' Gifting &amp; Sacred Heirlooms</h3>
+          <p>Allocate respectful gifting bundles for in-laws, sisters, and authentic Odia sacred metalware.</p>
+        </div>
+        <span class="survey-heirloom-tag">Family Consensus Vital</span>
+      </div>
+
+      <!-- Item 8: Attagaru (Mother-in-law) -->
+      <div class="survey-item-row" id="srow-SARA-MIL">
+        <div class="survey-item-top">
+          <div class="survey-item-info">
+            <strong>Mother-in-Law (Attagaru) Samandhi Vastra Hub</strong>
+            <small>1 Heirloom Kanchipuram / Berhampuri Kumbha Patta + 2 Festive Silks</small>
+          </div>
+        </div>
+        <div class="survey-tiers-grid">
+          <div class="survey-tier-card" onclick="window.selectSurveyTier('SARA-MIL', 't1', 31500)" data-item="SARA-MIL" data-tier="t1">
+            <span class="survey-tier-name"><input type="radio" name="tier-SARA-MIL" value="t1"> Tier 1: Traditional Silk Bundle</span>
+            <span class="survey-tier-price">₹25,000 – ₹38,000</span>
+            <span class="survey-tier-sub">1 Berhampuri Pata + 2 Sambalpuri Festive Silks</span>
+          </div>
+          <div class="survey-tier-card" onclick="window.selectSurveyTier('SARA-MIL', 't2', 46500)" data-item="SARA-MIL" data-tier="t2">
+            <span class="survey-tier-name"><input type="radio" name="tier-SARA-MIL" value="t2"> Tier 2: Heritage Heavy Silk</span>
+            <span class="survey-tier-price">₹38,000 – ₹55,000</span>
+            <span class="survey-tier-sub">1 Pure Kanchipuram Gold Zari + 2 High-End Handlooms</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 9: Mavagaru (Father-in-law) -->
+      <div class="survey-item-row" id="srow-SARA-FIL">
+        <div class="survey-item-top">
+          <div class="survey-item-info">
+            <strong>Father-in-Law (Mavagaru) Samandhi Vastra Hub</strong>
+            <small>1 Pure Silk Dhoti-Kurta Set + 1 Raymond Suit Piece / Safari</small>
+          </div>
+        </div>
+        <div class="survey-tiers-grid">
+          <div class="survey-tier-card" onclick="window.selectSurveyTier('SARA-FIL', 't1', 15000)" data-item="SARA-FIL" data-tier="t1">
+            <span class="survey-tier-name"><input type="radio" name="tier-SARA-FIL" value="t1"> Classic Vastra Set</span>
+            <span class="survey-tier-price">₹12,000 – ₹18,000</span>
+            <span class="survey-tier-sub">Tussar dhoti-kurta + Raymond poly-wool fabric</span>
+          </div>
+          <div class="survey-tier-card" onclick="window.selectSurveyTier('SARA-FIL', 't2', 23000)" data-item="SARA-FIL" data-tier="t2">
+            <span class="survey-tier-name"><input type="radio" name="tier-SARA-FIL" value="t2"> Premium Silk &amp; Wool</span>
+            <span class="survey-tier-price">₹18,000 – ₹28,000</span>
+            <span class="survey-tier-sub">Mulberry silk joda + Raymond all-wool suiting</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 10: TRS-OD-02 Balakati Kansa Set -->
+      <div class="survey-item-row" id="srow-TRS-OD-02">
+        <div class="survey-item-top">
+          <div class="survey-item-info">
+            <strong>TRS-OD-02: Balakati Hand-Cast Kansa Dinner Set (Ayurvedic Bell-Metal)</strong>
+            <small>Traditional bell-metal service for couple's first meal | Store: Balakati Artisan Cluster / Priyadarshini</small>
+          </div>
+          <span class="survey-heirloom-tag">🪔 Odia Cultural Heirloom</span>
+        </div>
+        <div class="survey-tiers-grid">
+          <div class="survey-tier-card" onclick="window.selectSurveyTier('TRS-OD-02', 't1', 7500)" data-item="TRS-OD-02" data-tier="t1">
+            <span class="survey-tier-name"><input type="radio" name="tier-TRS-OD-02" value="t1"> 5-Piece Essential</span>
+            <span class="survey-tier-price">₹7,500</span>
+            <span class="survey-tier-sub">Thali, 2 katoris, glass, spoon</span>
+          </div>
+          <div class="survey-tier-card" onclick="window.selectSurveyTier('TRS-OD-02', 't2', 11000)" data-item="TRS-OD-02" data-tier="t2">
+            <span class="survey-tier-name"><input type="radio" name="tier-TRS-OD-02" value="t2"> 7-Piece Traditional</span>
+            <span class="survey-tier-price">₹11,000</span>
+            <span class="survey-tier-sub">Thali, 3 katoris, sweet bowl, glass, spoon</span>
+          </div>
+          <div class="survey-tier-card" onclick="window.selectSurveyTier('TRS-OD-02', 't3', 15000)" data-item="TRS-OD-02" data-tier="t3">
+            <span class="survey-tier-name"><input type="radio" name="tier-TRS-OD-02" value="t3"> 9-Piece Royal Banquet</span>
+            <span class="survey-tier-price">₹15,000</span>
+            <span class="survey-tier-sub">Full service with ghee pot and water jug</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 11: TRS-OD-03 Cuttack Tarakasi Silver -->
+      <div class="survey-item-row" id="srow-TRS-OD-03">
+        <div class="survey-item-top">
+          <div class="survey-item-info">
+            <strong>TRS-OD-03: Cuttack Tarakasi Silver Sindura Phuda &amp; Pana Batta</strong>
+            <small>Pure 925 silver filigree ritual vermilion casket &amp; betel box | Store: Khimji / Epari / Cuttack</small>
+          </div>
+          <span class="survey-heirloom-tag">🪔 Odia Cultural Heirloom</span>
+        </div>
+        <div class="survey-tiers-grid">
+          <div class="survey-tier-card" onclick="window.selectSurveyTier('TRS-OD-03', 't1', 14000)" data-item="TRS-OD-03" data-tier="t1">
+            <span class="survey-tier-name"><input type="radio" name="tier-TRS-OD-03" value="t1"> Classic Filigree Set</span>
+            <span class="survey-tier-price">₹12,000 – ₹16,000</span>
+            <span class="survey-tier-sub">120g pure silver, traditional floral pattern</span>
+          </div>
+          <div class="survey-tier-card" onclick="window.selectSurveyTier('TRS-OD-03', 't2', 21500)" data-item="TRS-OD-03" data-tier="t2">
+            <span class="survey-tier-name"><input type="radio" name="tier-TRS-OD-03" value="t2"> Master Artisan Peacock Set</span>
+            <span class="survey-tier-price">₹18,000 – ₹25,000</span>
+            <span class="survey-tier-sub">200g fine filigree with embossed peacock lid</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4: Budget Allocation Summary & Sign-off -->
+    <div class="survey-tally-summary-card">
+      <div class="survey-studio-header" style="border-bottom-color: rgba(212, 175, 55, 0.3);">
+        <div>
+          <h3 style="color: var(--shop-gold);"><span>📊</span> Family Budget Allocation Summary &amp; Consensus Sign-Off</h3>
+          <p>Live calculated totals across all selected tiers and master tailoring savings.</p>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div class="survey-tally-row">
+          <span>1. Bridal Wardrobe &amp; Sacred Pata Portfolio:</span>
+          <strong id="summaryBridalTotal">₹1,47,750</strong>
+        </div>
+        <div class="survey-tally-row">
+          <span>2. Groom Ceremonial Wardrobe &amp; Tailoring:</span>
+          <strong id="summaryGroomTotal">₹42,250</strong>
+        </div>
+        <div class="survey-tally-row">
+          <span>3. In-Laws 'Sara' Gifting Packages:</span>
+          <strong id="summarySaraTotal">₹69,500</strong>
+        </div>
+        <div class="survey-tally-row">
+          <span>4. Traditional Sacred Heirlooms (Kansa &amp; Tarakasi):</span>
+          <strong id="summaryHeirloomsTotal">₹32,500</strong>
+        </div>
+        <div class="survey-tally-row grand-total">
+          <span>Total Tentative Allocated Budget:</span>
+          <span id="summaryGrandTotal">₹2,92,000</span>
+        </div>
+        <div style="font-size: 13px; color: var(--shop-emerald); margin-top: 6px;">
+          ✓ Master Gents Tailoring Savings vs Readymade: <strong id="summarySavingsTotal">+₹27,750</strong>
+        </div>
+      </div>
+
+      <div style="margin-top: 24px; padding-top: 16px; border-top: 1px dashed rgba(255, 255, 255, 0.15);">
+        <label style="display: block; font-size: 12px; font-weight: 700; color: var(--shop-text-primary); margin-bottom: 8px;">
+          Family Consultation Remarks &amp; Elder Sign-off Notes:
+        </label>
+        <textarea id="surveyFamilyRemarks" rows="3" style="width: 100%; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--shop-radius-sm); color: #fff; padding: 10px; font-size: 13px; resize: vertical;" placeholder="Enter agreed color palettes, elder blessings, specific store appointments, or tailoring notes..." onchange="window.saveSurveyRemarks(this.value)"></textarea>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 18px;">
+        <button class="shop-btn shop-btn-primary" onclick="window.printFamilySurvey()">
+          <span>🖨️</span> Print Complete A4 Survey
+        </button>
+      </div>
+    </div>
+
+  </section>

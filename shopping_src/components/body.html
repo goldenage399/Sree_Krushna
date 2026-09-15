@@ -47,6 +47,18 @@
     </div>
   </header>
 
+  <!-- Top View Segmented Switcher (P-SURVEY-HYBRID-001) -->
+  <div class="shop-view-switcher" id="shopViewSwitcher">
+    <button class="shop-view-tab active" id="tabCatalogView" onclick="window.switchShoppingView('catalog')">
+      <span>🛍️</span> Trousseau Catalog &amp; Consensus (34)
+    </button>
+    <button class="shop-view-tab" id="tabSurveyView" onclick="window.switchShoppingView('survey')">
+      <span>📝</span> Interactive Family Survey &amp; Budget Studio
+    </button>
+  </div>
+
+  <!-- Catalog View Container -->
+  <div id="catalogViewSection">
   <!-- KPI Metrics Banner -->
   <section class="shop-kpis" id="shopKpis">
     <div class="shop-kpi-card">
@@ -127,6 +139,8 @@
   <main class="shop-items-grid" id="itemsGrid">
     <!-- Rendered dynamically by JS -->
   </main>
+  </div>
+  <!-- End Catalog View Container -->
 
   <!-- Printable Family Consultation Survey Dossier (P-SURVEY-PRINT-001) -->
   <section id="familySurveyDossierPrintView" class="family-survey-dossier" style="display: none;">
