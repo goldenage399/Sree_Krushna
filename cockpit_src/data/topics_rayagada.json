@@ -1,0 +1,229 @@
+[
+  {
+    "id": 0,
+    "act": "ACT 1: ARRIVAL & ENTRANCE",
+    "actClass": "act-1",
+    "time": "10 mins",
+    "title": "Grand Entrance Swagata Torana & Welcome Easel",
+    "shortDesc": "12x14ft solid truss arch, fresh marigold/jasmine strings, Purna Kumbha urns",
+    "headline": "Traditional Swagata Torana & Antique Gold Welcome Easel",
+    "goal": "Establish a sacred, royal Odia welcome at the convention entrance without obstructing guest flow.",
+    "vernacular": "Entrance gate pe solid 12x14ft arch chahiye. Fresh gendu phula aur juhi/beli ki ladiyaan ho, plastic bilkul nahi. Dono side brass Purna Kumbha urns aur velvet welcome board.",
+    "scripts": {
+      "warm": "Namaste ji. Rayagada engagement mein entrance pe hume traditional Odia welcoming arch chahiye. Fresh marigold aur mogra strings ho, aur dono sides pe carved pedestals pe brass Purna Kumbha urns.",
+      "data": "The entrance accommodates 300–450 guests between 10:00 and 11:30 AM. Clearance must be minimum 12ft high by 14ft wide to prevent bottlenecks. Marigold garlands must be 100% fresh local blooms strung T-4 hours.",
+      "firm": "No foam boards, synthetic satin bows, or artificial plastic marigold chains at eye level. If artificial flowers are detected at the entrance, vendor will replace them immediately at their own expense."
+    },
+    "factCitation": "Standard commercial rate for a fresh marigold 12x14ft arched entrance torana with brass urns in South Odisha is ₹8,000–₹12,000.",
+    "guardrail": "Zero artificial plastic flowers on entrance archway. Minimum 12ft clear walk-through height.",
+    "tree": [
+      {
+        "stage": "Stage 1: Dimension & Truss Check",
+        "title": "Verify Clear Opening",
+        "text": "Ensure arch footplates are secured with rubber pads to protect venue tiles."
+      },
+      {
+        "stage": "Stage 2: Fresh Bloom Sourcing",
+        "title": "Fresh Marigold & Jasmine",
+        "text": "Mandate early morning flower delivery to avoid wilt in afternoon heat."
+      }
+    ],
+    "curveballs": [
+      {
+        "objection": "Decorator says: 'Fresh marigold gets squashed during transit to Rayagada.'",
+        "counter": "Rayagada and Berhampur wholesale flower markets have abundant morning supply. We require local fresh garland stringing on site.",
+        "fallback": "Vendor can transport loose blooms in damp jute bags and string on-site at 06:00 AM."
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "act": "ACT 1: ARRIVAL & ENTRANCE",
+    "actClass": "act-1",
+    "time": "10 mins",
+    "title": "Assembly Hall & Brass Vilakku Central Aisle",
+    "shortDesc": "Crimson runner, polished brass Vilakku lamps, 300 banquet chairs with gold bows",
+    "headline": "Aisle Walkway & Coordinated Banquet Seating",
+    "goal": "Direct guest flow towards the centerstage with illuminated brass oil lamps and dignified seating.",
+    "vernacular": "Central walkway pe neat carpet runner aur har 10ft pe brass deepam/Vilakku stands chahiye. Chairs pe clean ivory covers aur gold organza sashes.",
+    "scripts": {
+      "warm": "Hall ke andar jab guests aate hain, toh unhe ek sacred temple corridor feel milna chahiye. Central aisle carpet ke saath traditional brass oil lamps aur disciplined seating layout.",
+      "data": "Main hall holds 300 seated guests across 15 rows. Central aisle width must be minimum 6 feet clear for family procession and photography movement. 300 banquet chairs must have clean, ironed ivory slipcovers.",
+      "firm": "We will not accept torn or stained chair covers. Every single chair cover must be freshly laundered, with uniform gold sashes tied identically."
+    },
+    "factCitation": "Laundered banquet chair cover with sash rental benchmark is ₹15–₹25/chair in Odisha.",
+    "guardrail": "Minimum 6ft wide center aisle. Zero exposed wiring or loose carpet edges (tape edges with gaffer tape).",
+    "tree": [
+      {
+        "stage": "Stage 1: Aisle Alignment",
+        "title": "Straight Axis to Stage",
+        "text": "Align center carpet directly with stage center-point."
+      },
+      {
+        "stage": "Stage 2: Brass Lamp Safety",
+        "title": "Secure Base & Oil Care",
+        "text": "Vilakku lamps must have weighted brass bases and spill-proof brass saucers."
+      }
+    ],
+    "curveballs": [
+      {
+        "objection": "Decorator says: 'Oil lamps are risky on carpet; let's use plastic fairy lights.'",
+        "counter": "Brass Vilakku lamps are an essential sacred Odia ritual marker. We use wide brass urlis with floating candles and water underneath to prevent any oil drip.",
+        "fallback": "Brass tall stands with enclosed glass chimneys and brass urlis at bases."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "act": "ACT 2: NIRBANDHA MANDAP",
+    "actClass": "act-2",
+    "time": "20 mins",
+    "title": "Nirbandha Centerstage & Floral Ring Mandap",
+    "shortDesc": "30x18ft stage, 8ft central floral ring, 3D backlit gold monogram, Maharaja sofa",
+    "headline": "Engagement Centerstage Architecture & Floral Halo",
+    "goal": "Lock 30ft × 18ft ceremonial stage with signature 8ft floral ring and custom 3D gold monogram crest.",
+    "vernacular": "Yeh main stage hai jahan Ring Exchange aur Nirbandha vows honge. 30x18ft stage pe central 8ft floral ring, beige silk drapery, aur 3D gold S&K monogram with warm lighting.",
+    "scripts": {
+      "warm": "Main stage humare photos aur video ka central focus hai. Hum chaahte hain ki background mein 8ft circular floral halo ho with dense marigold aur white tuberoses, aur center mein warm lit 3D monogram.",
+      "data": "Stage is 30ft wide × 18ft deep at 2.5ft height. Backdrop is 24ft wide × 10ft high. Circular floral ring must be 8ft diameter, packed with fresh Rajnigandha, yellow/orange marigold, and cream roses. Maharaja two-seater sofa in ivory/gold.",
+      "firm": "Stage sub-flooring must not creak or bounce under the weight of 25 family members during blessings. 18mm marine plywood deck on heavy-duty iron risers is mandatory."
+    },
+    "factCitation": "Turnkey 30x18ft engagement floral ring stage with royal sofa and 3D monogram benchmark is ₹22,000–₹28,000 in Rayagada.",
+    "guardrail": "Zero bounce in stage platform. Monogram must be warm white LED (2700K–3000K), strictly no cold white (6500K).",
+    "tree": [
+      {
+        "stage": "Stage 1: Platform Leveling",
+        "title": "18mm Plywood Structure",
+        "text": "Inspect stage risers for level deck and carpet stretching."
+      },
+      {
+        "stage": "Stage 2: Backdrop Rigging",
+        "title": "Self-Supported Truss",
+        "text": "Backdrop must be free-standing; zero drilling into hall walls."
+      },
+      {
+        "stage": "Stage 3: Floral Packing",
+        "title": "Dense Bloom Density",
+        "text": "Ensure no exposed floral oasis foam visible on the 8ft ring."
+      }
+    ],
+    "curveballs": [
+      {
+        "objection": "Decorator says: 'Making an 8ft floral ring on site takes too much time.'",
+        "counter": "The metal circle frame can be pre-welded in the workshop and transported in 2 halves. Oasis blocks and florals are loaded 2 hours prior.",
+        "fallback": "Prefabricated two-half circular frame mounted on self-standing twin masts."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "act": "ACT 2: NIRBANDHA MANDAP",
+    "actClass": "act-2",
+    "time": "15 mins",
+    "title": "Stage Puja Chowki & Patra Paribartana Setup",
+    "shortDesc": "Low brass chowki, embroidered red velvet cloth, silver thali, Gua, coconut, rice",
+    "headline": "Sacred Vedic Nirbandha Ritual Zone on Stage",
+    "goal": "Provide dignified, authentic ceremonial altar on left side of stage for Vedic Sankalpa and horoscope exchange.",
+    "vernacular": "Stage ke left side pe Purohit ji ka sacred Patra Paribartana setup rahega. Low wooden pidha/chowki with embroidered red velvet aasan, brass deepam, aur traditional puja thalis.",
+    "scripts": {
+      "warm": "Ring exchange se pehle Purohit ji Vedic Patra Paribartana aur Sankalpa karenge. Stage ke ek side pe dedicated clean traditional chowki setup hona chahiye jo camera framing mein sacred lage.",
+      "data": "Area required on stage left is 8ft × 8ft. Two low wooden Pidha seats with embroidered velvet cushions, polished brass kosa-kusi, silver thali for horoscope scrolls, and brass samai oil lamp on brass urli.",
+      "firm": "This is a sacred Vedic ceremony. The ritual area must be pristine: zero loose electric cords, zero dirty vendor tools left on the stage carpet."
+    },
+    "factCitation": "Purohit chowki and ritual setup brassware inclusions are standard contract items under CTR-DECOR-RIDER-001.",
+    "guardrail": "Dedicated 8x8ft ceremonial zone on stage left. Polished traditional brassware only.",
+    "tree": [
+      {
+        "stage": "Stage 1: Altar Placement",
+        "title": "Left Stage Elevation",
+        "text": "Ensure camera sightlines to both Purohit altar and main couple sofa."
+      },
+      {
+        "stage": "Stage 2: Sacred Samagri Mat",
+        "title": "Velvet Aasan Lock",
+        "text": "Red velvet aasan with gold zari border for scroll exchange."
+      }
+    ],
+    "curveballs": [
+      {
+        "objection": "Decorator says: 'Usually families sit on the stage floor without dedicated decor.'",
+        "counter": "This is a high-dignity formal ceremony. A dedicated elevated chowki setup honors the Purohit and creates stunning photography.",
+        "fallback": "Provide low carved wooden chowki with velvet upholstery."
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "act": "ACT 3: PHOTO-OP & FEAST",
+    "actClass": "act-3",
+    "time": "15 mins",
+    "title": "Photo-Op & Monogram Memory Wall",
+    "shortDesc": "10x8ft botanical foliage wall, warm neon typography, brass hanging bells, 45° studio lighting",
+    "headline": "Guest Social Portrait Wall & Monogram Identity",
+    "goal": "Deploy high-engagement selfie & family portrait backdrop in hall foyer to relieve stage congestion.",
+    "vernacular": "Hall ke bahar ya entrance foyer mein 10x8ft green foliage photo-booth wall chahiye with neon 'Forever Begins Today — Sree & Krushna'. Guests yahan photos khinchwayenge toh stage pe rush nahi hoga.",
+    "scripts": {
+      "warm": "Guests ko aate hi ek beautiful photo spot milna chahiye. Dense green foliage wall with brass bells aur warm white neon typography. Isse stage pe crowd 50% kam ho jaati hai.",
+      "data": "10ft wide × 8ft high matte botanical foliage panel (zero reflective glare). Backlit warm white neon sign. Dual 45° 3200K softbox portrait lights to eliminate smartphone face shadows.",
+      "firm": "Neon sign must be warm white (2800K), NOT blue or purple. The lettering must be precisely aligned and securely fastened."
+    },
+    "factCitation": "Turnkey 10x8ft greenery photo wall with custom neon sign and studio softbox rental is ₹7,000–₹10,000.",
+    "guardrail": "Zero shiny plastic grass mats; high-density boxwood or artificial ficus foliage with fresh floral accents.",
+    "tree": [
+      {
+        "stage": "Stage 1: Foyer Location",
+        "title": "Sightline Placement",
+        "text": "Position near entrance foyer with 15ft clear pullback distance for group photos."
+      },
+      {
+        "stage": "Stage 2: Studio Lighting Lock",
+        "title": "Softbox Keylights",
+        "text": "Two 45-degree diffused keylights so phone photos look professional."
+      }
+    ],
+    "curveballs": [
+      {
+        "objection": "Decorator says: 'Neon signs take 10 days to order and are expensive.'",
+        "counter": "The monogram artwork is already finalized in vector format. Local laser acrylic cutting in Bhubaneswar or Berhampur takes 48 hours.",
+        "fallback": "Use laser-cut 12mm MDF gold-painted lettering with warm LED back-wash."
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "act": "ACT 3: PHOTO-OP & FEAST",
+    "actClass": "act-3",
+    "time": "15 mins",
+    "title": "Dining Pavilion & 40 kVA DG Power Contingency",
+    "shortDesc": "Buffet pass styling, clean handwash stations, dedicated 40 kVA AMF DG generator",
+    "headline": "Dining Pavilion Layout, Odia Feast Styling & Power Backup",
+    "goal": "Guarantee seamless Odia buffet dining and 100% uninterrupted power during Nirbandha vows.",
+    "vernacular": "Dining area mein buffet counters clean ivory fabric aur floral runners ke saath arranged hon. Handwash stations dry aur hygienic hon. Aur 40 kVA DG generator standby pe ready rahe.",
+    "scripts": {
+      "warm": "Khane ka area humare guests ke liye equally important hai. Buffet counters well-lit aur clean hon, handwash ke paas dry floor matting ho, aur power cut ka zero risk hona chahiye.",
+      "data": "300 guests dining over 2 hours. 4 parallel buffet lines with chafing dish sneeze guards. Dedicated 40 kVA generator with automatic mains failure (AMF) switch to bridge municipal power cuts in under 5 seconds.",
+      "firm": "Rayagada experiences periodic grid voltage dips. If stage lights or sound cut out during the ring exchange due to vendor power neglect, penalty clause Cl 9 applies."
+    },
+    "factCitation": "40 kVA silent DG rental for 6 hours including fuel and operator in Rayagada is ₹6,000–₹8,000.",
+    "guardrail": "Dedicated 40 kVA DG with AMF panel. Handwash area must have non-slip coir runners.",
+    "tree": [
+      {
+        "stage": "Stage 1: Buffet Pass Flow",
+        "title": "Parallel Counters",
+        "text": "Separate vegetarian pure counters from live counter stations."
+      },
+      {
+        "stage": "Stage 2: Power Load Test",
+        "title": "Pre-Event DG Test",
+        "text": "Run full stage lighting, sound, and AC on DG for 20 minutes at 09:00 AM."
+      }
+    ],
+    "curveballs": [
+      {
+        "objection": "Decorator says: 'Hall already has electricity; why spend on a DG?'",
+        "counter": "Municipal power in Rayagada is vulnerable to grid trips. An engagement ring ceremony cannot pause for 20 minutes in darkness. ₹6,000 DG is mandatory insurance.",
+        "fallback": "Mandate vendor supply 40 kVA DG as part of turnkey package."
+      }
+    ]
+  }
+]

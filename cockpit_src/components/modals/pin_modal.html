@@ -1,0 +1,13 @@
+  <!-- PIN MODAL -->
+  <div class="modal-backdrop" id="pinModalBackdrop">
+    <div class="pin-modal">
+      <div style="font-size: 28px;">🔒</div>
+      <div>
+        <h3 style="color: #fff; font-size: 15px; font-weight: 700;">Host Coordinator PIN</h3>
+        <p style="color: var(--text-secondary); font-size: 11px; margin-top: 4px;">Enter PIN to unlock private Presenter HUD & Cost Breakdowns</p>
+      </div>
+      <input type="password" maxlength="4" class="pin-input" id="pinInput" placeholder="••••" onkeydown="if(event.key==='Enter') submitPin()" />
+      <button class="pin-submit-btn" onclick="submitPin()">Unlock HUD</button>
+      <button class="mode-btn" onclick="closePinModal()" style="width: 100%; justify-content: center; font-size: 11px;">Cancel</button>
+    </div>
+  </div>

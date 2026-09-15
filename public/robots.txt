@@ -1,0 +1,6 @@
+# Sree Krushna Marriage OS — crawl policy
+# Household planning tool; not intended for public search indexing.
+# See: User_Created/Discussion Threads/Council/260914_arch_council_decorator_cockpit_online_integration.md (SEC-1)
+
+User-agent: *
+Disallow: /decorator-cockpit.html

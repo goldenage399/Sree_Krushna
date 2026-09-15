@@ -1,0 +1,44 @@
+  <!-- WORKSPACE 3: MASTER DECOR PLANNING & 20-STEP DECISION ROADMAP -->
+  <section class="decisions-layout" id="decisionsWorkspace">
+    <div class="decisions-header-bar">
+      <div class="decisions-title-row">
+        <div class="decisions-title-block">
+          <h2><span>🏛️</span> Master Decor Planning &amp; 20-Step Decision Roadmap</h2>
+          <p>Strict Precedence Execution Order &bull; Evaluated on Visual Impact, Multi-Event Reusability &amp; Cost Efficiency</p>
+        </div>
+        <div class="decisions-progress-wrapper">
+          <div class="decisions-progress-meta">
+            <span id="decisionProgressLabel" style="color: var(--text-primary);">11 / 20 Steps Resolved</span>
+            <span id="decisionProgressPercent" style="color: var(--accent-gold);">55% COMPLETE</span>
+          </div>
+          <div class="decisions-progress-track">
+            <div class="decisions-progress-fill" id="decisionsProgressFill" style="width: 55%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="decisions-controls-row">
+        <div class="decisions-filter-group">
+          <span style="font-size: 11px; color: var(--text-muted); font-weight: 600; margin-right: 4px;">FILTER:</span>
+          <button class="decisions-filter-btn active" id="fbtnDecisions-all" onclick="filterDecisions('all')">All Steps (20)</button>
+          <button class="decisions-filter-btn filter-pending" id="fbtnDecisions-pending" onclick="filterDecisions('pending')">🟡 Pending Decision (5)</button>
+          <button class="decisions-filter-btn filter-locked" id="fbtnDecisions-locked" onclick="filterDecisions('locked')">🟢 Locked &amp; Certified (11)</button>
+          <button class="decisions-filter-btn filter-vendor" id="fbtnDecisions-vendor" onclick="filterDecisions('vendor')">🔵 Vendor Action (4)</button>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 11px; color: var(--text-muted); display: inline-flex; align-items: center; gap: 4px;" class="desktop-only">
+            <span>💡</span> Click thumbnails to inspect CAD in Lightbox
+          </span>
+          <button class="mode-btn" onclick="copyDecisionDigest()" style="font-size: 11px; background: rgba(59,130,246,0.12); color: #38bdf8; border-color: rgba(56,189,248,0.3);" title="Copy executive summary of all decisions">
+            📋 Copy Digest
+          </button>
+          <button class="mode-btn" onclick="resetDecisionChoices()" style="font-size: 11px; color: var(--text-muted);" title="Reset custom decision choices to defaults">
+            ↺ Reset
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARDS GRID -->
+    <div class="decisions-grid" id="decisionsGridContainer"></div>
+  </section>

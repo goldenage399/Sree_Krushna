@@ -31,6 +31,15 @@
             "value": "strict-origin-when-cross-origin"
           }
         ]
+      },
+      {
+        "source": "/decorator-cockpit.html",
+        "headers": [
+          {
+            "key": "X-Robots-Tag",
+            "value": "noindex, nofollow, noarchive"
+          }
+        ]
       }
     ]
   }

@@ -1,0 +1,71 @@
+  <!-- TOPBAR -->
+  <header class="topnav">
+    <div class="brand-section">
+      <div class="brand-logo">SK</div>
+      <div>
+        <div class="brand-title">Sree Krushna Marriage OS</div>
+        <div style="display: flex; gap: 6px; align-items: center;">
+          <span class="brand-badge">COCKPIT v2.6</span>
+          <span class="badge" id="autosaveBadge" style="background:rgba(16,185,129,0.15); color:#10b981; border:1px solid rgba(16,185,129,0.3); font-size:10px; padding:1px 6px; border-radius:3px;">💾 Autosaved</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER LIVE STATUS -->
+    <div class="live-badge hud" id="liveModeBadge">
+      🔒 PRESENTER HUD — PRIVATE
+    </div>
+
+    <!-- RIGHT CONTROLS -->
+    <div class="nav-controls">
+      <button class="mode-btn" id="btnModeLookbook" onclick="openLookbookModal()" style="color:#38bdf8; border-color:rgba(56,189,248,0.4);">
+        <span>🖼️ Visual Lookbook</span>
+        <kbd class="hotkey-badge">V</kbd>
+      </button>
+      <button class="mode-btn active" id="btnModeHud" onclick="switchView('hud')">
+        <span>🔒 Presenter HUD</span>
+        <kbd class="hotkey-badge">H</kbd>
+      </button>
+      <button class="mode-btn" id="btnModeFounder" onclick="switchView('audience')">
+        <span>🔴 Audience View</span>
+      </button>
+      <button class="mode-btn" id="btnModeDecisions" onclick="switchView('decisions')" style="color:#10b981; border-color:rgba(16,185,129,0.4);" title="Master Decor Planning & 20-Step Decision Roadmap (4 / D)">
+        <span>🏛️ Master Decisions</span>
+        <kbd class="hotkey-badge">4</kbd>
+      </button>
+      <div style="width: 1px; height: 20px; background: var(--border-subtle);"></div>
+      <button class="mode-btn" onclick="exportTenderAnnexureModal()" style="color:var(--accent-gold); border-color:rgba(245,158,11,0.4);" title="Export Tender Annexure (T)">
+        <span>📄 Export Tender</span>
+        <kbd class="hotkey-badge">T</kbd>
+      </button>
+      <button class="mode-btn" onclick="resetCockpitDefaults()" style="font-size:10.5px; opacity:0.75;" title="Reset calculator and topics to defaults">
+        <span>↺ Reset</span>
+      </button>
+      <button class="mode-btn" onclick="toggleFullscreen()">⛶</button>
+      <div style="width: 1px; height: 20px; background: var(--border-subtle);"></div>
+      <a href="index.html" class="mode-btn" style="text-decoration:none; color:var(--text-muted);" title="Return to Sree Krushna Host App">
+        <span>🏠 Host App</span>
+      </a>
+      <button class="mode-btn" id="cockpitLogoutBtn" style="font-size:11px; opacity:0.85; color:#f87171; border-color:rgba(248,113,113,0.3);" title="Sign Out">
+        <span>🚪 Sign Out</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- EVENT CONTEXT STRIP -->
+  <div class="event-strip">
+    <div class="event-pills">
+      <button class="event-pill active" id="btnEventMarquee" onclick="switchEvent('marquee')">
+        <span>🎪 Open-Ground Marquee (50m)</span>
+      </button>
+      <button class="event-pill" id="btnEventRayagada" onclick="switchEvent('rayagada')">
+        <span>💍 Hotel Indoor Hall (Engagement)</span>
+      </button>
+    </div>
+    <div class="event-metrics">
+      <div>Venue: <strong style="color: #fff;" id="metricVenueId">VEN-002 (50m Ground)</strong></div>
+      <div>Budget Cap: <span class="event-metric-val" id="metricBudgetCap">₹4,00,000</span></div>
+      <div>Target Spend: <span class="event-metric-val" id="metricTargetSpend">₹3,25,000</span></div>
+      <div>Reserve Ceiling: <span class="event-metric-val" id="metricReserveCeiling" style="color:#f59e0b;">₹4,50,000</span></div>
+    </div>
+  </div>

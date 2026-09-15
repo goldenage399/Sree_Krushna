@@ -1,10 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sree Krushna Marriage OS — Decorator Negotiation Cockpit & Master Decision Engine v2.6</title>
-  <style>
+<!-- ==========================================================================
+     Sree Krushna Marriage OS — Decorator Negotiation Cockpit (In-App Fragment)
+     Standard: SPEC-ARCH-SDCA-001 | Ruling: AC-DEC-2026-012 / UI-DEC-2026-008
+     ========================================================================== -->
+<style>
+
+/* ==========================================================================
+   Sree Krushna Marriage OS — Decorator Negotiation Cockpit Fragment
+   Scoped Exclusively to #tab-cockpit #cockpitFrame (Zero Global Leakage)
+   Pattern: monolithic-engine-port-css-scoping-gate (AC-DEC-2026-012)
+   ========================================================================== */
+
+#tab-cockpit.active {
+  display: flex !important;
+  flex-direction: column;
+  height: calc(100vh - 140px);
+  min-height: 720px;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+#tab-cockpit #cockpitFrame {
+  height: 100%;
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+#tab-cockpit #cockpitFrame .app-shell {
+  display: flex !important;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+#tab-cockpit #cockpitFrame .decisions-layout {
+  height: calc(100% - var(--header-height));
+  flex: 1;
+}
+
+
 /* --- File: 00_embedded_fonts.css --- */
 /* Locally embedded fonts (Inter, JetBrains Mono, Outfit) — latin + latin-ext subsets, deduplicated (each family is served as one variable-font file per subset regardless of weight). Self-hosted as base64 data URIs so the Cockpit has zero network dependency. */
 @font-face {
@@ -59,7 +101,7 @@
 /* ==========================================================================
    CSS TOKENS & SYSTEM VARIABLES (IMPECCABLE CRAFT STANDARD)
    ========================================================================== */
-:root {
+#tab-cockpit #cockpitFrame {
   --bg-primary: #0a0f1d;
   --bg-secondary: #111827;
   --bg-tertiary: #1f293d;
@@ -95,13 +137,13 @@
   --ui-scale: 1;
 }
 
-* {
+#tab-cockpit #cockpitFrame * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-body {
+#tab-cockpit #cockpitFrame {
   font-family: var(--font-body);
   background: var(--bg-primary);
   background-image: radial-gradient(ellipse at top, rgba(245, 158, 11, 0.04), transparent 60%);
@@ -119,36 +161,36 @@ body {
 /* ==========================================================================
    THEME-INTEGRATED LUXURY SCROLLBARS (AC-DEC-2026-008 / UI-DEC-2026-004)
    ========================================================================== */
-* {
+#tab-cockpit #cockpitFrame * {
   scrollbar-width: thin;
   scrollbar-color: rgba(245, 158, 11, 0.35) #111827;
 }
 
-::-webkit-scrollbar {
+#tab-cockpit #cockpitFrame ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
-::-webkit-scrollbar-track {
+#tab-cockpit #cockpitFrame ::-webkit-scrollbar-track {
   background: var(--bg-secondary);
 }
 
-::-webkit-scrollbar-thumb {
+#tab-cockpit #cockpitFrame ::-webkit-scrollbar-thumb {
   background: rgba(245, 158, 11, 0.3);
   border-radius: 4px;
 }
 
-::-webkit-scrollbar-thumb:hover {
+#tab-cockpit #cockpitFrame ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-gold);
 }
 
-::-webkit-scrollbar-corner {
+#tab-cockpit #cockpitFrame ::-webkit-scrollbar-corner {
   background: var(--bg-primary);
 }
 
 
 /* TOAST NOTIFICATION & PROMPT AFFORDANCE (AC-DEC-2026-009 / UI-DEC-2026-005) */
-.cockpit-toast {
+#tab-cockpit #cockpitFrame .cockpit-toast {
   position: fixed;
   bottom: 24px;
   right: 24px;
@@ -169,7 +211,7 @@ body {
   pointer-events: none;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.cockpit-toast.active {
+#tab-cockpit #cockpitFrame .cockpit-toast.active {
   transform: translateY(0);
   opacity: 1;
   pointer-events: auto;
@@ -179,7 +221,7 @@ body {
 /* ==========================================================================
    MASTER DECISIONS LAYOUT & ROADMAP ENGINE (AC-DEC-2026-010 / UI-DEC-2026-006)
    ========================================================================== */
-.decisions-layout {
+#tab-cockpit #cockpitFrame .decisions-layout {
   display: none;
   flex-direction: column;
   height: calc(100vh - var(--header-height));
@@ -189,7 +231,7 @@ body {
   position: relative;
 }
 
-.decisions-header-bar {
+#tab-cockpit #cockpitFrame .decisions-header-bar {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -201,7 +243,7 @@ body {
   box-shadow: 0 10px 30px rgba(0,0,0,0.4);
 }
 
-.decisions-title-row {
+#tab-cockpit #cockpitFrame .decisions-title-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -209,7 +251,7 @@ body {
   gap: 16px;
 }
 
-.decisions-title-block h2 {
+#tab-cockpit #cockpitFrame .decisions-title-block h2 {
   font-family: var(--font-display);
   font-size: 20px;
   font-weight: 700;
@@ -219,20 +261,20 @@ body {
   gap: 10px;
 }
 
-.decisions-title-block p {
+#tab-cockpit #cockpitFrame .decisions-title-block p {
   font-size: 12px;
   color: var(--text-secondary);
   margin-top: 4px;
 }
 
-.decisions-progress-wrapper {
+#tab-cockpit #cockpitFrame .decisions-progress-wrapper {
   display: flex;
   flex-direction: column;
   gap: 6px;
   min-width: 280px;
 }
 
-.decisions-progress-meta {
+#tab-cockpit #cockpitFrame .decisions-progress-meta {
   display: flex;
   justify-content: space-between;
   font-size: 11px;
@@ -240,7 +282,7 @@ body {
   font-weight: 600;
 }
 
-.decisions-progress-track {
+#tab-cockpit #cockpitFrame .decisions-progress-track {
   height: 8px;
   background: var(--bg-secondary);
   border-radius: 4px;
@@ -248,14 +290,14 @@ body {
   border: 1px solid var(--border-subtle);
 }
 
-.decisions-progress-fill {
+#tab-cockpit #cockpitFrame .decisions-progress-fill {
   height: 100%;
   background: linear-gradient(90deg, #f59e0b, #10b981);
   border-radius: 4px;
   transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.decisions-controls-row {
+#tab-cockpit #cockpitFrame .decisions-controls-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -265,14 +307,14 @@ body {
   padding-top: 14px;
 }
 
-.decisions-filter-group {
+#tab-cockpit #cockpitFrame .decisions-filter-group {
   display: flex;
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
 }
 
-.decisions-filter-btn {
+#tab-cockpit #cockpitFrame .decisions-filter-btn {
   background: var(--bg-secondary);
   border: 1px solid var(--border-subtle);
   color: var(--text-secondary);
@@ -284,42 +326,42 @@ body {
   transition: all 0.15s;
 }
 
-.decisions-filter-btn:hover {
+#tab-cockpit #cockpitFrame .decisions-filter-btn:hover {
   border-color: var(--border-medium);
   color: #fff;
 }
 
-.decisions-filter-btn.active {
+#tab-cockpit #cockpitFrame .decisions-filter-btn.active {
   background: rgba(245, 158, 11, 0.15);
   border-color: var(--accent-gold);
   color: var(--accent-gold);
 }
 
-.decisions-filter-btn.active.filter-pending {
+#tab-cockpit #cockpitFrame .decisions-filter-btn.active.filter-pending {
   background: rgba(251, 191, 36, 0.15);
   border-color: #fbbf24;
   color: #fbbf24;
 }
 
-.decisions-filter-btn.active.filter-locked {
+#tab-cockpit #cockpitFrame .decisions-filter-btn.active.filter-locked {
   background: rgba(16, 185, 129, 0.15);
   border-color: #10b981;
   color: #10b981;
 }
 
-.decisions-filter-btn.active.filter-vendor {
+#tab-cockpit #cockpitFrame .decisions-filter-btn.active.filter-vendor {
   background: rgba(59, 130, 246, 0.15);
   border-color: #3b82f6;
   color: #3b82f6;
 }
 
-.decisions-grid {
+#tab-cockpit #cockpitFrame .decisions-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(390px, 1fr));
   gap: 20px;
 }
 
-.decision-card {
+#tab-cockpit #cockpitFrame .decision-card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 12px;
@@ -332,32 +374,32 @@ body {
   position: relative;
 }
 
-.decision-card:hover {
+#tab-cockpit #cockpitFrame .decision-card:hover {
   border-color: var(--border-medium);
   transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(0,0,0,0.4);
 }
 
-.decision-card.status-pending {
+#tab-cockpit #cockpitFrame .decision-card.status-pending {
   border-left: 4px solid #fbbf24;
 }
 
-.decision-card.status-locked {
+#tab-cockpit #cockpitFrame .decision-card.status-locked {
   border-left: 4px solid #10b981;
 }
 
-.decision-card.status-vendor {
+#tab-cockpit #cockpitFrame .decision-card.status-vendor {
   border-left: 4px solid #3b82f6;
 }
 
-.decision-card-top {
+#tab-cockpit #cockpitFrame .decision-card-top {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 10px;
 }
 
-.decision-step-badge {
+#tab-cockpit #cockpitFrame .decision-step-badge {
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 700;
@@ -368,7 +410,7 @@ body {
   border: 1px solid var(--border-subtle);
 }
 
-.decision-status-pill {
+#tab-cockpit #cockpitFrame .decision-status-pill {
   font-size: 10px;
   font-weight: 700;
   padding: 3px 8px;
@@ -380,25 +422,25 @@ body {
   gap: 5px;
 }
 
-.decision-status-pill.locked {
+#tab-cockpit #cockpitFrame .decision-status-pill.locked {
   background: rgba(16, 185, 129, 0.15);
   color: #10b981;
   border: 1px solid rgba(16, 185, 129, 0.4);
 }
 
-.decision-status-pill.pending {
+#tab-cockpit #cockpitFrame .decision-status-pill.pending {
   background: rgba(251, 191, 36, 0.15);
   color: #fbbf24;
   border: 1px solid rgba(251, 191, 36, 0.4);
 }
 
-.decision-status-pill.vendor {
+#tab-cockpit #cockpitFrame .decision-status-pill.vendor {
   background: rgba(59, 130, 246, 0.15);
   color: #3b82f6;
   border: 1px solid rgba(59, 130, 246, 0.4);
 }
 
-.decision-card-title {
+#tab-cockpit #cockpitFrame .decision-card-title {
   font-family: var(--font-display);
   font-size: 15px;
   font-weight: 700;
@@ -406,13 +448,13 @@ body {
   line-height: 1.35;
 }
 
-.decision-card-phase {
+#tab-cockpit #cockpitFrame .decision-card-phase {
   font-size: 11px;
   color: var(--text-muted);
   font-weight: 500;
 }
 
-.decision-dilemma-box {
+#tab-cockpit #cockpitFrame .decision-dilemma-box {
   background: var(--bg-secondary);
   border: 1px solid var(--border-subtle);
   border-radius: 6px;
@@ -422,7 +464,7 @@ body {
   line-height: 1.45;
 }
 
-.decision-benchmark-box {
+#tab-cockpit #cockpitFrame .decision-benchmark-box {
   background: rgba(245, 158, 11, 0.06);
   border: 1px solid rgba(245, 158, 11, 0.2);
   border-radius: 6px;
@@ -432,7 +474,7 @@ body {
   line-height: 1.4;
 }
 
-.decision-benchmark-title {
+#tab-cockpit #cockpitFrame .decision-benchmark-title {
   color: var(--accent-gold);
   font-weight: 700;
   margin-bottom: 4px;
@@ -441,7 +483,7 @@ body {
   gap: 6px;
 }
 
-.decision-direction-box {
+#tab-cockpit #cockpitFrame .decision-direction-box {
   font-size: 11.5px;
   color: var(--text-secondary);
   line-height: 1.45;
@@ -449,7 +491,7 @@ body {
   padding-left: 10px;
 }
 
-.decision-options-group {
+#tab-cockpit #cockpitFrame .decision-options-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -458,7 +500,7 @@ body {
   border-top: 1px solid var(--border-subtle);
 }
 
-.decision-option-label {
+#tab-cockpit #cockpitFrame .decision-option-label {
   display: flex;
   align-items: flex-start;
   gap: 8px;
@@ -471,24 +513,24 @@ body {
   transition: all 0.15s;
 }
 
-.decision-option-label:hover {
+#tab-cockpit #cockpitFrame .decision-option-label:hover {
   border-color: var(--border-medium);
   background: rgba(255, 255, 255, 0.04);
 }
 
-.decision-option-label.selected {
+#tab-cockpit #cockpitFrame .decision-option-label.selected {
   border-color: var(--accent-gold);
   background: rgba(245, 158, 11, 0.1);
   color: #fff;
 }
 
-.decision-option-radio {
+#tab-cockpit #cockpitFrame .decision-option-radio {
   margin-top: 2px;
   accent-color: var(--accent-gold);
   cursor: pointer;
 }
 
-.decision-vendor-box {
+#tab-cockpit #cockpitFrame .decision-vendor-box {
   background: rgba(59, 130, 246, 0.08);
   border: 1px solid rgba(59, 130, 246, 0.25);
   border-radius: 6px;
@@ -499,7 +541,7 @@ body {
 
 /* --- File: 02_hud_workspace.css --- */
 /* TOPBAR */
-.topnav {
+#tab-cockpit #cockpitFrame .topnav {
   height: var(--header-height);
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border-subtle);
@@ -512,14 +554,14 @@ body {
   gap: 12px;
 }
 
-.brand-section {
+#tab-cockpit #cockpitFrame .brand-section {
   display: flex;
   align-items: center;
   gap: 10px;
   min-width: 280px;
 }
 
-.brand-logo {
+#tab-cockpit #cockpitFrame .brand-logo {
   font-size: 18px;
   background: linear-gradient(135deg, #f59e0b, #ec4899);
   -webkit-background-clip: text;
@@ -528,7 +570,7 @@ body {
   letter-spacing: -0.02em;
 }
 
-.brand-title {
+#tab-cockpit #cockpitFrame .brand-title {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 14px;
@@ -536,7 +578,7 @@ body {
   color: #fff;
 }
 
-.brand-badge {
+#tab-cockpit #cockpitFrame .brand-badge {
   background: rgba(245, 158, 11, 0.15);
   border: 1px solid rgba(245, 158, 11, 0.3);
   color: var(--accent-gold);
@@ -547,7 +589,7 @@ body {
   font-weight: 600;
 }
 
-.live-badge {
+#tab-cockpit #cockpitFrame .live-badge {
   font-size: 11px;
   padding: 4px 12px;
   border-radius: 20px;
@@ -559,27 +601,27 @@ body {
   gap: 6px;
 }
 
-.live-badge.audience {
+#tab-cockpit #cockpitFrame .live-badge.audience {
   background: rgba(244, 63, 94, 0.15);
   color: #f43f5e;
   border: 1px solid rgba(244, 63, 94, 0.4);
   box-shadow: 0 0 16px var(--accent-rose-glow);
 }
 
-.live-badge.hud {
+#tab-cockpit #cockpitFrame .live-badge.hud {
   background: rgba(245, 158, 11, 0.15);
   color: var(--accent-gold);
   border: 1px solid rgba(245, 158, 11, 0.4);
   box-shadow: 0 0 16px var(--accent-gold-glow);
 }
 
-.nav-controls {
+#tab-cockpit #cockpitFrame .nav-controls {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.mode-btn {
+#tab-cockpit #cockpitFrame .mode-btn {
   background: var(--bg-tertiary);
   border: 1px solid var(--border-medium);
   color: var(--text-secondary);
@@ -595,20 +637,20 @@ body {
   user-select: none;
 }
 
-.mode-btn:hover {
+#tab-cockpit #cockpitFrame .mode-btn:hover {
   background: var(--bg-card-hover);
   color: var(--text-primary);
   border-color: var(--border-focus);
 }
 
-.mode-btn.active {
+#tab-cockpit #cockpitFrame .mode-btn.active {
   background: var(--accent-gold);
   color: #000;
   border-color: var(--accent-gold);
   font-weight: 700;
 }
 
-.hotkey-badge {
+#tab-cockpit #cockpitFrame .hotkey-badge {
   font-family: var(--font-mono);
   font-size: 9.5px;
   padding: 1px 5px;
@@ -619,7 +661,7 @@ body {
 }
 
 /* EVENT SELECTOR STRIP */
-.event-strip {
+#tab-cockpit #cockpitFrame .event-strip {
   background: #0d1527;
   border-bottom: 1px solid var(--border-subtle);
   padding: 6px 16px;
@@ -630,13 +672,13 @@ body {
   gap: 12px;
 }
 
-.event-pills {
+#tab-cockpit #cockpitFrame .event-pills {
   display: flex;
   gap: 8px;
   align-items: center;
 }
 
-.event-pill {
+#tab-cockpit #cockpitFrame .event-pill {
   padding: 4px 12px;
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.04);
@@ -650,13 +692,13 @@ body {
   transition: all 0.15s;
 }
 
-.event-pill.active {
+#tab-cockpit #cockpitFrame .event-pill.active {
   background: rgba(245, 158, 11, 0.18);
   border-color: var(--accent-gold);
   color: #fbbf24;
 }
 
-.event-metrics {
+#tab-cockpit #cockpitFrame .event-metrics {
   display: flex;
   align-items: center;
   gap: 14px;
@@ -664,13 +706,13 @@ body {
   font-size: 11px;
 }
 
-.event-metric-val {
+#tab-cockpit #cockpitFrame .event-metric-val {
   color: #10b981;
   font-weight: 700;
 }
 
 /* MAIN WORKSPACE LAYOUT (HUD) */
-.hud-layout {
+#tab-cockpit #cockpitFrame .hud-layout {
   display: grid;
   grid-template-columns: var(--sidebar-width) 1fr;
   flex: 1;
@@ -678,7 +720,7 @@ body {
 }
 
 /* SIDEBAR: AGENDA */
-.agenda-sidebar {
+#tab-cockpit #cockpitFrame .agenda-sidebar {
   background: var(--bg-secondary);
   border-right: 1px solid var(--border-subtle);
   display: flex;
@@ -686,7 +728,7 @@ body {
   overflow: hidden;
 }
 
-.sidebar-header {
+#tab-cockpit #cockpitFrame .sidebar-header {
   padding: 12px 14px;
   border-bottom: 1px solid var(--border-subtle);
   display: flex;
@@ -694,7 +736,7 @@ body {
   gap: 8px;
 }
 
-.search-input {
+#tab-cockpit #cockpitFrame .search-input {
   width: 100%;
   background: var(--bg-primary);
   border: 1px solid var(--border-subtle);
@@ -704,12 +746,12 @@ body {
   font-size: 11.5px;
 }
 
-.search-input:focus {
+#tab-cockpit #cockpitFrame .search-input:focus {
   outline: none;
   border-color: var(--border-focus);
 }
 
-.agenda-list {
+#tab-cockpit #cockpitFrame .agenda-list {
   flex: 1;
   overflow-y: auto;
   padding: 8px 6px;
@@ -718,7 +760,7 @@ body {
   gap: 4px;
 }
 
-.agenda-item {
+#tab-cockpit #cockpitFrame .agenda-item {
   padding: 9px 10px;
   border-radius: 6px;
   background: transparent;
@@ -730,25 +772,25 @@ body {
   gap: 4px;
 }
 
-.agenda-item:hover {
+#tab-cockpit #cockpitFrame .agenda-item:hover {
   background: rgba(255, 255, 255, 0.03);
   border-color: var(--border-subtle);
 }
 
-.agenda-item.active {
+#tab-cockpit #cockpitFrame .agenda-item.active {
   background: var(--bg-card);
   border-color: rgba(245, 158, 11, 0.35);
   box-shadow: inset 3px 0 0 var(--accent-gold);
 }
 
-.agenda-item-top {
+#tab-cockpit #cockpitFrame .agenda-item-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 6px;
 }
 
-.agenda-item-act {
+#tab-cockpit #cockpitFrame .agenda-item-act {
   font-size: 9.5px;
   text-transform: uppercase;
   font-weight: 700;
@@ -756,34 +798,34 @@ body {
   font-family: var(--font-mono);
 }
 
-.agenda-item-act.act-1 { color: #f59e0b; }
-.agenda-item-act.act-2 { color: #3b82f6; }
-.agenda-item-act.act-3 { color: #10b981; }
-.agenda-item-act.act-4 { color: #8b5cf6; }
-.agenda-item-act.act-5 { color: #ec4899; }
-.agenda-item-act.act-6 { color: #06b6d4; }
-.agenda-item-act.act-7 { color: #f97316; }
-.agenda-item-act.act-8 { color: #a855f7; }
+#tab-cockpit #cockpitFrame .agenda-item-act.act-1 { color: #f59e0b; }
+#tab-cockpit #cockpitFrame .agenda-item-act.act-2 { color: #3b82f6; }
+#tab-cockpit #cockpitFrame .agenda-item-act.act-3 { color: #10b981; }
+#tab-cockpit #cockpitFrame .agenda-item-act.act-4 { color: #8b5cf6; }
+#tab-cockpit #cockpitFrame .agenda-item-act.act-5 { color: #ec4899; }
+#tab-cockpit #cockpitFrame .agenda-item-act.act-6 { color: #06b6d4; }
+#tab-cockpit #cockpitFrame .agenda-item-act.act-7 { color: #f97316; }
+#tab-cockpit #cockpitFrame .agenda-item-act.act-8 { color: #a855f7; }
 
-.agenda-item-status-pill {
+#tab-cockpit #cockpitFrame .agenda-item-status-pill {
   font-size: 9px;
   font-family: var(--font-mono);
   padding: 1px 5px;
   border-radius: 3px;
   font-weight: 700;
 }
-.agenda-item-status-pill.agreed { background: rgba(16,185,129,0.15); color: #10b981; border: 1px solid rgba(16,185,129,0.3); }
-.agenda-item-status-pill.blocked { background: rgba(244,63,94,0.15); color: #f43f5e; border: 1px solid rgba(244,63,94,0.3); }
-.agenda-item-status-pill.in_progress { background: rgba(59,130,246,0.15); color: #3b82f6; border: 1px solid rgba(59,130,246,0.3); }
-.agenda-item-status-pill.pending { background: rgba(255,255,255,0.05); color: var(--text-muted); }
+#tab-cockpit #cockpitFrame .agenda-item-status-pill.agreed { background: rgba(16,185,129,0.15); color: #10b981; border: 1px solid rgba(16,185,129,0.3); }
+#tab-cockpit #cockpitFrame .agenda-item-status-pill.blocked { background: rgba(244,63,94,0.15); color: #f43f5e; border: 1px solid rgba(244,63,94,0.3); }
+#tab-cockpit #cockpitFrame .agenda-item-status-pill.in_progress { background: rgba(59,130,246,0.15); color: #3b82f6; border: 1px solid rgba(59,130,246,0.3); }
+#tab-cockpit #cockpitFrame .agenda-item-status-pill.pending { background: rgba(255,255,255,0.05); color: var(--text-muted); }
 
-.agenda-item-title {
+#tab-cockpit #cockpitFrame .agenda-item-title {
   font-weight: 600;
   font-size: 12px;
   color: #f1f5f9;
 }
 
-.agenda-item-desc {
+#tab-cockpit #cockpitFrame .agenda-item-desc {
   font-size: 11px;
   color: var(--text-secondary);
   white-space: nowrap;
@@ -792,7 +834,7 @@ body {
 }
 
 /* TOPIC DETAIL PANE */
-.topic-detail-pane {
+#tab-cockpit #cockpitFrame .topic-detail-pane {
   background: var(--bg-primary);
   display: flex;
   flex-direction: column;
@@ -801,7 +843,7 @@ body {
   gap: 14px;
 }
 
-.topic-header-card {
+#tab-cockpit #cockpitFrame .topic-header-card {
   background: var(--bg-card);
   border: 1px solid var(--border-medium);
   border-radius: 8px;
@@ -811,13 +853,13 @@ body {
   gap: 8px;
 }
 
-.topic-badge-row {
+#tab-cockpit #cockpitFrame .topic-badge-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.topic-act-pill {
+#tab-cockpit #cockpitFrame .topic-act-pill {
   font-family: var(--font-mono);
   font-size: 10px;
   font-weight: 700;
@@ -826,16 +868,16 @@ body {
   border-radius: 4px;
   background: rgba(255, 255, 255, 0.05);
 }
-.topic-act-pill.act-1 { color: #f59e0b; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); }
-.topic-act-pill.act-2 { color: #3b82f6; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); }
-.topic-act-pill.act-3 { color: #10b981; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); }
-.topic-act-pill.act-4 { color: #8b5cf6; background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3); }
-.topic-act-pill.act-5 { color: #ec4899; background: rgba(236, 72, 153, 0.15); border: 1px solid rgba(236, 72, 153, 0.3); }
-.topic-act-pill.act-6 { color: #06b6d4; background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.3); }
-.topic-act-pill.act-7 { color: #f97316; background: rgba(249, 115, 22, 0.15); border: 1px solid rgba(249, 115, 22, 0.3); }
-.topic-act-pill.act-8 { color: #a855f7; background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.3); }
+#tab-cockpit #cockpitFrame .topic-act-pill.act-1 { color: #f59e0b; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); }
+#tab-cockpit #cockpitFrame .topic-act-pill.act-2 { color: #3b82f6; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); }
+#tab-cockpit #cockpitFrame .topic-act-pill.act-3 { color: #10b981; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); }
+#tab-cockpit #cockpitFrame .topic-act-pill.act-4 { color: #8b5cf6; background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3); }
+#tab-cockpit #cockpitFrame .topic-act-pill.act-5 { color: #ec4899; background: rgba(236, 72, 153, 0.15); border: 1px solid rgba(236, 72, 153, 0.3); }
+#tab-cockpit #cockpitFrame .topic-act-pill.act-6 { color: #06b6d4; background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.3); }
+#tab-cockpit #cockpitFrame .topic-act-pill.act-7 { color: #f97316; background: rgba(249, 115, 22, 0.15); border: 1px solid rgba(249, 115, 22, 0.3); }
+#tab-cockpit #cockpitFrame .topic-act-pill.act-8 { color: #a855f7; background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.3); }
 
-.status-button-group {
+#tab-cockpit #cockpitFrame .status-button-group {
   display: flex;
   gap: 4px;
   background: var(--bg-primary);
@@ -844,7 +886,7 @@ body {
   border: 1px solid var(--border-subtle);
 }
 
-.status-btn {
+#tab-cockpit #cockpitFrame .status-btn {
   font-size: 9.5px;
   font-family: var(--font-mono);
   font-weight: 700;
@@ -857,16 +899,16 @@ body {
   transition: all 0.15s;
 }
 
-.status-btn:hover {
+#tab-cockpit #cockpitFrame .status-btn:hover {
   color: #fff;
 }
 
-.status-btn.active.pending { background: rgba(255, 255, 255, 0.1); color: #fff; }
-.status-btn.active.in_progress { background: rgba(59, 130, 246, 0.25); color: #60a5fa; }
-.status-btn.active.agreed { background: rgba(16, 185, 129, 0.25); color: #34d399; }
-.status-btn.active.blocked { background: rgba(244, 63, 94, 0.25); color: #fb7185; }
+#tab-cockpit #cockpitFrame .status-btn.active.pending { background: rgba(255, 255, 255, 0.1); color: #fff; }
+#tab-cockpit #cockpitFrame .status-btn.active.in_progress { background: rgba(59, 130, 246, 0.25); color: #60a5fa; }
+#tab-cockpit #cockpitFrame .status-btn.active.agreed { background: rgba(16, 185, 129, 0.25); color: #34d399; }
+#tab-cockpit #cockpitFrame .status-btn.active.blocked { background: rgba(244, 63, 94, 0.25); color: #fb7185; }
 
-.topic-title {
+#tab-cockpit #cockpitFrame .topic-title {
   font-size: 17px;
   font-family: var(--font-display);
   font-weight: 700;
@@ -874,14 +916,14 @@ body {
   letter-spacing: -0.01em;
 }
 
-.topic-goal {
+#tab-cockpit #cockpitFrame .topic-goal {
   font-size: 12px;
   color: var(--text-secondary);
   line-height: 1.4;
 }
 
 /* TOPIC VISUAL AFFORDANCE BAR (v2.5 DUAL MODE & PINTEREST OVERRIDE) */
-.topic-visual-strip {
+#tab-cockpit #cockpitFrame .topic-visual-strip {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -894,7 +936,7 @@ body {
   gap: 8px;
 }
 
-.topic-visual-btn {
+#tab-cockpit #cockpitFrame .topic-visual-btn {
   background: rgba(56, 189, 248, 0.15);
   border: 1px solid rgba(56, 189, 248, 0.35);
   color: #38bdf8;
@@ -909,31 +951,31 @@ body {
   transition: all 0.15s;
 }
 
-.topic-visual-btn:hover {
+#tab-cockpit #cockpitFrame .topic-visual-btn:hover {
   background: #38bdf8;
   color: #000;
 }
 
-.topic-visual-btn.photo-mode {
+#tab-cockpit #cockpitFrame .topic-visual-btn.photo-mode {
   background: rgba(245, 158, 11, 0.18);
   border-color: rgba(245, 158, 11, 0.4);
   color: #fbbf24;
 }
 
-.topic-visual-btn.photo-mode:hover {
+#tab-cockpit #cockpitFrame .topic-visual-btn.photo-mode:hover {
   background: #f59e0b;
   color: #000;
 }
 
 /* TABS */
-.stage-tabs {
+#tab-cockpit #cockpitFrame .stage-tabs {
   display: flex;
   gap: 6px;
   border-bottom: 1px solid var(--border-subtle);
   padding-bottom: 6px;
 }
 
-.stage-tab-btn {
+#tab-cockpit #cockpitFrame .stage-tab-btn {
   background: transparent;
   border: 1px solid transparent;
   color: var(--text-secondary);
@@ -948,19 +990,19 @@ body {
   transition: all 0.15s;
 }
 
-.stage-tab-btn:hover {
+#tab-cockpit #cockpitFrame .stage-tab-btn:hover {
   color: var(--text-primary);
   background: rgba(255, 255, 255, 0.03);
 }
 
-.stage-tab-btn.active {
+#tab-cockpit #cockpitFrame .stage-tab-btn.active {
   background: var(--bg-tertiary);
   color: var(--accent-gold);
   border-color: rgba(245, 158, 11, 0.3);
 }
 
 /* SCRIPT PANE */
-.script-card {
+#tab-cockpit #cockpitFrame .script-card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 8px;
@@ -970,13 +1012,13 @@ body {
   gap: 12px;
 }
 
-.tone-selector {
+#tab-cockpit #cockpitFrame .tone-selector {
   display: flex;
   gap: 6px;
   align-items: center;
 }
 
-.tone-btn {
+#tab-cockpit #cockpitFrame .tone-btn {
   background: var(--bg-primary);
   border: 1px solid var(--border-subtle);
   color: var(--text-secondary);
@@ -988,11 +1030,11 @@ body {
   transition: all 0.15s;
 }
 
-.tone-btn.active.warm { background: rgba(245, 158, 11, 0.18); color: #fbbf24; border-color: var(--accent-gold); }
-.tone-btn.active.data { background: rgba(59, 130, 246, 0.18); color: #60a5fa; border-color: var(--accent-blue); }
-.tone-btn.active.firm { background: rgba(244, 63, 94, 0.18); color: #fb7185; border-color: var(--accent-rose); }
+#tab-cockpit #cockpitFrame .tone-btn.active.warm { background: rgba(245, 158, 11, 0.18); color: #fbbf24; border-color: var(--accent-gold); }
+#tab-cockpit #cockpitFrame .tone-btn.active.data { background: rgba(59, 130, 246, 0.18); color: #60a5fa; border-color: var(--accent-blue); }
+#tab-cockpit #cockpitFrame .tone-btn.active.firm { background: rgba(244, 63, 94, 0.18); color: #fb7185; border-color: var(--accent-rose); }
 
-.script-box {
+#tab-cockpit #cockpitFrame .script-box {
   background: #0d1527;
   border-left: 3px solid var(--accent-gold);
   border-radius: 4px;
@@ -1003,7 +1045,7 @@ body {
   position: relative;
 }
 
-.vernacular-box {
+#tab-cockpit #cockpitFrame .vernacular-box {
   background: rgba(245, 158, 11, 0.06);
   border: 1px dashed rgba(245, 158, 11, 0.25);
   border-radius: 6px;
@@ -1015,7 +1057,7 @@ body {
 }
 
 /* DECISION TREE */
-.tree-step-card {
+#tab-cockpit #cockpitFrame .tree-step-card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 8px;
@@ -1026,7 +1068,7 @@ body {
   margin-bottom: 8px;
 }
 
-.tree-step-header {
+#tab-cockpit #cockpitFrame .tree-step-header {
   font-family: var(--font-mono);
   font-size: 10.5px;
   color: var(--accent-amber);
@@ -1034,20 +1076,20 @@ body {
   letter-spacing: 0.03em;
 }
 
-.tree-step-title {
+#tab-cockpit #cockpitFrame .tree-step-title {
   font-weight: 700;
   font-size: 13px;
   color: #fff;
 }
 
-.tree-step-desc {
+#tab-cockpit #cockpitFrame .tree-step-desc {
   font-size: 12px;
   color: var(--text-secondary);
   line-height: 1.45;
 }
 
 /* CURVEBALLS */
-.curveball-card {
+#tab-cockpit #cockpitFrame .curveball-card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 8px;
@@ -1058,7 +1100,7 @@ body {
   margin-bottom: 10px;
 }
 
-.curveball-objection {
+#tab-cockpit #cockpitFrame .curveball-objection {
   background: rgba(244, 63, 94, 0.08);
   border-left: 3px solid var(--accent-rose);
   padding: 8px 12px;
@@ -1068,7 +1110,7 @@ body {
   font-weight: 600;
 }
 
-.curveball-counter {
+#tab-cockpit #cockpitFrame .curveball-counter {
   background: rgba(16, 185, 129, 0.08);
   border-left: 3px solid var(--accent-emerald);
   padding: 8px 12px;
@@ -1077,7 +1119,7 @@ body {
   font-size: 12px;
 }
 
-.curveball-fallback {
+#tab-cockpit #cockpitFrame .curveball-fallback {
   background: rgba(59, 130, 246, 0.08);
   border-left: 3px solid var(--accent-blue);
   padding: 8px 12px;
@@ -1088,13 +1130,13 @@ body {
 }
 
 /* 4-TIER CALCULATOR */
-.calc-grid {
+#tab-cockpit #cockpitFrame .calc-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
 
-.calc-panel {
+#tab-cockpit #cockpitFrame .calc-panel {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 8px;
@@ -1104,14 +1146,14 @@ body {
   gap: 10px;
 }
 
-.calc-row {
+#tab-cockpit #cockpitFrame .calc-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 12px;
 }
 
-.calc-input {
+#tab-cockpit #cockpitFrame .calc-input {
   width: 110px;
   background: var(--bg-primary);
   border: 1px solid var(--border-medium);
@@ -1123,7 +1165,7 @@ body {
   text-align: right;
 }
 
-.calc-summary-box {
+#tab-cockpit #cockpitFrame .calc-summary-box {
   background: #0d1527;
   border: 1px solid var(--border-medium);
   border-radius: 8px;
@@ -1135,7 +1177,7 @@ body {
 
 /* --- File: 03_tender_modal_and_print.css --- */
 /* PIN MODAL */
-.modal-backdrop {
+#tab-cockpit #cockpitFrame .modal-backdrop {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.75);
@@ -1146,11 +1188,11 @@ body {
   z-index: 1000;
 }
 
-.modal-backdrop.active {
+#tab-cockpit #cockpitFrame .modal-backdrop.active {
   display: flex;
 }
 
-.pin-modal {
+#tab-cockpit #cockpitFrame .pin-modal {
   background: var(--bg-card);
   border: 1px solid var(--border-medium);
   border-radius: 12px;
@@ -1164,7 +1206,7 @@ body {
   box-shadow: 0 16px 32px rgba(0,0,0,0.7);
 }
 
-.pin-input {
+#tab-cockpit #cockpitFrame .pin-input {
   width: 140px;
   height: 44px;
   font-size: 22px;
@@ -1177,11 +1219,11 @@ body {
   color: #fff;
 }
 
-.pin-input:focus {
+#tab-cockpit #cockpitFrame .pin-input:focus {
   outline: none;
 }
 
-.pin-submit-btn {
+#tab-cockpit #cockpitFrame .pin-submit-btn {
   background: var(--accent-gold);
   color: #000;
   border: none;
@@ -1193,7 +1235,7 @@ body {
 }
 
 /* EXECUTIVE PRINTABLE TENDER ANNEXURE MODAL */
-.tender-modal {
+#tab-cockpit #cockpitFrame .tender-modal {
   background: var(--bg-card);
   border: 1px solid var(--border-medium);
   border-radius: 12px;
@@ -1206,7 +1248,7 @@ body {
   box-shadow: 0 24px 60px rgba(0,0,0,0.85);
 }
 
-.tender-modal-header {
+#tab-cockpit #cockpitFrame .tender-modal-header {
   padding: 12px 20px;
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border-subtle);
@@ -1215,14 +1257,14 @@ body {
   align-items: center;
 }
 
-.tender-modal-body {
+#tab-cockpit #cockpitFrame .tender-modal-body {
   flex: 1;
   overflow-y: auto;
   padding: 24px;
   background: #0b1120;
 }
 
-.tender-doc {
+#tab-cockpit #cockpitFrame .tender-doc {
   background: #ffffff;
   color: #0f172a;
   padding: 36px 44px;
@@ -1234,7 +1276,7 @@ body {
   position: relative;
 }
 
-.tender-watermark {
+#tab-cockpit #cockpitFrame .tender-watermark {
   position: absolute;
   top: 40%;
   left: 50%;
@@ -1248,7 +1290,7 @@ body {
   letter-spacing: 0.1em;
 }
 
-.tender-header-strip {
+#tab-cockpit #cockpitFrame .tender-header-strip {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -1257,14 +1299,14 @@ body {
   margin-bottom: 16px;
 }
 
-.tender-brand-box h1 {
+#tab-cockpit #cockpitFrame .tender-brand-box h1 {
   font-size: 17px;
   font-weight: 800;
   letter-spacing: -0.01em;
   color: #0f172a;
 }
 
-.tender-meta-grid {
+#tab-cockpit #cockpitFrame .tender-meta-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px 16px;
@@ -1276,14 +1318,14 @@ body {
   font-size: 11px;
 }
 
-.tender-table {
+#tab-cockpit #cockpitFrame .tender-table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 16px;
   font-size: 11px;
 }
 
-.tender-table th {
+#tab-cockpit #cockpitFrame .tender-table th {
   background: #0f172a;
   color: #ffffff;
   padding: 7px 10px;
@@ -1294,12 +1336,12 @@ body {
   letter-spacing: 0.03em;
 }
 
-.tender-table td {
+#tab-cockpit #cockpitFrame .tender-table td {
   padding: 7px 10px;
   border-bottom: 1px solid #e2e8f0;
 }
 
-.tender-signatures {
+#tab-cockpit #cockpitFrame .tender-signatures {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 30px;
@@ -1308,13 +1350,13 @@ body {
   border-top: 1px dashed #cbd5e1;
 }
 
-.sig-box {
+#tab-cockpit #cockpitFrame .sig-box {
   display: flex;
   flex-direction: column;
   gap: 40px;
 }
 
-.sig-line {
+#tab-cockpit #cockpitFrame .sig-line {
   border-top: 1px solid #0f172a;
   padding-top: 4px;
   font-weight: 600;
@@ -1324,6 +1366,7 @@ body {
 
 /* PRINT MEDIA */
 @media print {
+
   @page {
     size: A4 portrait;
     margin: 12mm;
@@ -1331,10 +1374,11 @@ body {
   body * {
     visibility: hidden;
   }
-  #tenderDocContainer, #tenderDocContainer * {
+  #tab-cockpit #cockpitFrame #tenderDocContainer,
+#tab-cockpit #cockpitFrame #tenderDocContainer * {
     visibility: visible;
   }
-  #tenderDocContainer {
+  #tab-cockpit #cockpitFrame #tenderDocContainer {
     position: absolute;
     left: 0;
     top: 0;
@@ -1344,16 +1388,22 @@ body {
     box-shadow: none !important;
     border: none !important;
   }
-  .tender-modal-header, .topnav, .event-strip, .lookbook-modal, .lightbox-backdrop {
+  #tab-cockpit #cockpitFrame .tender-modal-header,
+#tab-cockpit #cockpitFrame .topnav,
+#tab-cockpit #cockpitFrame .event-strip,
+#tab-cockpit #cockpitFrame .lookbook-modal,
+#tab-cockpit #cockpitFrame .lightbox-backdrop {
     display: none !important;
   }
+
 }
+
 
 /* --- File: 04_decision_roadmap.css --- */
 /* ==========================================================================
    VISUAL LOOKBOOK & LIGHTBOX STYLES (v2.5 REAL PHOTO + BLUEPRINT)
    ========================================================================== */
-.lookbook-modal {
+#tab-cockpit #cockpitFrame .lookbook-modal {
   background: var(--bg-card);
   border: 1px solid var(--border-medium);
   border-radius: 12px;
@@ -1366,7 +1416,7 @@ body {
   box-shadow: 0 24px 60px rgba(0,0,0,0.85);
 }
 
-.lookbook-modal-header {
+#tab-cockpit #cockpitFrame .lookbook-modal-header {
   padding: 14px 20px;
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border-subtle);
@@ -1375,7 +1425,7 @@ body {
   align-items: center;
 }
 
-.lookbook-filter-bar {
+#tab-cockpit #cockpitFrame .lookbook-filter-bar {
   padding: 10px 20px;
   background: #0d1527;
   border-bottom: 1px solid var(--border-subtle);
@@ -1385,7 +1435,7 @@ body {
   align-items: center;
 }
 
-.lookbook-filter-btn {
+#tab-cockpit #cockpitFrame .lookbook-filter-btn {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border-subtle);
   color: var(--text-secondary);
@@ -1398,19 +1448,19 @@ body {
   transition: all 0.15s;
 }
 
-.lookbook-filter-btn:hover {
+#tab-cockpit #cockpitFrame .lookbook-filter-btn:hover {
   color: #fff;
   border-color: var(--border-medium);
 }
 
-.lookbook-filter-btn.active {
+#tab-cockpit #cockpitFrame .lookbook-filter-btn.active {
   background: #38bdf8;
   color: #000;
   border-color: #38bdf8;
   font-weight: 700;
 }
 
-.lookbook-grid {
+#tab-cockpit #cockpitFrame .lookbook-grid {
   flex: 1;
   overflow-y: auto;
   padding: 20px;
@@ -1420,7 +1470,7 @@ body {
   background: var(--bg-primary);
 }
 
-.lookbook-card {
+#tab-cockpit #cockpitFrame .lookbook-card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 8px;
@@ -1431,13 +1481,13 @@ body {
   transition: all 0.2s ease;
 }
 
-.lookbook-card:hover {
+#tab-cockpit #cockpitFrame .lookbook-card:hover {
   border-color: #38bdf8;
   transform: translateY(-2px);
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
 }
 
-.lookbook-img-box {
+#tab-cockpit #cockpitFrame .lookbook-img-box {
   position: relative;
   width: 100%;
   aspect-ratio: 16/10;
@@ -1445,18 +1495,18 @@ body {
   overflow: hidden;
 }
 
-.lookbook-img-box img {
+#tab-cockpit #cockpitFrame .lookbook-img-box img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
 
-.lookbook-card:hover .lookbook-img-box img {
+#tab-cockpit #cockpitFrame .lookbook-card:hover .lookbook-img-box img {
   transform: scale(1.03);
 }
 
-.lookbook-badge-plate {
+#tab-cockpit #cockpitFrame .lookbook-badge-plate {
   position: absolute;
   top: 8px;
   left: 8px;
@@ -1471,7 +1521,7 @@ body {
   backdrop-filter: blur(4px);
 }
 
-.lookbook-badge-scope {
+#tab-cockpit #cockpitFrame .lookbook-badge-scope {
   position: absolute;
   top: 8px;
   right: 8px;
@@ -1483,19 +1533,19 @@ body {
   backdrop-filter: blur(4px);
 }
 
-.lookbook-badge-scope.mandatory {
+#tab-cockpit #cockpitFrame .lookbook-badge-scope.mandatory {
   background: rgba(16, 185, 129, 0.25);
   border: 1px solid rgba(16, 185, 129, 0.5);
   color: #34d399;
 }
 
-.lookbook-badge-scope.inspiration {
+#tab-cockpit #cockpitFrame .lookbook-badge-scope.inspiration {
   background: rgba(168, 85, 247, 0.25);
   border: 1px solid rgba(168, 85, 247, 0.5);
   color: #c084fc;
 }
 
-.lookbook-badge-type {
+#tab-cockpit #cockpitFrame .lookbook-badge-type {
   position: absolute;
   bottom: 8px;
   right: 8px;
@@ -1508,27 +1558,27 @@ body {
   font-family: var(--font-mono);
 }
 
-.lookbook-card-body {
+#tab-cockpit #cockpitFrame .lookbook-card-body {
   padding: 12px 14px;
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
-.lookbook-card-title {
+#tab-cockpit #cockpitFrame .lookbook-card-title {
   font-size: 12.5px;
   font-weight: 700;
   color: #fff;
   line-height: 1.35;
 }
 
-.lookbook-card-zone {
+#tab-cockpit #cockpitFrame .lookbook-card-zone {
   font-size: 11px;
   color: var(--accent-cyan);
   font-family: var(--font-mono);
 }
 
-.lookbook-card-notes {
+#tab-cockpit #cockpitFrame .lookbook-card-notes {
   font-size: 11px;
   color: var(--text-secondary);
   line-height: 1.4;
@@ -1538,7 +1588,7 @@ body {
   overflow: hidden;
 }
 
-.lookbook-card-footer {
+#tab-cockpit #cockpitFrame .lookbook-card-footer {
   margin-top: 4px;
   padding-top: 8px;
   border-top: 1px solid var(--border-subtle);
@@ -1549,7 +1599,7 @@ body {
   color: var(--text-muted);
 }
 
-.lookbook-footer {
+#tab-cockpit #cockpitFrame .lookbook-footer {
   padding: 10px 20px;
   background: var(--bg-secondary);
   border-top: 1px solid var(--border-subtle);
@@ -1563,7 +1613,7 @@ body {
    MASTER DECISIONS ZERO-GAP HYBRID VISUAL ELEVATION (AC-DEC-2026-011)
    ========================================================================== */
 
-.decision-card-domain-badge {
+#tab-cockpit #cockpitFrame .decision-card-domain-badge {
   display: inline-flex;
   align-items: center;
   gap: 5px;
@@ -1576,7 +1626,7 @@ body {
   color: #f1f5f9;
 }
 
-.decision-media-bar {
+#tab-cockpit #cockpitFrame .decision-media-bar {
   display: flex;
   gap: 12px;
   background: rgba(8, 14, 28, 0.7);
@@ -1588,17 +1638,17 @@ body {
   transition: border-color 0.2s;
 }
 
-.decision-media-bar:hover {
+#tab-cockpit #cockpitFrame .decision-media-bar:hover {
   border-color: rgba(56, 189, 248, 0.3);
 }
 
-.decision-thumb-pair {
+#tab-cockpit #cockpitFrame .decision-thumb-pair {
   display: flex;
   gap: 8px;
   flex-shrink: 0;
 }
 
-.decision-thumb-box {
+#tab-cockpit #cockpitFrame .decision-thumb-box {
   width: 90px;
   height: 60px;
   border-radius: 6px;
@@ -1610,19 +1660,19 @@ body {
   transition: transform 0.2s, border-color 0.2s;
 }
 
-.decision-thumb-box:hover {
+#tab-cockpit #cockpitFrame .decision-thumb-box:hover {
   transform: scale(1.04);
   border-color: #38bdf8;
 }
 
-.decision-thumb-box img {
+#tab-cockpit #cockpitFrame .decision-thumb-box img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.decision-thumb-tag {
+#tab-cockpit #cockpitFrame .decision-thumb-tag {
   position: absolute;
   bottom: 2px;
   right: 2px;
@@ -1636,7 +1686,7 @@ body {
   letter-spacing: 0.03em;
 }
 
-.decision-media-info {
+#tab-cockpit #cockpitFrame .decision-media-info {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -1644,14 +1694,14 @@ body {
   min-width: 0;
 }
 
-.decision-media-plate-id {
+#tab-cockpit #cockpitFrame .decision-media-plate-id {
   font-family: var(--font-mono);
   font-size: 10px;
   font-weight: 700;
   color: #fbbf24;
 }
 
-.decision-media-plate-title {
+#tab-cockpit #cockpitFrame .decision-media-plate-title {
   font-size: 12px;
   font-weight: 700;
   color: #f8fafc;
@@ -1660,7 +1710,7 @@ body {
   text-overflow: ellipsis;
 }
 
-.decision-lightbox-btn {
+#tab-cockpit #cockpitFrame .decision-lightbox-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -1677,7 +1727,7 @@ body {
   font-family: var(--font-mono);
 }
 
-.decision-lightbox-btn:hover {
+#tab-cockpit #cockpitFrame .decision-lightbox-btn:hover {
   background: rgba(56, 189, 248, 0.25);
   color: #fff;
   border-color: #38bdf8;
@@ -1685,7 +1735,7 @@ body {
 }
 
 /* Option-level Visual Comparison Cards */
-.decision-option-card {
+#tab-cockpit #cockpitFrame .decision-option-card {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--border-subtle);
   border-radius: 8px;
@@ -1698,25 +1748,25 @@ body {
   position: relative;
 }
 
-.decision-option-card:hover {
+#tab-cockpit #cockpitFrame .decision-option-card:hover {
   background: rgba(255, 255, 255, 0.04);
   border-color: var(--border-medium);
 }
 
-.decision-option-card.selected {
+#tab-cockpit #cockpitFrame .decision-option-card.selected {
   background: rgba(197, 160, 89, 0.08) !important;
   border-color: #C5A059 !important;
   box-shadow: 0 0 16px rgba(197, 160, 89, 0.22);
 }
 
-.decision-option-header {
+#tab-cockpit #cockpitFrame .decision-option-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
 }
 
-.decision-option-title {
+#tab-cockpit #cockpitFrame .decision-option-title {
   font-size: 12.5px;
   font-weight: 600;
   color: #f8fafc;
@@ -1725,7 +1775,7 @@ body {
   gap: 8px;
 }
 
-.decision-selected-pill {
+#tab-cockpit #cockpitFrame .decision-selected-pill {
   display: none;
   font-size: 9.5px;
   font-weight: 700;
@@ -1738,14 +1788,14 @@ body {
   letter-spacing: 0.04em;
 }
 
-.decision-option-card.selected .decision-selected-pill {
+#tab-cockpit #cockpitFrame .decision-option-card.selected .decision-selected-pill {
   display: inline-flex;
   align-items: center;
   gap: 3px;
 }
 
 /* Palette Swatches */
-.decision-swatch-strip {
+#tab-cockpit #cockpitFrame .decision-swatch-strip {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1757,7 +1807,7 @@ body {
   width: fit-content;
 }
 
-.decision-swatch-circle {
+#tab-cockpit #cockpitFrame .decision-swatch-circle {
   width: 18px;
   height: 18px;
   border-radius: 50%;
@@ -1767,19 +1817,19 @@ body {
   transition: transform 0.15s;
 }
 
-.decision-swatch-circle:hover {
+#tab-cockpit #cockpitFrame .decision-swatch-circle:hover {
   transform: scale(1.25);
   z-index: 2;
 }
 
-.decision-swatch-label {
+#tab-cockpit #cockpitFrame .decision-swatch-label {
   font-size: 10.5px;
   color: #94a3b8;
   font-family: var(--font-mono);
 }
 
 /* Visual Badge Chips */
-.decision-badge-chip {
+#tab-cockpit #cockpitFrame .decision-badge-chip {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -1794,29 +1844,32 @@ body {
   margin-top: 2px;
 }
 
-.decision-option-card.selected .decision-badge-chip {
+#tab-cockpit #cockpitFrame .decision-option-card.selected .decision-badge-chip {
   color: #fef08a;
   background: rgba(234, 179, 8, 0.12);
   border-color: rgba(234, 179, 8, 0.35);
 }
 
 @media (max-width: 600px) {
-  .decision-media-bar {
+
+  #tab-cockpit #cockpitFrame .decision-media-bar {
     flex-direction: column;
     align-items: flex-start;
   }
-  .decision-thumb-pair {
+  #tab-cockpit #cockpitFrame .decision-thumb-pair {
     width: 100%;
   }
-  .decision-thumb-box {
+  #tab-cockpit #cockpitFrame .decision-thumb-box {
     flex: 1;
     height: 70px;
   }
+
 }
+
 
 /* --- File: 05_lookbook_and_modals.css --- */
 /* FULLSCREEN LIGHTBOX (v2.5 DUAL MODE & PINTEREST OVERRIDE) */
-.lightbox-backdrop {
+#tab-cockpit #cockpitFrame .lightbox-backdrop {
   position: fixed;
   inset: 0;
   background: rgba(5, 8, 16, 0.96);
@@ -1828,18 +1881,18 @@ body {
   padding: 16px 24px;
 }
 
-.lightbox-backdrop.active {
+#tab-cockpit #cockpitFrame .lightbox-backdrop.active {
   display: flex;
 }
 
-.lightbox-topbar {
+#tab-cockpit #cockpitFrame .lightbox-topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
 }
 
-.lightbox-plate-badge {
+#tab-cockpit #cockpitFrame .lightbox-plate-badge {
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 700;
@@ -1850,14 +1903,14 @@ body {
   border-radius: 4px;
 }
 
-.lightbox-plate-title {
+#tab-cockpit #cockpitFrame .lightbox-plate-title {
   font-family: var(--font-display);
   font-size: 16px;
   font-weight: 700;
   color: #fff;
 }
 
-.lightbox-scope-badge {
+#tab-cockpit #cockpitFrame .lightbox-scope-badge {
   font-family: var(--font-mono);
   font-size: 10px;
   font-weight: 700;
@@ -1865,19 +1918,19 @@ body {
   border-radius: 4px;
 }
 
-.lightbox-scope-badge.mandatory {
+#tab-cockpit #cockpitFrame .lightbox-scope-badge.mandatory {
   background: rgba(16, 185, 129, 0.2);
   border: 1px solid rgba(16, 185, 129, 0.4);
   color: #34d399;
 }
 
-.lightbox-scope-badge.inspiration {
+#tab-cockpit #cockpitFrame .lightbox-scope-badge.inspiration {
   background: rgba(168, 85, 247, 0.2);
   border: 1px solid rgba(168, 85, 247, 0.4);
   color: #c084fc;
 }
 
-.lightbox-view-toggle {
+#tab-cockpit #cockpitFrame .lightbox-view-toggle {
   display: flex;
   background: var(--bg-tertiary);
   border: 1px solid var(--border-medium);
@@ -1885,7 +1938,7 @@ body {
   overflow: hidden;
 }
 
-.lb-toggle-btn {
+#tab-cockpit #cockpitFrame .lb-toggle-btn {
   background: transparent;
   border: none;
   color: var(--text-secondary);
@@ -1896,13 +1949,13 @@ body {
   transition: all 0.15s;
 }
 
-.lb-toggle-btn.active {
+#tab-cockpit #cockpitFrame .lb-toggle-btn.active {
   background: #38bdf8;
   color: #000;
   font-weight: 700;
 }
 
-.lb-close-btn {
+#tab-cockpit #cockpitFrame .lb-close-btn {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--border-medium);
   color: #fff;
@@ -1917,12 +1970,12 @@ body {
   transition: all 0.15s;
 }
 
-.lb-close-btn:hover {
+#tab-cockpit #cockpitFrame .lb-close-btn:hover {
   background: var(--accent-rose);
   border-color: var(--accent-rose);
 }
 
-.lightbox-stage {
+#tab-cockpit #cockpitFrame .lightbox-stage {
   flex: 1;
   display: flex;
   align-items: center;
@@ -1933,7 +1986,7 @@ body {
   width: 100%;
 }
 
-.lightbox-img-wrapper {
+#tab-cockpit #cockpitFrame .lightbox-img-wrapper {
   width: min(88vw, 1150px);
   height: min(72vh, 660px);
   display: flex;
@@ -1943,14 +1996,14 @@ body {
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.lightbox-img-wrapper.is-zoomed {
+#tab-cockpit #cockpitFrame .lightbox-img-wrapper.is-zoomed {
   width: 96vw;
   height: 82vh;
   max-width: none;
   max-height: none;
 }
 
-.lightbox-img-wrapper img {
+#tab-cockpit #cockpitFrame .lightbox-img-wrapper img {
   width: 100%;
   height: 100%;
   max-width: 100%;
@@ -1964,12 +2017,12 @@ body {
   transition: transform 0.2s ease;
 }
 
-.lightbox-img-wrapper.is-zoomed img {
+#tab-cockpit #cockpitFrame .lightbox-img-wrapper.is-zoomed img {
   border-radius: 4px;
   cursor: zoom-out;
 }
 
-.lookbook-badge-custom {
+#tab-cockpit #cockpitFrame .lookbook-badge-custom {
   position: absolute;
   bottom: 8px;
   left: 8px;
@@ -1984,7 +2037,7 @@ body {
   z-index: 4;
 }
 
-.custom-photo-modal {
+#tab-cockpit #cockpitFrame .custom-photo-modal {
   background: var(--bg-card);
   border: 1px solid var(--border-medium);
   border-radius: 12px;
@@ -1995,7 +2048,7 @@ body {
   animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.custom-photo-modal-header {
+#tab-cockpit #cockpitFrame .custom-photo-modal-header {
   background: var(--bg-secondary);
   padding: 12px 18px;
   display: flex;
@@ -2004,11 +2057,11 @@ body {
   border-bottom: 1px solid var(--border-subtle);
 }
 
-.custom-photo-modal-body {
+#tab-cockpit #cockpitFrame .custom-photo-modal-body {
   padding: 18px;
 }
 
-.custom-photo-preview-box {
+#tab-cockpit #cockpitFrame .custom-photo-preview-box {
   width: 100%;
   height: 220px;
   background: var(--bg-secondary);
@@ -2020,14 +2073,14 @@ body {
   justify-content: center;
 }
 
-.custom-photo-preview-box img {
+#tab-cockpit #cockpitFrame .custom-photo-preview-box img {
   width: 100%;
   height: 100%;
   object-fit: contain;
   background: #080c16;
 }
 
-.lb-nav-btn {
+#tab-cockpit #cockpitFrame .lb-nav-btn {
   background: rgba(20, 29, 47, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.15);
   color: #fff;
@@ -2044,23 +2097,23 @@ body {
   backdrop-filter: blur(4px);
 }
 
-.lb-nav-btn:hover {
+#tab-cockpit #cockpitFrame .lb-nav-btn:hover {
   background: #38bdf8;
   color: #000;
   border-color: #38bdf8;
 }
 
-.lb-nav-btn.prev {
+#tab-cockpit #cockpitFrame .lb-nav-btn.prev {
   position: absolute;
   left: 20px;
 }
 
-.lb-nav-btn.next {
+#tab-cockpit #cockpitFrame .lb-nav-btn.next {
   position: absolute;
   right: 20px;
 }
 
-.lightbox-caption-drawer {
+#tab-cockpit #cockpitFrame .lightbox-caption-drawer {
   background: var(--bg-card);
   border: 1px solid var(--border-medium);
   border-radius: 8px;
@@ -2073,7 +2126,7 @@ body {
   margin: 0 auto;
 }
 
-.lb-meta-row {
+#tab-cockpit #cockpitFrame .lb-meta-row {
   display: flex;
   gap: 20px;
   align-items: center;
@@ -2081,7 +2134,7 @@ body {
   flex-wrap: wrap;
 }
 
-.lb-notes-row {
+#tab-cockpit #cockpitFrame .lb-notes-row {
   font-size: 11px;
   color: var(--text-secondary);
   line-height: 1.45;
@@ -2089,7 +2142,7 @@ body {
 
 /* --- File: 06_founder_deck.css --- */
 /* AUDIENCE PRESENTATION MODE */
-.founder-layout {
+#tab-cockpit #cockpitFrame .founder-layout {
   display: none;
   flex-direction: column;
   height: calc(100vh - var(--header-height) - 34px);
@@ -2098,11 +2151,11 @@ body {
   position: relative;
 }
 
-.founder-layout.active {
+#tab-cockpit #cockpitFrame .founder-layout.active {
   display: flex;
 }
 
-.slide-tag {
+#tab-cockpit #cockpitFrame .slide-tag {
   font-family: var(--font-mono);
   font-size: 12px;
   color: var(--accent-gold);
@@ -2112,7 +2165,7 @@ body {
   margin-bottom: 8px;
 }
 
-.slide-title {
+#tab-cockpit #cockpitFrame .slide-title {
   font-family: var(--font-display);
   font-size: 32px;
   font-weight: 800;
@@ -2121,13 +2174,13 @@ body {
   margin-bottom: 8px;
 }
 
-.slide-subtitle {
+#tab-cockpit #cockpitFrame .slide-subtitle {
   font-size: 15px;
   color: var(--text-secondary);
   margin-bottom: 24px;
 }
 
-.slide-indicators {
+#tab-cockpit #cockpitFrame .slide-indicators {
   position: absolute;
   bottom: 24px;
   left: 60px;
@@ -2136,7 +2189,7 @@ body {
   align-items: center;
 }
 
-.slide-dot {
+#tab-cockpit #cockpitFrame .slide-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -2144,7 +2197,7 @@ body {
   cursor: pointer;
 }
 
-.slide-dot.active {
+#tab-cockpit #cockpitFrame .slide-dot.active {
   background: var(--accent-gold);
   width: 24px;
   border-radius: 4px;
@@ -2152,48 +2205,28 @@ body {
 
 /* MEDIA QUERIES (RESPONSIVE HARDENING) */
 @media (max-width: 900px) {
-  .hud-layout {
+
+  #tab-cockpit #cockpitFrame .hud-layout {
     grid-template-columns: 1fr;
   }
-  .agenda-sidebar {
+  #tab-cockpit #cockpitFrame .agenda-sidebar {
     max-height: 240px;
   }
-  .calc-grid {
+  #tab-cockpit #cockpitFrame .calc-grid {
     grid-template-columns: 1fr;
   }
+
 }
-  </style>
-</head>
-<body>
-  <div class="ambient-bg"></div>
 
-  <!-- COCKPIT GOOGLE AUTH OVERLAY (SEC-1) -->
-  <div id="cockpitAuthOverlay" class="cockpit-auth-overlay" style="position: fixed; inset: 0; z-index: 999999; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at center, #111827 0%, #080b11 100%); padding: 16px;">
-    <div class="cockpit-auth-card" style="background: rgba(18, 24, 38, 0.95); backdrop-filter: blur(20px); border: 1px solid #d4af37; border-radius: 12px; padding: 36px 28px; max-width: 440px; width: 100%; text-align: center; box-shadow: 0 16px 40px rgba(0,0,0,0.8);">
-      <div style="font-size: 2.8rem; margin-bottom: 12px;">🎪</div>
-      <h1 style="font-family: 'Cinzel', serif; font-size: 1.45rem; font-weight: 800; color: #f59e0b; margin-bottom: 6px; letter-spacing: 0.8px;">Sree Krushna</h1>
-      <p style="font-family: 'Outfit', sans-serif; font-size: 0.85rem; color: #94a3b8; margin-bottom: 24px; line-height: 1.4;">Decorator Negotiation Cockpit & Master Decisions<br><span style="color: #cbd5e1; font-weight: 500;">Authorized Planning Committee Only</span></p>
-      
-      <button id="cockpitLoginBtn" style="display: inline-flex; align-items: center; justify-content: center; gap: 12px; background: #ffffff; color: #1e293b; font-size: 0.95rem; font-weight: 600; padding: 14px 20px; min-height: 48px; border-radius: 8px; border: 1px solid #e2e8f0; cursor: pointer; width: 100%; transition: all 0.2s ease;">
-        <svg viewBox="0 0 24 24" style="width: 20px; height: 20px;" aria-hidden="true">
-          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-        </svg>
-        Sign in with Google
-      </button>
+</style>
 
-      <div id="cockpitAuthError" style="display: none; margin-top: 16px; padding: 12px 14px; background: rgba(230, 57, 70, 0.15); border: 1px solid #ef4444; border-radius: 6px; color: #fca5a5; font-size: 0.85rem; line-height: 1.4; text-align: left;"></div>
-    </div>
-  </div>
-
-  <div class="app-shell" style="display: none;">
-    <!-- SEC-1 remediation: content loading/error states while Firestore fetch is in flight -->
+<div id="cockpitFrame" class="cockpit-container">
+  <div class="app-shell">
     <div id="cockpitContentLoadingBanner" style="display:none; align-items:center; gap:10px; justify-content:center; padding:8px 16px; background:rgba(245,158,11,0.12); border-bottom:1px solid rgba(245,158,11,0.3); color:#f59e0b; font-family:'Inter',sans-serif; font-size:0.82rem; font-weight:600;">
       <span>⏳ Loading negotiation content…</span>
     </div>
     <div id="cockpitContentErrorBanner" style="display:none; padding:8px 16px; background:rgba(239,68,68,0.12); border-bottom:1px solid rgba(239,68,68,0.3); color:#fca5a5; font-family:'Inter',sans-serif; font-size:0.82rem;"></div>
+
       <!-- TOPBAR -->
   <header class="topnav">
     <div class="brand-section">
@@ -2267,7 +2300,6 @@ body {
   </div>
 
 
-    <!-- WORKSPACE 1: PRESENTER HUD -->
     <main class="hud-layout" id="hudWorkspace">
           <!-- LEFT SIDEBAR: AGENDA -->
     <aside class="agenda-sidebar">
@@ -2456,7 +2488,6 @@ body {
 
     </main>
 
-    <!-- WORKSPACE 2: AUDIENCE PRESENTATION MODE -->
       <!-- WORKSPACE 2: AUDIENCE PRESENTATION MODE -->
   <section class="founder-layout" id="founderWorkspace">
     <div id="activeSlideContainer"></div>
@@ -2468,8 +2499,6 @@ body {
     </div>
   </section>
 
-
-    <!-- WORKSPACE 3: MASTER DECOR PLANNING & 20-STEP DECISION ROADMAP -->
       <!-- WORKSPACE 3: MASTER DECOR PLANNING & 20-STEP DECISION ROADMAP -->
   <section class="decisions-layout" id="decisionsWorkspace">
     <div class="decisions-header-bar">
@@ -2517,7 +2546,6 @@ body {
 
   </div>
 
-  <!-- MODALS -->
     <!-- CUSTOM PHOTO OVERRIDE MODAL (v2.5 PINTEREST INTEGRATION) -->
   <div class="modal-backdrop" id="customPhotoModalBackdrop">
     <div class="custom-photo-modal">
@@ -2929,18 +2957,16 @@ body {
     </div>
   </div>
 
-
-  <!-- TOAST NOTIFICATION -->
     <!-- TOAST NOTIFICATION (AC-DEC-2026-009) -->
   <div class="cockpit-toast" id="cockpitToast">
     <span style="color: var(--accent-gold); font-weight: 700;">✓</span>
     <span id="cockpitToastText">Prompt copied to clipboard!</span>
   </div>
 
+</div>
 
-  <!-- JAVASCRIPT LOGIC & STRUCTURED DATA STORES -->
-  <script>
-    const CANONICAL_PLATES = [
+<script>
+  const CANONICAL_PLATES = [
   {
     "id": "PLATE-01",
     "index": 0,
@@ -3130,14 +3156,9 @@ body {
     "prompt": "An opulent night-time garden wedding stage. A glossy black mirror aisle runway reflecting sparkling overhead fairy lights. Suspended luxury crystal chandeliers glitter under the dark sky. A massive white wisteria floral arch frames the center stage, flanked by elegant white tufted chesterfield couches and tall urn floral arrangements. Photorealistic, 8k."
   }
 ];
-    let VISUAL_PLATES = JSON.parse(JSON.stringify(CANONICAL_PLATES));
-    // SEC-1 remediation (AC-DEC-2026-012): MASTER_DECISIONS / TOPICS_MARQUEE / TOPICS_RAYAGADA
-    // hold the actual negotiation scripts, guardrails, and decision options — they are no
-    // longer embedded at build time. They start empty and are populated at runtime from
-    // Firestore's `cockpit_content/*` collection, only after Google Sign-In + allow-list
-    // succeeds (see the auth-gate module script below and applyCockpitContent() in controller.js).
-    let MASTER_DECISIONS = [];
-    const TOPIC_PLATE_MAP = {
+  let VISUAL_PLATES = JSON.parse(JSON.stringify(CANONICAL_PLATES));
+  let MASTER_DECISIONS = [];
+  const TOPIC_PLATE_MAP = {
   "0": [
     3
   ],
@@ -3166,9 +3187,9 @@ body {
     2
   ]
 };
-    let TOPICS_MARQUEE = [];
-    let TOPICS_RAYAGADA = [];
-    const SLIDES_MARQUEE = [
+  let TOPICS_MARQUEE = [];
+  let TOPICS_RAYAGADA = [];
+  const SLIDES_MARQUEE = [
   {
     "tag": "SLIDE 1: STRATEGIC VISION",
     "title": "Open-Ground Luxury Marquee Vision",
@@ -3200,7 +3221,7 @@ body {
     "contentHtml": "\n          <div style=\"display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:20px;\">\n            <div style=\"background:#0d1527; border:1px solid #1e293d; padding:20px; border-radius:10px;\">\n              <h4 style=\"color:#10b981; font-size:14px; margin-bottom:6px;\">Post-Wedding Mandap Outdoor Reuse</h4>\n              <p style=\"color:#cbd5e1; font-size:12.5px; line-height:1.5;\">After the ceremony, Mandap structure and floral backdrop are repurposed to an adjacent outdoor photo area for post-wedding couple portraits, avoiding duplicate teardown and new booth expenses.</p>\n            </div>\n            <div style=\"background:#0d1527; border:1px solid #1e293d; padding:20px; border-radius:10px;\">\n              <h4 style=\"color:#ec4899; font-size:14px; margin-bottom:6px;\">Turnkey 30-50-20 Disbursement</h4>\n              <p style=\"color:#cbd5e1; font-size:12.5px; line-height:1.5;\">Tier A (Base Shell 60%) + Tier B (Event Accents 30%) + Tier C (Special Additions 10%). Prompt milestone payments (30% token, 50% handover, 20% post-event sign-off).</p>\n            </div>\n          </div>\n        "
   }
 ];
-    const SLIDES_RAYAGADA = [
+  const SLIDES_RAYAGADA = [
   {
     "tag": "SLIDE 1: ENGAGEMENT OVERVIEW",
     "title": "Rayagada Nirbandha & Engagement Vision",
@@ -3233,7 +3254,7 @@ body {
   }
 ];
 
-        let currentMode = 'hud';
+      let currentMode = 'hud';
     let currentEvent = 'marquee';
     let currentTopicIndex = 0;
     let activeStageView = 'script';
@@ -4382,99 +4403,97 @@ body {
       restoreCockpitState();
     });
 
-  </script>
 
-  <!-- FIREBASE AUTHENTICATION GATE (SEC-1) -->
-  <script src="js/config.js"></script>
-  <script type="module">
-    import { initAuthGate } from './js/auth.js';
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+  // Sub-Engine Delegation Contract (sub-engine-shadowing-and-tab-reconciliation.md)
+  window.renderDecoratorCockpit = function() {
+    if (typeof renderAgendaList === 'function') renderAgendaList();
+    if (typeof renderTopicDetail === 'function') renderTopicDetail();
+    if (typeof renderSlideIndicators === 'function') renderSlideIndicators();
+    if (typeof renderCurrentSlide === 'function') renderCurrentSlide();
+    if (typeof recalculate4TierQuote === 'function') recalculate4TierQuote();
+    if (typeof renderDecisionsGrid === 'function') renderDecisionsGrid();
+  };
+</script>
 
-    // SEC-1 remediation: fetch the sensitive negotiation content from Firestore only
-    // after auth succeeds — a static file can be gated visually, but everything it
-    // ships is still in the raw HTTP response. Firestore's security rules are the
-    // real request-time authorization boundary; see firestore.rules `cockpit_content`.
-    async function loadCockpitContentFromFirestore() {
-      if (typeof window.showCockpitContentLoading === 'function') window.showCockpitContentLoading(true);
-      const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-      try {
-        const db = getFirestore();
-        const [mdSnap, tmSnap, trSnap] = await Promise.all([
-          getDoc(doc(db, 'cockpit_content', 'master_decisions')),
-          getDoc(doc(db, 'cockpit_content', 'topics_marquee')),
-          getDoc(doc(db, 'cockpit_content', 'topics_rayagada')),
-        ]);
+<script type="module">
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
-        let md = mdSnap.exists() ? mdSnap.data().payload : [];
-        let tm = tmSnap.exists() ? tmSnap.data().payload : [];
-        let tr = trSnap.exists() ? trSnap.data().payload : [];
+  async function loadCockpitContentFromFirestore() {
+    if (typeof window.showCockpitContentLoading === 'function') window.showCockpitContentLoading(true);
+    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    try {
+      const db = getFirestore();
+      const [mdSnap, tmSnap, trSnap] = await Promise.all([
+        getDoc(doc(db, 'cockpit_content', 'master_decisions')),
+        getDoc(doc(db, 'cockpit_content', 'topics_marquee')),
+        getDoc(doc(db, 'cockpit_content', 'topics_rayagada')),
+      ]);
 
-        // DLRS Resilient Local Fallback (Pillar 1)
-        if (isLocalhost && (!md.length || !tm.length || !tr.length)) {
-          console.warn('⚠️ [DLRS] Local dev mode detected with unseeded Firestore. Loading local data from cockpit_src/data/ ...');
-          try {
-            const [mdRes, tmRes, trRes] = await Promise.all([
-              fetch('cockpit_src/data/master_decisions.json').then(r => r.ok ? r.json() : null),
-              fetch('cockpit_src/data/topics_marquee.json').then(r => r.ok ? r.json() : null),
-              fetch('cockpit_src/data/topics_rayagada.json').then(r => r.ok ? r.json() : null),
-            ]);
-            if (mdRes && !md.length) md = mdRes;
-            if (tmRes && !tm.length) tm = tmRes;
-            if (trRes && !tr.length) tr = trRes;
-          } catch (localErr) {
-            console.warn('⚠️ [DLRS] Local fallback fetch error:', localErr);
-          }
+      let md = mdSnap.exists() ? mdSnap.data().payload : [];
+      let tm = tmSnap.exists() ? tmSnap.data().payload : [];
+      let tr = trSnap.exists() ? trSnap.data().payload : [];
+
+      // DLRS Resilient Local Fallback (Pillar 1)
+      if (isLocalhost && (!md.length || !tm.length || !tr.length)) {
+        console.warn('⚠️ [DLRS] Local dev mode detected with unseeded Firestore. Loading local data from cockpit_src/data/ ...');
+        try {
+          const [mdRes, tmRes, trRes] = await Promise.all([
+            fetch('cockpit_src/data/master_decisions.json').then(r => r.ok ? r.json() : null),
+            fetch('cockpit_src/data/topics_marquee.json').then(r => r.ok ? r.json() : null),
+            fetch('cockpit_src/data/topics_rayagada.json').then(r => r.ok ? r.json() : null),
+          ]);
+          if (mdRes && !md.length) md = mdRes;
+          if (tmRes && !tm.length) tm = tmRes;
+          if (trRes && !tr.length) tr = trRes;
+        } catch (localErr) {
+          console.warn('⚠️ [DLRS] Local fallback fetch error:', localErr);
         }
+      }
 
-        if (typeof window.applyCockpitContent === 'function') {
-          window.applyCockpitContent({
-            masterDecisions: md,
-            topicsMarquee: tm,
-            topicsRayagada: tr,
-          });
-        }
+      if (typeof window.applyCockpitContent === 'function') {
+        window.applyCockpitContent({
+          masterDecisions: md,
+          topicsMarquee: tm,
+          topicsRayagada: tr,
+        });
+      }
 
-        if (!md.length && !isLocalhost) {
-          if (typeof window.showCockpitContentError === 'function') {
-            window.showCockpitContentError('Notice: Cockpit content not yet seeded in Firestore. Authorized SuperAdmins: run npm run seed:cockpit.');
-          }
+      if (!md.length && !isLocalhost) {
+        if (typeof window.showCockpitContentError === 'function') {
+          window.showCockpitContentError('Notice: Cockpit content not yet seeded in Firestore. Authorized SuperAdmins: run npm run seed:cockpit.');
         }
-      } catch (err) {
-        console.error('Failed to load cockpit content from Firestore:', err);
-        if (isLocalhost) {
-          console.warn('⚠️ [DLRS] Falling back to local data on Firestore connection failure in local dev...');
-          try {
-            const [mdRes, tmRes, trRes] = await Promise.all([
-              fetch('cockpit_src/data/master_decisions.json').then(r => r.ok ? r.json() : null),
-              fetch('cockpit_src/data/topics_marquee.json').then(r => r.ok ? r.json() : null),
-              fetch('cockpit_src/data/topics_rayagada.json').then(r => r.ok ? r.json() : null),
-            ]);
-            if (typeof window.applyCockpitContent === 'function') {
-              window.applyCockpitContent({
-                masterDecisions: mdRes || [],
-                topicsMarquee: tmRes || [],
-                topicsRayagada: trRes || [],
-              });
-            }
-          } catch (fallbackErr) {
-            if (typeof window.showCockpitContentError === 'function') window.showCockpitContentError(err.message || String(err));
+      }
+    } catch (err) {
+      console.error('Failed to load cockpit content from Firestore:', err);
+      if (isLocalhost) {
+        console.warn('⚠️ [DLRS] Falling back to local data on Firestore connection failure in local dev...');
+        try {
+          const [mdRes, tmRes, trRes] = await Promise.all([
+            fetch('cockpit_src/data/master_decisions.json').then(r => r.ok ? r.json() : null),
+            fetch('cockpit_src/data/topics_marquee.json').then(r => r.ok ? r.json() : null),
+            fetch('cockpit_src/data/topics_rayagada.json').then(r => r.ok ? r.json() : null),
+          ]);
+          if (typeof window.applyCockpitContent === 'function') {
+            window.applyCockpitContent({
+              masterDecisions: mdRes || [],
+              topicsMarquee: tmRes || [],
+              topicsRayagada: trRes || [],
+            });
           }
-        } else {
+        } catch (fallbackErr) {
           if (typeof window.showCockpitContentError === 'function') window.showCockpitContentError(err.message || String(err));
         }
-      } finally {
-        if (typeof window.showCockpitContentLoading === 'function') window.showCockpitContentLoading(false);
+      } else {
+        if (typeof window.showCockpitContentError === 'function') window.showCockpitContentError(err.message || String(err));
       }
+    } finally {
+      if (typeof window.showCockpitContentLoading === 'function') window.showCockpitContentLoading(false);
     }
+  }
 
-    initAuthGate({
-      overlayEl: document.getElementById('cockpitAuthOverlay'),
-      rootEl: document.querySelector('.app-shell'),
-      loginBtn: document.getElementById('cockpitLoginBtn'),
-      logoutBtn: document.getElementById('cockpitLogoutBtn'),
-      authErrorEl: document.getElementById('cockpitAuthError'),
-      onSignedIn: loadCockpitContentFromFirestore
-    });
-  </script>
-</body>
-</html>
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadCockpitContentFromFirestore);
+  } else {
+    loadCockpitContentFromFirestore();
+  }
+</script>

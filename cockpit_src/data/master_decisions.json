@@ -1,0 +1,551 @@
+[
+  {
+    "id": "DEC-01",
+    "step": 1,
+    "title": "Function Schedule & Day/Night Allocation",
+    "phase": "Phase I: Site & Spatial Foundations",
+    "zone": "Whole Venue",
+    "status": "locked",
+    "statusLabel": "LOCKED & CERTIFIED",
+    "spec": "EVT-001..004 / AC-DEC-2026-007",
+    "dilemma": "Freezing start/end timings for Haldi, Mehendi, Sangeet, and Wedding before contractor talks.",
+    "benchmark": "Vandana Mohan (WDC): Mandatory 6+ hour buffer between late-night Sangeet and morning wedding to prevent uninspected structural compromises.",
+    "direction": "Locked in OS: Haldi Day 1 Morning, Mehendi Day 1 Afternoon Split (VEN-001 hotel AC hall + Zone D lawn), Sangeet Day 1 Night, Wedding Day 2 Morning.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Locked OS Schedule: Day 1 Haldi/Mehendi/Sangeet, Day 2 Morning Vivaha (Certified)",
+        "selected": true
+      }
+    ],
+    "domainIcon": "📅"
+  },
+  {
+    "id": "DEC-02",
+    "step": 2,
+    "title": "Physical Site Survey & Boundary Clearances",
+    "phase": "Phase I: Site & Spatial Foundations",
+    "zone": "Perimeter & Access",
+    "status": "vendor",
+    "statusLabel": "VENDOR ACTION",
+    "spec": "SPEC-OPS-VENUE-GROUND-001 §1.1",
+    "dilemma": "Ground compaction, drainage gradient, and heavy equipment access across 50m distance.",
+    "benchmark": "Devika Narain: Laser subfloor leveling with treated timber pedestals must precede all tent framing to prevent standing water ingress.",
+    "direction": "Vendor must submit stamped CAD drawing showing 50m canopy link, 6m fire tender ring, and drainage slope.",
+    "vendorDeliverable": "Stamped CAD layout + Soil compaction report (Due T-21 Days)",
+    "domainIcon": "📐",
+    "plateIndex": 4,
+    "plateRef": "PLATE-05",
+    "plateLabel": "50m Covered Arrival Corridor"
+  },
+  {
+    "id": "DEC-03",
+    "step": 3,
+    "title": "Sun Path, Weather & Thermodynamic Orientation",
+    "phase": "Phase I: Site & Spatial Foundations",
+    "zone": "Marquee Alignment",
+    "status": "locked",
+    "statusLabel": "LOCKED & CERTIFIED",
+    "spec": "SPEC-OPS-VENUE-GROUND-001 §1.2",
+    "dilemma": "Preventing severe afternoon solar thermal loading and blinding glare in ceremony zones.",
+    "benchmark": "Abu Jani Sandeep Khosla: 850 g/m² blockout PVC reduces internal heat load by 6°C–8°C compared to translucent tarpaulins.",
+    "direction": "Locked in OS: Ridge oriented North-South; gable ends face North/South; afternoon sun shielded behind rear BOH kitchen wall.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Certified N-S Alignment with 850 g/m² Blockout PVC on South/West Walls",
+        "selected": true
+      }
+    ],
+    "domainIcon": "☀️",
+    "plateIndex": 3,
+    "plateRef": "PLATE-04",
+    "plateLabel": "Modular Marquee & HVAC"
+  },
+  {
+    "id": "DEC-04",
+    "step": 4,
+    "title": "Master Venue Spatial Zoning (Zones A–E)",
+    "phase": "Phase I: Site & Spatial Foundations",
+    "zone": "Master Site Plan",
+    "status": "locked",
+    "statusLabel": "LOCKED & CERTIFIED",
+    "spec": "open_ground_spatial_zoning.md",
+    "dilemma": "Zoning 100x160ft (16,000 sq ft) marquee with 40ft Mandap (30ft family flanks), 24x16ft Sangeet stage, and adjacent 60x40ft VIP dining tent.",
+    "benchmark": "Taj / Oberoi Convention Standards: Clear spatial zoning between ceremonial altar, dining, and party stage ensures zero acoustic or circulation clash.",
+    "direction": "Locked in OS: 100x160ft Main Marquee + 60x40ft VIP/Elderly Dining Tent + 100ft Road Arrival Tunnel + Post-Wedding Mandap Reuse.",
+    "options": [
+      {
+        "id": "A",
+        "text": "100×160ft Master Zoning (40ft Mandap, 24×16ft Stage, 60×40ft VIP Tent) (Certified)",
+        "selected": true
+      }
+    ],
+    "domainIcon": "🏛️",
+    "plateIndex": 3,
+    "plateRef": "PLATE-04",
+    "plateLabel": "Master Spatial Zoning"
+  },
+  {
+    "id": "DEC-05",
+    "step": 5,
+    "title": "Guest vs. Service Circulation Separation",
+    "phase": "Phase I: Site & Spatial Foundations",
+    "zone": "Access Ring",
+    "status": "vendor",
+    "statusLabel": "VENDOR ACTION",
+    "spec": "SPEC-OPS-VENUE-GROUND-001 §2.3",
+    "dilemma": "Strict segregation of guest arrivals from catering carts, dirty dish collection, and generator fuel lines.",
+    "benchmark": "Taj / Oberoi Palace Standards: 100% segregated Back-of-House service ring; guests never witness service waste removal.",
+    "direction": "Decorator must delineate a continuous 6ft rear service corridor behind Zone C leading to service gate.",
+    "vendorDeliverable": "BOH Circulation Drawing with zero cross-over through guest foyer (Due T-21 Days)",
+    "domainIcon": "🚶",
+    "plateIndex": 4,
+    "plateRef": "PLATE-05",
+    "plateLabel": "Grand Arrival Walkway"
+  },
+  {
+    "id": "DEC-06",
+    "step": 6,
+    "title": "Marquee Structure Architecture & Elevation",
+    "phase": "Phase II: Structural Shell & Climate",
+    "zone": "Structural Shell",
+    "status": "locked",
+    "statusLabel": "LOCKED & CERTIFIED",
+    "spec": "SPEC-PROC-DECOR-MARQUEE-001 §2.1",
+    "dilemma": "Ensuring unobstructed guest sightlines and certified 100 km/h wind stability.",
+    "benchmark": "German Roder / Losberger Standard: Clear-span hangars allow full 360-degree crane and jib video arcs with zero center poles.",
+    "direction": "Locked in OS: 100ft × 160ft German clear-span extruded aluminum alloy (6061-T6), 32ft ridge apex, zero center poles.",
+    "options": [
+      {
+        "id": "A",
+        "text": "100×160 German Clear-Span Structure (16,000 sq ft) with 100ft Covered Road Entry Tunnel",
+        "selected": true
+      }
+    ],
+    "domainIcon": "🎪",
+    "plateIndex": 3,
+    "plateRef": "PLATE-04",
+    "plateLabel": "German Clear-Span Hangar"
+  },
+  {
+    "id": "DEC-07",
+    "step": 7,
+    "title": "Dual-Zone HVAC & DG Power Backbone",
+    "phase": "Phase II: Structural Shell & Climate",
+    "zone": "Whole Venue MEP",
+    "status": "locked",
+    "statusLabel": "LOCKED & CERTIFIED",
+    "spec": "SPEC-PROC-DECOR-MARQUEE-001 §2.2-2.3",
+    "dilemma": "Preventing generator failure or audio-visual buzz while cooling a 500-guest tent.",
+    "benchmark": "Sound.com: Audio/Video circuits must be isolated through an online double-conversion UPS to eliminate harmonic generator noise.",
+    "direction": "Locked in OS: 40T package AC in Zone A, desert coolers in Zone C, dual 125 kVA DGs with online UPS on A/V bus.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Dual 125 kVA Silent DG (3-Bus SLD) + 40T Dedicated Package AC (Certified)",
+        "selected": true
+      }
+    ],
+    "domainIcon": "❄️",
+    "plateIndex": 3,
+    "plateRef": "PLATE-04",
+    "plateLabel": "Dual-Zone HVAC (40T + Evap)"
+  },
+  {
+    "id": "DEC-08",
+    "step": 8,
+    "title": "Master Color Palette & Metallic Standard",
+    "phase": "Phase III: Design Language & Materials",
+    "zone": "Aesthetic Identity",
+    "status": "pending",
+    "statusLabel": "PENDING YOUR DECISION",
+    "spec": "SPEC-PROC-DECOR-MARQUEE-001 §3.1",
+    "dilemma": "Selecting the unified color harmony across all 4 functions to prevent visual chaos.",
+    "benchmark": "Devika Narain: Calm 70% neutral base (Ivory, Champagne) with rich narrative accents prevents visual fatigue.",
+    "direction": "Base: Ivory & Champagne Satin with Brushed Champagne Gold metal. Choose your accent tone:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Option A (Recommended): Royal Amber & Marigold Gold (Vedic sacred warmth, elevates teak mandap)",
+        "selected": true,
+        "badge": "Vedic Sacred Warmth",
+        "swatches": [
+          {
+            "name": "Ivory",
+            "hex": "#FFFFF0"
+          },
+          {
+            "name": "Warm Champagne",
+            "hex": "#F7E7CE"
+          },
+          {
+            "name": "Antique Brass",
+            "hex": "#C5A059"
+          },
+          {
+            "name": "Royal Amber",
+            "hex": "#FFBF00"
+          }
+        ]
+      },
+      {
+        "id": "B",
+        "text": "Option B: Blush Rose & Dusty Peach (Soft romantic contemporary elegance, flattering for photos)",
+        "selected": false,
+        "badge": "Romantic Contemporary",
+        "swatches": [
+          {
+            "name": "Pearl White",
+            "hex": "#F8F9FA"
+          },
+          {
+            "name": "Blush Rose",
+            "hex": "#FFB6C1"
+          },
+          {
+            "name": "Dusty Peach",
+            "hex": "#E8C5B0"
+          },
+          {
+            "name": "Satin Champagne",
+            "hex": "#ECD5BB"
+          }
+        ]
+      },
+      {
+        "id": "C",
+        "text": "Option C: Deep Emerald & Midnight Navy (Dramatic royal palace opulence, high-contrast evening impact)",
+        "selected": false,
+        "badge": "High-Contrast Opulence",
+        "swatches": [
+          {
+            "name": "Pure Ivory",
+            "hex": "#FFFFF0"
+          },
+          {
+            "name": "Antique Gold",
+            "hex": "#D4AF37"
+          },
+          {
+            "name": "Imperial Emerald",
+            "hex": "#046307"
+          },
+          {
+            "name": "Midnight Navy",
+            "hex": "#1A2B4C"
+          }
+        ]
+      }
+    ],
+    "domainIcon": "🎨"
+  },
+  {
+    "id": "DEC-09",
+    "step": 9,
+    "title": "Material Palette Discipline & Prohibitions",
+    "phase": "Phase III: Design Language & Materials",
+    "zone": "Material Procurement",
+    "status": "pending",
+    "statusLabel": "PENDING YOUR DECISION",
+    "spec": "CTR-DECOR-RIDER-001 Cl 8",
+    "dilemma": "Enforcing quality standards and eliminating cheap vendor shortcuts (flex banners, plastic chairs).",
+    "benchmark": "Rani Pink: Luxury is defined by what you refuse; printed flex banners and plastic chairs destroy a multi-crore aesthetic.",
+    "direction": "Sign off on the Prohibited Negative List with ₹50,000 penalty clause in vendor rider.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Approve Strict Prohibited List with ₹50,000 Vendor Violation Penalty Clause (Recommended)",
+        "selected": true,
+        "badge": "🌿 100% Pure Natural Materials (Strict Zero-Plastic)"
+      },
+      {
+        "id": "B",
+        "text": "Flexible Guidelines without financial penalty clause",
+        "selected": false,
+        "badge": "⚠️ Commercial Concession (Selective Faux Permitted)"
+      }
+    ],
+    "domainIcon": "🪵"
+  },
+  {
+    "id": "DEC-10",
+    "step": 10,
+    "title": "Permanent Luxury Base Infrastructure",
+    "phase": "Phase III: Design Language & Materials",
+    "zone": "Whole Venue",
+    "status": "locked",
+    "statusLabel": "LOCKED & CERTIFIED",
+    "spec": "Prime Invariant P-BASE-DECOR",
+    "dilemma": "Avoiding teardown costs and wasted hours between multi-day events.",
+    "benchmark": "International Event Production: Permanent base infrastructure saves 45%–55% of total decor quotation across 4 events.",
+    "direction": "Locked in OS: Marquee shell, draped ceiling, chandeliers, and neutral carpet stay 100% constant across all 4 events.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Build-Once-Transform-Many Core Base Infrastructure (Certified)",
+        "selected": true
+      }
+    ],
+    "domainIcon": "🏛️",
+    "plateIndex": 3,
+    "plateRef": "PLATE-04",
+    "plateLabel": "Permanent Luxury Base Shell"
+  },
+  {
+    "id": "DEC-11",
+    "step": 11,
+    "title": "Cinema Lighting Design (CRI > 95)",
+    "phase": "Phase IV: Scenography & Production",
+    "zone": "Lighting Grid",
+    "status": "locked",
+    "statusLabel": "LOCKED & CERTIFIED",
+    "spec": "SPEC-PROC-DECOR-MARQUEE-001 §3.3",
+    "dilemma": "Preventing sickly green skin tones and 120fps video banding on cinema cameras.",
+    "benchmark": "Joseph Radhik: Low CRI LED stage lighting causes rolling shutter banding on slow-motion films that cannot be fixed in post.",
+    "direction": "Locked in OS: 3200K cinema profile for indoor ceremonies; 5600K daylight for mehendi; zero 120fps flicker on Sony FX3.",
+    "options": [
+      {
+        "id": "A",
+        "text": "CRI > 95 Cinema Keylights with 3200K Tungsten Balance & Flicker-Free Profiles",
+        "selected": true
+      }
+    ],
+    "domainIcon": "💡",
+    "plateIndex": 2,
+    "plateRef": "PLATE-03",
+    "plateLabel": "Sangeet Cinema Lighting Grid"
+  },
+  {
+    "id": "DEC-12",
+    "step": 12,
+    "title": "Floral Strategy & Structural Reuse Matrix",
+    "phase": "Phase IV: Scenography & Production",
+    "zone": "Mandap, Stage, Entrance",
+    "status": "pending",
+    "statusLabel": "PENDING YOUR DECISION",
+    "spec": "SPEC-PROC-DECOR-MARQUEE-001 §3.1",
+    "dilemma": "Balancing lush floral density with budget efficiency and 6-hour morning turnaround speed.",
+    "benchmark": "Devika Narain Floral Architecture: Permanent green foliage base built Day 1; accent garlands swapped via quick-clips in under 90 mins.",
+    "direction": "Very High density at Mandap & Entrance; High at Sangeet; Low at Buffets. Choose floral philosophy:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Option A (Recommended): Vedic Royal Hybrid (Marigold & mogra for day, red rose & tuberoses for wedding)",
+        "selected": true,
+        "badge": "🌼 100% Traditional Marigold & White Mogra"
+      },
+      {
+        "id": "B",
+        "text": "Option B: Modern English Pastel (White hydrangeas, blush spray roses, baby's breath)",
+        "selected": false,
+        "badge": "🌸 English Garden Pastel Roses & Hydrangeas"
+      },
+      {
+        "id": "C",
+        "text": "Option C: Architectural Foliage & Brass (Eucalyptus, olive branches, brass urlis, minimal cut florals)",
+        "selected": false,
+        "badge": "🌺 Curated Hybrid: Marigold Altar + Garden Lounge"
+      }
+    ],
+    "domainIcon": "🌺",
+    "plateIndex": 0,
+    "plateRef": "PLATE-01",
+    "plateLabel": "Vedic Lotus Mandap Florals"
+  },
+  {
+    "id": "DEC-13",
+    "step": 13,
+    "title": "Furniture Language & Seating Typography",
+    "phase": "Phase IV: Scenography & Production",
+    "zone": "Guest Seating",
+    "status": "pending",
+    "statusLabel": "PENDING YOUR DECISION",
+    "spec": "CTR-DECOR-RIDER-001 Cl 4",
+    "dilemma": "Ensuring comfortable seating for elders during 3-hour puja and festive party seating for youth.",
+    "benchmark": "The Wedding Design Company: Maximum 2 coherent furniture finishes (natural timber + champagne metal) creates visual serenity.",
+    "direction": "Zone A: Front 2 rows royal velvet sofas for immediate elders; remaining Champagne Chiavari. Zone D: Low charpais.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Champagne Gold Chiavari Chairs + Royal Velvet Elder Sofas (Recommended)",
+        "selected": true,
+        "badge": "🪵 Natural Cross-Back Teak & Linen Banquets"
+      },
+      {
+        "id": "B",
+        "text": "Natural Oak Cross-Back Chairs + Linen Tufted Lounge Sofas",
+        "selected": false,
+        "badge": "👑 Gold Chiavari & Royal Tufted Velvet Diwans"
+      }
+    ],
+    "domainIcon": "🪑",
+    "plateIndex": 5,
+    "plateRef": "PLATE-06",
+    "plateLabel": "Lounge & Banquet Seating"
+  },
+  {
+    "id": "DEC-14",
+    "step": 14,
+    "title": "Sacred Mandap Architecture & Smoke Extraction",
+    "phase": "Phase IV: Scenography & Production",
+    "zone": "Zone A Sacred Altar",
+    "status": "locked",
+    "statusLabel": "LOCKED & CERTIFIED",
+    "spec": "SPEC-PROC-DECOR-MARQUEE-001 §3.1-3.2",
+    "dilemma": "Preventing choking smoke accumulation while providing comfortable close-family seating on 40ft stage.",
+    "benchmark": "Oberoi Hotels Indoor Ritual Standard: Active mechanical smoke extraction is strictly mandatory for indoor havan fires.",
+    "direction": "Locked in OS: 40ft wide stage at 3ft elevation centered in 100ft tent with 30ft family flanks; 2mm zinc heat barrier, smoke extraction; repurposed post-ceremony for outdoor photo shoot.",
+    "options": [
+      {
+        "id": "A",
+        "text": "40ft Mandap Stage with 30ft Family Flanks + Smoke Canopy + Post-Wedding Photo Reuse (Certified)",
+        "selected": true
+      }
+    ],
+    "domainIcon": "🕉️",
+    "plateIndex": 0,
+    "plateRef": "PLATE-01",
+    "plateLabel": "Vedic Lotus Mandap & Havan Canopy"
+  },
+  {
+    "id": "DEC-15",
+    "step": 15,
+    "title": "Catering Pass & Guest Activity Stalls",
+    "phase": "Phase IV: Scenography & Production",
+    "zone": "Zone C & Zone D",
+    "status": "pending",
+    "statusLabel": "PENDING YOUR DECISION",
+    "spec": "SPEC-OPS-VENUE-GROUND-001 §2.4",
+    "dilemma": "Coordinating internal main buffet, separate 60x40ft VIP/elderly dining tent, and live activity stalls.",
+    "benchmark": "WeddingSutra Top Picks: Live artisan booths (lac bangles, organic ittar) drive 3× higher guest engagement than static backdrops.",
+    "direction": "Locked in OS: 4 Linear Buffets inside main marquee + Separate 60x40ft VIP/Elderly Dining Tent + Live Interactive Craft Stalls.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Option A (Recommended): Main Internal Buffets + 60x40ft VIP/Elderly Dining Tent + 2 Live Craft Stalls",
+        "selected": true,
+        "badge": "🍽️ Integrated Food Theatre & Artisan Craft Village"
+      },
+      {
+        "id": "B",
+        "text": "Option B: 360-Degree Video Spin Platform + Polaroid Guestbook + Candy Bar",
+        "selected": false,
+        "badge": "🥘 Segregated Peripheral Perimeter Buffet"
+      }
+    ],
+    "domainIcon": "🍽️",
+    "plateIndex": 6,
+    "plateRef": "PLATE-07",
+    "plateLabel": "Satellite Kitchen & Buffet"
+  },
+  {
+    "id": "DEC-16",
+    "step": 16,
+    "title": "4-Event Function Transformation Protocol",
+    "phase": "Phase V: Transformation & Final Sign-Off",
+    "zone": "Production Operations",
+    "status": "pending",
+    "statusLabel": "PENDING YOUR DECISION",
+    "spec": "SPEC-PROC-DECOR-MARQUEE-001 §2",
+    "dilemma": "Executing seamless event transitions across Haldi, Mehendi, Sangeet, and Wedding + Mandap outdoor photo reuse without delays.",
+    "benchmark": "Cineyug Production Playbook: Pre-staging modular Mandap sections in BOH staging tent allows overnight turnaround under 6 hours.",
+    "direction": "Approve overnight turnaround schedule and post-wedding Mandap outdoor photo reuse workflow.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Approve 6-Hour Overnight Turnaround + Mandap Post-Wedding Photo Repurposing (Recommended)",
+        "selected": true,
+        "badge": "🔄 Synchronized 50-Person Turnaround Crew"
+      },
+      {
+        "id": "B",
+        "text": "Request Extended 8-Hour Setup Window (delays morning ritual start)",
+        "selected": false,
+        "badge": "⏳ Phased Staggered Transformation"
+      }
+    ],
+    "domainIcon": "🔄",
+    "plateIndex": 5,
+    "plateRef": "PLATE-06",
+    "plateLabel": "Mehendi Garden Promenade Split"
+  },
+  {
+    "id": "DEC-17",
+    "step": 17,
+    "title": "Photography Sightlines, Drone & Cable Audit",
+    "phase": "Phase V: Transformation & Final Sign-Off",
+    "zone": "Media & Safety",
+    "status": "locked",
+    "statusLabel": "LOCKED & CERTIFIED",
+    "spec": "SPEC-PROC-DECOR-MARQUEE-001 §4",
+    "dilemma": "Ensuring zero trip hazards, drone propeller hazards, or guest head obstructions in official cinematography.",
+    "benchmark": "DGCA India & Event Safety Alliance: Strictly no drone flights within enclosed marquee environments.",
+    "direction": "Locked in OS: Strictly no indoor drones; 8ft clear central camera dolly corridor; heavy-duty rubber cable ramps taped down.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Outdoor-Only Drone Invariant + 8ft Clear Camera Dolly Track + Rubber Cable Ramps (Certified)",
+        "selected": true
+      }
+    ],
+    "domainIcon": "📸",
+    "plateIndex": 2,
+    "plateRef": "PLATE-03",
+    "plateLabel": "Cinema Sightlines & Camera Rigging"
+  },
+  {
+    "id": "DEC-18",
+    "step": 18,
+    "title": "Commercial BOQ & 4-Tier Budget Settlement",
+    "phase": "Phase V: Transformation & Final Sign-Off",
+    "zone": "Commercials & Ledger",
+    "status": "locked",
+    "statusLabel": "LOCKED & CERTIFIED",
+    "spec": "budget_master.md / Cockpit Engine",
+    "dilemma": "Negotiating fair vendor pricing across permanent base shell, transformations, and variable items.",
+    "benchmark": "Commercial Procurement Standard: 3-tier cost breakdown (Base Shell, Transformations, Variables) locks vendor accountability.",
+    "direction": "Locked in OS: Tier A (₹6.5L), Tier B (₹4.8L), Tier C (₹3.2L). Settlement target: ₹11.5L–₹12.5L.",
+    "options": [
+      {
+        "id": "A",
+        "text": "4-Tier Commercial Negotiation Framework (20% Advance, 50% Handover, 30% Retention) (Certified)",
+        "selected": true
+      }
+    ],
+    "domainIcon": "💰"
+  },
+  {
+    "id": "DEC-19",
+    "step": 19,
+    "title": "Technical, Structural & Fire Safety Certification",
+    "phase": "Phase V: Transformation & Final Sign-Off",
+    "zone": "Statutory Compliance",
+    "status": "vendor",
+    "statusLabel": "VENDOR ACTION",
+    "spec": "NBC Part 4 / CTR-DECOR-RIDER-001 Cl 9",
+    "dilemma": "Eliminating fire and wind collapse risks on open ground with 500+ guests.",
+    "benchmark": "National Building Code of India (NBC Part 4): All temporary tensile fabrics must carry DIN 4102 B1 flame-retardant certification.",
+    "direction": "Decorator must deliver signed flame-retardant certificates, 100 km/h wind rating, and extinguisher placement plan.",
+    "vendorDeliverable": "Flame-Retardant Fabric Certificate + Fire Extinguisher Layout (Due T-14 Days)",
+    "domainIcon": "🛡️",
+    "plateIndex": 3,
+    "plateRef": "PLATE-04",
+    "plateLabel": "Wind & Fire Structural Engineering"
+  },
+  {
+    "id": "DEC-20",
+    "step": 20,
+    "title": "Physical Mock-up & Material Sample Gate",
+    "phase": "Phase V: Transformation & Final Sign-Off",
+    "zone": "Quality Assurance",
+    "status": "vendor",
+    "statusLabel": "VENDOR ACTION",
+    "spec": "SPEC-PROC-DECOR-MARQUEE-001 §5",
+    "dilemma": "Color calibration errors and texture disappointments when relying solely on WhatsApp photos.",
+    "benchmark": "High-End Event Protocol: Physical mock-up table presented at T-14 days with actual linen, gold metal, chair cushion, and florals.",
+    "direction": "Mandatory T-14 physical sample inspection table before final 50% setup release. Strictly no WhatsApp-only approvals.",
+    "vendorDeliverable": "1:1 Physical Sample Mock-up Table (Due T-14 Days at Venue)",
+    "domainIcon": "🧪"
+  }
+]

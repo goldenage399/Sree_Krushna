@@ -1,0 +1,172 @@
+    <!-- RIGHT DETAIL PANE -->
+    <section class="topic-detail-pane">
+      
+      <!-- TOPIC HEADER -->
+      <div class="topic-header-card">
+        <div class="topic-badge-row">
+          <span class="topic-act-pill act-1" id="topicActBadge">ACT 1: STRUCTURE & THERMAL</span>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <span style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted);" id="topicTimeEstimate">15 mins</span>
+            <div class="status-button-group">
+              <button class="status-btn active pending" id="sbtnPending" onclick="setTopicStatus('pending')">PENDING</button>
+              <button class="status-btn" id="sbtnInProgress" onclick="setTopicStatus('in_progress')">IN PROGRESS</button>
+              <button class="status-btn" id="sbtnAgreed" onclick="setTopicStatus('agreed')">AGREED</button>
+              <button class="status-btn" id="sbtnBlocked" onclick="setTopicStatus('blocked')">BLOCKED</button>
+            </div>
+          </div>
+        </div>
+        <h2 class="topic-title" id="topicTitle">Topic Title</h2>
+        <div class="topic-goal" id="topicGoal">Goal statement</div>
+
+        <!-- DYNAMIC VISUAL REFERENCE PILL STRIP -->
+        <div class="topic-visual-strip" id="topicVisualStrip">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 16px;">📸</span>
+            <span style="font-size: 11px; color: #bae6fd; font-weight: 600;" id="topicVisualCountText">Visual Inspiration & Technical Plates Linked</span>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;" id="topicVisualButtonsContainer">
+            <!-- Injected dynamically -->
+          </div>
+        </div>
+      </div>
+
+      <!-- TABS -->
+      <div class="stage-tabs">
+        <button class="stage-tab-btn active" id="tabBtnScript" onclick="switchStageTab('script')">
+          <span>💬 Spoken Script</span>
+        </button>
+        <button class="stage-tab-btn" id="tabBtnTree" onclick="switchStageTab('tree')">
+          <span>🌳 Decision Tree</span>
+        </button>
+        <button class="stage-tab-btn" id="tabBtnCurveballs" onclick="switchStageTab('curveballs')">
+          <span>⚡ Vendor Curveballs</span>
+        </button>
+        <button class="stage-tab-btn" id="tabBtnEvidence" onclick="switchStageTab('evidence')">
+          <span>📋 13 RFP Deliverables</span>
+        </button>
+        <button class="stage-tab-btn" id="tabBtnCalc" onclick="switchStageTab('calc')">
+          <span>🧮 4-Tier Calculator</span>
+        </button>
+      </div>
+
+      <!-- CONTENT PANES -->
+      <div id="stageContentContainer">
+        
+        <!-- Section 1: Spoken Script -->
+        <div class="script-card" id="cardScriptSection">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <div class="tone-selector">
+              <span style="font-size: 11px; color: var(--text-muted); font-weight: 600;">Tone:</span>
+              <button class="tone-btn active warm" id="btnToneWarm" onclick="switchTone('warm')">
+                <span>Warm Collaboration</span>
+                <kbd class="hotkey-badge">1</kbd>
+              </button>
+              <button class="tone-btn data" id="btnToneData" onclick="switchTone('data')">
+                <span>Technical Data</span>
+                <kbd class="hotkey-badge">2</kbd>
+              </button>
+              <button class="tone-btn firm" id="btnToneFirm" onclick="switchTone('firm')">
+                <span>Firm Host Boundary</span>
+                <kbd class="hotkey-badge">3</kbd>
+              </button>
+            </div>
+            <button class="mode-btn" onclick="copySpokenScript()" style="font-size: 10.5px; padding: 4px 8px;">
+              <span>📋 Copy Text</span>
+            </button>
+          </div>
+
+          <div class="script-box" id="spokenScriptBox">
+            Select a topic to view tactical spoken script.
+          </div>
+
+          <div class="vernacular-box" id="vernacularBox">
+            Hindi/Odia vernacular anchor will appear here.
+          </div>
+        </div>
+
+        <!-- Section 2: Decision Tree -->
+        <div id="cardTreeSection" style="display: none;">
+          <div id="treeStepsContainer"></div>
+        </div>
+
+        <!-- Section 3: Curveballs -->
+        <div id="cardCurveballsSection" style="display: none;">
+          <div id="curveballsContainer"></div>
+        </div>
+
+        <!-- Section 4: 13 RFP Deliverables & Fact Citation -->
+        <div class="script-card" id="cardEvidenceSection" style="display: none;">
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 6px; padding: 12px;">
+              <div style="font-family: var(--font-mono); font-size: 10.5px; color: var(--accent-gold); font-weight: 700; margin-bottom: 4px;">BENCHMARK FACT CITATION & MARKET TRUTH</div>
+              <div style="font-size: 12px; color: #f1f5f9; line-height: 1.5;" id="factCitationText"></div>
+            </div>
+            <div style="background: rgba(244, 63, 94, 0.08); border: 1px solid rgba(244, 63, 94, 0.25); border-radius: 6px; padding: 12px;">
+              <div style="font-family: var(--font-mono); font-size: 10.5px; color: #f43f5e; font-weight: 700; margin-bottom: 4px;">REDLINE GUARDRAIL (WALKAWAY RULE)</div>
+              <div style="font-size: 12px; color: #fecdd3; line-height: 1.5;" id="guardrailText"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 5: 4-Tier Commercial Calculator -->
+        <div id="cardCalcSection" style="display: none;">
+          <div class="calc-grid">
+            <div class="calc-panel">
+              <h3 style="font-size: 13px; font-weight: 700; color: #fff; border-bottom: 1px solid var(--border-subtle); padding-bottom: 6px;">4-Tier Quote Structuring</h3>
+              <div class="calc-row">
+                <span>Tier A (Base Permanent Infrastructure)</span>
+                <input type="number" class="calc-input" id="calcTierA" value="240000" oninput="recalculate4TierQuote()" />
+              </div>
+              <div class="calc-row">
+                <span>Tier B1 (Haldi Accent Kit)</span>
+                <input type="number" class="calc-input" id="calcTierB1" value="25000" oninput="recalculate4TierQuote()" />
+              </div>
+              <div class="calc-row">
+                <span>Tier B2 (Mehendi Lounge Kit)</span>
+                <input type="number" class="calc-input" id="calcTierB2" value="30000" oninput="recalculate4TierQuote()" />
+              </div>
+              <div class="calc-row">
+                <span>Tier B3 (Sangeet Lighting Kit)</span>
+                <input type="number" class="calc-input" id="calcTierB3" value="45000" oninput="recalculate4TierQuote()" />
+              </div>
+              <div class="calc-row">
+                <span>Tier B4 (Wedding Mandap Kit)</span>
+                <input type="number" class="calc-input" id="calcTierB4" value="55000" oninput="recalculate4TierQuote()" />
+              </div>
+              <div class="calc-row">
+                <span>Tier C (Standalone / LED Screen)</span>
+                <input type="number" class="calc-input" id="calcTierC" value="35000" oninput="recalculate4TierQuote()" />
+              </div>
+              <div class="calc-row" style="border-top: 1px dashed var(--border-subtle); padding-top: 6px;">
+                <span style="color: var(--accent-rose); font-weight: 600;">Host Discount Target (Package Deal)</span>
+                <input type="number" class="calc-input" id="calcDiscount" value="55000" oninput="recalculate4TierQuote()" style="color:#f43f5e;" />
+              </div>
+            </div>
+
+            <div class="calc-summary-box">
+              <h3 style="font-size: 13px; font-weight: 700; color: #fff; border-bottom: 1px solid var(--border-subtle); padding-bottom: 6px;">Commercial Settlement Summary</h3>
+              <div class="calc-row">
+                <span style="color: var(--text-secondary);">Gross Unbundled Total:</span>
+                <span style="font-family: var(--font-mono); color: #fff;" id="res4TierRaw">₹4,30,000</span>
+              </div>
+              <div class="calc-row">
+                <span style="color: var(--accent-gold); font-weight: 700;">Net Negotiated Settlement:</span>
+                <span style="font-family: var(--font-mono); font-size: 15px; font-weight: 800; color: #10b981;" id="res4TierSettlement">₹3,75,000</span>
+              </div>
+              <div class="calc-row">
+                <span style="color: var(--text-secondary);">Host Savings:</span>
+                <span style="font-family: var(--font-mono); color: #38bdf8;" id="res4TierSavings">₹55,000 (12.8%)</span>
+              </div>
+              <div class="calc-row">
+                <span style="color: var(--text-secondary);">Milestone 3 Retention (20%):</span>
+                <span style="font-family: var(--font-mono); color: #f59e0b;" id="res4TierRetention">₹75,000</span>
+              </div>
+              <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border-subtle); font-size: 11px; color: var(--text-muted); line-height: 1.4;">
+                Payment gates: 30% Token (<strong style="color:#fff;" id="res4TierAdv">₹1,12,500</strong>), 50% Marquee Handover (<strong style="color:#fff;" id="res4TierFw">₹1,87,500</strong>), 20% Post-Wedding Punchlist (<strong style="color:#f43f5e;" id="res4TierRet">₹75,000</strong>).
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>

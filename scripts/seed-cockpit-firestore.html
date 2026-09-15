@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset=UTF-8 />
+<meta name=viewport content=width=device-width, initial-scale=1.0 />
+<title>Cockpit Firestore Seed Utility (Local Only)</title>
+<style>
+  body { font-family: -apple-system, 'Inter', sans-serif; background:#0a0f1d; color:#f8fafc; max-width:720px; margin:40px auto; padding:0 20px; line-height:1.6; }
+  h1 { color:#f59e0b; font-size:1.4rem; }
+  .warn { background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.4); padding:14px 16px; border-radius:8px; font-size:0.9rem; margin-bottom:20px; }
+  button { background:#f59e0b; color:#000; border:none; padding:12px 24px; border-radius:8px; font-weight:700; font-size:0.95rem; cursor:pointer; margin-right:10px; }
+  button:disabled { opacity:0.5; cursor:not-allowed; }
+  #log { margin-top:20px; font-family:'JetBrains Mono', monospace; font-size:0.82rem; white-space:pre-wrap; background:#111827; border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:14px 16px; min-height:80px; }
+  .ok { color:#34d399; }
+  .err { color:#f87171; }
+  #signedOutState, #signedInState { display:none; }
+</style>
+</head>
+<body>
+<h1>🔒 Decorator Cockpit — Firestore Content Seed Utility</h1>
+<div class=warn>
+  <strong>Dynamic Migration Tool (SEC-1 Remediation, AC-DEC-2026-012).</strong><br>
+  Reads source JSON directly from disk (<code>cockpit_src/data/*.json</code>) and pushes it into Firestore's
+  <code>cockpit_content</code> collection. This guarantees zero data drift.<br><br>
+  <strong>How to run:</strong> from the repo root, start
+  <code>SERVE_ROOT=. node scripts/dev-server.cjs</code> (PowerShell: <code>='.'; node scripts/dev-server.cjs</code>),
+  then open <code>http://localhost:5000/scripts/seed-cockpit-firestore.html</code>.<br>
+  <strong>Never copy or deploy this file into <code>public/</code></strong>.
+</div>
+
+<div id=signedOutState>
+  <button id=loginBtn>Sign in with Google</button>
+  <div id=authError class=err></div>
+</div>
+
+<div id=signedInState>
+  <p>Signed in as <strong id=userEmail></strong>.</p>
+  <button id=seedBtn>🚀 Seed 3 documents to Firestore</button>
+  <button id=logoutBtn>Sign out</button>
+</div>
+
+<div id=log>Waiting for sign-in…</div>
+
+<script src=../js/config.js></script>
+<script type=module>
+  import { initializeApp, getApps } from https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js;
+  import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js;
+  import { getFirestore, doc, setDoc, serverTimestamp } from https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js;
+
+  if (!getApps().length) initializeApp(window.firebaseConfig);
+  const auth = getAuth();
+  const db = getFirestore();
+  const logEl = document.getElementById('log');
+  const line = (msg, cls) => { logEl.innerHTML += '\n' + (cls ? '<span class=' + cls + '>' + msg + '</span>' : msg); };
+
+  async function loadSourceJson() {
+    const [md, tm, tr] = await Promise.all([
+      fetch('/cockpit_src/data/master_decisions.json').then(r => { if (!r.ok) throw new Error('HTTP ' + r.status + ' for master_decisions.json'); return r.json(); }),
+      fetch('/cockpit_src/data/topics_marquee.json').then(r => { if (!r.ok) throw new Error('HTTP ' + r.status + ' for topics_marquee.json'); return r.json(); }),
+      fetch('/cockpit_src/data/topics_rayagada.json').then(r => { if (!r.ok) throw new Error('HTTP ' + r.status + ' for topics_rayagada.json'); return r.json(); }),
+    ]);
+    return { md, tm, tr };
+  }
+
+  document.getElementById('loginBtn').onclick = async () => {
+    document.getElementById('authError').textContent = '';
+    try {
+      await signInWithPopup(auth, new GoogleAuthProvider());
+    } catch (err) {
+      document.getElementById('authError').textContent = err.message;
+    }
+  };
+  document.getElementById('logoutBtn').onclick = () => signOut(auth);
+
+  document.getElementById('seedBtn').onclick = async () => {
+    logEl.textContent = '';
+    const btn = document.getElementById('seedBtn');
+    btn.disabled = true;
+    const email = auth.currentUser && auth.currentUser.email;
+
+    line('Reading latest source files from /cockpit_src/data/ ...');
+    let data;
+    try {
+      data = await loadSourceJson();
+      line('✓ Loaded disk JSON: master_decisions (' + data.md.length + ' items), topics_marquee (' + data.tm.length + ' items), topics_rayagada (' + data.tr.length + ' items)', 'ok');
+    } catch (err) {
+      line('❌ Failed reading source JSON: ' + err.message, 'err');
+      line('💡 Ensure server was started with SERVE_ROOT=. so cockpit_src/ is accessible.');
+      btn.disabled = false;
+      return;
+    }
+
+    const jobs = [
+      ['master_decisions', data.md],
+      ['topics_marquee', data.tm],
+      ['topics_rayagada', data.tr],
+    ];
+    for (const [id, payload] of jobs) {
+      try {
+        await setDoc(doc(db, 'cockpit_content', id), { payload, updatedBy: email, updatedAt: serverTimestamp() });
+        line('✅ cockpit_content/' + id + ' written (' + JSON.stringify(payload).length + ' bytes)', 'ok');
+      } catch (err) {
+        line('❌ cockpit_content/' + id + ' FAILED: ' + err.message, 'err');
+      }
+    }
+    line('\nDone! Reload the live cockpit and sign in to confirm content loads.');
+    btn.disabled = false;
+  };
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      document.getElementById('signedOutState').style.display = 'none';
+      document.getElementById('signedInState').style.display = 'block';
+      document.getElementById('userEmail').textContent = user.email;
+      logEl.textContent = 'Ready. Click Seed 3 documents to Firestore — this writes live data directly to Firestore.';
+    } else {
+      document.getElementById('signedOutState').style.display = 'block';
+      document.getElementById('signedInState').style.display = 'none';
+      logEl.textContent = 'Waiting for Google Sign-In…';
+    }
+  });
+</script>
+</body>
+</html>

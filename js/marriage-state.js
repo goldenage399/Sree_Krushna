@@ -22,9 +22,9 @@
       version: '3.1.0',
       title: 'Sree Krushna Marriage OS',
       couple: 'Sree & Krushna',
-      muhurat: '2027-03-10 08:00 IST',
+      muhurat: '2027-03-10 12:00 IST (Hastaganthi)',
       venue: 'Swarna Mandap, Bhubaneswar, Odisha',
-      updatedAt: '2026-08-22T14:10:09.980Z'
+      updatedAt: '2026-09-15T08:30:00.000Z'
     },
 
     // ── 6 TEMPORAL PHASES / STAGES ──────────────────────────────────
@@ -48,25 +48,25 @@
       {
         id: 'STAGE_03',
         num: '03',
-        name: 'Barat & Grand Reception',
-        timeframe: 'Day 0 • 16:00 to 19:30',
-        desc: 'Barat assembly, Groom Safa/Mukuta dressing, bridal photography, brass band arrival & GATE-02 Baranugam.',
+        name: 'Barat & Baranugam Welcome',
+        timeframe: 'Day 0 • 09:00 to 11:30',
+        desc: 'Barat assembly, Groom Safa/Mukuta dressing, bridal daylight photography, brass band arrival & GATE-02 Baranugam.',
         icon: '🎺'
       },
       {
         id: 'STAGE_04',
         num: '04',
         name: 'Vedic Mandap Sanctum',
-        timeframe: 'Day 0 • 19:30 to 22:30',
-        desc: 'Astrological Lagna muhurat rites: Kanyadaan, Hastaganthi, Lajahoma, Saptapadi & Sindoor Daan.',
+        timeframe: 'Day 0 • 11:30 to 14:00',
+        desc: 'Astrological 12:00 Noon Hastaganthi Lagna muhurat rites: Kanyadaan, Hastaganthi, Lajahoma, Saptapadi & Sindoor Daan.',
         icon: '🕉️'
       },
       {
         id: 'STAGE_05',
         num: '05',
         name: 'Royal Feast & Hospitality',
-        timeframe: 'Day 0 • 19:30 to 23:30',
-        desc: 'Traditional Odia feast dining pavilion, VIP Sattvic service, photo lounge candids & guest departures.',
+        timeframe: 'Day 0 • 12:30 to 16:30',
+        desc: 'Grand Traditional Odia Vivaha Bhoji afternoon lunch feast, VIP Sattvic service, photo lounge candids & afternoon Kanyavida departure.',
         icon: '🍲'
       },
       {
@@ -142,33 +142,33 @@
       {
         id: 'GATE-01',
         name: 'Pre-Event Readiness Greenlight',
-        targetTime: 'Day 0 • T - 4 Hours (15:00)',
+        targetTime: 'Day 0 • 06:30 AM (T - 3 Hours)',
         owner: 'PER-014 (Command Controller)',
-        description: 'Mandatory sign-off across green rooms, power backups, samagri inspection, and dining pavilion setup.',
+        description: 'Mandatory morning sign-off across green rooms, power backups, samagri inspection, and dining pavilion setup.',
         status: 'READY'
       },
       {
         id: 'GATE-02',
         name: 'Barat & Entrance Handshake',
-        targetTime: 'Day 0 • 19:30',
+        targetTime: 'Day 0 • 10:30 AM',
         owner: 'PER-006 (Bride Mother) & PER-008',
-        description: 'Synchronized handshake: Barat procession arrival, cold pyros clearance, and Baranugam welcoming aarti.',
+        description: 'Synchronized handshake: Morning Barat procession arrival, cold pyros clearance, and Baranugam welcoming aarti.',
         status: 'PENDING'
       },
       {
         id: 'GATE-03',
         name: 'Vedic Sanctum Muhurat Lock',
-        targetTime: 'Day 0 • 21:30 Lagna Muhurat',
+        targetTime: 'Day 0 • 12:00 PM (Noon) Hastaganthi Muhurat',
         owner: 'PER-080 (Chief Vedic Purohit)',
-        description: 'Sacred Kanyadaan, Hastaganthi water pouring, Lajahoma, Saptapadi 7 vows & Sindoor Daan.',
+        description: 'Sacred Kanyadaan, 12:00 PM Hastaganthi water pouring, Lajahoma, Saptapadi 7 vows & Sindoor Daan.',
         status: 'PENDING'
       },
       {
         id: 'GATE-04',
         name: 'Kanyavida & Shagun Custody Seal',
-        targetTime: 'Day 0 • 23:45',
+        targetTime: 'Day 0 • 15:30 PM (3:30 PM)',
         owner: 'PER-007 (Asset Custodian) & Parents',
-        description: 'Signed handover of gift ledger, cash envelopes, gold return verification, and bridal vehicle departure.',
+        description: 'Signed handover of gift ledger, cash envelopes, gold return verification, and afternoon bridal vehicle departure.',
         status: 'PENDING'
       }
     ],
@@ -582,7 +582,7 @@
                         "done": false
                   },
                   {
-                        "text": "Drone flight permission and indoor gimbal stabilization confirmed.",
+                        "text": "Outdoor-only drone flight permissions locked; indoor handheld gimbal stabilization confirmed.",
                         "done": false
                   },
                   {
@@ -595,6 +595,10 @@
                   },
                   {
                         "text": "Advance booking payment executed (`PAY-003`).",
+                        "done": false
+                  },
+                  {
+                        "text": "Deliver pre-planned must-have shot and reel list (drone property flyover, groom prep, bride prep, balcony look, Varmala reveal, B&W hand-in-hand motion, family candids) to lead cinematographer at T-7 Days.",
                         "done": false
                   }
             ],
@@ -1213,8 +1217,8 @@
             "lead": "PER-014 (Command Controller) & Parents Council",
             "priority": "Critical",
             "status": "Planned",
-            "timeTag": "Day 0 - T - 4 Hours",
-            "desc": "Execute full venue walkthrough and sign-off on all 6 tracks 4 hours prior to Barat arrival, verifying green room access, sound levels, generator power, mandap samagri readiness, and dining buffer readiness.",
+            "timeTag": "Day 0 - 06:30 to 09:30",
+            "desc": "Execute full morning venue walkthrough and sign-off on all 6 tracks 3 hours prior to morning Barat arrival, verifying green room access, sound levels, generator power, mandap samagri readiness, and dining buffer readiness.",
             "checklist": [
                   {
                         "text": "Green rooms unlocked, cleaned, and air-conditioning operational.",
@@ -1229,11 +1233,11 @@
                         "done": false
                   },
                   {
-                        "text": "Buffet dining area setup complete with water jars and handwash stations.",
+                        "text": "Buffet dining area setup complete with water jars, tender coconut, and handwash stations.",
                         "done": false
                   },
                   {
-                        "text": "Formal `GATE-01` green light issued by PER-014.",
+                        "text": "Formal `GATE-01` morning green light issued by PER-014.",
                         "done": false
                   }
             ],
@@ -1249,27 +1253,27 @@
             "lead": "PER-006 (Bride Mother) & Green Room Coordinator",
             "priority": "Critical",
             "status": "Planned",
-            "timeTag": "Day 0 - 15:00 to 18:30",
-            "desc": "Coordinate bridal makeup, hair styling, traditional *Chandan Chita* sandalwood art, Sambalpuri silk saree draping, and gold jewelry handover in the Bride VIP green room.",
+            "timeTag": "Day 0 - 06:30 to 10:30",
+            "desc": "Coordinate morning bridal makeup, hair styling, traditional *Chandan Chita* sandalwood art, Sambalpuri silk saree draping, and gold jewelry handover in the Bride VIP green room.",
             "checklist": [
                   {
-                        "text": "15:00 — MUA arrives at green room with airbrush equipment.",
+                        "text": "06:30 — MUA arrives at green room with airbrush equipment and natural lighting setup.",
                         "done": false
                   },
                   {
-                        "text": "16:30 — Hair and sandalwood forehead artwork completed.",
+                        "text": "08:30 — Hair and sandalwood forehead artwork completed.",
                         "done": false
                   },
                   {
-                        "text": "17:30 — Saree draping and `AST-001` & `AST-002` jewellery handover signed off.",
+                        "text": "09:30 — Saree draping and `AST-001` & `AST-002` jewellery handover signed off.",
                         "done": false
                   },
                   {
-                        "text": "18:15 — Bridal solo portraits and family green room photo session completed.",
+                        "text": "10:15 — Bridal solo daylight portraits and family green room photo session completed.",
                         "done": false
                   },
                   {
-                        "text": "18:30 — Ready signal sent to Command Control for Mandap entry coordination.",
+                        "text": "10:30 — Ready signal sent to Command Control for Baranugam and Varamala coordination.",
                         "done": false
                   }
             ],
@@ -1288,27 +1292,27 @@
             "lead": "PER-008 (Groom Lead)",
             "priority": "Critical",
             "status": "Planned",
-            "timeTag": "Day 0 - 17:00 to 19:30",
-            "desc": "Manage Groom sherwani dressing, safa tying, Mukuta placement (`AST-006`), Barajatri assembly at assembly hotel, brass band start, and grand musical entry.",
+            "timeTag": "Day 0 - 07:30 to 10:30",
+            "desc": "Manage Groom sherwani dressing, safa tying, Mukuta placement (`AST-006`), morning Barajatri assembly at assembly hotel, brass band start, and grand daytime musical entry.",
             "checklist": [
                   {
-                        "text": "17:00 — Groom dressed in royal ivory sherwani; safa tied.",
+                        "text": "07:30 — Groom dressed in royal ivory sherwani; safa tied and Mukuta placed (`AST-006`).",
                         "done": false
                   },
                   {
-                        "text": "18:00 — Barajatri guests assembled at hotel lobby; floral corsages distributed.",
+                        "text": "08:30 — Barajatri guests assembled at hotel lobby; floral corsages and morning hydration distributed.",
                         "done": false
                   },
                   {
-                        "text": "18:30 — Brass band and dhol begin procession along pre-approved route.",
+                        "text": "09:30 — Brass band and dhol begin morning procession along pre-approved route.",
                         "done": false
                   },
                   {
-                        "text": "19:15 — Procession arrives at main gate; cold pyrotechnics ignited safely.",
+                        "text": "10:15 — Procession arrives at main gate; cold pyrotechnics and flower petal shower cleared.",
                         "done": false
                   },
                   {
-                        "text": "19:30 — `GATE-02` Barat Handshake triggered at venue entrance.",
+                        "text": "10:30 — `GATE-02` Morning Barat Handshake & Baranugam triggered at venue entrance.",
                         "done": false
                   }
             ],
@@ -1327,27 +1331,27 @@
             "lead": "Chief Vedic Purohit & PER-005",
             "priority": "Critical",
             "status": "Planned",
-            "timeTag": "Day 0 - 19:30 to 22:30",
-            "desc": "Officiate sequential Vedic rites: Baranugam, Kanyadaan, Hastaganthi, Lajahoma, Saptapadi, and Sindoor Daan, keeping strictly within the astrological lagna muhurat.",
+            "timeTag": "Day 0 - 10:45 to 14:00",
+            "desc": "Officiate sequential Vedic rites: Baranugam, Kanyadaan, 12:00 PM Hastaganthi, Lajahoma, Saptapadi, and Sindoor Daan, keeping strictly within the daytime astrological lagna muhurat.",
             "checklist": [
                   {
-                        "text": "19:45 — Groom seated in mandap; preliminary *Varana* puja started.",
+                        "text": "11:00 — Groom seated in mandap; preliminary *Varana* puja started.",
                         "done": false
                   },
                   {
-                        "text": "20:15 — Bride enters mandap wearing yellow-red *Baula Patani* saree.",
+                        "text": "11:30 — Bride enters mandap wearing yellow-red *Baula Patani* saree; preliminary Kanyadaan begins.",
                         "done": false
                   },
                   {
-                        "text": "20:45 — *Kanyadaan* and *Hastaganthi* sacred water pouring executed.",
+                        "text": "12:00 PM — 🪔 *Kanyadaan* and *Hastaganthi* sacred water pouring executed at exact Lagna Muhurat.",
                         "done": false
                   },
                   {
-                        "text": "21:30 — *Lajahoma* sacred fire offerings and *Saptapadi* seven steps completed.",
+                        "text": "12:45 — *Lajahoma* sacred fire offerings and *Saptapadi* seven steps completed.",
                         "done": false
                   },
                   {
-                        "text": "22:00 — *Sindoor Daan* and Mangalsutra tied (`AST-003`); `GATE-03` Sanctum Complete.",
+                        "text": "13:30 — *Sindoor Daan* and Mangalsutra tied (`AST-003`); `GATE-03` Sanctum Complete.",
                         "done": false
                   }
             ],
@@ -1360,33 +1364,33 @@
       {
             "id": "TSK-505",
             "wbs": "6.4.1",
-            "stage": "STAGE_03",
+            "stage": "STAGE_05",
             "track": "catering",
-            "title": "Track D — Dining Pavilion Operations & Feast Flow",
+            "title": "Track D — Dining Pavilion Operations & Grand Vivaha Bhoji Lunch Feast",
             "lead": "PER-014 (Food Lead) & Catering Captain",
             "priority": "High",
             "status": "Planned",
-            "timeTag": "Day 0 - 19:30 to 23:30",
-            "desc": "Control dining hall traffic flow, manage live snack stalls during Barat, coordinate seated banana-leaf VIP service for elder relatives, and ensure uninterrupted dessert refills.",
+            "timeTag": "Day 0 - 10:30 to 15:30",
+            "desc": "Control dining hall traffic flow, manage live morning welcome drinks/coolers during Barat arrival, coordinate grand afternoon Vivaha Bhoji lunch buffet, and oversee seated banana-leaf VIP service for Barajatri elder relatives.",
             "checklist": [
                   {
-                        "text": "19:00 — Welcome drinks and live Odia street snack counters open.",
+                        "text": "10:30 — Welcome drinks, tender coconut water, and morning Odia street snack counters open.",
                         "done": false
                   },
                   {
-                        "text": "20:00 — Main banquet buffet line opens for guests.",
+                        "text": "12:30 — Main royal Vivaha Bhoji afternoon lunch buffet line opens for wedding guests.",
                         "done": false
                   },
                   {
-                        "text": "20:30 — VIP seated dining area reserved for Barajatri elder relatives.",
+                        "text": "13:00 — VIP seated dining area on fresh banana leaves served for Barajatri elder relatives.",
                         "done": false
                   },
                   {
-                        "text": "22:00 — Fresh hot batch of *Chhena Poda* & sweets replenished.",
+                        "text": "14:30 — Fresh hot batch of *Chhena Poda*, hot Rasagola & Odia sweets replenished.",
                         "done": false
                   },
                   {
-                        "text": "23:30 — Post-wedding mandap dinner packed for couple and immediate family.",
+                        "text": "15:30 — Post-wedding lunch packed for couple and immediate family prior to Kanyavida departure.",
                         "done": false
                   }
             ],
@@ -1404,27 +1408,27 @@
             "lead": "VDR-003 Lead Videographer",
             "priority": "High",
             "status": "Planned",
-            "timeTag": "Day 0 - 15:00 to 23:00",
-            "desc": "Execute the pre-approved cinematic shot wishlist, capturing emotional Kanyadaan tears, Saptapadi macro footwork, aerial drone entrance, and steady live stream transmission.",
+            "timeTag": "Day 0 - 09:00 to 16:30",
+            "desc": "Execute the pre-approved daytime cinematic shot wishlist, capturing morning Barat energy, emotional Kanyadaan tears, 12:00 PM Hastaganthi sacred hand-joining, Saptapadi macro footwork, and golden-hour afternoon Kanyavida departure.",
             "checklist": [
                   {
-                        "text": "YouTube live stream broadcast link tested and shared with overseas relatives.",
+                        "text": "YouTube live stream broadcast link tested and shared with overseas relatives before 09:30 AM.",
                         "done": false
                   },
                   {
-                        "text": "Aerial drone flight captures Barat procession and full venue illuminations.",
+                        "text": "Aerial drone flight captures morning Barat procession and full daytime venue layout.",
                         "done": false
                   },
                   {
-                        "text": "Gimbal operator captures 360-degree bridal mandap entry walk.",
+                        "text": "Gimbal operator captures daylight bridal mandap entry walk.",
                         "done": false
                   },
                   {
-                        "text": "Macro prime lens captures exact millisecond of *Sindoor Daan*.",
+                        "text": "Macro prime lens captures exact millisecond of 12:00 PM *Hastaganthi* and *Sindoor Daan*.",
                         "done": false
                   },
                   {
-                        "text": "Hard disk backup of all memory cards initiated at end-of-night.",
+                        "text": "Hard disk backup of all memory cards initiated immediately following Kanyavida.",
                         "done": false
                   }
             ],
@@ -1436,14 +1440,14 @@
       {
             "id": "TSK-507",
             "wbs": "6.6.1",
-            "stage": "STAGE_03",
+            "stage": "STAGE_05",
             "track": "fleet",
             "title": "Track F — Shagun Safe Custody, Cash Logistics & Gold Handover",
             "lead": "PER-007 (Custody Lead) & Family Treasurer",
             "priority": "Critical",
             "status": "Planned",
-            "timeTag": "Day 0 - 18:00 to 24:00",
-            "desc": "Maintain physical custody of the master Shagun gift safe box, distribute cash tips to band/drivers, and transfer precious jewellery back into locked safe following mandap completion.",
+            "timeTag": "Day 0 - 10:00 to 16:00",
+            "desc": "Maintain physical custody of the master Shagun gift safe box, distribute cash tips to band/drivers, and transfer precious jewellery back into locked safe following mandap completion prior to afternoon departure.",
             "checklist": [
                   {
                         "text": "Dual-custodian lockbox established in Bride green room.",
@@ -1462,7 +1466,7 @@
                         "done": false
                   },
                   {
-                        "text": "`GATE-04` Departure Handshake signed off for convoy transit.",
+                        "text": "15:30 — `GATE-04` Departure Handshake signed off for afternoon bridal convoy transit.",
                         "done": false
                   }
             ],
@@ -1552,11 +1556,23 @@
             "lead": "Sree & Krushna",
             "priority": "High",
             "status": "Planned",
-            "timeTag": "T-90) to Phase 6 (Day +5",
+            "timeTag": "T-90 Days to Day +5",
             "desc": "Ensure every signed vendor contract (`CTR-###`) has a countersigned copy on file, GST-compliant invoices for payments above the statutory threshold, and security-deposit receipts retained for post-event refund claims.",
             "checklist": [
                   {
-                        "text": "All `CTR-",
+                        "text": "All countersigned vendor contracts (`CTR-001` through `CTR-010`) archived in digital vault.",
+                        "done": false
+                  },
+                  {
+                        "text": "Written confirmation of vendor reporting schedules, crew arrival times, and team headcounts secured at T-7 Days.",
+                        "done": false
+                  },
+                  {
+                        "text": "Pre-agreed vendor crew meal counts and dining area access confirmed with caterer at T-7 Days.",
+                        "done": false
+                  },
+                  {
+                        "text": "Milestone advance reconciliation and balance disbursement schedule finalized with Finance Lead.",
                         "done": false
                   }
             ],
@@ -1697,7 +1713,7 @@
             "lead": "PER-008 / Family Performance Leads",
             "priority": "Medium",
             "status": "Planned",
-            "timeTag": "T-45) to Phase 4 (T-5",
+            "timeTag": "T-45 Days to T-5 Days",
             "desc": "Schedule and track rehearsal sessions for family performance acts at the Sangeet, finalize the song/performance running order, and confirm the emcee/anchor script.",
             "checklist": [
                   {
@@ -1714,6 +1730,14 @@
                   },
                   {
                         "text": "Music/DJ playlist handed off ahead of `EVT-002`.",
+                        "done": false
+                  },
+                  {
+                        "text": "Collect, curate, and trim all family performance audio tracks (.mp3/.wav) into master cue sheet by T-7 Days.",
+                        "done": false
+                  },
+                  {
+                        "text": "Compile and review childhood/courtship photo and video montage for Sangeet LED screen display by T-7 Days.",
                         "done": false
                   }
             ],

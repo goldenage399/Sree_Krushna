@@ -1,0 +1,51 @@
+  <!-- FULLSCREEN LIGHTBOX (v2.5 DUAL MODE & PINTEREST OVERRIDE) -->
+  <div class="lightbox-backdrop" id="lightboxModalBackdrop">
+    <div class="lightbox-topbar">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span class="lightbox-plate-badge" id="lbPlateId">PLATE-01</span>
+        <span class="lightbox-plate-title" id="lbPlateTitle">Vedic Lotus Mandap</span>
+        <span class="lightbox-scope-badge" id="lbScopeBadge">MANDATORY CONTRACTUAL SCOPE</span>
+      </div>
+
+      <!-- Mode Switcher in Lightbox -->
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <div class="lightbox-view-toggle">
+          <button class="lb-toggle-btn active" id="lbTogglePhoto" onclick="switchLightboxMode('photo')">📸 Photo Inspiration</button>
+          <button class="lb-toggle-btn" id="lbToggleBlueprint" onclick="switchLightboxMode('blueprint')">📐 Blueprint Schematic</button>
+        </div>
+        <button class="mode-btn" id="lbZoomBtn" onclick="toggleLightboxZoom()" style="font-size: 11px; padding: 4px 10px;" title="Toggle Fullscreen Fit / Expanded Zoom (Z)">🔍 Expand</button>
+        <span style="font-size: 11px; color: #94a3b8; font-family: var(--font-mono);" id="lbCounter">1 / 8</span>
+        <button class="lb-close-btn" onclick="closeLightboxModal()" title="Close Lightbox (Esc)">✕</button>
+      </div>
+    </div>
+
+    <!-- MAIN IMAGE STAGE -->
+    <div class="lightbox-stage">
+      <button class="lb-nav-btn prev" onclick="prevLightboxPlate()" title="Previous (Left Arrow)">◀</button>
+      <div class="lightbox-img-wrapper">
+        <img id="lightboxImg" src="" alt="Architectural Reference Plate" onclick="toggleLightboxZoom()" title="Click to Toggle Fit / Expanded Zoom" />
+      </div>
+      <button class="lb-nav-btn next" onclick="nextLightboxPlate()" title="Next (Right Arrow)">▶</button>
+    </div>
+
+    <!-- BOTTOM METADATA DRAWER -->
+    <div class="lightbox-caption-drawer">
+      <div class="lb-meta-row">
+        <div><strong>Zone:</strong> <span id="lbZoneText" style="color:#fff;">Zone A — Sacred Sanctuary</span></div>
+        <div><strong>Specification:</strong> <code id="lbSpecText" style="color:#38bdf8;">SPEC-PROC-DECOR-MARQUEE-001 §3.1</code></div>
+        <div id="lbContractRiderWrap"><strong>Binding Rider:</strong> <span id="lbClauseText" style="color:#fbbf24;">CTR-DECOR-RIDER-001 Cl 5</span></div>
+        <div style="margin-left:auto; display:flex; align-items:center; gap:10px;">
+          <button class="mode-btn" id="lbCopyPromptBtn" onclick="copyPlatePrompt(currentLightboxIndex)" style="font-size:11px; padding:3px 9px; background:rgba(59,130,246,0.15); border-color:rgba(59,130,246,0.35); color:#60a5fa;" title="Copy Generative AI Prompt to Clipboard">📋 Copy Prompt</button>
+          <button class="mode-btn" id="lbEditPhotoBtn" onclick="openCustomPhotoModal(VISUAL_PLATES[currentLightboxIndex].id)" style="font-size:11px; padding:3px 9px; background:rgba(245,158,11,0.15); border-color:rgba(245,158,11,0.35); color:var(--accent-gold);">✏️ Custom / Pinterest URL</button>
+          <div style="font-size:10px; color:#94a3b8; font-family:var(--font-mono);">
+            Press <kbd style="background:rgba(255,255,255,0.1); padding:1px 4px; border-radius:3px;">T</kbd> (Mode) | <kbd style="background:rgba(255,255,255,0.1); padding:1px 4px; border-radius:3px;">Z</kbd> (Zoom)
+          </div>
+        </div>
+      </div>
+      <div class="lb-notes-row" id="lbNotesText">
+        Clear stage width 24ft, raised 18 inches, 2mm galvanized zinc subfloor protection under havan altar.
+      </div>
+    </div>
+  </div>
+
+  

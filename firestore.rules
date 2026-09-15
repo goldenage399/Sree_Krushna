@@ -145,6 +145,30 @@ service cloud.firestore {
         (!('checklist' in d) || (d.checklist is list && d.checklist.size() <= 15));
     }
 
+    // ===============================================================
+    // cockpit_content/{docId} — SEC-1 Remediation (AC-DEC-2026-012)
+    // ===============================================================
+    // Holds the Decorator Cockpit's sensitive negotiation content
+    // (negotiation scripts, guardrails, decision options) that must NOT
+    // ship inside the static decorator-cockpit.html build — it is fetched
+    // client-side only after Google Sign-In + allow-list succeeds.
+    // Doc IDs today: "master_decisions", "topics_marquee", "topics_rayagada".
+    //   payload      any    required  the original JSON content (array or map)
+    //   updatedBy    string required  must equal request.auth.token.email
+    //   updatedAt    timestamp required  must equal request.time (server-set)
+    function isValidCockpitContent(d) {
+      return d.keys().hasAll(['payload','updatedBy','updatedAt']) &&
+        d.keys().hasOnly(['payload','updatedBy','updatedAt']) &&
+        d.updatedBy == request.auth.token.email &&
+        d.updatedAt == request.time;
+    }
+
+    match /cockpit_content/{docId} {
+      allow read: if isAllowedUser();
+      allow create, update: if isAllowedUser() && isValidCockpitContent(request.resource.data);
+      allow delete: if false; // content is replaced (re-seeded), never deleted
+    }
+
     match /task_status/{taskId} {
       allow read: if isAllowedUser();
       allow write: if isAllowedUser() &&

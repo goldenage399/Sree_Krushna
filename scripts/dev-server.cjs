@@ -3,7 +3,10 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = process.env.PORT || 5000;
-const PUBLIC_DIR = path.join(__dirname, '..', 'public');
+// SERVE_ROOT lets a one-off local task (e.g. scripts/seed-cockpit-firestore.html, which must
+// never live under public/ — see AC-DEC-2026-012) serve from the repo root instead of the
+// production `public/` tree. Default behavior (npm run dev / npm run serve) is unchanged.
+const PUBLIC_DIR = path.join(__dirname, '..', process.env.SERVE_ROOT || 'public');
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',

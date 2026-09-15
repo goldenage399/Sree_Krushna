@@ -1,0 +1,303 @@
+[
+  {
+    "id": 0,
+    "act": "ACT 1: STRUCTURE & THERMAL",
+    "actClass": "act-1",
+    "time": "15 mins",
+    "title": "100x160ft Clear-Span & 100ft Arrival Tunnel",
+    "shortDesc": "100x160ft clear-span (16,000 sq ft), 100ft road entry tunnel, 850g/m² blackout",
+    "headline": "100x160ft Clear-Span Blackout Marquee & 100ft Covered Arrival Tunnel",
+    "goal": "Lock 100x160ft clear-span structure (16,000 sq ft) with 100ft covered entry tunnel from the road and 850 g/m² blackout roof.",
+    "vernacular": "Ek baar achha luxury base bana do — phir har function mein usi base ko intelligently transform karo. Bahar road se 100ft covered tunnel aur andar spacious 100x160ft grand pavilion.",
+    "scripts": {
+      "warm": "Namaste ji. Hum chaahte hain ki ek baar achha luxury base bana do — phir har function mein usi base ko intelligently transform karo. Marquee bahar se grand lage, road se 100ft ka covered arrival tunnel ho, aur andar se 100x160ft ka spacious luxury royal pavilion ka feel aana chahiye.",
+      "data": "The ground has a 100ft setback from the road. We require a 100ft covered entry tunnel connecting the road to the marquee. The main marquee is 100x160ft (16,000 sq ft), providing ample space for the 40ft Mandap, guest seating, dining, and Sangeet stage under one roof.",
+      "firm": "We will not accept generic temporary shamianas or single-ply translucent plastic. The 100x160ft structure must use clean 850 g/m² blockout PVC, and the 100ft arrival tunnel must be fully covered and weatherproof."
+    },
+    "factCitation": "100x160ft (16,000 sq ft) clear-span aluminum marquee with 100ft arrival tunnel. Standard turnkey rental benchmark for 2-day multi-event base in South Odisha is ₹1,80,000–₹2,20,000 including leveling and wooden sub-base.",
+    "guardrail": "Zero transparent roof sections above the Mandap or seating area. Opaque panels mandatory on East (morning) and South-West (afternoon).",
+    "tree": [
+      {
+        "stage": "Stage 1: Ground Orientation Verification",
+        "title": "Study Sun Trajectory",
+        "text": "Demand the decorator identify the East-West axis on the ground. East wall receives intense 08:00–11:00 AM sun during Haldi/Mandap; South-West receives 14:00–17:00 PM heat."
+      },
+      {
+        "stage": "Stage 2: Material Scrutiny",
+        "title": "Enforce 850 g/m² Blockout PVC",
+        "text": "Inspect fabric sample. It must have an opaque black core to guarantee zero greenhouse heating."
+      },
+      {
+        "stage": "Stage 3: Sub-Flooring Lock",
+        "title": "Leveling & Moisture Barrier",
+        "text": "Mandatory 4-inch elevated wooden deck with waterproof underlay to prevent ground dampness."
+      }
+    ],
+    "curveballs": [
+      {
+        "objection": "Decorator says: 'Blackout PVC makes the tent look dark and depressing inside.'",
+        "counter": "The blackout layer is only the exterior shield. The visible interior uses decorative ivory georgette and champagne-gold linings with crystal chandeliers, making it brighter and more royal than translucent tents.",
+        "fallback": "Allow translucent French windows only on the shaded North facade facing the garden."
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "act": "ACT 2: CEILING & CHANDELIERS",
+    "actClass": "act-2",
+    "time": "12 mins",
+    "title": "Grand Paneless Ceiling & Chandeliers",
+    "shortDesc": "Ivory graphic fabric, champagne-gold borders, blush piping, crystal chandeliers",
+    "headline": "Grand Paneless Ceiling with Ivory Fabric & Statement Chandeliers",
+    "goal": "Achieve luxury through scale, proportion, champagne-gold borders, and statement chandeliers—zero visual clutter or thousands of plastic hangings.",
+    "vernacular": "Structure same rahega, look aur mood function ke hisaab se change hoga. Luxury should come from elegance and scale, not excessive decoration.",
+    "scripts": {
+      "warm": "Hum chaahte hain ki ceiling visually majestic aur clean lage. We envision an uninterrupted ivory graphic fabric with champagne gold structural borders, delicate blush velvet piping, and grand crystal chandeliers. Luxury should come from elegance and scale, not excessive plastic decoration.",
+      "data": "Standard wedding ceilings use hundreds of cheap thermocol or artificial drops that sag in heat. We specify clean architectural bays of flame-retardant ivory fabric, champagne-gold structural box trims, and 8-12 tiered crystal chandeliers on DMX dimmers.",
+      "firm": "No sagging drapes, visible zip ties, or exposed wiring. All cables must run through internal truss sleeves. If chandeliers flicker or fail DMX dimming test, lighting deductions apply."
+    },
+    "factCitation": "Fine georgette/satin ivory ceiling lining with custom gold borders costs ₹35,000–₹45,000 for 6,500 sq ft. Tiered crystal chandeliers rent for ₹3,000–₹4,000/piece.",
+    "guardrail": "Zero sagging fabric. Zero exposed wiring across ceiling arches. Chandeliers must be secured with safety steel cables.",
+    "tree": [
+      {
+        "stage": "Stage 1: Design Restraint Lock",
+        "title": "Enforce Paneless Elegance",
+        "text": "Cinema cameras shoot upward during varmala. The background must be clean, regal ivory with warm lighting, not busy plastic props."
+      },
+      {
+        "stage": "Stage 2: Chandelier Dimming Check",
+        "title": "DMX Dimmer Console Rider",
+        "text": "Ensure chandeliers can dim from 100% (Haldi morning) down to 20% warm glow (Sangeet night) without buzzing."
+      }
+    ],
+    "curveballs": [
+      {
+        "objection": "Decorator says: 'Clients usually want hanging flower gardens and hundreds of birdcages.'",
+        "counter": "We do NOT want heavy hanging objects. They collect dust, trap heat, and look dated. We want modern architectural proportion and lighting scale.",
+        "fallback": "Allow minimal fresh green floral chandeliers strictly at the 4 intersection nodes of the central aisle."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "act": "ACT 3: CLIMATE & HVAC ZONING",
+    "actClass": "act-3",
+    "time": "15 mins",
+    "title": "Dual-Zone Climate & 60x40ft VIP/Elderly Dining Tent",
+    "shortDesc": "35-40T ductable AC Mandap sanctuary vs 60x40ft VIP tent & cooler dining",
+    "headline": "Dual-Zone Climate Isolation & 60x40ft VIP/Elderly Dining Pavilion",
+    "goal": "Lock 35–40 Ton sealed AC for the Mandap sanctuary, industrial coolers for main buffet, and a dedicated 60×40ft separate tent for VIP and elderly dining comfort.",
+    "vernacular": "Mandap aur seating area 100% chill hona chahiye. Aur VIPs aur elders ke liye theek bagal mein 60x40ft ka alag dining tent ho jahan shanti rahe, aasan seating ho, aur chalne ka distance kam ho.",
+    "scripts": {
+      "warm": "Climate aur buzurgon ka aaraam humare liye sabse important hai. Mandap aur seating viewing area fully air-conditioned ho. Aur VIP guests aur buzurgon ke liye theek bagal mein 60x40ft ka alag dining tent lagaiye — wahan short walking distance, shanti, aur aasan buffet access hona chahiye.",
+      "data": "Heat load for Mandap sanctuary requires 35–40 Tons of ductable air conditioning. For dining, we deploy 8-10 industrial coolers for the main marquee buffet, plus a dedicated 60ft × 40ft (2,400 sq ft) adjacent tent reserved for 80 VIPs and elderly guests with zero-step ramp access.",
+      "firm": "The 60x40ft VIP dining tent must be clean, well-cooled, and fully integrated with the main decor language. It must not look like an afterthought. If Mandap sanctuary temperature exceeds 26°C during daytime rituals, penalties apply."
+    },
+    "factCitation": "Dedicated 60x40ft (2,400 sq ft) German hangar for VIP/Elderly hospitality costs ₹35,000–₹45,000. 40T package AC for Mandap sanctuary rents for ₹65,000–₹80,000.",
+    "guardrail": "Double-layered acoustic and thermal drape between AC Mandap zone and Cooler dining zone. Dedicated ramped access into 60x40ft VIP tent for senior mobility.",
+    "tree": [
+      {
+        "stage": "Stage 1: VIP Tent Accessibility Check",
+        "title": "Shortest Walking Route for Elders",
+        "text": "Position the 60x40ft VIP dining tent immediately adjacent to the main marquee with a direct covered walkway, ensuring elders walk under 25 meters."
+      },
+      {
+        "stage": "Stage 2: Duct Diffuser Layout",
+        "title": "Quiet Overhead Fabric Ducts",
+        "text": "Ensure AC air is distributed through perforated fabric socks or concealed plenum boxes, NOT noisy direct metal fans blowing on guests."
+      }
+    ],
+    "curveballs": [
+      {
+        "objection": "Decorator says: 'Why set up a separate 60x40ft tent when the main 100x160ft marquee already has space?'",
+        "counter": "The main marquee will have high energy and Sangeet music. Elders and VIPs need a quieter, dignified dining environment with zero buffet queue pressure. The separate 60x40ft pavilion provides premium hospitality.",
+        "fallback": "Position 60x40ft tent on the garden flank with open viewing arches into the main lawn."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "act": "ACT 4: LITURGICAL & FIRE SAFETY",
+    "actClass": "act-4",
+    "time": "12 mins",
+    "title": "40ft Mandap Stage with 30ft Family Flanks",
+    "shortDesc": "40ft stage, 3ft height, 30ft flanking sofa wings for close family, smoke extraction",
+    "headline": "40ft Sacred Mandap Stage with 30ft Family Flanks & Smoke Canopy",
+    "goal": "Position 40ft wide Mandap stage centered in 100ft tent with dedicated 30ft flanking wings for close-family sofa seating, paired with clean havan smoke extraction.",
+    "vernacular": "100ft tent mein 40ft stage center pe rahegi, aur dono side 30ft space mein close family aur buzurgon ke liye comfortable royal sofa seating hogi. Havan kund ke upar aesthetic smoke hood lagao taaki mandap mein dhuaan na bhare.",
+    "scripts": {
+      "warm": "Pandit ji ka havan 2 ghante chalega aur mandap ceremony humare wedding ka focal point hai. 100ft tent mein 40ft stage center pe rahegi, aur dono side 30ft space mein close family aur buzurgon ke liye comfortable sofa seating hogi taaki wo araam se baith sakein aur stage clutter-free rahe.",
+      "data": "40ft stage centered on the 100ft width leaves 30ft on either side. We reserve these 30ft flanks for royal sofa seating for immediate family and elders, keeping key family members close to the rituals, maintaining clean camera sightlines, and preventing stage congestion.",
+      "firm": "The 30ft flanks must not be treated as empty leftover space. They must feature comfortable velvet sofas and carpet matching the main decor. A 2mm zinc fire plate and ducted havan smoke extraction hood are mandatory."
+    },
+    "factCitation": "40ft x 24ft stage platform with 3ft elevation and wooden sub-base costs ₹45,000–₹55,000. Family flank sofa styling costs ₹15,000–₹20,000.",
+    "guardrail": "2mm galvanized zinc subfloor plate beneath copper havan kund. Minimum 30ft clear flanking zones reserved exclusively for family sofa seating.",
+    "tree": [
+      {
+        "stage": "Stage 1: Flank Seating Layout Lock",
+        "title": "Family Sofa Alignment",
+        "text": "Verify that both 30ft flanks have 2 tiers of comfortable royal sofas angled toward the Mandap with unobstructed sightlines."
+      },
+      {
+        "stage": "Stage 2: Aesthetic Camouflage",
+        "title": "Conceal Fan & Duct",
+        "text": "Wrap duct in ivory georgette sleeve matching the ceiling pleats so it looks like an intentional architectural column."
+      }
+    ],
+    "curveballs": [
+      {
+        "objection": "Decorator says: 'Pandit ji will object to any hood over the sacred fire.'",
+        "counter": "The hood hangs 6.5 feet above the fire, completely outside the priests' reach, and is transparent. Multiple luxury weddings use this exact technique. It honors the ritual while keeping the AC tent clean.",
+        "fallback": "Provide variable speed controller so exhaust can be dialed down during delicate mantra recitations."
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "act": "ACT 5: POWER & REDUNDANCY",
+    "actClass": "act-5",
+    "time": "10 mins",
+    "title": "Autonomous Dual-DG Power & 3-Bus SLD",
+    "shortDesc": "Synchronized 2 x 125 kVA Silent DGs, 3-bus electrical isolation, zero blackout risk",
+    "headline": "Autonomous Dual-DG Power Infrastructure & 3-Bus Electrical Isolation",
+    "goal": "Ensure zero reliance on fluctuating local grid power via synchronized twin 125 kVA Silent DGs with isolated circuits for HVAC, Production, and Catering.",
+    "vernacular": "Power cut ka 1 second ka bhi risk nahi le sakte. Dono generator auto-changeover ke saath synchronize hone chahiye. Sound aur light ka load alag rahega, AC ka alag, aur catering tandoor ka alag.",
+    "scripts": {
+      "warm": "Humara event open ground mein hai, isliye power autonomous aur rock-solid honi chahiye. Twin 125 kVA Silent DG sets chahiye jo parallel mein sync rahein — agar ek DG trip ho to dusra instantly load le le without a microsecond of darkness.",
+      "data": "Total peak load: 40T AC = 60 kW, Stage Audio/LED Wall = 25 kW, Lighting/Chandeliers = 20 kW, Catering/BOH = 25 kW. Total peak = 130 kW (~160 kVA). Two 125 kVA DGs running at 65% capacity provide optimal fuel efficiency and 100% N+1 redundancy.",
+      "firm": "Any power tripping during Sangeet choreography or wedding pheras will result in liquidated damages of ₹20,000 per occurrence under Clause 4 of CTR-DECOR-RIDER-001. All diesel is turnkey vendor scope."
+    },
+    "factCitation": "Rental for twin 125 kVA Silent DGs with AMF panel and fuel for 48 hours is ₹45,000–₹55,000 in Rayagada district. Heavy fines apply for ungrounded gensets.",
+    "guardrail": "Bus A (HVAC/Coolers), Bus B (Sound/DMX/Video), Bus C (Catering/Lighting). Ground spikes with earthing salt pit mandatory.",
+    "tree": [
+      {
+        "stage": "Stage 1: Earthing & Voltage Lock",
+        "title": "Measure Neutral-to-Earth Voltage",
+        "text": "Sound engineer must measure neutral-to-earth voltage. Must be under 2V to prevent audio hum and LED wall processor damage."
+      },
+      {
+        "stage": "Stage 2: Diesel Stocking Verification",
+        "title": "48-Hour Diesel Fuel On-Site",
+        "text": "Vendor must pre-stock minimum 500 liters of diesel in certified sealed drums with transfer pump on Day 0."
+      }
+    ],
+    "curveballs": [
+      {
+        "objection": "Decorator says: 'Single 160 kVA generator is enough; dual DGs will increase budget.'",
+        "counter": "A single DG has zero redundancy. If the alternator fails or fuel line chokes, 500 guests sit in total darkness and sweltering heat. Twin 125 kVA DGs running in split bus is mandatory.",
+        "fallback": "Vendor can supply one 160 kVA primary DG and one 82.5 kVA backup DG on auto-switch if cost saving of ₹10,000 is passed to host."
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "act": "ACT 6: AUDIO-VISUAL PRODUCTION",
+    "actClass": "act-6",
+    "time": "15 mins",
+    "title": "Cinema Lighting & 24x16ft Sangeet Entertainment Stage",
+    "shortDesc": "24x16ft stage opposite entrance, 3200K cinema profile, natural guest progression",
+    "headline": "24x16ft Sangeet Entertainment Stage & Cinema-Grade 3200K Lighting",
+    "goal": "Place 24x16ft performance stage on the opposite side of the marquee from the entrance to create natural guest progression, backed by flicker-free 3200K cinema lighting.",
+    "vernacular": "Sangeet ka 24x16ft stage entrance ke opposite end pe lagao taaki guests ka natural flow rahe — pehle entrance, phir dining, aur aakhir mein entertainment. Stage pe saste DJ wale colorful lights nahi, clean 3200K warm cinema lighting chahiye.",
+    "scripts": {
+      "warm": "Entertainment stage 24x16ft marquee ke opposite end pe rahegi taaki entrance aur dining se naturally separated ho. Stage aur mandap pe high-CRI warm lights chahiye jisse skin tones naturally glowing dikhein aur slow-motion video mein flicker na ho.",
+      "data": "24ft × 16ft stage footprint (384 sq ft) opposite the entrance creates the ideal spatial progression: Road Tunnel → Lounge/Dining → Mandap/Altar → Sangeet Zone. We mandate flicker-free 3200K cinema lighting (CRI >= 95) with zero 120fps video banding.",
+      "firm": "The 24x16ft stage must be placed opposite the entrance. If video test reveals rolling shutter banding or colored LED spillage on bride/groom faces during rituals, decorator will forfeit 25% of lighting contract payout under Clause 3 of CTR-DECOR-RIDER-001."
+    },
+    "factCitation": "24x16ft stage with 2.5ft elevation, dance floor, and cinema lighting package rents for ₹35,000–₹45,000.",
+    "guardrail": "Stage placement strictly on the wall opposite the main entrance. Zero multi-color RGB par lights pointed directly at the Mandap altar or couple chairs.",
+    "tree": [
+      {
+        "stage": "Stage 1: Camera Test at Rigging",
+        "title": "120fps High-Speed Shutter Test",
+        "text": "Cinematographer tests lighting at 1/250s shutter angle on Day 0. Any fixture causing black banding lines must be swapped immediately."
+      },
+      {
+        "stage": "Stage 2: Front Fill vs Backlight Balance",
+        "title": "3-Point Key Lighting",
+        "text": "Ensure 45-degree key light, 30-degree soft fill, and subtle warm backlight on the mandap floral dome."
+      }
+    ],
+    "curveballs": [
+      {
+        "objection": "Decorator says: 'Our standard wedding lights look great in photographs.'",
+        "counter": "Photographers use flash, but cinematography uses continuous cinema lighting. Flash cannot fix video. Our cinema contract specifically mandates CRI > 95 fixtures.",
+        "fallback": "Allow decorator to sub-contract the stage lighting truss to specialized cinema rental vendor if they lack in-house fixtures."
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "act": "ACT 7: TRANSIT & GUEST LOGISTICS",
+    "actClass": "act-7",
+    "time": "10 mins",
+    "title": "100ft Road Arrival Tunnel & Post-Wedding Mandap Reuse",
+    "shortDesc": "100ft road covered tunnel, plus post-wedding Mandap outdoor photo repurposing",
+    "headline": "100ft Road Arrival Tunnel & Post-Wedding Mandap Photography Repurposing",
+    "goal": "Construct 100ft covered arrival tunnel from the road and plan the post-wedding Mandap reuse in an adjacent outdoor photo shoot zone.",
+    "vernacular": "Road se main tent 100ft door hai — wahan covered tunnel banao. Aur shaadi ke baad main Mandap todna nahi hai, use theek bahar outdoor photo area mein repurpose karenge couple portraits ke liye.",
+    "scripts": {
+      "warm": "Road aur marquee ke beech jo 100ft ka approach hai, use covered arrival tunnel banaiye with red carpet aur warm fairy lights. Aur wedding rituals ke baad, Mandap ko immediately dismantle nahi karenge — use theek bahar adjacent photo shoot zone mein repurpose karenge couple aur family ke outdoor portraits ke liye.",
+      "data": "100ft covered passage protects guests from weather. Post-wedding Mandap reuse protocol: Rather than paying for immediate teardown plus a separate photo backdrop, transitioning the Mandap structure to an adjacent outdoor photo lawn maximizes visual value with zero extra booth expenditure.",
+      "firm": "Canopy must be 100% leak-proof. The Mandap backdrop must be planned for non-destructive shift/re-erection for post-wedding photos; any unauthorized immediate dismantling will breach our reuse agreement."
+    },
+    "factCitation": "100ft covered passage with truss and fairy lights costs ₹30,000–₹40,000. Reusing Mandap backdrop saves ₹25,000–₹35,000 in standalone photo booth costs.",
+    "guardrail": "Minimum 10ft clear internal width. Ramp transitions at hotel porch curb and marquee entrance plinth for wheelchair and golf cart accessibility.",
+    "tree": [
+      {
+        "stage": "Stage 1: Ground Leveling & Drainage Check",
+        "title": "Verify Stormwater Flow",
+        "text": "Walk the 50m alignment. Grade the sides with compacted gravel so rainwater drains away from the carpet runner."
+      },
+      {
+        "stage": "Stage 2: Illumination & Ambience",
+        "title": "Warm Fairy-Light Tunnel",
+        "text": "Install continuous warm LED string curtains along both flanks for Instagram photo opportunities during night arrival."
+      }
+    ],
+    "curveballs": [
+      {
+        "objection": "Decorator says: 'Guests can easily walk 50 meters; why spend money on a tunnel?'",
+        "counter": "Elders in heavy silk sarees and guests in luxury footwear cannot walk across rough outdoor soil. The 50m tunnel creates immediate five-star arrival impact and protects against weather.",
+        "fallback": "Reduce side draping to sheer organza with fairy lights if structural cost needs pruning by ₹8,000."
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "act": "ACT 8: SCHEDULE & TIMELINE HARMONY",
+    "actClass": "act-8",
+    "time": "12 mins",
+    "title": "Mehendi Dual-Sanctuary Venue Allocation",
+    "shortDesc": "Phase 1 Hotel Hall (12:00-14:30) & Phase 2 Marquee Zone D (14:30-17:00) | Unlocks 7.5h Sangeet Rigging",
+    "headline": "Phased Dual-Sanctuary Mehendi Model & 7.5h Uninterrupted Sangeet Rigging Window",
+    "goal": "Formalize Architecture Council ruling AC-DEC-2026-007 (Option 1C): Route Mehendi Phase 1 into Hotel AC Hall and Phase 2 into Marquee Zone D Garden Promenade, guaranteeing a 7.5h uninterrupted Sangeet tech setup window in Zone A.",
+    "vernacular": "Mehendi ko do phase mein baanto: pehle 2.5 ghante hotel ke AC hall mein henna sukhne do aur lunch hone do, phir 2.5 ghante marquee ke garden lawn mein high-tea aur activity stalls enjoy karo. Isse Sangeet ke stage aur sound testing ke liye 7.5 ghante ka clear window mil jaayega.",
+    "scripts": {
+      "warm": "Humne schedule aur venue routing ko bohot intelligently optimize kiya hai. Mehendi Phase 1 (12:00–14:30) hotel ke indoor AC hall mein hoga taaki mehendi drying comfortable rahe. Phase 2 (14:30–17:00) marquee ke bahar Zone D garden promenade mein outdoor chai-snack stalls ke saath hoga. Is dauran marquee ka main Zone A stage aapke liye poori tarah free rahega taaki aap Sangeet ka LED wall aur sound test 100% ready kar sakein.",
+      "data": "Per Architecture Council AC-DEC-2026-007, running Mehendi in the main marquee stage creates an impossible 120-min crunch for complex Sangeet AV rigging. Splitting Mehendi into the Hotel Hall (12:00–14:30) and Marquee Zone D Garden Lawn (14:30–17:00) unlocks a massive 7.5-hour continuous setup window (10:00–17:30) in Zone A.",
+      "firm": "Zone A stage rigging and audio calibration must achieve full sign-off by 17:30 sharp on Day 1. No vendor labor or ladders will be permitted in Zone A after 18:00 when Sangeet guests arrive."
+    },
+    "factCitation": "Dual-Sanctuary model eliminates ₹40,000 in rush overtime labor and eliminates live mic / feedback disruption while mehendi artists are working.",
+    "guardrail": "Decorator crew gets uninterrupted possession of Zone A from 10:00 to 17:30. Zero soundcheck bleed into Hotel Hall during Phase 1.",
+    "tree": [
+      {
+        "stage": "Stage 1: Production Handover Lock",
+        "title": "Verify 10:00 AM Handover",
+        "text": "Ensure decorator begins LED screen tile mounting and audio line array rigging in Zone A at 10:00 AM on Day 1 without waiting for Mehendi."
+      },
+      {
+        "stage": "Stage 2: Zone D Garden Setup",
+        "title": "Complete Lawn Seating by 13:30",
+        "text": "Zone D lawn lounge parasols, charpai diwans, and high-tea counters must be 100% dressed by 13:30 for guest arrival at 14:30."
+      }
+    ],
+    "curveballs": [
+      {
+        "objection": "Decorator says: 'Splitting Mehendi across two zones means setting up two separate decor areas.'",
+        "counter": "The Hotel Hall only requires minimal existing floral backdrop from engagement. Zone D lawn uses simple festive parasols and low charpai lounges that double as evening outdoor seating. It actually saves labor panic.",
+        "fallback": "Consolidate photo-op backdrop so the same floral ring is rolled from hotel foyer to Zone D at 14:00."
+      }
+    ]
+  }
+]

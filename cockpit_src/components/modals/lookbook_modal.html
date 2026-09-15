@@ -1,0 +1,54 @@
+  <!-- VISUAL LOOKBOOK & ARCHITECTURAL REFERENCE MODAL (v2.4) -->
+  <div class="modal-backdrop" id="lookbookModalBackdrop">
+    <div class="lookbook-modal">
+      <div class="lookbook-modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 22px;">🖼️</span>
+          <div>
+            <h3 style="font-size: 14px; font-weight: 700; color: #fff; letter-spacing: 0.02em;">Wedding Decor Visual Lookbook &amp; Reference Plates</h3>
+            <p style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">
+              Real wedding decor photography inspiration + technical blueprint specifications for 50m Marquee (VEN-002)
+            </p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <!-- Dual View Toggle for Entire Grid -->
+          <div class="lightbox-view-toggle">
+            <button class="lb-toggle-btn active" id="gridTogglePhoto" onclick="setGridImageMode('photo')">📸 Photos</button>
+            <button class="lb-toggle-btn" id="gridToggleBlueprint" onclick="setGridImageMode('blueprint')">📐 Blueprints</button>
+          </div>
+          <button class="mode-btn" onclick="openLightboxToPlate(0, 'photo')" style="font-size: 11px; color: #38bdf8; border-color: rgba(56,189,248,0.4);">
+            <span>▶ Fullscreen Slideshow</span>
+          </button>
+          <button class="mode-btn" onclick="closeLookbookModal()" style="font-size: 14px; padding: 4px 10px;">✕</button>
+        </div>
+      </div>
+
+      <!-- FILTER CHIPS -->
+      <div class="lookbook-filter-bar">
+        <button class="lookbook-filter-btn active" id="fbtn-all" onclick="filterLookbook('all')">All Plates (8)</button>
+        <button class="lookbook-filter-btn" id="fbtn-mandap" onclick="filterLookbook('mandap')">Mandap &amp; Fire (2)</button>
+        <button class="lookbook-filter-btn" id="fbtn-sangeet" onclick="filterLookbook('sangeet')">Sangeet Stage (1)</button>
+        <button class="lookbook-filter-btn" id="fbtn-marquee" onclick="filterLookbook('marquee')">Marquee Shell &amp; HVAC (1)</button>
+        <button class="lookbook-filter-btn" id="fbtn-tunnel" onclick="filterLookbook('tunnel')">50m Arrival Tunnel (1)</button>
+        <button class="lookbook-filter-btn" id="fbtn-mehendi" onclick="filterLookbook('mehendi')">Mehendi Lawn (1)</button>
+        <button class="lookbook-filter-btn" id="fbtn-catering" onclick="filterLookbook('catering')">Catering &amp; Stalls (2)</button>
+      </div>
+
+      <!-- LOOKBOOK GRID -->
+      <div class="lookbook-grid" id="lookbookGridContainer">
+        <!-- Injected dynamically -->
+      </div>
+
+      <!-- ASSET INTEGRATION GUIDE FOOTER -->
+      <div class="lookbook-footer">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 16px;">📁</span>
+          <span style="font-size: 11px; color: #94a3b8;">
+            <strong>Offline Media Storage:</strong> All 8 reference photos &amp; CAD blueprints are stored locally in <code style="background:rgba(255,255,255,0.08); padding:2px 6px; border-radius:3px; font-family:var(--font-mono); color:#cbd5e1;">public/assets/decor/</code> for instant presentation without internet latency.
+          </span>
+        </div>
+        <span style="font-size: 11px; color: #10b981; font-family: var(--font-mono); font-weight: 600;">✓ 100% Offline Asset Ready</span>
+      </div>
+    </div>
+  </div>

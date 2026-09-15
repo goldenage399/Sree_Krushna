@@ -1,0 +1,271 @@
+/* FULLSCREEN LIGHTBOX (v2.5 DUAL MODE & PINTEREST OVERRIDE) */
+.lightbox-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 8, 16, 0.96);
+  backdrop-filter: blur(8px);
+  z-index: 1200;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 24px;
+}
+
+.lightbox-backdrop.active {
+  display: flex;
+}
+
+.lightbox-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.lightbox-plate-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  background: rgba(245, 158, 11, 0.2);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
+  border-radius: 4px;
+}
+
+.lightbox-plate-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.lightbox-scope-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.lightbox-scope-badge.mandatory {
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #34d399;
+}
+
+.lightbox-scope-badge.inspiration {
+  background: rgba(168, 85, 247, 0.2);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  color: #c084fc;
+}
+
+.lightbox-view-toggle {
+  display: flex;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-medium);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.lb-toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.lb-toggle-btn.active {
+  background: #38bdf8;
+  color: #000;
+  font-weight: 700;
+}
+
+.lb-close-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-medium);
+  color: #fff;
+  font-size: 14px;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.lb-close-btn:hover {
+  background: var(--accent-rose);
+  border-color: var(--accent-rose);
+}
+
+.lightbox-stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 10px 0;
+  width: 100%;
+}
+
+.lightbox-img-wrapper {
+  width: min(88vw, 1150px);
+  height: min(72vh, 660px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lightbox-img-wrapper.is-zoomed {
+  width: 96vw;
+  height: 82vh;
+  max-width: none;
+  max-height: none;
+}
+
+.lightbox-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--border-medium);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.85);
+  object-fit: contain;
+  background: #090e1a;
+  cursor: zoom-in;
+  transition: transform 0.2s ease;
+}
+
+.lightbox-img-wrapper.is-zoomed img {
+  border-radius: 4px;
+  cursor: zoom-out;
+}
+
+.lookbook-badge-custom {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background: rgba(245, 158, 11, 0.95);
+  color: #000;
+  font-size: 9.5px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  padding: 2px 6px;
+  border-radius: 3px;
+  letter-spacing: 0.03em;
+  z-index: 4;
+}
+
+.custom-photo-modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  border-radius: 12px;
+  width: 90vw;
+  max-width: 580px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.85);
+  overflow: hidden;
+  animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.custom-photo-modal-header {
+  background: var(--bg-secondary);
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.custom-photo-modal-body {
+  padding: 18px;
+}
+
+.custom-photo-preview-box {
+  width: 100%;
+  height: 220px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-photo-preview-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #080c16;
+}
+
+.lb-nav-btn {
+  background: rgba(20, 29, 47, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.15s;
+  z-index: 10;
+  backdrop-filter: blur(4px);
+}
+
+.lb-nav-btn:hover {
+  background: #38bdf8;
+  color: #000;
+  border-color: #38bdf8;
+}
+
+.lb-nav-btn.prev {
+  position: absolute;
+  left: 20px;
+}
+
+.lb-nav-btn.next {
+  position: absolute;
+  right: 20px;
+}
+
+.lightbox-caption-drawer {
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  border-radius: 8px;
+  padding: 12px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.lb-meta-row {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  font-size: 11.5px;
+  flex-wrap: wrap;
+}
+
+.lb-notes-row {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}

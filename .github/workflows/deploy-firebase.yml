@@ -6,6 +6,7 @@ on:
       - master
     paths:
       - 'public/**'
+      - 'cockpit_src/**'
       - 'firebase.json'
       - '.firebaserc'
       - '.github/workflows/deploy-firebase.yml'
@@ -17,6 +18,14 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build SDCA Cockpit
+        run: node cockpit_src/build.cjs
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0

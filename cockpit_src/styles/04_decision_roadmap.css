@@ -1,0 +1,463 @@
+/* ==========================================================================
+   VISUAL LOOKBOOK & LIGHTBOX STYLES (v2.5 REAL PHOTO + BLUEPRINT)
+   ========================================================================== */
+.lookbook-modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  border-radius: 12px;
+  width: 1140px;
+  max-width: 96vw;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.85);
+}
+
+.lookbook-modal-header {
+  padding: 14px 20px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lookbook-filter-bar {
+  padding: 10px 20px;
+  background: #0d1527;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  align-items: center;
+}
+
+.lookbook-filter-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  cursor: pointer;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+
+.lookbook-filter-btn:hover {
+  color: #fff;
+  border-color: var(--border-medium);
+}
+
+.lookbook-filter-btn.active {
+  background: #38bdf8;
+  color: #000;
+  border-color: #38bdf8;
+  font-weight: 700;
+}
+
+.lookbook-grid {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  background: var(--bg-primary);
+}
+
+.lookbook-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.lookbook-card:hover {
+  border-color: #38bdf8;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
+}
+
+.lookbook-img-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/10;
+  background: #070c18;
+  overflow: hidden;
+}
+
+.lookbook-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.lookbook-card:hover .lookbook-img-box img {
+  transform: scale(1.03);
+}
+
+.lookbook-badge-plate {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(10, 15, 29, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fbbf24;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+}
+
+.lookbook-badge-scope {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+}
+
+.lookbook-badge-scope.mandatory {
+  background: rgba(16, 185, 129, 0.25);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  color: #34d399;
+}
+
+.lookbook-badge-scope.inspiration {
+  background: rgba(168, 85, 247, 0.25);
+  border: 1px solid rgba(168, 85, 247, 0.5);
+  color: #c084fc;
+}
+
+.lookbook-badge-type {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #e2e8f0;
+  font-size: 9.5px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+}
+
+.lookbook-card-body {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lookbook-card-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.35;
+}
+
+.lookbook-card-zone {
+  font-size: 11px;
+  color: var(--accent-cyan);
+  font-family: var(--font-mono);
+}
+
+.lookbook-card-notes {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.lookbook-card-footer {
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.lookbook-footer {
+  padding: 10px 20px;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+/* ==========================================================================
+   MASTER DECISIONS ZERO-GAP HYBRID VISUAL ELEVATION (AC-DEC-2026-011)
+   ========================================================================== */
+
+.decision-card-domain-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-subtle);
+  color: #f1f5f9;
+}
+
+.decision-media-bar {
+  display: flex;
+  gap: 12px;
+  background: rgba(8, 14, 28, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 10px;
+  align-items: center;
+  margin: 4px 0 6px 0;
+  transition: border-color 0.2s;
+}
+
+.decision-media-bar:hover {
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+.decision-thumb-pair {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.decision-thumb-box {
+  width: 90px;
+  height: 60px;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  background: #030712;
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.decision-thumb-box:hover {
+  transform: scale(1.04);
+  border-color: #38bdf8;
+}
+
+.decision-thumb-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.decision-thumb-tag {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #94a3b8;
+  font-size: 8px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.03em;
+}
+
+.decision-media-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.decision-media-plate-id {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: #fbbf24;
+}
+
+.decision-media-plate-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #f8fafc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.decision-lightbox-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #38bdf8;
+  padding: 3px 9px;
+  border-radius: 4px;
+  font-size: 10.5px;
+  font-weight: 600;
+  cursor: pointer;
+  width: fit-content;
+  transition: all 0.15s;
+  font-family: var(--font-mono);
+}
+
+.decision-lightbox-btn:hover {
+  background: rgba(56, 189, 248, 0.25);
+  color: #fff;
+  border-color: #38bdf8;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+}
+
+/* Option-level Visual Comparison Cards */
+.decision-option-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+}
+
+.decision-option-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--border-medium);
+}
+
+.decision-option-card.selected {
+  background: rgba(197, 160, 89, 0.08) !important;
+  border-color: #C5A059 !important;
+  box-shadow: 0 0 16px rgba(197, 160, 89, 0.22);
+}
+
+.decision-option-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.decision-option-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.decision-selected-pill {
+  display: none;
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #C5A059;
+  background: rgba(197, 160, 89, 0.15);
+  border: 1px solid rgba(197, 160, 89, 0.4);
+  padding: 1px 7px;
+  border-radius: 10px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+}
+
+.decision-option-card.selected .decision-selected-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+/* Palette Swatches */
+.decision-swatch-strip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  padding: 5px 8px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  width: fit-content;
+}
+
+.decision-swatch-circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  flex-shrink: 0;
+  transition: transform 0.15s;
+}
+
+.decision-swatch-circle:hover {
+  transform: scale(1.25);
+  z-index: 2;
+}
+
+.decision-swatch-label {
+  font-size: 10.5px;
+  color: #94a3b8;
+  font-family: var(--font-mono);
+}
+
+/* Visual Badge Chips */
+.decision-badge-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  padding: 2px 7px;
+  border-radius: 4px;
+  width: fit-content;
+  margin-top: 2px;
+}
+
+.decision-option-card.selected .decision-badge-chip {
+  color: #fef08a;
+  background: rgba(234, 179, 8, 0.12);
+  border-color: rgba(234, 179, 8, 0.35);
+}
+
+@media (max-width: 600px) {
+  .decision-media-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .decision-thumb-pair {
+    width: 100%;
+  }
+  .decision-thumb-box {
+    flex: 1;
+    height: 70px;
+  }
+}

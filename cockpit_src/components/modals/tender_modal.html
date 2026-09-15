@@ -1,0 +1,221 @@
+  <!-- EXECUTIVE PRINTABLE TENDER ANNEXURE MODAL -->
+  <div class="modal-backdrop" id="tenderModalBackdrop">
+    <div class="tender-modal">
+      <div class="tender-modal-header">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 16px;">📄</span>
+          <strong style="color: #fff; font-size: 13px;">Contract Tender Annexure (CTR-DECOR-RIDER-001)</strong>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="mode-btn" onclick="printTenderDoc()" style="background: var(--accent-gold); color: #000; font-weight: 700;">
+            <span>🖨️ Print / Save PDF</span>
+          </button>
+          <button class="mode-btn" onclick="closeTenderModal()">✕</button>
+        </div>
+      </div>
+
+      <div class="tender-modal-body">
+        <div class="tender-doc" id="tenderDocContainer">
+          <div class="tender-watermark">OFFICIAL TENDER</div>
+
+          <!-- HEADER -->
+          <div class="tender-header-strip">
+            <div class="tender-brand-box">
+              <h1>SREE KRUSHNA MARRIAGE OPERATIONS</h1>
+              <div style="font-size: 11px; color: #64748b; font-family: var(--font-mono);">
+                EXECUTIVE PROCUREMENT DIVISION &bull; TENDER RIDER CTR-DECOR-RIDER-001
+              </div>
+            </div>
+            <div style="text-align: right; font-family: var(--font-mono); font-size: 10px; color: #475569;">
+              <div><strong>GOVERNING SPEC:</strong> SPEC-PROC-DECOR-MARQUEE-001</div>
+              <div><strong>DATE:</strong> <span id="tenderCurrentDate">2026-09-13</span></div>
+            </div>
+          </div>
+
+          <!-- METADATA BOX -->
+          <div class="tender-meta-grid">
+            <div><strong>Client Custodian:</strong> PER-005 / PER-014 (Sree Krushna Marriage OS)</div>
+            <div><strong>Target Venue:</strong> VEN-002 (50m Open-Ground Luxury Marquee)</div>
+            <div><strong>Assigned Events:</strong> Haldi (EVT-003), Mehendi/Sangeet (EVT-002), Wedding (EVT-004)</div>
+            <div><strong>Commercial Rule:</strong> 18% GST All-Inclusive &bull; Zero Unbudgeted Surcharges</div>
+          </div>
+
+          <!-- SCHEDULE TABLE -->
+          <h2 style="font-size: 12px; text-transform: uppercase; color: #0f172a; margin-bottom: 6px;">1. Agreed 4-Tier Commercial Schedule</h2>
+          <table class="tender-table">
+            <thead>
+              <tr>
+                <th style="width: 14%;">Tier</th>
+                <th style="width: 66%;">Scope Description & Operational Retention</th>
+                <th style="width: 20%; text-align: right;">Amount (INR)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Tier A</strong></td>
+                <td>German Clear-Span Marquee (50x130ft), Opaque Solar Walls, Wooden Sub-Deck, Paneless Ivory Ceiling, Chandeliers, 40T AC & Coolers, Havan Hood, 3-Bus Power SLD</td>
+                <td style="text-align: right; font-family: var(--font-mono);">₹ <span id="docTierA">2,40,000</span></td>
+              </tr>
+              <tr>
+                <td><strong>Tier B1</strong></td>
+                <td>Haldi Ceremony Accent Transformation (Yellow Marigolds, Brass Urlis, Low Bajots)</td>
+                <td style="text-align: right; font-family: var(--font-mono);">₹ <span id="docTierB1">25,000</span></td>
+              </tr>
+              <tr>
+                <td><strong>Tier B2</strong></td>
+                <td>Mehendi Lounge Accent Transformation (Pastel Drapes, Floor Cushions, Artist Cabanas)</td>
+                <td style="text-align: right; font-family: var(--font-mono);">₹ <span id="docTierB2">30,000</span></td>
+              </tr>
+              <tr>
+                <td><strong>Tier B3</strong></td>
+                <td>Sangeet Night Concert Transformation (Moving Heads, Velvet Lounge Sofas, Cocktail High-Tops)</td>
+                <td style="text-align: right; font-family: var(--font-mono);">₹ <span id="docTierB3">45,000</span></td>
+              </tr>
+              <tr>
+                <td><strong>Tier B4</strong></td>
+                <td>Vedic Wedding Mandap Altar Transformation (Sacred 4-Pillar Fresh Floral Altar, Zinc Underlay)</td>
+                <td style="text-align: right; font-family: var(--font-mono);">₹ <span id="docTierB4">55,000</span></td>
+              </tr>
+              <tr>
+                <td><strong>Tier C</strong></td>
+                <td>Standalone Additions (P3 LED Backdrop Screen 24x12ft, Monogram Photo Wall)</td>
+                <td style="text-align: right; font-family: var(--font-mono);">₹ <span id="docTierC">35,000</span></td>
+              </tr>
+              <tr style="background: #f8fafc;">
+                <td><strong>Concession</strong></td>
+                <td>Negotiated Multi-Event Volume Savings & Package Discount</td>
+                <td style="text-align: right; font-family: var(--font-mono); color: #2563eb;">- ₹ <span id="docDiscount">55,000</span></td>
+              </tr>
+              <tr style="background: #f1f5f9; font-weight: bold; font-size: 12px;">
+                <td colspan="2">TOTAL NET SETTLEMENT (18% GST All-Inclusive, Generator Diesel & Transport Included)</td>
+                <td style="text-align: right; font-family: var(--font-mono); color: #166534;">₹ <span id="docNetTotal">3,75,000</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- MILESTONE GATES -->
+          <h2 style="font-size: 12px; text-transform: uppercase; color: #0f172a; margin-top: 14px; margin-bottom: 6px;">2. Mandatory Milestone Payment Schedule</h2>
+          <table class="tender-table">
+            <thead>
+              <tr>
+                <th style="width: 25%;">Milestone</th>
+                <th style="width: 55%;">Verification Condition</th>
+                <th style="width: 20%; text-align: right;">Disbursement</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Milestone 1 (30% Token Advance)</strong></td>
+                <td>Upon bilateral signing of this tender rider and CAD layout approval</td>
+                <td style="text-align: right; font-family: var(--font-mono);"><strong>₹ <span id="docMilestone1">1,12,500</span></strong></td>
+              </tr>
+              <tr>
+                <td><strong>Milestone 2 (50% Handover)</strong></td>
+                <td>Verified physical erection of marquee, subfloor, and AC chill-down test by 20:00 Eve of Day 1</td>
+                <td style="text-align: right; font-family: var(--font-mono);"><strong>₹ <span id="docMilestone2">1,87,500</span></strong></td>
+              </tr>
+              <tr>
+                <td><strong>Milestone 3 (20% Retention)</strong></td>
+                <td>Strictly post-wedding final inspection and punch-list sign-off</td>
+                <td style="text-align: right; font-family: var(--font-mono); color: #dc2626;"><strong>₹ <span id="docMilestone3">75,000</span></strong></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- CLAUSES -->
+          <h2 style="font-size: 12px; text-transform: uppercase; color: #0f172a; margin-top: 14px; margin-bottom: 6px;">3. Binding Liquidated Damage & Safety Undertakings</h2>
+          <ul style="padding-left: 18px; margin-top: 6px; line-height: 1.6; font-size: 10.5px; color: #334155;">
+            <li><strong>Turnover Delay Penalty:</strong> -₹15,000 per hour for delays exceeding the 90-min (Haldi➔Mehendi) or 120-min (Mehendi➔Sangeet) turnover windows.</li>
+            <li><strong>Sacred Havan Smoke Extraction:</strong> Mandatory suspended telescopic smoke hood with negative-pressure exhaust blower venting outside marquee; 2mm zinc floor plate beneath copper kund; 4× CO2 fire extinguishers.</li>
+            <li><strong>Cinema Lighting CRI > 95:</strong> Zero 120fps video flicker on cinema 4K cameras; calibrated 3200K warm tungsten fixtures.</li>
+            <li><strong>Dual-DG 3-Bus Power Continuity:</strong> Synchronized 2 × 125 kVA Silent DGs with isolated circuits (Bus A HVAC, Bus B Audio/AV, Bus C Catering).</li>
+            <li><strong>Turnkey Labor Self-Sufficiency (AC-DEC-2026-007):</strong> Vendor provides 100% off-site lodging, boarding, and transport for all labor crew. Zero host hotel rooms allocated.</li>
+            <li><strong>Drone Aviation Boundary (AC-DEC-2026-007):</strong> Zero indoor drone flights permitted inside marquee. Drones restricted to exterior grounds and Barat.</li>
+            <li><strong>18% GST All-Inclusive:</strong> Zero subsequent tax, transport, or diesel escalation levies shall be accepted.</li>
+          </ul>
+
+          <!-- SECTION 4: SCHEDULE OF APPROVED VISUAL SPECIFICATIONS (ANNEXURE A) -->
+          <h2 style="font-size: 12px; text-transform: uppercase; color: #0f172a; margin-top: 14px; margin-bottom: 6px;">4. Schedule of Approved Architectural Reference Plates (Annexure A)</h2>
+          <table class="tender-table">
+            <thead>
+              <tr>
+                <th style="width: 15%;">Plate ID</th>
+                <th style="width: 25%;">Zone & Element</th>
+                <th style="width: 45%;">Approved Architectural & Engineering Standard</th>
+                <th style="width: 15%;">Compliance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>PLATE-01</strong></td>
+                <td>Zone A: Lotus Mandap</td>
+                <td>24ft clear stage width, 18" elevation, lotus arch, 2mm zinc fire plate under altar</td>
+                <td><strong style="color:#166534;">MANDATORY</strong></td>
+              </tr>
+              <tr>
+                <td><strong>PLATE-02</strong></td>
+                <td>Zone A: Havan Smoke Hood</td>
+                <td>Suspended polycarbonate hood, 1200 CFM negative-pressure fan, outdoor discharge duct</td>
+                <td><strong style="color:#166534;">MANDATORY</strong></td>
+              </tr>
+              <tr>
+                <td><strong>PLATE-03</strong></td>
+                <td>Zone A: Sangeet Rigging</td>
+                <td>36ft box truss, CRI > 95 cinema tungsten fixtures, P3 LED wall, acoustic drapes</td>
+                <td><strong style="color:#166534;">MANDATORY</strong></td>
+              </tr>
+              <tr>
+                <td><strong>PLATE-04</strong></td>
+                <td>Structure: Marquee & HVAC</td>
+                <td>120x80ft German hangar, pleated ivory ceiling, 40T AC sanctuary partition vs coolers</td>
+                <td><strong style="color:#166534;">MANDATORY</strong></td>
+              </tr>
+              <tr>
+                <td><strong>PLATE-05</strong></td>
+                <td>Zone E: 50m Arrival Tunnel</td>
+                <td>Weatherproof canopy corridor, red carpet runner, fairy-light arches, golf cart transit</td>
+                <td><strong style="color:#166534;">MANDATORY</strong></td>
+              </tr>
+              <tr>
+                <td><strong>PLATE-06</strong></td>
+                <td>Zone D: Mehendi Promenade</td>
+                <td>Lawn lounge, Rajasthani parasols, low charpai seating, brass urli waterbody</td>
+                <td><span style="color:#64748b;">INSPIRATION</span></td>
+              </tr>
+              <tr>
+                <td><strong>PLATE-07</strong></td>
+                <td>Zone C: Satellite Kitchen</td>
+                <td>BOH camouflaged prep area, fire-safed tandoor/fryer stations, dual 24ft buffet lines</td>
+                <td><strong style="color:#166534;">MANDATORY</strong></td>
+              </tr>
+              <tr>
+                <td><strong>PLATE-08</strong></td>
+                <td>Foyer: Engagement Stalls</td>
+                <td>Interactive wooden pergolas: lac bangle maker, polaroid photo-op, concierge gong</td>
+                <td><span style="color:#64748b;">INSPIRATION</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- SIGNATURES -->
+          <div class="tender-signatures">
+            <div class="sig-box">
+              <div style="font-size: 11px;">
+                <strong>FOR CLIENT (HOST):</strong><br>
+                Sree Krushna Marriage Operations Custodian
+              </div>
+              <div class="sig-line">Authorized Signatory &bull; Date</div>
+            </div>
+            <div class="sig-box">
+              <div style="font-size: 11px;">
+                <strong>FOR CONTRACTOR (DECORATOR):</strong><br>
+                Authorized Commercial Proprietor / Lead Decorator
+              </div>
+              <div class="sig-line">Acceptance &amp; Stamp &bull; Date</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>

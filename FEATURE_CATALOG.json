@@ -88,6 +88,12 @@
       "required": true
     },
     {
+      "id": "openCockpitBtn",
+      "testId": "open-cockpit-btn",
+      "label": "Decorator Cockpit Launch CTA",
+      "required": true
+    },
+    {
       "id": "themeToggleBtn",
       "testId": "theme-toggle-button",
       "label": "Theme Switcher",
