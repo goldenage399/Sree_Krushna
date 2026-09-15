@@ -1,0 +1,81 @@
+<!-- Universal Multi-Tier Collaborative Comments Drawer Primitive (STD-MOD-COMP-001 / AC-DEC-2026-021) -->
+<div class="sk-drawer-backdrop" id="skCommentsDrawerBackdrop" role="dialog" aria-modal="true" aria-labelledby="skCommentsDrawerTitle">
+  <div class="sk-comments-drawer" id="skCommentsDrawer">
+    
+    <!-- Drawer Header -->
+    <div class="sk-drawer-header">
+      <div class="sk-drawer-title-wrap">
+        <div class="sk-drawer-badge-row">
+          <span class="sk-drawer-opt-badge" id="skCommentsOptionBadge">OPT-01</span>
+          <span class="sk-drawer-align-pill" id="skCommentsAlignmentPill">✨ Open for Family Remarks</span>
+        </div>
+        <h3 class="sk-drawer-title" id="skCommentsDrawerTitle">Option Discussion</h3>
+        <p class="sk-drawer-sub" id="skCommentsDrawerSub">Bhubaneswar Shopping & Decor Review</p>
+      </div>
+      <button type="button" class="sk-drawer-close-btn" id="skBtnCloseComments" aria-label="Close discussion drawer">✕</button>
+    </div>
+
+    <!-- Quick Emoji Reaction Bar (AC-DEC-2026-021) -->
+    <div class="sk-reactions-bar">
+      <span class="sk-reactions-label">Quick Reactions:</span>
+      <div class="sk-reactions-group">
+        <button type="button" class="sk-reaction-btn" data-reaction="love" id="skReactionLove" title="Love it!">
+          <span>❤️</span> <strong class="count">0</strong>
+        </button>
+        <button type="button" class="sk-reaction-btn" data-reaction="approve" id="skReactionApprove" title="Looks great, approved!">
+          <span>👍</span> <strong class="count">0</strong>
+        </button>
+        <button type="button" class="sk-reaction-btn" data-reaction="doubt" id="skReactionDoubt" title="Have questions or doubts">
+          <span>🤔</span> <strong class="count">0</strong>
+        </button>
+        <button type="button" class="sk-reaction-btn" data-reaction="blocker" id="skReactionBlocker" title="Concern / Blocker">
+          <span>🚫</span> <strong class="count">0</strong>
+        </button>
+      </div>
+    </div>
+
+    <!-- Stakeholder Perspective Filter Strip -->
+    <div class="sk-stakeholder-strip" id="skStakeholderFilters">
+      <button type="button" class="sk-role-pill is-active" data-role="all">All Opinions (<span id="skCountAll">0</span>)</button>
+      <button type="button" class="sk-role-pill" data-role="bride">👰 Bride</button>
+      <button type="button" class="sk-role-pill" data-role="sisters">👭 Sisters</button>
+      <button type="button" class="sk-role-pill" data-role="inlaws">🎁 In-Laws</button>
+      <button type="button" class="sk-role-pill" data-role="elders">🪔 Elders</button>
+      <button type="button" class="sk-role-pill" data-role="host">👑 Host/Groom</button>
+    </div>
+
+    <!-- Comments & Remarks Stream -->
+    <div class="sk-comments-stream" id="skCommentsStream">
+      <!-- Injected dynamically by comments_engine.js -->
+    </div>
+
+    <!-- Sticky Post Composer (Tier 1 vs Tier 2 Visibility) -->
+    <div class="sk-composer-container">
+      <div class="sk-composer-controls">
+        <div class="sk-composer-role-select">
+          <label for="skCommentRoleSelect">Posting as:</label>
+          <select id="skCommentRoleSelect" class="sk-select-sm">
+            <option value="bride">👰 Bride (Sree)</option>
+            <option value="sisters" selected>👭 Sister (Family)</option>
+            <option value="inlaws">🎁 In-Laws (Bride Side)</option>
+            <option value="elders">🪔 Elder (Advisory)</option>
+            <option value="host">👑 Groom / Executive Host</option>
+          </select>
+        </div>
+        <div class="sk-composer-tier-toggle">
+          <label title="Host Internal is only visible to the groom and parents; Family Public is visible to everyone.">
+            <input type="checkbox" id="skCommentIsInternal">
+            <span>🔒 Host Internal</span>
+          </label>
+        </div>
+      </div>
+      <div class="sk-composer-input-row">
+        <textarea id="skCommentInput" class="sk-textarea-sm" rows="2" placeholder="Share your opinion, suggestion, or question on this option..."></textarea>
+        <button type="button" id="skBtnPostComment" class="sk-btn sk-btn-primary sk-btn-post">
+          <span>💬</span> Post
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

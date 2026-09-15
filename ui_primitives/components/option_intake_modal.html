@@ -1,0 +1,79 @@
+<!-- Universal Option Intake Modal Primitive (Adapted from PIO ImageUploadWidget) -->
+<div class="sk-modal-backdrop" id="skOptionIntakeBackdrop" role="dialog" aria-modal="true" aria-labelledby="skOptionIntakeTitle">
+  <div class="sk-modal-card sk-intake-card">
+    <div class="sk-intake-header">
+      <h3 id="skOptionIntakeTitle" class="sk-intake-title">Add Shopping / Decor Option</h3>
+      <button type="button" class="sk-modal-close" id="skOptionIntakeClose" aria-label="Close modal">✕</button>
+    </div>
+
+    <!-- Tabbed Intake Selector -->
+    <div class="sk-intake-tabs" role="tablist">
+      <button type="button" class="sk-intake-tab is-active" id="skTabDriveLink" role="tab" aria-selected="true" data-tab="drive">📎 Google Drive Link</button>
+      <button type="button" class="sk-intake-tab" id="skTabDeviceUpload" role="tab" aria-selected="false" data-tab="device">📷 Device / Camera</button>
+    </div>
+
+    <div class="sk-intake-body">
+      <!-- Tab Pane 1: Drive Link -->
+      <div class="sk-tab-pane is-active" id="skPaneDrive">
+        <label class="sk-intake-label" for="skDriveUrlInput">Google Drive or Image URL</label>
+        <div class="sk-input-group">
+          <input type="url" class="sk-intake-input" id="skDriveUrlInput" placeholder="https://drive.google.com/file/d/..." autocomplete="off">
+          <button type="button" class="sk-btn sk-btn-secondary" id="skBtnVerifyDrive">Verify Link</button>
+        </div>
+        <small class="sk-intake-hint">Shared Google Drive links automatically render with high-res zero-CORS previews.</small>
+        
+        <!-- Live Proof Preview Card (Adapted from PIO ProofPreviewWidget) -->
+        <div class="sk-proof-preview-card" id="skDriveProofCard" style="display: none;">
+          <img id="skDriveProofImg" class="sk-proof-thumb" src="" alt="Thumbnail Preview">
+          <div class="sk-proof-info">
+            <span class="sk-proof-badge" id="skDriveProofBadge">✓ Valid Drive Asset</span>
+            <span class="sk-proof-id" id="skDriveFileId">ID: —</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Pane 2: Local Device / Camera -->
+      <div class="sk-tab-pane" id="skPaneDevice" style="display: none;">
+        <label class="sk-intake-label" for="skFileInput">Upload Photo or Open Camera</label>
+        <div class="sk-dropzone" id="skDropzone">
+          <span class="sk-dropzone-icon">📷</span>
+          <p class="sk-dropzone-text">Tap to take photo or drag & drop image here</p>
+          <input type="file" id="skFileInput" accept="image/*" class="sk-file-input">
+        </div>
+      </div>
+
+      <!-- Option Metadata Fields -->
+      <div class="sk-intake-grid">
+        <div class="sk-form-group">
+          <label class="sk-intake-label" for="skOptionTitle">Option Name / Description</label>
+          <input type="text" class="sk-intake-input" id="skOptionTitle" placeholder="e.g. Royal Maroon Silk Saree">
+        </div>
+        <div class="sk-form-group">
+          <label class="sk-intake-label" for="skOptionCategory">Category</label>
+          <select class="sk-intake-select" id="skOptionCategory">
+            <option value="saree">Saree & Attire</option>
+            <option value="kurta">Kurta & Pajama</option>
+            <option value="lehenga">Lehenga & Choli</option>
+            <option value="jewelry">Jewelry & Ornaments</option>
+            <option value="mandap">Mandap Decor</option>
+            <option value="stage">Stage Decor</option>
+            <option value="other">General / Other</option>
+          </select>
+        </div>
+        <div class="sk-form-group">
+          <label class="sk-intake-label" for="skOptionPrice">Estimated Price (₹)</label>
+          <input type="number" class="sk-intake-input" id="skOptionPrice" placeholder="e.g. 18500">
+        </div>
+        <div class="sk-form-group">
+          <label class="sk-intake-label" for="skOptionVendor">Vendor / Boutique</label>
+          <input type="text" class="sk-intake-input" id="skOptionVendor" placeholder="e.g. Utkalika, Bhubaneswar">
+        </div>
+      </div>
+    </div>
+
+    <div class="sk-intake-footer">
+      <button type="button" class="sk-btn sk-btn-secondary" id="skBtnCancelIntake">Cancel</button>
+      <button type="button" class="sk-btn sk-btn-primary" id="skBtnSubmitOption">Add Option to Review</button>
+    </div>
+  </div>
+</div>

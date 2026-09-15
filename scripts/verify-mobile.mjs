@@ -70,9 +70,9 @@ for (const relPath of filesToAudit) {
   const hasViewport = /<meta\s+name=["']viewport["']\s+content=["'][^"']*width=device-width[^"']*["']/i.test(content);
   assert(hasViewport, `${relPath}: Contains standard responsive viewport meta tag`);
 
-  // Check 2: Zero Horizontal Body Overflow Contract
-  const hasZeroOverflow = /html,\s*body\s*\{[^}]*overflow-x:\s*hidden/i.test(content) || /body\s*\{[^}]*overflow-x:\s*hidden/i.test(content);
-  assert(hasZeroOverflow, `${relPath}: Enforces body { overflow-x: hidden }`);
+  // Check 2: Zero Horizontal Body Overflow Contract (Protocol 34: clip/hidden)
+  const hasZeroOverflow = /html,\s*body\s*\{[^}]*overflow-x:\s*(hidden|clip)/i.test(content) || /body\s*\{[^}]*overflow-x:\s*(hidden|clip)/i.test(content);
+  assert(hasZeroOverflow, `${relPath}: Enforces body { overflow-x: clip | hidden }`);
 
   // Check 3: Sticky Header & Nav Z-Index Tokens
   const hasZIndexTokens = /--z-sticky:\s*1000/i.test(content) && /--z-modal:\s*1020/i.test(content);

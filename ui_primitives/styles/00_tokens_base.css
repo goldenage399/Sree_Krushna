@@ -1,0 +1,53 @@
+/**
+ * Sree Krushna Marriage OS — Universal Design Tokens Base
+ * Standard: STD-MOD-COMP-001 | Ruling: AC-DEC-2026-019
+ * Scope: Baseline design system variables for luxury dark mode interfaces
+ */
+
+:root {
+  /* Surface & Background */
+  --sk-bg: #0f1117;
+  --sk-surface: #181b24;
+  --sk-surface-elevated: #222634;
+  --sk-surface-card: rgba(24, 27, 36, 0.85);
+  
+  /* Borders */
+  --sk-border: #2d3245;
+  --sk-border-subtle: rgba(255, 255, 255, 0.08);
+  --sk-border-focus: #e5a93c;
+  
+  /* Typography */
+  --sk-text-primary: #f3f4f6;
+  --sk-text-secondary: #9ca3af;
+  --sk-text-muted: #6b7280;
+  
+  /* Accent Colors */
+  --sk-gold: #e5a93c;
+  --sk-gold-glow: rgba(229, 169, 60, 0.15);
+  --sk-gold-subtle: rgba(229, 169, 60, 0.08);
+  
+  --sk-emerald: #10b981;
+  --sk-emerald-glow: rgba(16, 185, 129, 0.15);
+  --sk-emerald-subtle: rgba(16, 185, 129, 0.08);
+  
+  --sk-amber: #f59e0b;
+  --sk-amber-glow: rgba(245, 158, 11, 0.15);
+  
+  --sk-rose: #f43f5e;
+  --sk-rose-glow: rgba(244, 63, 94, 0.15);
+  
+  --sk-purple: #a855f7;
+  --sk-purple-glow: rgba(168, 85, 247, 0.15);
+  
+  --sk-blue: #3b82f6;
+  --sk-blue-glow: rgba(59, 130, 246, 0.15);
+
+  /* Geometry & Shadows */
+  --sk-radius-sm: 6px;
+  --sk-radius-md: 10px;
+  --sk-radius-lg: 16px;
+  --sk-radius-full: 9999px;
+  --sk-shadow-card: 0 4px 20px rgba(0, 0, 0, 0.35);
+  --sk-shadow-popover: 0 10px 35px rgba(0, 0, 0, 0.65);
+  --sk-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}

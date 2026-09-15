@@ -1,0 +1,29 @@
+<!-- Universal Lightbox Modal Primitive with Micro-Inspection Zoom/Pan (STD-MOD-COMP-001) -->
+<div class="sk-modal-backdrop" id="skLightboxBackdrop" role="dialog" aria-modal="true" aria-labelledby="skLightboxTitle">
+  <div class="sk-modal-card sk-lightbox-card">
+    <div class="sk-lightbox-header">
+      <div class="sk-lightbox-header-info">
+        <h3 id="skLightboxTitle" class="sk-lightbox-title">Media Preview</h3>
+        <span class="sk-lightbox-badge" id="skLightboxSourceBadge">Drive (High-Res CDN)</span>
+      </div>
+      <button type="button" class="sk-modal-close" id="skLightboxClose" aria-label="Close modal">✕</button>
+    </div>
+    <div class="sk-lightbox-body">
+      <div class="sk-lightbox-media-container" id="skLightboxMedia">
+        <img id="skLightboxImg" class="sk-lightbox-img" src="" alt="High-Resolution Preview" draggable="false">
+        
+        <!-- Floating Micro-Inspection Toolbar (Adapted from PIO UniversalViewer) -->
+        <div class="sk-zoom-toolbar" id="skLightboxToolbar" role="toolbar" aria-label="Image zoom and pan controls">
+          <button type="button" class="sk-zoom-btn" id="skBtnZoomOut" title="Zoom Out (Ctrl+-)" aria-label="Zoom out">−</button>
+          <span class="sk-zoom-badge" id="skZoomBadge" title="Current zoom level">100%</span>
+          <button type="button" class="sk-zoom-btn" id="skBtnZoomIn" title="Zoom In (Ctrl++)" aria-label="Zoom in">+</button>
+          <button type="button" class="sk-zoom-btn" id="skBtnFit" title="Fit to Screen (0)" aria-label="Fit image to screen">⤢</button>
+          <button type="button" class="sk-zoom-btn" id="skBtnReset" title="Reset (R)" aria-label="Reset zoom and position">↺</button>
+        </div>
+      </div>
+      <div class="sk-lightbox-caption" id="skLightboxCaption">
+        <!-- Caption, specs, and status -->
+      </div>
+    </div>
+  </div>
+</div>

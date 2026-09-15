@@ -14,6 +14,7 @@
     "verify:governance-wiring": "node scripts/verify-governance-wiring.cjs",
     "verify:governance-wiring:all": "node scripts/verify-governance-wiring.cjs --all",
     "verify:governance-schema": "node scripts/verify-governance-schema.cjs",
+    "verify:modular-architecture": "node scripts/verify-modular-architecture.cjs",
     "verify:deployment": "node scripts/verify-deployment.cjs",
     "verify:react-deployment": "node scripts/verify-react-deployment.cjs",
     "verify:mobile": "node scripts/verify-mobile.mjs",

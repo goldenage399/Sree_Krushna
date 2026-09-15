@@ -1,0 +1,300 @@
+/**
+ * Sree Krushna Marriage OS — Zoom/Pan & Option Intake Primitive Styles
+ * Standard: STD-MOD-COMP-001 | Ruling: AC-DEC-2026-022
+ * Scope: Floating zoom toolbar, micro-inspection badge, proof card, and intake modal
+ */
+
+/* Lightbox Micro-Inspection Stage */
+.sk-lightbox-card {
+  width: 95vw;
+  max-width: 1100px;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px;
+  box-sizing: border-box;
+}
+
+.sk-lightbox-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--sk-border);
+}
+
+.sk-lightbox-header-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sk-lightbox-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--sk-text-primary);
+}
+
+.sk-lightbox-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--sk-radius-full);
+  background: rgba(212, 175, 55, 0.12);
+  color: var(--sk-gold);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.sk-lightbox-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  margin-top: 12px;
+}
+
+.sk-lightbox-media-container {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  min-height: 300px;
+  background: #07090e;
+  border-radius: var(--sk-radius-md);
+  border: 1px solid var(--sk-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.sk-lightbox-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  pointer-events: auto;
+  user-select: none;
+}
+
+/* Floating Zoom/Pan Toolbar (Adapted from PIO UniversalViewer) */
+.sk-zoom-toolbar {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(15, 17, 23, 0.88);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--sk-border);
+  border-radius: var(--sk-radius-full);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 60;
+}
+
+.sk-zoom-btn {
+  background: transparent;
+  border: none;
+  color: var(--sk-text-primary);
+  font-size: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sk-zoom-btn:hover {
+  background: var(--sk-surface);
+  color: var(--sk-gold);
+}
+
+.sk-zoom-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--sk-gold);
+  min-width: 44px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  padding: 2px 6px;
+}
+
+.sk-lightbox-caption {
+  padding-top: 10px;
+  font-size: 13px;
+  color: var(--sk-text-secondary);
+}
+
+/* Option Intake Modal Styles */
+.sk-intake-card {
+  width: 95vw;
+  max-width: 580px;
+  padding: 20px;
+}
+
+.sk-intake-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.sk-intake-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--sk-text-primary);
+}
+
+.sk-intake-tabs {
+  display: flex;
+  gap: 12px;
+  border-bottom: 1px solid var(--sk-border);
+  margin-bottom: 16px;
+}
+
+.sk-intake-tab {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--sk-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sk-intake-tab.is-active {
+  color: var(--sk-gold);
+  border-bottom-color: var(--sk-gold);
+}
+
+.sk-intake-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--sk-text-secondary);
+  margin-bottom: 6px;
+}
+
+.sk-input-group {
+  display: flex;
+  gap: 8px;
+}
+
+.sk-intake-input, .sk-intake-select {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--sk-surface);
+  border: 1px solid var(--sk-border);
+  border-radius: var(--sk-radius-md);
+  color: var(--sk-text-primary);
+  font-size: 13px;
+  box-sizing: border-box;
+}
+
+.sk-intake-input:focus, .sk-intake-select:focus {
+  outline: none;
+  border-color: var(--sk-gold);
+}
+
+.sk-intake-hint {
+  display: block;
+  font-size: 11px;
+  color: var(--sk-text-tertiary, #94a3b8);
+  margin-top: 6px;
+}
+
+.sk-proof-preview-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: var(--sk-radius-md);
+  margin-top: 12px;
+}
+
+.sk-proof-thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--sk-radius-sm);
+  object-fit: cover;
+  border: 1px solid var(--sk-border);
+}
+
+.sk-proof-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sk-proof-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--sk-emerald);
+}
+
+.sk-proof-id {
+  font-size: 11px;
+  color: var(--sk-text-secondary);
+}
+
+.sk-dropzone {
+  border: 2px dashed var(--sk-border);
+  border-radius: var(--sk-radius-md);
+  padding: 24px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  background: var(--sk-surface);
+}
+
+.sk-dropzone-icon {
+  font-size: 28px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.sk-dropzone-text {
+  margin: 0;
+  font-size: 12px;
+  color: var(--sk-text-secondary);
+}
+
+.sk-file-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.sk-intake-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+@media (max-width: 480px) {
+  .sk-intake-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sk-intake-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  border-top: 1px solid var(--sk-border);
+  padding-top: 14px;
+}
