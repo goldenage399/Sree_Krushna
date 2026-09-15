@@ -30,6 +30,8 @@
     "test:cockpit": "node scripts/test-cockpit-smoke.cjs",
     "build:decision-registry": "node scripts/build-decision-registry-data.cjs && node scripts/build-decision-registry-html.cjs",
     "test:decision-registry": "node scripts/test-decision-registry.cjs",
+    "build:shopping": "node scripts/build-shopping-data.cjs && node scripts/build-shopping-html.cjs",
+    "test:shopping": "node scripts/test-shopping-registry.cjs",
     "seed:cockpit": "node scripts/seed-cockpit-firestore.cjs",
     "inspect:cockpit": "node scripts/db-inspect-cockpit.cjs",
     "deploy:cockpit-rules": "firebase.cmd deploy --only firestore:rules --non-interactive"

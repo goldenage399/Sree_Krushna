@@ -1,0 +1,1407 @@
+/**
+ * Static Decoupled Component Assembler (SDCA) for Shopping Registry HTML
+ * Standard: SPEC-PROC-TROUSSEAU-001 / P-SHOPPING-CONSENSUS-001 / P-COMPARE-SHARE-001 / INC-086
+ * Ruling: AC-DEC-2026-018 / UI-DEC-2026-014
+ * 
+ * Generates both shopping-registry.html and public/shopping-registry.html with 100% byte parity.
+ */
+
+const fs = require('fs');
+const path = require('path');
+
+const rootDir = path.resolve(__dirname, '..');
+
+const htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sree Krushna Marriage OS — Wedding Trousseau, 'Sara' & Bhubaneswar Shopping Registry</title>
+  <meta name="description" content="Master shopping checklist, Bhubaneswar market directory, and multi-stakeholder consensus engine for bride, sisters, and in-laws.">
+  <meta name="theme-color" content="#0f1117">
+  <link rel="icon" href="./assets/icons/icon-192x192.png" type="image/png">
+  <style>
+    /* ==========================================================================
+       SHOPPING REGISTRY & CONSENSUS SCOPED CSS (INC-086 COMPLIANT)
+       All rules are strictly scoped under #shoppingRegistryRoot, #shopModal, or .shop-*
+       ========================================================================== */
+    :root {
+      --shop-bg: #0f1117;
+      --shop-surface: #181b24;
+      --shop-surface-elevated: #222634;
+      --shop-border: #2d3245;
+      --shop-border-focus: #e5a93c;
+      --shop-text-primary: #f3f4f6;
+      --shop-text-secondary: #9ca3af;
+      --shop-text-muted: #6b7280;
+      --shop-gold: #e5a93c;
+      --shop-gold-glow: rgba(229, 169, 60, 0.15);
+      --shop-emerald: #10b981;
+      --shop-emerald-glow: rgba(16, 185, 129, 0.15);
+      --shop-amber: #f59e0b;
+      --shop-rose: #f43f5e;
+      --shop-rose-glow: rgba(244, 63, 94, 0.15);
+      --shop-purple: #a855f7;
+      --shop-purple-glow: rgba(168, 85, 247, 0.15);
+      --shop-blue: #3b82f6;
+      --shop-radius-sm: 6px;
+      --shop-radius-md: 10px;
+      --shop-radius-lg: 16px;
+      --shop-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+      --shop-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--shop-bg);
+      color: var(--shop-text-primary);
+      font-family: var(--shop-font-sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #shoppingRegistryRoot {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px 20px 80px;
+      box-sizing: border-box;
+    }
+
+    /* Family / Stakeholder Welcome Banner */
+    .shop-welcome-banner {
+      display: none;
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(229, 169, 60, 0.15) 100%);
+      border: 1px solid rgba(229, 169, 60, 0.4);
+      border-radius: var(--shop-radius-md);
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .shop-welcome-banner.active {
+      display: flex;
+    }
+
+    .shop-welcome-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .shop-welcome-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .shop-welcome-sub {
+      font-size: 13px;
+      color: var(--shop-text-secondary);
+      margin: 3px 0 0;
+    }
+
+    /* Header */
+    .shop-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--shop-border);
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .shop-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .shop-logo-monogram {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--shop-radius-md);
+      background: linear-gradient(135deg, #e5a93c 0%, #b8731d 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+      color: #0f1117;
+      box-shadow: 0 4px 12px rgba(229, 169, 60, 0.3);
+    }
+
+    .shop-title-group h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+
+    .shop-title-group p {
+      margin: 4px 0 0;
+      font-size: 13px;
+      color: var(--shop-text-secondary);
+    }
+
+    .shop-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .shop-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: var(--shop-radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--shop-border);
+      background: var(--shop-surface);
+      color: var(--shop-text-primary);
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .shop-btn:hover {
+      background: var(--shop-surface-elevated);
+      border-color: var(--shop-border-focus);
+      color: #ffffff;
+    }
+
+    .shop-btn-primary {
+      background: var(--shop-gold);
+      color: #0f1117;
+      border-color: var(--shop-gold);
+    }
+
+    .shop-btn-primary:hover {
+      background: #f0b74b;
+      color: #0f1117;
+    }
+
+    .shop-btn-whatsapp {
+      background: #25d366;
+      color: #ffffff;
+      border-color: #25d366;
+    }
+
+    .shop-btn-whatsapp:hover {
+      background: #1ebc59;
+      color: #ffffff;
+    }
+
+    /* KPI Metrics Banner */
+    .shop-kpis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .shop-kpi-card {
+      background: var(--shop-surface);
+      border: 1px solid var(--shop-border);
+      border-radius: var(--shop-radius-md);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .shop-kpi-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--shop-text-muted);
+      font-weight: 600;
+    }
+
+    .shop-kpi-val {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .shop-kpi-sub {
+      font-size: 12px;
+      color: var(--shop-text-secondary);
+    }
+
+    /* 4-Stage Itinerary Stepper */
+    .shop-stepper-section {
+      background: var(--shop-surface);
+      border: 1px solid var(--shop-border);
+      border-radius: var(--shop-radius-md);
+      padding: 18px 20px;
+      margin-bottom: 24px;
+    }
+
+    .shop-stepper-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .shop-stepper-title h2 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .shop-stepper-title p {
+      font-size: 12px;
+      color: var(--shop-text-secondary);
+      margin: 3px 0 0;
+    }
+
+    .shop-milestone-track {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+    }
+
+    .shop-milestone-node {
+      background: var(--shop-bg);
+      border: 1px solid var(--shop-border);
+      border-radius: var(--shop-radius-sm);
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .shop-milestone-node:hover {
+      border-color: var(--shop-border-focus);
+      transform: translateY(-2px);
+    }
+
+    .shop-milestone-node.active {
+      border-color: var(--shop-gold);
+      background: var(--shop-gold-glow);
+      box-shadow: 0 0 14px rgba(229, 169, 60, 0.2);
+    }
+
+    .shop-milestone-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .shop-milestone-phase {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--shop-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .shop-milestone-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 10px;
+      background: var(--shop-surface-elevated);
+      color: var(--shop-text-secondary);
+    }
+
+    .shop-milestone-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .shop-milestone-time {
+      font-size: 11px;
+      color: var(--shop-text-muted);
+    }
+
+    /* Clustered Option Pods */
+    .shop-cluster-section {
+      margin-bottom: 28px;
+    }
+
+    .shop-cluster-card {
+      background: var(--shop-surface);
+      border: 1px solid var(--shop-border);
+      border-radius: var(--shop-radius-md);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .shop-cluster-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .shop-cluster-title-wrap h2 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .shop-cluster-title-wrap p {
+      margin: 4px 0 0;
+      font-size: 12px;
+      color: var(--shop-text-secondary);
+    }
+
+    .shop-cluster-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .shop-pod-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .shop-pod-option-card {
+      background: var(--shop-surface-elevated);
+      border: 1px solid var(--shop-border);
+      border-radius: var(--shop-radius-md);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .shop-pod-option-card:hover {
+      border-color: var(--shop-border-focus);
+    }
+
+    .shop-pod-option-card.selected {
+      border-color: var(--shop-gold);
+      background: linear-gradient(180deg, rgba(229, 169, 60, 0.08) 0%, rgba(24, 27, 36, 0.9) 100%);
+      box-shadow: 0 0 16px rgba(229, 169, 60, 0.2);
+    }
+
+    .shop-pod-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      gap: 8px;
+    }
+
+    .shop-pod-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .shop-pod-price {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--shop-gold);
+      background: rgba(229, 169, 60, 0.1);
+      padding: 2px 8px;
+      border-radius: var(--shop-radius-sm);
+    }
+
+    .shop-pod-color {
+      font-size: 11px;
+      color: var(--shop-purple);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .shop-pod-highlight {
+      font-size: 12px;
+      color: var(--shop-text-secondary);
+      line-height: 1.45;
+      margin-bottom: 14px;
+    }
+
+    .shop-pod-store {
+      font-size: 11px;
+      color: var(--shop-text-muted);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 14px;
+    }
+
+    .shop-pod-radio-btn {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: var(--shop-radius-sm);
+      border: 1px solid var(--shop-border);
+      background: var(--shop-bg);
+      color: var(--shop-text-secondary);
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .shop-pod-option-card.selected .shop-pod-radio-btn {
+      background: var(--shop-gold);
+      color: #0f1117;
+      border-color: var(--shop-gold);
+    }
+
+    .shop-cluster-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 12px;
+      color: var(--shop-text-secondary);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* Store Directory Strip */
+    .shop-store-section {
+      background: var(--shop-surface);
+      border: 1px solid var(--shop-border);
+      border-radius: var(--shop-radius-md);
+      padding: 18px 20px;
+      margin-bottom: 28px;
+    }
+
+    .shop-store-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .shop-store-card {
+      background: var(--shop-bg);
+      border: 1px solid var(--shop-border);
+      border-radius: var(--shop-radius-sm);
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .shop-store-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .shop-store-zone {
+      font-size: 11px;
+      color: var(--shop-gold);
+      font-weight: 600;
+    }
+
+    .shop-store-specialty {
+      font-size: 11px;
+      color: var(--shop-text-secondary);
+      line-height: 1.4;
+    }
+
+    .shop-store-phone {
+      font-size: 11px;
+      color: var(--shop-emerald);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Itemized Checklist Grid & Toolbar */
+    .shop-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .shop-filter-pills {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .shop-pill {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--shop-surface);
+      border: 1px solid var(--shop-border);
+      color: var(--shop-text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .shop-pill:hover {
+      border-color: var(--shop-border-focus);
+      color: #ffffff;
+    }
+
+    .shop-pill.active {
+      background: var(--shop-gold);
+      color: #0f1117;
+      border-color: var(--shop-gold);
+    }
+
+    .shop-search-box {
+      position: relative;
+      min-width: 260px;
+    }
+
+    .shop-search-input {
+      width: 100%;
+      background: var(--shop-surface);
+      border: 1px solid var(--shop-border);
+      padding: 8px 14px 8px 34px;
+      border-radius: 20px;
+      color: #ffffff;
+      font-size: 13px;
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    .shop-search-input:focus {
+      border-color: var(--shop-gold);
+    }
+
+    .shop-search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--shop-text-muted);
+      font-size: 13px;
+      pointer-events: none;
+    }
+
+    .shop-items-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+      gap: 16px;
+    }
+
+    @media (max-width: 500px) {
+      .shop-items-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .shop-item-card {
+      background: var(--shop-surface);
+      border: 1px solid var(--shop-border);
+      border-radius: var(--shop-radius-md);
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .shop-item-card:hover {
+      border-color: var(--shop-border-focus);
+      box-shadow: var(--shop-shadow);
+    }
+
+    .shop-item-card.purchased {
+      border-color: var(--shop-emerald);
+      background: rgba(16, 185, 129, 0.04);
+    }
+
+    .shop-item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      gap: 10px;
+    }
+
+    .shop-id-badge {
+      font-family: monospace;
+      font-weight: 700;
+      font-size: 11px;
+      background: var(--shop-surface-elevated);
+      color: var(--shop-gold);
+      border: 1px solid var(--shop-border);
+      padding: 2px 7px;
+      border-radius: var(--shop-radius-sm);
+    }
+
+    .shop-item-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 4px;
+    }
+
+    .shop-item-role {
+      font-size: 12px;
+      color: var(--shop-text-secondary);
+      margin-bottom: 10px;
+    }
+
+    .shop-spec-box {
+      font-size: 12px;
+      color: var(--shop-text-primary);
+      background: rgba(255, 255, 255, 0.02);
+      border-left: 3px solid var(--shop-gold);
+      padding: 8px 12px;
+      border-radius: var(--shop-radius-sm);
+      margin-bottom: 12px;
+      line-height: 1.45;
+    }
+
+    .shop-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 11px;
+      color: var(--shop-text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .shop-meta-tag {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Multi-Stakeholder Voting Bar */
+    .shop-stakeholder-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: var(--shop-bg);
+      border-radius: var(--shop-radius-sm);
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .shop-vote-pill {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: var(--shop-radius-sm);
+      border: 1px solid var(--shop-border);
+      cursor: pointer;
+      background: var(--shop-surface);
+      color: var(--shop-text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+    }
+
+    .shop-vote-pill:hover {
+      border-color: var(--shop-border-focus);
+    }
+
+    .shop-vote-pill.approved {
+      background: var(--shop-emerald-glow);
+      border-color: var(--shop-emerald);
+      color: #ffffff;
+    }
+
+    .shop-item-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 12px;
+    }
+
+    .shop-check-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--shop-text-secondary);
+      user-select: none;
+    }
+
+    .shop-check-label input {
+      accent-color: var(--shop-emerald);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    /* Toast */
+    .shop-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #181b24;
+      border: 1px solid var(--shop-gold);
+      color: #ffffff;
+      padding: 12px 18px;
+      border-radius: var(--shop-radius-md);
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      display: none;
+      align-items: center;
+      gap: 10px;
+      z-index: 10000;
+    }
+
+    .shop-toast.active {
+      display: flex;
+    }
+
+    /* Print Dossier Optimization */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      #shoppingRegistryRoot {
+        padding: 0;
+        max-width: 100%;
+      }
+      .shop-btn, .shop-toolbar, .shop-welcome-banner, .shop-toast {
+        display: none !important;
+      }
+      .shop-item-card, .shop-cluster-card, .shop-store-card {
+        border: 1px solid #cccccc !important;
+        background: #ffffff !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+        margin-bottom: 12px;
+      }
+      .shop-item-title, .shop-cluster-title-wrap h2, .shop-store-name {
+        color: #000000 !important;
+      }
+      .shop-spec-box {
+        border-left: 3px solid #000000 !important;
+        background: #f9f9f9 !important;
+        color: #000000 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="shoppingRegistryRoot">
+  <!-- Family / Stakeholder Welcome Banner -->
+  <div class="shop-welcome-banner" id="shopWelcomeBanner">
+    <div class="shop-welcome-left">
+      <span style="font-size: 28px;" id="welcomeBannerIcon">🌺</span>
+      <div>
+        <h2 class="shop-welcome-title" id="welcomeBannerTitle">Welcome to Sree & Krushna Wedding Shopping Review!</h2>
+        <p class="shop-welcome-sub" id="welcomeBannerSub">Review the shortlisted sarees, lehengas, groomswear, and gifting bundles for our Bhubaneswar shopping trip.</p>
+      </div>
+    </div>
+    <button class="shop-btn shop-btn-primary" onclick="window.switchShoppingMode('executive')">
+      <span>👑</span> Executive Host View
+    </button>
+  </div>
+
+  <!-- Header -->
+  <header class="shop-header" id="shopHeader">
+    <div class="shop-brand">
+      <div class="shop-logo-monogram">SK</div>
+      <div class="shop-title-group">
+        <h1>Wedding Trousseau, 'Sara' & Bhubaneswar Shopping Registry</h1>
+        <p>Sree Krushna Marriage OS — Multi-Stakeholder Consensus & Market Navigator (SPEC-PROC-TROUSSEAU-001)</p>
+      </div>
+    </div>
+    <div class="shop-header-actions">
+      <button class="shop-btn shop-btn-whatsapp" id="btnShareFamily" title="Share with Family on WhatsApp">
+        <span>📱</span> Share with Family
+      </button>
+      <button class="shop-btn" id="btnShareSisters" title="Share Sisters' Selection Link">
+        <span>👭</span> Share with Sisters
+      </button>
+      <button class="shop-btn" id="btnPrintRunSheet" title="Print A4 Shopping Checklist">
+        <span>🖨️</span> Print Run Sheet
+      </button>
+      <button class="shop-btn" id="btnExportJson" title="Export Shopping State JSON">
+        <span>💾</span> Export JSON
+      </button>
+      <a href="./decision-registry.html" class="shop-btn" title="Back to Decision Registry">
+        <span>⚖️</span> Decision Registry
+      </a>
+    </div>
+  </header>
+
+  <!-- KPI Metrics Banner -->
+  <section class="shop-kpis" id="shopKpis">
+    <div class="shop-kpi-card">
+      <span class="shop-kpi-label">Total Shopping Items</span>
+      <span class="shop-kpi-val" id="kpiTotalItems">30</span>
+      <span class="shop-kpi-sub">Across 4 Chapters</span>
+    </div>
+    <div class="shop-kpi-card">
+      <span class="shop-kpi-label">Consensus Aligned</span>
+      <span class="shop-kpi-val" style="color: var(--shop-emerald);" id="kpiAlignedItems">18</span>
+      <span class="shop-kpi-sub">Approved by Bride/Sisters</span>
+    </div>
+    <div class="shop-kpi-card">
+      <span class="shop-kpi-label">Items Purchased</span>
+      <span class="shop-kpi-val" style="color: var(--shop-gold);" id="kpiPurchasedItems">0 / 30</span>
+      <span class="shop-kpi-sub">In Hand / Bagged</span>
+    </div>
+    <div class="shop-kpi-card">
+      <span class="shop-kpi-label">Bhubaneswar Stores</span>
+      <span class="shop-kpi-val" style="color: var(--shop-purple);" id="kpiStoresCount">8</span>
+      <span class="shop-kpi-sub">Janpath, Saheed Nagar, Unit-2</span>
+    </div>
+  </section>
+
+  <!-- 4-Stage Itinerary Stepper -->
+  <section class="shop-stepper-section" id="shoppingStepper">
+    <div class="shop-stepper-header">
+      <div class="shop-stepper-title">
+        <h2><span>🧭</span> 5-Day Bhubaneswar Shopping Itinerary</h2>
+        <p>Follow the daily shopping itinerary chapter-by-chapter as the Bride's family arrives in Bhubaneswar.</p>
+      </div>
+      <div>
+        <button class="shop-btn shop-btn-sm" id="btnFilterAllChapters">Show All Chapters</button>
+      </div>
+    </div>
+    <div class="shop-milestone-track" id="chapterMilestoneTrack">
+      <!-- Injected dynamically by JS -->
+    </div>
+  </section>
+
+  <!-- Clustered Option Pods (Side-by-Side Alternatives) -->
+  <section class="shop-cluster-section" id="shoppingClusterPods">
+    <!-- Injected dynamically by JS -->
+  </section>
+
+  <!-- Bhubaneswar Store Navigator Strip -->
+  <section class="shop-store-section" id="shoppingStoreNavigator">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+      <div>
+        <h3 style="margin: 0; font-size: 15px; color: #ffffff; display: flex; align-items: center; gap: 6px;">
+          <span>📍</span> Bhubaneswar Retail Directory & Market Hubs
+        </h3>
+        <p style="margin: 3px 0 0; font-size: 12px; color: var(--shop-text-secondary);">Verified stores for authentic handlooms, hallmarked gold, sherwanis, and packaging.</p>
+      </div>
+    </div>
+    <div class="shop-store-grid" id="storesGrid">
+      <!-- Injected dynamically by JS -->
+    </div>
+  </section>
+
+  <!-- Filter & Search Toolbar -->
+  <div class="shop-toolbar">
+    <div class="shop-filter-pills" id="shopFilterPills">
+      <button class="shop-pill active" data-filter="all">All Items (30)</button>
+      <button class="shop-pill" data-filter="bridal">🪔 Bridal Trousseau (7)</button>
+      <button class="shop-pill" data-filter="groom">👑 Groom Attire (8)</button>
+      <button class="shop-pill" data-filter="jewellery">💎 Jewellery & Silver (9)</button>
+      <button class="shop-pill" data-filter="sara">🎁 In-Laws 'Sara' (6)</button>
+      <button class="shop-pill" data-filter="purchased">✓ Purchased</button>
+    </div>
+    <div class="shop-search-box">
+      <span class="shop-search-icon">🔍</span>
+      <input type="text" id="shopSearchInput" class="shop-search-input" placeholder="Search items, fabrics, stores...">
+    </div>
+  </div>
+
+  <!-- Itemized Checklist Grid -->
+  <main class="shop-items-grid" id="itemsGrid">
+    <!-- Rendered dynamically by JS -->
+  </main>
+</div>
+
+<!-- Toast Notification -->
+<div class="shop-toast" id="shopToast">
+  <span id="toastIcon">📋</span>
+  <span id="toastMsg">Notification message</span>
+</div>
+
+<!-- Embedded Data Layer -->
+<script src="./js/shopping-data.js"></script>
+
+<!-- Application Logic -->
+<script>
+  (function() {
+    const data = window.SHOPPING_REGISTRY_DATA || { chapters: [], clusters: [], stores: [], items: [] };
+    const chapters = data.chapters || [];
+    const clusters = data.clusters || [];
+    const stores = data.stores || [];
+    const items = data.items || [];
+
+    // Local State
+    let activeChapter = 'all';
+    let activeFilter = 'all';
+    let searchQuery = '';
+    let isFamilyMode = false;
+    let userSelections = JSON.parse(localStorage.getItem('sk_shopping_selections') || '{}');
+    let itemPurchased = JSON.parse(localStorage.getItem('sk_shopping_purchased') || '{}');
+    let stakeholderApprovals = JSON.parse(localStorage.getItem('sk_shopping_approvals') || '{}');
+
+    // DOM Elements
+    const shopWelcomeBanner = document.getElementById('shopWelcomeBanner');
+    const welcomeBannerTitle = document.getElementById('welcomeBannerTitle');
+    const welcomeBannerSub = document.getElementById('welcomeBannerSub');
+    const welcomeBannerIcon = document.getElementById('welcomeBannerIcon');
+    const shopHeader = document.getElementById('shopHeader');
+    const chapterMilestoneTrack = document.getElementById('chapterMilestoneTrack');
+    const btnFilterAllChapters = document.getElementById('btnFilterAllChapters');
+    const shoppingClusterPods = document.getElementById('shoppingClusterPods');
+    const storesGrid = document.getElementById('storesGrid');
+    const itemsGrid = document.getElementById('itemsGrid');
+    const shopFilterPills = document.querySelectorAll('.shop-pill');
+    const shopSearchInput = document.getElementById('shopSearchInput');
+    const btnShareFamily = document.getElementById('btnShareFamily');
+    const btnShareSisters = document.getElementById('btnShareSisters');
+    const btnPrintRunSheet = document.getElementById('btnPrintRunSheet');
+    const btnExportJson = document.getElementById('btnExportJson');
+    const shopToast = document.getElementById('shopToast');
+    const toastIcon = document.getElementById('toastIcon');
+    const toastMsg = document.getElementById('toastMsg');
+    const kpiTotalItems = document.getElementById('kpiTotalItems');
+    const kpiAlignedItems = document.getElementById('kpiAlignedItems');
+    const kpiPurchasedItems = document.getElementById('kpiPurchasedItems');
+    const kpiStoresCount = document.getElementById('kpiStoresCount');
+
+    function saveState() {
+      localStorage.setItem('sk_shopping_selections', JSON.stringify(userSelections));
+      localStorage.setItem('sk_shopping_purchased', JSON.stringify(itemPurchased));
+      localStorage.setItem('sk_shopping_approvals', JSON.stringify(stakeholderApprovals));
+      updateKpis();
+    }
+
+    function showToast(msg, icon = '📋') {
+      toastIcon.textContent = icon;
+      toastMsg.textContent = msg;
+      shopToast.classList.add('active');
+      setTimeout(() => shopToast.classList.remove('active'), 3500);
+    }
+
+    // URL Query Param Parser
+    function parseUrlParams() {
+      const params = new URLSearchParams(window.location.search);
+      const mode = params.get('mode');
+      if (mode === 'family') {
+        isFamilyMode = true;
+        shopWelcomeBanner.classList.add('active');
+        shopHeader.style.display = 'none';
+        welcomeBannerTitle.textContent = "Welcome to Sree & Krushna Family Trousseau Review!";
+        welcomeBannerSub.textContent = "Please review the sacred Vivaha Pata, Groom Mandap wear, and In-Laws 'Sara' gifting packages below.";
+      } else if (mode === 'sisters') {
+        isFamilyMode = true;
+        shopWelcomeBanner.classList.add('active');
+        welcomeBannerIcon.textContent = "👭";
+        welcomeBannerTitle.textContent = "Sisters' Styling & Wardrobe Review Hub!";
+        welcomeBannerSub.textContent = "Vote on Sangeet Lehengas, Groom Sherwani styling, and your matching festive sarees!";
+      }
+
+      const paramChapter = params.get('chapter');
+      if (paramChapter && chapters.some(c => c.id === paramChapter)) {
+        activeChapter = paramChapter;
+      }
+
+      const paramCluster = params.get('cluster');
+      if (paramCluster) {
+        setTimeout(() => {
+          const el = document.getElementById('cluster-' + paramCluster);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 250);
+      }
+    }
+
+    window.switchShoppingMode = function(mode) {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('mode');
+      window.location.href = url.toString();
+    };
+
+    function updateKpis() {
+      kpiTotalItems.textContent = items.length;
+      kpiStoresCount.textContent = stores.length;
+
+      let purchasedCount = 0;
+      let alignedCount = 0;
+
+      items.forEach(i => {
+        if (itemPurchased[i.id]) purchasedCount++;
+        const approvals = stakeholderApprovals[i.id] || i.approvals || {};
+        if (approvals.bride && approvals.sisters) alignedCount++;
+      });
+
+      kpiPurchasedItems.textContent = \`\${purchasedCount} / \${items.length}\`;
+      kpiAlignedItems.textContent = alignedCount;
+    }
+
+    // Render Chapters
+    function renderChapters() {
+      chapterMilestoneTrack.innerHTML = chapters.map(c => {
+        const isActive = (c.id === activeChapter);
+        const chapterItems = items.filter(i => i.chapterId === c.id);
+        const doneCount = chapterItems.filter(i => itemPurchased[i.id]).length;
+
+        return \`
+          <div class="shop-milestone-node \${isActive ? 'active' : ''}" onclick="window.selectChapter('\${c.id}')">
+            <div class="shop-milestone-top">
+              <span class="shop-milestone-phase">Chapter \${c.number}</span>
+              <span class="shop-milestone-badge">\${doneCount}/\${chapterItems.length} Done</span>
+            </div>
+            <div class="shop-milestone-label">
+              <span>\${c.icon}</span> <span>\${c.title}</span>
+            </div>
+            <div class="shop-milestone-time">\${c.dayTimeline} • \${c.primaryZone}</div>
+          </div>
+        \`;
+      }).join('');
+    }
+
+    window.selectChapter = function(chapterId) {
+      activeChapter = (activeChapter === chapterId) ? 'all' : chapterId;
+      renderChapters();
+      renderClusters();
+      renderItems();
+    };
+
+    btnFilterAllChapters.addEventListener('click', () => {
+      activeChapter = 'all';
+      renderChapters();
+      renderClusters();
+      renderItems();
+    });
+
+    // Render Clusters
+    function renderClusters() {
+      const filteredClusters = clusters.filter(c => {
+        if (activeChapter === 'all') return true;
+        return c.chapterId === activeChapter;
+      });
+
+      if (filteredClusters.length === 0) {
+        shoppingClusterPods.innerHTML = '';
+        return;
+      }
+
+      shoppingClusterPods.innerHTML = filteredClusters.map(cluster => {
+        const currentChoice = userSelections[cluster.id] || 'A';
+
+        return \`
+          <div class="shop-cluster-card" id="cluster-\${cluster.id}">
+            <div class="shop-cluster-header">
+              <div class="shop-cluster-title-wrap">
+                <h2><span>✨</span> <span>\${cluster.title}</span></h2>
+                <p>\${cluster.description} • <strong>Deciders:</strong> \${cluster.deciders.join(', ')}</p>
+              </div>
+              <div class="shop-cluster-actions">
+                <button class="shop-btn shop-btn-whatsapp" onclick="window.shareClusterWhatsApp('\${cluster.id}')">
+                  <span>📱</span> Share for Vote
+                </button>
+              </div>
+            </div>
+
+            <!-- N-Option Cards -->
+            <div class="shop-pod-grid">
+              \${cluster.options.map(opt => {
+                const isSelected = (currentChoice === opt.optionId);
+                return \`
+                  <div class="shop-pod-option-card \${isSelected ? 'selected' : ''}" onclick="window.selectClusterOption('\${cluster.id}', '\${opt.optionId}')">
+                    <div class="shop-pod-top">
+                      <h4 class="shop-pod-title">Option \${opt.optionId}: \${opt.title}</h4>
+                      <span class="shop-pod-price">\${opt.priceTier}</span>
+                    </div>
+                    <div class="shop-pod-color">\${opt.color} • \${opt.weave}</div>
+                    <div class="shop-pod-highlight">\${opt.highlight}</div>
+                    <div class="shop-pod-store">📍 \${opt.store}</div>
+                    <button class="shop-pod-radio-btn" type="button">
+                      <span>\${isSelected ? '🔘' : '⚪'}</span>
+                      <span>\${isSelected ? 'Selected Preference (Active)' : 'Choose This Concept'}</span>
+                    </button>
+                  </div>
+                \`;
+              }).join('')}
+            </div>
+
+            <div class="shop-cluster-footer">
+              <span>📊 <strong>Active Family Choice:</strong> Option \${currentChoice}</span>
+              <span>Primary Hub: \${cluster.options[0].store}</span>
+            </div>
+          </div>
+        \`;
+      }).join('');
+    }
+
+    window.selectClusterOption = function(clusterId, optionId) {
+      userSelections[clusterId] = optionId;
+      saveState();
+      renderClusters();
+      showToast(\`Selected Option \${optionId} for \${clusterId}!\`, '✓');
+    };
+
+    // 1-Click WhatsApp Share for Clusters
+    window.shareClusterWhatsApp = function(clusterId) {
+      const cluster = clusters.find(c => c.id === clusterId);
+      if (!cluster) return;
+
+      const baseUrl = window.location.origin + window.location.pathname;
+      const shareUrl = \`\${baseUrl}?cluster=\${cluster.id}&mode=family\`;
+      const msg = cluster.whatsappTemplate.replace('{url}', shareUrl);
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(msg).then(() => {
+          showToast('WhatsApp invitation text copied to clipboard! Paste into your family chat.', '📲');
+        });
+      } else {
+        prompt('Copy WhatsApp Message:', msg);
+      }
+    };
+
+    // Render Stores
+    function renderStores() {
+      storesGrid.innerHTML = stores.map(s => {
+        return \`
+          <div class="shop-store-card">
+            <div class="shop-store-name"><span>🏬</span> <span>\${s.name}</span></div>
+            <div class="shop-store-zone">\${s.zone}</div>
+            <div class="shop-store-specialty">\${s.specialty}</div>
+            <div class="shop-store-phone">📞 \${s.phone}</div>
+          </div>
+        \`;
+      }).join('');
+    }
+
+    // Render Item Checklist Grid
+    function renderItems() {
+      const q = searchQuery.toLowerCase().trim();
+
+      const filtered = items.filter(item => {
+        if (activeChapter !== 'all' && item.chapterId !== activeChapter) return false;
+
+        if (activeFilter === 'purchased') {
+          if (!itemPurchased[item.id]) return false;
+        } else if (activeFilter !== 'all') {
+          if (item.category !== activeFilter) return false;
+        }
+
+        if (!q) return true;
+        const text = (item.id + ' ' + item.code + ' ' + item.title + ' ' + item.role + ' ' + item.spec + ' ' + item.store + ' ' + item.suggestedColor).toLowerCase();
+        return text.includes(q);
+      });
+
+      if (filtered.length === 0) {
+        itemsGrid.innerHTML = \`
+          <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--shop-text-muted);">
+            No shopping items match the current search and filter criteria.
+          </div>
+        \`;
+        return;
+      }
+
+      itemsGrid.innerHTML = filtered.map(item => {
+        const isBought = !!itemPurchased[item.id];
+        const approvals = stakeholderApprovals[item.id] || item.approvals || {};
+
+        return \`
+          <article class="shop-item-card \${isBought ? 'purchased' : ''}" id="card-\${item.id}">
+            <div>
+              <div class="shop-item-top">
+                <span class="shop-id-badge">\${item.id}</span>
+                <span style="font-size: 11px; font-weight: 700; color: var(--shop-gold);">\${item.priceRange}</span>
+              </div>
+              <h3 class="shop-item-title">\${item.title}</h3>
+              <div class="shop-item-role">✨ \${item.role}</div>
+              <div class="shop-spec-box">
+                <strong>Specification:</strong> \${item.spec}
+              </div>
+              <div class="shop-meta-row">
+                <span class="shop-meta-tag">🎨 <strong>Color:</strong> \${item.suggestedColor}</span>
+                <span class="shop-meta-tag">🏬 <strong>Store:</strong> \${item.store}</span>
+              </div>
+              
+              <!-- Multi-Stakeholder Consensus Bar -->
+              <div class="shop-stakeholder-bar">
+                <span style="font-size: 11px; font-weight: 700; color: var(--shop-text-muted); margin-right: 4px;">CONSENSUS:</span>
+                <button class="shop-vote-pill \${approvals.bride ? 'approved' : ''}" onclick="window.toggleApproval('\${item.id}', 'bride')">
+                  👰 Bride \${approvals.bride ? '✓' : '○'}
+                </button>
+                <button class="shop-vote-pill \${approvals.sisters ? 'approved' : ''}" onclick="window.toggleApproval('\${item.id}', 'sisters')">
+                  👭 Sisters \${approvals.sisters ? '✓' : '○'}
+                </button>
+                <button class="shop-vote-pill \${approvals.inlaws ? 'approved' : ''}" onclick="window.toggleApproval('\${item.id}', 'inlaws')">
+                  🤝 In-Laws \${approvals.inlaws ? '✓' : '○'}
+                </button>
+              </div>
+            </div>
+
+            <div class="shop-item-footer">
+              <label class="shop-check-label">
+                <input type="checkbox" \${isBought ? 'checked' : ''} onchange="window.togglePurchased('\${item.id}', this.checked)">
+                <span>\${isBought ? '✓ In Shopping Bag (Purchased)' : 'Mark as Purchased'}</span>
+              </label>
+              \${item.clusterId ? \`
+                <button class="shop-btn shop-btn-sm" onclick="window.focusCluster('\${item.clusterId}')" style="font-size: 11px; padding: 3px 8px;">
+                  ⚖️ Compare Alternatives
+                </button>
+              \` : ''}
+            </div>
+          </article>
+        \`;
+      }).join('');
+    }
+
+    window.togglePurchased = function(itemId, isChecked) {
+      itemPurchased[itemId] = isChecked;
+      saveState();
+      renderChapters();
+      renderItems();
+      showToast(isChecked ? 'Item marked as purchased in bag!' : 'Item unmarked.', '🛍️');
+    };
+
+    window.toggleApproval = function(itemId, role) {
+      if (!stakeholderApprovals[itemId]) {
+        const orig = items.find(i => i.id === itemId) || {};
+        stakeholderApprovals[itemId] = { ...(orig.approvals || {}) };
+      }
+      stakeholderApprovals[itemId][role] = !stakeholderApprovals[itemId][role];
+      saveState();
+      renderItems();
+      showToast(\`Updated \${role} approval for \${itemId}!\`, '✓');
+    };
+
+    window.focusCluster = function(clusterId) {
+      const el = document.getElementById('cluster-' + clusterId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    };
+
+    // Filter pills
+    shopFilterPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        shopFilterPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        activeFilter = pill.getAttribute('data-filter');
+        renderItems();
+      });
+    });
+
+    shopSearchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      renderItems();
+    });
+
+    // Share Family Button
+    btnShareFamily.addEventListener('click', () => {
+      const baseUrl = window.location.origin + window.location.pathname;
+      const shareUrl = \`\${baseUrl}?mode=family\`;
+      const text = \`🌺 *Sree Krushna Marriage OS — Wedding Shopping Review*\\nHelp us review and vote on the wedding trousseau, sarees, and 'Sara' gifting items for Bhubaneswar!\\n👉 Tap to review: \${shareUrl}\`;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('Family shopping link copied! Paste into WhatsApp.', '📱');
+        });
+      } else {
+        prompt('Copy Family Link:', text);
+      }
+    });
+
+    // Share Sisters Button
+    btnShareSisters.addEventListener('click', () => {
+      const baseUrl = window.location.origin + window.location.pathname;
+      const shareUrl = \`\${baseUrl}?mode=sisters\`;
+      const text = \`👭 *Sree Krushna Wedding — Sisters' Wardrobe & Styling Hub*\\nHey! Here is the Bhubaneswar shopping checklist for our sarees, lehengas, and groom styling. Tap to vote on your favorites:\\n👉 \${shareUrl}\`;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('Sisters review link copied! Paste into your chat.', '👭');
+        });
+      } else {
+        prompt('Copy Sisters Link:', text);
+      }
+    });
+
+    btnPrintRunSheet.addEventListener('click', () => window.print());
+
+    btnExportJson.addEventListener('click', () => {
+      const payload = {
+        exported_at: new Date().toISOString(),
+        purchased: itemPurchased,
+        selections: userSelections,
+        approvals: stakeholderApprovals,
+        registry: data
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = \`sree-krushna-shopping-export-\${new Date().toISOString().slice(0,10)}.json\`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Initialize
+    parseUrlParams();
+    updateKpis();
+    renderChapters();
+    renderClusters();
+    renderStores();
+    renderItems();
+  })();
+</script>
+
+</body>
+</html>
+`;
+
+const target1 = path.join(rootDir, 'shopping-registry.html');
+const target2 = path.join(rootDir, 'public/shopping-registry.html');
+
+fs.writeFileSync(target1, htmlContent, 'utf8');
+fs.writeFileSync(target2, htmlContent, 'utf8');
+
+console.log('✅ Successfully wrote updated Shopping Registry HTML to:');
+console.log(' - ' + target1 + ' (' + fs.statSync(target1).size + ' bytes)');
+console.log(' - ' + target2 + ' (' + fs.statSync(target2).size + ' bytes)');
