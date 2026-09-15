@@ -39,6 +39,12 @@ All entities must use standardized 3-digit padded identifiers:
 - **Collaborative Options Model**: See [PROP-20260915-collaborative-options-and-comments-model.md](./docs/proposals/PROP-20260915-collaborative-options-and-comments-model.md).
 - **Family Consultation Dossier**: See [A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md](./docs/references/A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md).
 
+### 5. Dynamic UI Lifecycle & Modal Dismissibility Invariant (`STD-UI-LIFECYCLE-001` / `DEC-003`)
+- **Sequential Dynamic Script Awaiting (`INV-LIFECYCLE-01`)**: All SPA dynamic tab/fragment loaders (`mount*Tab()`) MUST await `script.onload` sequentially before executing dependent code.
+- **Prohibition of Naked `DOMContentLoaded` (`INV-LIFECYCLE-02`)**: Modular UI components and dynamic fragments MUST guard event binding with `document.readyState !== 'loading'`. Naked `DOMContentLoaded` listeners are strictly forbidden.
+- **3-Trigger Modal/Drawer Dismissibility (`INV-LIFECYCLE-03`)**: All modals and slide-over drawers MUST support (1) explicit Close button click, (2) Backdrop click, and (3) Escape keydown.
+- **Pre-Flight Lifecycle Gate (`INV-LIFECYCLE-04`)**: Changes to UI scripts or mounters must pass `npm run verify:ui-lifecycle`.
+
 ---
 
 ## 2. Session Startup Gate (MANDATORY)
@@ -152,3 +158,4 @@ This repository implements the following universal patterns:
 - `.agent/patterns/sub-engine-shadowing-and-tab-reconciliation.md`
 - `.agent/patterns/sdca-pre-emit-syntax-gate.md`
 - `.agent/patterns/declarative-option-clustering-and-consensus.md`
+- `.agent/patterns/dynamic-fragment-lifecycle-and-modal-dismiss-contract.md`
