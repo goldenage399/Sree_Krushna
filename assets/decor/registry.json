@@ -129,6 +129,66 @@
       "dimensions": "3 Modular Wooden Pergolas (8ft × 8ft each)",
       "notes": "Lac bangle maker artisan with custom sizing, instant polaroid photo booth with floral arch and event hashtag, welcome concierge desk with brass ceremonial gong and laminated run-sheet scrolls.",
       "prompt": "An authentic traditional Indian wedding live interactive guest activity stall. A charming rustic wooden canopy pergola booth decorated with hanging marigold flowers, clay bells, and brass lanterns. In the stall, a skilled traditional Indian lac artisan craftsman is shaping handcrafted colorful lac and glass bangles over a small gentle coal burner for female wedding guests. Rows of gleaming glittering traditional bangles in red, green, and gold are neatly displayed on wooden dowels and velvet trays. Beside the stall is a vintage instant polaroid guestbook station with wooden easel. Warm evening fairy-lit ambiance, photorealistic, 8k."
+    },
+    {
+      "id": "PLATE-09",
+      "index": 8,
+      "title": "Starlit Aisle Canopy & Illuminated Floral Walkway",
+      "category": "tunnel",
+      "categoryLabel": "Arrival & Walkway",
+      "zone": "Zone B — Arrival & Processional Aisle",
+      "spec": "SPEC-PROC-DECOR-MARQUEE-001 §3.5",
+      "clause": "CTR-DECOR-RIDER-001 Cl 4",
+      "photoSrc": "./assets/decor/tunnel/photo-wedding-trail-fairylight-canopy.jpg",
+      "mandatory": true,
+      "dimensions": "60'-0\" Length × 10'-0\" Clear Walkway",
+      "notes": "Undulating warm off-white (2800K) fairy-light canopy draped across marquee trusses, plush ivory runner carpet, perimeter pastel floral hedges with integrated warm pillar candles, floral arch reveal.",
+      "prompt": "An enchanting luxury wedding entry walkway under a grand marquee ceiling. Overhead dense undulating canopy of thousands of warm golden fairy rice lights creating a starry tunnel. Down the center is a pristine ivory carpet runner bordered by lush floral hedges of pale blush roses and hydrangeas. Glass hurricane lanterns with warm flickering candles line the path leading to a magnificent floral arch. Photorealistic, 8k."
+    },
+    {
+      "id": "PLATE-10",
+      "index": 9,
+      "title": "Royal Carved Telugu Vedic Mandap & Sanctum",
+      "category": "mandap",
+      "categoryLabel": "Mandap & Rituals",
+      "zone": "Zone A — Sacred Sanctuary",
+      "spec": "SPEC-PROC-DECOR-MARQUEE-001 §3.1",
+      "clause": "CTR-DECOR-RIDER-001 Cl 1 & 2",
+      "photoSrc": "./assets/decor/mandap/photo-royal-telugu-vedic-mandap-carved.jpg",
+      "mandatory": true,
+      "dimensions": "28'-0\" × 20'-0\" Stage (18\" Riser) • 4 Carved Temple Pillars",
+      "notes": "Traditional hand-carved pillars, peach silk drapery, carved gold jali backdrop with warm backlighting, stepped brass samai lamps, brass urlis, authentic South Indian Telugu Vedic ritual setup.",
+      "prompt": "A majestic royal Telugu wedding mandap setup. Four intricately carved ivory and gold stone-style pillars support an ornate floral canopy with hanging pearl and flower tassels. Elegant peach silk drapery frames the altar. In the backdrop, a luminous gold filigree carved jali panel glows with amber light. On the stage are stepped brass samai oil lamps, puja offerings, and two ornate royal chairs. Photorealistic, 8k."
+    },
+    {
+      "id": "PLATE-11",
+      "index": 10,
+      "title": "Suspended Floral Lotus Canopy Dome Altar",
+      "category": "mandap",
+      "categoryLabel": "Mandap & Rituals",
+      "zone": "Zone A — Center Stage Altar",
+      "spec": "SPEC-PROC-DECOR-MARQUEE-001 §3.1",
+      "clause": "CTR-DECOR-RIDER-001 Cl 2",
+      "photoSrc": "./assets/decor/mandap/photo-suspended-lotus-mandap-dome.jpg",
+      "mandatory": false,
+      "dimensions": "12'-0\" Diameter Suspended Lotus Dome • Circular Mandala Backdrop",
+      "notes": "Ceiling-hung three-dimensional inverted lotus flower crafted from dense carnations and baby's breath, dual floral circular mandalas, dual royal ivory throne chairs.",
+      "prompt": "A dramatic luxury Indian wedding mandap with a giant suspended blooming lotus flower ceiling installation made of pink and white fresh floral petals. Beneath the lotus dome is a grand floral arch and layered concentric circular flower wall mandala backdrop. Two royal white throne chairs sit on an elevated stage. Photorealistic, 8k."
+    },
+    {
+      "id": "PLATE-12",
+      "index": 11,
+      "title": "Midnight Blooms Reflective Mirror Stage & Chandeliers",
+      "category": "sangeet",
+      "categoryLabel": "Sangeet & Reception Stage",
+      "zone": "Zone A — Evening Garden Stage",
+      "spec": "SPEC-PROC-DECOR-MARQUEE-001 §3.3",
+      "clause": "CTR-DECOR-RIDER-001 Cl 3",
+      "photoSrc": "./assets/decor/sangeet/photo-midnight-blooms-mirror-stage.jpg",
+      "mandatory": false,
+      "dimensions": "32'-0\" Stage • 40ft Reflective Black Acrylic Walkway",
+      "notes": "High-gloss black reflective mirror runway, overhead fairy light canopy with crystal chandeliers, cascading white wisteria floral arch, tufted French royal lounge seating.",
+      "prompt": "An opulent night-time garden wedding stage. A glossy black mirror aisle runway reflecting sparkling overhead fairy lights. Suspended luxury crystal chandeliers glitter under the dark sky. A massive white wisteria floral arch frames the center stage, flanked by elegant white tufted chesterfield couches and tall urn floral arrangements. Photorealistic, 8k."
     }
   ]
 }

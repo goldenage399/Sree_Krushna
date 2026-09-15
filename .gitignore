@@ -2,3 +2,8 @@ node_modules/
 .firebase/
 *.log
 scratch/
+
+# Heavy Media & Video Reference Quarantine (P-ASSET-GOV-001)
+*.mp4
+assets/decor/video_references/
+public/assets/decor/video_references/
