@@ -9757,9 +9757,163 @@ Would you like me to proceed with mounting the **`⚖️ Decision Registry`** as
 
 # Query 6.4 -
 
-# Review 6.4 -
+# Review 6.4 -Viewed build.cjs:1-68
+Viewed controller.js:1-60
+Viewed controller.js:880-946
+Searched for "decision-registry-data.js"
+Searched for "decision-registry-data"
+Viewed verify-deployment.cjs:15-45
+Viewed 00_tokens_base.css:1-54
+Viewed build.cjs:100-160
+Viewed verify-modular-architecture.cjs:1-50
+Viewed build-decision-registry-html.cjs:1-10
+Viewed controller.js:935-946
+Edited controller.js
+Viewed body.html:35-45
+Edited body.html
+Created d:\GitHub_Repo\Sree_Krushna\decision_registry_src\build.cjs
+Viewed build.cjs:50-68
+Edited build.cjs
+Ran command: `npm run build:decision-registry`
+Ran command: `node -e "const fs = require('fs'); const a = fs.readFileSync('decision-registry-fragment.html'); const b = fs.readFileSync('public/decision-registry-fragment.html'); console.log('Fragment Equal:', a.equals(b), 'Length:', a.length);"`
+Viewed verify-modular-architecture.cjs:150-180
+Edited verify-modular-architecture.cjs
+Ran command: `npm run verify:modular-architecture`
+Viewed FEATURE_CATALOG.json:55-85
+Edited FEATURE_CATALOG.json
+Viewed index.html:170-195
+Viewed index.html:755-790
+Edited index.html
+Viewed index.html:760-770
+Edited index.html
+Edited index.html
+Edited index.html
+Ran command: `node -e "const fs = require('fs'); const a = fs.readFileSync('index.html'); const b = fs.readFileSync('public/index.html'); console.log('Equal:', a.equals(b), 'Length:', a.length);"`
+Viewed app.js:1030-1080
+Viewed app.js:1058-1072
+Viewed app.js:1140-1155
+Edited app.js
+Viewed app.js:1145-1155
+Edited app.js
+Ran command: `npm run build:decision-registry`
+Viewed controller.js:940-1024
+Viewed controller.js:920-950
+Viewed controller.js:880-940
+Ran command: `node -c decision_registry_src/scripts/controller.js`
+Ran command: `npm run build:decision-registry`
+Ran command: `npm run test:decision-registry`
+Ran command: `npm run verify:modular-architecture`
+Ran command: `npm run verify:mobile`
+Ran command: `npm run test:cockpit`
+Ran command: `npm run verify:deployment`
+Listed 1 task
+Ran command: `node -e "const http = require('http'); http.get('http://localhost:5000', res => { console.log('/ status:', res.statusCode); http.get('http://localhost:5000/decision-registry-fragment.html', res2 => { console.log('/decision-registry-fragment.html status:', res2.statusCode); }); });"`
+Ran command: `git status -s`
+Created walkthrough.md
 
-# Response 6.4 -
+### 🎉 Master Decision Registry In-App Mounting Complete
+
+The **Master Decision Registry & Event Stepper** is now accessible as a first-class in-app tab right inside Marriage OS:
+
+- **Local App URL**: [http://localhost:5000/#tab-decision-registry](http://localhost:5000/#tab-decision-registry)
+- **Detailed Walkthrough**: [walkthrough.md](file:///C:/Users/TEMP/.gemini/antigravity/brain/facad75f-3205-40bc-a3d6-78fe4f71e2bf/walkthrough.md)
+
+---
+
+### What Was Done
+
+1. **New In-App Tab (`⚖️ Decisions`)**:
+   - Added `<button class="nav-btn" ...>⚖️ Decisions</button>` in the main navigation bar.
+   - Mounted `<div id="tab-decision-registry" class="tab-content" ...>` in `index.html` and `public/index.html` (100% byte parity at 88,336 bytes).
+   - Registered `tab-decision-registry` under `canonicalTabs` in `FEATURE_CATALOG.json`.
+
+2. **Scoped Fragment Assembler (`decision_registry_src/build.cjs`)**:
+   - Upgraded the SDCA builder to compile both the standalone file and the scoped fragment (`decision-registry-fragment.html`).
+   - Strictly scoped all CSS under `#tab-decision-registry #decisionRegistryFrame` to prevent global style bleed (`INC-086`).
+
+3. **Dynamic Rehydration Engine (`public/js/app.js`)**:
+   - Implemented `mountDecisionRegistryTab()` to dynamically fetch the fragment, inject scoped styles into `<head>`, and initialize `window.renderDecisionRegistry()`.
+
+4. **1-Click Bi-Directional Bridge**:
+   - Inside **`⚖️ Decisions`**, clicking **`🏛️ Open Cockpit`** switches seamlessly to **`🎪 Decorator Cockpit`** (`#tab-cockpit`) with zero page reloads.
+
+---
+
+### Verification Summary
+
+- `npm run verify:mobile` ──► **✅ PASS** (16/16 checks green)
+- `npm run verify:modular-architecture` ──► **✅ PASS** (44/44 checks green)
+- `npm run test:cockpit` ──► **✅ PASS** (5/5 phases green)
+- `npm run test:decision-registry` ──► **✅ PASS** (100% synchronized)
+- `npm run verify:deployment` ──► **✅ PASS** (9/9 pre-flight layers green)
+
+---
+
+### How to Test
+
+1. Open [http://localhost:5000/#tab-dashboard](http://localhost:5000/#tab-dashboard).
+2. Click **`⚖️ Decisions`** in the navigation bar.
+3. Step through the timeline (e.g., click **Day 2 Vedic Vivaha**), inspect the Mandap option cards, and test the **`🏛️ Open Cockpit`** bridge button.
+
+# Response 6.4 -# Walkthrough: In-App Master Decision Registry Tab (`UDS-HIERARCHY-001`)
+
+The **Master Decision Registry & Event Stepper** has been mounted natively into the Marriage OS web application as a first-class in-app tab (**`⚖️ Decisions`**).
+
+---
+
+## What Changed
+
+### 1. Navigation & Tab Integration
+- **`FEATURE_CATALOG.json`**: Registered `tab-decision-registry` under `canonicalTabs` with `data-testid="panel-decision-registry"` and `data-testid="nav-tab-decision-registry"`.
+- **`index.html` & `public/index.html`**:
+  - Added `<button class="nav-btn" ... data-testid="nav-tab-decision-registry" onclick="switchTab('tab-decision-registry')">⚖️ Decisions</button>` in `.tab-nav`.
+  - Mounted `<div id="tab-decision-registry" class="tab-content" role="tabpanel" ...>` containing `#decisionRegistryFrame` and gold loading skeleton.
+  - Maintained 100% byte parity between root `index.html` and `public/index.html` (88,336 bytes).
+
+### 2. Scoped Fragment Assembler (`decision_registry_src/build.cjs`)
+- Upgraded the SDCA builder to emit two dual-release pairs:
+  1. `decision-registry.html` <──► `public/decision-registry.html` (155,793 bytes, standalone).
+  2. `decision-registry-fragment.html` <──► `public/decision-registry-fragment.html` (169,996 bytes, scoped fragment).
+- Applied `monolithic-engine-port-css-scoping-gate` (`INC-086`): all fragment CSS rules are strictly scoped to `#tab-decision-registry #decisionRegistryFrame` with zero unscoped global tag leaks.
+
+### 3. Application State & Script Rehydration (`public/js/app.js`)
+- Wired `switchTab('tab-decision-registry')` to invoke `mountDecisionRegistryTab()`.
+- Implemented `mountDecisionRegistryTab()`:
+  - Fetches `decision-registry-fragment.html`.
+  - Injects scoped styles into `<head data-source="decision-registry-fragment">`.
+  - Injects the DOM into `#decisionRegistryFrame`.
+  - Recreates and executes script tags sequentially (`document.createElement('script')`).
+  - Calls `window.renderDecisionRegistry()`.
+
+### 4. Bi-Directional Contextual Bridging
+- Updated the header CTA in `decision_registry_src/components/body.html`:
+  `<button class="dr-btn dr-btn-primary" onclick="window.switchTab ? window.switchTab('tab-cockpit') : window.location.href='./#tab-cockpit'"><span>🏛️</span> Open Cockpit</button>`
+- 1-click bridge enables jumping between the Family Decision Stepper and the Decorator Negotiation Cockpit seamlessly without page reloads.
+
+---
+
+## Verification Results
+
+| Suite / Gate | Command | Result | Details |
+|---|---|---|---|
+| **Mobile Verification Gate** | `npm run verify:mobile` | **✅ PASS** | 16/16 checks passed. Viewport meta, clip overflow, touch targets $\ge 44\text{px}$, responsive tables. |
+| **Modular Component Architecture** | `npm run verify:modular-architecture` | **✅ PASS** | 44/44 checks passed. SDCA modules, syntax validation, shared primitives, and dual-release parity across all 7 distribution pairs. |
+| **Cockpit Pre-Flight Smoke** | `npm run test:cockpit` | **✅ PASS** | 5/5 phases green. Dual release parity, fragment isolation, DOM contracts, and state machine VM test. |
+| **Decision Registry Smoke** | `npm run test:decision-registry` | **✅ PASS** | Master decisions, Event Stepper, WhatsApp consensus generator verified. |
+| **Pre-Flight Deployment Gate** | `npm run verify:deployment` | **✅ PASS** | 9/9 pre-flight layers green. Canonical tab parity verified for `tab-decision-registry` and `tab-cockpit`. |
+
+---
+
+## How to Test in Your Browser
+
+1. Open [http://localhost:5000/#tab-dashboard](http://localhost:5000/#tab-dashboard).
+2. In the top navigation bar, click the new **`⚖️ Decisions`** tab (or navigate directly to [http://localhost:5000/#tab-decision-registry](http://localhost:5000/#tab-decision-registry)).
+3. **Verify the Chronological Event Stepper**:
+   - Notice the 5 milestone chapters: Engagement, Mehendi, Sangeet, Vedic Vivaha, and Reception.
+   - Click **`Day 2 Vedic Vivaha`** and observe the cluster pods (Mandap Lotus vs Mandap Carved) render side-by-side with voting controls.
+4. **Test Bi-Directional Cross-Linking**:
+   - In the header of the Decision Registry, click **`🏛️ Open Cockpit`** $\to$ observe smooth in-app tab switch directly into **`🎪 Decorator Cockpit`** (`#tab-cockpit`).
+
 
 # Query 6.5 -
 
