@@ -284,3 +284,6 @@
 
   global.SKPrimitives = SKPrimitives;
 })(typeof window !== 'undefined' ? window : this);
+
+/* SSOT: docs/incidents/INC-090-spa-pathname-drift-in-stakeholder-share-links.md — INC-090 */
+
