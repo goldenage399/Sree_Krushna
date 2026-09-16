@@ -38,6 +38,9 @@ All entities must use standardized 3-digit padded identifiers:
 - **Dual-Release Byte Parity**: Root (`/`) and Public (`/public`) artifacts must maintain 100% byte parity and pass `npm run verify:modular-architecture`.
 - **Collaborative Options Model**: See [PROP-20260915-collaborative-options-and-comments-model.md](./docs/proposals/PROP-20260915-collaborative-options-and-comments-model.md).
 - **Family Consultation Dossier**: See [A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md](./docs/references/A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md).
+- **Canonical Trousseau Specification**: See [SPEC-PROC-TROUSSEAU-001.md](./docs/references/SPEC-PROC-TROUSSEAU-001.md).
+- **Liturgical Attire & Catalog Drift Case Study**: See [INC-089-liturgical-attire-conflation-and-trousseau-catalog-drift.md](./docs/incidents/INC-089-liturgical-attire-conflation-and-trousseau-catalog-drift.md).
+- **3-Tier Multi-Surface Deployment**: See [260916_arch_council_multi_surface_web_app_and_shopping_deployment.md](./User_Created/Discussion Threads/Council/260916_arch_council_multi_surface_web_app_and_shopping_deployment.md) (`AC-DEC-2026-026` / `P-MULTI-SURFACE-DEPLOY-001`).
 
 ### 5. Dynamic UI Lifecycle & Modal Dismissibility Invariant (`STD-UI-LIFECYCLE-001` / `DEC-003`)
 - **Sequential Dynamic Script Awaiting (`INV-LIFECYCLE-01`)**: All SPA dynamic tab/fragment loaders (`mount*Tab()`) MUST await `script.onload` sequentially before executing dependent code.

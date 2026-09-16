@@ -10,6 +10,8 @@ hub: 04_PROCUREMENT_VENDORS/HUB.md
 **Version:** `1.0.0` (Production Baseline)  
 **Parent SSOT:** [`ARCHITECTURE_SPEC.md`](file:///d:/GitHub_Repo/Sree_Krushna/ARCHITECTURE_SPEC.md) & [`MASTER_WBS_BLUEPRINT.md`](file:///d:/GitHub_Repo/Sree_Krushna/00_GOVERNANCE/MASTER_WBS_BLUEPRINT.md)
 
+> ℹ️ **CANONICAL TROUSSEAU & SARA SSOT**: For itemized wardrobe, jewellery, and "Sara" gifting procurement with standardized IDs (`TRS-###`), 44-item inventory, multi-stakeholder consensus, and Bhubaneswar store navigation, see [`SPEC-PROC-TROUSSEAU-001.md`](../trousseau_and_shopping/SPEC-PROC-TROUSSEAU-001.md) and the interactive [Shopping Registry](http://localhost:5000/shopping-registry.html). This document retains macro WBS-level geographic routing and raw liturgical samagri (`SHP-SAM-###`).
+
 ---
 
 ## 1. Master Shopping Itinerary & Geographic Sourcing Map

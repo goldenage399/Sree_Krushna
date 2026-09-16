@@ -23,4 +23,5 @@ Welcome to the **Sree Krushna Marriage OS** documentation catalog.
 ## Incidents & Case Studies
 - [INC-087-linear-asset-ingestion-index-separation-and-consensus-gap.md](./incidents/INC-087-linear-asset-ingestion-index-separation-and-consensus-gap.md) — Linear Asset Ingestion Index Separation & Friction-Heavy Voting Architecture
 - [INC-088-dynamic-script-injection-race-and-spa-dead-domcontentloaded-trap.md](./incidents/INC-088-dynamic-script-injection-race-and-spa-dead-domcontentloaded-trap.md) — Dynamic Script Injection Race & SPA Zombie DOMContentLoaded Trap (STD-UI-LIFECYCLE-001 / DEC-003)
+- [INC-089-liturgical-attire-conflation-and-trousseau-catalog-drift.md](./incidents/INC-089-liturgical-attire-conflation-and-trousseau-catalog-drift.md) — Liturgical Attire Conflation & Multi-Chapter Trousseau Catalog Drift (P-LITURGICAL-ATTIRE-001 / AC-DEC-2026-025)
 
