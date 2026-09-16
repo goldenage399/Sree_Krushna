@@ -1474,6 +1474,101 @@
       gap: 4px;
     }
 
+    /* Store Category Filter Bar */
+    .shop-store-filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .shop-store-pill {
+      padding: 4px 10px;
+      border-radius: 14px;
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--shop-bg);
+      border: 1px solid var(--shop-border);
+      color: var(--shop-text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      min-height: 28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .shop-store-pill:hover {
+      border-color: var(--shop-border-focus);
+      color: #ffffff;
+    }
+
+    .shop-store-pill.active {
+      background: rgba(212, 175, 55, 0.18);
+      border-color: var(--shop-gold);
+      color: var(--shop-gold);
+      font-weight: 700;
+    }
+
+    /* Store Footer & Map Action Button */
+    .shop-store-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      gap: 8px;
+    }
+
+    .shop-store-map-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--shop-gold);
+      background: rgba(212, 175, 55, 0.08);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      text-decoration: none;
+      transition: all 0.18s ease;
+      cursor: pointer;
+    }
+
+    .shop-store-map-btn:hover {
+      background: var(--shop-gold);
+      color: #0f1117;
+      border-color: var(--shop-gold);
+      transform: translateY(-1px);
+    }
+
+    /* Visual AI / Image Search Button */
+    .shop-visual-search-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #93c5fd;
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      cursor: pointer;
+      transition: all 0.18s ease;
+      text-decoration: none;
+      min-height: 28px;
+    }
+
+    .shop-visual-search-btn:hover {
+      background: rgba(59, 130, 246, 0.22);
+      border-color: #60a5fa;
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
     /* Itemized Checklist Grid & Toolbar */
     .shop-toolbar {
       display: flex;
@@ -2364,8 +2459,8 @@
   <section class="shop-kpis" id="shopKpis">
     <div class="shop-kpi-card">
       <span class="shop-kpi-label">Total Shopping Items</span>
-      <span class="shop-kpi-val" id="kpiTotalItems">30</span>
-      <span class="shop-kpi-sub">Across 4 Chapters</span>
+      <span class="shop-kpi-val" id="kpiTotalItems">44</span>
+      <span class="shop-kpi-sub">Across 5 Chapters</span>
     </div>
     <div class="shop-kpi-card">
       <span class="shop-kpi-label">Consensus Aligned</span>
@@ -2374,7 +2469,7 @@
     </div>
     <div class="shop-kpi-card">
       <span class="shop-kpi-label">Items Purchased</span>
-      <span class="shop-kpi-val" style="color: var(--shop-gold);" id="kpiPurchasedItems">0 / 30</span>
+      <span class="shop-kpi-val" style="color: var(--shop-gold);" id="kpiPurchasedItems">0 / 44</span>
       <span class="shop-kpi-sub">In Hand / Bagged</span>
     </div>
     <div class="shop-kpi-card">
@@ -2410,9 +2505,17 @@
     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
       <div>
         <h3 style="margin: 0; font-size: 15px; color: #ffffff; display: flex; align-items: center; gap: 6px;">
-          <span>📍</span> Bhubaneswar Retail Directory & Market Hubs
+          <span>📍</span> Bhubaneswar Retail Directory &amp; Market Hubs
         </h3>
         <p style="margin: 3px 0 0; font-size: 12px; color: var(--shop-text-secondary);">Verified stores for authentic handlooms, hallmarked gold, sherwanis, and packaging.</p>
+      </div>
+      <!-- Store Category Filter Pills -->
+      <div class="shop-store-filter-bar" id="storeFilterBar">
+        <button class="shop-store-pill active" data-store-cat="all">All Stores (8)</button>
+        <button class="shop-store-pill" data-store-cat="silks">🧵 Silks &amp; Handlooms</button>
+        <button class="shop-store-pill" data-store-cat="jewellery">💎 Gold &amp; Silver</button>
+        <button class="shop-store-pill" data-store-cat="groomswear">👑 Groom &amp; Tailors</button>
+        <button class="shop-store-pill" data-store-cat="accessories">🎀 Packaging &amp; Puja</button>
       </div>
     </div>
     <div class="shop-store-grid" id="storesGrid">
@@ -2423,11 +2526,12 @@
   <!-- Filter & Search Toolbar -->
   <div class="shop-toolbar">
     <div class="shop-filter-pills" id="shopFilterPills">
-      <button class="shop-pill active" data-filter="all">All Items (34)</button>
-      <button class="shop-pill" data-filter="bridal">🪔 Bridal Trousseau (8)</button>
-      <button class="shop-pill" data-filter="groom">👑 Groom Attire (9)</button>
-      <button class="shop-pill" data-filter="jewellery">💎 Jewellery & Silver (10)</button>
-      <button class="shop-pill" data-filter="sara">🎁 In-Laws 'Sara' (7)</button>
+      <button class="shop-pill active" data-filter="all">All Items (44)</button>
+      <button class="shop-pill" data-filter="engagement">💍 Engagement (5)</button>
+      <button class="shop-pill" data-filter="bridal">🪔 Bridal Trousseau (10)</button>
+      <button class="shop-pill" data-filter="groom">👑 Groom Attire (10)</button>
+      <button class="shop-pill" data-filter="jewellery">💎 Jewellery &amp; Silver (11)</button>
+      <button class="shop-pill" data-filter="sara">🎁 In-Laws 'Sara' (8)</button>
       <button class="shop-pill" data-filter="purchased">✓ Purchased</button>
     </div>
     <div class="shop-search-box">
@@ -2622,6 +2726,7 @@
 </div>
 
 <!-- Embedded Data Layer -->
+<!-- SSOT: docs/incidents/INC-089-liturgical-attire-conflation-and-trousseau-catalog-drift.md — INC-089 -->
 
   <!-- Interactive Family Survey Studio (P-SURVEY-HYBRID-001) -->
   <section id="interactiveSurveyStudio" class="survey-studio-container" style="display: none;">
@@ -2801,22 +2906,22 @@
       </div>
     </div>
 
-    <!-- Section 2: Groom Mandap & Royal Attire (Custom Tailoring vs Readymade Gate) -->
+    <!-- Section 2: Groom Mandap & Royal Attire (Dual-Look Strategy: Barat Sherwani ➔ Mandap Silk Joda) -->
     <div class="survey-studio-card">
       <div class="survey-studio-header">
         <div>
-          <h3><span>👑</span> 2. Groom Ceremonial Wardrobe &amp; Master Tailoring Decisions</h3>
-          <p>Decide between bespoke master tailoring (Ashok Nagar / Rajmahal) versus branded readymade ensembles (Manyavar / Tasva).</p>
+          <h3><span>👑</span> 2. Groom Wardrobe &amp; Dual-Look Transition Strategy</h3>
+          <p>Decide the Groom's Dual-Look strategy (Barat Sherwani for entry/varmala ➔ Mandap Silk Joda for sacred havan fire) and tailoring sourcing.</p>
         </div>
-        <span class="survey-heirloom-tag">Major Cost-Saving Opportunity</span>
+        <span class="survey-heirloom-tag">Dual-Look Protocol</span>
       </div>
 
       <!-- Item 5: TRS-GR-03 Tailoring Decision -->
       <div class="survey-item-row" id="srow-TRS-GR-03">
         <div class="survey-item-top">
           <div class="survey-item-info">
-            <strong>TRS-GR-03: Royal Barat Sherwani &amp; Reception Ensemble</strong>
-            <small>Key decision: Custom tailoring vs readymade brand</small>
+            <strong>TRS-GR-03: Royal Barat Sherwani (Look 1: Grand Entry &amp; Varmala)</strong>
+            <small>Key decision: Custom tailoring vs readymade brand | Worn for Barat entry &amp; stage photos</small>
           </div>
           <span class="survey-heirloom-tag" style="background: rgba(16, 185, 129, 0.2); border-color: var(--shop-emerald);">Save up to ₹35,000</span>
         </div>
@@ -2857,10 +2962,10 @@
       <div class="survey-item-row" id="srow-TRS-OD-04">
         <div class="survey-item-top">
           <div class="survey-item-info">
-            <strong>TRS-OD-04: Sambalpuri Groom Joda &amp; Silk Dhoti</strong>
-            <small>Traditional Odia sacred wedding joda for groom morning rituals | Store: Boyanika (Master Canteen)</small>
+            <strong>TRS-OD-04: Sambalpuri Groom Joda &amp; Silk Dhoti (Look 2: Mandap Havan)</strong>
+            <small>Look 2: Mandatory unstitched sacred silk for 2.5-hr Havan, Ahutis &amp; Hastaganthi | Store: Boyanika</small>
           </div>
-          <span class="survey-heirloom-tag">🪔 Odia Cultural Heirloom</span>
+          <span class="survey-heirloom-tag">🪔 Odia Cultural Invariant</span>
         </div>
         <div class="survey-tiers-grid">
           <div class="survey-tier-card" onclick="window.selectSurveyTier('TRS-OD-04', 't1', 8000)" data-item="TRS-OD-04" data-tier="t1">
@@ -3063,6 +3168,8 @@
     </div>
 
   </section>
+
+<!-- SSOT: docs/incidents/INC-089-liturgical-attire-conflation-and-trousseau-catalog-drift.md — INC-089 -->
 
 
 <!-- Universal Lightbox Modal Primitive with Micro-Inspection Zoom/Pan (STD-MOD-COMP-001) -->
@@ -4231,6 +4338,7 @@
     let userSelections = JSON.parse(localStorage.getItem('sk_shopping_selections') || '{}');
     let itemPurchased = JSON.parse(localStorage.getItem('sk_shopping_purchased') || '{}');
     let stakeholderApprovals = JSON.parse(localStorage.getItem('sk_shopping_approvals') || '{}');
+    let activeStoreCategory = 'all';
 
     // DOM Elements
     const shopWelcomeBanner = document.getElementById('shopWelcomeBanner');
@@ -4242,6 +4350,7 @@
     const btnFilterAllChapters = document.getElementById('btnFilterAllChapters');
     const shoppingClusterPods = document.getElementById('shoppingClusterPods');
     const storesGrid = document.getElementById('storesGrid');
+    const storeFilterBar = document.getElementById('storeFilterBar');
     const itemsGrid = document.getElementById('itemsGrid');
     const shopFilterPills = document.querySelectorAll('.shop-pill');
     const shopSearchInput = document.getElementById('shopSearchInput');
@@ -4270,6 +4379,14 @@
       shopToast.classList.add('active');
       setTimeout(() => shopToast.classList.remove('active'), 3500);
     }
+
+    // Contextual 1-Click Visual AI & Image Search (P-SHOPPING-DISCOVERY-001)
+    window.openVisualSearch = function(query, mode = 'images') {
+      const udmParam = (mode === 'ai') ? 'udm=50' : 'udm=2';
+      const cleanQuery = (query || '').replace(/[^\w\s\-\u0B00-\u0B7F]/gi, ' ').replace(/\s+/g, ' ').trim();
+      const url = `https://www.google.com/search?q=${encodeURIComponent(cleanQuery)}&${udmParam}`;
+      window.open(url, '_blank', 'noopener,noreferrer');
+    };
 
     // URL Query Param Parser & Deep-Link Wiring
     function parseUrlParams() {
@@ -4489,10 +4606,13 @@
                     <div class="shop-pod-color">${opt.color} • ${opt.weave}</div>
                     <div class="shop-pod-highlight">${opt.highlight}</div>
                     <div class="shop-pod-store">📍 ${opt.store}</div>
-                    <div style="display: flex; gap: 6px; margin-top: 10px; align-items: stretch;">
-                      <button class="shop-pod-radio-btn" type="button" style="flex: 1; margin-top: 0;">
+                    <div style="display: flex; gap: 6px; margin-top: 10px; align-items: stretch; flex-wrap: wrap;">
+                      <button class="shop-pod-radio-btn" type="button" style="flex: 1; min-width: 120px; margin-top: 0;">
                         <span>${isSelected ? '🔘' : '⚪'}</span>
                         <span>${isSelected ? 'Selected (Active)' : 'Choose Concept'}</span>
+                      </button>
+                      <button class="shop-visual-search-btn" type="button" onclick="event.stopPropagation(); window.openVisualSearch('${(opt.visualSearchQuery || (opt.title + ' ' + (opt.color || '') + ' ' + (opt.weave || ''))).replace(/'/g, "\\'")}')" title="Google Images Visual AI Search">
+                        <span>🔍</span> Visual Search ↗
                       </button>
                       <button class="shop-btn" type="button" onclick="event.stopPropagation(); window.openCommentsDrawer('${cluster.id}', { title: '${opt.title.replace(/'/g, "\\'")}', badge: 'Opt ${opt.optionId}', sub: '${opt.store} • ${opt.priceTier}', alignment: '${isSelected ? '✓ Active Choice' : 'Open for Remarks'}' })" title="Open Family Opinions & Remarks" style="padding: 4px 10px; font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; border-color: rgba(212, 175, 55, 0.4); color: var(--shop-gold);">
                         <span>💬</span> <span>${commentCount}</span>
@@ -4537,15 +4657,35 @@
       }
     };
 
-    // Render Stores
+    // Render Stores with Category Filtering & Google Maps Navigation (P-SHOPPING-DISCOVERY-001)
     function renderStores() {
-      storesGrid.innerHTML = stores.map(s => {
+      const filteredStores = stores.filter(s => {
+        if (activeStoreCategory === 'all') return true;
+        return s.category === activeStoreCategory;
+      });
+
+      if (filteredStores.length === 0) {
+        storesGrid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 24px; color: var(--shop-text-muted);">
+            No verified stores found for this category.
+          </div>
+        `;
+        return;
+      }
+
+      storesGrid.innerHTML = filteredStores.map(s => {
+        const mapsLink = s.mapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.name + ', ' + s.address)}`;
         return `
           <div class="shop-store-card">
             <div class="shop-store-name"><span>🏬</span> <span>${s.name}</span></div>
             <div class="shop-store-zone">${s.zone}</div>
             <div class="shop-store-specialty">${s.specialty}</div>
-            <div class="shop-store-phone">📞 ${s.phone}</div>
+            <div class="shop-store-footer">
+              <span class="shop-store-phone">📞 ${s.phone}</span>
+              <a href="${mapsLink}" target="_blank" rel="noopener noreferrer" class="shop-store-map-btn" title="Open store in Google Maps">
+                <span>🗺️</span> Navigate ↗
+              </a>
+            </div>
           </div>
         `;
       }).join('');
@@ -4619,11 +4759,16 @@
                 <input type="checkbox" ${isBought ? 'checked' : ''} onchange="window.togglePurchased('${item.id}', this.checked)">
                 <span>${isBought ? '✓ In Shopping Bag (Purchased)' : 'Mark as Purchased'}</span>
               </label>
-              ${item.clusterId ? `
-                <button class="shop-btn shop-btn-sm" onclick="window.focusCluster('${item.clusterId}')" style="font-size: 11px; padding: 3px 8px;">
-                  ⚖️ Compare Alternatives
+              <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                <button class="shop-visual-search-btn" type="button" onclick="window.openVisualSearch('${(item.visualSearchQuery || (item.title + ' ' + (item.suggestedColor || '') + ' ' + (item.spec || ''))).replace(/'/g, "\\'")}')" title="Google Images Visual AI Search">
+                  <span>🔍</span> Visual Search ↗
                 </button>
-              ` : ''}
+                ${item.clusterId ? `
+                  <button class="shop-btn shop-btn-sm" onclick="window.focusCluster('${item.clusterId}')" style="font-size: 11px; padding: 3px 8px;">
+                    ⚖️ Compare Alternatives
+                  </button>
+                ` : ''}
+              </div>
             </div>
           </article>
         `;
@@ -4663,6 +4808,17 @@
         pill.classList.add('active');
         activeFilter = pill.getAttribute('data-filter');
         renderItems();
+      });
+    });
+
+    // Store category filter pills (P-SHOPPING-DISCOVERY-001)
+    const storePills = document.querySelectorAll('.shop-store-pill');
+    storePills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        storePills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        activeStoreCategory = pill.getAttribute('data-store-cat') || 'all';
+        renderStores();
       });
     });
 
@@ -5106,14 +5262,21 @@
       }
     }
 
-    // Initialize
+    // Initialize & Re-render API
+    function renderShoppingRegistry() {
+      updateKpis();
+      renderChapters();
+      renderClusters();
+      renderStores();
+      renderItems();
+      if (typeof window.updateSurveyUI === 'function') {
+        window.updateSurveyUI();
+      }
+    }
+    window.renderShoppingRegistry = renderShoppingRegistry;
+
     parseUrlParams();
-    updateKpis();
-    renderChapters();
-    renderClusters();
-    renderStores();
-    renderItems();
-    window.updateSurveyUI();
+    renderShoppingRegistry();
   })();
 </script>
 

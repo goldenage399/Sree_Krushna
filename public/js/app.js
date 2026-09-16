@@ -1063,6 +1063,8 @@ window.dataLayer = window.dataLayer || [];
         mountDecisionRegistryTab();
       } else if (targetId === 'tab-cockpit') {
         mountCockpitTab();
+      } else if (targetId === 'tab-shopping') {
+        mountShoppingRegistryTab();
       }
     }
 
@@ -1249,6 +1251,98 @@ window.dataLayer = window.dataLayer || [];
       }
     }
     window.mountDecisionRegistryTab = mountDecisionRegistryTab;
+
+    let shoppingMounted = false;
+    let shoppingMounting = false;
+    async function mountShoppingRegistryTab() {
+      const frame = document.getElementById('shoppingRegistryFrame');
+      if (!frame) return;
+
+      if (shoppingMounted) {
+        if (typeof window.renderShoppingRegistry === 'function') {
+          window.renderShoppingRegistry();
+        }
+        return;
+      }
+
+      if (shoppingMounting) return;
+      shoppingMounting = true;
+
+      try {
+        const res = await fetch('shopping-fragment.html');
+        if (!res.ok) throw new Error(`HTTP ${res.status} fetching shopping-fragment.html`);
+        const fragmentText = await res.text();
+
+        if (typeof DOMParser !== 'undefined') {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(fragmentText, 'text/html');
+
+          // 1. Transfer <style> tags to <head> if not already added
+          const styles = doc.querySelectorAll('style');
+          styles.forEach(st => {
+            const styleEl = document.createElement('style');
+            styleEl.setAttribute('data-source', 'shopping-fragment');
+            styleEl.textContent = st.textContent;
+            document.head.appendChild(styleEl);
+          });
+
+          // 2. Transfer DOM structure
+          const fragFrame = doc.querySelector('#shoppingRegistryFrame');
+          if (fragFrame) {
+            frame.innerHTML = fragFrame.innerHTML;
+          } else {
+            const bodyChildren = Array.from(doc.body.children).filter(el => el.tagName !== 'SCRIPT' && el.tagName !== 'STYLE');
+            frame.innerHTML = '';
+            bodyChildren.forEach(child => frame.appendChild(child));
+          }
+
+          // 3. Extract and execute scripts sequentially (INV-LIFECYCLE-01)
+          const scripts = doc.querySelectorAll('script');
+          for (const oldScript of scripts) {
+            await new Promise((resolve) => {
+              const newScript = document.createElement('script');
+              if (oldScript.type) newScript.type = oldScript.type;
+              if (oldScript.src) {
+                newScript.src = oldScript.src;
+                newScript.onload = () => resolve();
+                newScript.onerror = (e) => {
+                  console.warn('Script failed to load:', oldScript.src, e);
+                  resolve();
+                };
+                document.body.appendChild(newScript);
+              } else {
+                newScript.textContent = oldScript.textContent;
+                document.body.appendChild(newScript);
+                resolve();
+              }
+            });
+          }
+        } else {
+          frame.innerHTML = fragmentText;
+        }
+
+        shoppingMounted = true;
+        setTimeout(() => {
+          if (typeof window.renderShoppingRegistry === 'function') {
+            window.renderShoppingRegistry();
+          }
+        }, 50);
+
+      } catch (err) {
+        console.error('❌ Failed to mount Shopping Registry fragment:', err);
+        frame.innerHTML = `
+          <div style="padding: 32px 20px; text-align: center; color: var(--crimson-royal);">
+            <div style="font-size: 2rem; margin-bottom: 8px;">⚠️</div>
+            <h3 style="font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 6px;">Failed to Load Bhubaneswar Shopping Registry</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 14px;">${err.message}</p>
+            <button class="nav-btn active" style="margin: 0 auto; display: inline-flex;" onclick="shoppingMounted=false; mountShoppingRegistryTab()">Retry Mount ↻</button>
+          </div>
+        `;
+      } finally {
+        shoppingMounting = false;
+      }
+    }
+    window.mountShoppingRegistryTab = mountShoppingRegistryTab;
 
     function toggleCockpitPresentationMode(active) {
       if (!document || !document.body) return;
@@ -2111,6 +2205,7 @@ window.dataLayer = window.dataLayer || [];
     window.approveChangeRequest = approveChangeRequest;
     window.rejectChangeRequest = rejectChangeRequest;
     window.getAuthenticatedSubmitterName = getAuthenticatedSubmitterName;
+    window.mountShoppingRegistryTab = mountShoppingRegistryTab;
 
     // ── Real User Monitoring (RUM) / Web Vitals (Safe Async IIFE) ──
     (async function initWebVitals() {

@@ -19,6 +19,16 @@ window.SHOPPING_REGISTRY_DATA = {
   },
   "chapters": [
     {
+      "id": "chapter_engagement",
+      "number": 0,
+      "title": "Engagement & Nirbandha Ceremony",
+      "subtitle": "Diamond & Gold Rings, Engagement Attire, Sagan Thali Hampers & Return Gifts",
+      "icon": "💍",
+      "dayTimeline": "Day 0 (Pre-Wedding Runway)",
+      "primaryZone": "Janpath & Market Building Unit-2",
+      "itemCount": 5
+    },
+    {
       "id": "chapter_bridal_silks",
       "number": 1,
       "title": "Bridal Sacred Silks & Trousseau",
@@ -26,7 +36,7 @@ window.SHOPPING_REGISTRY_DATA = {
       "icon": "🪔",
       "dayTimeline": "Day 1 (10:00 - 19:30)",
       "primaryZone": "Master Canteen & Janpath",
-      "itemCount": 8
+      "itemCount": 10
     },
     {
       "id": "chapter_groom_wear",
@@ -36,7 +46,7 @@ window.SHOPPING_REGISTRY_DATA = {
       "icon": "👑",
       "dayTimeline": "Day 2 (10:30 - 19:30)",
       "primaryZone": "Janpath & Ashok Nagar (BMC Keshari)",
-      "itemCount": 9
+      "itemCount": 10
     },
     {
       "id": "chapter_jewellery",
@@ -46,7 +56,7 @@ window.SHOPPING_REGISTRY_DATA = {
       "icon": "💎",
       "dayTimeline": "Day 3 (10:30 - 20:00)",
       "primaryZone": "Janpath Retail Strip & Master Canteen",
-      "itemCount": 10
+      "itemCount": 11
     },
     {
       "id": "chapter_sara_gifting",
@@ -56,7 +66,7 @@ window.SHOPPING_REGISTRY_DATA = {
       "icon": "🎁",
       "dayTimeline": "Day 4 & 5 (11:00 - 20:00)",
       "primaryZone": "Saheed Nagar & Market Building Unit-2",
-      "itemCount": 7
+      "itemCount": 8
     }
   ],
   "clusters": [
@@ -107,7 +117,7 @@ window.SHOPPING_REGISTRY_DATA = {
     },
     {
       "id": "cluster_groom_mandap",
-      "title": "Groom Mandap Liturgical Attire",
+      "title": "Groom Mandap Liturgical Attire & Transition Strategy",
       "category": "groom",
       "chapterId": "chapter_groom_wear",
       "deciders": [
@@ -115,28 +125,41 @@ window.SHOPPING_REGISTRY_DATA = {
         "In-Laws",
         "Sisters"
       ],
-      "description": "Vedic Mandap ritual ensemble required for sacred fire havan and Hastaganthi rituals.",
-      "whatsappTemplate": "👑 *Sree Krushna Marriage OS — Groom Mandap Attire Review*\nHelp us finalize the Groom's ritual Dhoti-Kurta for the Vedic Mandap rituals! Review the options:\n• *Option A:* Pure Raw Tussar Silk Dhoti & Kurta (Boyanika)\n• *Option B:* Ivory Cotton-Silk Dhoti & Brocade Kurta (Manyavar)\n👉 Vote here: {url}",
+      "description": "Vedic Mandap ritual ensemble and Dual-Look transition between Barat entry Sherwani and sacred Havan fire rites.",
+      "whatsappTemplate": "👑 *Sree Krushna Marriage OS — Groom Mandap Attire Review*\nHelp us finalize the Groom's ritual Dhoti-Kurta & Barat transition strategy! Review the options:\n• *Option A:* Canonical Sambalpuri / Tussar Silk Joda & Dhoti (Vedic Mandap Invariant)\n• *Option B:* Dual-Look Strategy (Royal Sherwani for Barat Entry ➔ 15-Min Switch to Silk Joda for Havan)\n• *Option C:* Contemporary Open Mandap Silk Kurta-Achkan (Lightweight Raw Silk)\n👉 Review on your phone: {url}",
       "options": [
         {
           "optionId": "A",
-          "title": "Pure Raw Tussar Silk Dhoti & Kurta",
-          "color": "Natural Raw Silk Beige with Red/Gold Zari",
-          "weave": "Pure Tussar Handloom Silk",
-          "highlight": "Unstitched sacred silk dhoti with temple border + matching 2.5m ceremonial silk Patta (Angavastra) for knot tying.",
-          "store": "Boyanika (Master Canteen)",
-          "priceTier": "₹18,000 - ₹26,000",
-          "status": "Recommended"
+          "title": "Canonical Sambalpuri / Tussar Silk Joda & Dhoti",
+          "color": "Natural Raw Silk Beige / Gold with Red Kumbha Border",
+          "weave": "Pure Mulberry / Tussar Handloom Silk",
+          "highlight": "Strictly canonical unstitched Vedic silk dhoti + matching Angavastra. Essential for sacred havan ahutis, Hastaganthi knotting, and yajnopavita purity.",
+          "store": "Boyanika (Master Canteen) / Sambalpuri Bastralaya",
+          "priceTier": "₹14,000 - ₹22,000",
+          "status": "Recommended",
+          "visualSearchQuery": "Groom traditional Sambalpuri silk dhoti joda wedding Odisha"
         },
         {
           "optionId": "B",
-          "title": "Ivory Cotton-Silk Dhoti with Gold Brocade Kurta",
-          "color": "Off-White & Antique Gold",
-          "weave": "Cotton-Silk Jacquard Blend",
-          "highlight": "Modern pre-draped dhoti cut with tailored brocade kurta, easy movement, comfortable in hall temperature.",
-          "store": "Manyavar (Janpath)",
-          "priceTier": "₹14,000 - ₹20,000",
-          "status": "Shortlisted"
+          "title": "Dual-Look Strategy (Barat Sherwani ➔ Mandap Silk Joda)",
+          "color": "Royal Ivory Sherwani (Barat) + Pure Temple Silk Dhoti (Mandap)",
+          "weave": "Embroidered Brocade + Pure Handloom Silk",
+          "highlight": "Recommended hybrid approach: Grand cinematic royal Sherwani for Barat procession & Varmala stage photos, followed by a scheduled 15-min green room switch into sacred Silk Joda for the 2.5-hour Havan.",
+          "store": "Manyavar (Janpath) + Boyanika",
+          "priceTier": "₹45,000 - ₹75,000 (Combined)",
+          "status": "Shortlisted",
+          "visualSearchQuery": "Groom wedding sherwani and silk dhoti dual look transition"
+        },
+        {
+          "optionId": "C",
+          "title": "Contemporary Mandap-Compatible Silk Achkan/Kurta",
+          "color": "Ivory / Champagne Gold",
+          "weave": "Unlined Lightweight Raw Silk",
+          "highlight": "Single-outfit modern alternative: unlined lightweight raw silk kurta-achkan with open neck allowing sacred thread access and easy shoulder draping during fire rituals.",
+          "store": "Raymond (Janpath) / JadeBlue",
+          "priceTier": "₹18,000 - ₹28,000",
+          "status": "Alternative",
+          "visualSearchQuery": "Groom lightweight silk kurta achkan mandap ceremony"
         }
       ]
     },
@@ -218,6 +241,54 @@ window.SHOPPING_REGISTRY_DATA = {
           "status": "Alternative"
         }
       ]
+    },
+    {
+      "id": "cluster_engagement_rings",
+      "title": "Engagement Ring Styling & Metal Selection",
+      "category": "engagement",
+      "chapterId": "chapter_engagement",
+      "deciders": [
+        "Bride",
+        "Groom",
+        "Sisters"
+      ],
+      "description": "Shortlisted couple rings for the formal Nirbandha / Ring Exchange ceremony.",
+      "whatsappTemplate": "💍 *Sree Krushna Marriage OS — Engagement Ring Review*\nHelp us pick the couple engagement rings! Please review the options:\n• *Option A:* Solitaire Diamond with 18K Hallmarked Yellow Gold Band\n• *Option B:* Dual-Tone Platinum & Rose Gold Contemporary Couple Bands\n• *Option C:* Heritage Vedic 22K Hallmarked Gold Carved Bands\n👉 Review on your phone: {url}",
+      "options": [
+        {
+          "optionId": "A",
+          "title": "Solitaire Diamond with 18K Yellow Gold",
+          "color": "Warm Yellow Gold & Diamond Sparkle",
+          "weave": "0.5ct VVS/EF Solitaire with Pavé Setting",
+          "highlight": "Classic, timeless sparkle with certified 18K BIS hallmark and IGI diamond certificate.",
+          "store": "Khimji Jewellers (Janpath)",
+          "priceTier": "₹65,000 - ₹85,000",
+          "status": "Shortlisted",
+          "visualSearchQuery": "Solitaire diamond ring 18k yellow gold wedding band"
+        },
+        {
+          "optionId": "B",
+          "title": "Dual-Tone Platinum & Rose Gold Couple Bands",
+          "color": "Platinum Silver & Subtle Rose Gold",
+          "weave": "950 Pure Platinum + 18K Rose Gold Inlay",
+          "highlight": "Modern comfort-fit hypoallergenic band with subtle flush-set diamond accents.",
+          "store": "Lalchnd Jewellers (Master Canteen)",
+          "priceTier": "₹75,000 - ₹95,000",
+          "status": "Shortlisted",
+          "visualSearchQuery": "Platinum rose gold dual tone couple engagement rings"
+        },
+        {
+          "optionId": "C",
+          "title": "Heritage Vedic 22K Hallmarked Gold Carved Bands",
+          "color": "Deep 22K Golden Glow",
+          "weave": "Handcrafted Floral Filigree Engraving",
+          "highlight": "Traditional Auspicious Odia/Telugu temple carved gold band with zero fragile stone prong worries.",
+          "store": "Khimji Jewellers / Cuttack Tarakasi Artisans",
+          "priceTier": "₹45,000 - ₹62,000",
+          "status": "Shortlisted",
+          "visualSearchQuery": "22k gold engraved temple couple wedding rings India"
+        }
+      ]
     }
   ],
   "stores": [
@@ -225,6 +296,8 @@ window.SHOPPING_REGISTRY_DATA = {
       "id": "store_boyanika_master_canteen",
       "name": "Boyanika (State Handloom Apex)",
       "zone": "Master Canteen / Janpath",
+      "category": "silks",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Boyanika+Master+Canteen+Bhubaneswar",
       "address": "Janpath Rd, near Master Canteen Square, Bhubaneswar, Odisha 751001",
       "phone": "+91 674 253 0122",
       "specialty": "Authentic GI-Tagged Sambalpuri Pata, Bomkai Silk, Tussar Dhoti-Kurta",
@@ -232,7 +305,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "TRS-BR-01",
         "TRS-GR-01",
         "TRS-GR-02",
-        "TRS-SA-01"
+        "TRS-SA-01",
+        "TRS-EG-02",
+        "TRS-EG-05"
       ],
       "timings": "10:00 AM - 08:30 PM (All Days)"
     },
@@ -240,10 +315,13 @@ window.SHOPPING_REGISTRY_DATA = {
       "id": "store_khimji_janpath",
       "name": "Khimji Jewellers",
       "zone": "Janpath, Kharavela Nagar",
+      "category": "jewellery",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Khimji+Jewellers+Janpath+Bhubaneswar",
       "address": "621, Janpath Rd, Saheed Nagar / Kharavela Nagar, Bhubaneswar 751007",
       "phone": "+91 674 253 3000",
-      "specialty": "Hallmarked 22K Temple Gold, Chandra Haar, Cuttack Tarakasi Silver Filigree",
+      "specialty": "Hallmarked 22K Temple Gold, Chandra Haar, Cuttack Tarakasi Silver Filigree, Diamond Rings",
       "recommendedFor": [
+        "TRS-EG-01",
         "TRS-JW-01",
         "TRS-JW-02",
         "TRS-JW-04",
@@ -257,10 +335,13 @@ window.SHOPPING_REGISTRY_DATA = {
       "id": "store_lalchnd_master_canteen",
       "name": "Lalchnd Jewellers",
       "zone": "Master Canteen Junction",
+      "category": "jewellery",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Lalchnd+Jewellers+Master+Canteen+Bhubaneswar",
       "address": "Station Square, Master Canteen, Bhubaneswar, Odisha 751001",
       "phone": "+91 674 253 2828",
-      "specialty": "Heritage Bridal Gold Sets, Matha Patti, Kundan Waist Chains, Silver Puja Vessels",
+      "specialty": "Heritage Bridal Gold Sets, Matha Patti, Platinum Bands, Silver Puja Vessels",
       "recommendedFor": [
+        "TRS-EG-01",
         "TRS-JW-01",
         "TRS-JW-03",
         "TRS-JW-06",
@@ -272,10 +353,13 @@ window.SHOPPING_REGISTRY_DATA = {
       "id": "store_kalamandir_janpath",
       "name": "Kalamandir Royal Heritage",
       "zone": "Janpath, Kharavela Nagar",
+      "category": "silks",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kalamandir+Janpath+Bhubaneswar",
       "address": "Janpath Rd, opposite Ram Mandir, Kharavela Nagar, Bhubaneswar 751001",
       "phone": "+91 674 239 1234",
-      "specialty": "Bridal Lehengas, Kanjeevaram & Banarasi Silks, Designer Gowns",
+      "specialty": "Bridal Lehengas, Kanjeevaram & Banarasi Silks, Pastel Engagement Sarees",
       "recommendedFor": [
+        "TRS-EG-02",
         "TRS-BR-02",
         "TRS-BR-05",
         "TRS-SA-04"
@@ -286,10 +370,13 @@ window.SHOPPING_REGISTRY_DATA = {
       "id": "store_manyavar_janpath",
       "name": "Manyavar & Mohey",
       "zone": "Janpath, Saheed Nagar Junction",
+      "category": "groomswear",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Manyavar+Janpath+Bhubaneswar",
       "address": "Plot No. 132, Janpath Rd, Kharavela Nagar, Bhubaneswar 751001",
       "phone": "+91 674 238 0900",
-      "specialty": "Groom Royal Sherwanis, Safas, Mojaris, Brocade Kurtas, Mohey Bridal Lehengas",
+      "specialty": "Groom Royal Sherwanis, Safas, Engagement Kurtas & Nehru Jackets, Mohey Lehengas",
       "recommendedFor": [
+        "TRS-EG-03",
         "TRS-GR-03",
         "TRS-GR-04",
         "TRS-GR-05",
@@ -302,6 +389,8 @@ window.SHOPPING_REGISTRY_DATA = {
       "id": "store_sherwani_house_keshari",
       "name": "Sherwani House",
       "zone": "Ashok Nagar (BMC Keshari Mall)",
+      "category": "groomswear",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=BMC+Keshari+Mall+Ashok+Nagar+Bhubaneswar",
       "address": "2nd Floor, BMC Keshari Mall, Ashok Nagar, Bhubaneswar 751009",
       "phone": "+91 94370 12345",
       "specialty": "Custom-Fit Embroidered Sherwanis, Royal Safas, Groom Accoutrements",
@@ -316,10 +405,13 @@ window.SHOPPING_REGISTRY_DATA = {
       "id": "store_market_building_unit2",
       "name": "Market Building (Unit-2 Plaza)",
       "zone": "Ashok Nagar / Unit-2",
+      "category": "accessories",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Market+Building+Unit+2+Ashok+Nagar+Bhubaneswar",
       "address": "Market Building Promenade, Unit-2, Ashok Nagar, Bhubaneswar 751009",
       "phone": "Local Hub",
-      "specialty": "Kala Niketan, Shringar Boxes, Bridal Footwear, Alta, Bangles, Kula Hampers",
+      "specialty": "Ring Trays, Sagan Thali Hampers, Kala Niketan, Shringar Boxes, Bridal Footwear, Alta",
       "recommendedFor": [
+        "TRS-EG-04",
         "TRS-BR-06",
         "TRS-GR-08",
         "TRS-JW-08",
@@ -331,10 +423,13 @@ window.SHOPPING_REGISTRY_DATA = {
       "id": "store_raymond_janpath",
       "name": "The Raymond Shop",
       "zone": "Janpath, Kharavela Nagar",
+      "category": "groomswear",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=The+Raymond+Shop+Janpath+Bhubaneswar",
       "address": "Janpath Rd, Kharavela Nagar, Bhubaneswar 751001",
       "phone": "+91 674 253 4567",
-      "specialty": "Custom Made-to-Measure Tuxedos, Jodhpuri Suits, Italian Wool Fabric Cuts",
+      "specialty": "Custom Made-to-Measure Tuxedos, Jodhpuri Suits, Engagement Blazers, Italian Wool Cuts",
       "recommendedFor": [
+        "TRS-EG-03",
         "TRS-GR-06",
         "TRS-SA-02"
       ],
@@ -958,6 +1053,199 @@ window.SHOPPING_REGISTRY_DATA = {
         "sisters": true,
         "inlaws": true
       }
+    },
+    {
+      "id": "TRS-EG-01",
+      "code": "EG-01",
+      "title": "Diamond & Gold Engagement Rings (Bride & Groom)",
+      "category": "engagement",
+      "chapterId": "chapter_engagement",
+      "clusterId": "cluster_engagement_rings",
+      "role": "Sacred Ring Exchange (Nirbandha / Nischitartham Ceremony)",
+      "spec": "Hallmarked 18K/22K Gold with VVS Solitaire Diamond / Classic Platinum Couple Bands",
+      "suggestedColor": "Yellow Gold / Platinum Sheen",
+      "store": "Khimji Jewellers / Lalchnd Jewellers",
+      "priceRange": "₹45,000 - ₹95,000",
+      "status": "Planned",
+      "visualSearchQuery": "Diamond gold engagement couple rings design jewellery Bhubaneswar",
+      "approvals": {
+        "bride": true,
+        "sisters": true,
+        "inlaws": true
+      }
+    },
+    {
+      "id": "TRS-EG-02",
+      "code": "EG-02",
+      "title": "Bride Engagement Saree / Pastel Silk / Lehenga",
+      "category": "engagement",
+      "chapterId": "chapter_engagement",
+      "role": "Ring Exchange Ceremony Attire for Bride",
+      "spec": "Pastel Peach/Lilac Kanchipuram Silk Saree or Lightweight Designer Banarasi Brocade Lehenga",
+      "suggestedColor": "Pastel Peach / Lilac / Mint Gold",
+      "store": "Kalamandir (Janpath) / Boyanika",
+      "priceRange": "₹25,000 - ₹45,000",
+      "status": "Planned",
+      "visualSearchQuery": "Bride engagement pastel silk saree lehenga peach lilac Bhubaneswar",
+      "approvals": {
+        "bride": true,
+        "sisters": true,
+        "inlaws": true
+      }
+    },
+    {
+      "id": "TRS-EG-03",
+      "code": "EG-03",
+      "title": "Groom Engagement Kurta Ensemble / Indo-Western Suit",
+      "category": "engagement",
+      "chapterId": "chapter_engagement",
+      "role": "Ring Exchange Ceremony Attire for Groom",
+      "spec": "Silk Kurta-Pajama with Hand-Embroidered Velvet/Silk Nehru Jacket or Tailored Jodhpuri Bandhgala",
+      "suggestedColor": "Powder Blue / Ivory Cream / Rose Gold Accents",
+      "store": "Manyavar (Janpath) / Raymond / Ashok Nagar Tailors",
+      "priceRange": "₹12,000 - ₹22,000",
+      "status": "Planned",
+      "visualSearchQuery": "Groom engagement kurta embroidered nehru jacket indo western ivory",
+      "approvals": {
+        "bride": true,
+        "sisters": true,
+        "inlaws": true
+      }
+    },
+    {
+      "id": "TRS-EG-04",
+      "code": "EG-04",
+      "title": "Decorative Ring Platter & Nirbandha Sagan Thali Hampers",
+      "category": "engagement",
+      "chapterId": "chapter_engagement",
+      "role": "Ceremonial Presentation of Sacred Rings & Auspicious Sagan Articles",
+      "spec": "Handcrafted Floral Velvet Ring Box Tray + Auspicious Thali with Betel Leaves, Supari, Silver Bowls for Haldi-Kumkum",
+      "suggestedColor": "Crimson Velvet & Gilded Brass / Floral Accents",
+      "store": "Market Building (Unit-2) / Saheed Nagar Hub",
+      "priceRange": "₹4,500 - ₹9,500",
+      "status": "Planned",
+      "visualSearchQuery": "Wedding engagement ring platter tray sagan thali decoration",
+      "approvals": {
+        "bride": true,
+        "sisters": true,
+        "inlaws": true
+      }
+    },
+    {
+      "id": "TRS-EG-05",
+      "code": "EG-05",
+      "title": "In-Laws Elder Return Vastra & Odia Sweets Hampers",
+      "category": "engagement",
+      "chapterId": "chapter_engagement",
+      "role": "Formal Exchange of Auspicious Welcome Garments & Sweets during Nirbandha",
+      "spec": "Silk Sarees for Mother-in-Law & Aunts, Safari/Kurta Pieces for Elders + Handcrafted Brass Platters of Odia Sweets & Dry Fruits",
+      "suggestedColor": "Festive Rich Silk Weaves & Royal Hampers",
+      "store": "Boyanika (Janpath) / Nimapada Sweets / Saheed Nagar",
+      "priceRange": "₹18,000 - ₹32,000",
+      "status": "Planned",
+      "visualSearchQuery": "Indian wedding engagement return gifting dry fruits sweets hamper",
+      "approvals": {
+        "bride": true,
+        "sisters": true,
+        "inlaws": true
+      }
+    },
+    {
+      "id": "TRS-OD-05",
+      "code": "OD-05",
+      "title": "Odia Sacred Bridal & Groom Mukuta Set (Shola & Silver Filigree)",
+      "category": "jewellery",
+      "chapterId": "chapter_jewellery",
+      "role": "Ceremonial Royal Crowns for Muhurtham Hastaganthi Ritual",
+      "spec": "Handcrafted pure white aquatic shola pith crown pair adorned with Cuttack 925 silver filigree peacock crests & auspicious chandan beading",
+      "suggestedColor": "Pure Shola White & Silver Gilt",
+      "store": "Market Building (Unit-2) / Cuttack Tarakasi Artisans",
+      "priceRange": "₹3,500 - ₹7,500",
+      "status": "Planned",
+      "visualSearchQuery": "Odia wedding mukuta traditional shola silver crown bride groom",
+      "approvals": {
+        "bride": true,
+        "sisters": true,
+        "inlaws": true
+      }
+    },
+    {
+      "id": "TRS-OD-06",
+      "code": "OD-06",
+      "title": "Baula Patta Saree & Hastaganthi Bandhana Vastra Set",
+      "category": "bridal",
+      "chapterId": "chapter_bridal_silks",
+      "role": "Sacred Ritual Drape & Physical Knotting Cloth for Hastaganthi & Saptapadi",
+      "spec": "Auspicious yellow handloom silk cloth with crimson kumbha border (Baula Patta) + consecrated yellow silk knotting drape with betel nut & coin pouches",
+      "suggestedColor": "Auspicious Turmeric Yellow with Vermilion Border",
+      "store": "Boyanika (Master Canteen) / Utkalika",
+      "priceRange": "₹4,500 - ₹8,500",
+      "status": "Planned",
+      "visualSearchQuery": "Baula patta saree hastaganthi bandhana vastra Odia wedding",
+      "approvals": {
+        "bride": true,
+        "sisters": true,
+        "inlaws": true
+      }
+    },
+    {
+      "id": "TRS-BR-08",
+      "code": "BR-08",
+      "title": "Bride Haldi Handloom Yellow Saree & Fresh Floral Jewellery Suite",
+      "category": "bridal",
+      "chapterId": "chapter_bridal_silks",
+      "role": "Mangala Krutya, Diya Mangula & Haldi Turmeric Blessing Ceremony",
+      "spec": "Pure yellow mulberry/cotton handloom saree + artisanal fresh floral jewelry (Tagar/Mogra Matha Patti, Haathphool, Floral Jhumkas, Waist Belt)",
+      "suggestedColor": "Sunlit Haldi Yellow & Fresh Floral Accents",
+      "store": "Kalamandir (Janpath) / Saheed Nagar Floral Decorators",
+      "priceRange": "₹8,000 - ₹15,000",
+      "status": "Planned",
+      "visualSearchQuery": "Bride haldi yellow silk saree fresh flower jewellery set",
+      "approvals": {
+        "bride": true,
+        "sisters": true,
+        "inlaws": true
+      }
+    },
+    {
+      "id": "TRS-GR-10",
+      "code": "GR-10",
+      "title": "Groom Mangala Snana / Haldi Tussar Silk Kurta & Dhoti Ensemble",
+      "category": "groom",
+      "chapterId": "chapter_groom_wear",
+      "role": "Pre-Wedding Turmeric Anointing, Snana & Satyanarayana Puja",
+      "spec": "Lightweight breathable unstitched yellow cotton-silk dhoti + natural mustard-yellow Tussar kurta with simple temple border",
+      "suggestedColor": "Mustard / Haldi Yellow & Natural Tussar",
+      "store": "Boyanika (Janpath) / Sambalpuri Bastralaya",
+      "priceRange": "₹4,500 - ₹8,500",
+      "status": "Planned",
+      "visualSearchQuery": "Groom haldi yellow tussar silk kurta dhoti set wedding",
+      "approvals": {
+        "bride": true,
+        "sisters": true,
+        "inlaws": true
+      }
+    },
+    {
+      "id": "TRS-OD-07",
+      "code": "OD-07",
+      "title": "Sacred Bamboo Kula & Odia Alaktaka (Alta) Ritual Set",
+      "category": "sara",
+      "chapterId": "chapter_sara_gifting",
+      "role": "Laja Homa (Puffed Rice Fire Offering) & Auspicious Bridal Foot/Hand Blessing",
+      "spec": "Hand-woven painted bamboo winnowing tray (Kula) for Khoi offering + Traditional herbal red Alaktaka (Alta) bottles with chandan applicator sticks",
+      "suggestedColor": "Traditional Painted Red & Yellow Bamboo with Pure Alta",
+      "store": "Market Building (Unit-2 Plaza) / Saheed Nagar Hub",
+      "priceRange": "₹1,500 - ₹3,500",
+      "status": "Planned",
+      "visualSearchQuery": "Odia wedding bamboo kula laja homa alta alaktaka set",
+      "approvals": {
+        "bride": true,
+        "sisters": true,
+        "inlaws": true
+      }
     }
   ]
 };
+
+/* SSOT: docs/incidents/INC-089-liturgical-attire-conflation-and-trousseau-catalog-drift.md — INC-089 */

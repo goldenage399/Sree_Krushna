@@ -67,6 +67,13 @@
       "required": true
     },
     {
+      "id": "tab-shopping",
+      "testId": "panel-shopping",
+      "navTestId": "nav-tab-shopping",
+      "title": "Shopping",
+      "required": true
+    },
+    {
       "id": "tab-procurement",
       "testId": "panel-procurement",
       "navTestId": "nav-tab-procurement",

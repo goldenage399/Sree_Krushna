@@ -131,7 +131,7 @@
           </a>
 
           <!-- Bhubaneswar Shopping Registry Link -->
-          <a href="./shopping-registry.html" id="openShoppingRegistryBtn" class="header-action-btn btn-ghost" data-testid="open-shopping-registry-btn" aria-label="Open Bhubaneswar Shopping Registry" style="text-decoration: none;">
+          <a href="#tab-shopping" id="openShoppingRegistryBtn" class="header-action-btn btn-ghost" data-testid="open-shopping-registry-btn" aria-label="Open Bhubaneswar Shopping Registry" onclick="switchTab('tab-shopping')" style="text-decoration: none;">
             <span class="btn-icon">🛍️</span>
             <span class="btn-text">Shopping</span>
           </a>
@@ -190,6 +190,7 @@
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-vision" data-testid="nav-tab-vision" onclick="switchTab('tab-vision')">🎨 Vision Studio</button>
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-decision-registry" data-testid="nav-tab-decision-registry" onclick="switchTab('tab-decision-registry')">⚖️ Decisions</button>
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-cockpit" data-testid="nav-tab-cockpit" onclick="switchTab('tab-cockpit')">🎪 Decorator Cockpit</button>
+        <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-shopping" data-testid="nav-tab-shopping" onclick="switchTab('tab-shopping')">🛍️ Shopping</button>
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-procurement" data-testid="nav-tab-procurement" onclick="switchTab('tab-procurement')">🤝 Vendors</button>
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-governance" data-testid="nav-tab-governance" onclick="switchTab('tab-governance')">🛡️ Custody</button>
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-intake" data-testid="nav-tab-intake" onclick="switchTab('tab-intake')">📨 Intake Ledger</button>
@@ -801,6 +802,17 @@
             <div style="font-size: 2.5rem; margin-bottom: 12px; animation: pulse 1.5s infinite;">🎪</div>
             <h3 style="font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 6px;">Loading Decorator Negotiation Cockpit...</h3>
             <p style="color: var(--text-muted); font-size: 0.85rem;">Hydrating battlecards, 4-tier quote model, and master decisions.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: BHUBANESWAR SHOPPING REGISTRY & FAMILY SURVEY -->
+      <div id="tab-shopping" class="tab-content" role="tabpanel" aria-labelledby="nav-tab-shopping" data-testid="panel-shopping">
+        <div id="shoppingRegistryFrame">
+          <div id="shoppingRegistryLoadingPlaceholder" style="padding: 48px 20px; text-align: center; color: var(--gold-bright);">
+            <div style="font-size: 2.5rem; margin-bottom: 12px; animation: pulse 1.5s infinite;">🛍️</div>
+            <h3 style="font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 6px;">Loading Bhubaneswar Shopping & Survey Registry...</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Hydrating 44-item trousseau catalog, 8 verified stores, and family survey studio.</p>
           </div>
         </div>
       </div>
