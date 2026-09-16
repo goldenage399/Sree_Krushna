@@ -40,7 +40,10 @@ All entities must use standardized 3-digit padded identifiers:
 - **Family Consultation Dossier**: See [A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md](./docs/references/A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md).
 - **Canonical Trousseau Specification**: See [SPEC-PROC-TROUSSEAU-001.md](./docs/references/SPEC-PROC-TROUSSEAU-001.md).
 - **Liturgical Attire & Catalog Drift Case Study**: See [INC-089-liturgical-attire-conflation-and-trousseau-catalog-drift.md](./docs/incidents/INC-089-liturgical-attire-conflation-and-trousseau-catalog-drift.md).
+- **Stakeholder Deep-Link Station & Pathname Conflation Case Study**: See [INC-090-spa-pathname-drift-in-stakeholder-share-links.md](./docs/incidents/INC-090-spa-pathname-drift-in-stakeholder-share-links.md).
 - **3-Tier Multi-Surface Deployment**: See [260916_arch_council_multi_surface_web_app_and_shopping_deployment.md](./User_Created/Discussion Threads/Council/260916_arch_council_multi_surface_web_app_and_shopping_deployment.md) (`AC-DEC-2026-026` / `P-MULTI-SURFACE-DEPLOY-001`).
+- **Universal Quick-Share Architecture**: See [260916_arch_council_universal_executive_quick_share_and_deep_link_architecture.md](./User_Created/Discussion Threads/Council/260916_arch_council_universal_executive_quick_share_and_deep_link_architecture.md) (`AC-DEC-2026-027` / `UI-DEC-2026-023` / `P-QUICK-SHARE-001`).
+
 
 ### 5. Dynamic UI Lifecycle & Modal Dismissibility Invariant (`STD-UI-LIFECYCLE-001` / `DEC-003`)
 - **Sequential Dynamic Script Awaiting (`INV-LIFECYCLE-01`)**: All SPA dynamic tab/fragment loaders (`mount*Tab()`) MUST await `script.onload` sequentially before executing dependent code.
@@ -161,4 +164,6 @@ This repository implements the following universal patterns:
 - `.agent/patterns/sdca-pre-emit-syntax-gate.md`
 - `.agent/patterns/declarative-option-clustering-and-consensus.md`
 - `.agent/patterns/dynamic-fragment-lifecycle-and-modal-dismiss-contract.md`
+- `.agent/patterns/canonical-stakeholder-deep-link-station.md`
+
 

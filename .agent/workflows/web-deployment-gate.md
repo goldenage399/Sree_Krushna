@@ -25,8 +25,10 @@ This enforces:
 4. **Layer 4:** PWA Service Worker Shell cache assets exist on disk.
 5. **Layer 5:** Root and public distribution files are in exact byte sync.
 6. **Layer 6:** Security headers and branded `404.html` verified.
+7. **Layer 10:** Canonical Stakeholder Quick-Share Station & Deep-Link Affordances (enforcing `.agent/patterns/canonical-stakeholder-deep-link-station.md` / `P-QUICK-SHARE-001`).
 
 If any check returns `FAIL`, deployment is blocked.
+
 
 ---
 
