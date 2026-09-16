@@ -1375,8 +1375,14 @@ window.dataLayer = window.dataLayer || [];
     window.toggleCockpitPresentationMode = toggleCockpitPresentationMode;
 
     document.addEventListener('keydown', (e) => {
-      if (e && e.key === 'Escape' && document.body && typeof document.body.getAttribute === 'function' && document.body.getAttribute('data-cockpit-presentation') === 'true') {
-        toggleCockpitPresentationMode(false);
+      if (e && e.key === 'Escape') {
+        if (document.body && typeof document.body.getAttribute === 'function' && document.body.getAttribute('data-cockpit-presentation') === 'true') {
+          toggleCockpitPresentationMode(false);
+        }
+        const execModal = document.getElementById('executiveShareModal');
+        if (execModal && execModal.classList.contains('active')) {
+          closeExecutiveShareModal(null);
+        }
       }
     });
 
@@ -1617,6 +1623,106 @@ window.dataLayer = window.dataLayer || [];
     function closeLiturgyNoteModal() { closeInspirationModal(null); }
     function closeVendorNominationModal() { closeInspirationModal(null); }
     function closeCustodyProposalModal() { closeInspirationModal(null); }
+
+    // ==========================================================================
+    // UNIVERSAL EXECUTIVE STAKEHOLDER QUICK-SHARE STATION (P-QUICK-SHARE-001)
+    // ==========================================================================
+    function openExecutiveShareModal() {
+      const modal = document.getElementById('executiveShareModal');
+      if (modal) {
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+      }
+    }
+
+    function closeExecutiveShareModal(e) {
+      const modal = document.getElementById('executiveShareModal');
+      if (modal) {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    function getStakeholderSharePayload(key) {
+      const origin = (typeof window !== 'undefined' && window.location && window.location.origin) 
+        ? window.location.origin 
+        : 'https://sree-krushna-forever.web.app';
+      let title = '';
+      let url = '';
+      let text = '';
+
+      switch (key) {
+        case 'shopping-family':
+          title = 'Family Shopping Review';
+          url = `${origin}/shopping-registry.html?mode=family`;
+          text = `🌺 *Sree Krushna Marriage OS — Wedding Shopping Review*\nHelp us review and vote on the wedding trousseau, sarees, and 'Sara' gifting items for Bhubaneswar!\n👉 Tap to review: ${url}`;
+          break;
+        case 'shopping-sisters':
+          title = "Sisters' Styling & Wardrobe Hub";
+          url = `${origin}/shopping-registry.html?mode=sisters`;
+          text = `👭 *Sree Krushna Wedding — Sisters' Wardrobe & Styling Hub*\nHey! Here is the Bhubaneswar shopping checklist for our sarees, lehengas, and groom styling. Tap to vote on your favorites:\n👉 ${url}`;
+          break;
+        case 'shopping-vivaha-pata':
+          title = 'Vivaha Pata & Khandua Silks';
+          url = `${origin}/shopping-registry.html?cluster=vivaha_pata&mode=family`;
+          text = `👑 *Sree Krushna Wedding — Vivaha Pata & Khandua Review*\nHelp us choose the sacred wedding silks & Khandua Pata for the Lagna rituals:\n👉 Review & Vote: ${url}`;
+          break;
+        case 'shopping-groom-mandap':
+          title = 'Groom Mandap Liturgical Attire';
+          url = `${origin}/shopping-registry.html?cluster=groom_mandap&mode=family`;
+          text = `✨ *Sree Krushna Wedding — Groom Mandap Liturgical Attire*\nReview the authentic Odia Dhoti, Khandua Joda, and Mandap wear options:\n👉 Review & Vote: ${url}`;
+          break;
+        case 'decisions-family':
+          title = 'Family Decor Consensus';
+          url = `${origin}/decision-registry.html?event=EVT-004&mode=family`;
+          text = `🌺 *Sree Krushna Marriage OS — Family Decor Review*\nHelp us review and vote on our wedding decor concepts!\n👉 Tap to review: ${url}`;
+          break;
+        case 'decisions-mandap':
+          title = 'Vivaha Mandap Decor Cluster';
+          url = `${origin}/decision-registry.html?event=EVT-004&cluster=mandap_structure&mode=family`;
+          text = `🏛️ *Sree Krushna Wedding — Vivaha Mandap Design Consensus*\nReview and vote on the sacred Mandap floral & architectural themes:\n👉 Tap to vote: ${url}`;
+          break;
+        case 'decisions-sangeet':
+          title = 'Sangeet Stage & Lighting Cluster';
+          url = `${origin}/decision-registry.html?event=EVT-003&cluster=sangeet_stage&mode=family`;
+          text = `🪩 *Sree Krushna Wedding — Sangeet Stage & Lighting Consensus*\nVote on the Sangeet stage backdrop, trussing, and ambient lighting:\n👉 Tap to vote: ${url}`;
+          break;
+        case 'cockpit-hub':
+          title = 'Decorator Negotiation Cockpit';
+          url = `${origin}/decorator-cockpit.html`;
+          text = `🎪 *Sree Krushna Marriage OS — Decorator Cockpit*\nExecutive presentation and vendor quotation workspace:\n👉 View Cockpit: ${url}`;
+          break;
+        case 'intake-public':
+          title = 'Proposal & Intake Studio';
+          url = `${origin}/shopping-registry.html#intake`;
+          text = `💡 *Sree Krushna Wedding — Idea & Shopping Drop*\nHave a saree recommendation or vendor quote? Drop it directly into our registry:\n👉 Submit Option: ${url}`;
+          break;
+        default:
+          title = 'Sree Krushna Marriage OS';
+          url = `${origin}/`;
+          text = `👑 *Sree Krushna Marriage OS*\nSingle Source of Truth & Executive Control Tower:\n👉 Open OS: ${url}`;
+      }
+      return { key, title, url, text };
+    }
+
+    function copyShareItem(key) {
+      const payload = getStakeholderSharePayload(key);
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(payload.text).then(() => {
+          alert(`Copied ${payload.title} WhatsApp message to clipboard! Paste into WhatsApp.`);
+        }).catch(() => {
+          prompt('Copy WhatsApp Message:', payload.text);
+        });
+      } else {
+        prompt('Copy WhatsApp Message:', payload.text);
+      }
+    }
+
+    function openShareWhatsApp(key) {
+      const payload = getStakeholderSharePayload(key);
+      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(payload.text)}`;
+      window.open(waUrl, '_blank');
+    }
 
     // ==========================================================================
     // CO-CREATION & ASYNCHRONOUS IDEA INGESTION ENGINE (SPEC-INTAKE-COCREATION-001)
@@ -2206,6 +2312,11 @@ window.dataLayer = window.dataLayer || [];
     window.rejectChangeRequest = rejectChangeRequest;
     window.getAuthenticatedSubmitterName = getAuthenticatedSubmitterName;
     window.mountShoppingRegistryTab = mountShoppingRegistryTab;
+    window.openExecutiveShareModal = openExecutiveShareModal;
+    window.closeExecutiveShareModal = closeExecutiveShareModal;
+    window.copyShareItem = copyShareItem;
+    window.openShareWhatsApp = openShareWhatsApp;
+    window.getStakeholderSharePayload = getStakeholderSharePayload;
 
     // ── Real User Monitoring (RUM) / Web Vitals (Safe Async IIFE) ──
     (async function initWebVitals() {

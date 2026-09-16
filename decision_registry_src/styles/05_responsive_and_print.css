@@ -1595,7 +1595,7 @@
         padding: 0;
         max-width: 100%;
       }
-      .dr-btn, .dr-toolbar, .dr-carousel-section, .dr-stepper-container, #drLightboxModal, .dr-family-banner {
+      .dr-btn, .dr-toolbar, .dr-carousel-section, .dr-stepper-container, #drLightboxModal, .dr-family-banner, .dr-executive-share-bar {
         display: none !important;
       }
       .dr-cluster-card, .dr-card {

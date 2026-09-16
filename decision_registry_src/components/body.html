@@ -41,6 +41,32 @@
     </div>
   </header>
 
+  <!-- Executive Stakeholder Quick-Share Station (P-QUICK-SHARE-001) -->
+  <div class="dr-executive-share-bar" id="drExecutiveShareBar" data-testid="dr-executive-share-bar">
+    <div class="share-bar-header">
+      <span class="share-bar-icon">🔗</span>
+      <span class="share-bar-title">Stakeholder Quick-Share:</span>
+      <span class="share-bar-subtitle">1-Click WhatsApp links for family decor voting &amp; venue reviews</span>
+    </div>
+    <div class="share-bar-chips">
+      <button class="share-chip share-chip-family" onclick="window.copyStakeholderShare('decisions-family')" title="Copy current event Decor Review link for Family WhatsApp">
+        <span>🌺 Family Decor Mode</span>
+        <span class="chip-copy-icon">📋</span>
+      </button>
+      <button class="share-chip share-chip-mandap" onclick="window.copyStakeholderShare('decisions-mandap')" title="Copy Mandap Decor Cluster consensus link">
+        <span>🏛️ Vivaha Mandap</span>
+        <span class="chip-copy-icon">📋</span>
+      </button>
+      <button class="share-chip share-chip-sangeet" onclick="window.copyStakeholderShare('decisions-sangeet')" title="Copy Sangeet Stage Cluster consensus link">
+        <span>🪩 Sangeet Stage</span>
+        <span class="chip-copy-icon">📋</span>
+      </button>
+      <button class="share-chip share-chip-popout" onclick="window.openStandalonePortal('decision-registry.html')" title="Open standalone full-screen portal in new tab">
+        <span>↗️ Standalone Portal</span>
+      </button>
+    </div>
+  </div>
+
   <!-- ==========================================================================
        CHRONOLOGICAL EVENT STEPPER COMPONENT (P-EVENT-STEPPER-001)
        ========================================================================== -->

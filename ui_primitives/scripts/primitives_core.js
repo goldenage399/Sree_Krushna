@@ -29,15 +29,17 @@
     },
 
     /**
-     * Safely copy text to clipboard with modern fallback
+     * Safely copy text to clipboard with modern fallback and optional toast notification
      * @param {string} text - Text to copy
+     * @param {string} [feedbackMsg] - Optional message to show in toast
      * @returns {Promise<boolean>}
      */
-    copyToClipboard: async function(text) {
+    copyToClipboard: async function(text, feedbackMsg) {
+      let ok = false;
       try {
         if (navigator.clipboard && window.isSecureContext) {
           await navigator.clipboard.writeText(text);
-          return true;
+          ok = true;
         } else {
           const textArea = document.createElement('textarea');
           textArea.value = text;
@@ -46,14 +48,130 @@
           document.body.appendChild(textArea);
           textArea.focus();
           textArea.select();
-          const successful = document.execCommand('copy');
+          ok = document.execCommand('copy');
           document.body.removeChild(textArea);
-          return successful;
         }
       } catch (err) {
         console.error('Failed to copy to clipboard:', err);
-        return false;
+        ok = false;
       }
+      if (ok && feedbackMsg) {
+        SKPrimitives.showToast(feedbackMsg);
+      }
+      return ok;
+    },
+
+    /**
+     * Generate canonical, origin-aware URL for stakeholder standalone portals
+     * Resolves BUG-SHARE-BASEURL-001 by guaranteeing target portal filename
+     * @param {string} portalFile - e.g. 'shopping-registry.html', 'decision-registry.html'
+     * @param {Object|string} [params] - Query parameter object or query string
+     * @returns {string} Fully qualified canonical URL
+     */
+    getStakeholderUrl: function(portalFile, params) {
+      const origin = (typeof window !== 'undefined' && window.location && window.location.origin) 
+        ? window.location.origin 
+        : 'https://sree-krushna-forever.web.app';
+      let qs = '';
+      if (typeof params === 'string') {
+        qs = params.startsWith('?') ? params.substring(1) : params;
+      } else if (params && typeof params === 'object') {
+        const searchParams = new URLSearchParams();
+        Object.keys(params).forEach(key => {
+          if (params[key] !== undefined && params[key] !== null) {
+            searchParams.set(key, params[key]);
+          }
+        });
+        qs = searchParams.toString();
+      }
+      return `${origin}/${portalFile}${qs ? '?' + qs : ''}`;
+    },
+
+    /**
+     * Universal Stakeholder Share Catalog (P-QUICK-SHARE-001)
+     * @param {string} key
+     * @returns {{ key: string, title: string, url: string, text: string, whatsappUrl: string }}
+     */
+    getStakeholderShare: function(key) {
+      let url = '';
+      let text = '';
+      let title = '';
+
+      switch (key) {
+        case 'shopping-family':
+          title = 'Family Shopping Review';
+          url = SKPrimitives.getStakeholderUrl('shopping-registry.html', { mode: 'family' });
+          text = `🌺 *Sree Krushna Marriage OS — Wedding Shopping Review*\nHelp us review and vote on the wedding trousseau, sarees, and 'Sara' gifting items for Bhubaneswar!\n👉 Tap to review: ${url}`;
+          break;
+        case 'shopping-sisters':
+          title = "Sisters' Styling & Wardrobe Hub";
+          url = SKPrimitives.getStakeholderUrl('shopping-registry.html', { mode: 'sisters' });
+          text = `👭 *Sree Krushna Wedding — Sisters' Wardrobe & Styling Hub*\nHey! Here is the Bhubaneswar shopping checklist for our sarees, lehengas, and groom styling. Tap to vote on your favorites:\n👉 ${url}`;
+          break;
+        case 'shopping-vivaha-pata':
+          title = 'Vivaha Pata & Khandua Attire';
+          url = SKPrimitives.getStakeholderUrl('shopping-registry.html', { cluster: 'vivaha_pata', mode: 'family' });
+          text = `👑 *Sree Krushna Wedding — Vivaha Pata & Khandua Review*\nHelp us choose the sacred wedding silks & Khandua Pata for the Lagna rituals:\n👉 Review & Vote: ${url}`;
+          break;
+        case 'shopping-groom-mandap':
+          title = 'Groom Mandap Liturgical Attire';
+          url = SKPrimitives.getStakeholderUrl('shopping-registry.html', { cluster: 'groom_mandap', mode: 'family' });
+          text = `✨ *Sree Krushna Wedding — Groom Mandap Liturgical Attire*\nReview the authentic Odia Dhoti, Khandua Joda, and Mandap wear options:\n👉 Review & Vote: ${url}`;
+          break;
+        case 'decisions-family':
+          title = 'Family Decor Consensus';
+          url = SKPrimitives.getStakeholderUrl('decision-registry.html', { event: 'EVT-004', mode: 'family' });
+          text = `🌺 *Sree Krushna Marriage OS — Family Decor Review*\nHelp us review and vote on our wedding decor concepts!\n👉 Tap to review: ${url}`;
+          break;
+        case 'decisions-mandap':
+          title = 'Vivaha Mandap Decor Cluster';
+          url = SKPrimitives.getStakeholderUrl('decision-registry.html', { event: 'EVT-004', cluster: 'mandap_structure', mode: 'family' });
+          text = `🏛️ *Sree Krushna Wedding — Vivaha Mandap Design Consensus*\nReview and vote on the sacred Mandap floral & architectural themes:\n👉 Tap to vote: ${url}`;
+          break;
+        case 'decisions-sangeet':
+          title = 'Sangeet Stage & Lighting Cluster';
+          url = SKPrimitives.getStakeholderUrl('decision-registry.html', { event: 'EVT-003', cluster: 'sangeet_stage', mode: 'family' });
+          text = `🪩 *Sree Krushna Wedding — Sangeet Stage & Lighting Consensus*\nVote on the Sangeet stage backdrop, trussing, and ambient lighting:\n👉 Tap to vote: ${url}`;
+          break;
+        case 'cockpit-hub':
+          title = 'Decorator Negotiation Cockpit';
+          url = SKPrimitives.getStakeholderUrl('decorator-cockpit.html');
+          text = `🎪 *Sree Krushna Marriage OS — Decorator Cockpit*\nExecutive presentation and vendor quotation workspace:\n👉 View Cockpit: ${url}`;
+          break;
+        case 'intake-public':
+          title = 'Proposal & Intake Studio';
+          url = SKPrimitives.getStakeholderUrl('shopping-registry.html') + '#intake';
+          text = `💡 *Sree Krushna Wedding — Idea & Shopping Drop*\nHave a saree recommendation or vendor quote? Drop it directly into our registry:\n👉 Submit Option: ${url}`;
+          break;
+        default:
+          title = 'Sree Krushna Marriage OS';
+          url = SKPrimitives.getStakeholderUrl('index.html');
+          text = `👑 *Sree Krushna Marriage OS*\nSingle Source of Truth & Executive Control Tower:\n👉 Open OS: ${url}`;
+      }
+
+      const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+      return { key, title, url, text, whatsappUrl };
+    },
+
+    /**
+     * Copy stakeholder share bundle to clipboard and notify
+     * @param {string} key
+     */
+    copyStakeholderShare: function(key) {
+      const share = SKPrimitives.getStakeholderShare(key);
+      SKPrimitives.copyToClipboard(share.text, `Copied ${share.title} WhatsApp message to clipboard!`);
+    },
+
+    /**
+     * Copy raw URL to clipboard
+     * @param {string} keyOrUrl
+     * @param {string} [label]
+     */
+    copyUrlToClipboard: function(keyOrUrl, label) {
+      const url = (typeof keyOrUrl === 'string' && keyOrUrl.startsWith('http')) 
+        ? keyOrUrl 
+        : (SKPrimitives.getStakeholderShare(keyOrUrl).url);
+      SKPrimitives.copyToClipboard(url, `Copied ${label || 'link'} to clipboard!`);
     },
 
     /**

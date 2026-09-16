@@ -47,6 +47,36 @@
     </div>
   </header>
 
+  <!-- Executive Stakeholder Quick-Share Station (P-QUICK-SHARE-001) -->
+  <div class="shop-executive-share-bar" id="shopExecutiveShareBar" data-testid="shop-executive-share-bar">
+    <div class="share-bar-header">
+      <span class="share-bar-icon">🔗</span>
+      <span class="share-bar-title">Stakeholder Quick-Share:</span>
+      <span class="share-bar-subtitle">1-Click WhatsApp links for family &amp; styling circles</span>
+    </div>
+    <div class="share-bar-chips">
+      <button class="share-chip share-chip-family" onclick="window.copyStakeholderShare('shopping-family')" title="Copy frictionless Family Review link for WhatsApp">
+        <span>🌺 Family Mode</span>
+        <span class="chip-copy-icon">📋</span>
+      </button>
+      <button class="share-chip share-chip-sisters" onclick="window.copyStakeholderShare('shopping-sisters')" title="Copy Sisters' Wardrobe &amp; Styling link">
+        <span>👭 Sisters' Styling</span>
+        <span class="chip-copy-icon">📋</span>
+      </button>
+      <button class="share-chip share-chip-pata" onclick="window.copyStakeholderShare('shopping-vivaha-pata')" title="Copy Vivaha Pata &amp; Khandua cluster link">
+        <span>👑 Vivaha Pata</span>
+        <span class="chip-copy-icon">📋</span>
+      </button>
+      <button class="share-chip share-chip-mandap" onclick="window.copyStakeholderShare('shopping-groom-mandap')" title="Copy Groom Mandap Liturgical Attire link">
+        <span>✨ Groom Mandap</span>
+        <span class="chip-copy-icon">📋</span>
+      </button>
+      <button class="share-chip share-chip-popout" onclick="window.openStandalonePortal('shopping-registry.html')" title="Open standalone full-screen portal in new tab">
+        <span>↗️ Standalone Portal</span>
+      </button>
+    </div>
+  </div>
+
   <!-- Top View Segmented Switcher (P-SURVEY-HYBRID-001) -->
   <div class="shop-view-switcher" id="shopViewSwitcher">
     <button class="shop-view-tab active" id="tabCatalogView" onclick="window.switchShoppingView('catalog')">

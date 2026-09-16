@@ -184,3 +184,140 @@ body {
       font-size: 12px;
       color: var(--shop-text-secondary);
     }
+
+    /* Executive Stakeholder Quick-Share Station (P-QUICK-SHARE-001) */
+    .shop-executive-share-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: rgba(229, 169, 60, 0.08);
+      border: 1px solid rgba(229, 169, 60, 0.28);
+      border-radius: var(--shop-radius-md);
+      padding: 12px 18px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .shop-executive-share-bar .share-bar-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .shop-executive-share-bar .share-bar-icon {
+      font-size: 16px;
+    }
+
+    .shop-executive-share-bar .share-bar-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--shop-gold);
+      letter-spacing: 0.02em;
+    }
+
+    .shop-executive-share-bar .share-bar-subtitle {
+      font-size: 11px;
+      color: var(--shop-text-secondary);
+    }
+
+    .shop-executive-share-bar .share-bar-chips {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .share-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--shop-border);
+      background: var(--shop-surface);
+      color: var(--shop-text-primary);
+      transition: all 0.15s ease;
+      text-decoration: none;
+      user-select: none;
+    }
+
+    .share-chip:hover {
+      background: var(--shop-surface-elevated);
+      border-color: var(--shop-gold);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .share-chip .chip-copy-icon {
+      font-size: 11px;
+      opacity: 0.7;
+    }
+
+    .share-chip:hover .chip-copy-icon {
+      opacity: 1;
+    }
+
+    .share-chip-family {
+      border-color: rgba(37, 211, 102, 0.4);
+      background: rgba(37, 211, 102, 0.08);
+      color: #25d366;
+    }
+
+    .share-chip-family:hover {
+      background: rgba(37, 211, 102, 0.2);
+      border-color: #25d366;
+      color: #ffffff;
+    }
+
+    .share-chip-sisters {
+      border-color: rgba(236, 72, 153, 0.4);
+      background: rgba(236, 72, 153, 0.08);
+      color: #f472b6;
+    }
+
+    .share-chip-sisters:hover {
+      background: rgba(236, 72, 153, 0.2);
+      border-color: #ec4899;
+      color: #ffffff;
+    }
+
+    .share-chip-pata {
+      border-color: rgba(229, 169, 60, 0.4);
+      background: rgba(229, 169, 60, 0.08);
+      color: var(--shop-gold);
+    }
+
+    .share-chip-pata:hover {
+      background: rgba(229, 169, 60, 0.2);
+      border-color: var(--shop-gold);
+      color: #ffffff;
+    }
+
+    .share-chip-mandap {
+      border-color: rgba(168, 85, 247, 0.4);
+      background: rgba(168, 85, 247, 0.08);
+      color: #c084fc;
+    }
+
+    .share-chip-mandap:hover {
+      background: rgba(168, 85, 247, 0.2);
+      border-color: #a855f7;
+      color: #ffffff;
+    }
+
+    .share-chip-popout {
+      border-color: rgba(59, 130, 246, 0.4);
+      background: rgba(59, 130, 246, 0.08);
+      color: #60a5fa;
+    }
+
+    .share-chip-popout:hover {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: #3b82f6;
+      color: #ffffff;
+    }

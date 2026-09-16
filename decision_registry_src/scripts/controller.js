@@ -382,8 +382,9 @@
       const cluster = clusters.find(c => c.id === clusterId);
       if (!cluster) return;
 
-      const baseUrl = window.location.origin + window.location.pathname;
-      const shareUrl = `${baseUrl}?event=${cluster.event}&cluster=${cluster.id}&mode=family`;
+      const shareUrl = (typeof SKPrimitives !== 'undefined' && SKPrimitives.getStakeholderUrl)
+        ? SKPrimitives.getStakeholderUrl('decision-registry.html', { event: cluster.event, cluster: cluster.id, mode: 'family' })
+        : `${window.location.origin}/decision-registry.html?event=${cluster.event}&cluster=${cluster.id}&mode=family`;
       const msg = cluster.whatsappTemplate.replace('{url}', shareUrl);
 
       // Copy to clipboard
@@ -400,8 +401,9 @@
     // Share Entire Family Mode Link
     if (btnShareFamilyMode) {
       btnShareFamilyMode.addEventListener('click', () => {
-        const baseUrl = window.location.origin + window.location.pathname;
-        const shareUrl = `${baseUrl}?event=${currentEvent}&mode=family`;
+        const shareUrl = (typeof SKPrimitives !== 'undefined' && SKPrimitives.getStakeholderUrl)
+          ? SKPrimitives.getStakeholderUrl('decision-registry.html', { event: currentEvent, mode: 'family' })
+          : `${window.location.origin}/decision-registry.html?event=${currentEvent}&mode=family`;
         const text = `🌺 *Sree Krushna Marriage OS — Family Decor Review*\nHelp us review and vote on our wedding decor concepts!\n👉 Tap to review: ${shareUrl}`;
 
         if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1059,6 +1061,19 @@
     }
     window.renderDecisionRegistry = initDecisionRegistry;
     window.initDecisionRegistry = initDecisionRegistry;
+    window.copyStakeholderShare = function(key) {
+      if (typeof SKPrimitives !== 'undefined' && SKPrimitives.copyStakeholderShare) {
+        SKPrimitives.copyStakeholderShare(key);
+      } else {
+        console.warn('SKPrimitives not available for copyStakeholderShare:', key);
+      }
+    };
+    window.openStandalonePortal = function(portalFile) {
+      const url = (typeof SKPrimitives !== 'undefined' && SKPrimitives.getStakeholderUrl)
+        ? SKPrimitives.getStakeholderUrl(portalFile)
+        : `${window.location.origin}/${portalFile}`;
+      window.open(url, '_blank');
+    };
 
     initDecisionRegistry();
   })();

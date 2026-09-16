@@ -1165,6 +1165,143 @@
       color: var(--shop-text-secondary);
     }
 
+    /* Executive Stakeholder Quick-Share Station (P-QUICK-SHARE-001) */
+    .shop-executive-share-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: rgba(229, 169, 60, 0.08);
+      border: 1px solid rgba(229, 169, 60, 0.28);
+      border-radius: var(--shop-radius-md);
+      padding: 12px 18px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .shop-executive-share-bar .share-bar-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .shop-executive-share-bar .share-bar-icon {
+      font-size: 16px;
+    }
+
+    .shop-executive-share-bar .share-bar-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--shop-gold);
+      letter-spacing: 0.02em;
+    }
+
+    .shop-executive-share-bar .share-bar-subtitle {
+      font-size: 11px;
+      color: var(--shop-text-secondary);
+    }
+
+    .shop-executive-share-bar .share-bar-chips {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .share-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--shop-border);
+      background: var(--shop-surface);
+      color: var(--shop-text-primary);
+      transition: all 0.15s ease;
+      text-decoration: none;
+      user-select: none;
+    }
+
+    .share-chip:hover {
+      background: var(--shop-surface-elevated);
+      border-color: var(--shop-gold);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .share-chip .chip-copy-icon {
+      font-size: 11px;
+      opacity: 0.7;
+    }
+
+    .share-chip:hover .chip-copy-icon {
+      opacity: 1;
+    }
+
+    .share-chip-family {
+      border-color: rgba(37, 211, 102, 0.4);
+      background: rgba(37, 211, 102, 0.08);
+      color: #25d366;
+    }
+
+    .share-chip-family:hover {
+      background: rgba(37, 211, 102, 0.2);
+      border-color: #25d366;
+      color: #ffffff;
+    }
+
+    .share-chip-sisters {
+      border-color: rgba(236, 72, 153, 0.4);
+      background: rgba(236, 72, 153, 0.08);
+      color: #f472b6;
+    }
+
+    .share-chip-sisters:hover {
+      background: rgba(236, 72, 153, 0.2);
+      border-color: #ec4899;
+      color: #ffffff;
+    }
+
+    .share-chip-pata {
+      border-color: rgba(229, 169, 60, 0.4);
+      background: rgba(229, 169, 60, 0.08);
+      color: var(--shop-gold);
+    }
+
+    .share-chip-pata:hover {
+      background: rgba(229, 169, 60, 0.2);
+      border-color: var(--shop-gold);
+      color: #ffffff;
+    }
+
+    .share-chip-mandap {
+      border-color: rgba(168, 85, 247, 0.4);
+      background: rgba(168, 85, 247, 0.08);
+      color: #c084fc;
+    }
+
+    .share-chip-mandap:hover {
+      background: rgba(168, 85, 247, 0.2);
+      border-color: #a855f7;
+      color: #ffffff;
+    }
+
+    .share-chip-popout {
+      border-color: rgba(59, 130, 246, 0.4);
+      background: rgba(59, 130, 246, 0.08);
+      color: #60a5fa;
+    }
+
+    .share-chip-popout:hover {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: #3b82f6;
+      color: #ffffff;
+    }
+
     /* 4-Stage Itinerary Stepper */
     .shop-stepper-section {
       background: var(--shop-surface);
@@ -1831,7 +1968,7 @@
         padding: 0;
         max-width: 100%;
       }
-      .shop-btn, .shop-toolbar, .shop-welcome-banner, .shop-toast {
+      .shop-btn, .shop-toolbar, .shop-welcome-banner, .shop-toast, .shop-executive-share-bar {
         display: none !important;
       }
       .shop-item-card, .shop-cluster-card, .shop-store-card {
@@ -2442,6 +2579,36 @@
       </a>
     </div>
   </header>
+
+  <!-- Executive Stakeholder Quick-Share Station (P-QUICK-SHARE-001) -->
+  <div class="shop-executive-share-bar" id="shopExecutiveShareBar" data-testid="shop-executive-share-bar">
+    <div class="share-bar-header">
+      <span class="share-bar-icon">🔗</span>
+      <span class="share-bar-title">Stakeholder Quick-Share:</span>
+      <span class="share-bar-subtitle">1-Click WhatsApp links for family &amp; styling circles</span>
+    </div>
+    <div class="share-bar-chips">
+      <button class="share-chip share-chip-family" onclick="window.copyStakeholderShare('shopping-family')" title="Copy frictionless Family Review link for WhatsApp">
+        <span>🌺 Family Mode</span>
+        <span class="chip-copy-icon">📋</span>
+      </button>
+      <button class="share-chip share-chip-sisters" onclick="window.copyStakeholderShare('shopping-sisters')" title="Copy Sisters' Wardrobe &amp; Styling link">
+        <span>👭 Sisters' Styling</span>
+        <span class="chip-copy-icon">📋</span>
+      </button>
+      <button class="share-chip share-chip-pata" onclick="window.copyStakeholderShare('shopping-vivaha-pata')" title="Copy Vivaha Pata &amp; Khandua cluster link">
+        <span>👑 Vivaha Pata</span>
+        <span class="chip-copy-icon">📋</span>
+      </button>
+      <button class="share-chip share-chip-mandap" onclick="window.copyStakeholderShare('shopping-groom-mandap')" title="Copy Groom Mandap Liturgical Attire link">
+        <span>✨ Groom Mandap</span>
+        <span class="chip-copy-icon">📋</span>
+      </button>
+      <button class="share-chip share-chip-popout" onclick="window.openStandalonePortal('shopping-registry.html')" title="Open standalone full-screen portal in new tab">
+        <span>↗️ Standalone Portal</span>
+      </button>
+    </div>
+  </div>
 
   <!-- Top View Segmented Switcher (P-SURVEY-HYBRID-001) -->
   <div class="shop-view-switcher" id="shopViewSwitcher">
@@ -4184,15 +4351,17 @@
     },
 
     /**
-     * Safely copy text to clipboard with modern fallback
+     * Safely copy text to clipboard with modern fallback and optional toast notification
      * @param {string} text - Text to copy
+     * @param {string} [feedbackMsg] - Optional message to show in toast
      * @returns {Promise<boolean>}
      */
-    copyToClipboard: async function(text) {
+    copyToClipboard: async function(text, feedbackMsg) {
+      let ok = false;
       try {
         if (navigator.clipboard && window.isSecureContext) {
           await navigator.clipboard.writeText(text);
-          return true;
+          ok = true;
         } else {
           const textArea = document.createElement('textarea');
           textArea.value = text;
@@ -4201,14 +4370,130 @@
           document.body.appendChild(textArea);
           textArea.focus();
           textArea.select();
-          const successful = document.execCommand('copy');
+          ok = document.execCommand('copy');
           document.body.removeChild(textArea);
-          return successful;
         }
       } catch (err) {
         console.error('Failed to copy to clipboard:', err);
-        return false;
+        ok = false;
       }
+      if (ok && feedbackMsg) {
+        SKPrimitives.showToast(feedbackMsg);
+      }
+      return ok;
+    },
+
+    /**
+     * Generate canonical, origin-aware URL for stakeholder standalone portals
+     * Resolves BUG-SHARE-BASEURL-001 by guaranteeing target portal filename
+     * @param {string} portalFile - e.g. 'shopping-registry.html', 'decision-registry.html'
+     * @param {Object|string} [params] - Query parameter object or query string
+     * @returns {string} Fully qualified canonical URL
+     */
+    getStakeholderUrl: function(portalFile, params) {
+      const origin = (typeof window !== 'undefined' && window.location && window.location.origin) 
+        ? window.location.origin 
+        : 'https://sree-krushna-forever.web.app';
+      let qs = '';
+      if (typeof params === 'string') {
+        qs = params.startsWith('?') ? params.substring(1) : params;
+      } else if (params && typeof params === 'object') {
+        const searchParams = new URLSearchParams();
+        Object.keys(params).forEach(key => {
+          if (params[key] !== undefined && params[key] !== null) {
+            searchParams.set(key, params[key]);
+          }
+        });
+        qs = searchParams.toString();
+      }
+      return `${origin}/${portalFile}${qs ? '?' + qs : ''}`;
+    },
+
+    /**
+     * Universal Stakeholder Share Catalog (P-QUICK-SHARE-001)
+     * @param {string} key
+     * @returns {{ key: string, title: string, url: string, text: string, whatsappUrl: string }}
+     */
+    getStakeholderShare: function(key) {
+      let url = '';
+      let text = '';
+      let title = '';
+
+      switch (key) {
+        case 'shopping-family':
+          title = 'Family Shopping Review';
+          url = SKPrimitives.getStakeholderUrl('shopping-registry.html', { mode: 'family' });
+          text = `🌺 *Sree Krushna Marriage OS — Wedding Shopping Review*\nHelp us review and vote on the wedding trousseau, sarees, and 'Sara' gifting items for Bhubaneswar!\n👉 Tap to review: ${url}`;
+          break;
+        case 'shopping-sisters':
+          title = "Sisters' Styling & Wardrobe Hub";
+          url = SKPrimitives.getStakeholderUrl('shopping-registry.html', { mode: 'sisters' });
+          text = `👭 *Sree Krushna Wedding — Sisters' Wardrobe & Styling Hub*\nHey! Here is the Bhubaneswar shopping checklist for our sarees, lehengas, and groom styling. Tap to vote on your favorites:\n👉 ${url}`;
+          break;
+        case 'shopping-vivaha-pata':
+          title = 'Vivaha Pata & Khandua Attire';
+          url = SKPrimitives.getStakeholderUrl('shopping-registry.html', { cluster: 'vivaha_pata', mode: 'family' });
+          text = `👑 *Sree Krushna Wedding — Vivaha Pata & Khandua Review*\nHelp us choose the sacred wedding silks & Khandua Pata for the Lagna rituals:\n👉 Review & Vote: ${url}`;
+          break;
+        case 'shopping-groom-mandap':
+          title = 'Groom Mandap Liturgical Attire';
+          url = SKPrimitives.getStakeholderUrl('shopping-registry.html', { cluster: 'groom_mandap', mode: 'family' });
+          text = `✨ *Sree Krushna Wedding — Groom Mandap Liturgical Attire*\nReview the authentic Odia Dhoti, Khandua Joda, and Mandap wear options:\n👉 Review & Vote: ${url}`;
+          break;
+        case 'decisions-family':
+          title = 'Family Decor Consensus';
+          url = SKPrimitives.getStakeholderUrl('decision-registry.html', { event: 'EVT-004', mode: 'family' });
+          text = `🌺 *Sree Krushna Marriage OS — Family Decor Review*\nHelp us review and vote on our wedding decor concepts!\n👉 Tap to review: ${url}`;
+          break;
+        case 'decisions-mandap':
+          title = 'Vivaha Mandap Decor Cluster';
+          url = SKPrimitives.getStakeholderUrl('decision-registry.html', { event: 'EVT-004', cluster: 'mandap_structure', mode: 'family' });
+          text = `🏛️ *Sree Krushna Wedding — Vivaha Mandap Design Consensus*\nReview and vote on the sacred Mandap floral & architectural themes:\n👉 Tap to vote: ${url}`;
+          break;
+        case 'decisions-sangeet':
+          title = 'Sangeet Stage & Lighting Cluster';
+          url = SKPrimitives.getStakeholderUrl('decision-registry.html', { event: 'EVT-003', cluster: 'sangeet_stage', mode: 'family' });
+          text = `🪩 *Sree Krushna Wedding — Sangeet Stage & Lighting Consensus*\nVote on the Sangeet stage backdrop, trussing, and ambient lighting:\n👉 Tap to vote: ${url}`;
+          break;
+        case 'cockpit-hub':
+          title = 'Decorator Negotiation Cockpit';
+          url = SKPrimitives.getStakeholderUrl('decorator-cockpit.html');
+          text = `🎪 *Sree Krushna Marriage OS — Decorator Cockpit*\nExecutive presentation and vendor quotation workspace:\n👉 View Cockpit: ${url}`;
+          break;
+        case 'intake-public':
+          title = 'Proposal & Intake Studio';
+          url = SKPrimitives.getStakeholderUrl('shopping-registry.html') + '#intake';
+          text = `💡 *Sree Krushna Wedding — Idea & Shopping Drop*\nHave a saree recommendation or vendor quote? Drop it directly into our registry:\n👉 Submit Option: ${url}`;
+          break;
+        default:
+          title = 'Sree Krushna Marriage OS';
+          url = SKPrimitives.getStakeholderUrl('index.html');
+          text = `👑 *Sree Krushna Marriage OS*\nSingle Source of Truth & Executive Control Tower:\n👉 Open OS: ${url}`;
+      }
+
+      const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+      return { key, title, url, text, whatsappUrl };
+    },
+
+    /**
+     * Copy stakeholder share bundle to clipboard and notify
+     * @param {string} key
+     */
+    copyStakeholderShare: function(key) {
+      const share = SKPrimitives.getStakeholderShare(key);
+      SKPrimitives.copyToClipboard(share.text, `Copied ${share.title} WhatsApp message to clipboard!`);
+    },
+
+    /**
+     * Copy raw URL to clipboard
+     * @param {string} keyOrUrl
+     * @param {string} [label]
+     */
+    copyUrlToClipboard: function(keyOrUrl, label) {
+      const url = (typeof keyOrUrl === 'string' && keyOrUrl.startsWith('http')) 
+        ? keyOrUrl 
+        : (SKPrimitives.getStakeholderShare(keyOrUrl).url);
+      SKPrimitives.copyToClipboard(url, `Copied ${label || 'link'} to clipboard!`);
     },
 
     /**
@@ -4644,8 +4929,9 @@
       const cluster = clusters.find(c => c.id === clusterId);
       if (!cluster) return;
 
-      const baseUrl = window.location.origin + window.location.pathname;
-      const shareUrl = `${baseUrl}?cluster=${cluster.id}&mode=family`;
+      const shareUrl = (typeof SKPrimitives !== 'undefined' && SKPrimitives.getStakeholderUrl)
+        ? SKPrimitives.getStakeholderUrl('shopping-registry.html', { cluster: cluster.id, mode: 'family' })
+        : `${window.location.origin}/shopping-registry.html?cluster=${cluster.id}&mode=family`;
       const msg = cluster.whatsappTemplate.replace('{url}', shareUrl);
 
       if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -4829,8 +5115,9 @@
 
     // Share Family Button
     btnShareFamily.addEventListener('click', () => {
-      const baseUrl = window.location.origin + window.location.pathname;
-      const shareUrl = `${baseUrl}?mode=family`;
+      const shareUrl = (typeof SKPrimitives !== 'undefined' && SKPrimitives.getStakeholderUrl)
+        ? SKPrimitives.getStakeholderUrl('shopping-registry.html', { mode: 'family' })
+        : `${window.location.origin}/shopping-registry.html?mode=family`;
       const text = `🌺 *Sree Krushna Marriage OS — Wedding Shopping Review*\nHelp us review and vote on the wedding trousseau, sarees, and 'Sara' gifting items for Bhubaneswar!\n👉 Tap to review: ${shareUrl}`;
 
       if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -4844,8 +5131,9 @@
 
     // Share Sisters Button
     btnShareSisters.addEventListener('click', () => {
-      const baseUrl = window.location.origin + window.location.pathname;
-      const shareUrl = `${baseUrl}?mode=sisters`;
+      const shareUrl = (typeof SKPrimitives !== 'undefined' && SKPrimitives.getStakeholderUrl)
+        ? SKPrimitives.getStakeholderUrl('shopping-registry.html', { mode: 'sisters' })
+        : `${window.location.origin}/shopping-registry.html?mode=sisters`;
       const text = `👭 *Sree Krushna Wedding — Sisters' Wardrobe & Styling Hub*\nHey! Here is the Bhubaneswar shopping checklist for our sarees, lehengas, and groom styling. Tap to vote on your favorites:\n👉 ${shareUrl}`;
 
       if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -5274,6 +5562,19 @@
       }
     }
     window.renderShoppingRegistry = renderShoppingRegistry;
+    window.copyStakeholderShare = function(key) {
+      if (typeof SKPrimitives !== 'undefined' && SKPrimitives.copyStakeholderShare) {
+        SKPrimitives.copyStakeholderShare(key);
+      } else {
+        console.warn('SKPrimitives not available for copyStakeholderShare:', key);
+      }
+    };
+    window.openStandalonePortal = function(portalFile) {
+      const url = (typeof SKPrimitives !== 'undefined' && SKPrimitives.getStakeholderUrl)
+        ? SKPrimitives.getStakeholderUrl(portalFile)
+        : `${window.location.origin}/${portalFile}`;
+      window.open(url, '_blank');
+    };
 
     parseUrlParams();
     renderShoppingRegistry();

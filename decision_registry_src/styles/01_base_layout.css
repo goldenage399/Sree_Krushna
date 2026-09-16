@@ -31,3 +31,128 @@
       --dr-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
       --dr-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
+
+    /* Executive Stakeholder Quick-Share Station (P-QUICK-SHARE-001) */
+    .dr-executive-share-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: rgba(229, 169, 60, 0.08);
+      border: 1px solid rgba(229, 169, 60, 0.28);
+      border-radius: var(--dr-radius-md);
+      padding: 12px 18px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .dr-executive-share-bar .share-bar-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .dr-executive-share-bar .share-bar-icon {
+      font-size: 16px;
+    }
+
+    .dr-executive-share-bar .share-bar-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--dr-gold);
+      letter-spacing: 0.02em;
+    }
+
+    .dr-executive-share-bar .share-bar-subtitle {
+      font-size: 11px;
+      color: var(--dr-text-secondary);
+    }
+
+    .dr-executive-share-bar .share-bar-chips {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .share-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--dr-border);
+      background: var(--dr-surface);
+      color: var(--dr-text-primary);
+      transition: all 0.15s ease;
+      text-decoration: none;
+      user-select: none;
+    }
+
+    .share-chip:hover {
+      background: var(--dr-surface-elevated);
+      border-color: var(--dr-gold);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .share-chip .chip-copy-icon {
+      font-size: 11px;
+      opacity: 0.7;
+    }
+
+    .share-chip:hover .chip-copy-icon {
+      opacity: 1;
+    }
+
+    .share-chip-family {
+      border-color: rgba(37, 211, 102, 0.4);
+      background: rgba(37, 211, 102, 0.08);
+      color: #25d366;
+    }
+
+    .share-chip-family:hover {
+      background: rgba(37, 211, 102, 0.2);
+      border-color: #25d366;
+      color: #ffffff;
+    }
+
+    .share-chip-mandap {
+      border-color: rgba(229, 169, 60, 0.4);
+      background: rgba(229, 169, 60, 0.08);
+      color: var(--dr-gold);
+    }
+
+    .share-chip-mandap:hover {
+      background: rgba(229, 169, 60, 0.2);
+      border-color: var(--dr-gold);
+      color: #ffffff;
+    }
+
+    .share-chip-sangeet {
+      border-color: rgba(168, 85, 247, 0.4);
+      background: rgba(168, 85, 247, 0.08);
+      color: #c084fc;
+    }
+
+    .share-chip-sangeet:hover {
+      background: rgba(168, 85, 247, 0.2);
+      border-color: #a855f7;
+      color: #ffffff;
+    }
+
+    .share-chip-popout {
+      border-color: rgba(59, 130, 246, 0.4);
+      background: rgba(59, 130, 246, 0.08);
+      color: #60a5fa;
+    }
+
+    .share-chip-popout:hover {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: #3b82f6;
+      color: #ffffff;
+    }

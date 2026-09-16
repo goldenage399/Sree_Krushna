@@ -319,8 +319,9 @@
       const cluster = clusters.find(c => c.id === clusterId);
       if (!cluster) return;
 
-      const baseUrl = window.location.origin + window.location.pathname;
-      const shareUrl = `${baseUrl}?cluster=${cluster.id}&mode=family`;
+      const shareUrl = (typeof SKPrimitives !== 'undefined' && SKPrimitives.getStakeholderUrl)
+        ? SKPrimitives.getStakeholderUrl('shopping-registry.html', { cluster: cluster.id, mode: 'family' })
+        : `${window.location.origin}/shopping-registry.html?cluster=${cluster.id}&mode=family`;
       const msg = cluster.whatsappTemplate.replace('{url}', shareUrl);
 
       if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -504,8 +505,9 @@
 
     // Share Family Button
     btnShareFamily.addEventListener('click', () => {
-      const baseUrl = window.location.origin + window.location.pathname;
-      const shareUrl = `${baseUrl}?mode=family`;
+      const shareUrl = (typeof SKPrimitives !== 'undefined' && SKPrimitives.getStakeholderUrl)
+        ? SKPrimitives.getStakeholderUrl('shopping-registry.html', { mode: 'family' })
+        : `${window.location.origin}/shopping-registry.html?mode=family`;
       const text = `🌺 *Sree Krushna Marriage OS — Wedding Shopping Review*\nHelp us review and vote on the wedding trousseau, sarees, and 'Sara' gifting items for Bhubaneswar!\n👉 Tap to review: ${shareUrl}`;
 
       if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -519,8 +521,9 @@
 
     // Share Sisters Button
     btnShareSisters.addEventListener('click', () => {
-      const baseUrl = window.location.origin + window.location.pathname;
-      const shareUrl = `${baseUrl}?mode=sisters`;
+      const shareUrl = (typeof SKPrimitives !== 'undefined' && SKPrimitives.getStakeholderUrl)
+        ? SKPrimitives.getStakeholderUrl('shopping-registry.html', { mode: 'sisters' })
+        : `${window.location.origin}/shopping-registry.html?mode=sisters`;
       const text = `👭 *Sree Krushna Wedding — Sisters' Wardrobe & Styling Hub*\nHey! Here is the Bhubaneswar shopping checklist for our sarees, lehengas, and groom styling. Tap to vote on your favorites:\n👉 ${shareUrl}`;
 
       if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -949,6 +952,19 @@
       }
     }
     window.renderShoppingRegistry = renderShoppingRegistry;
+    window.copyStakeholderShare = function(key) {
+      if (typeof SKPrimitives !== 'undefined' && SKPrimitives.copyStakeholderShare) {
+        SKPrimitives.copyStakeholderShare(key);
+      } else {
+        console.warn('SKPrimitives not available for copyStakeholderShare:', key);
+      }
+    };
+    window.openStandalonePortal = function(portalFile) {
+      const url = (typeof SKPrimitives !== 'undefined' && SKPrimitives.getStakeholderUrl)
+        ? SKPrimitives.getStakeholderUrl(portalFile)
+        : `${window.location.origin}/${portalFile}`;
+      window.open(url, '_blank');
+    };
 
     parseUrlParams();
     renderShoppingRegistry();

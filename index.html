@@ -136,6 +136,12 @@
             <span class="btn-text">Shopping</span>
           </a>
 
+          <!-- Executive Stakeholder Quick-Share Station Link/Modal Trigger -->
+          <button id="openExecutiveShareBtn" class="header-action-btn btn-gold" data-testid="open-executive-share-btn" aria-label="Open Stakeholder Quick-Share Station" onclick="openExecutiveShareModal()">
+            <span class="btn-icon">🔗</span>
+            <span class="btn-text">Share Links</span>
+          </button>
+
           <!-- Theme Switcher Toggle -->
           <button id="themeToggleBtn" class="header-action-btn btn-ghost theme-toggle-btn" data-testid="theme-toggle-button" aria-label="Toggle Bright/Dark Theme" onclick="toggleTheme()">
             <span id="themeToggleIcon">☀️</span>
@@ -1165,6 +1171,202 @@
           <button class="theme-toggle-btn" onclick="copyIdeasForDev()">📋 Export Full Intake JSON</button>
           <button class="btn-return" style="padding: 8px 18px; font-size: 0.85rem; border: none; cursor: pointer;" onclick="closeIntakeLedgerModal(null)">Close</button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Universal Executive Stakeholder Quick-Share Station Modal (P-QUICK-SHARE-001 / AC-DEC-2026-027) -->
+  <div id="executiveShareModal" class="modal-overlay" data-testid="executive-share-modal" role="dialog" aria-modal="true" aria-labelledby="executive-share-title" onclick="closeExecutiveShareModal(event)">
+    <div class="modal" data-testid="executive-share-modal-content" style="max-width: 820px;" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h2 id="executive-share-title" style="font-family: var(--font-display); color: var(--gold-bright); font-size: 1.25rem; display: flex; align-items: center; gap: 8px;">
+          <span>🔗</span> Executive Stakeholder Quick-Share Station
+        </h2>
+        <button class="modal-close" data-testid="executive-share-modal-close" aria-label="Close modal" onclick="closeExecutiveShareModal(null)">&times;</button>
+      </div>
+
+      <p style="font-size: 0.82rem; color: var(--text-muted); margin: 4px 0 16px; line-height: 1.5;">
+        1-Click canonical stakeholder link generator and WhatsApp invitation hub. All links route directly to frictionless standalone portals without requiring sign-in or navigating complex tabs.
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 14px; max-height: 520px; overflow-y: auto; padding-right: 4px;">
+        
+        <!-- Link 1: Shopping Family Review -->
+        <div class="share-modal-card" style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px;">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+              <span style="font-size: 0.92rem; font-weight: 700; color: var(--gold-bright);">🌺 Family Shopping Review &amp; Survey</span>
+              <span class="status-badge" style="background: rgba(37, 211, 102, 0.15); color: #25d366; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px;">Parents &amp; Family</span>
+            </div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0 0 6px;">Shortlisted sarees, lehengas, and 'Sara' gifting checklist for Bhubaneswar review.</p>
+            <code style="font-size: 0.72rem; color: var(--sapphire-royal); word-break: break-all; background: rgba(0,0,0,0.25); padding: 2px 6px; border-radius: 4px; display: block;">/shopping-registry.html?mode=family</code>
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 4px;">
+            <button class="theme-toggle-btn" style="flex: 1; padding: 6px 10px; font-size: 0.78rem;" onclick="copyShareItem('shopping-family')">📋 Copy WhatsApp Msg</button>
+            <button class="theme-toggle-btn" style="background: rgba(37, 211, 102, 0.15); border-color: #25d366; color: #25d366; padding: 6px 10px; font-size: 0.78rem;" onclick="openShareWhatsApp('shopping-family')">💬 WhatsApp</button>
+            <a href="/shopping-registry.html?mode=family" target="_blank" rel="noopener noreferrer" class="btn-return" style="padding: 6px 10px; font-size: 0.78rem; text-decoration: none; display: flex; align-items: center;">↗️</a>
+          </div>
+        </div>
+
+        <!-- Link 2: Sisters' Wardrobe & Styling -->
+        <div class="share-modal-card" style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px;">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+              <span style="font-size: 0.92rem; font-weight: 700; color: #f472b6;">👭 Sisters' Wardrobe &amp; Styling Hub</span>
+              <span class="status-badge" style="background: rgba(236, 72, 153, 0.15); color: #f472b6; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px;">Sisters Circle</span>
+            </div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0 0 6px;">Dedicated styling view for sister coordinates, pastels, and matching ensembles.</p>
+            <code style="font-size: 0.72rem; color: var(--sapphire-royal); word-break: break-all; background: rgba(0,0,0,0.25); padding: 2px 6px; border-radius: 4px; display: block;">/shopping-registry.html?mode=sisters</code>
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 4px;">
+            <button class="theme-toggle-btn" style="flex: 1; padding: 6px 10px; font-size: 0.78rem;" onclick="copyShareItem('shopping-sisters')">📋 Copy WhatsApp Msg</button>
+            <button class="theme-toggle-btn" style="background: rgba(37, 211, 102, 0.15); border-color: #25d366; color: #25d366; padding: 6px 10px; font-size: 0.78rem;" onclick="openShareWhatsApp('shopping-sisters')">💬 WhatsApp</button>
+            <a href="/shopping-registry.html?mode=sisters" target="_blank" rel="noopener noreferrer" class="btn-return" style="padding: 6px 10px; font-size: 0.78rem; text-decoration: none; display: flex; align-items: center;">↗️</a>
+          </div>
+        </div>
+
+        <!-- Link 3: Vivaha Pata & Khandua -->
+        <div class="share-modal-card" style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px;">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+              <span style="font-size: 0.92rem; font-weight: 700; color: var(--gold-bright);">👑 Vivaha Pata &amp; Khandua Silks</span>
+              <span class="status-badge" style="background: rgba(229, 169, 60, 0.15); color: var(--gold-bright); font-size: 0.7rem; padding: 2px 6px; border-radius: 4px;">Sacred Trousseau</span>
+            </div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0 0 6px;">Canonical Lagna silk selections from Boyanika and Utkalika.</p>
+            <code style="font-size: 0.72rem; color: var(--sapphire-royal); word-break: break-all; background: rgba(0,0,0,0.25); padding: 2px 6px; border-radius: 4px; display: block;">/shopping-registry.html?cluster=vivaha_pata&amp;mode=family</code>
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 4px;">
+            <button class="theme-toggle-btn" style="flex: 1; padding: 6px 10px; font-size: 0.78rem;" onclick="copyShareItem('shopping-vivaha-pata')">📋 Copy WhatsApp Msg</button>
+            <button class="theme-toggle-btn" style="background: rgba(37, 211, 102, 0.15); border-color: #25d366; color: #25d366; padding: 6px 10px; font-size: 0.78rem;" onclick="openShareWhatsApp('shopping-vivaha-pata')">💬 WhatsApp</button>
+            <a href="/shopping-registry.html?cluster=vivaha_pata&amp;mode=family" target="_blank" rel="noopener noreferrer" class="btn-return" style="padding: 6px 10px; font-size: 0.78rem; text-decoration: none; display: flex; align-items: center;">↗️</a>
+          </div>
+        </div>
+
+        <!-- Link 4: Groom Mandap Liturgical Attire -->
+        <div class="share-modal-card" style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px;">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+              <span style="font-size: 0.92rem; font-weight: 700; color: #c084fc;">✨ Groom Mandap Liturgical Attire</span>
+              <span class="status-badge" style="background: rgba(168, 85, 247, 0.15); color: #c084fc; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px;">Vedic Liturgy</span>
+            </div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0 0 6px;">Authentic Odia unstitched Dhoti, Khandua Joda, and Mandap wear.</p>
+            <code style="font-size: 0.72rem; color: var(--sapphire-royal); word-break: break-all; background: rgba(0,0,0,0.25); padding: 2px 6px; border-radius: 4px; display: block;">/shopping-registry.html?cluster=groom_mandap&amp;mode=family</code>
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 4px;">
+            <button class="theme-toggle-btn" style="flex: 1; padding: 6px 10px; font-size: 0.78rem;" onclick="copyShareItem('shopping-groom-mandap')">📋 Copy WhatsApp Msg</button>
+            <button class="theme-toggle-btn" style="background: rgba(37, 211, 102, 0.15); border-color: #25d366; color: #25d366; padding: 6px 10px; font-size: 0.78rem;" onclick="openShareWhatsApp('shopping-groom-mandap')">💬 WhatsApp</button>
+            <a href="/shopping-registry.html?cluster=groom_mandap&amp;mode=family" target="_blank" rel="noopener noreferrer" class="btn-return" style="padding: 6px 10px; font-size: 0.78rem; text-decoration: none; display: flex; align-items: center;">↗️</a>
+          </div>
+        </div>
+
+        <!-- Link 5: Decors Family Consensus -->
+        <div class="share-modal-card" style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px;">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+              <span style="font-size: 0.92rem; font-weight: 700; color: var(--gold-bright);">🌺 Family Decor Review &amp; Consensus</span>
+              <span class="status-badge" style="background: rgba(37, 211, 102, 0.15); color: #25d366; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px;">Decor Consensus</span>
+            </div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0 0 6px;">Event-by-event decor stepper with 1-click voting for family members.</p>
+            <code style="font-size: 0.72rem; color: var(--sapphire-royal); word-break: break-all; background: rgba(0,0,0,0.25); padding: 2px 6px; border-radius: 4px; display: block;">/decision-registry.html?event=EVT-004&amp;mode=family</code>
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 4px;">
+            <button class="theme-toggle-btn" style="flex: 1; padding: 6px 10px; font-size: 0.78rem;" onclick="copyShareItem('decisions-family')">📋 Copy WhatsApp Msg</button>
+            <button class="theme-toggle-btn" style="background: rgba(37, 211, 102, 0.15); border-color: #25d366; color: #25d366; padding: 6px 10px; font-size: 0.78rem;" onclick="openShareWhatsApp('decisions-family')">💬 WhatsApp</button>
+            <a href="/decision-registry.html?event=EVT-004&amp;mode=family" target="_blank" rel="noopener noreferrer" class="btn-return" style="padding: 6px 10px; font-size: 0.78rem; text-decoration: none; display: flex; align-items: center;">↗️</a>
+          </div>
+        </div>
+
+        <!-- Link 6: Vivaha Mandap Decor Cluster -->
+        <div class="share-modal-card" style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px;">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+              <span style="font-size: 0.92rem; font-weight: 700; color: var(--gold-bright);">🏛️ Vivaha Mandap Decor Cluster</span>
+              <span class="status-badge" style="background: rgba(229, 169, 60, 0.15); color: var(--gold-bright); font-size: 0.7rem; padding: 2px 6px; border-radius: 4px;">Mandap Decor</span>
+            </div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0 0 6px;">Direct consensus link for the sacred Vedic Vivaha Mandap structure.</p>
+            <code style="font-size: 0.72rem; color: var(--sapphire-royal); word-break: break-all; background: rgba(0,0,0,0.25); padding: 2px 6px; border-radius: 4px; display: block;">/decision-registry.html?event=EVT-004&amp;cluster=mandap_structure&amp;mode=family</code>
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 4px;">
+            <button class="theme-toggle-btn" style="flex: 1; padding: 6px 10px; font-size: 0.78rem;" onclick="copyShareItem('decisions-mandap')">📋 Copy WhatsApp Msg</button>
+            <button class="theme-toggle-btn" style="background: rgba(37, 211, 102, 0.15); border-color: #25d366; color: #25d366; padding: 6px 10px; font-size: 0.78rem;" onclick="openShareWhatsApp('decisions-mandap')">💬 WhatsApp</button>
+            <a href="/decision-registry.html?event=EVT-004&amp;cluster=mandap_structure&amp;mode=family" target="_blank" rel="noopener noreferrer" class="btn-return" style="padding: 6px 10px; font-size: 0.78rem; text-decoration: none; display: flex; align-items: center;">↗️</a>
+          </div>
+        </div>
+
+        <!-- Link 7: Sangeet Stage Decor Cluster -->
+        <div class="share-modal-card" style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px;">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+              <span style="font-size: 0.92rem; font-weight: 700; color: #a855f7;">🪩 Sangeet Stage &amp; Lighting Cluster</span>
+              <span class="status-badge" style="background: rgba(168, 85, 247, 0.15); color: #c084fc; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px;">Sangeet Stage</span>
+            </div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0 0 6px;">Consensus link for Sangeet stage design, LED trussing, and florals.</p>
+            <code style="font-size: 0.72rem; color: var(--sapphire-royal); word-break: break-all; background: rgba(0,0,0,0.25); padding: 2px 6px; border-radius: 4px; display: block;">/decision-registry.html?event=EVT-003&amp;cluster=sangeet_stage&amp;mode=family</code>
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 4px;">
+            <button class="theme-toggle-btn" style="flex: 1; padding: 6px 10px; font-size: 0.78rem;" onclick="copyShareItem('decisions-sangeet')">📋 Copy WhatsApp Msg</button>
+            <button class="theme-toggle-btn" style="background: rgba(37, 211, 102, 0.15); border-color: #25d366; color: #25d366; padding: 6px 10px; font-size: 0.78rem;" onclick="openShareWhatsApp('decisions-sangeet')">💬 WhatsApp</button>
+            <a href="/decision-registry.html?event=EVT-003&amp;cluster=sangeet_stage&amp;mode=family" target="_blank" rel="noopener noreferrer" class="btn-return" style="padding: 6px 10px; font-size: 0.78rem; text-decoration: none; display: flex; align-items: center;">↗️</a>
+          </div>
+        </div>
+
+        <!-- Link 8: Decorator Negotiation Cockpit -->
+        <div class="share-modal-card" style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px;">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+              <span style="font-size: 0.92rem; font-weight: 700; color: var(--gold-bright);">🎪 Decorator Negotiation Cockpit</span>
+              <span class="status-badge" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px;">Executive Host</span>
+            </div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0 0 6px;">Vendor meeting slide deck, line-item budgets, and design specifications.</p>
+            <code style="font-size: 0.72rem; color: var(--sapphire-royal); word-break: break-all; background: rgba(0,0,0,0.25); padding: 2px 6px; border-radius: 4px; display: block;">/decorator-cockpit.html</code>
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 4px;">
+            <button class="theme-toggle-btn" style="flex: 1; padding: 6px 10px; font-size: 0.78rem;" onclick="copyShareItem('cockpit-hub')">📋 Copy Cockpit Link</button>
+            <button class="theme-toggle-btn" style="background: rgba(37, 211, 102, 0.15); border-color: #25d366; color: #25d366; padding: 6px 10px; font-size: 0.78rem;" onclick="openShareWhatsApp('cockpit-hub')">💬 WhatsApp</button>
+            <a href="/decorator-cockpit.html" target="_blank" rel="noopener noreferrer" class="btn-return" style="padding: 6px 10px; font-size: 0.78rem; text-decoration: none; display: flex; align-items: center;">↗️</a>
+          </div>
+        </div>
+
+        <!-- Link 9: Universal Proposal & Intake Studio -->
+        <div class="share-modal-card" style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px;">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+              <span style="font-size: 0.92rem; font-weight: 700; color: #60a5fa;">💡 Proposal &amp; Intake Studio</span>
+              <span class="status-badge" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px;">Open Submission</span>
+            </div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0 0 6px;">Public suggestion intake for decor concepts, shopping links, and ideas.</p>
+            <code style="font-size: 0.72rem; color: var(--sapphire-royal); word-break: break-all; background: rgba(0,0,0,0.25); padding: 2px 6px; border-radius: 4px; display: block;">/shopping-registry.html#intake</code>
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 4px;">
+            <button class="theme-toggle-btn" style="flex: 1; padding: 6px 10px; font-size: 0.78rem;" onclick="copyShareItem('intake-public')">📋 Copy Link</button>
+            <button class="theme-toggle-btn" style="background: rgba(37, 211, 102, 0.15); border-color: #25d366; color: #25d366; padding: 6px 10px; font-size: 0.78rem;" onclick="openShareWhatsApp('intake-public')">💬 WhatsApp</button>
+            <a href="/shopping-registry.html#intake" target="_blank" rel="noopener noreferrer" class="btn-return" style="padding: 6px 10px; font-size: 0.78rem; text-decoration: none; display: flex; align-items: center;">↗️</a>
+          </div>
+        </div>
+
+        <!-- Link 10: Sree Krushna Marriage OS -->
+        <div class="share-modal-card" style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px;">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+              <span style="font-size: 0.92rem; font-weight: 700; color: var(--gold-bright);">👑 Sree Krushna Marriage OS Root</span>
+              <span class="status-badge" style="background: rgba(229, 169, 60, 0.15); color: var(--gold-bright); font-size: 0.7rem; padding: 2px 6px; border-radius: 4px;">Master OS</span>
+            </div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0 0 6px;">Executive Control Tower, Precedence DAG, and Vedic Liturgies.</p>
+            <code style="font-size: 0.72rem; color: var(--sapphire-royal); word-break: break-all; background: rgba(0,0,0,0.25); padding: 2px 6px; border-radius: 4px; display: block;">/</code>
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 4px;">
+            <button class="theme-toggle-btn" style="flex: 1; padding: 6px 10px; font-size: 0.78rem;" onclick="copyShareItem('app-home')">📋 Copy App Link</button>
+            <button class="theme-toggle-btn" style="background: rgba(37, 211, 102, 0.15); border-color: #25d366; color: #25d366; padding: 6px 10px; font-size: 0.78rem;" onclick="openShareWhatsApp('app-home')">💬 WhatsApp</button>
+            <a href="/" target="_blank" rel="noopener noreferrer" class="btn-return" style="padding: 6px 10px; font-size: 0.78rem; text-decoration: none; display: flex; align-items: center;">↗️</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border-subtle);">
+        <span style="font-size: 0.78rem; color: var(--text-muted);">Standard: P-QUICK-SHARE-001 | Ruling: AC-DEC-2026-027</span>
+        <button type="button" class="btn-return" style="padding: 8px 20px; font-size: 0.85rem; border: none; cursor: pointer;" onclick="closeExecutiveShareModal(null)">Done ✓</button>
       </div>
     </div>
   </div>

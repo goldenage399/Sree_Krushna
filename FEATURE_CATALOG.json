@@ -127,6 +127,12 @@
       "required": true
     },
     {
+      "id": "openExecutiveShareBtn",
+      "testId": "open-executive-share-btn",
+      "label": "Universal Stakeholder Quick-Share Station",
+      "required": true
+    },
+    {
       "id": "themeToggleBtn",
       "testId": "theme-toggle-button",
       "label": "Theme Switcher",
@@ -156,6 +162,12 @@
       "id": "changeRequestReceiptModal",
       "testId": "cr-receipt-modal",
       "domain": "ALL",
+      "required": true
+    },
+    {
+      "id": "executiveShareModal",
+      "testId": "executive-share-modal",
+      "domain": "SHARE",
       "required": true
     }
   ]
