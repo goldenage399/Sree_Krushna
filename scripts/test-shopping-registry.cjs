@@ -39,6 +39,10 @@ const domChecks = [
   'window.shareClusterWhatsApp',
   'window.togglePurchased',
   'window.toggleApproval',
+  'window.openVisualSearch',
+  'storeFilterBar',
+  'shop-store-map-btn',
+  'shop-visual-search-btn',
   'parseUrlParams'
 ];
 
@@ -47,12 +51,19 @@ domChecks.forEach(check => {
   console.log(`  ✓ [PASS] HTML contains DOM element/contract: ${check}`);
 });
 
-console.log('▶ [3/4] Auditing Shared Data Layer Schema (SPEC-PROC-TROUSSEAU-001)...');
+console.log('▶ [3/4] Auditing Shared Data Layer Schema (SPEC-PROC-TROUSSEAU-001 / P-SHOPPING-DISCOVERY-001)...');
 const dataChecks = [
   '"chapters":',
   '"clusters":',
   '"stores":',
   '"items":',
+  'chapter_engagement',
+  'cluster_engagement_rings',
+  'TRS-EG-01',
+  'TRS-EG-02',
+  'TRS-EG-03',
+  'TRS-EG-04',
+  'TRS-EG-05',
   'TRS-BR-01',
   'TRS-BR-02',
   'TRS-GR-01',
@@ -65,11 +76,17 @@ const dataChecks = [
   'TRS-OD-02',
   'TRS-OD-03',
   'TRS-OD-04',
+  'TRS-OD-05',
+  'TRS-OD-06',
+  'TRS-OD-07',
+  'TRS-BR-08',
+  'TRS-GR-10',
   'cluster_vivaha_pata',
   'cluster_groom_mandap',
   'cluster_bridal_lehenga',
   'cluster_sara_inlaws',
-  'whatsappTemplate'
+  'whatsappTemplate',
+  'mapsUrl'
 ];
 
 dataChecks.forEach(check => {
@@ -77,27 +94,37 @@ dataChecks.forEach(check => {
   console.log(`  ✓ [PASS] Data layer contains contract: ${check}`);
 });
 
-console.log('▶ [4/4] Verifying 34/34 Item Count & Category Distribution...');
+console.log('▶ [4/4] Verifying 44/44 Item Count, Dual-Look Attire, Stores & Category Distribution...');
 const jsonMatch = rootData.match(/\{[\s\S]*\}/);
 assert(jsonMatch, 'Could not extract JSON data from shopping-data.js');
 const data = JSON.parse(jsonMatch[0]);
-assert.strictEqual(data.chapters.length, 4, 'Must have exactly 4 shopping chapters');
-assert.strictEqual(data.clusters.length, 4, 'Must have exactly 4 consensus clusters');
+assert.strictEqual(data.chapters.length, 5, 'Must have exactly 5 shopping chapters (including Engagement)');
+assert.strictEqual(data.clusters.length, 5, 'Must have exactly 5 consensus clusters');
 assert.strictEqual(data.stores.length, 8, 'Must have exactly 8 verified Bhubaneswar stores');
-assert.strictEqual(data.items.length, 34, 'Must have exactly 34 itemized shopping records');
+
+// Verify all stores have category and mapsUrl
+data.stores.forEach(store => {
+  assert(store.category, `Store ${store.id} missing category`);
+  assert(store.mapsUrl && store.mapsUrl.startsWith('https://www.google.com/maps'), `Store ${store.id} missing valid Google Maps URL`);
+});
+console.log('  ✓ [PASS] All 8 stores categorized with verified Google Maps navigation URLs');
+
+assert.strictEqual(data.items.length, 44, 'Must have exactly 44 itemized shopping records');
 
 const bridalCount = data.items.filter(i => i.category === 'bridal').length;
 const groomCount = data.items.filter(i => i.category === 'groom').length;
 const jewelleryCount = data.items.filter(i => i.category === 'jewellery').length;
 const saraCount = data.items.filter(i => i.category === 'sara').length;
+const engagementCount = data.items.filter(i => i.category === 'engagement').length;
 
-assert.strictEqual(bridalCount, 8, 'Must have 8 bridal items');
-assert.strictEqual(groomCount, 9, 'Must have 9 groom items');
-assert.strictEqual(jewelleryCount, 10, 'Must have 10 jewellery items');
-assert.strictEqual(saraCount, 7, 'Must have 7 sara gifting items');
+assert.strictEqual(bridalCount, 10, 'Must have 10 bridal items');
+assert.strictEqual(groomCount, 10, 'Must have 10 groom items');
+assert.strictEqual(jewelleryCount, 11, 'Must have 11 jewellery items');
+assert.strictEqual(saraCount, 8, 'Must have 8 sara gifting items');
+assert.strictEqual(engagementCount, 5, 'Must have 5 engagement items');
 
-console.log(`  ✓ [PASS] Total 34 items verified: Bridal (${bridalCount}), Groom (${groomCount}), Jewellery (${jewelleryCount}), Sara Gifting (${saraCount})`);
+console.log(`  ✓ [PASS] Total 44 items verified: Engagement (${engagementCount}), Bridal (${bridalCount}), Groom (${groomCount}), Jewellery (${jewelleryCount}), Sara Gifting (${saraCount})`);
 
 console.log('\n════════════════════════════════════════════════════════════════════════════════');
-console.log('🎉 SHOPPING REGISTRY & CONSENSUS GATE PASSED: 100% GREEN & READY FOR BHUBANESWAR TRIP!');
+console.log('🎉 SHOPPING REGISTRY & LITURGICAL RECONCILIATION GATE: 100% GREEN (44/44 ITEMS)');
 console.log('════════════════════════════════════════════════════════════════════════════════\n');

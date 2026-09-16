@@ -63,8 +63,8 @@
   <section class="shop-kpis" id="shopKpis">
     <div class="shop-kpi-card">
       <span class="shop-kpi-label">Total Shopping Items</span>
-      <span class="shop-kpi-val" id="kpiTotalItems">30</span>
-      <span class="shop-kpi-sub">Across 4 Chapters</span>
+      <span class="shop-kpi-val" id="kpiTotalItems">44</span>
+      <span class="shop-kpi-sub">Across 5 Chapters</span>
     </div>
     <div class="shop-kpi-card">
       <span class="shop-kpi-label">Consensus Aligned</span>
@@ -73,7 +73,7 @@
     </div>
     <div class="shop-kpi-card">
       <span class="shop-kpi-label">Items Purchased</span>
-      <span class="shop-kpi-val" style="color: var(--shop-gold);" id="kpiPurchasedItems">0 / 30</span>
+      <span class="shop-kpi-val" style="color: var(--shop-gold);" id="kpiPurchasedItems">0 / 44</span>
       <span class="shop-kpi-sub">In Hand / Bagged</span>
     </div>
     <div class="shop-kpi-card">
@@ -109,9 +109,17 @@
     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
       <div>
         <h3 style="margin: 0; font-size: 15px; color: #ffffff; display: flex; align-items: center; gap: 6px;">
-          <span>📍</span> Bhubaneswar Retail Directory & Market Hubs
+          <span>📍</span> Bhubaneswar Retail Directory &amp; Market Hubs
         </h3>
         <p style="margin: 3px 0 0; font-size: 12px; color: var(--shop-text-secondary);">Verified stores for authentic handlooms, hallmarked gold, sherwanis, and packaging.</p>
+      </div>
+      <!-- Store Category Filter Pills -->
+      <div class="shop-store-filter-bar" id="storeFilterBar">
+        <button class="shop-store-pill active" data-store-cat="all">All Stores (8)</button>
+        <button class="shop-store-pill" data-store-cat="silks">🧵 Silks &amp; Handlooms</button>
+        <button class="shop-store-pill" data-store-cat="jewellery">💎 Gold &amp; Silver</button>
+        <button class="shop-store-pill" data-store-cat="groomswear">👑 Groom &amp; Tailors</button>
+        <button class="shop-store-pill" data-store-cat="accessories">🎀 Packaging &amp; Puja</button>
       </div>
     </div>
     <div class="shop-store-grid" id="storesGrid">
@@ -122,11 +130,12 @@
   <!-- Filter & Search Toolbar -->
   <div class="shop-toolbar">
     <div class="shop-filter-pills" id="shopFilterPills">
-      <button class="shop-pill active" data-filter="all">All Items (34)</button>
-      <button class="shop-pill" data-filter="bridal">🪔 Bridal Trousseau (8)</button>
-      <button class="shop-pill" data-filter="groom">👑 Groom Attire (9)</button>
-      <button class="shop-pill" data-filter="jewellery">💎 Jewellery & Silver (10)</button>
-      <button class="shop-pill" data-filter="sara">🎁 In-Laws 'Sara' (7)</button>
+      <button class="shop-pill active" data-filter="all">All Items (44)</button>
+      <button class="shop-pill" data-filter="engagement">💍 Engagement (5)</button>
+      <button class="shop-pill" data-filter="bridal">🪔 Bridal Trousseau (10)</button>
+      <button class="shop-pill" data-filter="groom">👑 Groom Attire (10)</button>
+      <button class="shop-pill" data-filter="jewellery">💎 Jewellery &amp; Silver (11)</button>
+      <button class="shop-pill" data-filter="sara">🎁 In-Laws 'Sara' (8)</button>
       <button class="shop-pill" data-filter="purchased">✓ Purchased</button>
     </div>
     <div class="shop-search-box">
@@ -321,3 +330,4 @@
 </div>
 
 <!-- Embedded Data Layer -->
+<!-- SSOT: docs/incidents/INC-089-liturgical-attire-conflation-and-trousseau-catalog-drift.md — INC-089 -->

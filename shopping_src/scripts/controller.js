@@ -13,6 +13,7 @@
     let userSelections = JSON.parse(localStorage.getItem('sk_shopping_selections') || '{}');
     let itemPurchased = JSON.parse(localStorage.getItem('sk_shopping_purchased') || '{}');
     let stakeholderApprovals = JSON.parse(localStorage.getItem('sk_shopping_approvals') || '{}');
+    let activeStoreCategory = 'all';
 
     // DOM Elements
     const shopWelcomeBanner = document.getElementById('shopWelcomeBanner');
@@ -24,6 +25,7 @@
     const btnFilterAllChapters = document.getElementById('btnFilterAllChapters');
     const shoppingClusterPods = document.getElementById('shoppingClusterPods');
     const storesGrid = document.getElementById('storesGrid');
+    const storeFilterBar = document.getElementById('storeFilterBar');
     const itemsGrid = document.getElementById('itemsGrid');
     const shopFilterPills = document.querySelectorAll('.shop-pill');
     const shopSearchInput = document.getElementById('shopSearchInput');
@@ -52,6 +54,14 @@
       shopToast.classList.add('active');
       setTimeout(() => shopToast.classList.remove('active'), 3500);
     }
+
+    // Contextual 1-Click Visual AI & Image Search (P-SHOPPING-DISCOVERY-001)
+    window.openVisualSearch = function(query, mode = 'images') {
+      const udmParam = (mode === 'ai') ? 'udm=50' : 'udm=2';
+      const cleanQuery = (query || '').replace(/[^\w\s\-\u0B00-\u0B7F]/gi, ' ').replace(/\s+/g, ' ').trim();
+      const url = `https://www.google.com/search?q=${encodeURIComponent(cleanQuery)}&${udmParam}`;
+      window.open(url, '_blank', 'noopener,noreferrer');
+    };
 
     // URL Query Param Parser & Deep-Link Wiring
     function parseUrlParams() {
@@ -271,10 +281,13 @@
                     <div class="shop-pod-color">${opt.color} • ${opt.weave}</div>
                     <div class="shop-pod-highlight">${opt.highlight}</div>
                     <div class="shop-pod-store">📍 ${opt.store}</div>
-                    <div style="display: flex; gap: 6px; margin-top: 10px; align-items: stretch;">
-                      <button class="shop-pod-radio-btn" type="button" style="flex: 1; margin-top: 0;">
+                    <div style="display: flex; gap: 6px; margin-top: 10px; align-items: stretch; flex-wrap: wrap;">
+                      <button class="shop-pod-radio-btn" type="button" style="flex: 1; min-width: 120px; margin-top: 0;">
                         <span>${isSelected ? '🔘' : '⚪'}</span>
                         <span>${isSelected ? 'Selected (Active)' : 'Choose Concept'}</span>
+                      </button>
+                      <button class="shop-visual-search-btn" type="button" onclick="event.stopPropagation(); window.openVisualSearch('${(opt.visualSearchQuery || (opt.title + ' ' + (opt.color || '') + ' ' + (opt.weave || ''))).replace(/'/g, "\\'")}')" title="Google Images Visual AI Search">
+                        <span>🔍</span> Visual Search ↗
                       </button>
                       <button class="shop-btn" type="button" onclick="event.stopPropagation(); window.openCommentsDrawer('${cluster.id}', { title: '${opt.title.replace(/'/g, "\\'")}', badge: 'Opt ${opt.optionId}', sub: '${opt.store} • ${opt.priceTier}', alignment: '${isSelected ? '✓ Active Choice' : 'Open for Remarks'}' })" title="Open Family Opinions & Remarks" style="padding: 4px 10px; font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; border-color: rgba(212, 175, 55, 0.4); color: var(--shop-gold);">
                         <span>💬</span> <span>${commentCount}</span>
@@ -319,15 +332,35 @@
       }
     };
 
-    // Render Stores
+    // Render Stores with Category Filtering & Google Maps Navigation (P-SHOPPING-DISCOVERY-001)
     function renderStores() {
-      storesGrid.innerHTML = stores.map(s => {
+      const filteredStores = stores.filter(s => {
+        if (activeStoreCategory === 'all') return true;
+        return s.category === activeStoreCategory;
+      });
+
+      if (filteredStores.length === 0) {
+        storesGrid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 24px; color: var(--shop-text-muted);">
+            No verified stores found for this category.
+          </div>
+        `;
+        return;
+      }
+
+      storesGrid.innerHTML = filteredStores.map(s => {
+        const mapsLink = s.mapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.name + ', ' + s.address)}`;
         return `
           <div class="shop-store-card">
             <div class="shop-store-name"><span>🏬</span> <span>${s.name}</span></div>
             <div class="shop-store-zone">${s.zone}</div>
             <div class="shop-store-specialty">${s.specialty}</div>
-            <div class="shop-store-phone">📞 ${s.phone}</div>
+            <div class="shop-store-footer">
+              <span class="shop-store-phone">📞 ${s.phone}</span>
+              <a href="${mapsLink}" target="_blank" rel="noopener noreferrer" class="shop-store-map-btn" title="Open store in Google Maps">
+                <span>🗺️</span> Navigate ↗
+              </a>
+            </div>
           </div>
         `;
       }).join('');
@@ -401,11 +434,16 @@
                 <input type="checkbox" ${isBought ? 'checked' : ''} onchange="window.togglePurchased('${item.id}', this.checked)">
                 <span>${isBought ? '✓ In Shopping Bag (Purchased)' : 'Mark as Purchased'}</span>
               </label>
-              ${item.clusterId ? `
-                <button class="shop-btn shop-btn-sm" onclick="window.focusCluster('${item.clusterId}')" style="font-size: 11px; padding: 3px 8px;">
-                  ⚖️ Compare Alternatives
+              <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                <button class="shop-visual-search-btn" type="button" onclick="window.openVisualSearch('${(item.visualSearchQuery || (item.title + ' ' + (item.suggestedColor || '') + ' ' + (item.spec || ''))).replace(/'/g, "\\'")}')" title="Google Images Visual AI Search">
+                  <span>🔍</span> Visual Search ↗
                 </button>
-              ` : ''}
+                ${item.clusterId ? `
+                  <button class="shop-btn shop-btn-sm" onclick="window.focusCluster('${item.clusterId}')" style="font-size: 11px; padding: 3px 8px;">
+                    ⚖️ Compare Alternatives
+                  </button>
+                ` : ''}
+              </div>
             </div>
           </article>
         `;
@@ -445,6 +483,17 @@
         pill.classList.add('active');
         activeFilter = pill.getAttribute('data-filter');
         renderItems();
+      });
+    });
+
+    // Store category filter pills (P-SHOPPING-DISCOVERY-001)
+    const storePills = document.querySelectorAll('.shop-store-pill');
+    storePills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        storePills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        activeStoreCategory = pill.getAttribute('data-store-cat') || 'all';
+        renderStores();
       });
     });
 
@@ -888,12 +937,19 @@
       }
     }
 
-    // Initialize
+    // Initialize & Re-render API
+    function renderShoppingRegistry() {
+      updateKpis();
+      renderChapters();
+      renderClusters();
+      renderStores();
+      renderItems();
+      if (typeof window.updateSurveyUI === 'function') {
+        window.updateSurveyUI();
+      }
+    }
+    window.renderShoppingRegistry = renderShoppingRegistry;
+
     parseUrlParams();
-    updateKpis();
-    renderChapters();
-    renderClusters();
-    renderStores();
-    renderItems();
-    window.updateSurveyUI();
+    renderShoppingRegistry();
   })();

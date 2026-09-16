@@ -64,7 +64,7 @@ check('Check 1: Dynamic Script Tag Sequencing in Host App (INV-LIFECYCLE-01)', (
   const appJs = fs.readFileSync(appJsPath, 'utf8');
 
   // Verify mount functions that inject scripts
-  const mountFunctions = ['mountDecisionRegistryTab', 'mountCockpitTab'];
+  const mountFunctions = ['mountDecisionRegistryTab', 'mountCockpitTab', 'mountShoppingRegistryTab'];
   let checkedCount = 0;
 
   mountFunctions.forEach(fnName => {
@@ -112,6 +112,7 @@ check('Check 2: Zombie DOMContentLoaded Prohibition Gate (INV-LIFECYCLE-02)', ()
     path.join(REPO_ROOT, 'ui_primitives/scripts'),
     path.join(REPO_ROOT, 'decision_registry_src/scripts'),
     path.join(REPO_ROOT, 'shopping_registry_src/scripts'),
+    path.join(REPO_ROOT, 'shopping_src/scripts'),
     path.join(REPO_ROOT, 'cockpit_src')
   ];
 

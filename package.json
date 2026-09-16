@@ -33,6 +33,8 @@
     "build:decision-registry": "node scripts/build-decision-registry-data.cjs && node scripts/build-decision-registry-html.cjs",
     "test:decision-registry": "node scripts/test-decision-registry.cjs",
     "build:shopping": "node scripts/build-shopping-data.cjs && node scripts/build-shopping-html.cjs",
+    "build:shopping:fragment": "node shopping_src/build.cjs --fragment",
+    "build:shopping:all": "node shopping_src/build.cjs --all",
     "test:shopping": "node scripts/test-shopping-registry.cjs",
     "seed:cockpit": "node scripts/seed-cockpit-firestore.cjs",
     "inspect:cockpit": "node scripts/db-inspect-cockpit.cjs",

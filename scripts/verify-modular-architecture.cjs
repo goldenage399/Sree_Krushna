@@ -154,6 +154,7 @@ const dualPairs = [
   ['decision-registry.html', 'public/decision-registry.html'],
   ['decision-registry-fragment.html', 'public/decision-registry-fragment.html'],
   ['shopping-registry.html', 'public/shopping-registry.html'],
+  ['shopping-fragment.html', 'public/shopping-fragment.html'],
   ['js/decision-registry-data.js', 'public/js/decision-registry-data.js'],
   ['js/shopping-data.js', 'public/js/shopping-data.js']
 ];

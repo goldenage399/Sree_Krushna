@@ -53,6 +53,101 @@
       gap: 4px;
     }
 
+    /* Store Category Filter Bar */
+    .shop-store-filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .shop-store-pill {
+      padding: 4px 10px;
+      border-radius: 14px;
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--shop-bg);
+      border: 1px solid var(--shop-border);
+      color: var(--shop-text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      min-height: 28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .shop-store-pill:hover {
+      border-color: var(--shop-border-focus);
+      color: #ffffff;
+    }
+
+    .shop-store-pill.active {
+      background: rgba(212, 175, 55, 0.18);
+      border-color: var(--shop-gold);
+      color: var(--shop-gold);
+      font-weight: 700;
+    }
+
+    /* Store Footer & Map Action Button */
+    .shop-store-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      gap: 8px;
+    }
+
+    .shop-store-map-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--shop-gold);
+      background: rgba(212, 175, 55, 0.08);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      text-decoration: none;
+      transition: all 0.18s ease;
+      cursor: pointer;
+    }
+
+    .shop-store-map-btn:hover {
+      background: var(--shop-gold);
+      color: #0f1117;
+      border-color: var(--shop-gold);
+      transform: translateY(-1px);
+    }
+
+    /* Visual AI / Image Search Button */
+    .shop-visual-search-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #93c5fd;
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      cursor: pointer;
+      transition: all 0.18s ease;
+      text-decoration: none;
+      min-height: 28px;
+    }
+
+    .shop-visual-search-btn:hover {
+      background: rgba(59, 130, 246, 0.22);
+      border-color: #60a5fa;
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
     /* Itemized Checklist Grid & Toolbar */
     .shop-toolbar {
       display: flex;
