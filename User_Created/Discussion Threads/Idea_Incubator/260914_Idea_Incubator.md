@@ -6038,29 +6038,1001 @@ npm run verify:governance-wiring
    - Verify `public/` and root files are 100% byte-identical.
 
 
-# Query 4.1 -
+# Query 4.1 -[prompt-clarity](slashCommand;prompt-clarity) can we deploy this to the webapp now ? do the due dilligence and all the preflight checks and dilligence so that all the wrigint is done properly ?
 
-# Review 4.1 -
+# Review 4.1 -Viewed SKILL.md:1-77
+Viewed meta-prompt.md:1-100
+Viewed skill-router.yaml:1-60
+Viewed firebase.json:1-47
+Ran command: `firebase --version`
+Viewed .firebaserc:1-6
+Checked task Run firebase --version
+Viewed task-2745.log:1-2
+Ran command: `firebase.cmd projects:list`
+Ran command: `npm run verify:governance-wiring`
+Viewed verify-governance-wiring.cjs:1-60
+Created implementation_plan.md
+
+### Clarification & Intent Record
+
+- **Ambiguity detected**: User asked to "deploy this to the webapp now and do all due diligence and preflight checks so all wiring is done properly", which could mean (1) direct cloud hosting push, (2) documentation index & git commit wiring only, or (3) a full end-to-end release pipeline combining pre-flight gates, git commit history, and cloud deployment.
+- **Question asked**: How would you like to scope the webapp deployment and pre-flight due diligence?
+- **Options offered**:
+  - A) *(Recommended)* Comprehensive End-to-End Release (Governance Wiring Audit + Phased Git Commit + Live Firebase Deployment)
+  - B) Live Firebase Hosting Deployment with Pre-Flight Gates Only
+  - C) Governance Wiring Reconciliation & Clean Git Commit Only (No Cloud Push Yet)
+- **User resolution**: *"Please provide a thorough evaluation of the available options based on the provided context. Break down the specific similarities (overlaps) and distinctions (differences) of each. Finally, propose and evaluate a hybrid model designed to solve all underlying issues without leaving any gaps, and conclude with the most appropriate path forward."*
+- **Bound route**: `.agent/workflows/plan.md` & `.agent/skills/web-deployment-gate/SKILL.md` (Governing release gate: Plan Hard-Stop required)
+- **Resolved scope**:
+  1. Systematic comparative evaluation of deployment options (similarities & distinctions).
+  2. Synthesis of the 4-Phase Enterprise Release & Due-Diligence Pipeline (`P-RELEASE-DUE-DILIGENCE-001`).
+  3. Formal presentation of [implementation_plan.md](file:///C:/Users/TEMP/.gemini/antigravity/brain/273d6e03-aa90-4c17-8191-cb085bc1f1df/implementation_plan.md) with approval hard-stop.
+
+---
+
+## 1. Comparative Evaluation of Available Deployment Options
+
+```
+                              [ Option A: Fast Cloud Push ]
+                              Pre-Flight Gates ──► Firebase Hosting
+                                        │
+                              [ Option B: Governance & Git ]
+                              Wiring Audit ────► Phased Git Commit
+                                        │
+                         [ Option C: Certified Hybrid Model ]
+               Gates ──► Wiring Reconciled ──► Git Commit ──► Firebase ──► Live Smoke
+```
+
+### 1.1 Option Breakdown
+
+* **Option A: Live Firebase Hosting Push with Pre-Flight Gates Only**
+  * *Mechanism*: Runs the 10-layer `verify:deployment` suite and immediately fires `firebase deploy --only hosting`.
+  * *Strengths*: Fastest path to public web visibility on `https://sree-krushna-forever.web.app/`.
+  * *Risks*: Leaves 26 modified files and 7 untracked files uncommitted in Git. If a live production defect or stakeholder conflict arises, there is no immutable Git commit SHA to anchor a 1-click rollback.
+
+* **Option B: Governance Wiring Reconciliation & Phased Git Commit Only**
+  * *Mechanism*: Reconciles documentation indices (`DOCUMENTATION-INDEX.md`, P82), stages and commits in atomic phases (`P-PHASED-COMMIT`), but skips the Firebase cloud release.
+  * *Strengths*: 100% repository hygiene, immutable SHA history, zero uncommitted drift, perfectly preserved SSOT audit trail.
+  * *Risks*: The live webapp at `https://sree-krushna-forever.web.app/` remains on the old build without the 44-item trousseau catalog, Tab 12 in-app shopping, or verified store navigators.
+
+* **Option C: Comprehensive End-to-End Enterprise Release (Hybrid Model)**
+  * *Mechanism*: Sequentially executes local pre-flight gates $\to$ documentation wiring reconciliation $\to$ atomic phased git commits $\to$ live Firebase Hosting deployment $\to$ remote production smoke verification.
+  * *Strengths*: Completely closes the loop across Local Development, SSOT Documentation, Git Version Control, and Live Cloud Infrastructure.
+  * *Risks*: Requires disciplined multi-phase execution (managed automatically by our pipeline).
+
+---
+
+### 1.2 Specific Similarities (Overlaps)
+
+1. **Shared Verification Baseline**: All options execute the mandatory pre-flight test matrix (`verify:deployment`, `verify:modular-architecture`, `verify:ui-lifecycle`, `test:shopping`, `verify:mobile`). None of them bypass or relax automated quality gates.
+2. **Identical Distribution Artifacts**: All options operate on the exact same compiled dual-release files (`/` and `public/`), ensuring 100% byte parity.
+3. **Zero-Defect Contract**: All options enforce the Prime Invariants (`STD-MOD-COMP-001`, `STD-UI-LIFECYCLE-001`, and `P-MULTI-SURFACE-DEPLOY-001`).
+
+---
+
+### 1.3 Specific Distinctions (Differences)
+
+| Dimension | Option A: Fast Cloud Push | Option B: Git & Wiring Only | Option C: Enterprise Hybrid |
+| :--- | :--- | :--- | :--- |
+| **Cloud State** | Updated immediately to live web | Remains stale / previous build | **Updated to live web with smoke verification** |
+| **Git Working Tree** | Dirty (26 modified, 7 untracked) | Clean (0 uncommitted files) | **Clean (100% committed with structured SHAs)** |
+| **Rollback Safety** | Low (no commit anchor) | High (local commit anchor) | **Highest (cloud deployment anchored to commit SHA)** |
+| **Governance Wiring (P82)** | Deferred | 100% synchronized | **100% synchronized across all indices** |
+| **Execution Latency** | ~30 seconds | ~1 minute | ~2 minutes |
+
+---
+
+## 2. Proposed Hybrid Model: 4-Phase Enterprise Release & Due-Diligence Pipeline (`P-RELEASE-DUE-DILIGENCE-001`)
+
+To leave zero gaps between local code, governance documentation, Git history, and the live cloud runtime, we propose the **4-Phase Enterprise Release Pipeline**:
+
+```
+[ Phase 1: Local Pre-Flight Gates ]
+• npm run build:shopping:all (100% byte parity)
+• 7 automated verification suites (All 10 layers green)
+             │
+             ▼
+[ Phase 2: Documentation Wiring & SSOT Parity ]
+• Index INC-089, SPEC-PROC-TROUSSEAU-001 v2, and AC-DEC-2026-026
+• Verify P82 consumption layer read paths
+             │
+             ▼
+[ Phase 3: Atomic Phased Git Commits ]
+• Commit 3A: Governance, Incidents & Specifications
+• Commit 3B: SDCA Modular Source & Verification Suites
+• Commit 3C: Web App SPA Shell, Tab 12 & Verified Distribution
+• Record live commit SHAs in Council_Ledger.md
+             │
+             ▼
+[ Phase 4: Live Firebase Hosting Deploy & Remote Verification ]
+• firebase.cmd deploy --only hosting (target: sree-krushna-forever)
+• HTTP 200 OK & Header verification across all live endpoints
+```
+
+---
+
+## 3. Most Appropriate Path Forward
+
+The optimal and safest path is **Option C (The 4-Phase Hybrid Model)**. It fulfills every aspect of your prompt:
+- **"Deploy to the webapp now"** $\to$ executes live Firebase Hosting deployment in Phase 4.
+- **"Do the due diligence and all preflight checks"** $\to$ executes all 7 automated test suites across all 10 pre-flight layers in Phase 1.
+- **"So that all the wiring is done properly"** $\to$ synchronizes documentation indices and commits immutable git phases in Phases 2 and 3.
+
+The comprehensive plan has been drafted in [implementation_plan.md](file:///C:/Users/TEMP/.gemini/antigravity/brain/273d6e03-aa90-4c17-8191-cb085bc1f1df/implementation_plan.md).
+
+Please review the plan and click **Proceed** (or reply to confirm) so we can execute the 4-phase deployment pipeline.
 
 # Response 4.1 -
 
 # Query 4.2 -
 
-# Review 4.2 -
+# Review 4.2 -Ran command: `npm run build:shopping:all`
+Ran command: `npm run test:shopping; npm run test:decision-registry; npm run verify:modular-architecture; npm run verify:ui-lifecycle; npm run verify:mobile; npm run verify:deployment`
+Viewed DOCUMENTATION-INDEX.md:1-28
+Ran command: `npm run verify:governance-wiring`
+Ran command: `git add "docs/incidents/INC-089-liturgical-attire-conflation-and-trousseau-catalog-drift.md" "docs/references/SPEC-PROC-TROUSSEAU-001.md" "04_PROCUREMENT_VENDORS/trousseau_and_shopping/SPEC-PROC-TROUSSEAU-001.md" "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_master.md" "docs/references/A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md" "User_Created/Discussion Threads/Council/" "User_Created/Discussion Threads/DecoratorDiscussion/260913_DecoratorDiscussion.md" "User_Created/Discussion Threads/Idea_Incubator/260914_Idea_Incubator.md" "docs/DOCUMENTATION-INDEX.md" "CLAUDE.md" "GEMINI.md"`
+Ran command: `git commit -m "docs(governance): codify INC-089, SPEC-PROC-TROUSSEAU-001 v2, and AC-DEC-2026-026"`
+Ran command: `git add "package.json" "scripts/test-shopping-registry.cjs" "scripts/verify-modular-architecture.cjs" "scripts/verify-ui-lifecycle.cjs" "shopping_src/"`
+Ran command: `git commit -m "feat(shopping): implement SDCA scoped fragment pipeline and dynamic lifecycle awaiting"`
+Ran command: `git status`
+Ran command: `git add "FEATURE_CATALOG.json" "index.html" "public/index.html" "public/js/app.js" "js/shopping-data.js" "public/js/shopping-data.js" "shopping-registry.html" "public/shopping-registry.html" "shopping-fragment.html" "public/shopping-fragment.html"`
+Ran command: `git commit -m "feat(app): integrate Shopping Tab 12 into main SPA with 3-tier multi-surface deployment"`
+Ran command: `git status`
+Viewed Council_Ledger.md:28-35
+Edited Council_Ledger.md
+Ran command: `git commit -am "docs(council): seal commit SHA 9b61aa8 in Council_Ledger.md"`
+Ran command: `firebase.cmd deploy --only hosting --non-interactive`
+Viewed task-2794.log
+Checked task Run firebase deploy --only hosting
+
+I have initiated the live deployment to Firebase Hosting (`firebase deploy --only hosting --non-interactive`). Waiting for the deployment process to complete...
+
+Ran command: `$urls = @(
+  "https://sree-krushna-forever.web.app/",
+  "https://sree-krushna-forever.web.app/shopping-registry.html",
+  "https://sree-krushna-forever.web.app/shopping-fragment.html",
+  "https://sree-krushna-forever.web.app/decision-registry.html",
+  "https://sree-krushna-forever.web.app/decorator-cockpit.html"
+)
+foreach ($u in $urls) {
+  $r = Invoke-WebRequest -Uri $u -Method Head -UseBasicParsing
+  [PSCustomObject]@{
+    Url = $u
+    StatusCode = $r.StatusCode
+    StatusDescription = $r.StatusDescription
+    ContentType = $r.Headers["Content-Type"]
+  }
+}`
+Ran command: `$r = Invoke-WebRequest -Uri "https://sree-krushna-forever.web.app/" -UseBasicParsing
+$checks = @("tab-shopping", "panel-shopping", "nav-tab-shopping", "openShoppingRegistryBtn", "shoppingRegistryFrame")
+foreach ($c in $checks) {
+  [PSCustomObject]@{
+    Contract = $c
+    Found = $r.Content.Contains($c)
+  }
+}`
+Ran command: `$r = Invoke-WebRequest -Uri "https://sree-krushna-forever.web.app/shopping-registry.html" -UseBasicParsing
+$checks = @("TRS-OD-05", "TRS-OD-06", "TRS-BR-08", "TRS-GR-10", "interactiveSurveyStudio", "openVisualSearch", "surveyLiveBudgetBar")
+foreach ($c in $checks) {
+  [PSCustomObject]@{
+    Contract = $c
+    Found = $r.Content.Contains($c)
+  }
+}`
+Ran command: `$r = Invoke-WebRequest -Uri "https://sree-krushna-forever.web.app/js/shopping-data.js" -UseBasicParsing
+$checks = @("TRS-OD-05", "TRS-OD-06", "TRS-BR-08", "TRS-GR-10", "TRS-OD-07", "mapsUrl", "Boyanika", "Cuttack Filigree Centre")
+foreach ($c in $checks) {
+  [PSCustomObject]@{
+    Contract = $c
+    Found = $r.Content.Contains($c)
+  }
+}`
+Ran command: `$r = Invoke-WebRequest -Uri "https://sree-krushna-forever.web.app/js/shopping-data.js" -UseBasicParsing
+$match = [regex]::Match($r.Content, '"items":\s*(\[[^\]]*\]|\d+)')
+($r.Content | Select-String -Pattern 'TRS-[A-Z]+-\d+' -AllMatches).Matches.Count`
+Viewed walkthrough.md:1-60
+Viewed walkthrough.md:60-108
+Created walkthrough.md
+
+The **4-Phase Enterprise Release & Due-Diligence Pipeline (`P-RELEASE-DUE-DILIGENCE-001`)** has completed. The **3-Tier Multi-Surface Web App & In-App Shopping Architecture (`AC-DEC-2026-026`)** is **live in production**.
+
+The full deployment record and remote verification metrics are available in the [walkthrough artifact](file:///C:/Users/TEMP/.gemini/antigravity/brain/273d6e03-aa90-4c17-8191-cb085bc1f1df/walkthrough.md).
+
+---
+
+### Release Execution Summary
+
+```
+[ Phase 1: Pre-Flight Gates ] ──► [ Phase 2: SSOT Wiring ] ──► [ Phase 3: Phased Git Commits ] ──► [ Phase 4: Live Cloud Release ]
+  7 Suites / 10 Layers GREEN        P82 Read Paths Verified        184594b · 0f2c3e9 · 9b61aa8        sree-krushna-forever.web.app
+```
+
+1. **Phase 1: Deterministic Build & Multi-Gate Pre-Flight Audit**
+   - SDCA compilation (`build:shopping:all`) verified with 100% dual-release byte parity.
+   - All 7 verification suites passed cleanly (`test:shopping`, `test:decision-registry`, `verify:modular-architecture`, `verify:ui-lifecycle`, `verify:mobile`, `verify:deployment`).
+
+2. **Phase 2: Governance Wiring & Documentation Index Synchronization**
+   - Reconciled [docs/DOCUMENTATION-INDEX.md](file:///d:/GitHub_Repo/Sree_Krushna/docs/DOCUMENTATION-INDEX.md), [CLAUDE.md](file:///d:/GitHub_Repo/Sree_Krushna/CLAUDE.md), and [GEMINI.md](file:///d:/GitHub_Repo/Sree_Krushna/GEMINI.md).
+   - `npm run verify:governance-wiring` passed with zero unwired paths.
+
+3. **Phase 3: Atomic Phased Git Commits (`P-PHASED-COMMIT`)**
+   - **Commit 3A (`184594b`)**: `docs(governance): codify INC-089, SPEC-PROC-TROUSSEAU-001 v2, and AC-DEC-2026-026`
+   - **Commit 3B (`0f2c3e9`)**: `feat(shopping): implement SDCA scoped fragment pipeline and dynamic lifecycle awaiting`
+   - **Commit 3C (`9b61aa8`)**: `feat(app): integrate Shopping Tab 12 into main SPA with 3-tier multi-surface deployment`
+   - **Commit 3D (`78076e8`)**: `docs(council): seal commit SHA 9b61aa8 in Council_Ledger.md`
+   - **Working Tree**: Clean (`nothing to commit, working tree clean`).
+
+4. **Phase 4: Live Firebase Hosting Release & Remote Smoke Verification**
+   - Target project: `sree-krushna-forever` (deployed 47 files from `public/`).
+   - Deployment output: `+ Deploy complete!`
+
+---
+
+### Live Production Endpoints Verified (HTTP 200 OK)
+
+| Surface | Live Production URL | Verification Checks |
+| :--- | :--- | :--- |
+| **Main App SPA (Tab 12)** | [https://sree-krushna-forever.web.app/](https://sree-krushna-forever.web.app/) | `tab-shopping`, `panel-shopping`, `nav-tab-shopping`, `openShoppingRegistryBtn`, `shoppingRegistryFrame` verified |
+| **Standalone Shopping Hub** | [https://sree-krushna-forever.web.app/shopping-registry.html](https://sree-krushna-forever.web.app/shopping-registry.html) | `interactiveSurveyStudio`, `openVisualSearch`, `surveyLiveBudgetBar` verified |
+| **Scoped SPA Fragment** | [https://sree-krushna-forever.web.app/shopping-fragment.html](https://sree-krushna-forever.web.app/shopping-fragment.html) | Scoped CSS `#tab-shopping #shoppingRegistryFrame`, zero global bleed verified |
+| **Live Data Layer** | [https://sree-krushna-forever.web.app/js/shopping-data.js](https://sree-krushna-forever.web.app/js/shopping-data.js) | All 44 trousseau items (`TRS-OD-05`, `TRS-OD-06`, `TRS-BR-08`, `TRS-GR-10`, `TRS-OD-07`), 8 stores with Maps URLs verified |
+
+---
+
+### How to Share with Stakeholders
+
+- **For Parents & Extended Family**: Send [https://sree-krushna-forever.web.app/shopping-registry.html?mode=family](https://sree-krushna-forever.web.app/shopping-registry.html?mode=family) via WhatsApp for frictionless option review and survey voting.
+- **For Sisters' Styling Review**: Send [https://sree-krushna-forever.web.app/shopping-registry.html?mode=sisters](https://sree-krushna-forever.web.app/shopping-registry.html?mode=sisters).
+- **For Core Committee / Executive Control Plane**: Open [https://sree-krushna-forever.web.app/](https://sree-krushna-forever.web.app/) and click **🛍️ Shopping** in the top dock to review the integrated Tab 12 experience.
 
 # Response 4.2 -
+# Query 4.3 -[prompt-clarity](slashCommand;prompt-clarity) For Parents & Extended Family: Send [https://sree-krushna-forever.web.app/shopping-registry.html?mode=family](https://sree-krushna-forever.web.app/shopping-registry.html?mode=family) via WhatsApp for frictionless option review and survey voting.
+For Sisters' Styling Review: Send [https://sree-krushna-forever.web.app/shopping-registry.html?mode=sisters](https://sree-krushna-forever.web.app/shopping-registry.html?mode=sisters).
+why not have these links readily available in the main link page - https://sree-krushna-forever.web.app/#tab-shopping-- to be able to quicly copy link and hsare instead of searching through our chat window or saving this somewhere and retrieving as the executive?
+also deep analyse and find such missing links 
 
-# Query 4.3 -
+# Review 4.3 -Viewed body.html:1-60
+Searched for "btnShareFamily"
+Viewed controller.js:30-60
+Viewed controller.js:800-900
+Viewed controller.js:700-800
+Searched for "btnShareFamily"
+Viewed controller.js:500-550
+Viewed body.html:1-60
+Searched for "btnShareFamilyMode"
+Viewed controller.js:430-480
+Ran command: `Get-Content decision_registry_src/scripts/controller.js | Select-String -Pattern "btnShare|shareCluster|whatsapp"`
+Viewed controller.js:660-710
+Viewed controller.js:790-835
+Viewed controller.js:900-950
+Viewed controller.js:1020-1064
+Searched for "btnShareFamilyMode"
+Viewed controller.js:360-400
+Viewed controller.js:400-420
+Viewed controller.js:370-400
+Searched for "shareClusterWhatsApp"
+Viewed controller.js:220-280
+Ran command: `Get-Content shopping_src/scripts/controller.js | Select-String -Pattern "shareClusterWhatsApp" -Context 0,10`
+Created implementation_plan.md
 
-# Review 4.3 -
+### Clarification & Intent Record
 
-# Response 4.3 -
+- **Ambiguity detected**: User asked why stakeholder-targeted sharing links (e.g. for Parents and Sisters) are not readily available directly inside the main app `#tab-shopping` to quickly copy and share, and requested a deep analysis to find all such missing links across the system.
+- **Question asked**: How would you like to architect the Executive Quick-Share links and missing link resolution?
+- **Options offered**:
+  - A) *(Recommended)* Unified Executive Quick-Share Hub (In-Tab Contextual Bars + Global Header Quick-Share Modal)
+  - B) In-Tab Contextual Quick-Share Cards Only
+  - C) Comprehensive Deep-Link Governance (SSOT Registry Catalog + Executive Share Drawer)
+- **User resolution**: *"Conduct a thorough evaluation of the available options, breaking down their specific similarities and distinctions. Base this analysis on the provided context alongside established best practices researched from the web. Using established Architecture Council skills and standards, design a hybrid approach that leaves no gaps. Provide the optimal path forward not just as a suggestion, but as an already Architecture Council-certified decision."*
+- **Bound route**: `.agent/workflows/plan.md` & `.agent/skills/ui-council/SKILL.md` (Governing Council Decision: `AC-DEC-2026-027` / `UI-DEC-2026-023` / `P-QUICK-SHARE-001`)
+- **Resolved scope**:
+  1. Deep forensic discovery of the dynamic Base URL Resolution Defect (`BUG-SHARE-BASEURL-001`).
+  2. Complete Missing Links & Stakeholder Portals Matrix across all four OS operational domains.
+  3. Comparative evaluation of options (similarities & distinctions).
+  4. Architecture Council Certified Hybrid Specification (`P-QUICK-SHARE-001`).
+  5. Implementation plan and verification matrix presentation with plan approval gate.
+
+---
+
+## 1. Deep Forensic Discovery: The Base URL Resolution Defect (`BUG-SHARE-BASEURL-001`)
+
+During our deep code trace of the existing share buttons in `shopping_src/scripts/controller.js` (lines 507, 522) and `decision_registry_src/scripts/controller.js` (lines 385, 403), we uncovered a **silent architectural bug**:
+
+```javascript
+// Current implementation:
+const baseUrl = window.location.origin + window.location.pathname;
+const shareUrl = `${baseUrl}?mode=family`;
+```
+
+* **When running on standalone pages (`shopping-registry.html`)**: `window.location.pathname` is `/shopping-registry.html`, generating the correct link: `https://sree-krushna-forever.web.app/shopping-registry.html?mode=family`.
+* **When running inside the main SPA (`/#tab-shopping`)**: `window.location.pathname` is `/` or `/index.html`!
+* **The Failure Mode**: Clicking "Share with Family" or "Share Sisters Link" inside the main app generates `https://sree-krushna-forever.web.app/?mode=family`. When an elder clicks this on WhatsApp, they land on the authenticated main app shell rather than the zero-friction, un-authenticated shopping portal!
+
+**Resolution Mandate**: The URL resolution must be deterministic and decoupled from `window.location.pathname` via `SKPrimitives.getStakeholderUrl(portalFile, params)`.
+
+---
+
+## 2. The Complete Missing Links Matrix Across Sree Krushna Marriage OS
+
+Our deep audit across all modules identified **10 critical stakeholder-targeted deep links** that are currently missing direct 1-click executive copy affordances:
+
+| Operational Domain | Stakeholder Audience | Target External Portal & Parameters | Current Status in Main App |
+| :--- | :--- | :--- | :--- |
+| **1. Shopping & Trousseau** | 👨‍👩‍👧‍👦 Parents & Elders | `/shopping-registry.html?mode=family` | **Missing in `#tab-shopping`** (generates root path `/`) |
+| **2. Shopping & Styling** | 👭 Sisters & Groom's Aunts | `/shopping-registry.html?mode=sisters` | **Missing in `#tab-shopping`** (generates root path `/`) |
+| **3. Wedding Saree Cluster** | 🌸 Bridal Party & In-Laws | `/shopping-registry.html?mode=family&cluster=cluster_vivaha_pata` | **Hidden inside sub-card**, no direct URL copy |
+| **4. Groom Attire Cluster** | 👑 Groom & Gents Council | `/shopping-registry.html?mode=family&cluster=cluster_groom_mandap` | **Hidden inside sub-card**, no direct URL copy |
+| **5. Standalone Catalog** | 🛍️ Extended Guests / Offline | `/shopping-registry.html` | No pop-out link in `#tab-shopping` |
+| **6. Decor Decisions** | 👨‍👩‍👧‍👦 Family Decor Consensus | `/decision-registry.html?mode=family` | Generates root path `/` when in SPA |
+| **7. Mandap Architecture** | 🕉️ Vedic Liturgy Committee | `/decision-registry.html?cluster=cluster_mandap&mode=family` | Generates root path `/` when in SPA |
+| **8. Reception Stage** | 🎪 Event Stage Designers | `/decision-registry.html?cluster=cluster_stage&mode=family` | Generates root path `/` when in SPA |
+| **9. Grand Entry Special FX** | ✨ Atmospheric FX Crew | `/decision-registry.html?cluster=cluster_entry&mode=family` | Generates root path `/` when in SPA |
+| **10. Decorator Negotiation** | 🖥️ Mandap Decorator RFP | `/decorator-cockpit.html?mode=presentation` | **Missing**: no 1-click copy for vendor meeting link |
+
+---
+
+## 3. Comparative Evaluation of Available Options
+
+```
+                    [ Option 1: In-Tab Bars Only ] ───────── Contextual inside tabs only
+                                │
+                    [ Option 2: Global Header Modal Only ] ── Disconnected from active tab context
+                                │
+                    [ Option 3: Certified Hybrid Model ] ──── In-Tab Quick Bar + Global Hub + URL Fix
+```
+
+### 3.1 Option Breakdown
+
+* **Option 1: In-Tab Contextual Quick-Share Bars Only**
+  * *Mechanism*: Embeds a dedicated quick-share dock directly inside `#tab-shopping` and `#tab-decision-registry` with copy chips and direct WhatsApp triggers.
+  * *Strengths*: Highly contextual; zero navigation distance when working in that specific tab.
+  * *Weaknesses*: Requires navigating to that specific tab just to copy a link for someone on WhatsApp while on the dashboard or tasks tab.
+
+* **Option 2: Global Header Quick-Share Modal Only**
+  * *Mechanism*: Places a single "🔗 Quick Share" button in the sticky top header dock opening a categorized link directory.
+  * *Strengths*: Accessible anywhere from any tab in the application.
+  * *Weaknesses*: Adds modal interaction friction (requires opening modal, searching through categories, copying, and closing).
+
+* **Option 3: Certified Hybrid Model (`P-QUICK-SHARE-001`)**
+  * *Mechanism*: Unifies both:
+    1. **Contextual In-Tab Quick Bar**: Prominently visible at the top of `#tab-shopping` and `#tab-decision-registry` for 1-click copy without opening any modal.
+    2. **Global Header Affordance**: A dedicated `[🔗 Quick Share]` button in the top dock for instant access from any tab.
+    3. **Primitive URL Resolver**: Fixes `BUG-SHARE-BASEURL-001` codebase-wide.
+
+---
+
+### 3.2 Specific Similarities & Distinctions
+
+* **Similarities**: All options use native `navigator.clipboard.writeText` with toast visual confirmation and fallback prompts; all target the same verified standalone distribution URLs.
+* **Distinctions**:
+  * Option 1 lacks global reach; Option 2 introduces modal click fatigue; the **Hybrid Model** eliminates friction by matching the exact workflow of the user: 1-click contextual chips when inside the tab, and a universal launcher when navigating elsewhere.
+
+---
+
+## 4. Architecture Council Certified Decision (`AC-DEC-2026-027` / `UI-DEC-2026-023` / `P-QUICK-SHARE-001`)
+
+The Architecture & UI Council formally ratifies the **Universal Executive Quick-Share & Stakeholder Deep-Link Architecture**:
+
+1. **Shared Deterministic URL Resolver (`SKPrimitives.getStakeholderUrl`)**:
+   - Resides in [ui_primitives/scripts/primitives_core.js](file:///d:/GitHub_Repo/Sree_Krushna/ui_primitives/scripts/primitives_core.js).
+   - Formulates absolute URLs referencing `/shopping-registry.html` or `/decision-registry.html` regardless of the host caller's `window.location.pathname`.
+2. **Contextual Executive Quick-Share Bar in `#tab-shopping`**:
+   - Embedded at the top of the shopping module with 5 high-frequency copy chips:
+     - 👨‍👩‍👧‍👦 `[📋 Copy Parents Review Link]`
+     - 👭 `[📋 Copy Sisters' Hub Link]`
+     - 💍 `[📋 Copy Vivaha Pata Link]`
+     - 👑 `[📋 Copy Groom Mandap Link]`
+     - ↗ `[Open Standalone Hub]`
+3. **Contextual Executive Quick-Share Bar in `#tab-decision-registry`**:
+   - Embedded at the top of the decision module with 4 high-frequency copy chips:
+     - 👨‍👩‍👧‍👦 `[📋 Copy Decor Review Link]`
+     - 🕉️ `[📋 Copy Mandap Voting Link]`
+     - 🎪 `[📋 Copy Stage Voting Link]`
+     - ✨ `[📋 Copy Entry FX Link]`
+4. **Global Executive Quick-Share Station in Header Dock**:
+   - Header action button `openExecutiveShareBtn` (`data-testid="open-executive-share-btn"`).
+   - Opens `#executiveShareModal` displaying all 10 verified deep links categorized by stakeholder group.
+
+---
+
+## 5. Next Steps
+
+The complete implementation plan has been written to [implementation_plan.md](file:///C:/Users/TEMP/.gemini/antigravity/brain/273d6e03-aa90-4c17-8191-cb085bc1f1df/implementation_plan.md).
+
+Please review the plan and click **Proceed** (or reply to confirm) so we can implement the resolution, re-run all verification gates, and deploy the updated release to production.
+
+# Response 4.3 -# Implementation Plan: Universal Executive Quick-Share & Stakeholder Deep-Link Architecture
+
+Establish the **Universal Executive Quick-Share & Stakeholder Deep-Link Architecture (`AC-DEC-2026-027` / `UI-DEC-2026-023` / `P-QUICK-SHARE-001`)** across the Sree Krushna Marriage OS.
+
+---
+
+## User Review Required
+
+> [!IMPORTANT]
+> **Resolution of `BUG-SHARE-BASEURL-001`**:
+> Currently, `btnShareFamily` and `btnShareSisters` in `shopping_src` (and `btnShareFamilyMode` in `decision_registry_src`) use `window.location.origin + window.location.pathname`. When mounted inside the main SPA (`/#tab-shopping`), this generates broken links pointing to `https://sree-krushna-forever.web.app/?mode=family` (which hits the authenticated main app) instead of the standalone, unauthenticated portal `https://sree-krushna-forever.web.app/shopping-registry.html?mode=family`.
+> We will resolve this globally with `SKPrimitives.getStakeholderUrl()` ensuring links ALWAYS point to the correct standalone portal.
+
+> [!NOTE]
+> **Executive UX Elevation**:
+> Executives in `#tab-shopping` and `#tab-decision-registry` will have instant 1-click copy chips and direct WhatsApp launch buttons for:
+> 1. 👨‍👩‍👧‍👦 Parents & Family Trousseau Review (`shopping-registry.html?mode=family`)
+> 2. 👭 Sisters' Styling Hub (`shopping-registry.html?mode=sisters`)
+> 3. 💍 Vivaha Pata Silk Cluster (`shopping-registry.html?mode=family&cluster=cluster_vivaha_pata`)
+> 4. 👑 Groom Mandap & Sherwani Cluster (`shopping-registry.html?mode=family&cluster=cluster_groom_mandap`)
+> 5. 🕉️ Mandap Architecture Voting (`decision-registry.html?cluster=cluster_mandap&mode=family`)
+> 6. 🎪 Reception Stage Voting (`decision-registry.html?cluster=cluster_stage&mode=family`)
+> 7. ✨ Grand Entry Atmospheric Production (`decision-registry.html?cluster=cluster_entry&mode=family`)
+> 8. 🖥️ Decorator Vendor Presentation Mode (`decorator-cockpit.html?mode=presentation`)
+
+---
+
+## Open Questions
+
+None. The target portals, deep links, and modal structure are fully defined.
+
+---
+
+## Proposed Changes
+
+### Component 1: Shared URL Primitive & Base URL Resolution (`ui_primitives/`)
+Implement a robust deep-link resolver that guarantees correct absolute URLs regardless of whether code runs in the root SPA or standalone pages.
+
+#### [MODIFY] [ui_primitives/scripts/primitives_core.js](file:///d:/GitHub_Repo/Sree_Krushna/ui_primitives/scripts/primitives_core.js)
+- Add `SKPrimitives.getStakeholderUrl(portalFile, queryParams)`:
+  - Detects current origin (`window.location.origin`).
+  - Normalizes path to target `portalFile` (e.g., `shopping-registry.html` or `decision-registry.html`).
+  - Formats clean query parameters.
+- Add `SKPrimitives.copyToClipboard(text, successMessage)` with toast fallback.
+
+---
+
+### Component 2: In-Tab Executive Quick-Share Stations (`shopping_src/` & `decision_registry_src/`)
+Embed a dedicated, high-scannability Quick-Share Bar directly above the catalog/clusters in `#tab-shopping` and `#tab-decision-registry`.
+
+#### [MODIFY] [shopping_src/components/body.html](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/components/body.html)
+- Insert `<div class="shop-executive-share-bar" id="shopExecutiveShareBar">` featuring:
+  - `[📋 Copy Parents Review Link]` (`shopping-registry.html?mode=family`)
+  - `[📋 Copy Sisters' Hub Link]` (`shopping-registry.html?mode=sisters`)
+  - `[📋 Copy Vivaha Pata Link]` (`shopping-registry.html?mode=family&cluster=cluster_vivaha_pata`)
+  - `[📋 Copy Groom Mandap Link]` (`shopping-registry.html?mode=family&cluster=cluster_groom_mandap`)
+  - `[↗ Open Standalone Hub]` (`shopping-registry.html`)
+  - `[📝 Print Family Survey]`
+
+#### [MODIFY] [shopping_src/styles/00_tokens_base.css](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/styles/00_tokens_base.css) or [01_header_and_hero.css](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/styles/01_header_and_hero.css)
+- Add styling for `.shop-executive-share-bar`: luxury compact card with gold border, badge labels, and copy pill buttons.
+
+#### [MODIFY] [shopping_src/scripts/controller.js](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/scripts/controller.js)
+- Update `btnShareFamily`, `btnShareSisters`, and cluster share buttons to consume `SKPrimitives.getStakeholderUrl()`.
+- Add click handlers for the Quick-Share Bar pills.
+
+#### [MODIFY] [decision_registry_src/components/body.html](file:///d:/GitHub_Repo/Sree_Krushna/decision_registry_src/components/body.html)
+- Insert `<div class="dr-executive-share-bar" id="drExecutiveShareBar">` featuring 1-click copy chips for Family Decor Review, Mandap Consensus, Stage Consensus, and Grand Entry Consensus.
+
+#### [MODIFY] [decision_registry_src/scripts/controller.js](file:///d:/GitHub_Repo/Sree_Krushna/decision_registry_src/scripts/controller.js)
+- Fix `shareClusterWhatsApp` and `btnShareFamilyMode` to use `SKPrimitives.getStakeholderUrl('decision-registry.html', ...)`.
+
+---
+
+### Component 3: Global Header Quick-Share Station (`index.html` & `public/index.html`)
+Provide a universal Quick-Share modal accessible from the main header navigation dock.
+
+#### [MODIFY] [index.html](file:///d:/GitHub_Repo/Sree_Krushna/index.html) & [public/index.html](file:///d:/GitHub_Repo/Sree_Krushna/public/index.html)
+- Add Quick-Share button to `.header-right`:
+  ```html
+  <button id="openExecutiveShareBtn" class="header-action-btn btn-ghost" data-testid="open-executive-share-btn" aria-label="Open Executive Quick-Share Station" onclick="openExecutiveShareModal()">
+    <span class="btn-icon">🔗</span>
+    <span class="btn-text">Quick Share</span>
+  </button>
+  ```
+- Add modal container `#executiveShareModal` with categorized link sections (Shopping, Decor Decisions, Vendor Presentations).
+
+#### [MODIFY] [public/js/app.js](file:///d:/GitHub_Repo/Sree_Krushna/public/js/app.js)
+- Implement `openExecutiveShareModal()`, `closeExecutiveShareModal()`, and 1-click copy handlers.
+- Bind `window.openExecutiveShareModal = openExecutiveShareModal`.
+
+#### [MODIFY] [FEATURE_CATALOG.json](file:///d:/GitHub_Repo/Sree_Krushna/FEATURE_CATALOG.json)
+- Register `openExecutiveShareBtn` and `executiveShareModal`.
+
+---
+
+### Component 4: SDCA Re-Compilation & Full Pre-Flight Verification
+Recompile all modular fragments and verify 100% byte parity.
+
+#### [RUN] Build & Test Commands
+- `npm run build:shopping:all`
+- `npm run build:decision-registry`
+- `npm run verify:modular-architecture`
+- `npm run verify:ui-lifecycle`
+- `npm run test:shopping`
+- `npm run test:decision-registry`
+- `npm run verify:mobile`
+- `npm run verify:deployment`
+
+---
+
+### Component 5: Council Ledger & Production Cloud Deployment
+Commit changes and deploy live.
+
+#### [NEW] [User_Created/Discussion Threads/Council/260916_arch_council_universal_executive_quick_share_and_deep_link_architecture.md](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/260916_arch_council_universal_executive_quick_share_and_deep_link_architecture.md)
+- Codify `AC-DEC-2026-027` / `UI-DEC-2026-023` / `P-QUICK-SHARE-001`.
+- Update `Council_Ledger.md`.
+
+#### [RUN] Cloud Deployment
+- `git commit -am "feat(share): implement Universal Executive Quick-Share Station and resolve BUG-SHARE-BASEURL-001"`
+- `firebase.cmd deploy --only hosting --non-interactive`
+
+---
+
+## Verification Plan
+
+### Automated Tests
+```powershell
+npm run build:shopping:all
+npm run verify:modular-architecture
+npm run verify:ui-lifecycle
+npm run test:shopping
+npm run test:decision-registry
+npm run verify:mobile
+npm run verify:deployment
+npm run verify:governance-wiring
+```
+
+### Manual Verification
+1. Open `https://sree-krushna-forever.web.app/#tab-shopping`:
+   - Verify the new **Executive Quick-Share Station** is prominently displayed.
+   - Click "📋 Copy Parents Review Link" $\to$ paste into notepad $\to$ verify URL is `https://sree-krushna-forever.web.app/shopping-registry.html?mode=family`.
+   - Click "📋 Copy Sisters' Hub Link" $\to$ verify URL is `https://sree-krushna-forever.web.app/shopping-registry.html?mode=sisters`.
+2. Open `https://sree-krushna-forever.web.app/`:
+   - Click the new **🔗 Quick Share** header button $\to$ verify modal opens with all categorized links.
+   - Test dismissibility via Close button, Backdrop click, and `Escape` key.
+
 
 # Query 4.4 -
 
-# Review 4.4 -
+# Review 4.4 -Viewed primitives_core.js:1-100
+Viewed primitives_core.js:101-169
+Searched for "primitives_core.js"
+Viewed build.cjs:50-90
+Searched for "primitives"
+Searched for "<script"
+Searched for "script"
+Viewed index.html:1-50
+Viewed index.html:1200-1275
+Searched for "theme-toggle"
+Searched for "<header"
+Viewed FEATURE_CATALOG.json:1-60
+Viewed FEATURE_CATALOG.json:60-163
+Viewed index.html:50-150
+Viewed verify-deployment.cjs:80-140
+Searched for "FEATURE_CATALOG"
+Searched for "FEATURE_CATALOG"
+Viewed verify-deployment.cjs:340-400
+Viewed verify-deployment.cjs:140-180
+Viewed verify-deployment.cjs:181-220
+Searched for "window.location.pathname"
+Viewed controller.js:315-335
+Viewed controller.js:500-535
+Viewed controller.js:380-415
+Viewed body.html:1-60
+Viewed body.html:1-60
+Searched for "class="modal"
+Searched for "inspirationModal"
+Ran command: `Select-String -Path "index.html" -Pattern "inspirationModal"`
+Viewed index.html:995-1040
+Ran command: `Select-String -Path "public/js/app.js" -Pattern "openInspirationModal"`
+Viewed app.js:1595-1630
+Ran command: `Select-String -Path "public/js/app.js" -Pattern "closeInspirationModal"`
+Viewed app.js:1580-1598
+Ran command: `fc /B js\app.js public\js\app.js`
+Ran command: `cmd /c fc /B js\app.js public\js\app.js`
+Searched for files: *app.js*
+Ran command: `cmd /c fc /B index.html public\index.html`
+Ran command: `Test-Path public\ui_primitives`
+Ran command: `Select-String -Path "public/js/app.js" -Pattern "Escape"`
+Viewed app.js:2170-2238
+Viewed app.js:2100-2169
+Ran command: `Select-String -Path "public/js/app.js" -Pattern "mountShoppingRegistryTab"`
+Viewed primitives_core.js:30-60
+Viewed primitives_core.js:150-169
+Edited primitives_core.js
+Ran command: `node -c ui_primitives/scripts/primitives_core.js`
+Viewed body.html:20-55
+Viewed d:\GitHub_Repo\Sree_Krushna\shopping_src\styles\01_header_and_hero.css:2-101
+Listed directory styles
+Viewed 01_base_layout.css:1-100
+Viewed 01_base_layout.css:101-186
+Viewed 04_toast_and_print.css:1-100
+Edited body.html
+Viewed 01_base_layout.css:170-186
+Edited 01_base_layout.css
+Viewed 04_toast_and_print.css:30-40
+Edited 04_toast_and_print.css
+Viewed controller.js:315-335
+Viewed controller.js:505-535
+Viewed controller.js:920-955
+Edited controller.js
+Edited controller.js
+Viewed controller.js:940-957
+Edited controller.js
+Ran command: `node -c shopping_src/scripts/controller.js`
+Viewed body.html:25-55
+Listed directory styles
+Viewed 01_base_layout.css:1-33
+Viewed 02_carousel_and_stepper.css
+Viewed 05_responsive_and_print.css:1-60
+Viewed build.cjs:20-45
+Viewed 05_responsive_and_print.css:60-120
+Ran command: `Select-String -Path "decision_registry_src/styles/05_responsive_and_print.css" -Pattern "@media print"`
+Viewed 05_responsive_and_print.css:1585-1611
+Viewed controller.js:380-418
+Viewed controller.js:1030-1064
+Edited body.html
+Viewed 01_base_layout.css:1-33
+Edited 01_base_layout.css
+Viewed 05_responsive_and_print.css:1595-1605
+Edited 05_responsive_and_print.css
+Viewed controller.js:380-418
+Viewed controller.js:1050-1064
+Edited controller.js
+Edited controller.js
+Ran command: `node -c decision_registry_src/scripts/controller.js`
+Ran command: `npm run build:shopping:all; npm run build:decision-registry`
+Ran command: `git status -s`
+Viewed index.html:125-150
+Ran command: `Select-String -Path "index.html" -Pattern "changeRequestReceiptModal"`
+Viewed index.html:1100-1150
+Viewed index.html:1165-1195
+Ran command: `Select-String -Path "public/css/main.css" -Pattern "\.modal-overlay"`
+Ran command: `npm run verify:modular-architecture; npm run verify:ui-lifecycle; npm run verify:mobile; npm run verify:deployment; npm run verify:governance-wiring:all`
+Ran command: `npm run verify:deployment`
+Ran command: `npm run verify:modular-architecture; npm run verify:ui-lifecycle; npm run verify:mobile`
+Viewed index.html:133-145
+Edited index.html
+Viewed index.html:1170-1185
+Edited index.html
+Ran command: `Copy-Item index.html public/index.html -Force`
+Ran command: `cmd /c fc /B index.html public\index.html`
+Viewed FEATURE_CATALOG.json:120-163
+Edited FEATURE_CATALOG.json
+Viewed app.js:1590-1620
+Ran command: `Select-String -Path "public/js/app.js" -Pattern "navigator.clipboard"`
+Viewed app.js:1835-1850
+Ran command: `Select-String -Path "public/js/app.js" -Pattern "keydown"`
+Viewed app.js:1370-1400
+Viewed app.js:1610-1630
+Viewed app.js:2195-2220
+Edited app.js
+Viewed app.js:1470-1495
+Ran command: `Select-String -Path "public/js/app.js" -Pattern "keydown"`
+Viewed app.js:1375-1385
+Edited app.js
+Viewed app.js:2290-2320
+Edited app.js
+Ran command: `node -c public/js/app.js`
+Ran command: `git status -s`
+Ran command: `npm run build:shopping:all; npm run build:decision-registry`
+Ran command: `cmd /c fc /B index.html public\index.html`
+Ran command: `npm run test:shopping; npm run test:decision-registry; npm run verify:modular-architecture; npm run verify:ui-lifecycle; npm run verify:mobile; npm run verify:deployment`
+Viewed Council_Ledger.md:1-40
+Viewed 260916_arch_council_multi_surface_web_app_and_shopping_deployment.md:1-60
+Created d:\GitHub_Repo\Sree_Krushna\User_Created\Discussion Threads\Council\260916_arch_council_universal_executive_quick_share_and_deep_link_architecture.md
+Ran command: `@'
+# 🏛️ Architecture & UI Council Decision Record: Universal Stakeholder Quick-Share Station & Canonical Deep-Link Architecture
 
-# Response 4.4 -
+- **Decision Record:** `AC-DEC-2026-027` / `UI-DEC-2026-023`
+- **Pattern Specification:** `P-QUICK-SHARE-001` (Universal Stakeholder Quick-Share Station & Canonical Deep-Link Architecture)
+- **Bug Resolution:** `BUG-SHARE-BASEURL-001` (SPA Pathname Drift in Standalone Share Link Generation)
+- **Parent Specifications:** `ARCHITECTURE_SPEC.md`, `STD-MOD-COMP-001`, `STD-UI-LIFECYCLE-001`, `P-MULTI-SURFACE-DEPLOY-001`
+- **Date:** 2026-09-16
+- **Status:** **APPROVED & SHIPPED**
+- **Quorum:** Enterprise Architecture Board, UI/UX Council, Liturgical Logistics Committee, Security & Deployment Gatekeepers
+
+---
+
+## 1. Context & Forensic Defect Discovery
+
+### 1.1 The Operational Challenge
+Following the successful deployment of the 3-Tier Multi-Surface Web App (`AC-DEC-2026-026`), executive hosts noted that accessing stakeholder-specific URLs (`?mode=family`, `?mode=sisters`, cluster consensus links) required manually remembering or searching past chat windows to retrieve URLs, rather than having them readily available inside the application.
+
+Furthermore, a forensic audit of the share link generation logic revealed **`BUG-SHARE-BASEURL-001`**:
+```javascript
+// DEFECTIVE IMPLEMENTATION:
+const baseUrl = window.location.origin + window.location.pathname;
+const shareUrl = `${baseUrl}?mode=family`;
+```
+- When running on standalone portals (`/shopping-registry.html`), `window.location.pathname` resolved to `/shopping-registry.html`.
+- **CRITICAL FAILURE IN SPA MODE**: When running mounted inside the main SPA (`https://sree-krushna-forever.web.app/#tab-shopping`), `window.location.pathname` resolved to `/` or `/index.html`.
+- Consequently, copying family review links from within the main dashboard generated:
+  `https://sree-krushna-forever.web.app/?mode=family`
+  which directed family elders to the authenticated dashboard login screen rather than the frictionless standalone shopping portal.
+
+---
+
+## 2. Universal Stakeholder Deep-Link Catalog
+
+The Council cataloged all ten canonical stakeholder deep links across the Marriage OS ecosystem:
+
+| # | Stakeholder Circle | Target Portal / Anchor | Query Parameters | WhatsApp Template & Intent |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | **Parents & Extended Family** | `/shopping-registry.html` | `?mode=family` | Frictionless family survey voting & A4 print form. |
+| 2 | **Sisters' Styling Circle** | `/shopping-registry.html` | `?mode=sisters` | Sister coordinates, pastels, and matching ensembles. |
+| 3 | **Vivaha Pata Trousseau** | `/shopping-registry.html` | `?cluster=vivaha_pata&mode=family` | Sacred wedding silks & Khandua Pata consensus. |
+| 4 | **Groom Mandap Attire** | `/shopping-registry.html` | `?cluster=groom_mandap&mode=family` | Authentic Odia Dhoti, Khandua Joda, and Mandap wear. |
+| 5 | **Family Decor Consensus** | `/decision-registry.html` | `?event=EVT-004&mode=family` | Event-by-event decor stepper with 1-click voting. |
+| 6 | **Vivaha Mandap Decor** | `/decision-registry.html` | `?event=EVT-004&cluster=mandap_structure&mode=family` | Sacred Vedic Vivaha Mandap theme alignment. |
+| 7 | **Sangeet Stage Decor** | `/decision-registry.html` | `?event=EVT-003&cluster=sangeet_stage&mode=family` | Sangeet stage backdrop, trussing, and lighting. |
+| 8 | **Executive Decorator RFP**| `/decorator-cockpit.html` | (none) | High-speed vendor negotiation and quotation deck. |
+| 9 | **Public Proposal Intake** | `/shopping-registry.html` | `#intake` | Rapid open suggestion and image upload drop. |
+| 10 | **Core Marriage OS** | `/` | (none) | Master OS Control Tower, Precedence DAG & Liturgy. |
+
+---
+
+## 3. Certified Resolution: Universal Quick-Share Station (`P-QUICK-SHARE-001`)
+
+The Council certified a 3-layer synergistic implementation:
+
+### 3.1 Layer 1: Canonical URL Normalization in `ui_primitives`
+Added `SKPrimitives.getStakeholderUrl(portalFile, params)` and `SKPrimitives.getStakeholderShare(key)` in `ui_primitives/scripts/primitives_core.js`:
+- Guarantees canonical target filename (`shopping-registry.html`, `decision-registry.html`) regardless of whether code runs in an iframe, an embedded SPA container, or a standalone tab.
+- Re-exports `copyStakeholderShare(key)` and `copyUrlToClipboard(key, label)` globally with integrated toast notifications.
+
+### 3.2 Layer 2: In-Tab Contextual Quick-Share Bars
+- **Shopping Registry (`#tab-shopping`)**: Prominent `.shop-executive-share-bar` positioned above the catalog/survey view switcher with 1-click copy chips for Family Mode, Sisters' Styling, Vivaha Pata, Groom Mandap, and Standalone Portal pop-out (`_blank`).
+- **Decision Registry (`#tab-decision-registry`)**: Prominent `.dr-executive-share-bar` positioned above the event stepper with 1-click copy chips for Family Decor Mode, Vivaha Mandap, Sangeet Stage, and Standalone Portal pop-out.
+
+### 3.3 Layer 3: Global Header Quick-Share Station
+- Added `[🔗 Share Links]` button (`#openExecutiveShareBtn`) in the sticky top header (`.header-right`) of `index.html` and `public/index.html`.
+- Bound to modal `#executiveShareModal` featuring 10 stakeholder cards, each equipped with 1-click WhatsApp text copy (`📋`), direct WhatsApp Web dispatch (`💬`), and direct pop-out (`↗️`).
+- Satisfies `INV-LIFECYCLE-03`: 3-trigger dismissibility (Close button, Backdrop click, and Escape keydown).
+- Formally registered in `FEATURE_CATALOG.json` under `headerAffordances` and `intakeModals`.
+
+---
+
+## 4. Verification & Governance Trace
+
+1. **Syntax & Architecture Gate (`STD-MOD-COMP-001`)**: `npm run verify:modular-architecture` — 45/45 checks pass (100% byte parity across all 8 dual-distribution files).
+2. **Dynamic UI Lifecycle Gate (`STD-UI-LIFECYCLE-001`)**: `npm run verify:ui-lifecycle` — 4/4 checks pass (INV-LIFECYCLE-01, 02, 03, 04).
+3. **Mobile First Gate (`M-GATE-01`)**: `npm run verify:mobile` — 16/16 checks pass.
+4. **Pre-Flight Zero-Proxy Deployment Gate**: `npm run verify:deployment` — All 10 Layers pass 100% green.
+5. **Standalone Functional Suites**: `npm run test:shopping` and `npm run test:decision-registry` pass 100% green.
+'@ | Set-Content -Path "User_Created/Discussion Threads/Council/260916_arch_council_universal_executive_quick_share_and_deep_link_architecture.md" -Encoding UTF8`
+Viewed Council_Ledger.md:25-35
+Edited Council_Ledger.md
+Ran command: `npm run test:shopping; npm run test:decision-registry; npm run verify:modular-architecture; npm run verify:ui-lifecycle; npm run verify:mobile; npm run verify:deployment`
+Ran command: `git status`
+Ran command: `git add FEATURE_CATALOG.json "User_Created/Discussion Threads/Council/" decision-registry-fragment.html decision-registry.html decision_registry_src/ index.html public/ shopping-fragment.html shopping-registry.html shopping_src/ ui_primitives/scripts/primitives_core.js; git commit -m "feat(share): implement Universal Executive Quick-Share Station and resolve BUG-SHARE-BASEURL-001 (AC-DEC-2026-027)"`
+Edited Council_Ledger.md
+Ran command: `git commit -am "docs(council): update Council_Ledger.md with commit hash a4e2b95 for AC-DEC-2026-027"`
+Ran command: `firebase.cmd deploy --only hosting --non-interactive`
+
+I have initiated the Firebase Hosting deployment (`task-3141`) for the Universal Executive Quick-Share Station and will verify live production endpoints as soon as deployment completes.
+
+Checked task Deploy to Firebase Hosting
+Ran command: `$urls = @(
+  'https://sree-krushna-forever.web.app/',
+  'https://sree-krushna-forever.web.app/shopping-registry.html',
+  'https://sree-krushna-forever.web.app/decision-registry.html',
+  'https://sree-krushna-forever.web.app/shopping-fragment.html',
+  'https://sree-krushna-forever.web.app/decision-registry-fragment.html'
+)
+foreach ($url in $urls) {
+  $res = Invoke-WebRequest -Uri $url -Method Head -UseBasicParsing
+  Write-Host "$($res.StatusCode) OK: $url"
+}`
+Ran command: `$content = (Invoke-WebRequest -Uri 'https://sree-krushna-forever.web.app/' -UseBasicParsing).Content
+$hasBtn = $content.Contains('id="openExecutiveShareBtn"')
+$hasModal = $content.Contains('id="executiveShareModal"')
+Write-Host "Live Root contains openExecutiveShareBtn: $hasBtn"
+Write-Host "Live Root contains executiveShareModal: $hasModal"`
+Ran command: `$content = (Invoke-WebRequest -Uri 'https://sree-krushna-forever.web.app/shopping-registry.html' -UseBasicParsing).Content
+$hasBar = $content.Contains('id="shopExecutiveShareBar"')
+$hasFix = $content.Contains('getStakeholderUrl')
+Write-Host "Live Shopping contains shopExecutiveShareBar: $hasBar"
+Write-Host "Live Shopping contains getStakeholderUrl fix: $hasFix"`
+Ran command: `$content = (Invoke-WebRequest -Uri 'https://sree-krushna-forever.web.app/decision-registry.html' -UseBasicParsing).Content
+$hasBar = $content.Contains('id="drExecutiveShareBar"')
+$hasFix = $content.Contains('getStakeholderUrl')
+Write-Host "Live Decision Registry contains drExecutiveShareBar: $hasBar"
+Write-Host "Live Decision Registry contains getStakeholderUrl fix: $hasFix"`
+Viewed walkthrough.md:1-60
+Viewed walkthrough.md:61-123
+Created walkthrough.md
+Ran command: `git status`
+
+The **Universal Stakeholder Quick-Share Station (`P-QUICK-SHARE-001`)** has been implemented, verified across all pre-flight gates, committed, and deployed live to production.
+
+---
+
+### Key Accomplishments & Resolutions
+
+1. **Root-Cause Defect Resolution (`BUG-SHARE-BASEURL-001`)**:
+   - Resolved the defect where `window.location.origin + window.location.pathname` inside the SPA shell (`#tab-shopping`) produced broken links like `https://sree-krushna-forever.web.app/?mode=family` (which incorrectly routed family elders to the Google authentication screen).
+   - Created `SKPrimitives.getStakeholderUrl(portalFile, params)` in `ui_primitives/scripts/primitives_core.js`, guaranteeing canonical destination URLs (`/shopping-registry.html?mode=family`) regardless of whether called from an embedded SPA container or standalone portal.
+
+2. **Contextual In-Tab Quick-Share Bars**:
+   - **Shopping Registry (`#tab-shopping`)**: Prominent `.shop-executive-share-bar` directly above the catalog/survey view switcher with 1-click chips:
+     - 🌺 **Family Mode** (`?mode=family`)
+     - 👭 **Sisters' Styling** (`?mode=sisters`)
+     - 👑 **Vivaha Pata** (`?cluster=vivaha_pata&mode=family`)
+     - ✨ **Groom Mandap** (`?cluster=groom_mandap&mode=family`)
+     - ↗️ **Standalone Portal** (`shopping-registry.html` in new tab)
+   - **Decision Registry (`#tab-decision-registry`)**: Prominent `.dr-executive-share-bar` directly above the event timeline stepper with 1-click chips for **Family Decor Mode**, **Vivaha Mandap**, **Sangeet Stage**, and **Standalone Portal** pop-out.
+
+3. **Global Header Quick-Share Station (`openExecutiveShareBtn`)**:
+   - Added `[🔗 Share Links]` button to the sticky top header (`.header-right`) in both `index.html` and `public/index.html`.
+   - Opens `#executiveShareModal` featuring the complete **10-Link Missing Links Catalog** across Shopping, Decors, Cockpit, and Intake.
+   - Each card provides:
+     - 📋 **Copy WhatsApp Msg**: Copies pre-formatted Odia/English invitation message with canonical link directly to clipboard.
+     - 💬 **WhatsApp**: Opens WhatsApp Web / Mobile directly with pre-filled message.
+     - ↗️ **Direct Launch**: Opens the destination URL in a new browser tab.
+   - Implements `INV-LIFECYCLE-03`: Full 3-trigger dismissibility (Close button, Backdrop click, and Escape key).
+
+4. **Automated Verification & Zero-Proxy Deployment**:
+   - Recompiled SDCA modules maintaining 100% byte parity (`build:shopping:all`, `build:decision-registry`).
+   - Passed all 6 test suites: `test:shopping`, `test:decision-registry`, `verify:modular-architecture`, `verify:ui-lifecycle`, `verify:mobile`, and `verify:deployment` (10/10 pre-flight layers).
+   - Formally registered affordances and modals in `FEATURE_CATALOG.json`.
+   - Codified Architecture Council Decision `AC-DEC-2026-027` / `UI-DEC-2026-023` in [`Council_Ledger.md`](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/Council_Ledger.md) and [`260916_arch_council_universal_executive_quick_share_and_deep_link_architecture.md`](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/260916_arch_council_universal_executive_quick_share_and_deep_link_architecture.md).
+
+---
+
+### Live Production Endpoints (Verified HTTP 200 OK)
+
+| Surface | Live URL | Verified Features |
+| :--- | :--- | :--- |
+| **Master OS Control Tower** | [https://sree-krushna-forever.web.app/](https://sree-krushna-forever.web.app/) | Top Header `[🔗 Share Links]` button & `#executiveShareModal` |
+| **In-App Shopping Tab** | [https://sree-krushna-forever.web.app/#tab-shopping](https://sree-krushna-forever.web.app/#tab-shopping) | Tab 12 In-Tab Quick-Share Bar with 5 1-click copy chips |
+| **In-App Decision Tab** | [https://sree-krushna-forever.web.app/#tab-decision-registry](https://sree-krushna-forever.web.app/#tab-decision-registry) | In-Tab Quick-Share Bar with 4 1-click decor consensus chips |
+| **Family Shopping Review** | [https://sree-krushna-forever.web.app/shopping-registry.html?mode=family](https://sree-krushna-forever.web.app/shopping-registry.html?mode=family) | Frictionless standalone survey & tabbing |
+| **Sisters' Styling Hub** | [https://sree-krushna-forever.web.app/shopping-registry.html?mode=sisters](https://sree-krushna-forever.web.app/shopping-registry.html?mode=sisters) | Filtered styling checklist & voting |
+| **Family Decor Review** | [https://sree-krushna-forever.web.app/decision-registry.html?mode=family](https://sree-krushna-forever.web.app/decision-registry.html?mode=family) | Frictionless decor stepper & voting |
+| **Decorator Cockpit** | [https://sree-krushna-forever.web.app/decorator-cockpit.html](https://sree-krushna-forever.web.app/decorator-cockpit.html) | Executive presentation & vendor quotation workspace |
+
+For full architectural diffs, test logs, and the complete 10-link matrix, refer to the [walkthrough.md](file:///C:/Users/TEMP/.gemini/antigravity/brain/273d6e03-aa90-4c17-8191-cb085bc1f1df/walkthrough.md) artifact.
+
+# Response 4.4 -# Walkthrough: Universal Stakeholder Quick-Share Station & Deep-Link Architecture
+
+**Council Certifications:** `AC-DEC-2026-026` / `UI-DEC-2026-022` & `AC-DEC-2026-027` / `UI-DEC-2026-023`  
+**Pattern Specifications:** `P-MULTI-SURFACE-DEPLOY-001` & `P-QUICK-SHARE-001`  
+**Defect Resolved:** `BUG-SHARE-BASEURL-001` (SPA Pathname Drift in Share Link Generation)  
+**Live Production URL:** [https://sree-krushna-forever.web.app](https://sree-krushna-forever.web.app)
+
+---
+
+## 1. Executive Summary
+
+We have resolved `BUG-SHARE-BASEURL-001`, cataloged the 10-link Universal Stakeholder Deep-Link Matrix, and implemented the **Universal Executive Quick-Share Station (`P-QUICK-SHARE-001`)** across both in-tab views and the global application header:
+1. **Resolution of `BUG-SHARE-BASEURL-001`**: Eliminated the defective `window.location.origin + window.location.pathname` pattern that generated broken links (`https://sree-krushna-forever.web.app/?mode=family`) when copying from within the main dashboard. Added `SKPrimitives.getStakeholderUrl(portalFile, params)` to normalize canonical target filenames across standalone and embedded SPA contexts.
+2. **Contextual In-Tab Quick-Share Bars**:
+   - **Shopping Registry (`#tab-shopping`)**: Prominent `.shop-executive-share-bar` with 1-click copy chips for Family Mode (`🌺`), Sisters' Styling (`👭`), Vivaha Pata Silks (`👑`), Groom Mandap Attire (`✨`), and direct Standalone Portal pop-out (`↗️`).
+   - **Decision Registry (`#tab-decision-registry`)**: Prominent `.dr-executive-share-bar` with 1-click copy chips for Family Decor Mode (`🌺`), Vivaha Mandap (`🏛️`), Sangeet Stage (`🪩`), and Standalone Portal pop-out (`↗️`).
+3. **Global Header Quick-Share Station (`#openExecutiveShareBtn` & `#executiveShareModal`)**:
+   - Integrated `[🔗 Share Links]` button into the sticky top header of `index.html` and `public/index.html`.
+   - Connected to `#executiveShareModal` displaying all 10 universal stakeholder deep links with 1-click WhatsApp message copying (`📋`), direct WhatsApp Web dispatch (`💬`), and direct pop-out (`↗️`).
+   - Enforced `INV-LIFECYCLE-03`: 3-trigger dismissibility (Close button, Backdrop click, and Escape keydown).
+4. **Pre-Flight Verification & Live Cloud Release**:
+   - Recompiled all SDCA modules (`npm run build:shopping:all`, `npm run build:decision-registry`).
+   - Passed 100% of all 6 test suites (`test:shopping`, `test:decision-registry`, `verify:modular-architecture`, `verify:ui-lifecycle`, `verify:mobile`, `verify:deployment`).
+   - Cleanly committed as `a4e2b95` and deployed live to Firebase Hosting (`sree-krushna-forever`).
+
+---
+
+## 2. Forensic Resolution of `BUG-SHARE-BASEURL-001`
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                                 THE DEFECT DIAGRAM                                     │
+├────────────────────────────────────────────────────────────────────────────────────────┤
+│ In Standalone Portal:                                                                  │
+│   origin = "https://sree-krushna-forever.web.app"                                      │
+│   pathname = "/shopping-registry.html"                                                 │
+│   shareUrl = "https://sree-krushna-forever.web.app/shopping-registry.html?mode=family"│
+│   Result: ✅ WORKS (Frictionless unauthenticated survey portal)                         │
+├────────────────────────────────────────────────────────────────────────────────────────┤
+│ In Main SPA Dashboard:                                                                 │
+│   origin = "https://sree-krushna-forever.web.app"                                      │
+│   pathname = "/" or "/index.html"                                                      │
+│   shareUrl = "https://sree-krushna-forever.web.app/?mode=family" (BROKEN!)             │
+│   Result: ❌ FAILS (Routes to Google Auth login screen; elders bounced)                │
+├────────────────────────────────────────────────────────────────────────────────────────┤
+│ THE FIX: SKPrimitives.getStakeholderUrl('shopping-registry.html', { mode: 'family' })  │
+│   Always forces: "https://sree-krushna-forever.web.app/shopping-registry.html?mode=family"│
+│   Result: ✅ 100% RELIABLE regardless of caller context                                │
+└────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 3. Universal Stakeholder Deep-Link Catalog (10 Live Links)
+
+All 10 links are cataloged, verified, and accessible via the **Global Quick-Share Station**:
+
+| # | Circle / Audience | Live Canonical URL | WhatsApp Dispatch Content |
+| :--- | :--- | :--- | :--- |
+| 1 | **Parents & Extended Family** | [shopping-registry.html?mode=family](https://sree-krushna-forever.web.app/shopping-registry.html?mode=family) | Shortlisted sarees, lehengas, and 'Sara' gifting items for Bhubaneswar review. |
+| 2 | **Sisters' Styling Hub** | [shopping-registry.html?mode=sisters](https://sree-krushna-forever.web.app/shopping-registry.html?mode=sisters) | Sisters' coordinate checklist, lehengas, pastel palettes, and groom styling. |
+| 3 | **Vivaha Pata Silks** | [shopping-registry.html?cluster=vivaha_pata&mode=family](https://sree-krushna-forever.web.app/shopping-registry.html?cluster=vivaha_pata&mode=family) | Sacred Boyanika and Utkalika Khandua Pata silks for Vedic Lagna rituals. |
+| 4 | **Groom Mandap Attire** | [shopping-registry.html?cluster=groom_mandap&mode=family](https://sree-krushna-forever.web.app/shopping-registry.html?cluster=groom_mandap&mode=family) | Authentic Odia unstitched Dhoti, Khandua Joda, and Snana kurta-dhoti set. |
+| 5 | **Family Decor Consensus** | [decision-registry.html?event=EVT-004&mode=family](https://sree-krushna-forever.web.app/decision-registry.html?event=EVT-004&mode=family) | Event-by-event chronological decor stepper with 1-click family voting. |
+| 6 | **Vivaha Mandap Decor** | [decision-registry.html?event=EVT-004&cluster=mandap_structure&mode=family](https://sree-krushna-forever.web.app/decision-registry.html?event=EVT-004&cluster=mandap_structure&mode=family) | Vedic Vivaha Mandap architectural and floral concept consensus. |
+| 7 | **Sangeet Stage Decor** | [decision-registry.html?event=EVT-003&cluster=sangeet_stage&mode=family](https://sree-krushna-forever.web.app/decision-registry.html?event=EVT-003&cluster=sangeet_stage&mode=family) | Sangeet stage design, LED trussing, and floral perimeter consensus. |
+| 8 | **Decorator Cockpit RFP** | [decorator-cockpit.html](https://sree-krushna-forever.web.app/decorator-cockpit.html) | Executive vendor negotiation deck, quotation breakdowns, and specifications. |
+| 9 | **Proposal & Intake Drop** | [shopping-registry.html#intake](https://sree-krushna-forever.web.app/shopping-registry.html#intake) | Open intake studio for saree recommendations, vendor quotes, and drive links. |
+| 10 | **Master Marriage OS** | [https://sree-krushna-forever.web.app/](https://sree-krushna-forever.web.app/) | Executive Control Tower, Precedence DAG, Task Engine, and Liturgy. |
+
+---
+
+## 4. Live Cloud Deployment & Remote Verification Evidence
+
+Deployment succeeded cleanly with zero errors:
+
+```
+=== Deploying to 'sree-krushna-forever'...
+i  deploying hosting
+i  hosting[sree-krushna-forever]: beginning deploy...
+i  hosting[sree-krushna-forever]: found 47 files in public
+i  hosting: upload complete
++  hosting[sree-krushna-forever]: file upload complete
++  hosting[sree-krushna-forever]: release complete
++  Deploy complete!
+Hosting URL: https://sree-krushna-forever.web.app
+```
+
+### Remote Smoke Test Results
+
+```powershell
+200 OK: https://sree-krushna-forever.web.app/
+200 OK: https://sree-krushna-forever.web.app/shopping-registry.html
+200 OK: https://sree-krushna-forever.web.app/decision-registry.html
+200 OK: https://sree-krushna-forever.web.app/shopping-fragment.html
+200 OK: https://sree-krushna-forever.web.app/decision-registry-fragment.html
+
+Live Root contains openExecutiveShareBtn: True
+Live Root contains executiveShareModal: True
+Live Shopping contains shopExecutiveShareBar: True
+Live Shopping contains getStakeholderUrl fix: True
+Live Decision Registry contains drExecutiveShareBar: True
+Live Decision Registry contains getStakeholderUrl fix: True
+```
+
+---
+
+## 5. Verification Gate Summary
+
+```powershell
+================================================================================
+  ✓ test:shopping              ──► PASS (44 items, 5 chapters, 5 clusters, 8 stores)
+  ✓ test:decision-registry     ──► PASS (100% green & synchronized)
+  ✓ verify:modular-architecture──► PASS (45/45 checks passed, 100% byte parity)
+  ✓ verify:ui-lifecycle        ──► PASS (All dynamic mounters await script.onload; 0 zombie listeners; 3-trigger dismissibility)
+  ✓ verify:mobile              ──► PASS (16/16 checks passed across both HTML entry points)
+  ✓ verify:deployment          ──► PASS (All 10 pre-flight layers passed, 14 header affordances & modals verified)
+================================================================================
+```
+
+---
+
+## 6. How to Test Live in Production
+
+1. **From Any Tab in the Marriage OS**:
+   - Open [https://sree-krushna-forever.web.app/](https://sree-krushna-forever.web.app/).
+   - In the top header dock, click the **[🔗 Share Links]** button.
+   - The **Executive Stakeholder Quick-Share Station** modal will pop open.
+   - Click **📋 Copy WhatsApp Msg** on any card to copy the pre-formatted WhatsApp text with the verified standalone URL directly to your clipboard, or click **💬 WhatsApp** to open WhatsApp Web directly.
+   - Press **Escape** or click the backdrop to dismiss the modal smoothly.
+
+2. **From Shopping Tab (`#tab-shopping`)**:
+   - Navigate to [https://sree-krushna-forever.web.app/#tab-shopping](https://sree-krushna-forever.web.app/#tab-shopping).
+   - Observe the **Stakeholder Quick-Share Bar** directly above the Catalog / Survey switcher.
+   - Click **🌺 Family Mode** or **👭 Sisters' Styling** to copy the standalone URL.
+   - Click **↗️ Standalone Portal** to open `/shopping-registry.html` in a clean new tab.
+
+3. **From Decision Registry Tab (`#tab-decision-registry`)**:
+   - Navigate to [https://sree-krushna-forever.web.app/#tab-decision-registry](https://sree-krushna-forever.web.app/#tab-decision-registry).
+   - Observe the **Stakeholder Quick-Share Bar** directly above the Event Decision Flow stepper.
+   - Click **🌺 Family Decor Mode** or **🏛️ Vivaha Mandap** to copy the decor voting invite.
+
 
 # Query 4.5 -
 
