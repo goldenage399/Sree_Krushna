@@ -180,6 +180,10 @@
         if (params.get('cat')) tableState.category = params.get('cat');
         if (params.get('status')) tableState.status = params.get('status');
         if (params.get('q')) tableState.query = params.get('q');
+        if (params.get('layout') === 'cards') {
+          tableState.displayMode = 'cards';
+          setTimeout(() => { if (window.setTableLayoutMode) window.setTableLayoutMode('cards'); }, 150);
+        }
         setTimeout(() => {
           if (window.switchShoppingView) window.switchShoppingView('table');
         }, 100);
@@ -604,7 +608,8 @@
       category: 'all',
       status: 'all',
       query: '',
-      collapsedGroups: new Set()
+      collapsedGroups: new Set(),
+      displayMode: 'table' // 'table' | 'cards' (AC-DEC-2026-034 / UI-DEC-2026-030)
     };
     let pendingRemoteToastCount = 0;
     let remoteToastTimer = null;
@@ -633,12 +638,35 @@
 
           if (tableState.query) url.searchParams.set('q', tableState.query);
           else url.searchParams.delete('q');
+
+          if (tableState.displayMode && tableState.displayMode !== 'table') {
+            url.searchParams.set('layout', tableState.displayMode);
+          } else {
+            url.searchParams.delete('layout');
+          }
         }
         window.history.replaceState(null, '', url.toString());
       } catch (err) {
         // Silently tolerate restricted contexts
       }
     }
+
+    // Mutable Table Density & Layout Switcher (AC-DEC-2026-034 / UI-DEC-2026-030)
+    window.setTableLayoutMode = function(mode) {
+      tableState.displayMode = mode || 'table';
+      const tableEl = document.getElementById('shoppingDataTable');
+      const tableSec = document.getElementById('shoppingTableViewSection');
+      if (tableEl) {
+        tableEl.classList.toggle('mode-cards', mode === 'cards');
+      }
+      if (tableSec) {
+        tableSec.classList.toggle('mode-cards', mode === 'cards');
+      }
+      document.querySelectorAll('#tableLayoutSwitcher .table-group-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-layout') === mode);
+      });
+      syncTableUrlState();
+    };
 
     window.setTableGroupBy = function(groupBy) {
       tableState.groupBy = groupBy;
@@ -686,6 +714,7 @@
     };
 
     window.resetTableFilters = function() {
+      const currentMode = tableState.displayMode || 'table';
       tableState = {
         groupBy: 'chapter',
         sortKey: 'default',
@@ -693,7 +722,8 @@
         category: 'all',
         status: 'all',
         query: '',
-        collapsedGroups: new Set()
+        collapsedGroups: new Set(),
+        displayMode: currentMode
       };
       const searchInput = document.getElementById('tableSearchInput');
       if (searchInput) searchInput.value = '';
@@ -1138,26 +1168,26 @@
 
       return `
         <tr data-item-id="${item.id}" data-group-id="${groupId}" ${displayStyle}>
-          <td class="sticky-col">
+          <td class="sticky-col" data-col-label="Item Title &amp; Code">
             <div class="item-title-cell">
               <span class="item-code-badge">${item.id}</span>
               <span class="item-name-text">${escTitle}</span>
               ${attrHtml}
             </div>
           </td>
-          <td>
+          <td data-col-label="Category">
             <div style="display: flex; flex-direction: column; gap: 2px;">
               <span class="item-cat-badge" style="text-transform: capitalize; font-size: 0.75rem; padding: 2px 8px; border-radius: 12px; background: rgba(255,255,255,0.06); border: 1px solid var(--border-subtle); width: fit-content;">${item.category}</span>
               ${chapterBadge}
             </div>
           </td>
-          <td style="font-size: 0.8rem; color: var(--text-muted);">${item.role || '—'}</td>
-          <td style="font-size: 0.82rem; font-weight: 500;">
+          <td data-col-label="Liturgical Role" style="font-size: 0.8rem; color: var(--text-muted);">${item.role || '—'}</td>
+          <td data-col-label="Store / Sourcing" style="font-size: 0.82rem; font-weight: 500;">
             ${escStore}
             ${storePlannedDiff}
           </td>
-          <td class="table-budget-cell" style="font-size: 0.82rem; color: var(--gold-bright); font-weight: 600;">${item.priceRange || '—'}</td>
-          <td>
+          <td data-col-label="Est. Budget" class="table-budget-cell" style="font-size: 0.82rem; color: var(--gold-bright); font-weight: 600;">${item.priceRange || '—'}</td>
+          <td data-col-label="Live Status">
             <select class="status-dropdown ${statusClass}" data-item-id="${item.id}" data-field="status" onchange="this.className='status-dropdown status-'+this.value.toLowerCase(); window.updateTableItemStatus('${item.id}', this.value)">
               <option value="Planned" ${curStatus === 'Planned' ? 'selected' : ''}>⏳ Planned</option>
               <option value="Shortlisted" ${curStatus === 'Shortlisted' ? 'selected' : ''}>⭐ Shortlisted</option>
@@ -1167,13 +1197,13 @@
               <option value="Dropped" ${curStatus === 'Dropped' ? 'selected' : ''}>❌ Dropped</option>
             </select>
           </td>
-          <td>
+          <td data-col-label="Actual Price (₹)">
             <input type="text" class="table-price-input" data-item-id="${item.id}" data-field="price" placeholder="₹ actual" value="${curPrice}" onblur="window.updateTableItemPrice('${item.id}', this.value)" onkeydown="if(event.key==='Enter') this.blur()">
           </td>
-          <td>
+          <td data-col-label="Notes / Tailoring">
             <input type="text" class="table-notes-input" data-item-id="${item.id}" data-field="notes" placeholder="Add note/spec..." value="${(curNotes || '').replace(/"/g, '&quot;')}" onblur="window.updateTableItemNotes('${item.id}', this.value)" onkeydown="if(event.key==='Enter') this.blur()">
           </td>
-          <td style="text-align: center;">
+          <td data-col-label="Actions" style="text-align: center;">
             <div class="cell-actions">
               <button type="button" class="cell-action-btn" title="Visual AI Search" onclick="window.openVisualSearchByItemId('${item.id}')">🔍</button>
               <button type="button" class="cell-action-btn" title="Share via WhatsApp" onclick="window.shareTableItemById('${item.id}')">📱</button>

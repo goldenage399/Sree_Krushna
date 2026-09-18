@@ -107,40 +107,77 @@
 
         <div class="header-right" data-testid="header-right-actions">
           <!-- Share Inspiration / Idea Drop CTA -->
-          <button id="openInspirationBtn" class="header-action-btn btn-gold" data-testid="open-inspiration-btn" aria-label="Share Idea or Inspiration" onclick="openInspirationModal()">
+          <button id="openInspirationBtn" class="header-action-btn btn-gold desktop-only-action" data-testid="open-inspiration-btn" aria-label="Share Idea or Inspiration" onclick="openInspirationModal()">
             <span class="btn-icon">💡</span>
             <span class="btn-text">Share Idea</span>
           </button>
 
           <!-- Universal Intake Ledger CTA -->
-          <button id="openIntakeLedgerBtn" class="header-action-btn btn-blue" data-testid="open-intake-ledger-btn" aria-label="View Change Requests Ledger" onclick="openIntakeLedgerModal()">
+          <button id="openIntakeLedgerBtn" class="header-action-btn btn-blue desktop-only-action" data-testid="open-intake-ledger-btn" aria-label="View Change Requests Ledger" onclick="openIntakeLedgerModal()">
             <span class="btn-icon">📨</span>
             <span class="btn-text">Intake Ledger</span>
           </button>
 
           <!-- Decorator Cockpit Launch CTA -->
-          <button id="openCockpitBtn" class="header-action-btn btn-gold" data-testid="open-cockpit-btn" aria-label="Open Decorator Negotiation Cockpit" onclick="switchTab('tab-cockpit')">
+          <button id="openCockpitBtn" class="header-action-btn btn-gold desktop-only-action" data-testid="open-cockpit-btn" aria-label="Open Decorator Negotiation Cockpit" onclick="switchTab('tab-cockpit')">
             <span class="btn-icon">🎪</span>
             <span class="btn-text">Decorator Cockpit</span>
           </button>
 
           <!-- Master Decision Registry Link -->
-          <a href="./decision-registry.html" id="openDecisionRegistryBtn" class="header-action-btn btn-ghost" data-testid="open-decision-registry-btn" aria-label="Open Master Decision Registry" style="text-decoration: none;">
+          <a href="./decision-registry.html" id="openDecisionRegistryBtn" class="header-action-btn btn-ghost desktop-only-action" data-testid="open-decision-registry-btn" aria-label="Open Master Decision Registry" style="text-decoration: none;">
             <span class="btn-icon">⚖️</span>
             <span class="btn-text">Decisions</span>
           </a>
 
           <!-- Bhubaneswar Shopping Registry Link -->
-          <a href="#tab-shopping" id="openShoppingRegistryBtn" class="header-action-btn btn-ghost" data-testid="open-shopping-registry-btn" aria-label="Open Bhubaneswar Shopping Registry" onclick="switchTab('tab-shopping')" style="text-decoration: none;">
+          <a href="#tab-shopping" id="openShoppingRegistryBtn" class="header-action-btn btn-ghost desktop-only-action" data-testid="open-shopping-registry-btn" aria-label="Open Bhubaneswar Shopping Registry" onclick="switchTab('tab-shopping')" style="text-decoration: none;">
             <span class="btn-icon">🛍️</span>
             <span class="btn-text">Shopping</span>
           </a>
 
           <!-- Executive Stakeholder Quick-Share Station Link/Modal Trigger -->
-          <button id="openExecutiveShareBtn" class="header-action-btn btn-gold" data-testid="open-executive-share-btn" aria-label="Open Stakeholder Quick-Share Station" onclick="openExecutiveShareModal()">
+          <button id="openExecutiveShareBtn" class="header-action-btn btn-gold desktop-only-action" data-testid="open-executive-share-btn" aria-label="Open Stakeholder Quick-Share Station" onclick="openExecutiveShareModal()">
             <span class="btn-icon">🔗</span>
             <span class="btn-text">Share Links</span>
           </button>
+
+          <!-- Consolidated Mobile / Tablet Quick-Action Dropdown (AC-DEC-2026-034 / UI-DEC-2026-030) -->
+          <div class="quick-actions-dropdown" id="quickActionsDropdown">
+            <button id="headerQuickActionsBtn" class="header-action-btn btn-gold quick-actions-trigger" data-testid="quick-actions-trigger" aria-label="Open Quick Actions Menu" aria-haspopup="true" aria-expanded="false" onclick="toggleQuickActionsMenu(event)">
+              <span class="btn-icon">⚡</span>
+              <span class="btn-text">Actions</span>
+              <span class="dropdown-chevron" aria-hidden="true">▾</span>
+            </button>
+            <div id="headerQuickActionsPopover" class="quick-actions-popover" role="menu" aria-label="Quick Actions Menu" style="display: none;">
+              <div class="qa-group-title">⚡ Quick Actions &amp; Tools</div>
+              <button class="qa-item-btn" onclick="toggleQuickActionsMenu(event); openExecutiveShareModal();">
+                <span class="qa-item-icon">🔗</span>
+                <span>Share Links &amp; Portals</span>
+              </button>
+              <button class="qa-item-btn" onclick="toggleQuickActionsMenu(event); openInspirationModal();">
+                <span class="qa-item-icon">💡</span>
+                <span>Share Idea / Inspiration</span>
+              </button>
+              <button class="qa-item-btn" onclick="toggleQuickActionsMenu(event); openIntakeLedgerModal();">
+                <span class="qa-item-icon">📨</span>
+                <span>Intake Ledger</span>
+              </button>
+              <div class="qa-group-title">🏛️ Modules &amp; Decisions</div>
+              <button class="qa-item-btn" onclick="toggleQuickActionsMenu(event); switchTab('tab-cockpit');">
+                <span class="qa-item-icon">🎪</span>
+                <span>Decorator Cockpit</span>
+              </button>
+              <a href="./decision-registry.html" class="qa-item-btn" onclick="toggleQuickActionsMenu(event);">
+                <span class="qa-item-icon">⚖️</span>
+                <span>Decision Registry</span>
+              </a>
+              <button class="qa-item-btn" onclick="toggleQuickActionsMenu(event); switchTab('tab-shopping');">
+                <span class="qa-item-icon">🛍️</span>
+                <span>Shopping Registry</span>
+              </button>
+            </div>
+          </div>
 
           <!-- Theme Switcher Toggle -->
           <button id="themeToggleBtn" class="header-action-btn btn-ghost theme-toggle-btn" data-testid="theme-toggle-button" aria-label="Toggle Bright/Dark Theme" onclick="toggleTheme()">

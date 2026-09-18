@@ -281,14 +281,30 @@
   background: rgba(245, 158, 11, 0.04);
 }
 
-.shop-data-table .sticky-col {
+.shop-data-table thead th {
   position: sticky;
-  left: 0;
-  background: rgba(15, 23, 42, 0.95);
-  z-index: 1;
+  top: 0;
+  z-index: 4;
 }
 
-.shop-data-table tr:hover .sticky-col {
+.shop-data-table th.sticky-col {
+  position: sticky;
+  left: 0;
+  top: 0;
+  z-index: 6;
+  background: rgba(26, 36, 54, 0.98);
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.35);
+}
+
+.shop-data-table td.sticky-col {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: rgba(15, 23, 42, 0.96);
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.25);
+}
+
+.shop-data-table tr:hover td.sticky-col {
   background: rgba(26, 36, 54, 0.98);
 }
 
@@ -586,4 +602,140 @@ tr.row-pulse td {
 .table-budget-cell,
 .table-actual-price-cell {
   font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   Card Layout Mode & Responsive Container Rules (AC-DEC-2026-034 / UI-DEC-2026-030)
+   ========================================================================== */
+.shop-data-table.mode-cards thead,
+.mode-cards .shop-data-table thead {
+  display: none;
+}
+
+.shop-data-table.mode-cards,
+.shop-data-table.mode-cards tbody,
+.mode-cards .shop-data-table,
+.mode-cards .shop-data-table tbody {
+  display: block;
+  width: 100%;
+}
+
+.shop-data-table.mode-cards tr:not(.table-group-header-row),
+.mode-cards .shop-data-table tr:not(.table-group-header-row) {
+  display: flex;
+  flex-direction: column;
+  background: rgba(26, 36, 54, 0.6);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  padding: 14px 16px;
+  gap: 8px;
+}
+
+.shop-data-table.mode-cards tr:not(.table-group-header-row):hover,
+.mode-cards .shop-data-table tr:not(.table-group-header-row):hover {
+  background: rgba(26, 36, 54, 0.85);
+  border-color: rgba(245, 158, 11, 0.35);
+}
+
+.shop-data-table.mode-cards td,
+.mode-cards .shop-data-table td {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.shop-data-table.mode-cards td.sticky-col,
+.mode-cards .shop-data-table td.sticky-col {
+  position: static;
+  background: none;
+  box-shadow: none;
+  padding-bottom: 10px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.shop-data-table.mode-cards td::before,
+.mode-cards .shop-data-table td::before {
+  content: attr(data-col-label);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--gold-bright);
+  min-width: 120px;
+  flex-shrink: 0;
+}
+
+.shop-data-table.mode-cards td.sticky-col::before,
+.mode-cards .shop-data-table td.sticky-col::before {
+  display: none;
+}
+
+.shop-data-table.mode-cards tr.table-group-header-row,
+.mode-cards .shop-data-table tr.table-group-header-row {
+  display: block;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.shop-data-table.mode-cards tr.table-group-header-row td,
+.mode-cards .shop-data-table tr.table-group-header-row td {
+  display: block;
+  padding: 8px 14px;
+}
+
+.shop-data-table.mode-cards tr.table-group-header-row td::before,
+.mode-cards .shop-data-table tr.table-group-header-row td::before {
+  display: none;
+}
+
+/* Responsive Container Reflow */
+@container shoppingRegistry (max-width: 768px) {
+  .table-controls-top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .table-search-group {
+    max-width: 100%;
+  }
+  .table-group-switcher,
+  .table-layout-switcher {
+    width: 100%;
+    overflow-x: auto;
+    justify-content: flex-start;
+  }
+  .table-actions-group {
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+}
+
+@media (max-width: 768px) {
+  .table-controls-top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .table-search-group {
+    max-width: 100%;
+  }
+  .table-group-switcher,
+  .table-layout-switcher {
+    width: 100%;
+    overflow-x: auto;
+    justify-content: flex-start;
+  }
+  .table-actions-group {
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
 }

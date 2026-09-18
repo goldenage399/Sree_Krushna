@@ -53,6 +53,11 @@
   --sk-shadow-card: 0 4px 20px rgba(0, 0, 0, 0.35);
   --sk-shadow-popover: 0 10px 35px rgba(0, 0, 0, 0.65);
   --sk-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  
+  /* Touch & Fluid Tokens (AC-DEC-2026-034 / UI-DEC-2026-030 / Protocol 19) */
+  --sk-touch-target: 44px;
+  --sk-space-fluid-page: clamp(10px, 1.5vw, 24px);
+  --sk-space-fluid-card: clamp(12px, 1.5vw, 20px);
 }
 
 
@@ -989,6 +994,8 @@
     }
 
     #tab-shopping #shoppingRegistryFrame #shoppingRegistryRoot {
+      container-type: inline-size;
+      container-name: shoppingRegistry;
       max-width: 1400px;
       width: 100%;
       margin: 0 auto;
@@ -1581,7 +1588,7 @@
 
     #tab-shopping #shoppingRegistryFrame .shop-store-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
       gap: 14px;
       margin-top: 14px;
     }
@@ -1796,11 +1803,20 @@
 
     #tab-shopping #shoppingRegistryFrame .shop-items-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
       gap: 16px;
     }
 
-    @media (max-width: 500px) {
+    @container shoppingRegistry (max-width: 580px) {
+
+      #tab-shopping #shoppingRegistryFrame .shop-items-grid {
+        grid-template-columns: 1fr;
+      }
+    
+}
+
+
+    @media (max-width: 580px) {
 
       #tab-shopping #shoppingRegistryFrame .shop-items-grid {
         grid-template-columns: 1fr;
@@ -1936,19 +1952,21 @@
     }
 
     #tab-shopping #shoppingRegistryFrame .shop-check-label {
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 8px;
       cursor: pointer;
       font-weight: 600;
       color: var(--shop-text-secondary);
       user-select: none;
+      min-height: 44px;
+      padding: 4px 0;
     }
 
     #tab-shopping #shoppingRegistryFrame .shop-check-label input {
       accent-color: var(--shop-emerald);
-      width: 16px;
-      height: 16px;
+      width: 20px;
+      height: 20px;
       cursor: pointer;
     }
 
@@ -2844,14 +2862,30 @@
   background: rgba(245, 158, 11, 0.04);
 }
 
-#tab-shopping #shoppingRegistryFrame .shop-data-table .sticky-col {
+#tab-shopping #shoppingRegistryFrame .shop-data-table thead th {
   position: sticky;
-  left: 0;
-  background: rgba(15, 23, 42, 0.95);
-  z-index: 1;
+  top: 0;
+  z-index: 4;
 }
 
-#tab-shopping #shoppingRegistryFrame .shop-data-table tr:hover .sticky-col {
+#tab-shopping #shoppingRegistryFrame .shop-data-table th.sticky-col {
+  position: sticky;
+  left: 0;
+  top: 0;
+  z-index: 6;
+  background: rgba(26, 36, 54, 0.98);
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.35);
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-data-table td.sticky-col {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: rgba(15, 23, 42, 0.96);
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.25);
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-data-table tr:hover td.sticky-col {
   background: rgba(26, 36, 54, 0.98);
 }
 
@@ -3150,6 +3184,148 @@
 #tab-shopping #shoppingRegistryFrame .table-actual-price-cell {
   font-variant-numeric: tabular-nums;
 }
+
+/* ==========================================================================
+   Card Layout Mode & Responsive Container Rules (AC-DEC-2026-034 / UI-DEC-2026-030)
+   ========================================================================== */
+#tab-shopping #shoppingRegistryFrame .shop-data-table.mode-cards thead,
+#tab-shopping #shoppingRegistryFrame .mode-cards .shop-data-table thead {
+  display: none;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-data-table.mode-cards,
+#tab-shopping #shoppingRegistryFrame .shop-data-table.mode-cards tbody,
+#tab-shopping #shoppingRegistryFrame .mode-cards .shop-data-table,
+#tab-shopping #shoppingRegistryFrame .mode-cards .shop-data-table tbody {
+  display: block;
+  width: 100%;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-data-table.mode-cards tr:not(.table-group-header-row),
+#tab-shopping #shoppingRegistryFrame .mode-cards .shop-data-table tr:not(.table-group-header-row) {
+  display: flex;
+  flex-direction: column;
+  background: rgba(26, 36, 54, 0.6);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  padding: 14px 16px;
+  gap: 8px;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-data-table.mode-cards tr:not(.table-group-header-row):hover,
+#tab-shopping #shoppingRegistryFrame .mode-cards .shop-data-table tr:not(.table-group-header-row):hover {
+  background: rgba(26, 36, 54, 0.85);
+  border-color: rgba(245, 158, 11, 0.35);
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-data-table.mode-cards td,
+#tab-shopping #shoppingRegistryFrame .mode-cards .shop-data-table td {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-data-table.mode-cards td.sticky-col,
+#tab-shopping #shoppingRegistryFrame .mode-cards .shop-data-table td.sticky-col {
+  position: static;
+  background: none;
+  box-shadow: none;
+  padding-bottom: 10px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-data-table.mode-cards td::before,
+#tab-shopping #shoppingRegistryFrame .mode-cards .shop-data-table td::before {
+  content: attr(data-col-label);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--gold-bright);
+  min-width: 120px;
+  flex-shrink: 0;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-data-table.mode-cards td.sticky-col::before,
+#tab-shopping #shoppingRegistryFrame .mode-cards .shop-data-table td.sticky-col::before {
+  display: none;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-data-table.mode-cards tr.table-group-header-row,
+#tab-shopping #shoppingRegistryFrame .mode-cards .shop-data-table tr.table-group-header-row {
+  display: block;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-data-table.mode-cards tr.table-group-header-row td,
+#tab-shopping #shoppingRegistryFrame .mode-cards .shop-data-table tr.table-group-header-row td {
+  display: block;
+  padding: 8px 14px;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-data-table.mode-cards tr.table-group-header-row td::before,
+#tab-shopping #shoppingRegistryFrame .mode-cards .shop-data-table tr.table-group-header-row td::before {
+  display: none;
+}
+
+/* Responsive Container Reflow */
+@container shoppingRegistry (max-width: 768px) {
+
+  #tab-shopping #shoppingRegistryFrame .table-controls-top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  #tab-shopping #shoppingRegistryFrame .table-search-group {
+    max-width: 100%;
+  }
+  #tab-shopping #shoppingRegistryFrame .table-group-switcher,
+#tab-shopping #shoppingRegistryFrame .table-layout-switcher {
+    width: 100%;
+    overflow-x: auto;
+    justify-content: flex-start;
+  }
+  #tab-shopping #shoppingRegistryFrame .table-actions-group {
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+}
+
+
+@media (max-width: 768px) {
+
+  #tab-shopping #shoppingRegistryFrame .table-controls-top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  #tab-shopping #shoppingRegistryFrame .table-search-group {
+    max-width: 100%;
+  }
+  #tab-shopping #shoppingRegistryFrame .table-group-switcher,
+#tab-shopping #shoppingRegistryFrame .table-layout-switcher {
+    width: 100%;
+    overflow-x: auto;
+    justify-content: flex-start;
+  }
+  #tab-shopping #shoppingRegistryFrame .table-actions-group {
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+}
+
 
 </style>
 
@@ -3564,6 +3740,13 @@
         <button type="button" class="table-accordion-toggle-btn" id="btnToggleAllAccordions" onclick="window.toggleAllTableGroups()" title="Collapse or Expand all table sections">
           <span class="accordion-toggle-icon">↕</span> <span id="toggleAllAccordionsText">Collapse All</span>
         </button>
+      </div>
+
+      <!-- Density & Responsive Layout Switcher (AC-DEC-2026-034 / UI-DEC-2026-030) -->
+      <div class="table-layout-switcher" id="tableLayoutSwitcher" style="display: inline-flex; align-items: center; gap: 4px; background: rgba(15, 23, 42, 0.6); padding: 4px 6px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+        <span class="group-switcher-label">Layout:</span>
+        <button type="button" class="table-group-btn active" id="btnLayoutTable" data-layout="table" onclick="window.setTableLayoutMode('table')" title="Dense Spreadsheet Table View">📊 Table</button>
+        <button type="button" class="table-group-btn" id="btnLayoutCards" data-layout="cards" onclick="window.setTableLayoutMode('cards')" title="Mobile-Friendly Card View">🗂️ Cards</button>
       </div>
 
       <div class="table-actions-group">
@@ -5643,6 +5826,10 @@
         if (params.get('cat')) tableState.category = params.get('cat');
         if (params.get('status')) tableState.status = params.get('status');
         if (params.get('q')) tableState.query = params.get('q');
+        if (params.get('layout') === 'cards') {
+          tableState.displayMode = 'cards';
+          setTimeout(() => { if (window.setTableLayoutMode) window.setTableLayoutMode('cards'); }, 150);
+        }
         setTimeout(() => {
           if (window.switchShoppingView) window.switchShoppingView('table');
         }, 100);
@@ -6067,7 +6254,8 @@
       category: 'all',
       status: 'all',
       query: '',
-      collapsedGroups: new Set()
+      collapsedGroups: new Set(),
+      displayMode: 'table' // 'table' | 'cards' (AC-DEC-2026-034 / UI-DEC-2026-030)
     };
     let pendingRemoteToastCount = 0;
     let remoteToastTimer = null;
@@ -6096,12 +6284,35 @@
 
           if (tableState.query) url.searchParams.set('q', tableState.query);
           else url.searchParams.delete('q');
+
+          if (tableState.displayMode && tableState.displayMode !== 'table') {
+            url.searchParams.set('layout', tableState.displayMode);
+          } else {
+            url.searchParams.delete('layout');
+          }
         }
         window.history.replaceState(null, '', url.toString());
       } catch (err) {
         // Silently tolerate restricted contexts
       }
     }
+
+    // Mutable Table Density & Layout Switcher (AC-DEC-2026-034 / UI-DEC-2026-030)
+    window.setTableLayoutMode = function(mode) {
+      tableState.displayMode = mode || 'table';
+      const tableEl = document.getElementById('shoppingDataTable');
+      const tableSec = document.getElementById('shoppingTableViewSection');
+      if (tableEl) {
+        tableEl.classList.toggle('mode-cards', mode === 'cards');
+      }
+      if (tableSec) {
+        tableSec.classList.toggle('mode-cards', mode === 'cards');
+      }
+      document.querySelectorAll('#tableLayoutSwitcher .table-group-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-layout') === mode);
+      });
+      syncTableUrlState();
+    };
 
     window.setTableGroupBy = function(groupBy) {
       tableState.groupBy = groupBy;
@@ -6149,6 +6360,7 @@
     };
 
     window.resetTableFilters = function() {
+      const currentMode = tableState.displayMode || 'table';
       tableState = {
         groupBy: 'chapter',
         sortKey: 'default',
@@ -6156,7 +6368,8 @@
         category: 'all',
         status: 'all',
         query: '',
-        collapsedGroups: new Set()
+        collapsedGroups: new Set(),
+        displayMode: currentMode
       };
       const searchInput = document.getElementById('tableSearchInput');
       if (searchInput) searchInput.value = '';
@@ -6601,26 +6814,26 @@
 
       return `
         <tr data-item-id="${item.id}" data-group-id="${groupId}" ${displayStyle}>
-          <td class="sticky-col">
+          <td class="sticky-col" data-col-label="Item Title &amp; Code">
             <div class="item-title-cell">
               <span class="item-code-badge">${item.id}</span>
               <span class="item-name-text">${escTitle}</span>
               ${attrHtml}
             </div>
           </td>
-          <td>
+          <td data-col-label="Category">
             <div style="display: flex; flex-direction: column; gap: 2px;">
               <span class="item-cat-badge" style="text-transform: capitalize; font-size: 0.75rem; padding: 2px 8px; border-radius: 12px; background: rgba(255,255,255,0.06); border: 1px solid var(--border-subtle); width: fit-content;">${item.category}</span>
               ${chapterBadge}
             </div>
           </td>
-          <td style="font-size: 0.8rem; color: var(--text-muted);">${item.role || '—'}</td>
-          <td style="font-size: 0.82rem; font-weight: 500;">
+          <td data-col-label="Liturgical Role" style="font-size: 0.8rem; color: var(--text-muted);">${item.role || '—'}</td>
+          <td data-col-label="Store / Sourcing" style="font-size: 0.82rem; font-weight: 500;">
             ${escStore}
             ${storePlannedDiff}
           </td>
-          <td class="table-budget-cell" style="font-size: 0.82rem; color: var(--gold-bright); font-weight: 600;">${item.priceRange || '—'}</td>
-          <td>
+          <td data-col-label="Est. Budget" class="table-budget-cell" style="font-size: 0.82rem; color: var(--gold-bright); font-weight: 600;">${item.priceRange || '—'}</td>
+          <td data-col-label="Live Status">
             <select class="status-dropdown ${statusClass}" data-item-id="${item.id}" data-field="status" onchange="this.className='status-dropdown status-'+this.value.toLowerCase(); window.updateTableItemStatus('${item.id}', this.value)">
               <option value="Planned" ${curStatus === 'Planned' ? 'selected' : ''}>⏳ Planned</option>
               <option value="Shortlisted" ${curStatus === 'Shortlisted' ? 'selected' : ''}>⭐ Shortlisted</option>
@@ -6630,13 +6843,13 @@
               <option value="Dropped" ${curStatus === 'Dropped' ? 'selected' : ''}>❌ Dropped</option>
             </select>
           </td>
-          <td>
+          <td data-col-label="Actual Price (₹)">
             <input type="text" class="table-price-input" data-item-id="${item.id}" data-field="price" placeholder="₹ actual" value="${curPrice}" onblur="window.updateTableItemPrice('${item.id}', this.value)" onkeydown="if(event.key==='Enter') this.blur()">
           </td>
-          <td>
+          <td data-col-label="Notes / Tailoring">
             <input type="text" class="table-notes-input" data-item-id="${item.id}" data-field="notes" placeholder="Add note/spec..." value="${(curNotes || '').replace(/"/g, '&quot;')}" onblur="window.updateTableItemNotes('${item.id}', this.value)" onkeydown="if(event.key==='Enter') this.blur()">
           </td>
-          <td style="text-align: center;">
+          <td data-col-label="Actions" style="text-align: center;">
             <div class="cell-actions">
               <button type="button" class="cell-action-btn" title="Visual AI Search" onclick="window.openVisualSearchByItemId('${item.id}')">🔍</button>
               <button type="button" class="cell-action-btn" title="Share via WhatsApp" onclick="window.shareTableItemById('${item.id}')">📱</button>

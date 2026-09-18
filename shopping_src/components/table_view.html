@@ -39,6 +39,13 @@
         </button>
       </div>
 
+      <!-- Density & Responsive Layout Switcher (AC-DEC-2026-034 / UI-DEC-2026-030) -->
+      <div class="table-layout-switcher" id="tableLayoutSwitcher" style="display: inline-flex; align-items: center; gap: 4px; background: rgba(15, 23, 42, 0.6); padding: 4px 6px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+        <span class="group-switcher-label">Layout:</span>
+        <button type="button" class="table-group-btn active" id="btnLayoutTable" data-layout="table" onclick="window.setTableLayoutMode('table')" title="Dense Spreadsheet Table View">📊 Table</button>
+        <button type="button" class="table-group-btn" id="btnLayoutCards" data-layout="cards" onclick="window.setTableLayoutMode('cards')" title="Mobile-Friendly Card View">🗂️ Cards</button>
+      </div>
+
       <div class="table-actions-group">
         <button type="button" class="shop-btn shop-btn-primary" id="btnOpenAddTableItem" onclick="window.openAddShoppingItemModal()">
           <span>➕</span> Add Item

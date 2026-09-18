@@ -133,8 +133,8 @@ function scopeCssBlock(css, prefix) {
       continue;
     }
 
-    if (css.slice(i).match(/^@media[^{]*\{/)) {
-      const match = css.slice(i).match(/^(@media[^{]*\{)/);
+    if (css.slice(i).match(/^@(media|container)[^{]*\{/)) {
+      const match = css.slice(i).match(/^(@(media|container)[^{]*\{)/);
       const mediaHeader = match[1];
       result += mediaHeader + '\n';
       i += mediaHeader.length;

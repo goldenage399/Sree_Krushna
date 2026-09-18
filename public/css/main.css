@@ -70,6 +70,15 @@
       --z-sticky: 1000;
       --z-modal: 1020;
       --z-overlay: 9999;
+      /* Fluid Responsive & Breakpoint Tokens (AC-DEC-2026-034 / UI-DEC-2026-030) */
+      --bp-mobile-max: 480px;
+      --bp-tablet-max: 1024px;
+      --bp-laptop-max: 1366px;
+      --bp-desktop-min: 1367px;
+      --font-fluid-h1: clamp(0.92rem, 0.8rem + 0.5vw, 1.25rem);
+      --font-fluid-body: clamp(0.85rem, 0.8rem + 0.2vw, 0.95rem);
+      --space-fluid-page: clamp(10px, 1.5vw, 24px);
+      --space-fluid-gap: clamp(6px, 1vw, 12px);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -534,6 +543,81 @@
       transform: translateY(-1px) !important;
     }
 
+    /* Quick Actions Button & Popover (AC-DEC-2026-034 / UI-DEC-2026-030) */
+    .quick-actions-dropdown {
+      position: relative;
+      display: none; /* Shown on viewports < 1024px */
+      align-items: center;
+    }
+
+    .quick-actions-trigger {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 5px !important;
+    }
+
+    .quick-actions-popover {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      min-width: 250px;
+      max-width: 300px;
+      background: var(--bg-surface-elevated, #131b2e);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(212, 168, 67, 0.35);
+      border-radius: var(--radius-md, 12px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 16px rgba(212, 168, 67, 0.18);
+      padding: 10px;
+      z-index: var(--z-modal, 1020);
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      animation: popoverFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .qa-group-title {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--gold-bright, #f5c518);
+      padding: 4px 6px 2px;
+    }
+
+    .qa-item-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 8px 10px;
+      min-height: 44px; /* Protocol 19 / WCAG touch target */
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--text-main, #f8fafc);
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-sizing: border-box;
+      font-family: var(--font-body);
+      text-align: left;
+    }
+
+    .qa-item-btn:hover, .qa-item-btn:focus {
+      background: rgba(212, 168, 67, 0.15);
+      border-color: var(--gold-bright, #f5c518);
+      color: var(--gold-bright, #f5c518);
+      transform: translateX(2px);
+    }
+
+    .qa-item-icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
     /* User Profile Dropdown Component */
     .user-profile-dropdown {
       position: relative;
@@ -819,6 +903,8 @@
       scroll-snap-type: x proximity;
       scrollbar-width: none;
       min-height: 36px;
+      mask-image: linear-gradient(to right, transparent, black 16px, black calc(100% - 16px), transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 16px, black calc(100% - 16px), transparent);
     }
     nav.tab-nav::-webkit-scrollbar { display: none; }
 
@@ -2333,6 +2419,12 @@
     }
 
     @media (max-width: 1024px) {
+      .quick-actions-dropdown {
+        display: inline-flex !important;
+      }
+      .desktop-only-action {
+        display: none !important;
+      }
       .header-action-btn .btn-text {
         display: none; /* Icon-only action buttons on tablets / small laptops */
       }
@@ -2530,13 +2622,15 @@
       .brand-title h1 { font-size: 0.90rem; }
       .user-role-badge { display: none; /* Show avatar circle only on ultra-compact */ }
       .profile-trigger-btn { padding: 2px; }
-      .profile-popover {
+      .profile-popover,
+      .quick-actions-popover {
         position: fixed;
         top: 46px;
         left: 10px;
         right: 10px;
         min-width: auto;
         width: auto;
+        max-width: none;
       }
       nav.tab-nav { padding: 0 4px; gap: 2px; min-height: 32px; }
       .nav-btn { padding: 4px 7px; font-size: 0.74rem; min-height: 32px; gap: 3px; }

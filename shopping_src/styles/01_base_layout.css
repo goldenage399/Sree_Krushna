@@ -8,6 +8,8 @@ body {
     }
 
     #shoppingRegistryRoot {
+      container-type: inline-size;
+      container-name: shoppingRegistry;
       max-width: 1400px;
       width: 100%;
       margin: 0 auto;
