@@ -1019,3 +1019,143 @@
 #tab-dopkos .console-table tr:hover td {
   background: rgba(245, 197, 24, 0.06);
 }
+
+/* ==========================================================================
+   MULTI-VIEWPORT RESPONSIVE HARDENING (MOBILE 300px–480px, TABLET 768px–1024px)
+   Standard: STD-MOD-COMP-001 | Protocol 19 (M-GATE-01) | AC-DEC-2026-034
+   ========================================================================== */
+@media (max-width: 1024px) {
+  #tab-dopkos.active {
+    height: calc(100dvh - 130px) !important;
+    min-height: 560px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #tab-dopkos.active {
+    height: calc(100dvh - 110px) !important;
+    min-height: 480px !important;
+  }
+
+  #tab-dopkos #z1 {
+    height: auto !important;
+    min-height: 44px !important;
+    flex-wrap: wrap !important;
+    padding: 6px 10px !important;
+    gap: 6px 10px !important;
+  }
+
+  #tab-dopkos #stage-strip {
+    padding: 6px 8px !important;
+    gap: 4px !important;
+  }
+
+  #tab-dopkos .stage-card {
+    min-width: 115px !important;
+    padding: 6px 8px !important;
+  }
+
+  #tab-dopkos #console-top {
+    height: auto !important;
+    min-height: 38px !important;
+    max-height: none !important;
+    flex-wrap: wrap !important;
+    padding: 6px 8px !important;
+    gap: 6px !important;
+  }
+
+  #tab-dopkos .console-left-group,
+  #tab-dopkos .console-right-group {
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    justify-content: space-between !important;
+    gap: 6px !important;
+  }
+
+  #tab-dopkos #console-search {
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 36px !important;
+  }
+
+  #tab-dopkos .console-segmented-filters {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    max-width: 100% !important;
+    min-height: 34px !important;
+    height: auto !important;
+  }
+
+  #tab-dopkos .filter-pill {
+    min-height: 30px !important;
+    padding: 0 10px !important;
+  }
+
+  #tab-dopkos .console-btn,
+  #tab-dopkos .console-widget {
+    min-height: 32px !important;
+    height: auto !important;
+    padding: 4px 8px !important;
+  }
+
+  #tab-dopkos .console-zoom-group {
+    height: 32px !important;
+  }
+
+  #tab-dopkos .console-zoom-btn {
+    height: 30px !important;
+    min-width: 30px !important;
+    padding: 0 8px !important;
+    font-size: 0.85rem !important;
+  }
+
+  #tab-dopkos .console-zoom-val {
+    height: 30px !important;
+    min-width: 40px !important;
+  }
+
+  #tab-dopkos .label-corner,
+  #tab-dopkos .trade-label {
+    width: 75px !important;
+    font-size: 0.65rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  #tab-dopkos.active {
+    height: calc(100dvh - 100px) !important;
+    min-height: 420px !important;
+  }
+
+  #tab-dopkos #dopkos-5zone-frame {
+    --card-w: 135px;
+  }
+
+  #tab-dopkos #z1-project {
+    font-size: 0.8rem !important;
+  }
+
+  #tab-dopkos #z1-stage {
+    font-size: 0.65rem !important;
+  }
+
+  #tab-dopkos .z1-stat {
+    font-size: 0.65rem !important;
+    padding: 2px 5px !important;
+  }
+
+  #tab-dopkos .stage-card {
+    min-width: 95px !important;
+    padding: 4px 6px !important;
+  }
+
+  #tab-dopkos .stage-name {
+    font-size: 0.72rem !important;
+  }
+
+  #tab-dopkos .label-corner,
+  #tab-dopkos .trade-label {
+    width: 58px !important;
+    font-size: 0.58rem !important;
+  }
+}

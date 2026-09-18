@@ -315,7 +315,7 @@ body {
 
 .decisions-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(390px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
   gap: 20px;
 }
 
@@ -516,7 +516,8 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  min-width: 280px;
+  min-width: 0;
+  flex-shrink: 1;
 }
 
 .brand-logo {
@@ -1133,6 +1134,186 @@ body {
   gap: 8px;
 }
 
+/* ==========================================================================
+   MULTI-VIEWPORT RESPONSIVE HARDENING (MOBILE 300px–480px, TABLET 768px–850px)
+   Standard: STD-MOD-COMP-001 | Protocol 19 (M-GATE-01) | AC-DEC-2026-034
+   ========================================================================== */
+@media (max-width: 850px) {
+  .hud-layout {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .agenda-sidebar {
+    max-height: 220px;
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+  }
+
+  .agenda-list {
+    max-height: 160px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .agenda-item {
+    min-height: 44px;
+    padding: 8px 10px;
+  }
+
+  .topic-detail-pane {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 14px 12px;
+  }
+
+  .stage-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    padding-bottom: 4px;
+  }
+
+  .stage-tab-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-height: 40px;
+    padding: 6px 12px;
+  }
+
+  .calc-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .status-btn {
+    min-height: 38px;
+    padding: 6px 10px;
+  }
+
+  .tone-btn {
+    min-height: 38px;
+    padding: 6px 12px;
+  }
+
+  .calc-input {
+    min-height: 38px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 768px) {
+  .topnav {
+    height: auto;
+    min-height: var(--header-height);
+    padding: 8px 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .hotkey-badge,
+  #liveModeBadge {
+    display: none !important;
+  }
+
+  .mode-btn {
+    padding: 6px 10px;
+    min-height: 40px;
+    font-size: 11px;
+  }
+
+  .event-strip {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 8px 12px;
+  }
+
+  .event-pills {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+    flex-wrap: nowrap;
+  }
+
+  .event-pill {
+    flex-shrink: 0;
+    min-height: 38px;
+    padding: 6px 12px;
+  }
+
+  .event-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    font-size: 10.5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-badge {
+    display: none;
+  }
+
+  .brand-title {
+    font-size: 13px;
+  }
+
+  .agenda-sidebar {
+    max-height: 180px;
+  }
+
+  .agenda-list {
+    max-height: 125px;
+  }
+
+  .topic-detail-pane {
+    padding: 10px 8px;
+    gap: 10px;
+  }
+
+  .topic-header-card {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .topic-title {
+    font-size: clamp(14px, 4.5vw, 17px);
+  }
+
+  .topic-visual-strip {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .topic-visual-btn {
+    min-height: 40px;
+    justify-content: center;
+  }
+
+  .event-metrics {
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 6px;
+    font-size: 10px;
+  }
+
+  .status-button-group {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .tone-selector {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+}
+
 /* --- File: 03_tender_modal_and_print.css --- */
 /* PIN MODAL */
 .modal-backdrop {
@@ -1155,7 +1336,8 @@ body {
   border: 1px solid var(--border-medium);
   border-radius: 12px;
   padding: 24px 30px;
-  width: 320px;
+  width: min(320px, calc(100vw - 28px));
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1225,7 +1407,7 @@ body {
 .tender-doc {
   background: #ffffff;
   color: #0f172a;
-  padding: 36px 44px;
+  padding: clamp(14px, 4vw, 36px) clamp(12px, 4vw, 44px);
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -1321,6 +1503,25 @@ body {
   font-size: 11px;
 }
 
+@media (max-width: 640px) {
+  .tender-modal {
+    width: 100vw;
+    max-width: 100vw;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+  .tender-modal-body {
+    padding: 8px;
+  }
+  .tender-parties-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .tender-signatures {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
 
 /* PRINT MEDIA */
 @media print {
@@ -1415,7 +1616,7 @@ body {
   overflow-y: auto;
   padding: 20px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
   gap: 16px;
   background: var(--bg-primary);
 }
@@ -1801,6 +2002,19 @@ body {
 }
 
 @media (max-width: 600px) {
+  .lookbook-modal {
+    width: 100vw;
+    max-width: 100vw;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+  .lookbook-grid {
+    padding: 10px;
+    gap: 12px;
+  }
+  .lookbook-filter-bar {
+    padding: 8px 12px;
+  }
   .decision-media-bar {
     flex-direction: column;
     align-items: flex-start;
@@ -1988,8 +2202,8 @@ body {
   background: var(--bg-card);
   border: 1px solid var(--border-medium);
   border-radius: 12px;
-  width: 90vw;
-  max-width: 580px;
+  width: min(580px, calc(100vw - 20px));
+  max-width: 100%;
   box-shadow: 0 25px 60px rgba(0,0,0,0.85);
   overflow: hidden;
   animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -2087,6 +2301,39 @@ body {
   line-height: 1.45;
 }
 
+@media (max-width: 640px) {
+  .lightbox-backdrop {
+    padding: 10px 12px;
+  }
+  .lightbox-topbar {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .lightbox-img-wrapper {
+    width: 98vw;
+    height: 60vh;
+  }
+  .lb-nav-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+  .lb-nav-btn.prev {
+    left: 8px;
+  }
+  .lb-nav-btn.next {
+    right: 8px;
+  }
+  .lightbox-caption-drawer {
+    padding: 10px 12px;
+    font-size: 11px;
+  }
+  .lb-meta-row {
+    gap: 10px;
+    font-size: 10.5px;
+  }
+}
+
 /* --- File: 06_founder_deck.css --- */
 /* AUDIENCE PRESENTATION MODE */
 .founder-layout {
@@ -2094,8 +2341,10 @@ body {
   flex-direction: column;
   height: calc(100vh - var(--header-height) - 34px);
   background: #060913;
-  padding: 30px 60px;
+  padding: clamp(14px, 3vw, 24px) clamp(12px, 3vw, 20px);
   position: relative;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .founder-layout.active {
@@ -2114,7 +2363,7 @@ body {
 
 .slide-title {
   font-family: var(--font-display);
-  font-size: 32px;
+  font-size: clamp(1.25rem, 5vw, 2rem);
   font-weight: 800;
   color: #fff;
   letter-spacing: -0.02em;
@@ -2122,15 +2371,15 @@ body {
 }
 
 .slide-subtitle {
-  font-size: 15px;
+  font-size: clamp(0.85rem, 3vw, 0.95rem);
   color: var(--text-secondary);
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .slide-indicators {
   position: absolute;
-  bottom: 24px;
-  left: 60px;
+  bottom: clamp(12px, 2vw, 24px);
+  left: clamp(16px, 4vw, 60px);
   display: flex;
   gap: 8px;
   align-items: center;
@@ -2148,19 +2397,6 @@ body {
   background: var(--accent-gold);
   width: 24px;
   border-radius: 4px;
-}
-
-/* MEDIA QUERIES (RESPONSIVE HARDENING) */
-@media (max-width: 900px) {
-  .hud-layout {
-    grid-template-columns: 1fr;
-  }
-  .agenda-sidebar {
-    max-height: 240px;
-  }
-  .calc-grid {
-    grid-template-columns: 1fr;
-  }
 }
   </style>
 </head>

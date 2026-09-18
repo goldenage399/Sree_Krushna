@@ -19,7 +19,8 @@
   border: 1px solid var(--border-medium);
   border-radius: 12px;
   padding: 24px 30px;
-  width: 320px;
+  width: min(320px, calc(100vw - 28px));
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -89,7 +90,7 @@
 .tender-doc {
   background: #ffffff;
   color: #0f172a;
-  padding: 36px 44px;
+  padding: clamp(14px, 4vw, 36px) clamp(12px, 4vw, 44px);
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -185,6 +186,25 @@
   font-size: 11px;
 }
 
+@media (max-width: 640px) {
+  .tender-modal {
+    width: 100vw;
+    max-width: 100vw;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+  .tender-modal-body {
+    padding: 8px;
+  }
+  .tender-parties-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .tender-signatures {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
 
 /* PRINT MEDIA */
 @media print {

@@ -4,8 +4,10 @@
   flex-direction: column;
   height: calc(100vh - var(--header-height) - 34px);
   background: #060913;
-  padding: 30px 60px;
+  padding: clamp(14px, 3vw, 24px) clamp(12px, 3vw, 20px);
   position: relative;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .founder-layout.active {
@@ -24,7 +26,7 @@
 
 .slide-title {
   font-family: var(--font-display);
-  font-size: 32px;
+  font-size: clamp(1.25rem, 5vw, 2rem);
   font-weight: 800;
   color: #fff;
   letter-spacing: -0.02em;
@@ -32,15 +34,15 @@
 }
 
 .slide-subtitle {
-  font-size: 15px;
+  font-size: clamp(0.85rem, 3vw, 0.95rem);
   color: var(--text-secondary);
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .slide-indicators {
   position: absolute;
-  bottom: 24px;
-  left: 60px;
+  bottom: clamp(12px, 2vw, 24px);
+  left: clamp(16px, 4vw, 60px);
   display: flex;
   gap: 8px;
   align-items: center;
@@ -60,15 +62,3 @@
   border-radius: 4px;
 }
 
-/* MEDIA QUERIES (RESPONSIVE HARDENING) */
-@media (max-width: 900px) {
-  .hud-layout {
-    grid-template-columns: 1fr;
-  }
-  .agenda-sidebar {
-    max-height: 240px;
-  }
-  .calc-grid {
-    grid-template-columns: 1fr;
-  }
-}

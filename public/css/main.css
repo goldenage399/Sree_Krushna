@@ -2367,7 +2367,7 @@
     /* Ritual Cards Grid */
     .ritual-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
       gap: 16px;
     }
     .ritual-card {
@@ -2377,10 +2377,17 @@
       padding: 16px;
       cursor: pointer;
       transition: all 0.2s;
+      min-height: 44px;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     .ritual-card:hover {
       border-color: var(--gold-antique);
       transform: translateY(-2px);
+    }
+    .ritual-card:active {
+      transform: scale(0.99);
+      border-color: var(--gold-bright);
     }
     .ritual-card h3 {
       font-family: var(--font-display);
@@ -2583,6 +2590,14 @@
 
       .ritual-grid {
         grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .ritual-card {
+        padding: 14px 12px;
+      }
+      .ritual-meta {
+        flex-wrap: wrap;
+        gap: 6px;
       }
       .palette-grid {
         grid-template-columns: 1fr;
@@ -2661,6 +2676,17 @@
       .ribbon-action-btn {
         width: 100%;
         justify-content: center;
+      }
+      .modal {
+        padding: 16px 14px;
+        max-height: 90vh;
+        border-radius: var(--radius-md);
+      }
+      .ritual-card h3 {
+        font-size: 0.98rem;
+      }
+      .ritual-card p {
+        font-size: 0.80rem;
       }
     }
 
