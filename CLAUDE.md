@@ -41,6 +41,9 @@ All entities must use standardized 3-digit padded identifiers:
 - **Canonical Trousseau Specification**: See [SPEC-PROC-TROUSSEAU-001.md](./docs/references/SPEC-PROC-TROUSSEAU-001.md).
 - **Liturgical Attire & Catalog Drift Case Study**: See [INC-089-liturgical-attire-conflation-and-trousseau-catalog-drift.md](./docs/incidents/INC-089-liturgical-attire-conflation-and-trousseau-catalog-drift.md).
 - **Stakeholder Deep-Link Station & Pathname Conflation Case Study**: See [INC-090-spa-pathname-drift-in-stakeholder-share-links.md](./docs/incidents/INC-090-spa-pathname-drift-in-stakeholder-share-links.md).
+- **Unvetted Ideation Creep Case Study**: See [INC-091-unvetted-ideation-creep-and-incubation-firewall-boundary.md](./docs/incidents/INC-091-unvetted-ideation-creep-and-incubation-firewall-boundary.md).
+- **ES Module Timing Race & Reconnection Case Study**: See [INC-092-dynamic-module-timing-race-and-unauthenticated-local-fallback.md](./docs/incidents/INC-092-dynamic-module-timing-race-and-unauthenticated-local-fallback.md).
+- **Open Ground Experiential Proposals**: See [PROP-20260917-open-ground-experiential-enhancements.md](./docs/proposals/PROP-20260917-open-ground-experiential-enhancements.md).
 - **3-Tier Multi-Surface Deployment**: See [260916_arch_council_multi_surface_web_app_and_shopping_deployment.md](./User_Created/Discussion Threads/Council/260916_arch_council_multi_surface_web_app_and_shopping_deployment.md) (`AC-DEC-2026-026` / `P-MULTI-SURFACE-DEPLOY-001`).
 - **Universal Quick-Share Architecture**: See [260916_arch_council_universal_executive_quick_share_and_deep_link_architecture.md](./User_Created/Discussion Threads/Council/260916_arch_council_universal_executive_quick_share_and_deep_link_architecture.md) (`AC-DEC-2026-027` / `UI-DEC-2026-023` / `P-QUICK-SHARE-001`).
 
@@ -50,6 +53,12 @@ All entities must use standardized 3-digit padded identifiers:
 - **Prohibition of Naked `DOMContentLoaded` (`INV-LIFECYCLE-02`)**: Modular UI components and dynamic fragments MUST guard event binding with `document.readyState !== 'loading'`. Naked `DOMContentLoaded` listeners are strictly forbidden.
 - **3-Trigger Modal/Drawer Dismissibility (`INV-LIFECYCLE-03`)**: All modals and slide-over drawers MUST support (1) explicit Close button click, (2) Backdrop click, and (3) Escape keydown.
 - **Pre-Flight Lifecycle Gate (`INV-LIFECYCLE-04`)**: Changes to UI scripts or mounters must pass `npm run verify:ui-lifecycle`.
+
+### 6. Incubation Firewall & Ideation Boundary (`INV-INCUBATION-FIREWALL-001` / `P-IDEA-FIREWALL-001`)
+- **Strict Ideation Segregation**: No exploratory suggestion, creative idea, decorator add-on, or unapproved experiential concept may directly modify or append to canonical operational SSOTs (`05_OPERATIONS_LOGISTICS/`, `04_PROCUREMENT_VENDORS/`), procurement tenders/riders, financial ledgers, or active task queues.
+- **Mandatory Incubation Routing**: All new concepts, exploratory features, and brainstormed additions MUST be routed through `.agent/workflows/idea-incubator.md` (`/idea-incubator`) and logged into `docs/proposals/` as `DRAFT (In Ideation / Incubation — PENDING DECISION)`.
+- **Promotion Gate**: An incubation proposal can only be promoted to active operational specifications, decisions (`DEC-###`), and execution tasks (`TSK-###`) after formal host review, budget clearance, and council certification (`AC-DEC-###`).
+
 
 ---
 
@@ -165,5 +174,4 @@ This repository implements the following universal patterns:
 - `.agent/patterns/declarative-option-clustering-and-consensus.md`
 - `.agent/patterns/dynamic-fragment-lifecycle-and-modal-dismiss-contract.md`
 - `.agent/patterns/canonical-stakeholder-deep-link-station.md`
-
-
+- `.agent/patterns/dynamic-module-timing-race-and-auth-reconnect.md`

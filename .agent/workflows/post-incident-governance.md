@@ -141,6 +141,7 @@ Before editing `GEMINI.md` or `.agent/standards-catalog.json`:
     - See `.agent/patterns/write-without-reader.md` for the write-without-reader validation pattern.
     - See `.agent/patterns/derive-dont-declare-guardrails.md` — a guard rail must READ the fact it protects, never restate it in a hardcoded list. A restated fact drifts (INC-062: the list went stale *and* its risk note was inverted, leaving the guard blind and misleading).
     - See `.agent/patterns/proxy-signal-verdicts.md` — never act on a proxy (import counts, filenames, mtimes, header comments) when deleting/merging. Measure the fact, and re-measure immediately before editing.
+    - See `.agent/patterns/dynamic-module-timing-race-and-auth-reconnect.md` for the ES module load polling and dynamic auth reconnection contract.
 
    Distinction:
    - Code invariant → `GEMINI.md` + `standards-catalog.json` (steps 1-4 above)

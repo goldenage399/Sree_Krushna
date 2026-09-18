@@ -51,6 +51,11 @@ All entities must use standardized 3-digit padded identifiers:
 - **3-Trigger Modal/Drawer Dismissibility (`INV-LIFECYCLE-03`)**: All modals and slide-over drawers MUST support (1) explicit Close button click, (2) Backdrop click, and (3) Escape keydown.
 - **Pre-Flight Lifecycle Gate (`INV-LIFECYCLE-04`)**: Changes to UI scripts or mounters must pass `npm run verify:ui-lifecycle`.
 
+### 6. Incubation Firewall & Ideation Boundary (`INV-INCUBATION-FIREWALL-001` / `P-IDEA-FIREWALL-001`)
+- **Strict Ideation Segregation**: No exploratory suggestion, creative idea, decorator add-on, or unapproved experiential concept may directly modify or append to canonical operational SSOTs (`05_OPERATIONS_LOGISTICS/`, `04_PROCUREMENT_VENDORS/`), procurement tenders/riders, financial ledgers, or active task queues.
+- **Mandatory Incubation Routing**: All new concepts, exploratory features, and brainstormed additions MUST be routed through `.agent/workflows/idea-incubator.md` (`/idea-incubator`) and logged into `docs/proposals/` as `DRAFT (In Ideation / Incubation — PENDING DECISION)`.
+- **Promotion Gate**: An incubation proposal can only be promoted to active operational specifications, decisions (`DEC-###`), and execution tasks (`TSK-###`) after formal host review, budget clearance, and council certification (`AC-DEC-###`).
+
 ---
 
 ## 2. Session Startup Gate (MANDATORY)
@@ -166,4 +171,4 @@ This repository implements the following universal patterns:
 - `.agent/patterns/declarative-option-clustering-and-consensus.md`
 - `.agent/patterns/dynamic-fragment-lifecycle-and-modal-dismiss-contract.md`
 - `.agent/patterns/canonical-stakeholder-deep-link-station.md`
-
+- `.agent/patterns/dynamic-module-timing-race-and-auth-reconnect.md`
