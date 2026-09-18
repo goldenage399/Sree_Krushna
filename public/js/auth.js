@@ -147,6 +147,9 @@ export function initAuthGate(options = {}) {
       if (typeof onSignedIn === "function") {
         onSignedIn(user, userRoleInfo);
       }
+      try {
+        window.dispatchEvent(new CustomEvent('sk-auth-state-changed', { detail: { user, userRoleInfo } }));
+      } catch (e) {}
     } else if (user && !isAllowed(user.email)) {
       window.currentUser = null;
       window.currentUserRole = null;
@@ -160,6 +163,9 @@ export function initAuthGate(options = {}) {
       if (typeof onSignedOut === "function") {
         onSignedOut(user);
       }
+      try {
+        window.dispatchEvent(new CustomEvent('sk-auth-state-changed', { detail: { user: null } }));
+      } catch (e) {}
     } else {
       window.currentUser = null;
       window.currentUserRole = null;
@@ -169,6 +175,9 @@ export function initAuthGate(options = {}) {
       if (typeof onSignedOut === "function") {
         onSignedOut(null);
       }
+      try {
+        window.dispatchEvent(new CustomEvent('sk-auth-state-changed', { detail: { user: null } }));
+      } catch (e) {}
     }
   });
 
@@ -232,3 +241,5 @@ document.addEventListener("keydown", (e) => {
     }
   }
 });
+/* SSOT: docs/incidents/INC-092-dynamic-module-timing-race-and-unauthenticated-local-fallback.md — INC-092 */
+

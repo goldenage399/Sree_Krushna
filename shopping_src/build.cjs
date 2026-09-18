@@ -35,6 +35,11 @@ const combinedCss = primCss + '\n\n    ' + moduleCss;
 // Read Body Component and Shared Modals (Lightbox + Intake Modal + Survey Studio)
 let bodyHtml = fs.readFileSync(path.join(baseDir, 'components', 'body.html'), 'utf8');
 
+const tableViewPath = path.join(baseDir, 'components', 'table_view.html');
+if (fs.existsSync(tableViewPath)) {
+  bodyHtml += '\n\n' + fs.readFileSync(tableViewPath, 'utf8');
+}
+
 const surveyStudioPath = path.join(baseDir, 'components', 'survey_studio.html');
 if (fs.existsSync(surveyStudioPath)) {
   bodyHtml += '\n\n' + fs.readFileSync(surveyStudioPath, 'utf8');

@@ -71,6 +71,10 @@
         <span>✨ Groom Mandap</span>
         <span class="chip-copy-icon">📋</span>
       </button>
+      <button class="share-chip share-chip-table" onclick="window.copyStakeholderShare('shopping-table')" title="Copy Live Mutable Table link for WhatsApp">
+        <span>📊 Table Mode</span>
+        <span class="chip-copy-icon">📋</span>
+      </button>
       <button class="share-chip share-chip-popout" onclick="window.openStandalonePortal('shopping-registry.html')" title="Open standalone full-screen portal in new tab">
         <span>↗️ Standalone Portal</span>
       </button>
@@ -80,7 +84,10 @@
   <!-- Top View Segmented Switcher (P-SURVEY-HYBRID-001) -->
   <div class="shop-view-switcher" id="shopViewSwitcher">
     <button class="shop-view-tab active" id="tabCatalogView" onclick="window.switchShoppingView('catalog')">
-      <span>🛍️</span> Trousseau Catalog &amp; Consensus (34)
+      <span>🛍️</span> Trousseau Catalog &amp; Consensus (44)
+    </button>
+    <button class="shop-view-tab" id="tabTableView" onclick="window.switchShoppingView('table')">
+      <span>📊</span> Live Mutable Table Grid
     </button>
     <button class="shop-view-tab" id="tabSurveyView" onclick="window.switchShoppingView('survey')">
       <span>📝</span> Interactive Family Survey &amp; Budget Studio

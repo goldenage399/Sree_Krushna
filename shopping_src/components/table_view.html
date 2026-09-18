@@ -1,0 +1,220 @@
+<!-- High-Density Mutable Table View (AC-DEC-2026-028 / P-SHOPPING-FIRESTORE-COLLAB-001) -->
+<div id="shoppingTableViewSection" class="shop-table-section" style="display: none;">
+
+  <!-- Table HUD Metrics Bar -->
+  <div class="shop-table-hud" id="shopTableHud">
+    <div class="hud-stat-pill">
+      <span class="hud-label">📋 Total Items:</span>
+      <strong id="tableHudTotal">44</strong>
+    </div>
+    <div class="hud-stat-pill">
+      <span class="hud-label">🛍️ Purchased:</span>
+      <strong id="tableHudPurchased" style="color: var(--shop-gold);">0 / 44</strong>
+    </div>
+    <div class="hud-stat-pill">
+      <span class="hud-label">💰 Total Spent:</span>
+      <strong id="tableHudTotalSpent" style="color: var(--shop-emerald);">₹0</strong>
+    </div>
+    <div class="hud-stat-pill hud-sync-pill" id="tableHudSyncStatus" title="Firestore Real-Time Sync Status">
+      <span class="sync-dot"></span>
+      <span id="tableSyncText">Connecting Live Firestore...</span>
+    </div>
+  </div>
+
+  <!-- Table Toolbar (Search, Grouping, Filters, Actions) -->
+  <div class="shop-table-toolbar">
+    <div class="table-controls-top">
+      <div class="table-search-group">
+        <span class="table-search-icon">🔍</span>
+        <input type="text" id="tableSearchInput" class="table-search-input" placeholder="Search item, store, fabric, or role..." oninput="window.filterShoppingTable()">
+      </div>
+
+      <div class="table-group-switcher" id="tableGroupSwitcher">
+        <span class="group-switcher-label">Group:</span>
+        <button type="button" class="table-group-btn active" data-group="chapter" onclick="window.setTableGroupBy('chapter')">📁 By Chapter</button>
+        <button type="button" class="table-group-btn" data-group="store" onclick="window.setTableGroupBy('store')">🏬 By Store</button>
+        <button type="button" class="table-group-btn" data-group="none" onclick="window.setTableGroupBy('none')">📄 Flat List</button>
+        <button type="button" class="table-accordion-toggle-btn" id="btnToggleAllAccordions" onclick="window.toggleAllTableGroups()" title="Collapse or Expand all table sections">
+          <span class="accordion-toggle-icon">↕</span> <span id="toggleAllAccordionsText">Collapse All</span>
+        </button>
+      </div>
+
+      <div class="table-actions-group">
+        <button type="button" class="shop-btn shop-btn-primary" id="btnOpenAddTableItem" onclick="window.openAddShoppingItemModal()">
+          <span>➕</span> Add Item
+        </button>
+        <button type="button" class="shop-btn" onclick="window.exportShoppingTable('jsonl')" title="Download canonical JSONL file">
+          <span>📥</span> JSONL
+        </button>
+        <button type="button" class="shop-btn" onclick="window.exportShoppingTable('csv')" title="Download CSV for Google Sheets">
+          <span>📊</span> CSV
+        </button>
+        <button type="button" class="shop-btn shop-btn-whatsapp" onclick="window.copyStakeholderShare('shopping-table')" title="Copy Table View Link for WhatsApp">
+          <span>🔗</span> Share Table
+        </button>
+      </div>
+    </div>
+
+    <!-- Tier 1: Category Facet Filters -->
+    <div class="table-category-filters" id="tableCategoryFilters">
+      <button type="button" class="table-filter-btn active" data-cat="all" onclick="window.setTableCategoryFilter('all')">All <span class="pill-count" id="catCountAll">44</span></button>
+      <button type="button" class="table-filter-btn" data-cat="bridal" onclick="window.setTableCategoryFilter('bridal')">👰 Bridal <span class="pill-count" id="catCountBridal">10</span></button>
+      <button type="button" class="table-filter-btn" data-cat="groom" onclick="window.setTableCategoryFilter('groom')">👑 Groom <span class="pill-count" id="catCountGroom">10</span></button>
+      <button type="button" class="table-filter-btn" data-cat="jewellery" onclick="window.setTableCategoryFilter('jewellery')">💎 Jewellery <span class="pill-count" id="catCountJewellery">7</span></button>
+      <button type="button" class="table-filter-btn" data-cat="sara" onclick="window.setTableCategoryFilter('sara')">🎁 Sara Gifting <span class="pill-count" id="catCountSara">12</span></button>
+      <button type="button" class="table-filter-btn" data-cat="engagement" onclick="window.setTableCategoryFilter('engagement')">💍 Engagement <span class="pill-count" id="catCountEngagement">5</span></button>
+    </div>
+
+    <!-- Tier 2: Live Status Facet Filters -->
+    <div class="table-status-filters" id="tableStatusFilters">
+      <span class="status-filter-label">Status:</span>
+      <button type="button" class="table-status-btn active" data-status="all" onclick="window.setTableStatusFilter('all')">All <span class="pill-count" id="statCountAll">44</span></button>
+      <button type="button" class="table-status-btn status-btn-planned" data-status="Planned" onclick="window.setTableStatusFilter('Planned')">⏳ Planned <span class="pill-count" id="statCountPlanned">0</span></button>
+      <button type="button" class="table-status-btn status-btn-shortlisted" data-status="Shortlisted" onclick="window.setTableStatusFilter('Shortlisted')">⭐ Shortlisted <span class="pill-count" id="statCountShortlisted">0</span></button>
+      <button type="button" class="table-status-btn status-btn-in_trial" data-status="In_Trial" onclick="window.setTableStatusFilter('In_Trial')">👗 In Trial <span class="pill-count" id="statCountInTrial">0</span></button>
+      <button type="button" class="table-status-btn status-btn-ordered" data-status="Ordered" onclick="window.setTableStatusFilter('Ordered')">📦 Ordered <span class="pill-count" id="statCountOrdered">0</span></button>
+      <button type="button" class="table-status-btn status-btn-purchased" data-status="Purchased" onclick="window.setTableStatusFilter('Purchased')">✅ Purchased <span class="pill-count" id="statCountPurchased">0</span></button>
+      <button type="button" class="table-reset-btn" id="btnResetTableFilters" onclick="window.resetTableFilters()" title="Reset all filters and sorting" style="display: none;">↺ Reset</button>
+    </div>
+  </div>
+
+  <!-- Responsive Table Wrapper -->
+  <div class="shop-table-container">
+    <table class="shop-data-table" id="shoppingDataTable">
+      <thead>
+        <tr>
+          <th style="min-width: 200px;" class="sticky-col sortable" data-sort-key="title" onclick="window.sortTableColumn('title')" title="Sort by Title">
+            <div class="th-content">
+              <span>Item Title &amp; Code</span>
+              <span class="sort-icon" id="sortIcon_title">⇅</span>
+            </div>
+          </th>
+          <th style="min-width: 110px;" class="sortable" data-sort-key="category" onclick="window.sortTableColumn('category')" title="Sort by Category">
+            <div class="th-content">
+              <span>Category</span>
+              <span class="sort-icon" id="sortIcon_category">⇅</span>
+            </div>
+          </th>
+          <th style="min-width: 170px;" class="sortable" data-sort-key="role" onclick="window.sortTableColumn('role')" title="Sort by Liturgical Role">
+            <div class="th-content">
+              <span>Liturgical Role / Event</span>
+              <span class="sort-icon" id="sortIcon_role">⇅</span>
+            </div>
+          </th>
+          <th style="min-width: 150px;" class="sortable" data-sort-key="store" onclick="window.sortTableColumn('store')" title="Sort by Store">
+            <div class="th-content">
+              <span>Store / Sourcing</span>
+              <span class="sort-icon" id="sortIcon_store">⇅</span>
+            </div>
+          </th>
+          <th style="min-width: 120px;" class="sortable" data-sort-key="budget" onclick="window.sortTableColumn('budget')" title="Sort by Estimated Budget">
+            <div class="th-content">
+              <span>Est. Budget</span>
+              <span class="sort-icon" id="sortIcon_budget">⇅</span>
+            </div>
+          </th>
+          <th style="min-width: 130px;" class="sortable" data-sort-key="status" onclick="window.sortTableColumn('status')" title="Sort by Procurement Lifecycle Status">
+            <div class="th-content">
+              <span>Live Status</span>
+              <span class="sort-icon" id="sortIcon_status">⇅</span>
+            </div>
+          </th>
+          <th style="min-width: 125px;" class="sortable" data-sort-key="actualPrice" onclick="window.sortTableColumn('actualPrice')" title="Sort by Actual Price Paid">
+            <div class="th-content">
+              <span>Actual Price (₹)</span>
+              <span class="sort-icon" id="sortIcon_actualPrice">⇅</span>
+            </div>
+          </th>
+          <th style="min-width: 180px;">Notes / Tailoring</th>
+          <th style="min-width: 90px; text-align: center;">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="shoppingTableBody">
+        <!-- Rendered dynamically by window.renderShoppingTable() -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal: Add New Shopping Item (INV-LIFECYCLE-03 3-Trigger Dismissible) -->
+<div class="sk-modal-backdrop" id="addShoppingItemModal" onclick="if(event.target===this) window.closeAddShoppingItemModal()">
+  <div class="sk-modal-card" role="dialog" aria-modal="true" aria-labelledby="addShoppingItemTitle">
+    <div class="sk-modal-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px; margin-bottom: 16px;">
+      <h3 id="addShoppingItemTitle" style="font-family: var(--font-display); color: var(--gold-bright); font-size: 1.15rem; margin: 0;">🛍️ Add New Shopping Item</h3>
+      <button type="button" class="sk-modal-close" onclick="window.closeAddShoppingItemModal()" aria-label="Close modal" style="background: none; border: none; font-size: 1.4rem; color: var(--text-muted); cursor: pointer;">&times;</button>
+    </div>
+
+    <form id="addShoppingItemForm" onsubmit="window.handleAddNewShoppingItem(event)">
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <div>
+          <label style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;">Item Title *</label>
+          <input type="text" id="newItemTitle" required placeholder="e.g., Pure Silver Sindoor Farua or Extra Sambalpuri Pata" style="width: 100%; padding: 8px 12px; background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border-subtle); border-radius: 6px; color: #fff;">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;">Category *</label>
+            <select id="newItemCategory" required onchange="window.syncNewItemCategoryToChapter(this.value)" style="width: 100%; padding: 8px 12px; background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border-subtle); border-radius: 6px; color: #fff;">
+              <option value="bridal">👰 Bridal</option>
+              <option value="groom">👑 Groom</option>
+              <option value="jewellery">💎 Jewellery</option>
+              <option value="sara">🎁 Sara Gifting</option>
+              <option value="engagement">💍 Engagement</option>
+              <option value="puja_samagri">🪔 Puja Samagri</option>
+              <option value="general">✨ General</option>
+            </select>
+          </div>
+          <div>
+            <label style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;">Chapter / Phase *</label>
+            <select id="newItemChapter" required style="width: 100%; padding: 8px 12px; background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border-subtle); border-radius: 6px; color: #fff;">
+              <option value="chapter_bridal_silks">🪔 Ch 1: Bridal Sacred Silks</option>
+              <option value="chapter_groom_wear">👑 Ch 2: Groom Regalia &amp; Mandap</option>
+              <option value="chapter_jewellery">💎 Ch 3: Temple Gold &amp; Silver</option>
+              <option value="chapter_sara_gifting">🎁 Ch 4: Sara &amp; Family Gifting</option>
+              <option value="chapter_engagement">💍 Ch 0: Engagement &amp; Nirbandha</option>
+              <option value="chapter_general">✨ Additional / Ad-Hoc Items</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;">Target Store</label>
+            <input type="text" id="newItemStore" placeholder="e.g. Boyanika, Khimji, Market Building" style="width: 100%; padding: 8px 12px; background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border-subtle); border-radius: 6px; color: #fff;">
+          </div>
+          <div>
+            <label style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;">Est. Price Range</label>
+            <input type="text" id="newItemPriceRange" placeholder="e.g. ₹15,000 - ₹25,000" style="width: 100%; padding: 8px 12px; background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border-subtle); border-radius: 6px; color: #fff;">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;">Initial Status</label>
+            <select id="newItemStatus" style="width: 100%; padding: 8px 12px; background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border-subtle); border-radius: 6px; color: #fff;">
+              <option value="Planned">Planned</option>
+              <option value="Shortlisted">Shortlisted</option>
+              <option value="In_Trial">In Trial</option>
+              <option value="Ordered">Ordered</option>
+              <option value="Purchased">Purchased</option>
+            </select>
+          </div>
+          <div>
+            <label style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;">Liturgical Role / Event</label>
+            <input type="text" id="newItemRole" placeholder="e.g. Day 2 Daytime Hastaganthi or Sangeet Night" style="width: 100%; padding: 8px 12px; background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border-subtle); border-radius: 6px; color: #fff;">
+          </div>
+        </div>
+
+        <div>
+          <label style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;">Notes &amp; Sizing Specs</label>
+          <textarea id="newItemNotes" rows="2" placeholder="Specific color preferences, weaver contact, sizing, or tailoring lead time..." style="width: 100%; padding: 8px 12px; background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border-subtle); border-radius: 6px; color: #fff;"></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px;">
+          <button type="button" class="shop-btn" onclick="window.closeAddShoppingItemModal()">Cancel</button>
+          <button type="submit" class="shop-btn shop-btn-primary" id="btnSubmitNewShoppingItem">💾 Save to Firestore</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

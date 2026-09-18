@@ -119,7 +119,55 @@ function fsListenTaskStatus(callback) {
   });
 }
 
+// ── Real-Time Shopping Engine (AC-DEC-2026-028) ───────────────────
+function fsSetShoppingItemStatus(itemId, patch) {
+  if (!window.currentUser || !window.currentUser.email) return Promise.reject(new Error("Unauthenticated"));
+  return setDoc(doc(db, "shopping_items", itemId), {
+    ...patch,
+    updatedBy: window.currentUser.email,
+    updatedAt: serverTimestamp(),
+  }, { merge: true });
+}
+
+async function fsCreateShoppingItem(item) {
+  if (!window.currentUser || !window.currentUser.email) throw new Error("Unauthenticated");
+  const id = await mintId("shopping_items", "TRS");
+  const record = {
+    id,
+    title: item.title,
+    category: item.category || "general",
+    chapterId: item.chapterId || "chapter_general",
+    role: item.role || "Wedding Sourcing",
+    priceRange: item.priceRange || "",
+    status: item.status || "Planned",
+    store: item.store || "",
+    actualPrice: item.actualPrice !== undefined ? item.actualPrice : "",
+    actualStore: item.actualStore || item.store || "",
+    notes: item.notes || "",
+    addedBy: window.currentUser.displayName || window.currentUser.email,
+    updatedBy: window.currentUser.email,
+    updatedAt: serverTimestamp(),
+  };
+  await setDoc(doc(db, "shopping_items", id), record);
+  return { id, ...record };
+}
+
+function fsListenShoppingItems(callback, onError) {
+  return onSnapshot(collection(db, "shopping_items"), (snap) => {
+    const map = {};
+    snap.docs.forEach((d) => { map[d.id] = d.data(); });
+    callback(map);
+  }, (err) => {
+    if (typeof onError === 'function') onError(err);
+    else console.warn("Firestore fsListenShoppingItems error:", err);
+  });
+}
+
 Object.assign(window, {
   fsDispatchChangeRequest, fsUpdateChangeRequestStatus, fsListenChangeRequests,
   fsSetTaskStatus, fsCreateAdhocTask, fsListenTaskStatus,
+  fsSetShoppingItemStatus, fsCreateShoppingItem, fsListenShoppingItems,
 });
+/* SSOT: docs/incidents/INC-092-dynamic-module-timing-race-and-unauthenticated-local-fallback.md — INC-092 */
+
+

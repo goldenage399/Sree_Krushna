@@ -173,6 +173,16 @@
         setTimeout(() => {
           if (window.switchShoppingView) window.switchShoppingView('survey');
         }, 100);
+      } else if (paramView === 'table') {
+        if (params.get('group')) tableState.groupBy = params.get('group');
+        if (params.get('sort')) tableState.sortKey = params.get('sort');
+        if (params.get('order')) tableState.sortOrder = params.get('order');
+        if (params.get('cat')) tableState.category = params.get('cat');
+        if (params.get('status')) tableState.status = params.get('status');
+        if (params.get('q')) tableState.query = params.get('q');
+        setTimeout(() => {
+          if (window.switchShoppingView) window.switchShoppingView('table');
+        }, 100);
       }
     }
 
@@ -556,24 +566,1023 @@
     window.switchShoppingView = function(viewMode) {
       window.currentShoppingView = viewMode;
       const tabCatalog = document.getElementById('tabCatalogView');
+      const tabTable = document.getElementById('tabTableView');
       const tabSurvey = document.getElementById('tabSurveyView');
       const catalogSection = document.getElementById('catalogViewSection');
+      const tableSection = document.getElementById('shoppingTableViewSection');
       const surveyStudio = document.getElementById('interactiveSurveyStudio');
 
-      if (viewMode === 'survey') {
-        if (tabCatalog) tabCatalog.classList.remove('active');
-        if (tabSurvey) tabSurvey.classList.add('active');
-        if (catalogSection) catalogSection.style.display = 'none';
-        if (surveyStudio) surveyStudio.style.display = 'flex';
+      if (tabCatalog) tabCatalog.classList.toggle('active', viewMode === 'catalog');
+      if (tabTable) tabTable.classList.toggle('active', viewMode === 'table');
+      if (tabSurvey) tabSurvey.classList.toggle('active', viewMode === 'survey');
+
+      if (catalogSection) catalogSection.style.display = viewMode === 'catalog' ? 'block' : 'none';
+      if (tableSection) tableSection.style.display = viewMode === 'table' ? 'block' : 'none';
+      if (surveyStudio) surveyStudio.style.display = viewMode === 'survey' ? 'flex' : 'none';
+
+      if (viewMode === 'table') {
+        window.renderShoppingTable();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (viewMode === 'survey') {
         window.updateSurveyUI();
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
-        if (tabCatalog) tabCatalog.classList.add('active');
-        if (tabSurvey) tabSurvey.classList.remove('active');
-        if (catalogSection) catalogSection.style.display = 'block';
-        if (surveyStudio) surveyStudio.style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     };
+
+    // ========================================================================
+    // HIGH-DENSITY MUTABLE TABLE ENGINE & FIRESTORE SYNC (AC-DEC-2026-028/029/030/031)
+    // Standards: P-TABLE-INTERACTIVE-001 / P-COLLAB-CONCURRENCY-001 / P-SHOPPING-HARDEN-001
+    // ========================================================================
+    let firestoreShoppingCache = {};
+    let localAdhocItems = JSON.parse(localStorage.getItem('sk_shopping_adhoc_items_v1') || '[]');
+    let tableState = {
+      groupBy: 'chapter', // 'chapter' | 'store' | 'none'
+      sortKey: 'default', // 'default' | 'title' | 'category' | 'role' | 'store' | 'budget' | 'status' | 'actualPrice'
+      sortOrder: 'asc',   // 'asc' | 'desc'
+      category: 'all',
+      status: 'all',
+      query: '',
+      collapsedGroups: new Set()
+    };
+    let pendingRemoteToastCount = 0;
+    let remoteToastTimer = null;
+
+    function syncTableUrlState() {
+      try {
+        const url = new URL(window.location.href);
+        if (window.currentShoppingView === 'table') {
+          url.searchParams.set('view', 'table');
+          if (tableState.groupBy !== 'chapter') url.searchParams.set('group', tableState.groupBy);
+          else url.searchParams.delete('group');
+
+          if (tableState.sortKey !== 'default') {
+            url.searchParams.set('sort', tableState.sortKey);
+            url.searchParams.set('order', tableState.sortOrder);
+          } else {
+            url.searchParams.delete('sort');
+            url.searchParams.delete('order');
+          }
+
+          if (tableState.category !== 'all') url.searchParams.set('cat', tableState.category);
+          else url.searchParams.delete('cat');
+
+          if (tableState.status !== 'all') url.searchParams.set('status', tableState.status);
+          else url.searchParams.delete('status');
+
+          if (tableState.query) url.searchParams.set('q', tableState.query);
+          else url.searchParams.delete('q');
+        }
+        window.history.replaceState(null, '', url.toString());
+      } catch (err) {
+        // Silently tolerate restricted contexts
+      }
+    }
+
+    window.setTableGroupBy = function(groupBy) {
+      tableState.groupBy = groupBy;
+      document.querySelectorAll('#tableGroupSwitcher .table-group-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-group') === groupBy);
+      });
+      syncTableUrlState();
+      window.renderShoppingTable();
+    };
+
+    window.setTableCategoryFilter = function(cat) {
+      tableState.category = cat;
+      document.querySelectorAll('#tableCategoryFilters .table-filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-cat') === cat);
+      });
+      updateResetButtonVisibility();
+      syncTableUrlState();
+      window.renderShoppingTable();
+    };
+
+    window.setTableStatusFilter = function(status) {
+      tableState.status = status;
+      document.querySelectorAll('#tableStatusFilters .table-status-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-status') === status);
+      });
+      updateResetButtonVisibility();
+      syncTableUrlState();
+      window.renderShoppingTable();
+    };
+
+    window.sortTableColumn = function(key) {
+      if (tableState.sortKey === key && tableState.sortOrder === 'asc') {
+        tableState.sortOrder = 'desc';
+      } else if (tableState.sortKey === key && tableState.sortOrder === 'desc') {
+        tableState.sortKey = 'default';
+        tableState.sortOrder = 'asc';
+      } else {
+        tableState.sortKey = key;
+        tableState.sortOrder = 'asc';
+      }
+      updateSortHeaderUI();
+      updateResetButtonVisibility();
+      syncTableUrlState();
+      window.renderShoppingTable();
+    };
+
+    window.resetTableFilters = function() {
+      tableState = {
+        groupBy: 'chapter',
+        sortKey: 'default',
+        sortOrder: 'asc',
+        category: 'all',
+        status: 'all',
+        query: '',
+        collapsedGroups: new Set()
+      };
+      const searchInput = document.getElementById('tableSearchInput');
+      if (searchInput) searchInput.value = '';
+
+      document.querySelectorAll('#tableGroupSwitcher .table-group-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-group') === 'chapter');
+      });
+      document.querySelectorAll('#tableCategoryFilters .table-filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-cat') === 'all');
+      });
+      document.querySelectorAll('#tableStatusFilters .table-status-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-status') === 'all');
+      });
+
+      updateSortHeaderUI();
+      updateResetButtonVisibility();
+      syncTableUrlState();
+      window.renderShoppingTable();
+      showToast('Table filters and sorting reset to default', '↺');
+    };
+
+    function updateResetButtonVisibility() {
+      const resetBtn = document.getElementById('btnResetTableFilters');
+      if (!resetBtn) return;
+      const isDirty = tableState.category !== 'all' || tableState.status !== 'all' || tableState.sortKey !== 'default' || !!tableState.query;
+      resetBtn.style.display = isDirty ? 'inline-block' : 'none';
+    }
+
+    function updateSortHeaderUI() {
+      document.querySelectorAll('.shop-data-table th.sortable').forEach(th => {
+        const k = th.getAttribute('data-sort-key');
+        const icon = document.getElementById(`sortIcon_${k}`);
+        th.classList.remove('sorted-asc', 'sorted-desc');
+        if (tableState.sortKey === k) {
+          if (tableState.sortOrder === 'asc') {
+            th.classList.add('sorted-asc');
+            if (icon) icon.textContent = '▲';
+          } else {
+            th.classList.add('sorted-desc');
+            if (icon) icon.textContent = '▼';
+          }
+        } else {
+          if (icon) icon.textContent = '⇅';
+        }
+      });
+    }
+
+    window.filterShoppingTable = function() {
+      const input = document.getElementById('tableSearchInput');
+      tableState.query = input ? input.value.toLowerCase().trim() : '';
+      updateResetButtonVisibility();
+      syncTableUrlState();
+      window.renderShoppingTable();
+    };
+
+    // Collapsible Accordion Group Toggle (AC-DEC-2026-032 / P-TABLE-ACCORDION-001)
+    window.toggleTableGroup = function(groupId) {
+      if (!groupId) return;
+      if (tableState.collapsedGroups.has(groupId)) {
+        tableState.collapsedGroups.delete(groupId);
+      } else {
+        tableState.collapsedGroups.add(groupId);
+      }
+      const isCollapsed = tableState.collapsedGroups.has(groupId);
+      const headerRow = document.querySelector(`tr[data-group-header-id="${groupId}"]`);
+      if (headerRow) {
+        headerRow.classList.toggle('collapsed', isCollapsed);
+        headerRow.setAttribute('aria-expanded', !isCollapsed);
+        const arrow = headerRow.querySelector('.accordion-arrow');
+        if (arrow) arrow.textContent = isCollapsed ? '▶' : '▼';
+      }
+      document.querySelectorAll(`tr[data-group-id="${groupId}"]`).forEach(tr => {
+        tr.style.display = isCollapsed ? 'none' : '';
+      });
+      updateToggleAllButtonText();
+    };
+
+    window.toggleAllTableGroups = function() {
+      const allHeaders = document.querySelectorAll('tr[data-group-header-id]');
+      if (!allHeaders.length) return;
+      const allGroupIds = Array.from(allHeaders).map(h => h.getAttribute('data-group-header-id'));
+      const anyOpen = allGroupIds.some(id => !tableState.collapsedGroups.has(id));
+      if (anyOpen) {
+        // Collapse all
+        allGroupIds.forEach(id => tableState.collapsedGroups.add(id));
+      } else {
+        // Expand all
+        tableState.collapsedGroups.clear();
+      }
+      window.renderShoppingTable();
+    };
+
+    function updateToggleAllButtonText() {
+      const toggleText = document.getElementById('toggleAllAccordionsText');
+      if (!toggleText) return;
+      const allHeaders = document.querySelectorAll('tr[data-group-header-id]');
+      if (!allHeaders.length) {
+        toggleText.textContent = 'Collapse All';
+        return;
+      }
+      const allGroupIds = Array.from(allHeaders).map(h => h.getAttribute('data-group-header-id'));
+      const anyOpen = allGroupIds.some(id => !tableState.collapsedGroups.has(id));
+      toggleText.textContent = anyOpen ? 'Collapse All' : 'Expand All';
+    }
+
+    // Bidirectional Category to Chapter Auto-Mapping (P-INTAKE-CHAPTER-001)
+    window.syncNewItemCategoryToChapter = function(cat) {
+      const chapterSelect = document.getElementById('newItemChapter');
+      if (!chapterSelect) return;
+      const mapping = {
+        bridal: 'chapter_bridal_silks',
+        groom: 'chapter_groom_wear',
+        jewellery: 'chapter_jewellery',
+        sara: 'chapter_sara_gifting',
+        engagement: 'chapter_engagement',
+        puja_samagri: 'chapter_general',
+        general: 'chapter_general'
+      };
+      if (mapping[cat]) {
+        chapterSelect.value = mapping[cat];
+      }
+    };
+
+    window.openAddShoppingItemModal = function() {
+      const modal = document.getElementById('addShoppingItemModal');
+      if (modal) {
+        modal.classList.add('is-active');
+        const catSelect = document.getElementById('newItemCategory');
+        if (catSelect) window.syncNewItemCategoryToChapter(catSelect.value);
+        const titleInput = document.getElementById('newItemTitle');
+        if (titleInput) setTimeout(() => titleInput.focus(), 50);
+      }
+    };
+
+    window.closeAddShoppingItemModal = function() {
+      const modal = document.getElementById('addShoppingItemModal');
+      if (modal) modal.classList.remove('is-active');
+    };
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        window.closeAddShoppingItemModal();
+      }
+    });
+
+    window.handleAddNewShoppingItem = async function(e) {
+      if (e) e.preventDefault();
+      const title = document.getElementById('newItemTitle')?.value.trim();
+      if (!title) return;
+
+      const category = document.getElementById('newItemCategory')?.value || 'general';
+      const chapterId = document.getElementById('newItemChapter')?.value || 'chapter_general';
+      const status = document.getElementById('newItemStatus')?.value || 'Planned';
+      const store = document.getElementById('newItemStore')?.value.trim() || '';
+      const priceRange = document.getElementById('newItemPriceRange')?.value.trim() || '';
+      const role = document.getElementById('newItemRole')?.value.trim() || 'Wedding Sourcing';
+      const notes = document.getElementById('newItemNotes')?.value.trim() || '';
+
+      const submitBtn = document.getElementById('btnSubmitNewShoppingItem');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Saving...';
+      }
+
+      const newItem = {
+        title,
+        category,
+        chapterId,
+        status,
+        store,
+        priceRange,
+        role,
+        notes
+      };
+
+      try {
+        if (typeof window.fsCreateShoppingItem === 'function') {
+          const created = await window.fsCreateShoppingItem(newItem);
+          showToast(`Item "${title}" (${created.id}) saved to Firestore!`, '🎉');
+        } else {
+          const nextNum = 900 + localAdhocItems.length + 1;
+          const fallbackItem = {
+            id: `TRS-${nextNum}`,
+            code: `AD-${nextNum}`,
+            ...newItem
+          };
+          localAdhocItems.push(fallbackItem);
+          localStorage.setItem('sk_shopping_adhoc_items_v1', JSON.stringify(localAdhocItems));
+          showToast(`Item "${title}" (${fallbackItem.id}) saved locally!`, '💾');
+        }
+      } catch (err) {
+        console.warn('Error creating shopping item:', err);
+        const nextNum = 900 + localAdhocItems.length + 1;
+        const fallbackItem = {
+          id: `TRS-${nextNum}`,
+          code: `AD-${nextNum}`,
+          ...newItem
+        };
+        localAdhocItems.push(fallbackItem);
+        localStorage.setItem('sk_shopping_adhoc_items_v1', JSON.stringify(localAdhocItems));
+        showToast(`Saved locally: "${title}"`, '💾');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = '💾 Save to Firestore';
+        }
+        document.getElementById('addShoppingItemForm')?.reset();
+        window.closeAddShoppingItemModal();
+        window.renderShoppingTable();
+      }
+    };
+
+    window.updateTableItemStatus = function(itemId, newStatus) {
+      if (!firestoreShoppingCache[itemId]) firestoreShoppingCache[itemId] = {};
+      firestoreShoppingCache[itemId].status = newStatus;
+
+      const adhoc = localAdhocItems.find(i => i.id === itemId);
+      if (adhoc) {
+        adhoc.status = newStatus;
+        localStorage.setItem('sk_shopping_adhoc_items_v1', JSON.stringify(localAdhocItems));
+      }
+
+      if (typeof window.fsSetShoppingItemStatus === 'function') {
+        window.fsSetShoppingItemStatus(itemId, { status: newStatus }).catch(err => {
+          console.warn('Firestore status update error:', err);
+        });
+      }
+      updateTableHudStats();
+      updateFilterPillCounts(getAllShoppingItemsMerged());
+      showToast(`${itemId} status: ${newStatus.replace('_', ' ')}`, '✓');
+    };
+
+    window.updateTableItemPrice = function(itemId, val) {
+      const num = parseFloat(val.replace(/[^0-9.]/g, '')) || 0;
+      if (!firestoreShoppingCache[itemId]) firestoreShoppingCache[itemId] = {};
+      firestoreShoppingCache[itemId].actualPrice = num;
+
+      const adhoc = localAdhocItems.find(i => i.id === itemId);
+      if (adhoc) {
+        adhoc.actualPrice = num;
+        localStorage.setItem('sk_shopping_adhoc_items_v1', JSON.stringify(localAdhocItems));
+      }
+
+      if (typeof window.fsSetShoppingItemStatus === 'function') {
+        window.fsSetShoppingItemStatus(itemId, { actualPrice: num }).catch(err => {
+          console.warn('Firestore price update error:', err);
+        });
+      }
+      updateTableHudStats();
+      showToast(`${itemId} price: ₹${num.toLocaleString('en-IN')}`, '💰');
+    };
+
+    window.updateTableItemNotes = function(itemId, val) {
+      if (!firestoreShoppingCache[itemId]) firestoreShoppingCache[itemId] = {};
+      firestoreShoppingCache[itemId].notes = val;
+
+      const adhoc = localAdhocItems.find(i => i.id === itemId);
+      if (adhoc) {
+        adhoc.notes = val;
+        localStorage.setItem('sk_shopping_adhoc_items_v1', JSON.stringify(localAdhocItems));
+      }
+
+      if (typeof window.fsSetShoppingItemStatus === 'function') {
+        window.fsSetShoppingItemStatus(itemId, { notes: val }).catch(err => {
+          console.warn('Firestore notes update error:', err);
+        });
+      }
+      showToast(`${itemId} notes saved`, '📝');
+    };
+
+    function getAllShoppingItemsMerged() {
+      const baseItems = (data && data.items) ? [...data.items] : [];
+      const itemMap = new Map();
+      baseItems.forEach(i => itemMap.set(i.id, { ...i }));
+
+      localAdhocItems.forEach(i => {
+        itemMap.set(i.id, { ...i });
+      });
+
+      Object.keys(firestoreShoppingCache).forEach(k => {
+        const fItem = firestoreShoppingCache[k];
+        if (fItem && fItem.title && !itemMap.has(k)) {
+          itemMap.set(k, {
+            id: k,
+            code: fItem.code || k.replace('TRS-', 'AD-'),
+            title: fItem.title,
+            category: fItem.category || 'general',
+            chapterId: fItem.chapterId || 'chapter_general',
+            role: fItem.role || 'Wedding Sourcing',
+            store: fItem.store || '',
+            priceRange: fItem.priceRange || '',
+            status: fItem.status || 'Planned',
+            actualPrice: fItem.actualPrice || '',
+            notes: fItem.notes || ''
+          });
+        }
+      });
+
+      return Array.from(itemMap.values());
+    }
+
+    function updateTableHudStats() {
+      const all = getAllShoppingItemsMerged();
+      const hudTotal = document.getElementById('tableHudTotal');
+      const hudPurchased = document.getElementById('tableHudPurchased');
+      const hudSpent = document.getElementById('tableHudTotalSpent');
+
+      let purchasedCount = 0;
+      let totalSpent = 0;
+
+      all.forEach(item => {
+        const ov = firestoreShoppingCache[item.id] || {};
+        const st = ov.status || item.status || 'Planned';
+        const pr = ov.actualPrice !== undefined ? Number(ov.actualPrice) : (Number(item.actualPrice) || 0);
+
+        if (st === 'Purchased') {
+          purchasedCount++;
+        }
+        if (!isNaN(pr) && pr > 0) {
+          totalSpent += pr;
+        }
+      });
+
+      if (hudTotal) hudTotal.textContent = all.length;
+      if (hudPurchased) hudPurchased.textContent = `${purchasedCount} / ${all.length}`;
+      if (hudSpent) hudSpent.textContent = `₹${totalSpent.toLocaleString('en-IN')}`;
+    }
+
+    function updateFilterPillCounts(allItems) {
+      const catCounts = { all: allItems.length, bridal: 0, groom: 0, jewellery: 0, sara: 0, engagement: 0 };
+      const statCounts = { all: allItems.length, Planned: 0, Shortlisted: 0, In_Trial: 0, Ordered: 0, Purchased: 0 };
+
+      allItems.forEach(i => {
+        const ov = firestoreShoppingCache[i.id] || {};
+        const st = ov.status || i.status || 'Planned';
+        const cat = i.category || 'general';
+
+        if (catCounts[cat] !== undefined) catCounts[cat]++;
+        if (statCounts[st] !== undefined) statCounts[st]++;
+      });
+
+      const setBadge = (id, count) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = count !== undefined ? count : '0';
+      };
+
+      setBadge('catCountAll', catCounts.all);
+      setBadge('catCountBridal', catCounts.bridal);
+      setBadge('catCountGroom', catCounts.groom);
+      setBadge('catCountJewellery', catCounts.jewellery);
+      setBadge('catCountSara', catCounts.sara);
+      setBadge('catCountEngagement', catCounts.engagement);
+
+      setBadge('statCountAll', statCounts.all);
+      setBadge('statCountPlanned', statCounts.Planned);
+      setBadge('statCountShortlisted', statCounts.Shortlisted);
+      setBadge('statCountInTrial', statCounts.In_Trial);
+      setBadge('statCountOrdered', statCounts.Ordered);
+      setBadge('statCountPurchased', statCounts.Purchased);
+    }
+
+    function sortItems(itemsList, key, order) {
+      if (key === 'default') return itemsList;
+      const dir = order === 'desc' ? -1 : 1;
+      return [...itemsList].sort((a, b) => {
+        const ovA = firestoreShoppingCache[a.id] || {};
+        const ovB = firestoreShoppingCache[b.id] || {};
+
+        if (key === 'title') {
+          return dir * (a.title || '').localeCompare(b.title || '');
+        }
+        if (key === 'category') {
+          return dir * (a.category || '').localeCompare(b.category || '');
+        }
+        if (key === 'role') {
+          return dir * (a.role || '').localeCompare(b.role || '');
+        }
+        if (key === 'store') {
+          const storeA = ovA.actualStore || ovA.store || a.store || '';
+          const storeB = ovB.actualStore || ovB.store || b.store || '';
+          return dir * storeA.localeCompare(storeB);
+        }
+        if (key === 'budget') {
+          const parseMinBudget = (str) => {
+            if (!str) return 0;
+            const nums = str.match(/\d+/g);
+            return nums && nums.length > 0 ? parseInt(nums.join(''), 10) : 0;
+          };
+          return dir * (parseMinBudget(a.priceRange) - parseMinBudget(b.priceRange));
+        }
+        if (key === 'status') {
+          const statusOrder = { 'Planned': 1, 'Shortlisted': 2, 'In_Trial': 3, 'Ordered': 4, 'Purchased': 5, 'Dropped': 6 };
+          const stA = ovA.status || a.status || 'Planned';
+          const stB = ovB.status || b.status || 'Planned';
+          return dir * ((statusOrder[stA] || 99) - (statusOrder[stB] || 99));
+        }
+        if (key === 'actualPrice') {
+          const prA = ovA.actualPrice !== undefined ? Number(ovA.actualPrice) : (Number(a.actualPrice) || 0);
+          const prB = ovB.actualPrice !== undefined ? Number(ovB.actualPrice) : (Number(b.actualPrice) || 0);
+          if (prA <= 0 && prB <= 0) return 0;
+          if (prA <= 0) return 1;
+          if (prB <= 0) return -1;
+          return dir * (prA - prB);
+        }
+        return 0;
+      });
+    }
+
+    function getChapterBadgeHtml(chapterId) {
+      if (!chapterId) return '';
+      const ch = chapters.find(c => c.id === chapterId);
+      if (ch) {
+        const shortTitle = ch.title.split('&')[0].trim();
+        return `<span class="item-chapter-badge">${ch.icon || '📁'} Ch ${ch.number}: ${shortTitle}</span>`;
+      }
+      if (chapterId === 'chapter_general') {
+        return `<span class="item-chapter-badge">✨ General</span>`;
+      }
+      return '';
+    }
+
+    function renderRowHtml(item, groupId = '', isCollapsed = false) {
+      const ov = firestoreShoppingCache[item.id] || {};
+      const curStatus = ov.status || item.status || 'Planned';
+      const curPrice = ov.actualPrice !== undefined ? ov.actualPrice : (item.actualPrice || '');
+      const curNotes = ov.notes !== undefined ? ov.notes : (item.notes || '');
+      const plannedStore = item.store || '';
+      const actualStore = ov.actualStore || '';
+      const displayStore = actualStore || plannedStore || 'TBD';
+
+      const statusClass = 'status-' + curStatus.toLowerCase();
+      const escTitle = (item.title || '').replace(/"/g, '&quot;');
+      const escStore = displayStore.replace(/"/g, '&quot;');
+      const storePlannedDiff = (actualStore && plannedStore && actualStore !== plannedStore)
+        ? `<span class="planned-store-tag">Planned: ${plannedStore.replace(/"/g, '&quot;')}</span>`
+        : '';
+
+      const updatedBy = ov.updatedBy ? ov.updatedBy.split('@')[0] : '';
+      const attrHtml = updatedBy ? `<div class="row-attribution">Updated by ${updatedBy}</div>` : '';
+      const chapterBadge = (tableState.groupBy !== 'chapter') ? getChapterBadgeHtml(item.chapterId) : '';
+      const displayStyle = isCollapsed ? 'style="display: none;"' : '';
+
+      return `
+        <tr data-item-id="${item.id}" data-group-id="${groupId}" ${displayStyle}>
+          <td class="sticky-col">
+            <div class="item-title-cell">
+              <span class="item-code-badge">${item.id}</span>
+              <span class="item-name-text">${escTitle}</span>
+              ${attrHtml}
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <span class="item-cat-badge" style="text-transform: capitalize; font-size: 0.75rem; padding: 2px 8px; border-radius: 12px; background: rgba(255,255,255,0.06); border: 1px solid var(--border-subtle); width: fit-content;">${item.category}</span>
+              ${chapterBadge}
+            </div>
+          </td>
+          <td style="font-size: 0.8rem; color: var(--text-muted);">${item.role || '—'}</td>
+          <td style="font-size: 0.82rem; font-weight: 500;">
+            ${escStore}
+            ${storePlannedDiff}
+          </td>
+          <td class="table-budget-cell" style="font-size: 0.82rem; color: var(--gold-bright); font-weight: 600;">${item.priceRange || '—'}</td>
+          <td>
+            <select class="status-dropdown ${statusClass}" data-item-id="${item.id}" data-field="status" onchange="this.className='status-dropdown status-'+this.value.toLowerCase(); window.updateTableItemStatus('${item.id}', this.value)">
+              <option value="Planned" ${curStatus === 'Planned' ? 'selected' : ''}>⏳ Planned</option>
+              <option value="Shortlisted" ${curStatus === 'Shortlisted' ? 'selected' : ''}>⭐ Shortlisted</option>
+              <option value="In_Trial" ${curStatus === 'In_Trial' ? 'selected' : ''}>👗 In Trial</option>
+              <option value="Ordered" ${curStatus === 'Ordered' ? 'selected' : ''}>📦 Ordered</option>
+              <option value="Purchased" ${curStatus === 'Purchased' ? 'selected' : ''}>✅ Purchased</option>
+              <option value="Dropped" ${curStatus === 'Dropped' ? 'selected' : ''}>❌ Dropped</option>
+            </select>
+          </td>
+          <td>
+            <input type="text" class="table-price-input" data-item-id="${item.id}" data-field="price" placeholder="₹ actual" value="${curPrice}" onblur="window.updateTableItemPrice('${item.id}', this.value)" onkeydown="if(event.key==='Enter') this.blur()">
+          </td>
+          <td>
+            <input type="text" class="table-notes-input" data-item-id="${item.id}" data-field="notes" placeholder="Add note/spec..." value="${(curNotes || '').replace(/"/g, '&quot;')}" onblur="window.updateTableItemNotes('${item.id}', this.value)" onkeydown="if(event.key==='Enter') this.blur()">
+          </td>
+          <td style="text-align: center;">
+            <div class="cell-actions">
+              <button type="button" class="cell-action-btn" title="Visual AI Search" onclick="window.openVisualSearchByItemId('${item.id}')">🔍</button>
+              <button type="button" class="cell-action-btn" title="Share via WhatsApp" onclick="window.shareTableItemById('${item.id}')">📱</button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }
+
+    function calculateGroupSubtotals(groupItems) {
+      let purchasedCount = 0;
+      let totalSpent = 0;
+      groupItems.forEach(item => {
+        const ov = firestoreShoppingCache[item.id] || {};
+        const st = ov.status || item.status || 'Planned';
+        const pr = ov.actualPrice !== undefined ? Number(ov.actualPrice) : (Number(item.actualPrice) || 0);
+        if (st === 'Purchased') purchasedCount++;
+        if (!isNaN(pr) && pr > 0) totalSpent += pr;
+      });
+      return { total: groupItems.length, purchased: purchasedCount, spent: totalSpent };
+    }
+
+    window.renderShoppingTable = function() {
+      const tbody = document.getElementById('shoppingTableBody');
+      if (!tbody) return;
+
+      const all = getAllShoppingItemsMerged();
+      updateTableHudStats();
+      updateFilterPillCounts(all);
+      updateSortHeaderUI();
+      updateResetButtonVisibility();
+
+      // Filter step
+      const filtered = all.filter(item => {
+        const ov = firestoreShoppingCache[item.id] || {};
+        const curStatus = ov.status || item.status || 'Planned';
+
+        if (tableState.category !== 'all' && item.category !== tableState.category) {
+          return false;
+        }
+        if (tableState.status !== 'all' && curStatus !== tableState.status) {
+          return false;
+        }
+        if (tableState.query) {
+          const matchTitle = (item.title || '').toLowerCase().includes(tableState.query);
+          const matchCode = (item.id || '').toLowerCase().includes(tableState.query) || (item.code || '').toLowerCase().includes(tableState.query);
+          const matchStore = (item.store || '').toLowerCase().includes(tableState.query) || (ov.actualStore || '').toLowerCase().includes(tableState.query);
+          const matchRole = (item.role || '').toLowerCase().includes(tableState.query);
+          const matchSpec = (item.spec || '').toLowerCase().includes(tableState.query);
+          return matchTitle || matchCode || matchStore || matchRole || matchSpec;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 36px; color: var(--text-muted);"><div style="font-size: 1.1rem; margin-bottom: 8px;">🔍 No items found matching active filters</div><button type="button" class="shop-btn" onclick="window.resetTableFilters()">Reset All Filters</button></td></tr>`;
+        return;
+      }
+
+      // Active Focus Preservation (P-DOM-RECONCILE-001)
+      const activeEl = document.activeElement;
+      const activeItemId = activeEl ? activeEl.getAttribute('data-item-id') : null;
+      const activeField = activeEl ? activeEl.getAttribute('data-field') : null;
+      const selStart = (activeEl && activeEl.selectionStart !== undefined) ? activeEl.selectionStart : null;
+      const selEnd = (activeEl && activeEl.selectionEnd !== undefined) ? activeEl.selectionEnd : null;
+
+      let html = '';
+
+      if (tableState.groupBy === 'chapter') {
+        // Group by liturgical chapter
+        const chapterMap = new Map();
+        chapters.forEach(c => chapterMap.set(c.id, { meta: c, items: [] }));
+        const unassigned = [];
+
+        filtered.forEach(item => {
+          if (item.chapterId && chapterMap.has(item.chapterId)) {
+            chapterMap.get(item.chapterId).items.push(item);
+          } else {
+            unassigned.push(item);
+          }
+        });
+
+        chapterMap.forEach((grp, chId) => {
+          if (grp.items.length > 0) {
+            const sorted = sortItems(grp.items, tableState.sortKey, tableState.sortOrder);
+            const sub = calculateGroupSubtotals(sorted);
+            const isCollapsed = tableState.collapsedGroups.has(chId);
+            const arrowGlyph = isCollapsed ? '▶' : '▼';
+            html += `
+              <tr class="table-group-header-row clickable ${isCollapsed ? 'collapsed' : ''}"
+                  data-group-header-id="${chId}"
+                  role="button"
+                  tabindex="0"
+                  aria-expanded="${!isCollapsed}"
+                  onclick="window.toggleTableGroup('${chId}')"
+                  onkeydown="if(event.key==='Enter'||event.key===' ') { event.preventDefault(); window.toggleTableGroup('${chId}'); }">
+                <td colspan="9">
+                  <div class="table-group-header-content">
+                    <span class="table-group-title">
+                      <span class="accordion-arrow">${arrowGlyph}</span>
+                      ${grp.meta.icon || '📁'} ${grp.meta.title}
+                    </span>
+                    <div class="table-group-subtotal">
+                      <span class="group-subtotal-badge">Items: <strong>${sub.total}</strong></span>
+                      <span class="group-subtotal-badge">Purchased: <strong>${sub.purchased}</strong></span>
+                      <span class="group-subtotal-badge">Spent: <strong style="color: var(--shop-emerald);">₹${sub.spent.toLocaleString('en-IN')}</strong></span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            `;
+            sorted.forEach(item => { html += renderRowHtml(item, chId, isCollapsed); });
+          }
+        });
+
+        if (unassigned.length > 0) {
+          const chId = 'chapter_general';
+          const sorted = sortItems(unassigned, tableState.sortKey, tableState.sortOrder);
+          const sub = calculateGroupSubtotals(sorted);
+          const isCollapsed = tableState.collapsedGroups.has(chId);
+          const arrowGlyph = isCollapsed ? '▶' : '▼';
+          html += `
+            <tr class="table-group-header-row clickable ${isCollapsed ? 'collapsed' : ''}"
+                data-group-header-id="${chId}"
+                role="button"
+                tabindex="0"
+                aria-expanded="${!isCollapsed}"
+                onclick="window.toggleTableGroup('${chId}')"
+                onkeydown="if(event.key==='Enter'||event.key===' ') { event.preventDefault(); window.toggleTableGroup('${chId}'); }">
+              <td colspan="9">
+                <div class="table-group-header-content">
+                  <span class="table-group-title">
+                    <span class="accordion-arrow">${arrowGlyph}</span>
+                    ✨ Additional &amp; Ad-Hoc Items
+                  </span>
+                  <div class="table-group-subtotal">
+                    <span class="group-subtotal-badge">Items: <strong>${sub.total}</strong></span>
+                    <span class="group-subtotal-badge">Purchased: <strong>${sub.purchased}</strong></span>
+                    <span class="group-subtotal-badge">Spent: <strong style="color: var(--shop-emerald);">₹${sub.spent.toLocaleString('en-IN')}</strong></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          `;
+          sorted.forEach(item => { html += renderRowHtml(item, chId, isCollapsed); });
+        }
+      } else if (tableState.groupBy === 'store') {
+        // Group by Store (P-SHOPPING-HARDEN-001: actualStore || store)
+        const storeMap = new Map();
+        filtered.forEach(item => {
+          const ov = firestoreShoppingCache[item.id] || {};
+          const stName = ov.actualStore || ov.store || item.store || 'Unassigned Store';
+          if (!storeMap.has(stName)) storeMap.set(stName, []);
+          storeMap.get(stName).push(item);
+        });
+
+        Array.from(storeMap.keys()).sort().forEach(stName => {
+          const grpItems = storeMap.get(stName);
+          const sorted = sortItems(grpItems, tableState.sortKey, tableState.sortOrder);
+          const sub = calculateGroupSubtotals(sorted);
+          const stId = 'store_' + stName.replace(/[^a-zA-Z0-9_-]/g, '_');
+          const isCollapsed = tableState.collapsedGroups.has(stId);
+          const arrowGlyph = isCollapsed ? '▶' : '▼';
+          html += `
+            <tr class="table-group-header-row clickable ${isCollapsed ? 'collapsed' : ''}"
+                data-group-header-id="${stId}"
+                role="button"
+                tabindex="0"
+                aria-expanded="${!isCollapsed}"
+                onclick="window.toggleTableGroup('${stId}')"
+                onkeydown="if(event.key==='Enter'||event.key===' ') { event.preventDefault(); window.toggleTableGroup('${stId}'); }">
+              <td colspan="9">
+                <div class="table-group-header-content">
+                  <span class="table-group-title">
+                    <span class="accordion-arrow">${arrowGlyph}</span>
+                    🏬 ${stName}
+                  </span>
+                  <div class="table-group-subtotal">
+                    <span class="group-subtotal-badge">Items: <strong>${sub.total}</strong></span>
+                    <span class="group-subtotal-badge">Purchased: <strong>${sub.purchased}</strong></span>
+                    <span class="group-subtotal-badge">Spent: <strong style="color: var(--shop-emerald);">₹${sub.spent.toLocaleString('en-IN')}</strong></span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          `;
+          sorted.forEach(item => { html += renderRowHtml(item, stId, isCollapsed); });
+        });
+      } else {
+        // Flat List (Dual-Mode Context Preservation: Chapter Badges shown)
+        const sorted = sortItems(filtered, tableState.sortKey, tableState.sortOrder);
+        sorted.forEach(item => { html += renderRowHtml(item, '', false); });
+      }
+
+      tbody.innerHTML = html;
+
+      updateToggleAllButtonText();
+      const masterToggleBtn = document.getElementById('btnToggleAllAccordions');
+      if (masterToggleBtn) {
+        masterToggleBtn.style.display = (tableState.groupBy === 'none') ? 'none' : 'inline-flex';
+      }
+
+      // Restore Focus and Cursor Caret Position
+      if (activeItemId && activeField) {
+        const newEl = tbody.querySelector(`[data-item-id="${activeItemId}"][data-field="${activeField}"]`);
+        if (newEl) {
+          newEl.focus();
+          if (selStart !== null && selEnd !== null && typeof newEl.setSelectionRange === 'function') {
+            newEl.setSelectionRange(selStart, selEnd);
+          }
+        }
+      }
+    };
+
+    window.openVisualSearchByItemId = function(itemId) {
+      const all = getAllShoppingItemsMerged();
+      const found = all.find(i => i.id === itemId);
+      if (found) {
+        window.openVisualSearch(found.title);
+      }
+    };
+
+    window.shareTableItemById = function(itemId) {
+      const all = getAllShoppingItemsMerged();
+      const found = all.find(i => i.id === itemId);
+      if (!found) return;
+
+      const ov = firestoreShoppingCache[itemId] || {};
+      const status = (ov.status || found.status || 'Planned').replace('_', ' ');
+      const price = ov.actualPrice ? `₹${Number(ov.actualPrice).toLocaleString('en-IN')}` : (found.priceRange || 'TBD');
+      const shareUrl = (typeof SKPrimitives !== 'undefined' && SKPrimitives.getStakeholderUrl)
+        ? SKPrimitives.getStakeholderUrl('shopping-registry.html', { view: 'table', cat: found.category })
+        : `${window.location.origin}/shopping-registry.html?view=table&cat=${found.category}`;
+
+      const text = `🛍️ *Sree Krushna Marriage OS — Shopping Item*\nItem: *${found.title}* (${itemId})\nCategory: *${found.category}*\nStatus: *${status}*\nPrice/Budget: *${price}*\n👉 Live Shopping Table: ${shareUrl}`;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast(`Item link copied for WhatsApp!`, '📱');
+        });
+      } else {
+        prompt('Copy WhatsApp Message:', text);
+      }
+    };
+
+    window.exportShoppingTable = function(format) {
+      const all = getAllShoppingItemsMerged();
+      if (format === 'jsonl') {
+        const lines = all.map(i => {
+          const ov = firestoreShoppingCache[i.id] || {};
+          return JSON.stringify({
+            ...i,
+            status: ov.status || i.status || 'Planned',
+            actualPrice: ov.actualPrice !== undefined ? ov.actualPrice : (i.actualPrice || ''),
+            actualStore: ov.actualStore || ov.store || i.store || '',
+            notes: ov.notes || i.notes || '',
+            updatedBy: ov.updatedBy || '',
+            updatedAt: ov.updatedAt || ''
+          });
+        });
+        const blob = new Blob([lines.join('\n') + '\n'], { type: 'application/x-ndjson' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `shopping_items_live_${new Date().toISOString().split('T')[0]}.jsonl`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('Exported live shopping JSONL!', '📥');
+      } else if (format === 'csv') {
+        const escapeCsv = (str) => {
+          if (str === undefined || str === null) return '""';
+          return `"${String(str).replace(/"/g, '""')}"`;
+        };
+        const rows = [
+          ['ID', 'Code', 'Title', 'Category', 'Role', 'Store', 'Est_Price', 'Status', 'Actual_Price', 'Notes', 'Updated_By'].join(',')
+        ];
+        all.forEach(i => {
+          const ov = firestoreShoppingCache[i.id] || {};
+          rows.push([
+            escapeCsv(i.id),
+            escapeCsv(i.code || ''),
+            escapeCsv(i.title),
+            escapeCsv(i.category),
+            escapeCsv(i.role || ''),
+            escapeCsv(ov.actualStore || ov.store || i.store || ''),
+            escapeCsv(i.priceRange || ''),
+            escapeCsv(ov.status || i.status || 'Planned'),
+            escapeCsv(ov.actualPrice !== undefined ? ov.actualPrice : (i.actualPrice || '')),
+            escapeCsv(ov.notes || i.notes || ''),
+            escapeCsv(ov.updatedBy || '')
+          ].join(','));
+        });
+        const blob = new Blob([rows.join('\n') + '\n'], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `shopping_items_live_${new Date().toISOString().split('T')[0]}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('Exported live shopping CSV!', '📊');
+      }
+    };
+
+    let firestoreUnsubscribe = null;
+    let syncRetryTimer = null;
+
+    function initFirestoreShoppingSync(retries = 25) {
+      if (typeof window.fsListenShoppingItems === 'function') {
+        const syncPill = document.getElementById('tableHudSyncStatus');
+        const syncText = document.getElementById('tableSyncText');
+
+        if (firestoreUnsubscribe) {
+          try { firestoreUnsubscribe(); } catch(e) {}
+          firestoreUnsubscribe = null;
+        }
+
+        if (syncText && (!firestoreShoppingCache || Object.keys(firestoreShoppingCache).length === 0)) {
+          syncText.textContent = '⏳ Connecting Live Firestore...';
+        }
+
+        try {
+          firestoreUnsubscribe = window.fsListenShoppingItems((itemsMap) => {
+            const previousCache = firestoreShoppingCache || {};
+            firestoreShoppingCache = itemsMap || {};
+
+            // Identify remote updates from other users
+            const changedRemoteItems = [];
+            const userEmail = (window.currentUser && window.currentUser.email) ? window.currentUser.email : '';
+            Object.keys(firestoreShoppingCache).forEach(k => {
+              const current = firestoreShoppingCache[k];
+              const prev = previousCache[k];
+              if (current && (!prev || prev.status !== current.status || prev.actualPrice !== current.actualPrice || prev.notes !== current.notes)) {
+                if (current.updatedBy && current.updatedBy !== userEmail) {
+                  changedRemoteItems.push({ id: k, ...current });
+                }
+              }
+            });
+
+            // Trigger Throttled Toast & Pulse (P-COLLAB-CONCURRENCY-001)
+            if (changedRemoteItems.length > 0) {
+              changedRemoteItems.forEach(item => {
+                const tr = document.querySelector(`tr[data-item-id="${item.id}"]`);
+                if (tr) {
+                  tr.classList.add('row-pulse');
+                  setTimeout(() => tr.classList.remove('row-pulse'), 1800);
+                }
+              });
+
+              pendingRemoteToastCount += changedRemoteItems.length;
+              clearTimeout(remoteToastTimer);
+              remoteToastTimer = setTimeout(() => {
+                if (pendingRemoteToastCount === 1) {
+                  const single = changedRemoteItems[0];
+                  const author = single.updatedBy ? single.updatedBy.split('@')[0] : 'Collaborator';
+                  showToast(`${author} updated ${single.id} (${(single.status || 'item').replace('_', ' ')})`, '🔔');
+                } else if (pendingRemoteToastCount > 1) {
+                  showToast(`${pendingRemoteToastCount} items updated in real-time`, '🔔');
+                }
+                pendingRemoteToastCount = 0;
+              }, 4000);
+            }
+
+            const count = Object.keys(firestoreShoppingCache).length;
+            if (syncText) syncText.textContent = `🟢 Live Sync (${count} updates)`;
+            if (syncPill) {
+              const dot = syncPill.querySelector('.sync-dot');
+              if (dot) dot.classList.remove('offline');
+            }
+            if (window.currentShoppingView === 'table') {
+              window.renderShoppingTable();
+            }
+          }, (err) => {
+            console.warn('Firestore shopping listener permission/network notice:', err);
+            const syncText = document.getElementById('tableSyncText');
+            const syncPill = document.getElementById('tableHudSyncStatus');
+            const isAuthErr = err && err.code === 'permission-denied';
+            if (syncText) {
+              syncText.textContent = isAuthErr ? '🟡 Local Mode (Sign-in Required)' : '🟡 Local Mode (Offline)';
+              syncText.title = err ? (err.message || '') : '';
+            }
+            if (syncPill) {
+              const dot = syncPill.querySelector('.sync-dot');
+              if (dot) dot.classList.add('offline');
+            }
+          });
+        } catch (e) {
+          console.warn('Firestore shopping listener failed to initialize:', e);
+          const syncText = document.getElementById('tableSyncText');
+          if (syncText) syncText.textContent = '🟡 Local Mode';
+        }
+      } else if (retries > 0) {
+        // Module firestore-client.js is still resolving async CDN imports; retry in 200ms
+        clearTimeout(syncRetryTimer);
+        syncRetryTimer = setTimeout(() => initFirestoreShoppingSync(retries - 1), 200);
+      } else {
+        const syncText = document.getElementById('tableSyncText');
+        if (syncText) syncText.textContent = '🟡 Local Mode (Bridge Offline)';
+        const syncPill = document.getElementById('tableHudSyncStatus');
+        if (syncPill) {
+          const dot = syncPill.querySelector('.sync-dot');
+          if (dot) dot.classList.add('offline');
+        }
+      }
+    }
+
+    // Auto-reconnect when user completes Google Sign-In or switches accounts
+    window.addEventListener('sk-auth-state-changed', () => {
+      initFirestoreShoppingSync();
+    });
 
     // ========================================================================
     // INTERACTIVE FAMILY SURVEY & BUDGET ENGINE (P-SURVEY-HYBRID-001)
@@ -968,4 +1977,6 @@
 
     parseUrlParams();
     renderShoppingRegistry();
+    initFirestoreShoppingSync();
   })();
+  /* SSOT: docs/incidents/INC-092-dynamic-module-timing-race-and-unauthenticated-local-fallback.md — INC-092 */

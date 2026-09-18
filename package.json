@@ -38,7 +38,9 @@
     "test:shopping": "node scripts/test-shopping-registry.cjs",
     "seed:cockpit": "node scripts/seed-cockpit-firestore.cjs",
     "inspect:cockpit": "node scripts/db-inspect-cockpit.cjs",
-    "deploy:cockpit-rules": "firebase.cmd deploy --only firestore:rules --non-interactive"
+    "deploy:cockpit-rules": "firebase.cmd deploy --only firestore:rules --non-interactive",
+    "deploy:hosting": "firebase.cmd deploy --only hosting --non-interactive",
+    "deploy:all": "firebase.cmd deploy --only firestore:rules,hosting --non-interactive"
   },
   "keywords": [
     "marriage-os",

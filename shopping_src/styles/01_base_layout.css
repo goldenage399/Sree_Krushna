@@ -9,9 +9,19 @@ body {
 
     #shoppingRegistryRoot {
       max-width: 1400px;
+      width: 100%;
       margin: 0 auto;
-      padding: 24px 20px 80px;
       box-sizing: border-box;
+      padding: clamp(16px, 2.5vw, 24px) clamp(12px, 2vw, 20px) max(clamp(20px, 3vw, 32px), env(safe-area-inset-bottom, 0px));
+      padding-left: max(clamp(12px, 2vw, 20px), env(safe-area-inset-left, 0px));
+      padding-right: max(clamp(12px, 2vw, 20px), env(safe-area-inset-right, 0px));
+    }
+
+    @media (max-width: 600px) {
+      #shoppingRegistryRoot {
+        padding-top: 14px;
+        padding-bottom: max(16px, env(safe-area-inset-bottom, 0px));
+      }
     }
 
     /* Family / Stakeholder Welcome Banner */
