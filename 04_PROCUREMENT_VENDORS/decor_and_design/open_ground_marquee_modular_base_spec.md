@@ -32,13 +32,15 @@ The underlying structure, marquee shell, flooring, ceiling treatment, major chan
 
 | Base Structural Element (Common to All 4 Functions) | Technical Specification | Operational Retention Standard |
 | :--- | :--- | :--- |
-| **Main Marquee Shell** | German clear-span aluminum structure (15m × 40m / 50ft × 130ft) | Erected once; zero dismantling until post-wedding clearance. |
+| **Main Marquee Shell** | German clear-span aluminum structure (100ft × 160ft / 16,000 sq ft) with 12ft covered arrival canopy | Erected once; zero dismantling until post-wedding clearance. |
+| **Attached Functional Annexes** | Dedicated Top-Left Haldi Annex + 30ft Private Dining VIP Pod | Attached semi-permanent structures providing segregated wet & VIP zones. |
+| **Dual Stage Platforms** | Top Ceremonial Mandap Stage (40ft wide + 30ft flanks) + Left Wall Sangeet Stage 1 (24ft × 16ft) | Base stage structures erected once; transformed via modular overlays. |
 | **Flooring Sub-Base** | Elevated moisture-barrier wooden sub-decking + needle-felt carpet | Sealed against ground dampness; vacuum-cleaned between functions. |
 | **Ceiling Architecture** | Grand paneless ivory textured graphic fabric + champagne-gold borders | Permanent rigging; zero modification between events. |
 | **Centerpiece Chandeliers** | 8–12 Statement faceted crystal tiered chandeliers on DMX dimmers | Stationary; dimmed and programmed for distinct moods. |
 | **Core Rigging & Lighting Truss** | Matte-black box trusses with warm profile follow-spots and ambient washes | Fixed position; reprogrammed via lighting board scenes. |
-| **Climate Infrastructure** | Dual-Zone 40-ton ductable AC + 8 industrial evaporative coolers | Fixed ducting and insulated air curtains throughout. |
-| **Back-of-House / Service Grid** | Segregated catering circulation spine, utility trenches, DG cabling | Zero interference with guest experience or photo sightlines. |
+| **Climate Infrastructure** | Dual-Zone 60–80 ton ductable AC + 10–12 industrial evaporative coolers + 10–15T Private Dining AC | Fixed ducting and insulated air curtains throughout. |
+| **Back-of-House / Service Grid** | Rear kitchen hub (behind bottom buffet), utility trenches, DG cabling | Zero interference with guest experience or photo sightlines. |
 
 ---
 
@@ -48,10 +50,10 @@ Between functions, the venue mood transforms rapidly through selective, high-imp
 
 | Function | Dominant Mood & Visual Language | Selective Overlays (What Changes) | Common Base (What Remains) |
 | :--- | :--- | :--- | :--- |
-| **Haldi** (`EVT-003`)<br>*(Day 1 Morning)* | Fresh, bright, sunlit Vedic celebration; yellow & gold vibrancy | • Yellow marigold garlands & hanging brass urlis<br>• Carved wooden low bajots & silk yellow asanas<br>• Floral backdrop ring with fresh sunflower accents | Marquee shell, ivory ceiling, crystal chandeliers, flooring, AC/cooler grid. |
-| **Mehendi** (`EVT-002`)<br>*(Day 1 Afternoon)* | Bohemian, intimate, festive luxury garden lounge | • Pastel cushion floor seating & cane wicker lounges<br>• Colorful tassel/kaleera hangings & printed cabana drapes<br>• Interactive Mehendi artist kiosks & live bangle stalls | Marquee shell, ivory ceiling, chandeliers, flooring, cooling infrastructure. |
-| **Sangeet** (`EVT-002`)<br>*(Day 1 Night)* | Dramatic, electric, high-energy Bollywood gala | • High-definition LED backdrop screen on central stage<br>• Moving head beam lights, strobe arrays, haze effects<br>• Velvet lounge sofas, cocktail high-tables & bar counters | Marquee shell, ivory ceiling, chandeliers, flooring, cooling infrastructure. |
-| **Vedic Marriage** (`EVT-004`)<br>*(Day 2 Morning)* | Serene, majestic, deeply sacred Vedic temple grandeur | • 4-pillar sacred Mandap with 100% fresh Rajnigandha & rose bells<br>• Fireproof copper Havan Kund with zinc safety barrier<br>• Purohit Vedic altar seating with ivory & vermilion fabrics | Marquee shell, ivory ceiling, chandeliers, flooring, AC sanctuary zone. |
+| **Haldi** (`EVT-003`)<br>*(Day 1 Morning)* | Fresh, bright, sunlit Vedic celebration; yellow & gold vibrancy | • **Conducted in dedicated Top-Left Haldi Annex**<br>• Yellow marigold garlands & hanging brass urlis<br>• Carved wooden low bajots & silk yellow asanas<br>• Main 16,000 sq ft hall remains 100% dry & clean | Marquee shell, ivory ceiling, crystal chandeliers, flooring, AC/cooler grid. |
+| **Mehendi** (`EVT-002`)<br>*(Day 1 Afternoon)* | Bohemian, intimate, festive luxury garden lounge | • Pastel cushion floor seating & cane wicker lounges in main hall<br>• Colorful tassel/kaleera hangings & printed cabana drapes<br>• Interactive Mehendi artist kiosks & live bangle stalls | Marquee shell, ivory ceiling, chandeliers, flooring, cooling infrastructure. |
+| **Sangeet** (`EVT-002`)<br>*(Day 1 Night)* | Dramatic, electric, high-energy Bollywood gala | • **Stage 1 (Left Wall):** High-definition LED backdrop screen & trussing<br>• Moving head beam lights, strobe arrays, haze effects<br>• Velvet lounge sofas, cocktail high-tables & central dancefloor | Marquee shell, ivory ceiling, chandeliers, flooring, cooling infrastructure. |
+| **Vedic Marriage** (`EVT-004`)<br>*(Day 2 Morning)* | Serene, majestic, deeply sacred Vedic temple grandeur | • **Top Head Stage:** 4-pillar sacred Mandap with 100% fresh Rajnigandha & rose bells<br>• Fireproof copper Havan Kund with zinc safety barrier & smoke hood<br>• Purohit Vedic altar seating with ivory & vermilion fabrics; 30ft family flanks | Marquee shell, ivory ceiling, chandeliers, flooring, AC sanctuary zone. |
 
 ---
 
@@ -120,7 +122,7 @@ Every shortlisted decorator must submit a proposal answering all 13 criteria:
 3. **Solar-Control & Blackout Strategy:** Specific layout of opaque vs. open sidewalls based on ground orientation.
 4. **Ceiling Concept Rendering:** Detailed architectural drawings of the ivory fabric, champagne-gold borders, and chandelier layout.
 5. **Mandap / Reception / Buffet Separation Plan:** Physical acoustic and visual zoning plan.
-6. **Cooling & Climate Management Integration:** Ducting routes, AC tonnage calculation (35–40T), and cooler CFM placement.
+6. **Cooling & Climate Management Integration:** Ducting routes, AC tonnage calculation (60–80T main + 10–15T Private Dining), and cooler CFM placement.
 7. **Lighting Architecture & DMX Rider:** Circuit layout for warm 3200K tungsten vs. 5600K daylight cinema fixtures.
 8. **Floral Strategy & Cold-Chain Logistics:** Fresh vs. artificial ratios and harvest delivery schedules.
 9. **Activity & Interactive Booth Framework:** Standardized modular kiosks for Mehendi artists, snacks, and photo-ops.
@@ -188,13 +190,13 @@ graph TD
     end
 
     subgraph Isolated Distribution Buses
-        AMF --> BusA["❄️ Bus A (Heavy Mechanical):<br/>35-40T Ductable ACs & Industrial Coolers"]
+        AMF --> BusA["❄️ Bus A (Heavy Mechanical):<br/>60-80T Ductable ACs & Industrial Coolers"]
         AMF --> BusB["🎵 Bus B (Sensitive Electronics):<br/>Stage Sound, DMX Lighting, LED Wall, Live Stream"]
         AMF --> BusC["🍲 Bus C (Utility & Catering):<br/>Food Warmers, Live Stations, Perimeter Floodlights"]
     end
 ```
 
-- **Bus A (Heavy Mechanical):** Dedicated to AC tower compressors and evaporative cooler pumps.
+- **Bus A (Heavy Mechanical):** Dedicated to AC tower compressors, sump drainage pumps, and evaporative cooler pumps.
 - **Bus B (Electronics & Audio):** Dedicated clean power with independent spike suppressors for PA audio consoles, Purohit wireless lapels, DMX lighting boards, and 1080p broadcast streaming encoders.
 - **Bus C (Utility & Catering):** Dedicated to caterer induction warmers, deep fryers, live snack stalls, and security lighting.
 
@@ -205,3 +207,10 @@ graph TD
 - **Tax Inclusivity:** The agreed contract rate must be explicitly **18% GST All-Inclusive**. No subsequent tax surcharges, labor cess, or generator fuel levies may be added to any milestone invoice.
 - **Milestone Payment Protocol:** In strict accordance with [`CTR-DECOR-RIDER-001`](file:///d:/GitHub_Repo/Sree_Krushna/04_PROCUREMENT_VENDORS/contracts/DECORATOR_RFP_RIDER_GROUND_MARQUEE.md): 30% Advance on signing • 50% on Base Marquee & AC Commissioning Handover (Day 1, 20:00) • 20% Final Post-Event Punch-list Sign-off.
 
+---
+
+## 12. Pending Experiential Production Proposals (Incubation Gate)
+
+Technical specifications for experimental installations—including the **Haldi Rain Dance Deck (`PROP-20260917-EXP-001`)**, **Interactive Craft Rotundas**, **Elder Foot Spa**, and **Cold-Pyro FX (`PROP-20260917-EXP-002`)**—are currently held in ideation under [`PROP-20260917-open-ground-experiential-enhancements.md`](file:///d:/GitHub_Repo/Sree_Krushna/docs/proposals/PROP-20260917-open-ground-experiential-enhancements.md). They do not form part of the baseline structural tender until promoted by the host council.
+
+<!-- SSOT: docs/incidents/INC-091-unvetted-ideation-creep-and-incubation-firewall-boundary.md — INC-091 -->

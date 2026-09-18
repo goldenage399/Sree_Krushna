@@ -31,7 +31,7 @@ status: "Quote_Received"
 
 ## 2. Commercial Framework (4-Tier Modular Structure)
 Per `CTR-DECOR-RIDER-001`, bids must adhere strictly to the non-duplicative transformation model:
-- **Tier A (Base Infrastructure):** German Hanger (50ft × 130ft), sub-flooring, HVAC ducting, central crystal chandeliers.
+- **Tier A (Base Infrastructure):** German Hanger (100ft × 160ft / 16,000 sq ft) with 12ft arrival canopy, attached Haldi & Private Dining annexes, sub-flooring, 60–80T HVAC ducting, central crystal chandeliers.
 - **Tier B (Modular Event Transformations):** Haldi (Yellow Marigold) $\rightarrow$ Mehendi (Teal Garden) $\rightarrow$ Sangeet (Midnight Blue Truss) $\rightarrow$ Vivaha (Vedic Ivory Lotus).
 - **Tier C (Sacred Vedic Production):** 4-Pillar consecrated Mandap dome, havankund exhaust canopy, Hastaganthi puja chowki.
 - **Tier D (Contingency & Production Utilities):** 40 kVA silent DG power backup, LED wall screen, fog cannons.

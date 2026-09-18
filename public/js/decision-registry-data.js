@@ -16,10 +16,10 @@ window.DECISION_REGISTRY_DATA = {
     standard: "P-DECISION-REG-001 / P-VISUAL-CAROUSEL-001 / P-COMPARE-SHARE-001"
   },
   summary: {
-    totalItems: 31,
+    totalItems: 38,
     pendingChoices: 9,
     vendorDeliverables: 4,
-    incubatingIdeas: 7,
+    incubatingIdeas: 14,
     governancePolicies: 1,
     certifiedLocked: 10,
     totalPlates: 12,
@@ -339,7 +339,7 @@ window.DECISION_REGISTRY_DATA = {
   {
     "id": "PLATE-07",
     "index": 6,
-    "title": "BOH Satellite Finishing Kitchen & Linear Buffets",
+    "title": "20×8ft Rectangular Central Island & Dual Main Buffet",
     "category": "catering",
     "categoryLabel": "Catering & Stalls",
     "events": [
@@ -349,10 +349,10 @@ window.DECISION_REGISTRY_DATA = {
     "zone": "Zone C & Rear BOH — Food Operations",
     "spec": "SPEC-OPS-VENUE-GROUND-001 §2.4",
     "clause": "CTR-DECOR-RIDER-001 Cl 6",
-    "photoSrc": "./assets/decor/stalls_catering/photo-wedding-buffet-setup.jpg",
-    "blueprintSrc": "./assets/decor/stalls_catering/plate-07-satellite-kitchen-buffet.svg",
+    "photoSrc": "./assets/decor/marquee/hybrid-rectangular-island-inner-view.jpg",
+    "blueprintSrc": "./assets/decor/marquee/blueprint-open-ground-100x160.jpg",
     "mandatory": true,
-    "dimensions": "Dual 24ft Linear Buffet Runs • 640 sq. ft. BOH Pass",
+    "dimensions": "20×8ft Central Island • 70ft Dual Main Baseline • 15ft Clear Aisles",
     "status": "locked",
     "statusBadge": "LOCKED SPEC",
     "linkedDecisions": [
@@ -361,8 +361,8 @@ window.DECISION_REGISTRY_DATA = {
     ],
     "clusterId": null,
     "clusterOption": null,
-    "notes": "Fire-retardant printed camouflage screening wall, gas tandoor and deep-fryer fire safety perimeter with CO2/DCP extinguishers, electric hot box warming cabinets, 2,000L utility water bowser, dual high-throughput buffet lines.",
-    "prompt": "A grand, opulent royal Indian wedding dining buffet spread inside a decorated marquee dining pavilion. Long linear buffet counters draped in midnight navy and gold brocade linens, presenting an array of polished brass and copper chafing dishes with live flame burners below. Fresh aromatic floral runners of tuberoses and baby's breath along the center of the buffet. Elegant menu signage stands with gold calligraphy. Behind the service counter, impeccably uniformed banquet staff in turbans. Warm ambient lighting creating an inviting royal feast ambiance. Photorealistic, 8k."
+    "notes": "Freestanding 20×8ft rectangular central island providing 360° multi-sided servicing of salads, chaats, artisanal breads, and dual-tier plate stacks with 15ft perimeter aisles; 70ft dual main-course buffet backed by enclosed exterior BOH kitchen (DWG A103 / AC-DEC-2026-030).",
+    "prompt": "An eye-level interior architectural 3D perspective rendering of a luxury 100x160 ft Indian wedding marquee pavilion featuring a grand 20x8 ft rectangular central island with warm under-counter lighting, neatly arranged gourmet salads, artisanal bread baskets, cold raitas, live artisanal chaat bowls, and elegant stacks of plates accessible from all four sides, with an inward-facing 70ft dual main buffet behind."
   },
   {
     "id": "PLATE-08",
@@ -611,63 +611,63 @@ window.DECISION_REGISTRY_DATA = {
     "category": "decor_pending",
     "categoryLabel": "Decor: Host Decision",
     "domainIcon": "🪑",
-    "title": "Furniture Language & Seating Typography",
+    "title": "Ceremonial Seating Typography & Concourse Clearance",
     "phase": "Phase III: Production & Scenic Fabrication",
-    "zone": "Guest Seating",
+    "zone": "Zone A Ceremonial Seating & Concourse",
     "status": "pending",
     "statusLabel": "PENDING HOST DECISION",
-    "dilemma": "Balancing elder ergonomic comfort (firm cushioned chairs with arms) with luxury visual aesthetics.",
-    "benchmark": "Devika Narain: Ban flimsy plastic banquet chairs; cushioned wooden Chiavari or French Louis chairs with 50mm high-density foam prevent elder fatigue.",
-    "direction": "Dedicated front 3 rows for grandparents & elders with cushioned armchairs; central cross-back chairs for general guests.",
+    "dilemma": "Balancing ceremonial sightlines during 3-hour Vivaha rituals with an uncluttered 35-ft central concourse for free guest movement.",
+    "benchmark": "The Wedding Design Company: Right-sizing central seating prevents oceans of empty chairs while opening pedestrian arteries.",
+    "direction": "Locked in DWG A103: 80-chair ceremonial bay (8 rows of 10) flanking 10-ft aisle + 40 chairs in family sofa wings; opens 35-ft clear central concourse.",
     "options": [
       {
         "id": "A",
-        "text": "Tiered Seating: Front 3 rows upholstered armchairs; remainder gold Chiavari chairs",
+        "text": "Option A (Recommended): 80-Chair Ceremonial Bay + 40 Flank Chairs & Family Sofas (DWG A103)",
         "selected": true
       },
       {
         "id": "B",
-        "text": "Uniform Seating: All wooden cross-back banquet chairs with ivory linen seat pads",
+        "text": "Option B: Dense 200-Chair Theater Block (Restricts central circulation)",
         "selected": false
       }
     ],
     "actionType": "host_vote",
     "plateRef": "PLATE-06",
-    "plateTitle": "Mehendi Zone D Garden Promenade & Lounge",
-    "event": "mehendi"
+    "plateTitle": "Ceremonial Seating Typography & Concourse Clearance",
+    "event": "wedding"
   },
   {
     "id": "DEC-15",
     "category": "decor_pending",
     "categoryLabel": "Decor: Host Decision",
     "domainIcon": "🍽️",
-    "title": "Catering Pass & Guest Activity Stalls",
+    "title": "Dining Court Architecture: Rectangular Central Island & Dual Buffets",
     "phase": "Phase IV: Event Choreography & Dining",
-    "zone": "Zone C Dining & Foyer",
+    "zone": "Zone C Dining Court",
     "status": "pending",
     "statusLabel": "PENDING HOST DECISION",
-    "dilemma": "Selecting engaging interactive cultural activity stalls (lac bangle artisan, attar bar, instant polaroid) without cluttering dining circulation.",
-    "benchmark": "Luxury Wedding Standard: Max 2 interactive kiosks placed along the arrival foyer, strictly minimum 20ft away from the hot food buffet lines.",
-    "direction": "Approve 2 curated kiosks: Traditional Lac Bangle Maker and Instant Polaroid Memory Trellis.",
+    "dilemma": "Eliminating dinner bottlenecks across 350+ guests while separating quick appetizer grazers from full-plate main course diners.",
+    "benchmark": "Luxury Wedding Banquet Standard: Freestanding multi-sided central island reduces plate/salad wait times by 60% compared to linear buffets.",
+    "direction": "Locked in DWG A103: Freestanding 20×8ft Rectangular Central Island (salads, chaats, breads, plate stacks) + 70ft Dual Main-Course Baseline + West Cocktail Grazing Lounge.",
     "options": [
       {
         "id": "A",
-        "text": "Approve Dual Kiosks: Artisan Bangle Maker + Polaroid Memory Trellis (PLATE-08)",
+        "text": "Option A (Recommended): 20×8ft Rectangular Central Island + 70ft Dual Main Baseline + West Cocktail Lounge (DWG A103)",
         "selected": true
       },
       {
         "id": "B",
-        "text": "Dining Focus Only: Omit artisan stalls; allocate full square footage to dining tables",
+        "text": "Option B: Traditional Linear Perimeter Buffets (Higher queue times)",
         "selected": false
       }
     ],
     "actionType": "host_vote",
-    "plateRef": "PLATE-08",
+    "plateRef": "PLATE-07",
     "alternativePlates": [
-      "PLATE-07"
+      "PLATE-08"
     ],
-    "plateTitle": "Interactive Activity Stalls & Dining Pass",
-    "event": "haldi"
+    "plateTitle": "20×8ft Rectangular Central Island & Dual Main Buffet",
+    "event": "infrastructure"
   },
   {
     "id": "DEC-16",
@@ -985,6 +985,209 @@ window.DECISION_REGISTRY_DATA = {
     "plateRef": "PLATE-08",
     "plateTitle": "Interactive Activity Kiosks (Polaroid Station)",
     "event": "mehendi"
+  },
+  {
+    "id": "PROP-EXP-001",
+    "category": "idea_incubator",
+    "categoryLabel": "Idea Incubator",
+    "domainIcon": "🌧️",
+    "title": "Haldi Outdoor Rain Dance & Splash Deck with 3-Stage Air-Lock",
+    "targetEvent": "Day 1 Haldi (EVT-003)",
+    "status": "incubating",
+    "statusLabel": "INCUBATING PROPOSAL — PENDING DECISION",
+    "dilemma": "Photographer suggested an exterior 20x25ft rain dance deck outside Haldi Annex. Requires 6\" composite elevation, 1:40 slope, french drainage, and 3-stage dry transition air-lock to prevent yellow turmeric water on main marquee carpet.",
+    "benchmark": "Luxury Destination Wedding Standard: Isolating wet rituals completely exterior to main canopy prevents ₹50,000+ carpet water damage.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Option A: Approve with budget cap (Composite deck, 8 warm-mist nozzles, perimeter sump pump)",
+        "selected": false
+      },
+      {
+        "id": "B",
+        "text": "Option B (Recommended): Keep Haldi as traditional seated floral ritual; defer rain dance deck",
+        "selected": true
+      }
+    ],
+    "estimatedCost": "₹25,000 – ₹35,000",
+    "plateRef": "PLATE-05",
+    "actionType": "promote_idea",
+    "plateTitle": "Haldi Outdoor Rain Dance & Splash Deck with 3-Stage Air-Lock",
+    "event": "haldi"
+  },
+  {
+    "id": "PROP-EXP-002",
+    "category": "idea_incubator",
+    "categoryLabel": "Idea Incubator",
+    "domainIcon": "🌺",
+    "title": "Artisanal Ittar (Fragrance) & Live Lac Bangle Craft Rotunda",
+    "targetEvent": "Day 1 Mehendi Promenade & Reception",
+    "status": "incubating",
+    "statusLabel": "INCUBATING PROPOSAL — PENDING DECISION",
+    "dilemma": "10-ft hexagonal wooden gazebo in Zone D where traditional perfumers blend custom roll-on wedding scents for guests, accompanied by a live artisan hand-sizing lac and glass bangles.",
+    "benchmark": "Devika Narain: Live sensory and artisan crafting elevates guest delight 3x over static photo walls with minimal structural footprint (<100 sq ft).",
+    "options": [
+      {
+        "id": "A",
+        "text": "Option A: Approve (Source local artisans from Rayagada / Bhubaneswar; allocate ₹8k-₹12k)",
+        "selected": true
+      },
+      {
+        "id": "B",
+        "text": "Option B: Defer to standard guest favors",
+        "selected": false
+      }
+    ],
+    "estimatedCost": "₹8,000 – ₹12,000",
+    "plateRef": "PLATE-08",
+    "actionType": "promote_idea",
+    "plateTitle": "Artisanal Ittar & Live Lac Bangle Craft Rotunda",
+    "event": "mehendi"
+  },
+  {
+    "id": "PROP-EXP-003",
+    "category": "idea_incubator",
+    "categoryLabel": "Idea Incubator",
+    "domainIcon": "🦶",
+    "title": "Elder Foot Spa & Reflexology Lounge",
+    "targetEvent": "Whole-Venue VIP Hospitality",
+    "status": "incubating",
+    "statusLabel": "INCUBATING PROPOSAL — PENDING DECISION",
+    "dilemma": "4 plush velvet reclining chairs with ultrasonic herbal foot-mist dispensers situated in the entry vestibule of the 30ft Private Dining pod, offering quick 10-minute foot relief for elderly family members.",
+    "benchmark": "High-End Family Hospitality: Providing targeted relief for senior relatives during multi-hour ceremonies prevents fatigue without clinical appearance.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Option A: Approve (Schedule hotel spa therapists for 2-hour shifts during peak ritual hours)",
+        "selected": true
+      },
+      {
+        "id": "B",
+        "text": "Option B: Defer (Rely on comfortable sofa seating in private tent)",
+        "selected": false
+      }
+    ],
+    "estimatedCost": "₹6,000 – ₹10,000",
+    "plateRef": "PLATE-07",
+    "actionType": "promote_idea",
+    "plateTitle": "Elder Foot Spa & Reflexology Lounge",
+    "event": "infrastructure"
+  },
+  {
+    "id": "PROP-EXP-004",
+    "category": "idea_incubator",
+    "categoryLabel": "Idea Incubator",
+    "domainIcon": "🎥",
+    "title": "360° Glam-Cam & Retro Rotary Audio Guestbook",
+    "targetEvent": "Day 1 Sangeet & Reception",
+    "status": "incubating",
+    "statusLabel": "INCUBATING PROPOSAL — PENDING DECISION",
+    "dilemma": "Rotating slow-motion video pedestal paired with an ivory vintage rotary analog telephone in a custom acoustic booth, allowing guests to leave voice messages for the couple.",
+    "benchmark": "2026 Wedding Trend: Audio guestbooks generate deeply emotional personal keepsakes compared to standard guestbook signatures.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Option A: Include in Photographer Contract (Incorporate into photo production rider)",
+        "selected": true
+      },
+      {
+        "id": "B",
+        "text": "Option B: Defer to standard digital videography",
+        "selected": false
+      }
+    ],
+    "estimatedCost": "₹12,000 – ₹18,000",
+    "plateRef": "PLATE-03",
+    "actionType": "promote_idea",
+    "plateTitle": "360° Glam-Cam & Retro Rotary Audio Guestbook",
+    "event": "sangeet"
+  },
+  {
+    "id": "PROP-EXP-005",
+    "category": "idea_incubator",
+    "categoryLabel": "Idea Incubator",
+    "domainIcon": "🍨",
+    "title": "Theatrical Nitro Dessert Counter & Live Culinary Theater",
+    "targetEvent": "Sangeet & Wedding Dinner",
+    "status": "incubating",
+    "statusLabel": "INCUBATING PROPOSAL — PENDING DECISION",
+    "dilemma": "Cryo-station for flash-freezing Odisha Chenna Poda crunch, dragon-breath meringues, and live flambé dessert presentations integrated into the 20x8ft central island or dessert wing.",
+    "benchmark": "Modern Indian Catering: 'Eatertainment' dessert stations drive high visual excitement and guest interaction.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Option A: Review safety & transport with caterer (Verify liquid nitrogen transport to Rayagada)",
+        "selected": false
+      },
+      {
+        "id": "B",
+        "text": "Option B: Stick to traditional live warm jalebi, kulfi, and Chenna Poda counters",
+        "selected": true
+      }
+    ],
+    "estimatedCost": "₹15,000 – ₹22,000",
+    "plateRef": "PLATE-07",
+    "actionType": "promote_idea",
+    "plateTitle": "Theatrical Nitro Dessert Counter & Live Culinary Theater",
+    "event": "infrastructure"
+  },
+  {
+    "id": "PROP-EXP-006",
+    "category": "idea_incubator",
+    "categoryLabel": "Idea Incubator",
+    "domainIcon": "🎆",
+    "title": "Grand Barat Procession & Cold-Pyro Sparkler Avenue",
+    "targetEvent": "Day 2 Morning Barat Procession (EVT-004)",
+    "status": "incubating",
+    "statusLabel": "INCUBATING PROPOSAL — PENDING DECISION",
+    "dilemma": "8 wireless DMX cold-spark fountains along the 12-ft covered canopy tunnel triggered sequentially as the groom reaches the entrance.",
+    "benchmark": "Event Safety Standard: Cold spark gerb fountains produce zero heat, non-toxic smoke, and are safe for tent fabrics with 10ft overhead clearance.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Option A: Approve for outdoor arrival tunnel only (Verify venue fire clearance)",
+        "selected": true
+      },
+      {
+        "id": "B",
+        "text": "Option B: Use traditional dhol tasha, brass band, and floral showers only",
+        "selected": false
+      }
+    ],
+    "estimatedCost": "₹8,000 – ₹12,000",
+    "plateRef": "PLATE-05",
+    "actionType": "promote_idea",
+    "plateTitle": "Grand Barat Procession & Cold-Pyro Sparkler Avenue",
+    "event": "wedding"
+  },
+  {
+    "id": "PROP-EXP-007",
+    "category": "idea_incubator",
+    "categoryLabel": "Idea Incubator",
+    "domainIcon": "🔇",
+    "title": "Acoustic Decoupling Drapery for 30 ft Private VIP Dining Pod",
+    "targetEvent": "Whole-Venue VIP Comfort",
+    "status": "incubating",
+    "statusLabel": "INCUBATING PROPOSAL — PENDING DECISION",
+    "dilemma": "Quilted 600 g/m² acoustic velvet drapes lining the west wall of the 30 ft Private Dining pod to dampen 15–18 dB of Sangeet concert noise for elder diners.",
+    "benchmark": "Acoustic Architecture Standard: Dual-layer heavy velour with air gap effectively dampens mid/high frequencies without requiring rigid drywall partitions.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Option A: Include in Decorator Tender (Specify 600 g/m² acoustic-rated velour drapes)",
+        "selected": true
+      },
+      {
+        "id": "B",
+        "text": "Option B: Use standard double-layer decorative georgette drapes",
+        "selected": false
+      }
+    ],
+    "estimatedCost": "₹10,000 – ₹15,000",
+    "plateRef": "PLATE-07",
+    "actionType": "promote_idea",
+    "plateTitle": "Acoustic Decoupling Drapery for 30ft VIP Dining Pod",
+    "event": "infrastructure"
   },
   {
     "id": "DEC-002",

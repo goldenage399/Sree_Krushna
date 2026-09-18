@@ -356,27 +356,27 @@
   {
     "id": "DEC-13",
     "step": 13,
-    "title": "Furniture Language & Seating Typography",
+    "title": "Ceremonial Seating Typography & Concourse Clearance",
     "phase": "Phase IV: Scenography & Production",
-    "zone": "Guest Seating",
+    "zone": "Guest Seating & Concourse",
     "status": "pending",
     "statusLabel": "PENDING YOUR DECISION",
-    "spec": "CTR-DECOR-RIDER-001 Cl 4",
-    "dilemma": "Ensuring comfortable seating for elders during 3-hour puja and festive party seating for youth.",
-    "benchmark": "The Wedding Design Company: Maximum 2 coherent furniture finishes (natural timber + champagne metal) creates visual serenity.",
-    "direction": "Zone A: Front 2 rows royal velvet sofas for immediate elders; remaining Champagne Chiavari. Zone D: Low charpais.",
+    "spec": "CTR-DECOR-RIDER-001 Cl 4 / DWG A103",
+    "dilemma": "Balancing ceremonial sightlines during 3-hour Vivaha rituals with an uncluttered 35-ft central concourse for free guest movement.",
+    "benchmark": "The Wedding Design Company: Right-sizing central seating prevents oceans of empty chairs while opening pedestrian arteries.",
+    "direction": "Locked in DWG A103: 80-chair ceremonial bay (8 rows of 10) flanking 10-ft aisle + 40 chairs in family sofa wings; opens 35-ft clear central concourse.",
     "options": [
       {
         "id": "A",
-        "text": "Champagne Gold Chiavari Chairs + Royal Velvet Elder Sofas (Recommended)",
+        "text": "Option A (Recommended): 80-Chair Ceremonial Bay + 40 Flank Chairs & Family Sofas (DWG A103)",
         "selected": true,
-        "badge": "🪵 Natural Cross-Back Teak & Linen Banquets"
+        "badge": "🪑 80-Seat Bay + 35-ft Open Concourse"
       },
       {
         "id": "B",
-        "text": "Natural Oak Cross-Back Chairs + Linen Tufted Lounge Sofas",
+        "text": "Option B: Dense 200-Chair Theater Block (Restricts central pedestrian flow)",
         "selected": false,
-        "badge": "👑 Gold Chiavari & Royal Tufted Velvet Diwans"
+        "badge": "🏛️ Dense 200-Seat Block"
       }
     ],
     "domainIcon": "🪑",
@@ -411,33 +411,33 @@
   {
     "id": "DEC-15",
     "step": 15,
-    "title": "Catering Pass & Guest Activity Stalls",
+    "title": "Dining Court Architecture: Rectangular Central Island & Dual Buffets",
     "phase": "Phase IV: Scenography & Production",
-    "zone": "Zone C & Zone D",
+    "zone": "Zone C Dining Court",
     "status": "pending",
     "statusLabel": "PENDING YOUR DECISION",
-    "spec": "SPEC-OPS-VENUE-GROUND-001 §2.4",
-    "dilemma": "Coordinating internal main buffet, separate 60x40ft VIP/elderly dining tent, and live activity stalls.",
-    "benchmark": "WeddingSutra Top Picks: Live artisan booths (lac bangles, organic ittar) drive 3× higher guest engagement than static backdrops.",
-    "direction": "Locked in OS: 4 Linear Buffets inside main marquee + Separate 60x40ft VIP/Elderly Dining Tent + Live Interactive Craft Stalls.",
+    "spec": "SPEC-OPS-VENUE-GROUND-001 §2.4 / DWG A103",
+    "dilemma": "Eliminating dinner bottlenecks across 350+ guests while separating quick appetizer grazers from full-plate main course diners.",
+    "benchmark": "Luxury Wedding Banquet Standard: Freestanding multi-sided central island reduces plate/salad wait times by 60% compared to linear buffets.",
+    "direction": "Locked in DWG A103: Freestanding 20×8ft Rectangular Central Island (salads, chaats, breads, plate stacks) + 70ft Dual Main-Course Baseline + West Cocktail Grazing Lounge.",
     "options": [
       {
         "id": "A",
-        "text": "Option A (Recommended): Main Internal Buffets + 60x40ft VIP/Elderly Dining Tent + 2 Live Craft Stalls",
+        "text": "Option A (Recommended): 20×8ft Rectangular Central Island + 70ft Dual Main Baseline + West Cocktail Lounge (DWG A103)",
         "selected": true,
-        "badge": "🍽️ Integrated Food Theatre & Artisan Craft Village"
+        "badge": "🥗 20×8ft Multi-Service Island & Dual Buffet"
       },
       {
         "id": "B",
-        "text": "Option B: 360-Degree Video Spin Platform + Polaroid Guestbook + Candy Bar",
+        "text": "Option B: Traditional Linear Perimeter Buffets (Single queue flow)",
         "selected": false,
-        "badge": "🥘 Segregated Peripheral Perimeter Buffet"
+        "badge": "🥘 Linear Perimeter Buffet"
       }
     ],
     "domainIcon": "🍽️",
     "plateIndex": 6,
     "plateRef": "PLATE-07",
-    "plateLabel": "Satellite Kitchen & Buffet"
+    "plateLabel": "20×8ft Central Island & Dual Buffet"
   },
   {
     "id": "DEC-16",

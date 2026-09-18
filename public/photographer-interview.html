@@ -1,0 +1,2054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📸 Wedding Photographer Evaluation & Interview Battlecard — Sree Krushna Marriage OS</title>
+  <style>
+    :root {
+      --bg-main: #0b0f17;
+      --bg-surface: #121824;
+      --bg-card: #182234;
+      --bg-card-hover: #1e2b42;
+      --border-color: #2a374f;
+      --border-focus: #f5c518;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+      --gold-primary: #f5c518;
+      --gold-secondary: #d4a843;
+      --gold-bg: rgba(245, 197, 24, 0.1);
+      --crimson: #ef4444;
+      --crimson-bg: rgba(239, 68, 68, 0.12);
+      --emerald: #10b981;
+      --emerald-bg: rgba(16, 185, 129, 0.12);
+      --blue: #38bdf8;
+      --blue-bg: rgba(56, 189, 248, 0.12);
+      --purple: #a855f7;
+      --purple-bg: rgba(168, 85, 247, 0.12);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding-bottom: 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── APP HEADER ──────────────────────────────────────────────── */
+    header.app-header {
+      background: linear-gradient(180deg, #162032 0%, #0f1726 100%);
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 24px 0 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      transition: padding 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    header.app-header.is-scrolled {
+      padding: 8px 20px 0 20px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.7);
+      background: rgba(15, 23, 38, 0.96);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 12px;
+      transition: margin-bottom 0.2s ease, gap 0.2s ease;
+    }
+
+    header.app-header.is-scrolled .header-top {
+      margin-bottom: 6px;
+      gap: 10px;
+    }
+
+    .header-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-title .icon {
+      font-size: 2rem;
+      background: var(--gold-bg);
+      border: 1px solid var(--gold-secondary);
+      border-radius: var(--radius-md);
+      padding: 6px 12px;
+      transition: all 0.2s ease;
+    }
+
+    header.app-header.is-scrolled .header-title .icon {
+      font-size: 1.2rem;
+      padding: 2px 7px;
+      border-radius: var(--radius-sm);
+    }
+
+    .header-title h1 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--gold-primary);
+      letter-spacing: 0.3px;
+      transition: font-size 0.2s ease;
+    }
+
+    header.app-header.is-scrolled .header-title h1 {
+      font-size: 0.95rem;
+    }
+
+    .header-title p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      transition: opacity 0.2s ease;
+    }
+
+    header.app-header.is-scrolled .header-title p {
+      display: none;
+    }
+
+    /* Minimized header info pill (shown only when scrolled) */
+    .header-mini-meta {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      background: rgba(11, 15, 23, 0.85);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 3px 12px;
+      font-size: 0.78rem;
+    }
+
+    header.app-header.is-scrolled .header-mini-meta {
+      display: inline-flex;
+    }
+
+    .mini-vendor-tag strong {
+      color: var(--gold-primary);
+    }
+
+    .mini-score-tag {
+      background: var(--gold-bg);
+      border: 1px solid var(--gold-secondary);
+      color: var(--gold-primary);
+      padding: 1px 8px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.74rem;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    header.app-header.is-scrolled .btn {
+      padding: 5px 12px;
+      font-size: 0.78rem;
+      min-height: 32px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 9px 16px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      min-height: 40px;
+    }
+
+    .btn-gold {
+      background: var(--gold-primary);
+      color: #0b0f17;
+    }
+    .btn-gold:hover {
+      background: #ffd633;
+      box-shadow: 0 0 12px rgba(245, 197, 24, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border-color: var(--border-color);
+      color: var(--text-main);
+    }
+    .btn-outline:hover {
+      background: var(--bg-card);
+      border-color: var(--text-muted);
+    }
+
+    .btn-danger {
+      background: var(--crimson-bg);
+      border-color: var(--crimson);
+      color: #fca5a5;
+    }
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.25);
+    }
+
+    /* ─── VENDOR PROFILE BAR ─────────────────────────────────────── */
+    .vendor-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      background: rgba(11, 15, 23, 0.7);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      margin-bottom: 10px;
+      transition: max-height 0.3s ease, opacity 0.2s ease, padding 0.3s ease, margin 0.3s ease;
+      overflow: hidden;
+      max-height: 250px;
+    }
+
+    header.app-header.is-scrolled .vendor-bar {
+      max-height: 0;
+      opacity: 0;
+      padding: 0 16px;
+      margin-bottom: 0;
+      border-width: 0;
+      pointer-events: none;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .field-group label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--gold-secondary);
+    }
+
+    .field-group input {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 7px 10px;
+      color: var(--text-main);
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .field-group input:focus {
+      border-color: var(--border-focus);
+    }
+
+    /* ─── SCORE TICKER & VERDICT ─────────────────────────────────── */
+    .score-banner {
+      background: linear-gradient(90deg, #131d2e 0%, #172439 100%);
+      border: 1px solid var(--gold-secondary);
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
+      margin: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .score-main {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .score-circle {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: #0b0f17;
+      border: 3px solid var(--gold-primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: var(--gold-primary);
+      box-shadow: 0 0 15px rgba(245, 197, 24, 0.25);
+    }
+    .score-circle .val { font-size: 1.35rem; line-height: 1; }
+    .score-circle .denom { font-size: 0.65rem; color: var(--text-muted); }
+
+    .score-info h2 {
+      font-size: 1.1rem;
+      color: var(--text-main);
+      margin-bottom: 3px;
+    }
+    .score-info p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .verdict-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .verdict-finalize {
+      background: var(--emerald-bg);
+      border: 1px solid var(--emerald);
+      color: #6ee7b7;
+    }
+    .verdict-standby {
+      background: var(--gold-bg);
+      border: 1px solid var(--gold-secondary);
+      color: var(--gold-primary);
+    }
+    .verdict-reject {
+      background: var(--crimson-bg);
+      border: 1px solid var(--crimson);
+      color: #fca5a5;
+    }
+
+    /* ─── CATEGORY PILL NAVIGATION ────────────────────────────────── */
+    .category-nav {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 8px 0 10px 0;
+      scrollbar-width: none;
+      border-top: 1px solid rgba(42, 55, 79, 0.4);
+      background: transparent;
+      transition: padding 0.2s ease, border-color 0.2s ease;
+    }
+
+    .category-nav::-webkit-scrollbar { display: none; }
+
+    header.app-header.is-scrolled .category-nav {
+      padding: 5px 0 7px 0;
+      border-top-color: rgba(42, 55, 79, 0.7);
+    }
+
+    .nav-pill {
+      white-space: nowrap;
+      padding: 6px 13px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      scroll-margin: 20px;
+    }
+
+    header.app-header.is-scrolled .nav-pill {
+      padding: 4px 10px;
+      font-size: 0.73rem;
+      min-height: 28px;
+      background: rgba(24, 34, 52, 0.85);
+    }
+
+    .nav-pill:hover, .nav-pill.active {
+      color: var(--gold-primary);
+      border-color: var(--gold-secondary);
+      background: rgba(245, 197, 24, 0.15) !important;
+      box-shadow: 0 0 12px rgba(245, 197, 24, 0.25);
+    }
+
+    /* ─── MAIN CONTAINER ─────────────────────────────────────────── */
+    .container {
+      max-width: 1200px;
+      margin: 24px auto;
+      padding: 0 20px;
+    }
+
+    /* ─── ACCORDION SECTION ──────────────────────────────────────── */
+    .section-block {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      margin-bottom: 20px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+      scroll-margin-top: 105px;
+    }
+
+    .section-block:focus-within, .section-block:hover {
+      border-color: #3f4e6d;
+    }
+
+    .section-header {
+      padding: 16px 20px;
+      background: var(--bg-card);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+      border-bottom: 1px solid transparent;
+      transition: background 0.2s;
+    }
+
+    .section-header:hover {
+      background: var(--bg-card-hover);
+    }
+
+    .section-header.open {
+      border-bottom-color: var(--border-color);
+    }
+
+    .section-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      background: var(--gold-bg);
+      border: 1px solid var(--gold-secondary);
+      font-size: 1rem;
+    }
+
+    .section-title-group h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .section-title-group .sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .section-toggle-icon {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      transition: transform 0.25s ease;
+    }
+
+    .section-header.open .section-toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    .section-content {
+      display: none;
+      padding: 20px;
+    }
+
+    .section-content.open {
+      display: block;
+    }
+
+    /* ─── QUESTION CARDS ─────────────────────────────────────────── */
+    .question-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .question-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      transition: all 0.2s;
+    }
+
+    .question-card:hover {
+      border-color: #435475;
+      background: #192539;
+    }
+
+    .question-checkbox {
+      margin-top: 2px;
+    }
+
+    .custom-check {
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--border-color);
+      border-radius: 5px;
+      background: var(--bg-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: all 0.2s;
+    }
+
+    .custom-check:checked {
+      background: var(--emerald);
+      border-color: var(--emerald);
+    }
+
+    .custom-check:checked::after {
+      content: '✓';
+      color: #0b0f17;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .q-body {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .q-text {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.45;
+    }
+
+    .q-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.8rem;
+    }
+
+    .badge-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 9px;
+      border-radius: var(--radius-sm);
+      font-size: 0.74rem;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .chip-standard {
+      background: var(--emerald-bg);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+    }
+
+    .chip-warning {
+      background: var(--crimson-bg);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #f87171;
+    }
+
+    .chip-info {
+      background: var(--blue-bg);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: #38bdf8;
+    }
+
+    .q-rationale {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: rgba(11, 15, 23, 0.5);
+      border-left: 3px solid var(--gold-secondary);
+      padding: 6px 10px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+
+    /* ─── SECTION NOTES ──────────────────────────────────────────── */
+    .section-notes {
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .section-notes label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .section-notes textarea {
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 0.85rem;
+      resize: vertical;
+      min-height: 60px;
+      outline: none;
+    }
+
+    .section-notes textarea:focus {
+      border-color: var(--border-focus);
+    }
+
+    /* ─── SCORING TABLE ──────────────────────────────────────────── */
+    .scoring-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .scoring-row {
+      display: grid;
+      grid-template-columns: 2fr 80px 100px 120px;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+    }
+
+    .scoring-row label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .scoring-row .weight {
+      font-size: 0.78rem;
+      color: var(--gold-secondary);
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .scoring-row input[type="number"] {
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 6px 10px;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-align: center;
+      width: 100%;
+      outline: none;
+    }
+
+    .scoring-row input[type="number"]:focus {
+      border-color: var(--gold-primary);
+    }
+
+    .scoring-row .row-weighted {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--emerald);
+      text-align: right;
+    }
+
+    /* ─── DEAL BREAKERS CALLOUT ──────────────────────────────────── */
+    .deal-breakers-box {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(18, 24, 36, 1) 100%);
+      border: 1px solid var(--crimson);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-top: 24px;
+    }
+
+    .deal-breakers-box h3 {
+      font-size: 1.1rem;
+      color: #f87171;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .deal-breakers-box ol {
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.86rem;
+      color: #cbd5e1;
+    }
+
+    .deal-breakers-box li strong {
+      color: #fca5a5;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────────────────── */
+    footer.app-footer {
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+      border-top: 1px solid var(--border-color);
+      margin-top: 40px;
+    }
+
+    /* ─── PRINT STYLESHEET (@media print) ────────────────────────── */
+    @media print {
+      body {
+        background-color: #ffffff !important;
+        color: #111827 !important;
+        font-size: 10pt;
+        padding-bottom: 0;
+      }
+
+      header.app-header {
+        position: static !important;
+        background: #ffffff !important;
+        border-bottom: 2px solid #111827 !important;
+        padding: 10px 0 !important;
+        backdrop-filter: none !important;
+      }
+
+      .header-actions, .category-nav, .btn, .section-toggle-icon, .deal-breakers-box {
+        display: none !important;
+      }
+
+      .header-title h1 {
+        color: #111827 !important;
+        font-size: 16pt !important;
+      }
+
+      .header-title p {
+        color: #4b5563 !important;
+      }
+
+      .vendor-bar {
+        background: #f9fafb !important;
+        border: 1px solid #d1d5db !important;
+        padding: 8px !important;
+      }
+
+      .vendor-bar input {
+        background: #ffffff !important;
+        border: 1px solid #9ca3af !important;
+        color: #111827 !important;
+      }
+
+      .score-banner {
+        background: #f3f4f6 !important;
+        border: 1px solid #9ca3af !important;
+        color: #111827 !important;
+        margin: 12px 0 !important;
+        padding: 8px 12px !important;
+      }
+
+      .score-circle {
+        background: #ffffff !important;
+        border-color: #111827 !important;
+        color: #111827 !important;
+      }
+
+      .section-block {
+        background: #ffffff !important;
+        border: 1px solid #e5e7eb !important;
+        margin-bottom: 14px !important;
+        page-break-inside: avoid;
+      }
+
+      .section-header {
+        background: #f3f4f6 !important;
+        border-bottom: 1px solid #d1d5db !important;
+        padding: 8px 12px !important;
+      }
+
+      .section-header h3 {
+        color: #111827 !important;
+        font-size: 11pt !important;
+      }
+
+      .section-badge {
+        background: #e5e7eb !important;
+        border-color: #9ca3af !important;
+      }
+
+      .section-content {
+        display: block !important;
+        padding: 10px 12px !important;
+      }
+
+      .question-card {
+        background: #ffffff !important;
+        border: 1px solid #e5e7eb !important;
+        padding: 8px 10px !important;
+        margin-bottom: 8px !important;
+        page-break-inside: avoid;
+      }
+
+      .custom-check {
+        border: 1.5px solid #111827 !important;
+        background: #ffffff !important;
+      }
+
+      .q-text {
+        color: #111827 !important;
+        font-size: 9.5pt !important;
+      }
+
+      .q-rationale {
+        background: #f9fafb !important;
+        border-left: 3px solid #6b7280 !important;
+        color: #4b5563 !important;
+        font-size: 8.5pt !important;
+      }
+
+      .badge-chip {
+        border: 1px solid #9ca3af !important;
+        background: #f3f4f6 !important;
+        color: #1f2937 !important;
+        font-size: 7.5pt !important;
+      }
+
+      .chip-standard { color: #065f46 !important; }
+      .chip-warning { color: #991b1b !important; }
+      .chip-info { color: #1e40af !important; }
+
+      .scoring-row {
+        background: #ffffff !important;
+        border: 1px solid #e5e7eb !important;
+        padding: 6px 10px !important;
+      }
+
+      .scoring-row input {
+        border: 1px solid #9ca3af !important;
+        background: #ffffff !important;
+        color: #111827 !important;
+      }
+
+      .section-notes textarea {
+        background: #ffffff !important;
+        border: 1px solid #d1d5db !important;
+        color: #111827 !important;
+        min-height: 40px !important;
+      }
+
+      .deal-print-summary {
+        display: block !important;
+        border: 1px solid #111827;
+        padding: 10px;
+        margin-top: 15px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-top { flex-direction: column; align-items: flex-start; }
+      .header-actions { width: 100%; justify-content: flex-start; }
+      .vendor-bar { grid-template-columns: 1fr; }
+      .score-banner { flex-direction: column; align-items: flex-start; }
+      .scoring-row { grid-template-columns: 1fr 60px 80px; }
+      .scoring-row .row-weighted { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- APP HEADER -->
+  <header class="app-header" id="appHeader">
+    <div class="header-top">
+      <div class="header-title">
+        <div class="icon">📸</div>
+        <div>
+          <h1>Master Photographer Interview Battlecard</h1>
+          <p>Sree Krushna Marriage OS — Dual-Family Odia Rituals, Technical Rider & SLA Verification</p>
+        </div>
+      </div>
+
+      <!-- COMPACT META BADGE (Visible when minimized on scroll) -->
+      <div class="header-mini-meta" id="headerMiniMeta">
+        <span class="mini-vendor-tag">📸 <strong id="miniVendorDisplay">Vendor Unassigned</strong></span>
+        <span class="mini-score-tag" id="miniScoreDisplay">⭐ 0/100</span>
+      </div>
+
+      <div class="header-actions">
+        <button class="btn btn-gold" onclick="window.print()">🖨️ Print / Save PDF</button>
+        <button class="btn btn-outline" onclick="toggleAllAccordions()">📂 Expand / Collapse All</button>
+        <button class="btn btn-danger" onclick="resetForm()">↺ Reset</button>
+      </div>
+    </div>
+
+    <!-- VENDOR PROFILE BAR -->
+    <div class="vendor-bar" id="vendorBar">
+      <div class="field-group">
+        <label>Agency / Studio Name</label>
+        <input type="text" id="vendorName" placeholder="e.g. Cinematic Odia Weddings" oninput="updateMiniMeta()" />
+      </div>
+      <div class="field-group">
+        <label>Lead Photographer Name</label>
+        <input type="text" id="leadName" placeholder="e.g. Rajesh Mohapatra" />
+      </div>
+      <div class="field-group">
+        <label>Total Package Quote (₹)</label>
+        <input type="text" id="packageQuote" placeholder="e.g. 1,50,000" oninput="updateMiniMeta()" />
+      </div>
+      <div class="field-group">
+        <label>Meeting Date</label>
+        <input type="date" id="meetingDate" />
+      </div>
+    </div>
+
+    <!-- CATEGORY QUICK JUMP PILLS (Sticky with Header) -->
+    <nav class="category-nav" id="categoryNav">
+      <a class="nav-pill active" href="#sec-crew">👥 Crew & Dual-Side</a>
+      <a class="nav-pill" href="#sec-prewed">🌅 Pre-Wedding & Reels</a>
+      <a class="nav-pill" href="#sec-rayagada">🚆 Rayagada Engagement</a>
+      <a class="nav-pill" href="#sec-handi">🏺 Handi & Home Rites</a>
+      <a class="nav-pill" href="#sec-mangan">🌼 Mangan & Haldi</a>
+      <a class="nav-pill" href="#sec-sangeet">💃 Mehendi & Sangeet</a>
+      <a class="nav-pill" href="#sec-mandap">🔥 Vedic Mandap Sanctum</a>
+      <a class="nav-pill" href="#sec-bidai">🏡 Bidai & Gruhapravesha</a>
+      <a class="nav-pill" href="#sec-reception">👑 Grand Reception</a>
+      <a class="nav-pill" href="#sec-tech">🎙️ Audio & Gear Rider</a>
+      <a class="nav-pill" href="#sec-sla">📦 Deliverables & SLAs</a>
+      <a class="nav-pill" href="#sec-milestones">💳 Payment Milestones</a>
+      <a class="nav-pill" href="#sec-scorecard">📊 Evaluation Scorecard</a>
+    </nav>
+  </header>
+
+  <!-- SCORE & VERDICT BANNER -->
+  <div class="score-banner" id="scoreBanner">
+    <div class="score-main">
+      <div class="score-circle">
+        <span class="val" id="totalScoreVal">0</span>
+        <span class="denom">/ 100</span>
+      </div>
+      <div class="score-info">
+        <h2>Live Vendor Scoring & Qualification Status</h2>
+        <p id="scoreSummaryText">Score the 6 weighted evaluation pillars below to calculate real-time qualification.</p>
+      </div>
+    </div>
+    <div class="verdict-badge verdict-standby" id="verdictBadge">
+      ⏳ Scoring Pending
+    </div>
+  </div>
+
+  <!-- MAIN QUESTIONS CONTAINER -->
+  <main class="container">
+
+    <!-- 1. CREW SIZING & DUAL-SIDE DEPLOYMENT -->
+    <section class="section-block" id="sec-crew">
+      <div class="section-header open" onclick="toggleSection(this)">
+        <div class="section-title-group">
+          <span class="section-badge">👥</span>
+          <div>
+            <h3>1. Team Sizing, Lead Ownership & Dual-Side Architecture</h3>
+            <span class="sub">Guarantees dedicated leads, no outsourcing, and parallel Bride/Groom coverage</span>
+          </div>
+        </div>
+        <span class="section-toggle-icon">▼</span>
+      </div>
+      <div class="section-content open">
+        <div class="question-list">
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Will YOU personally lead the photography on our wedding day, and will your exact name be written into our contract?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Primary lead explicitly named in contract</span>
+                <span class="badge-chip chip-warning">Red Flag: "Our studio associates are all equally good"</span>
+              </div>
+              <div class="q-rationale">Avoids the classic bait-and-switch where senior agency portfolio is presented, but junior freelance apprentices show up on event day.</div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"How many total crew members will be deployed for the Vedic Wedding day?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Min 6–7 crew (2 Candid + 2 Traditional + 2 4K Cinema + 1 Drone Pilot)</span>
+                <span class="badge-chip chip-warning">Red Flag: 2–3 "hybrid" shooters doing both photo & video</span>
+              </div>
+              <div class="q-rationale">A wedding cannot be captured properly if a shooter is toggling between photo and video modes on a single body.</div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"How do you deploy teams for concurrent morning rituals at the Bride's residence and Groom's residence?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Dedicated Squad A (Bride) & Squad B (Groom) deployed with separate gear & transport</span>
+                <span class="badge-chip chip-warning">Red Flag: One photographer rushing between two homes across town</span>
+              </div>
+              <div class="q-rationale">Simultaneous Mangan and Haldi baths mean one crew cannot physically cover both sides.</div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"How many other weddings is your studio handling on our wedding date?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Exclusive date booking or strictly capped unit</span>
+                <span class="badge-chip chip-warning">Red Flag: Studio running 4–5 events concurrently on auspicious Tithis</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-notes">
+          <label>Photographer's Response & Notes:</label>
+          <textarea placeholder="Record promised team count, lead names, and coverage commitments..."></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. PRE-WEDDING SHOOT -->
+    <section class="section-block" id="sec-prewed">
+      <div class="section-header open" onclick="toggleSection(this)">
+        <div class="section-title-group">
+          <span class="section-badge">🌅</span>
+          <div>
+            <h3>2. Pre-Wedding Shoot ("Reveling", Conceptual & Teaser Films)</h3>
+            <span class="sub">Locations, outfit changes, drone clearance, and teaser reel turnaround</span>
+          </div>
+        </div>
+        <span class="section-toggle-icon">▼</span>
+      </div>
+      <div class="section-content open">
+        <div class="question-list">
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"How many distinct locations and shooting hours are included in your pre-wedding package?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: 2–3 locations (e.g. Puri beach dawn, Konark pine forest, Mukteshvara temple, Chilika) across 1–2 days</span>
+                <span class="badge-chip chip-info">Min 4 outfit/styling changes</span>
+              </div>
+              <div class="q-rationale">Clarifies whether travel time between locations cuts into active photography time.</div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Do you handle ASI temple photography permissions, drone flight clearances, or beach entry permits?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Studio guides permissions or coordinates with local security</span>
+                <span class="badge-chip chip-warning">Red Flag: Complete ignorance of ASI temple tripod/camera restrictions</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Can we receive a 60-second 9:16 vertical Instagram teaser reel within 5 days of the shoot for digital invitations?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Fast teaser delivery (≤ 5–7 days)</span>
+                <span class="badge-chip chip-warning">Red Flag: "Everything will be delivered together after the wedding"</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-notes">
+          <label>Photographer's Response & Notes:</label>
+          <textarea placeholder="Locations agreed, dates proposed, costume changes permitted..."></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. RAYAGADA OUTSTATION ENGAGEMENT -->
+    <section class="section-block" id="sec-rayagada">
+      <div class="section-header open" onclick="toggleSection(this)">
+        <div class="section-title-group">
+          <span class="section-badge">🚆</span>
+          <div>
+            <h3>3. Rayagada Outstation Engagement (Nirbandha Logistics)</h3>
+            <span class="sub">Travel transparency, arrival call times, and sacred Sanskrit scroll exchange</span>
+          </div>
+        </div>
+        <span class="section-toggle-icon">▼</span>
+      </div>
+      <div class="section-content open">
+        <div class="question-list">
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Have you covered outstation weddings in Rayagada or South Odisha, and what are your exact travel and stay billing terms?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Fixed all-inclusive travel lump-sum (Zero hidden daily per-diem)</span>
+                <span class="badge-chip chip-warning">Red Flag: Uncapped open-ended travel billing for crew meals and taxis</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"What time will your crew arrive at the Rayagada venue before the 11 Feb evening Nirbandha?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Arrival min 3–4 hours prior to scout stage lighting and electrical power</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"How will you capture the solemn Patra Paribartana (horoscope/vow scroll exchange) alongside the ring ceremony?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Macro focus on Sanskrit scroll + dual-angle ring exchange & family blessings</span>
+              </div>
+              <div class="q-rationale">The Odia Nirbandha is a formal liturgical alliance ceremony before the priests; it is not just a western ring party.</div>
+            </div>
+          </div>
+        </div>
+        <div class="section-notes">
+          <label>Photographer's Response & Notes:</label>
+          <textarea placeholder="Rayagada travel arrangement, room bookings needed, arrival schedule..."></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. HANDI MANGULA & DEVA NIMANTRANA -->
+    <section class="section-block" id="sec-handi">
+      <div class="section-header open" onclick="toggleSection(this)">
+        <div class="section-title-group">
+          <span class="section-badge">🏺</span>
+          <div>
+            <h3>4. Handi Mangula, Deva Nimantrana & Traditional Home Rites</h3>
+            <span class="sub">Sacred clay pots, family temple invitations, tight room spaces, and temple decorum</span>
+          </div>
+        </div>
+        <span class="section-toggle-icon">▼</span>
+      </div>
+      <div class="section-content open">
+        <div class="question-list">
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Home rituals like Handi Mangula and Deva Nimantrana occur in compact living rooms and local temples. What lenses and lighting do you use so rooms don't look cluttered or harsh?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: 24mm/35mm f/1.4 wide prime lenses + bounced soft LED lighting</span>
+                <span class="badge-chip chip-warning">Red Flag: Direct blinding on-camera flash that blows out white walls</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Are your photographers respectful of traditional temple sanctum decorum during deity invitations?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Strict adherence to temple customs (shoes off, no intrusive flash in sanctum)</span>
+              </div>
+              <div class="q-rationale">Local priests will stop ceremonies if arrogant photographers violate temple sanctum rules.</div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Will you capture close-up detailed portraits of the sacred painted clay pots (Handi), betel nuts (Guas), and mango leaves?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Dedicated macro asset photography of traditional puja samagri</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-notes">
+          <label>Photographer's Response & Notes:</label>
+          <textarea placeholder="Equipment for home rituals, priest coordination, lighting approach..."></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. MANGAN / HALDI -->
+    <section class="section-block" id="sec-mangan">
+      <div class="section-header open" onclick="toggleSection(this)">
+        <div class="section-title-group">
+          <span class="section-badge">🌼</span>
+          <div>
+            <h3>5. Mangan / Haldi & Ceremonial Snana (Dual-Side Concurrent)</h3>
+            <span class="sub">Raw turmeric paste, water protection, slow-motion splashes, and Sadhaba blessings</span>
+          </div>
+        </div>
+        <span class="section-toggle-icon">▼</span>
+      </div>
+      <div class="section-content open">
+        <div class="question-list">
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Mangan and Haldi happen concurrently on the same morning at both Bride's and Groom's residences. Are two full photography squads guaranteed?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Confirmed parallel squads at both homes</span>
+                <span class="badge-chip chip-warning">Red Flag: Proposing to shift one family's ritual time to suit photography</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Haldi involves heavy turmeric paste, holy water splashing (Snana), and wild cousin banter. Is your equipment weather-sealed?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Weather-sealed pro bodies + rain/splash covers</span>
+                <span class="badge-chip chip-warning">Red Flag: Photographer standing 20 feet away to avoid turmeric splashes</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Will your cinematographers shoot 120 fps high-speed slow-motion for the turmeric splash and holy water bath?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: 4K 120 fps / 1080p 120 fps slow-motion capture for cinematic film</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"How do you capture the emotional 'Seven Married Women' (Sadhaba) blessing ritual and maternal prayers?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Close candid portraiture of mother's and elder women's expressions</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-notes">
+          <label>Photographer's Response & Notes:</label>
+          <textarea placeholder="Squad assignments for Groom and Bride houses, water protection gear..."></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. MEHENDI & SANGEET -->
+    <section class="section-block" id="sec-sangeet">
+      <div class="section-header open" onclick="toggleSection(this)">
+        <div class="section-title-group">
+          <span class="section-badge">💃</span>
+          <div>
+            <h3>6. Mehendi & Sangeet (Choreography, Gimbal & Low-Light Speed)</h3>
+            <span class="sub">Stage performances, moving stage beam lights, crowd reactions, and Mehendi macro shots</span>
+          </div>
+        </div>
+        <span class="section-toggle-icon">▼</span>
+      </div>
+      <div class="section-content open">
+        <div class="question-list">
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"During choreographed dance performances on stage, do you track with a 3-axis gimbal (DJI RS3/RS4) from the dance floor or static tripods?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: 1 Active gimbal operator on stage/floor + 1 Static wide 4K + 1 Telephoto candid</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Sangeet stage lighting uses intense moving LED beams and lasers. How do you protect your camera sensors and skin tones?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Experienced in high dynamic range low-light; knows to avoid direct laser hits on sensors</span>
+              </div>
+              <div class="q-rationale">Unskilled operators get camera CMOS sensors permanently burned by stage lasers.</div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Do you dedicate time for macro portraits of the Bride's Mehendi (palms, feet, groom initials) BEFORE the crowd enters?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Dedicated 20-min macro portrait window scheduled before guests arrive</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-notes">
+          <label>Photographer's Response & Notes:</label>
+          <textarea placeholder="Gimbal operators, low-light lens choices, Mehendi prep schedule..."></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. VEDIC MANDAP SANCTUM (THE MASTER WEDDING) -->
+    <section class="section-block" id="sec-mandap">
+      <div class="section-header open" onclick="toggleSection(this)">
+        <div class="section-title-group">
+          <span class="section-badge">🔥</span>
+          <div>
+            <h3>7. Vedic Wedding Day Sanctum (The Master Day)</h3>
+            <span class="sub">Barat drone, Baranugam, Kanyadaan, Hatha Ganthi, Saptapadi, Sindoor Daan & Kaudi Khela</span>
+          </div>
+        </div>
+        <span class="section-toggle-icon">▼</span>
+      </div>
+      <div class="section-content open">
+        <div class="question-list">
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Do you have a female candid photographer for the bridal prep suite (lehenga draping, Chandan Chita, silver Mukuta placement)?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Female lead photographer assigned to bridal suite for privacy and comfort</span>
+                <span class="badge-chip chip-warning">Red Flag: Male shooters entering bridal dressing room without notice</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"How do you coordinate coverage between the moving street Barat procession and the Bride's family awaiting at the gate?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Dual team (1 Drone + 1 Wide Gimbal with Barat; 1 Stage lead at the welcome arch)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"How will you shoot the Baranugam welcoming Arati and traditional Huluhuli without getting blocked by the crowd?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Pre-positioned lead photographer on elevated riser at the entrance gate</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"During Kanyadaan & Hatha Ganthi, how do you capture the water flowing through the father's hands onto the couple's joined hands?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: 90mm macro lens at f/2.8 + high-speed shutter + simultaneous wide angle of father's face</span>
+              </div>
+              <div class="q-rationale">This is the emotional apex of the Odia wedding. Missing the water stream or father's expression is unforgivable.</div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Sindoor Daan happens in a single split-second! Where will your lights and shooters be positioned?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Zero pillar shadows, 2 synchronized angles (close macro + wide mandap reaction)</span>
+                <span class="badge-chip chip-warning">Red Flag: "We'll just zoom in from wherever we are standing"</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"How do you ensure photographers do not block the sacred Agni, the Purohit, or the view of seated elders during Saptapadi?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Respectful low-profile floor angles; no crowding inside the sanctum square</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Will you capture the playful family games (Kaudi Khela, Sala Bidha banter) that conclude the Mandap ceremonies?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Complete coverage until the couple steps down from the Mandap</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-notes">
+          <label>Photographer's Response & Notes:</label>
+          <textarea placeholder="Mandap shooter positioning, bridal prep team, ritual timing coordination..."></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. POST-WEDDING HOME RITES -->
+    <section class="section-block" id="sec-bidai">
+      <div class="section-header open" onclick="toggleSection(this)">
+        <div class="section-title-group">
+          <span class="section-badge">🏡</span>
+          <div>
+            <h3>8. Post-Wedding Home Rites (Bidai, Gruhapravesha & Alta Footprints)</h3>
+            <span class="sub">Emotional farewell, low-light vehicle departure, rice pot tipping, and ring finding</span>
+          </div>
+        </div>
+        <span class="section-toggle-icon">▼</span>
+      </div>
+      <div class="section-content open">
+        <div class="question-list">
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Bidai often happens late at night or early morning in dim lighting. What low-light gear do you use so you don't shove blinding lights into crying parents' faces?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: High ISO full-frame sensors (Sony FX3/A7SIII) + fast prime lenses (f/1.4)</span>
+                <span class="badge-chip chip-warning">Red Flag: Direct high-beam floodlights blinding weeping family members</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Will a dedicated photographer travel with the groom's car to arrive at the groom's residence BEFORE the couple arrives for Gruhapravesha?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Advance shooter arrives early to set up door threshold lighting</span>
+                <span class="badge-chip chip-warning">Red Flag: Photographer gets stuck in traffic and arrives after bride has entered</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"How will you capture the bride tipping the brass rice pot (Mana), stepping onto the Alta plate, and leaving red footsteps on the cloth?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Low ground-level macro video tracking the Alta footsteps + door entry blessings</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-notes">
+          <label>Photographer's Response & Notes:</label>
+          <textarea placeholder="Bidai logistics, transport plan to groom's house, Gruhapravesha setup..."></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. GRAND RECEPTION -->
+    <section class="section-block" id="sec-reception">
+      <div class="section-header open" onclick="toggleSection(this)">
+        <div class="section-title-group">
+          <span class="section-badge">👑</span>
+          <div>
+            <h3>9. Grand Reception (Stage Management, VIP Grouping & Candids)</h3>
+            <span class="sub">300+ guest queue management, studio strobes, and dedicated couple portrait window</span>
+          </div>
+        </div>
+        <span class="section-toggle-icon">▼</span>
+      </div>
+      <div class="section-content open">
+        <div class="question-list">
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"We expect 300+ guests greeting the couple on the reception stage. How does your traditional stage team keep guest lines moving while ensuring every group is properly centered and eyes open?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Experienced stage director calling groups quickly; double-burst trigger to avoid closed eyes</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Do you bring your own dedicated studio strobes with softboxes (Godox AD600 / Elinchrom), or do you rely on decorator hall lights?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Studio brings independent high-CRI flash strobes with diffused umbrellas/softboxes</span>
+                <span class="badge-chip chip-warning">Red Flag: Relying exclusively on venue yellow ambient lights</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"When do you schedule the exclusive 30-minute couple portrait session?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Scheduled 45 mins BEFORE stage opens, while makeup is pristine</span>
+                <span class="badge-chip chip-warning">Red Flag: Doing couple portraits at midnight when the couple is exhausted</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-notes">
+          <label>Photographer's Response & Notes:</label>
+          <textarea placeholder="Stage lighting equipment, assistant crowd coordinator, couple shoot timing..."></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. TECHNICAL GEAR & PUROHIT AUDIO RIDER -->
+    <section class="section-block" id="sec-tech">
+      <div class="section-header open" onclick="toggleSection(this)">
+        <div class="section-title-group">
+          <span class="section-badge">🎙️</span>
+          <div>
+            <h3>10. Technical Gear, Pure Vedic Mantra Audio & Drone Rider</h3>
+            <span class="sub">Wireless lapels on Purohit, dual-slot card writes, 4K full-frame bodies</span>
+          </div>
+        </div>
+        <span class="section-toggle-icon">▼</span>
+      </div>
+      <div class="section-content open">
+        <div class="question-list">
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"How do you record the Chief Purohit's Vedic Sanskrit mantras and the couple's vows?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Wireless lapel mic (Sennheiser EW-DP / Rode Wireless PRO) anchored to head Purohit + Zoom recorder</span>
+                <span class="badge-chip chip-warning">DEAL BREAKER: "We'll just capture audio using the camera's built-in mic"</span>
+              </div>
+              <div class="q-rationale">On-camera mics only record hall echo, ambient chatter, and screeching speakers. You will hear zero sacred mantras in your wedding film.</div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Do all your camera bodies record to dual memory card slots simultaneously on-site?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Mandatory dual-slot simultaneous write (UHS-II V90 cards)</span>
+                <span class="badge-chip chip-warning">DEAL BREAKER: Single-slot consumer cameras (one corrupt card wipes your wedding forever)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"What exact camera models and cinema primes are being deployed?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Sony FX3 / A7 IV / A7S III or Canon R5 / R6 (Full-Frame 10-bit 4K)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"What is your drone safety protocol over crowded mandap and marquee areas?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: DJI Mavic 3 / Air 3; strict altitude rules; zero low-altitude buzzing over fire or elderly guests</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-notes">
+          <label>Photographer's Response & Notes:</label>
+          <textarea placeholder="Audio hardware models, camera bodies, drone license and safety policy..."></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. DELIVERABLES & POST-PRODUCTION SLAS -->
+    <section class="section-block" id="sec-sla">
+      <div class="section-header open" onclick="toggleSection(this)">
+        <div class="section-title-group">
+          <span class="section-badge">📦</span>
+          <div>
+            <h3>11. Deliverables, Turnaround SLAs & Canvera Albums</h3>
+            <span class="sub">Sneak-peeks, cinematic teaser, full 45-min film, raw 4TB hard drive, and album quality</span>
+          </div>
+        </div>
+        <span class="section-toggle-icon">▼</span>
+      </div>
+      <div class="section-content open">
+        <div class="question-list">
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"In how many hours/days will we receive our 50 curated sneak-peek highlight photos?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: ≤ 48 to 72 hours post-event for social media</span>
+                <span class="badge-chip chip-warning">Red Flag: "We deliver all photos together after 2 months"</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"What is the contractual turnaround SLA for the 3–5 minute 4K cinematic highlight teaser film?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: ≤ 15 to 20 business days</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"What is the duration of the full wedding documentary film, and when is it delivered?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: 45–60 minutes full documentary film delivered within ≤ 45 days</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Do we receive 100% of the raw unedited photos (RAW+JPEG) and full video footage on an external SSD?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: 100% Raw data provided on client's 2TB–4TB drive within 14 days</span>
+                <span class="badge-chip chip-warning">Red Flag: Charging extra exorbitant fees just to copy raw footage</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"What are the master photo album specifications (print lab, sheet count, cover material)?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Min 2 Premium Flush-Mount Albums (Canvera / Photostop), 40–50 sheets (80–100 pages), Non-tearable matte, Leatherette/Acrylic box</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"How many rounds of video and album design revisions are included, and can we choose our soundtrack songs?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Min 2 revision rounds with couple-curated music selection</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-notes">
+          <label>Photographer's Response & Notes:</label>
+          <textarea placeholder="SLA commitments, album paper specs, raw drive handover protocol..."></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. COMMERCIALS & PAYMENT MILESTONES -->
+    <section class="section-block" id="sec-milestones">
+      <div class="section-header open" onclick="toggleSection(this)">
+        <div class="section-title-group">
+          <span class="section-badge">💳</span>
+          <div>
+            <h3>12. Commercials, Payment Milestones & Contract Clauses</h3>
+            <span class="sub">Retention leverage, overtime policies, and personal privacy rights</span>
+          </div>
+        </div>
+        <span class="section-toggle-icon">▼</span>
+      </div>
+      <div class="section-content open">
+        <div class="question-list">
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Will you agree to a standard milestone payment schedule retaining 15–20% until final albums and full 4K films are delivered?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard Schedule: 20% Booking → 35% Event Morning → 25% Event Finish → 10% Raw Data → 10% Final Album Approval</span>
+                <span class="badge-chip chip-warning">DEAL BREAKER: Demanding 100% payment on wedding day (you lose all post-production leverage)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Odia weddings frequently run late past midnight into early morning Muhurtas. What is your overtime policy?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Event-anchored coverage (crew stays until the ritual finishes, e.g. Bidai complete) or clearly capped hourly overtime</span>
+                <span class="badge-chip chip-warning">Red Flag: Rigid 10:00 PM cutoff where crew packs up while Saptapadi is ongoing</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Do we retain full personal printing and distribution rights to all high-resolution photos?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Full personal license included with zero watermarks on delivered photos</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-checkbox">
+              <input type="checkbox" class="custom-check" />
+            </div>
+            <div class="q-body">
+              <div class="q-text">"Will you respect our privacy and NOT publish intimate family prep photos or emotional moments on public Instagram if requested?"</div>
+              <div class="q-meta">
+                <span class="badge-chip chip-standard">Standard: Written consent required before publishing intimate bridal/family moments on social media</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-notes">
+          <label>Photographer's Response & Notes:</label>
+          <textarea placeholder="Payment milestones agreed, overtime agreement, privacy clauses..."></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13. MASTER EVALUATION SCORECARD -->
+    <section class="section-block" id="sec-scorecard">
+      <div class="section-header open" onclick="toggleSection(this)">
+        <div class="section-title-group">
+          <span class="section-badge">📊</span>
+          <div>
+            <h3>13. Master Evaluation Scorecard (Enter Scores 1–10)</h3>
+            <span class="sub">Calculates real-time weighted score and final vendor verdict</span>
+          </div>
+        </div>
+        <span class="section-toggle-icon">▼</span>
+      </div>
+      <div class="section-content open">
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">
+          Grade the photographer on each dimension from <strong>1 (Incompetent/Refused)</strong> to <strong>10 (Exceptional/Gold Standard)</strong>. Total score and qualification verdict update automatically above.
+        </p>
+
+        <div class="scoring-grid">
+          <div class="scoring-row">
+            <label>1. Odia Ritual Fluency & Liturgical Knowledge (Handi, Mangan, Hatha Ganthi, Sindoor Daan)</label>
+            <span class="weight">20% Wt</span>
+            <input type="number" id="sc_ritual" min="0" max="10" value="0" oninput="calculateScore()" placeholder="1–10" />
+            <span class="row-weighted" id="rw_ritual">0.0 / 20</span>
+          </div>
+
+          <div class="scoring-row">
+            <label>2. Dual-Family Parallel Sizing (Simultaneous dedicated teams for Bride & Groom)</label>
+            <span class="weight">20% Wt</span>
+            <input type="number" id="sc_crew" min="0" max="10" value="0" oninput="calculateScore()" placeholder="1–10" />
+            <span class="row-weighted" id="rw_crew">0.0 / 20</span>
+          </div>
+
+          <div class="scoring-row">
+            <label>3. Full Gallery Quality & Consistency (Uniform lighting across candid, stage, and dim home rites)</label>
+            <span class="weight">15% Wt</span>
+            <input type="number" id="sc_gallery" min="0" max="10" value="0" oninput="calculateScore()" placeholder="1–10" />
+            <span class="row-weighted" id="rw_gallery">0.0 / 15</span>
+          </div>
+
+          <div class="scoring-row">
+            <label>4. Audio & Cinema Gear Rider (Purohit lapels, 4K bodies, dual-slot memory cards, drone pilot)</label>
+            <span class="weight">15% Wt</span>
+            <input type="number" id="sc_gear" min="0" max="10" value="0" oninput="calculateScore()" placeholder="1–10" />
+            <span class="row-weighted" id="rw_gear">0.0 / 15</span>
+          </div>
+
+          <div class="scoring-row">
+            <label>5. Turnaround SLAs & Milestone Schedule (Safe payment retention, ≤72h teaser, Canvera album)</label>
+            <span class="weight">15% Wt</span>
+            <input type="number" id="sc_sla" min="0" max="10" value="0" oninput="calculateScore()" placeholder="1–10" />
+            <span class="row-weighted" id="rw_sla">0.0 / 15</span>
+          </div>
+
+          <div class="scoring-row">
+            <label>6. Interpersonal Demeanor & Composure (Calm under pressure, courteous to elders, respectful)</label>
+            <span class="weight">15% Wt</span>
+            <input type="number" id="sc_demeanor" min="0" max="10" value="0" oninput="calculateScore()" placeholder="1–10" />
+            <span class="row-weighted" id="rw_demeanor">0.0 / 15</span>
+          </div>
+        </div>
+
+        <div class="section-notes" style="margin-top:20px;">
+          <label>Final Meeting Summary & Committee Sign-Off:</label>
+          <textarea placeholder="Key negotiation outcomes, concessions won, remaining doubts, and next step deadlines..."></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEAL BREAKERS WARNING BOX -->
+    <div class="deal-breakers-box">
+      <h3>🚨 Top 5 Non-Negotiable Deal-Breakers (Walk Away If Any Apply)</h3>
+      <ol>
+        <li><strong>No Dedicated Lapel Mic for Purohit:</strong> If they say "we will use on-camera audio", you will get room echo and shrieking speakers, but zero clear Sanskrit mantras.</li>
+        <li><strong>Refusal of Lead Names in Contract:</strong> If the studio owner refuses to commit the exact primary photographer and cinematographer names in writing.</li>
+        <li><strong>Demanding 100% Payment on Wedding Day:</strong> If you pay 100% before receiving albums, expect 9 to 12 months of delays with zero leverage to speed them up.</li>
+        <li><strong>Single-Slot Memory Cameras:</strong> Consumer camera bodies without dual SD card slots risk total footage loss if a single card corrupts.</li>
+        <li><strong>Single Crew for Parallel Events:</strong> Expecting one team to sprint between Bride's home and Groom's home on Mangan morning will ruin both schedules.</li>
+      </ol>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Sree Krushna Marriage OS — Architectural Knowledge Base & Procurement Engine</p>
+    <p style="margin-top:4px;">Document Spec: <code>SPEC-PROC-PHOTO-EVAL-001</code> | UI Council Review: <code>UI-COUNCIL-EXP-001</code></p>
+  </footer>
+
+  <!-- APP CONTROLLER JAVASCRIPT -->
+  <script>
+    // Accordion Toggle Function
+    function toggleSection(headerEl) {
+      const contentEl = headerEl.nextElementSibling;
+      headerEl.classList.toggle('open');
+      contentEl.classList.toggle('open');
+    }
+
+    // Toggle All Accordions
+    let allExpanded = true;
+    function toggleAllAccordions() {
+      allExpanded = !allExpanded;
+      document.querySelectorAll('.section-header').forEach(header => {
+        const content = header.nextElementSibling;
+        if (allExpanded) {
+          header.classList.add('open');
+          content.classList.add('open');
+        } else {
+          header.classList.remove('open');
+          content.classList.remove('open');
+        }
+      });
+    }
+
+    // Sync Vendor Meta to Minimized Header
+    function updateMiniMeta() {
+      const vName = document.getElementById('vendorName').value.trim();
+      const vQuote = document.getElementById('packageQuote').value.trim();
+      const displayEl = document.getElementById('miniVendorDisplay');
+      if (vName && vQuote) {
+        displayEl.textContent = `${vName} (₹${vQuote})`;
+      } else if (vName) {
+        displayEl.textContent = vName;
+      } else {
+        displayEl.textContent = 'Vendor Unassigned';
+      }
+    }
+
+    // Auto-Minimizing Sticky Header on Scroll
+    window.addEventListener('scroll', () => {
+      const appHeader = document.getElementById('appHeader');
+      if (window.scrollY > 70) {
+        appHeader.classList.add('is-scrolled');
+      } else {
+        appHeader.classList.remove('is-scrolled');
+      }
+    }, { passive: true });
+
+    // Live Scoring Calculator
+    function calculateScore() {
+      const getVal = (id) => {
+        const val = parseFloat(document.getElementById(id).value) || 0;
+        return Math.min(10, Math.max(0, val));
+      };
+
+      const sc_ritual = getVal('sc_ritual');
+      const sc_crew = getVal('sc_crew');
+      const sc_gallery = getVal('sc_gallery');
+      const sc_gear = getVal('sc_gear');
+      const sc_sla = getVal('sc_sla');
+      const sc_demeanor = getVal('sc_demeanor');
+
+      // Weights: 20%, 20%, 15%, 15%, 15%, 15%
+      const rw_ritual = sc_ritual * 2.0;
+      const rw_crew = sc_crew * 2.0;
+      const rw_gallery = sc_gallery * 1.5;
+      const rw_gear = sc_gear * 1.5;
+      const rw_sla = sc_sla * 1.5;
+      const rw_demeanor = sc_demeanor * 1.5;
+
+      document.getElementById('rw_ritual').textContent = rw_ritual.toFixed(1) + ' / 20';
+      document.getElementById('rw_crew').textContent = rw_crew.toFixed(1) + ' / 20';
+      document.getElementById('rw_gallery').textContent = rw_gallery.toFixed(1) + ' / 15';
+      document.getElementById('rw_gear').textContent = rw_gear.toFixed(1) + ' / 15';
+      document.getElementById('rw_sla').textContent = rw_sla.toFixed(1) + ' / 15';
+      document.getElementById('rw_demeanor').textContent = rw_demeanor.toFixed(1) + ' / 15';
+
+      const total = rw_ritual + rw_crew + rw_gallery + rw_gear + rw_sla + rw_demeanor;
+      const roundedTotal = Math.round(total);
+      document.getElementById('totalScoreVal').textContent = roundedTotal;
+      document.getElementById('miniScoreDisplay').textContent = `⭐ ${roundedTotal}/100`;
+
+      // Verdict Logic
+      const verdictEl = document.getElementById('verdictBadge');
+      const summaryTextEl = document.getElementById('scoreSummaryText');
+
+      if (total === 0) {
+        verdictEl.className = 'verdict-badge verdict-standby';
+        verdictEl.textContent = '⏳ Scoring Pending';
+        summaryTextEl.textContent = 'Enter scores (1–10) in the 6 evaluation pillars below.';
+      } else if (total >= 80) {
+        verdictEl.className = 'verdict-badge verdict-finalize';
+        verdictEl.textContent = '✅ Recommended to Finalize';
+        summaryTextEl.textContent = 'Vendor demonstrates exceptional ritual fluency, dual-side crewing, audio rider, and safe contract terms.';
+      } else if (total >= 65) {
+        verdictEl.className = 'verdict-badge verdict-standby';
+        verdictEl.textContent = '⚠️ Qualified with Negotiation';
+        summaryTextEl.textContent = 'Strong contender, but requires mandatory contract riders for audio gear, lead names, or payment retention.';
+      } else {
+        verdictEl.className = 'verdict-badge verdict-reject';
+        verdictEl.textContent = '❌ Reject / High Risk';
+        summaryTextEl.textContent = 'Critical deficiencies in ritual knowledge, equipment safety, or crewing capacity. High probability of disappointment.';
+      }
+    }
+
+    // Reset Form
+    function resetForm() {
+      if (confirm('Reset all entered responses, notes, and scores?')) {
+        document.querySelectorAll('input[type="text"]').forEach(el => el.value = '');
+        document.querySelectorAll('input[type="date"]').forEach(el => el.value = '');
+        document.querySelectorAll('input[type="number"]').forEach(el => el.value = '0');
+        document.querySelectorAll('textarea').forEach(el => el.value = '');
+        document.querySelectorAll('.custom-check').forEach(el => el.checked = false);
+        calculateScore();
+        updateMiniMeta();
+      }
+    }
+
+    // ScrollSpy & Initialization
+    document.addEventListener('DOMContentLoaded', () => {
+      const today = new Date().toISOString().split('T')[0];
+      const dateInput = document.getElementById('meetingDate');
+      if (dateInput && !dateInput.value) {
+        dateInput.value = today;
+      }
+
+      updateMiniMeta();
+
+      // Intersection Observer for Category Nav ScrollSpy
+      const observerOptions = {
+        root: null,
+        rootMargin: '-15% 0px -65% 0px',
+        threshold: 0
+      };
+
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const sectionId = entry.target.id;
+            document.querySelectorAll('.nav-pill').forEach(pill => {
+              if (pill.getAttribute('href') === `#${sectionId}`) {
+                pill.classList.add('active');
+                pill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+              } else {
+                pill.classList.remove('active');
+              }
+            });
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('section.section-block').forEach(sec => {
+        sectionObserver.observe(sec);
+      });
+    });
+  </script>
+</body>
+</html>

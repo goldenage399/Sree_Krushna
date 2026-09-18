@@ -32,38 +32,41 @@ Vendors must submit their commercial bids using this exact unbundled structure:
 
 ### TIER A: Common Base Infrastructure (Permanent Erection)
 *Single, non-recurring fee for the entire wedding duration (Day 1 through Day 2):*
-1. German Clear-Span Marquee (50ft × 130ft) with 850 g/m² Blackout PVC Roof: ₹ `__________`
-2. Strategic Opaque Solar-Block Sidewalls (East & South-West faces): ₹ `__________`
-3. Elevated Wooden Sub-Flooring + Needle-Felt Luxury Carpet Base: ₹ `__________`
-4. Grand Paneless Ivory Ceiling Fabric + Champagne Gold Borders + Velvet Taping: ₹ `__________`
-5. Central Axis Statement Tiered Crystal Chandeliers (8–12 units on DMX): ₹ `__________`
-6. Dual-Zone Climate Infrastructure (35-40T Ductable AC + 8 Industrial Coolers): ₹ `__________`
-7. Core Rigging, Matte-Black Trussing & Base Electrical Distribution: ₹ `__________`
+1. German Clear-Span Marquee (100ft × 160ft / 16,000 sq ft) with 12ft covered arrival canopy & 850 g/m² Blackout PVC Roof: ₹ `__________`
+2. Attached Functional Annexes (Dedicated Top-Left Haldi Annex + 30ft Private Dining VIP Pod): ₹ `__________`
+3. Dual Stage Platforms (Top Head Ceremonial Stage 40ft + 30ft flanks, Left Wall Stage 1 24ft × 16ft): ₹ `__________`
+4. Strategic Opaque Solar-Block Sidewalls (East & South-West faces): ₹ `__________`
+5. Elevated Wooden Sub-Flooring + Needle-Felt Luxury Carpet Base: ₹ `__________`
+6. Grand Paneless Ivory Ceiling Fabric + Champagne Gold Borders + Velvet Taping: ₹ `__________`
+7. Central Axis Statement Tiered Crystal Chandeliers (8–12 units on DMX): ₹ `__________`
+8. Dual-Zone Climate Infrastructure (60–80T Ductable AC + 10–12 Industrial Coolers + 10–15T Private Dining AC): ₹ `__________`
+9. Core Rigging, Matte-Black Trussing & Base Electrical Distribution: ₹ `__________`
 **TIER A SUB-TOTAL (Base Infrastructure): ₹ `__________`**
 
 ---
 
 ### TIER B: Function-Wise Selective Transformations
 *Labor, accent materials, and programming for rapid day-to-night pivots:*
-1. **Haldi Transformation (`EVT-003`):** Marigold toranas, brass urlis, yellow Vedic bajots: ₹ `__________`
-2. **Mehendi Transformation (`EVT-002`):** Pastel drapes, floor cushions, Mehendi artist cabanas: ₹ `__________`
-3. **Sangeet Transformation (`EVT-002`):** Velvet lounge sofas, moving-head lighting scenes: ₹ `__________`
-4. **Vedic Marriage Transformation (`EVT-004`):** Sacred Mandap fresh tuberose bells, altar silk asanas: ₹ `__________`
+1. **Haldi Setup (`EVT-003`):** Conducted in dedicated Top-Left Annex; marigold toranas, brass urlis, yellow Vedic bajots: ₹ `__________`
+2. **Mehendi Transformation (`EVT-002`):** Main hall; pastel drapes, floor cushions, Mehendi artist cabanas: ₹ `__________`
+3. **Sangeet Transformation (`EVT-002`):** Stage 1 (Left wall); velvet lounge sofas, moving-head lighting scenes: ₹ `__________`
+4. **Vedic Marriage Transformation (`EVT-004`):** Top Head Stage; sacred Mandap fresh tuberose bells, altar silk asanas: ₹ `__________`
 **TIER B SUB-TOTAL (Transformations): ₹ `__________`**
 
 ---
 
-### TIER C: Function-Specific Additions (Standalone Features)
+### TIER C: Function-Specific Additions (Approved Core Features)
 1. Sangeet P3 High-Definition LED Backdrop Screen (24ft × 12ft): ₹ `__________`
-2. Vedic Sacred Copper Havan Altar with Certified Zinc Safety Barrier: ₹ `__________`
+2. Vedic Sacred Copper Havan Altar with Certified Zinc Safety Barrier & Smoke Hood: ₹ `__________`
 3. 3D Acrylic Monogram Photo-Op Keepsake Wall: ₹ `__________`
+*(Note: Experiential proposals such as the Rain Dance Deck, Ittar Rotunda, and Elder Foot Spa are held in incubation under PROP-20260917 and quoted separately if approved.)*
 **TIER C SUB-TOTAL (Specific Additions): ₹ `__________`**
 
 ---
 
 ### TIER D: Optional Luxury Enhancements (A la Carte)
 1. Kinetic DMX Ceiling Lighting Arrays (40 Spheres): ₹ `__________`
-2. Cold-Pyro / Sparkler Fountain Entrance Truss: ₹ `__________`
+2. Cold-Pyro Sparkler Fountain Entrance Truss: ₹ `__________`
 **TIER D SUB-TOTAL (Optional Enhancements): ₹ `__________`**
 
 ---
@@ -109,3 +112,4 @@ I/We, the authorized representative of `______________________________`, have re
 **Accepted by Client Coordinator:** `________________________________`  
 **Lead Operations Custodian:** `PER-005` / `PER-014`
 
+<!-- SSOT: docs/incidents/INC-091-unvetted-ideation-creep-and-incubation-firewall-boundary.md — INC-091 -->

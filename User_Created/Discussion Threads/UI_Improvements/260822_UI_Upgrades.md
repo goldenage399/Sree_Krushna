@@ -4019,13 +4019,444 @@ The stage header row is now fully populated with stage bands. Here's a summary o
 
 # Response 3.9 -
 
-# Query 4.0 -
+# Query 4.0 -[prompt-clarity](slashCommand;prompt-clarity)
 
-# Review 4.0 -
+Prepare an exhaustive plan to make this mobile friendly ?document.querySelector("#shoppingRegistryFrame") s well as document.querySelector("#stickyHeaderShell") and other such pages.
 
-# Response 4.0 -
+these need to be responsive design for small laptiop , large one and tablemt and mobile freindly ? Lets scafoold an enhancement and create a detailed report , check with [impeccable](slashCommand;impeccable) and UI COuncil while preparing the implementation plan
 
-# Query 4.1 -
+# Review 4.0 -Viewed SKILL.md:1-77
+
+Viewed meta-prompt.md:1-137
+Searched for "shoppingRegistryFrame"
+Searched for "stickyHeaderShell"
+Viewed skill-router.yaml:1-100
+Searched for "mobile"
+Searched for files: _enhancement_
+Viewed enhancement-config.json:1-6
+Listed directory enhancements
+Viewed UI-QUALITY-ENHANCEMENT-CLUSTER.md:1-13
+Listed directory enhancement-notes
+Viewed architecture-council.md:1-100
+Viewed ui-council.md:1-100
+Viewed SKILL.md:1-80
+Ran command: `node -e "console.log(process.version)"`
+Ran command: `node .agents/skills/impeccable/scripts/context.mjs`
+Viewed index.html:80-180
+Viewed index.html:181-235
+Viewed index.html:810-835
+Searched for "shopping-fragment"
+Listed directory shopping_src
+Listed directory components
+Listed directory styles
+Searched for "app-sticky-shell"
+Searched for "stickyHeaderShell"
+Viewed index.html:1-85
+Searched for "tab-nav"
+Searched for files: *.css
+Viewed main.css:1-100
+Searched for "sticky"
+Viewed main.css:150-250
+Viewed main.css:245-450
+Viewed main.css:451-550
+Viewed main.css:650-750
+Viewed main.css:770-860
+Viewed main.css:3000-3135
+Ran command: `node -e "const fs = require('fs'); const lines = fs.readFileSync('public/css/main.css', 'utf8').split('\n'); lines.forEach((l, i) => { if (l.includes('@media')) console.log(i+1, l); });"`
+Viewed main.css:2320-2450
+Viewed main.css:2451-2570
+Ran command: `node -e "const fs = require('fs'); const path = require('path'); fs.readdirSync('shopping_src/styles').forEach(f => { const content = fs.readFileSync(path.join('shopping_src/styles', f), 'utf8'); content.split('\n').forEach((l, i) => { if (l.includes('@media')) console.log(f, i+1, l); }); });"`
+Viewed 01_base_layout.css:1-60
+Viewed 06_mutable_table.css:1-70
+Viewed 06_mutable_table.css:71-170
+Viewed 06_mutable_table.css:171-270
+Used tool: search_web
+Viewed Council_Ledger.md:1-46
+Viewed SKILL.md:1-60
+Viewed SKILL.md:1-70
+Listed directory SK-001
+Listed directory SK-003
+Viewed 00_ENHANCEMENT_INDEX.md:1-24
+Listed directory SK-004
+Listed directory SK-003
+Viewed 00_ENHANCEMENT_INDEX.md:1-50
+Searched for files: *SK-005\*
+Viewed package.json:1-52
+Ran command: `npm run verify:mobile`
+Ran command: `npm run test:shopping`
+Ran command: `npm run verify:modular-architecture && npm run verify:ui-lifecycle`
+Ran command: `npm run verify:modular-architecture; npm run verify:ui-lifecycle`
+Created 00_ENHANCEMENT_INDEX.md
+Created implementation_plan.md
+
+### Clarification & Intent Record
+
+- **Ambiguity detected**: Scope bundling across multi-surface pages (`#shoppingRegistryFrame`, `#stickyHeaderShell`, "other such pages"), 4 viewport tiers, enhancement scaffolding, and UI Council / `/impeccable` governance.
+- **Question asked**: Which responsive modernization scope and execution path would you like to pursue?
+- **Options offered**: A) 2-Phase Phased Program · B) Targeted Scope (`#stickyHeaderShell` & `#shoppingRegistryFrame` only) · C) Simultaneous Full-App Big Bang.
+- **User resolution**: Conduct a thorough comparative evaluation of the options (similarities & distinctions), research web best practices, design an airtight hybrid approach, and deliver an already Architecture & UI Council-certified decision.
+- **Bound route**: `.agent/workflows/architecture-council.md` & `.agent/workflows/ui-council.md` & `.agents/skills/impeccable/SKILL.md` & `.agent/workflows/mobile-ui-engineering.md` & `enhancement-scaffolder`.
+- **Resolved scope**:
+  1. Comparative analysis of Options A, B, and C with similarities, distinctions, tradeoffs, and web best practice research (CSS Container Queries, Fluid Typography `clamp()`, Mobile Dock navigation ergonomics, Table-to-Card stacked conversions).
+  2. Convene Full Architecture Council & UI Council with `/impeccable` Core Craft Auditor, `parent-layout-audit`, and `mobile-ui-validator`.
+  3. Formally certify Decision `AC-DEC-2026-033` / `UI-DEC-2026-029` / `P-MULTI-VIEWPORT-RESPONSIVE-001`.
+  4. Scaffold Enhancement `SK-005` in `docs/enhancements/` and `enhancement-notes/` under the `[UI-QUALITY]` cluster (`enhancement-config.json` `next_id: 6`).
+  5. Deliver the comprehensive 4-tier responsive implementation plan prioritizing `#stickyHeaderShell` and `#shoppingRegistryFrame` in Phase 1 before cascading to operational tabs in Phase 2 and perimeter views in Phase 3.
+  6. Enforce a Governance Hard-Stop for user approval before modifying production source code.
+
+---
+
+I have formulated the exhaustive design document and certified decision in the implementation plan artifact:
+
+👉 **[Multi-Viewport Responsive Modernization Architecture & Implementation Plan](file:///C:/Users/Temp/.gemini/antigravity/brain/558ffc22-a70f-4957-987d-86cbbcc97764/implementation_plan.md)**
+
+### Key Highlights & Architectural Decisions
+
+1. **Comparative Verdict & The Hybrid Bridge**:
+   - **Option B** (isolated fix) creates a disjointed legacy experience across the rest of the OS.
+   - **Option C** (full-app simultaneous refactor) creates extreme regression risk across complex SVG bézier DAG canvases and SDCA compilers.
+   - **Certified Hybrid Approach (`P-MULTI-VIEWPORT-RESPONSIVE-001`)**: Establishes unified responsive tokens, container queries, and fully hardens `#stickyHeaderShell` and `#shoppingRegistryFrame` in **Phase 1** as the gold-standard reference implementations, with structured rollouts across the operational suite (`#tab-dopkos`, `#tab-planning`, `#tab-rituals`) in **Phase 2**, and perimeter views in **Phase 3**.
+2. **The $300\text{px}$ Mathematical Necessity (`parent-layout-audit`)**:
+   - Tracing horizontal offsets reveals that at $300\text{px}$, usable width is $288\text{px}$. With the royal brand lockup requiring $129\text{px}$, attempting to render 7 standalone action buttons ($298\text{px}$) requires $431\text{px}$, causing severe clipping and overflow.
+   - The UI Council and `/impeccable` have certified the **Consolidated Quick-Action Popover / Drawer** (`#headerQuickActionsMenu`), reducing mobile topbar clutter to $\le 3$ primary touch targets while keeping 100% of capabilities accessible within 1 tap.
+3. **Shopping Registry & Mutable Table Ergonomics**:
+   - Upgrading `shopping_src/styles/` to CSS Container Queries (`@container (max-width: ...)`).
+   - Implementing **Responsive Table Dual-Mode Ergonomics**: an adaptive `[🗂️ Cards]` ⟷ `[📊 Table]` view switcher with touch-optimized stacked cards for bazaar shopping, plus frozen sticky Item Name columns on horizontal table scroll.
+4. **Enhancement Scaffolding**:
+   - Ready to register **`SK-005`** in `enhancement-config.json`, `docs/enhancements/UI-QUALITY-ENHANCEMENT-CLUSTER.md`, and log `AC-DEC-2026-033` / `UI-DEC-2026-029` in `Council_Ledger.md`.
+
+_(Note from Impeccable Setup: A newer version of Impeccable v4.3.1 is available; if desired, we can update via `npx impeccable update` in a future session)._
+
+Please review the **[implementation plan](file:///C:/Users/Temp/.gemini/antigravity/brain/558ffc22-a70f-4957-987d-86cbbcc97764/implementation_plan.md)**. Once you approve, I will proceed to scaffold `SK-005` and execute Phase 1.
+
+# Response 4.0 -# Multi-Viewport Responsive Modernization Architecture & Implementation Plan
+
+> **Enhancement Track**: `SK-005` (Cluster: `[UI-QUALITY]`)  
+> **Council Certified Decision**: `AC-DEC-2026-033` / `UI-DEC-2026-029` / `P-MULTI-VIEWPORT-RESPONSIVE-001`  
+> **Auditors Convened**: Full Architecture Council & UI Council (featuring `/impeccable` Core Craft Auditor, `mobile-ui-validator`, and `parent-layout-audit`)  
+> **Target Surfaces**: `#stickyHeaderShell`, `#shoppingRegistryFrame`, Core Operational Tabs (`#tab-dopkos`, `#tab-planning`, `#tab-rituals`, `#tab-procurement`), and Auxiliary Modals
+
+---
+
+## 📋 Clarification & Intent Record
+
+- **Ambiguity detected**: Multi-faceted request combining scope ambiguity across application pages (`#shoppingRegistryFrame`, `#stickyHeaderShell`, and "other such pages"), viewport tiers (Mobile, Tablet, Small Laptop, Large Desktop), enhancement scaffolding, UI Council review with `/impeccable`, and implementation planning.
+- **Question asked**: Which responsive modernization scope and execution path would you like to pursue?
+- **Options offered**:
+  - **A (Recommended)**: 2-Phase Phased Program prioritizing `#stickyHeaderShell` & `#shoppingRegistryFrame` as reference standards before cascading.
+  - **B**: Scope strictly to `#stickyHeaderShell` and `#shoppingRegistryFrame` only.
+  - **C**: Simultaneous full-app responsive overhaul across all tabs and pages in one single milestone.
+- **User resolution**: _"Conduct a thorough evaluation of the available options, breaking down their specific similarities and distinctions. Base this analysis on the provided context alongside established best practices researched from the web. Using established Architecture Council skills and standards, design a hybrid approach that leaves no gaps. Provide the optimal path forward not just as a suggestion, but as an already Architecture Council-certified decision."_
+- **Bound route**: `.agent/workflows/architecture-council.md`, `.agent/workflows/ui-council.md`, `.agents/skills/impeccable/SKILL.md`, `.agent/workflows/mobile-ui-engineering.md`, `enhancement-scaffolder`.
+- **Resolved scope**:
+  1. Conduct a rigorous comparative evaluation of Options A, B, and C (similarities, distinctions, failure modes, web best practice alignment).
+  2. Convene Full Architecture & UI Council with `/impeccable` design audit and seat all 14 mandatory domain auditors.
+  3. Synthesize an airtight, gapless **Hybrid Responsive Architecture** (`P-MULTI-VIEWPORT-RESPONSIVE-001`) that solves immediate pain points while systematically protecting long-term stability.
+  4. Formally certify the decision as `AC-DEC-2026-033` / `UI-DEC-2026-029`.
+  5. Scaffold Enhancement `SK-005` in `docs/enhancements/` and `enhancement-notes/`, updating `enhancement-config.json` (`next_id: 6`) and `UI-QUALITY-ENHANCEMENT-CLUSTER.md`.
+  6. Present this exhaustive implementation plan artifact and HARD-STOP for user review before writing source code.
+
+---
+
+## ⚖️ Comparative Evaluation of Strategic Options
+
+### 1. Options Breakdown & Structural Analysis
+
+| Dimension                 | Option A: Phased 2-Stage Program                                                                                                                      | Option B: Targeted Scope (Shell & Registry Only)                                                                         | Option C: Simultaneous Full-App Big Bang                                                                               |
+| :------------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------- |
+| **Core Concept**          | Establish responsive token primitives + complete `#stickyHeaderShell` & `#shoppingRegistryFrame` (Phase 1), then cascade to remaining tabs (Phase 2). | Strictly isolate changes to `#stickyHeaderShell` and `#shoppingRegistryFrame`; reject/defer all other tabs indefinitely. | Overhaul all 13 tabs, DAG studio, planning suites, decorator cockpit, and modals concurrently in one massive PR.       |
+| **Blast Radius**          | **Controlled & Measured**: Zero regression risk to complex SVG bézier engines in Tab 4 while resolving immediate daily pain points.                   | **Narrow**: Minimal blast radius, but leaves technical debt and inconsistent UX across the rest of the OS.               | **Extreme**: Modifies $>20$ source files across DAG, Planning, Cockpit, and Shell simultaneously.                      |
+| **Regression Risk**       | **Low**: Verified independently against `test:shopping` and `verify:mobile` before expanding surface area.                                            | **Very Low**: Minimal moving parts, but creates an architectural canyon between shopping and the rest of the app.        | **Critical**: High likelihood of breaking complex layouts (e.g. 5-Zone DO-PKOS Canvas, SVG lines, timeline swimlanes). |
+| **Verification Velocity** | **High**: Rapid delivery of tangible, testable mobile experiences in Phase 1 with strict gating.                                                      | **Highest**: Fastest turnaround, but incomplete product vision.                                                          | **Lowest**: High cognitive stall, huge merge conflicts, verification paralysis.                                        |
+
+### 2. Deep Similarities Across All Options
+
+1. **Target Viewport Spectrum**: All three options recognize the mandatory 4-tier viewport spectrum:
+   - **Compact Mobile**: $300\text{px}$ – $480\text{px}$ (Protocol 19 / `M-GATE-01` compliance).
+   - **Tablet & Phablet**: $481\text{px}$ – $1024\text{px}$ (iPad, Foldables).
+   - **Small Laptop**: $1025\text{px}$ – $1366\text{px}$ (13" MacBooks, standard office laptops).
+   - **Large Desktop**: $1440\text{px}$+ (4K, Ultra-Wide).
+2. **Core Pain Points**: All options agree that `#stickyHeaderShell` (top brand lockup + countdown capsule + 7 action buttons + profile popover + 13 tabs) and `#shoppingRegistryFrame` (carousel, lightbox, 44-item live mutable table, survey studio) are currently the highest-frequency, most critical mobile/laptop bottlenecks.
+3. **Mandatory Invariants**: All options must maintain 100% byte parity (`STD-MOD-COMP-001`), dynamic script lifecycle sequencing (`INV-LIFECYCLE-01`), 3-vector modal dismissibility (`INV-LIFECYCLE-03`), and zero horizontal overflow (`overflow-x: clip`).
+
+### 3. Critical Distinctions & Tradeoffs
+
+1. **Architectural Gap (Option B Failure Mode)**: Option B solves the immediate problem for Shopping and the Header, but leaves tabs like DO-PKOS Precedence DAG (`#tab-dopkos`), Planning & Operations (`#tab-planning`), and Decorator Cockpit (`#tab-cockpit`) feeling like a disjointed legacy desktop portal. Users jumping between tabs on mobile experience jarring cognitive whiplash.
+2. **Monolithic Collapse (Option C Failure Mode)**: Option C attempts to reflow the entire OS at once. However, `#tab-dopkos` runs an intricate cubic-bézier dependency DAG canvas (`css/dopkos-engine.css`), `#tab-cockpit` runs an isolated SDCA compiler with tender annexures, and `#tab-planning` runs 2D precedence matrices. Blending these with shopping in one turn violates the 4-PPSD principle and guarantees verification stalls.
+3. **The Web Standards Benchmark**: Contemporary responsive architecture (researched 2026 best practices) mandates **Container Queries (`@container`)** for modular components and **Fluid Typography (`clamp()`)** for layout shells. A pure viewport-media-query approach (Option B & C defaults) fails because components embedded inside different containers or frames behave unpredictably.
+
+---
+
+## 🏛️ The Architecture & UI Council Deliberation
+
+The Council was formally convened on **September 18, 2026** to establish a binding standard for multi-viewport responsiveness across the Sree Krushna Marriage OS.
+
+### Council Roster & Auditor Findings
+
+#### 1. The SSOT Authority Auditor (`ssot-reconciliation`)
+
+- **Finding**: The architecture must anchor in canonical specifications (`ARCHITECTURE_SPEC.md`, `GEMINI.md`, and `SPEC-PROC-TROUSSEAU-001.md`). The responsive strategy must not modify data structures or business logic contracts (`marriage-state.js`, Firestore collections `shopping_items`, `tasks`). It is purely a presentation-layer and ergonomic enhancement.
+
+#### 2. The Craft & Visual Polish Auditor (`impeccable` — Core Mandatory Member)
+
+- **Finding**: The current header shell suffers from **Utility Density Saturation**: on screens below $1024\text{px}$, 7 buttons squeeze horizontally with truncated labels. On mobile ($300\text{px}$–$480\text{px}$), usable width is only $288\text{px}$ (after $12\text{px}$ padding). Attempting to render 8 interactive elements creates visual chaos.
+- **Directive**: Eliminate clutter. Group secondary links (`Decisions`, `Shopping`, `Intake`, `Cockpit`) into a sleek, royal **Consolidated Quick-Action Popover / Drawer** (`#headerQuickActionsMenu`) triggered by a single luxury gold button (`⚡ Quick Actions`), while keeping the Live Countdown Capsule, Theme Switcher, and User Profile accessible.
+
+#### 3. The Math & Parent Layout Auditor (`parent-layout-audit`)
+
+- **Formula Verification**:
+  $$\text{usable\_width} = \text{viewport\_width} - \Sigma(\text{ancestor horizontal padding} + 2 \times \text{border}) - \Sigma(\text{gaps})$$
+- **Audit at $300\text{px}$ (Smallest Claimed Breakpoint)**:
+  - Header padding: $6\text{px} + 6\text{px} = 12\text{px} \implies \text{Usable} = 288\text{px}$.
+  - Brand lockup: $28\text{px}$ (seal) $+ 6\text{px}$ (gap) $+ 95\text{px}$ (compact text) $= 129\text{px}$.
+  - Remaining space: $288 - 129 = 159\text{px}$.
+  - A maximum of **3 touch targets** ($36\text{px}$ each $+ 6\text{px}$ gaps $= 120\text{px}$) can fit in `.header-right` without overflowing!
+  - Therefore, the 7-button sprawl **mathematically cannot fit at $300\text{px}$–$480\text{px}$**. Consolidation is an absolute mathematical necessity.
+
+#### 4. The Mobile Usability Auditor (`mobile-ui-validator`)
+
+- **Protocol 19 (`M-GATE-01`) Enforcements**:
+  - All interactive tap targets (buttons, pills, accordion toggles, select inputs) must be $\ge 44 \times 44\text{px}$.
+  - Zero horizontal overflow (`body { overflow-x: clip; }`).
+  - Mobile bottom navigation / dock ergonomics: Ensure `env(safe-area-inset-bottom)` and `env(safe-area-inset-top)` are strictly respected.
+  - Live Mutable Table (`06_mutable_table.css`): On screens $<600\text{px}$, standard multi-column tables fail usability. Provide an adaptive **Table-to-Card stacked view toggle** (`[🗂️ Cards]` ⟷ `[📊 Table]`) and freeze the primary Item column with `position: sticky; left: 0` when viewing the table.
+
+#### 5. The Theme System Auditor (`ui-design-validator`)
+
+- **Invariant**: All responsive adjustments must consume semantic theme tokens (`--bg-surface`, `--text-main`, `--border-subtle`, `--gold-bright`, `--shadow-elevation-*`). Zero hardcoded hex codes. Seamless switching between Royal Obsidian (Dark) and Ivory Temple Gold (Light).
+
+#### 6. The Maintainability & Velocity Auditor (`ponytail`)
+
+- **Burden of Proof**: Reject speculative abstractions. Do not invent a heavyweight CSS framework or rewrite existing functional components. Use native CSS Container Queries (`@container`), CSS Grid, `clamp()`, and lightweight vanilla JavaScript toggles.
+
+---
+
+## 🏆 The Certified Decision: Hybrid Responsive Architecture (`AC-DEC-2026-033` / `UI-DEC-2026-029`)
+
+The Architecture and UI Councils unanimously **APPROVE and CERTIFY** the **3-Phase Gapless Hybrid Architecture**:
+
+```mermaid
+flowchart TD
+    subgraph Foundation ["Core Foundation (All Tiers)"]
+        T1["Responsive Token System<br/>(--bp-*, --space-fluid-*, --font-fluid-*)"]
+        CQ["CSS Container Query Primitives<br/>(container-type: inline-size)"]
+    end
+
+    subgraph Phase1 ["Phase 1: High-Frequency Core (Immediate Execution)"]
+        H1["#stickyHeaderShell Overhaul<br/>• 300px: Consolidated Quick-Action Popover<br/>• 768px: 2-Tier Condensed Dock<br/>• 1024px: Standard Responsive Dock<br/>• 1440px: Widescreen Luxury Lockup"]
+        S1["#shoppingRegistryFrame Overhaul<br/>• Container Queries on Cards & Modals<br/>• Mutable Table: Table-to-Card Toggle + Sticky Col<br/>• Fluid clamp() Spacing & Touch Targets >=44px"]
+    end
+
+    subgraph Phase2 ["Phase 2: Core Operational Suite Cascade"]
+        D1["#tab-dopkos (5-Zone DAG Engine)<br/>Adaptive Bottom Drawer + Touch Zoom"]
+        P1["#tab-planning (Planning & Matrix)<br/>Responsive 2D Precedence Shell"]
+        R1["#tab-rituals & #tab-procurement<br/>Responsive Bento Grids (1 / 2 / 3 cols)"]
+    end
+
+    subgraph Phase3 ["Phase 3: Perimeter Surfaces & Modals"]
+        C1["Decorator Cockpit (SDCA)<br/>Lookbooks & Scaled SVG Lightboxes"]
+        M1["Global Auxiliary Modals<br/>(#inspirationModal, #executiveShareModal)"]
+    end
+
+    Foundation --> Phase1
+    Phase1 --> Phase2
+    Phase2 --> Phase3
+```
+
+### Binding Architectural Invariants (`P-MULTI-VIEWPORT-RESPONSIVE-001`)
+
+1. **`INV-RESP-01` (4-Tier Breakpoint Ladder)**:
+   - `--bp-mobile-max: 480px`
+   - `--bp-tablet-max: 1024px`
+   - `--bp-laptop-max: 1366px`
+   - `--bp-desktop-min: 1367px`
+2. **`INV-RESP-02` (Header Mathematical Containment)**:
+   - On viewports $< 768\text{px}$, `.header-right` is strictly constrained to $\le 3$ primary actions (Theme Toggle, Quick-Action Menu Trigger, User Profile Popover). All secondary standalone navigation links collapse into the `#headerQuickActionsMenu` popover.
+3. **`INV-RESP-03` (Component Container Query First)**:
+   - Modular components inside `#shoppingRegistryFrame` (item cards, option pods, survey controls, table rows) must declare `container-type: inline-size` on their parent shells and reflow via `@container (max-width: ...)` rather than brittle global `@media` queries.
+4. **`INV-RESP-04` (Touch & Ergonomics Standard)**:
+   - All interactive controls across all viewports must satisfy $\ge 44 \times 44\text{px}$ hit bounding boxes and include `touch-action: manipulation` to prevent double-tap delays on mobile.
+5. **`INV-RESP-05` (Dual-Release Parity Gate)**:
+   - Every responsive enhancement must compile with 100% byte parity between root and `public/` distributions, passing `verify:modular-architecture`, `verify:ui-lifecycle`, `verify:mobile`, and `verify:deployment`.
+
+---
+
+## 🛠️ Proposed Changes & Detailed Implementation Plan (Phase 1)
+
+### Component 1: Design Tokens & Base Primitives
+
+#### [MODIFY] [public/css/main.css](file:///d:/GitHub_Repo/Sree_Krushna/public/css/main.css)
+
+- Add fluid responsive tokens to `:root`:
+  ```css
+  --font-fluid-h1: clamp(1.1rem, 0.9rem + 1vw, 1.6rem);
+  --font-fluid-body: clamp(0.85rem, 0.8rem + 0.25vw, 0.95rem);
+  --space-fluid-page: clamp(12px, 2vw, 24px);
+  --space-fluid-card: clamp(12px, 1.5vw, 20px);
+  ```
+- Implement the consolidated `#headerQuickActionsMenu` styling:
+  - Slide-down or popover modal with luxury obsidian glass backdrop.
+  - Groups: "Executive Links" (Intake Ledger, Cockpit, Decisions), "Quick Share" (Share Idea, Share Links), "Views" (Shopping).
+  - Clean SVG/emoji icons with high-contrast text and active focus states.
+- Refactor `@media` breakpoints at lines 2325–2570 into the structured 4-tier ladder ($300\text{px}$–$480\text{px}$, $481\text{px}$–$1024\text{px}$, $1025\text{px}$–$1366\text{px}$, $1440\text{px}$+).
+- Add edge-fade scroll gradient masks to `nav.tab-nav`:
+  ```css
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 16px,
+    black calc(100% - 16px),
+    transparent
+  );
+  ```
+
+#### [MODIFY] [ui_primitives/styles/00_tokens_base.css](file:///d:/GitHub_Repo/Sree_Krushna/ui_primitives/styles/00_tokens_base.css)
+
+- Synchronize fluid spacing tokens and touch-target minimums ($\ge 44\text{px}$) across shared primitives.
+
+---
+
+### Component 2: Unified Sticky Header Shell (`#stickyHeaderShell`)
+
+#### [MODIFY] [index.html](file:///d:/GitHub_Repo/Sree_Krushna/index.html) & [public/index.html](file:///d:/GitHub_Repo/Sree_Krushna/public/index.html)
+
+- Instrument `.header-right` with responsive consolidation markup:
+  - Add `<button id="headerQuickActionsBtn" class="header-action-btn btn-gold quick-actions-trigger" ...>` visible only on mobile/tablet ($<1024\text{px}$).
+  - Add `<div id="headerQuickActionsPopover" class="quick-actions-popover" role="menu" ...>` containing the consolidated secondary actions.
+  - Add `class="desktop-only-action"` to standalone header buttons (`#openInspirationBtn`, `#openIntakeLedgerBtn`, `#openCockpitBtn`, `#openDecisionRegistryBtn`, `#openShoppingRegistryBtn`, `#openExecutiveShareBtn`) so they cleanly hide on mobile without layout jumping.
+- Maintain exact 100% byte parity between `index.html` and `public/index.html`.
+
+#### [MODIFY] [public/js/app.js](file:///d:/GitHub_Repo/Sree_Krushna/public/js/app.js)
+
+- Add controller functions for the Quick Actions popover:
+  - `toggleQuickActionsMenu(event)`
+  - Close on click outside, close on Escape keydown (satisfying `INV-LIFECYCLE-03`).
+  - Active focus trap when opened via keyboard navigation.
+
+---
+
+### Component 3: Bhubaneswar Shopping Registry Frame (`#shoppingRegistryFrame`)
+
+#### [MODIFY] [shopping_src/styles/01_base_layout.css](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/styles/01_base_layout.css)
+
+- Wrap `#shoppingRegistryRoot` in container query context: `container-type: inline-size; container-name: shoppingRegistry;`.
+- Use fluid padding: `padding: var(--space-fluid-page) var(--space-fluid-page) max(var(--space-fluid-page), env(safe-area-inset-bottom));`.
+- Ensure responsive hero/welcome banners stack vertically on small devices without horizontal stretching.
+
+#### [MODIFY] [shopping_src/styles/02_stepper_and_clusters.css](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/styles/02_stepper_and_clusters.css)
+
+- Implement `@container (max-width: 640px)` for Cluster Option Pods:
+  - Stack competing option plates vertically instead of side-by-side.
+  - Expand consensus vote buttons to full width with $\ge 44\text{px}$ touch targets.
+  - Allow horizontal touch swipe with snap on the milestone stepper.
+
+#### [MODIFY] [shopping_src/styles/03_stores_and_items.css](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/styles/03_stores_and_items.css)
+
+- Replace static media queries with container queries:
+  - `@container (min-width: 1100px)`: 4 columns.
+  - `@container (min-width: 750px) and (max-width: 1099px)`: 3 columns.
+  - `@container (min-width: 480px) and (max-width: 749px)`: 2 columns.
+  - `@container (max-width: 479px)`: 1 column (full width cards with large thumbnail and prominent action buttons).
+
+#### [MODIFY] [shopping_src/styles/05_survey_studio.css](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/styles/05_survey_studio.css)
+
+- Reflow Survey Studio on small screens:
+  - Make tailoring comparison cards stack cleanly.
+  - Sticky live budget aggregator bar adjusts padding to respect `env(safe-area-inset-bottom)`.
+
+#### [MODIFY] [shopping_src/styles/06_mutable_table.css](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/styles/06_mutable_table.css)
+
+- Implement **Responsive Table Dual-Mode Ergonomics**:
+  - Add view switcher control in table toolbar: `[🗂️ Card View]` ⟷ `[📊 Table View]`.
+  - `@container (max-width: 680px)`:
+    - Default or toggle to **Responsive Item Cards**: Transforms table rows into stacked, luxury shopping cards with status dropdown, price input, and comment launcher formatted for one-thumb mobile operation.
+    - If in Table View on mobile: Freeze Item Name and Thumbnail column (`position: sticky; left: 0; z-index: 5; background: var(--bg-surface-elevated); box-shadow: 2px 0 6px rgba(0,0,0,0.4);`) while allowing horizontal touch scrolling for secondary metrics.
+  - Optimize toolbar layout: Search input flexes to 100% on mobile, filter pills wrap smoothly with no horizontal page clipping.
+
+#### [MODIFY] [shopping_src/components/table_view.html](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/components/table_view.html) & [shopping_src/scripts/controller.js](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/scripts/controller.js)
+
+- Add the Card/Table view switcher buttons and wire state persistence (`tableState.displayMode = 'cards' | 'table'`).
+- Support modal touch dismissibility on mobile devices.
+
+#### [BUILD & RECOMPILE] Re-assemble Shopping Modules
+
+- Execute `node shopping_src/build.cjs --all` to emit:
+  - `shopping-registry.html` & `public/shopping-registry.html`
+  - `shopping-fragment.html` & `public/shopping-fragment.html`
+  - Ensure 100% byte parity across all 4 release artifacts.
+
+---
+
+### Component 4: Governance & Enhancement Scaffolding
+
+#### [NEW] [docs/enhancements/SK-005/00_ENHANCEMENT_INDEX.md](file:///d:/GitHub_Repo/Sree_Krushna/docs/enhancements/SK-005/00_ENHANCEMENT_INDEX.md)
+
+- Canonical SSOT documentation for Enhancement SK-005.
+
+#### [NEW] [enhancement-notes/SK-005/00_ENHANCEMENT_INDEX.md](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-005/00_ENHANCEMENT_INDEX.md)
+
+- Implementation notes and tracking index.
+
+#### [MODIFY] [enhancement-config.json](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-config.json)
+
+- Increment `"next_id": 6`.
+
+#### [MODIFY] [docs/enhancements/UI-QUALITY-ENHANCEMENT-CLUSTER.md](file:///d:/GitHub_Repo/Sree_Krushna/docs/enhancements/UI-QUALITY-ENHANCEMENT-CLUSTER.md)
+
+- Register `SK-005` in the Active Enhancements table.
+
+#### [NEW] [User_Created/Discussion Threads/Council/260918_arch_ui_council_multi_viewport_responsive_modernization.md](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/260918_arch_ui_council_multi_viewport_responsive_modernization.md)
+
+- Complete formal Architecture & UI Council Deliberation record.
+
+#### [MODIFY] [User_Created/Discussion Threads/Council/Council_Ledger.md](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/Council_Ledger.md)
+
+- Log entry for `AC-DEC-2026-033` / `UI-DEC-2026-029`.
+
+---
+
+## 🧪 Verification Plan
+
+### Automated Test Gates
+
+```powershell
+# 1. Verify Shopping Registry Data Layer, DOM & Parity
+npm run test:shopping
+
+# 2. Verify SDCA Modular Component Architecture & 100% Byte Parity
+npm run verify:modular-architecture
+
+# 3. Verify Dynamic UI Lifecycle & Modal Dismissibility (INV-LIFECYCLE-01 to 04)
+npm run verify:ui-lifecycle
+
+# 4. Verify Mobile 300px First Gate (Protocol 19 / M-GATE-01)
+npm run verify:mobile
+
+# 5. Verify 10-Layer Universal Deployment Gate
+npm run verify:deployment
+```
+
+### Manual Multi-Viewport Matrix Verification
+
+Using Chrome DevTools / Playwright device emulation:
+
+| Viewport Tier              | Test Resolution                                            | Target Checks & Acceptance Criteria                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| :------------------------- | :--------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Tier 1: Compact Mobile** | `320px × 568px` (iPhone SE) & `375px × 667px`              | 1. Zero horizontal page scroll (`overflow-x: clip`).<br>2. Brand mark compact; header shows Theme, Quick Actions trigger, Profile.<br>3. Tapping Quick Actions opens modal with all 7 links; dismisses via Close button, Backdrop, or Escape.<br>4. Tab nav scrolls horizontally with smooth touch momentum and edge-fade indicators.<br>5. Shopping Mutable Table renders stacked card view or frozen sticky Item column.<br>6. Touch targets $\ge 44 \times 44\text{px}$. |
+| **Tier 2: Tablet**         | `768px × 1024px` (iPad Mini) & `820px × 1180px` (iPad Air) | 1. Header renders in compact 2-tier dock.<br>2. Live countdown capsule displays icon + digits.<br>3. Shopping item grid renders in 2 balanced columns.<br>4. Survey Studio tailoring cards render side-by-side.                                                                                                                                                                                                                                                             |
+| **Tier 3: Small Laptop**   | `1024px × 768px` & `1366px × 768px` (Standard Laptop)      | 1. Header displays full action buttons with labels.<br>2. Shopping Mutable Table displays all 8 columns comfortably without horizontal scrollbar.<br>3. Table toolbar search and filters fit on single line without wrapping.                                                                                                                                                                                                                                               |
+| **Tier 4: Large Desktop**  | `1440px × 900px` & `1920px × 1080px` (Widescreen)          | 1. Maximum layout container bound to $1440\text{px}$–$1600\text{px}$ with centered margins.<br>2. 4-column card grid in Shopping Registry.<br>3. Full widescreen HUD metrics bar.                                                                                                                                                                                                                                                                                           |
+
+---
+
+## 🔒 User Review Required & Hard-Stop Gate
+
+> [!IMPORTANT]
+> **GOVERNANCE HARD-STOP**: In accordance with the 4-Phase Problem-Solving Discipline (4-PPSD), the Prompt Clarity Protocol, and Council Charter rules, this exhaustive implementation plan, comparative evaluation, and certified architecture decision are submitted for your explicit review and confirmation.
+>
+> **No production application code or stylesheets will be altered until you review and approve this plan.**
+
+# Query 4.1 -/prompt-clarity review and suggest changes and feedback
 
 # Review 4.1 -
 
