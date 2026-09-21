@@ -133,3 +133,23 @@ To enable remote collaboration between distributed family leads (e.g. bride & gr
 **Client Bridge (`public/js/modules/firestore-client.js`):**
 - Uses `initializeFirestore(app, { localCache: persistentLocalCache() })` to provide automatic IndexedDB offline-readiness.
 - Exposes `window.fsDispatchChangeRequest`, `fsUpdateChangeRequestStatus`, `fsListenChangeRequests`, `fsSetTaskStatus`, and `fsListenTaskStatus` for UI script consumption without requiring ES module refactoring across the entire web app.
+
+---
+
+## 8. Multi-Viewport Responsive Modernization & Modular Layout Architecture (SK-005)
+
+**Ruling:** `AC-DEC-2026-034` / `UI-DEC-2026-030` (`P-MULTI-VIEWPORT-RESPONSIVE-001`)  
+**SSOT Specification:** [`docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md`](docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md)
+
+To support executive operations across diverse mobile, tablet, laptop, and ultra-wide form factors without visual degradation:
+1. **Header Saturation Gate (`#stickyHeaderShell` & `#headerQuickActionsPopover`):**
+   - On compact viewports ($\le 360\text{px}$), secondary buttons (Cockpit, Decisions, Shopping, Share, Intake) collapse automatically into a single `[⚡ Actions ▾]` popover button with 3-trigger dismissibility (`INV-LIFECYCLE-03`).
+2. **Mutable Table Dual-Mode Card/Table Reflow (`#shoppingRegistryFrame` / `FKL-DI-022`):**
+   - On desktop ($>768\text{px}$), renders fluid table with sticky frozen column `th/td:first-child` (`position: sticky; left: 0; z-index: 2;`).
+   - On mobile ($\le 768\text{px}$), collapses `tr` into self-contained vertical card pods with `td::before { content: attr(data-col-label); }`, preserving real-time inline editing without horizontal panning.
+3. **SDCA At-Rule Scoping Invariant (`INV-SDCA-004` / `FKL-AL-006`):**
+   - SDCA build compilers (`cockpit_src/build.cjs`, `shopping_src/build.cjs`, `decision_registry_src/build.cjs`) scope CSS partials using `/^@(media|container|supports|layer)[^{]*\{/` to prevent `@container` queries from being mangled with parent selector prefixes.
+4. **Fluid Vedic Liturgy Grid (`#tab-rituals`):**
+   - Auto-fit ritual cards (`repeat(auto-fit, minmax(min(100%, 280px), 1fr))`) and accessible touch-target feedback (`min-height: 44px; touch-action: manipulation;`).
+5. **DO-PKOS Dynamic Viewport Scaling (`#tab-dopkos`):**
+   - Dynamic viewport calculation (`height: calc(100dvh - 110px) !important; min-height: 480px !important;` at $\le 768\text{px}$), wrapping HUD stats, and horizontal touch-scrolling toolbar.

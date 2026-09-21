@@ -41,8 +41,10 @@ All entities must use standardized 3-digit padded identifiers:
 - **Canonical Trousseau Specification**: See [SPEC-PROC-TROUSSEAU-001.md](./docs/references/SPEC-PROC-TROUSSEAU-001.md).
 - **Liturgical Attire & Catalog Drift Case Study**: See [INC-089-liturgical-attire-conflation-and-trousseau-catalog-drift.md](./docs/incidents/INC-089-liturgical-attire-conflation-and-trousseau-catalog-drift.md).
 - **Stakeholder Deep-Link Station & Pathname Conflation Case Study**: See [INC-090-spa-pathname-drift-in-stakeholder-share-links.md](./docs/incidents/INC-090-spa-pathname-drift-in-stakeholder-share-links.md).
+- **SDCA At-Rule Compiler Scoping Case Study**: See [INC-093-sdca-compiler-regex-container-query-mangling.md](./docs/incidents/INC-093-sdca-compiler-regex-container-query-mangling.md).
 - **3-Tier Multi-Surface Deployment**: See [260916_arch_council_multi_surface_web_app_and_shopping_deployment.md](./User_Created/Discussion Threads/Council/260916_arch_council_multi_surface_web_app_and_shopping_deployment.md) (`AC-DEC-2026-026` / `P-MULTI-SURFACE-DEPLOY-001`).
 - **Universal Quick-Share Architecture**: See [260916_arch_council_universal_executive_quick_share_and_deep_link_architecture.md](./User_Created/Discussion Threads/Council/260916_arch_council_universal_executive_quick_share_and_deep_link_architecture.md) (`AC-DEC-2026-027` / `UI-DEC-2026-023` / `P-QUICK-SHARE-001`).
+- **Mutable Table & Multi-Viewport Architecture**: See [SPEC-ARCH-MUTABLE-TABLE-001.md](./docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md) (`FKL-DI-022` / `INV-SDCA-004` / `AC-DEC-2026-034`).
 
 
 ### 5. Dynamic UI Lifecycle & Modal Dismissibility Invariant (`STD-UI-LIFECYCLE-001` / `DEC-003`)
@@ -172,3 +174,4 @@ This repository implements the following universal patterns:
 - `.agent/patterns/dynamic-fragment-lifecycle-and-modal-dismiss-contract.md`
 - `.agent/patterns/canonical-stakeholder-deep-link-station.md`
 - `.agent/patterns/dynamic-module-timing-race-and-auth-reconnect.md`
+- `.agent/patterns/sdca-container-query-scoping.md`

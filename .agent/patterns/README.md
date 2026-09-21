@@ -102,6 +102,7 @@ The tier is a **graduation ladder**: a pattern may start at `reference` and grad
 | [dynamic-fragment-lifecycle-and-modal-dismiss-contract.md](dynamic-fragment-lifecycle-and-modal-dismiss-contract.md) | `guarded` | VALIDATED | `GEMINI.md` (Prime Invariant 5), `DEC-003`, `verify:ui-lifecycle` | universal |
 | [canonical-stakeholder-deep-link-station.md](canonical-stakeholder-deep-link-station.md) | `guarded` | VALIDATED | `web-deployment-gate.md`, `INC-090`, `verify:deployment` | universal |
 | [dynamic-module-timing-race-and-auth-reconnect.md](dynamic-module-timing-race-and-auth-reconnect.md) | `reference` | VALIDATED | `post-incident-governance.md` | universal |
+| [sdca-container-query-scoping.md](sdca-container-query-scoping.md) | `guarded` | VALIDATED | `shopping_src/build.cjs`, `cockpit_src/build.cjs`, `decision_registry_src/build.cjs`, `verify:modular-architecture` | universal |
 > Update this index whenever a pattern is created or its tier changes via `/capture-pattern`.
 
 ---

@@ -234,3 +234,4 @@ For full-page replacement: skip the PRISM preview step — a full page cannot be
 - [Theme Isolation Plugin Guide](../../docs/development-guidelines/THEME-ISOLATION-PLUGIN-GUIDE.md) — 6-layer isolation for external design reviews
 - [JSX → HTML conversion](../../CLAUDE.md) (Central Brain UI Reference Workflows) — when sharing references *to* an external for replication
 - [ENH-INFRA-066 PRISM v2](../../docs/enhancements/ENH-INFRA-066-IMPLEMENTATION-SYNTHESIS.md) — the ingestion pipeline this workflow feeds
+- [.agent/patterns/sdca-container-query-scoping.md](../patterns/sdca-container-query-scoping.md) — SDCA container query scoping invariant (INV-SDCA-004)

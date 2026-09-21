@@ -18,6 +18,7 @@ Welcome to the **Sree Krushna Marriage OS** documentation catalog.
 ## Reference Specs
 - [SPEC-PROC-TROUSSEAU-001.md](./references/SPEC-PROC-TROUSSEAU-001.md) — Canonical Trousseau & Bridal Shopping Specification
 - [A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md](./references/A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md) — Physical-Digital Dual Surface Family Trousseau & 'Sara' Decision Survey Dossier
+- [SPEC-ARCH-MUTABLE-TABLE-001.md](./references/SPEC-ARCH-MUTABLE-TABLE-001.md) — Mutable Table Dual-Mode Card/Table Reflow with Frozen Column & Multi-Viewport Architecture (FKL-DI-022 / INV-SDCA-004)
 
 ---
 
@@ -28,5 +29,6 @@ Welcome to the **Sree Krushna Marriage OS** documentation catalog.
 - [INC-090-spa-pathname-drift-in-stakeholder-share-links.md](./incidents/INC-090-spa-pathname-drift-in-stakeholder-share-links.md) — SPA Pathname Drift in Stakeholder Share Links & Unauthenticated Portal Bypass (P-QUICK-SHARE-001 / AC-DEC-2026-027)
 - [INC-091-unvetted-ideation-creep-and-incubation-firewall-boundary.md](./incidents/INC-091-unvetted-ideation-creep-and-incubation-firewall-boundary.md) — Unvetted Ideation Creep into Operational SSOTs & Incubation Firewall Breach (INV-INCUBATION-FIREWALL-001 / P-IDEA-FIREWALL-001)
 - [INC-092-dynamic-module-timing-race-and-unauthenticated-local-fallback.md](./incidents/INC-092-dynamic-module-timing-race-and-unauthenticated-local-fallback.md) — Dynamic ES Module Timing Race & Unauthenticated Local Mode Fallback in Showroom Shopping Table (STD-UI-LIFECYCLE-001 / dynamic-module-timing-race-and-auth-reconnect)
+- [INC-093-sdca-compiler-regex-container-query-mangling.md](./incidents/INC-093-sdca-compiler-regex-container-query-mangling.md) — SDCA Build Compiler Regex At-Rule Container Query Mangling (STD-MOD-COMP-001 / INV-SDCA-004 / sdca-container-query-scoping)
 
 
