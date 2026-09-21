@@ -133,6 +133,7 @@ function scopeCssBlock(css, prefix) {
       continue;
     }
 
+    // Invariant INV-SDCA-004: see .agent/patterns/sdca-container-query-scoping.md
     if (css.slice(i).match(/^@(media|container)[^{]*\{/)) {
       const match = css.slice(i).match(/^(@(media|container)[^{]*\{)/);
       const mediaHeader = match[1];
@@ -220,3 +221,4 @@ const targetFragmentPublic = path.join(rootDir, 'public', 'shopping-fragment.htm
 fs.writeFileSync(targetFragmentRoot, fragmentHtml, 'utf8');
 fs.writeFileSync(targetFragmentPublic, fragmentHtml, 'utf8');
 console.log('✅ Assembled scoped shopping-fragment.html (' + fs.statSync(targetFragmentRoot).size + ' bytes)');
+/* SSOT: docs/incidents/INC-093-sdca-compiler-regex-container-query-mangling.md — INC-093 */

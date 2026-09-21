@@ -191,3 +191,5 @@ if (failures === 0) {
   console.log('═'.repeat(80) + '\n');
   process.exit(1);
 }
+
+/* SSOT: docs/incidents/INC-093-sdca-compiler-regex-container-query-mangling.md — INC-093 */

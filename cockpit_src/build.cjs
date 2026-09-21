@@ -146,6 +146,7 @@ function scopeCssBlock(css, prefix) {
       continue;
     }
 
+    // Invariant INV-SDCA-004: see .agent/patterns/sdca-container-query-scoping.md
     if (css.slice(i).match(/^@(media|container)[^{]*\{/)) {
       const match = css.slice(i).match(/^(@(media|container)[^{]*\{)/);
       const mediaHeader = match[1];
@@ -491,7 +492,6 @@ ${scopedCss}
     process.exit(1);
   }
 }
-
 const elapsed = process.hrtime(startTime);
-const ms = (elapsed[0] * 1000 + elapsed[1] / 1e6).toFixed(2);
-console.log(`🎉 SDCA Cockpit Build Complete in ${ms}ms.`);
+console.log(`🎉 SDCA Cockpit Build Complete in ${(elapsed[0] * 1000 + elapsed[1] / 1e6).toFixed(2)}ms.`);
+/* SSOT: docs/incidents/INC-093-sdca-compiler-regex-container-query-mangling.md — INC-093 */
