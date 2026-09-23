@@ -23,6 +23,27 @@ skills:
     when: "Pre-flight deployment verification, auditing web SPAs for session persistence, 404, security headers, PWA cache invalidation, and scaffolding new web repos"
     related_skills: [mobile-ui-validator, gas-deploy-guard, protocol-enforcer-pre-code]
 
+  - id: cockpit-intake
+    repo: [task-dashboard]
+    triggers: ["cockpit intake", "decorator intake", "ingest cockpit", "update cockpit layout"]
+    cost: medium
+    invoke: /cockpit-intake
+    when: "Standardized ingestion protocol for the Decorator Cockpit (SDCA). Translates decorator discussion threads, vendor meeting outcomes, and venue layout briefs into Cockpit topics."
+
+  - id: excel-multisheet-processor
+    repo: [task-dashboard]
+    triggers: ["excel multisheet", "process excel", "inspect workbook", "convert xlsx", "excel to markdown"]
+    cost: medium
+    invoke: /excel-multisheet-processor
+    when: "Use when processing, converting, inspecting, or consolidating multi-sheet Excel (.xlsx, .xls) workbooks, extracting data into Markdown for LLM ingestion."
+
+  - id: idea-incubator
+    repo: [task-dashboard]
+    triggers: ["incubate idea", "brainstorm proposal", "idea incubator", "add proposal", "explore concept", "/idea-incubator"]
+    cost: medium
+    invoke: /idea-incubator
+    when: "Use when user wants to brainstorm, bounce an idea, stress-test an experiential concept, or add a raw proposal to the ideas list without treating it as an immediate code implementation."
+
   # Shared: capsicum + pio
   - id: caveman
     repo: [capsicum, pio, task-dashboard]
