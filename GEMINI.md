@@ -46,6 +46,9 @@ All entities must use standardized 3-digit padded identifiers:
 - **Universal Quick-Share Architecture**: See [260916_arch_council_universal_executive_quick_share_and_deep_link_architecture.md](./User_Created/Discussion Threads/Council/260916_arch_council_universal_executive_quick_share_and_deep_link_architecture.md) (`AC-DEC-2026-027` / `UI-DEC-2026-023` / `P-QUICK-SHARE-001`).
 - **Mutable Table & Multi-Viewport Architecture**: See [SPEC-ARCH-MUTABLE-TABLE-001.md](./docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md) (`FKL-DI-022` / `INV-SDCA-004` / `AC-DEC-2026-034`).
 - **Tri-Modal Visual Intake & Collaborative Deep-Link Sharing**: See [260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md](./User_Created/Discussion Threads/Council/260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md) (`AC-DEC-2026-035` / `P-COLLAB-VISUAL-INTAKE-001` / `INC-094`).
+- **Top-Left Brand Seal & Adaptive Drawer Architecture**: See [260923_arch_council_top_left_brand_seal_and_navigation_drawer_architecture.md](./User_Created/Discussion Threads/Council/260923_arch_council_top_left_brand_seal_and_navigation_drawer_architecture.md) (`AC-DEC-2026-036` / `UI-DEC-2026-032` / `P-BRAND-NAV-HYBRID-001` / `INC-095`).
+- **Shopping Catalog Domain Decoupling & Two-Tier Operating Modes**: See [260923_arch_council_shopping_catalog_information_architecture_and_domain_decoupling.md](./User_Created/Discussion Threads/Council/260923_arch_council_shopping_catalog_information_architecture_and_domain_decoupling.md) (`AC-DEC-2026-037` / `UI-DEC-2026-033` / `P-SHOPPING-JOURNEY-HUBS-001` / `INC-096`).
+- **Pinterest Intake, Multi-Image Containers & Collab Deep-Link Sharing**: See [260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md](./User_Created/Discussion Threads/Council/260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md) (`AC-DEC-2026-038` / `UI-DEC-2026-034` / `P-PINTEREST-INTAKE-001` / `P-MULTI-IMAGE-CONTAINER-001` / `P-COLLAB-OPTION-SHARE-001`).
 
 
 ### 5. Dynamic UI Lifecycle & Modal Dismissibility Invariant (`STD-UI-LIFECYCLE-001` / `DEC-003`)
@@ -177,3 +180,5 @@ This repository implements the following universal patterns:
 - `.agent/patterns/dynamic-module-timing-race-and-auth-reconnect.md`
 - `.agent/patterns/sdca-container-query-scoping.md`
 - `.agent/patterns/collab-visual-intake-and-deep-link-sharing.md`
+- `.agent/patterns/containing-block-viewport-escape-gate.md`
+- `.agent/patterns/two-tier-workspace-subview-decoupling.md`

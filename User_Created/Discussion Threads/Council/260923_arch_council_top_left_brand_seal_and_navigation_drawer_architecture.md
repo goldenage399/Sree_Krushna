@@ -2,6 +2,7 @@
 
 **Council Reference:** `AC-DEC-2026-036` / `UI-DEC-2026-032`  
 **Standard Activated:** `P-BRAND-NAV-HYBRID-001` (Top-Left Compound Brand Navigation & Adaptive Off-Canvas Drawer)  
+**Related Incident:** `INC-095` (Containing-Block Trap & Negative-Offset Off-Canvas Drawer)  
 **Date:** 2026-09-23  
 **Status:** **APPROVED & CERTIFIED**  
 **Quorum:** Full Joint Council (8 Domain Auditors Seated)  

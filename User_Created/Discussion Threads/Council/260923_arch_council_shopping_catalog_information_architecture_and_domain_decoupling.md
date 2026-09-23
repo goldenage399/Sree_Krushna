@@ -2,6 +2,7 @@
 
 **Council Reference:** `AC-DEC-2026-037` / `UI-DEC-2026-033`  
 **Standard Activated:** `P-SHOPPING-CATALOG-HUBS-001` (Segmented Progressive Disclosure Hub & Domain Decoupling)  
+**Related Incident:** `INC-096` (Monolithic Vertical Collision & Catalog Sub-Domain Scroll Fatigue)  
 **Date:** 2026-09-23  
 **Status:** **APPROVED & CERTIFIED**  
 **Quorum:** Full Joint Council (8 Domain Auditors Seated)  
