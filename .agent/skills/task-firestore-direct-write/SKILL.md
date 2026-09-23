@@ -1,6 +1,6 @@
 ---
 name: task-firestore-direct-write
-description: Write a task doc directly into the tasks collection via an admin script (bypassing the app UI/wizard) so it passes firestore.rules and matches the real schema on first try. Use when asked to "create a task for X", "log this as a task", "add a task in the dashboard" via script/CLI rather than the browser UI.
+description: Write a task doc directly into the tasks collection via an admin script (bypassing the app UI/wizard) so it passes database security rules and matches the real schema on first try. Use when asked to "create a task for X", "log this as a task", "add a task in the dashboard" via script/CLI rather than the browser UI.
 ---
 
 <!-- shared:skill.task-firestore-direct-write.core:start -->
@@ -9,7 +9,7 @@ description: Write a task doc directly into the tasks collection via an admin sc
 The app's task-creation wizard (`TaskCreationWizard` → `TaskValidationService`
 → `EnhancedTaskService.createTask`) never runs when you write a task with an
 admin script (`serviceAccountKey.prod.json` + `firebase-admin`). Admin SDK
-writes **bypass `firestore.rules` entirely**, so a doc that "writes
+writes **bypass security rules entirely**, so a doc that "writes
 successfully" can still be missing fields the real app requires — it just
 won't fail loudly until something tries to query or render it. This skill
 exists so that gap gets caught before the write, not after.
@@ -36,7 +36,7 @@ exists so that gap gets caught before the write, not after.
    profiles across projects; ask which project if it's not obvious from
    context.
 
-3. **Check `firestore.rules` `match /tasks/{taskId}` → `allow create`
+3. **Check security rules `match /tasks/{taskId}` → `allow create`
    before writing anything.** As of this writing it requires, on the
    document being created:
    - `projectId` — non-null, non-empty (ENH-FIELD-001). This is the
@@ -83,6 +83,11 @@ exists so that gap gets caught before the write, not after.
        escalatedAt: null, escalationReason: null
      },
      originProfileId: string,    // REQUIRED by rules — = assignedTo.profileId
+     workstreamId: string|null,  // ADR-030/TASK-247 stage-gate FK, optional —
+                                 // null (or omit) files the task under "General /
+                                 // Unassigned"; list a project's stages via
+                                 // npm run db:workstreams [projectId], or read
+                                 // projects/{projectId}/workstreams directly
      schemaVersion: 1,
      _derived: null,
      createdAt: serverTimestamp(), lastUpdatedAt: serverTimestamp(),
@@ -128,7 +133,7 @@ exists so that gap gets caught before the write, not after.
 If the task should be creatable by a normal user through the browser UI
 (not a one-off admin backfill), don't reach for this — use the app's
 `TaskCreationWizard` flow instead, which runs `TaskValidationService` and
-goes through `firestore.rules` for real. This skill is specifically for
+goes through security rules for real. This skill is specifically for
 "create a task via script because no one's going to click through the
 wizard for this."
 <!-- shared:skill.task-firestore-direct-write.core:end -->

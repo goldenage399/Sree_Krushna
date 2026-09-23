@@ -102,6 +102,12 @@ Before creating any folder or writing to any cluster file, confirm the enhanceme
 >
 > _Items 2–9 above are Gear 2's eight trade-off questions, lightly reworded; item 1 (Dependency Lookup) is a repo-specific addition. If you revise either list, reconcile the other — the canonical wording for items 2–9 lives in Template 2._
 
+**Protocol P-EDL Requirement (Mandatory Dependency Linkage)**:
+Before finalizing scaffolding, assert that:
+1. Every referenced task ID in `Depends On`, `Blocks`, and `Related` is verified to physically exist in `ENHANCEMENT-MASTER-REGISTRY.md` or `docs/enhancements/*.md`.
+2. When creating a child or continuation enhancement (e.g. `TASK-251`), immediately update the parent enhancement (e.g. `TASK-247`) with a reciprocal downstream link (`- **Downstream Child**: TASK-XXX`).
+3. Run `npm run check:enhancement-deps` to validate graph integrity and update `dist/enhancement-dependency-graph.json`.
+
 **Gate rule**: If the user says "skip" or the enhancement is trivially simple (≤ 2 hours, single-file change), this check may be deferred and logged as a note in the lean entry. For all other enhancements, it must be answered before Step 3.
 
 > **Gate mapping**: This **Trade-Off & Dependency Checklist** is the **ideation gate** ("should we build this at all?"). The downstream **execution gate** is the [5 Lenses Check in plan-review](../../workflows/plan-review.md#the-5-lenses-check-feasibility--impact) ("is this specific plan sound before we execute?"). They derive from Gear 2 and Gear 1 of the Reusable Prompt Library respectively; the gear numbers denote analytical depth, not running order — this heavier Gear 2 analysis runs once at ideation, the lighter Gear 1 check runs per plan. Same five dimensions, different stage — do not consolidate.
@@ -126,8 +132,19 @@ For **Complex** enhancements, write this mandatory frontmatter into `00_ENHANCEM
 
 ## 🔗 Dependencies
 
+```yaml
+dependencies:
+  depends_on:
+    - TASK-XXX  # [Title/Reason or "None (Foundational)"]
+  related:
+    - TASK-YYY  # [Sibling/Cross-cutting]
+  blocks:
+    - TASK-ZZZ  # [Blocked task or "None (Foundational)"]
+```
+
 - **Depends On**: None (Foundational)  # Must specify dependent Task ID(s) or "None (Foundational)". Empty [] arrays are banned.
 - **Blocks**: None (Foundational)      # Must specify blocked Task ID(s) or "None (Foundational)". Empty [] arrays are banned.
+- **Related / Siblings**: None
 
 ## 🎯 Goal
 

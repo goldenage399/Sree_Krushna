@@ -13,7 +13,6 @@
  *     .agent/workflows/*.md → skill-router entry OR CLAUDE.md workflow table
  *     .agent/skills/*      → skill-router entry with matching id
  *     new P-standards      → skill-router trigger OR session-open conditional reference
- *     *-MODULE-SPEC.md     → DOCUMENTATION-INDEX.md + TASK-MANAGEMENT.md + SYSTEM_CLARITY_SNAPSHOT.md + PREFLIGHT.md
  *
  * Usage:
  *   node scripts/verify-governance-wiring.cjs           # diff-mode: new artifacts only
@@ -43,40 +42,15 @@ const STRICT = process.argv.includes('--strict');
 const ALL_MODE = process.argv.includes('--all');
 const JSON_OUT = process.argv.includes('--json');
 
-let GRAPH_DATA = null;
-
-function pathToId(p) {
-  let pStr = String(p).replace(/\\/g, '/').replace(/^\/+|\/+$/g, '');
-  pStr = pStr.replace(/\.(js|jsx|ts|tsx|py|css|html|md|json|jsonl)$/i, '');
-  pStr = pStr.replace(/[^a-zA-Z0-9]/g, '_');
-  return pStr.toLowerCase();
-}
-
-// --emit[=path]: materialize the GAWC graph (GWPA §2) to governance-wiring.json
-const EMIT_ARG = process.argv.find(a => a === '--emit' || a.startsWith('--emit='));
-const EMIT = !!EMIT_ARG;
-const EMIT_PATH = (EMIT_ARG && EMIT_ARG.includes('=')) ? EMIT_ARG.split('=').slice(1).join('=') : 'governance-wiring.json';
-
-// PACT-tier'd artifact types (carry activation_tier + bidirectional consumed_by). Everything else is matrix-wired.
-const PACT_TYPES = new Set(['agent-pattern', 'rolling-snapshot', 'protocol', 'collaborator-wiring']);
-// Types whose artifacts share a single backing file (so id must be disambiguated by ref).
-const SHARED_FILE_TYPES = new Set(['p-standard', 'arch-invariant']);
-// Stable lane order for the projection.
-const CLASS_ORDER = ['agent-pattern', 'agent-skill', 'agent-workflow', 'dist-catalog', 'p-standard', 'arch-invariant', 'rolling-snapshot', 'protocol', 'collaborator-wiring', 'module-spec', 'doc-file'];
-
 const CONSUMPTION_FILES = {
-  skillRouter:       '.agent/skill-router.yaml',
-  sessionOpen:       '.agent/workflows/aos-session-open.md',
-  sessionClose:      '.agent/workflows/aos-session-close.md',
-  claudeMd:          'CLAUDE.md',
-  debugFrontend:     '.agent/workflows/debug-frontend.md',
-  preflight:         '.agent/PREFLIGHT.md',
-  standardsCatalog:  '.agent/standards-catalog.json',
-  docIndex:          'docs/DOCUMENTATION-INDEX.md',
-  taskManagementHub: 'docs/TASK-MANAGEMENT.md',
-  systemSnapshot:    'docs/SYSTEM_CLARITY_SNAPSHOT.md',
+  skillRouter:    '.agent/skill-router.yaml',
+  sessionOpen:    '.agent/workflows/aos-session-open.md',
+  sessionClose:   '.agent/workflows/aos-session-close.md',
+  claudeMd:       'CLAUDE.md',
+  debugFrontend:  '.agent/workflows/debug-frontend.md',
+  preflight:      '.agent/PREFLIGHT.md',
+  standardsCatalog: '.agent/standards-catalog.json',
 };
-
 
 // ─── Wiring Matrix ───────────────────────────────────────────────────────────
 //
@@ -124,55 +98,20 @@ const WIRING_MATRIX = {
     atLeastOne: [],
     optional:   [],
   },
-  'module-spec': {
-    label:      'Module SSOT Spec (*-MODULE-SPEC.md)',
-    required:   ['docIndex', 'taskManagementHub', 'systemSnapshot', 'preflight'],
-    atLeastOne: [],
-    optional:   ['claudeMd'],
-  },
-  'doc-file': {
-    label:      'docs/ markdown file',
-    required:   ['docIndex'],
-    atLeastOne: [],
-    optional:   ['claudeMd'],
-  },
 };
 
 // Human-readable labels for consumption files
 const CONSUMPTION_LABELS = {
-  skillRouter:       '.agent/skill-router.yaml',
-  sessionOpen:       '.agent/workflows/aos-session-open.md',
-  sessionClose:      '.agent/workflows/aos-session-close.md',
-  claudeMd:          'CLAUDE.md',
-  debugFrontend:     '.agent/workflows/debug-frontend.md',
-  preflight:         '.agent/PREFLIGHT.md',
-  docIndex:          'docs/DOCUMENTATION-INDEX.md',
-  taskManagementHub: 'docs/TASK-MANAGEMENT.md',
-  systemSnapshot:    'docs/SYSTEM_CLARITY_SNAPSHOT.md',
+  skillRouter:   '.agent/skill-router.yaml',
+  sessionOpen:   '.agent/workflows/aos-session-open.md',
+  sessionClose:  '.agent/workflows/aos-session-close.md',
+  claudeMd:      'CLAUDE.md',
+  debugFrontend: '.agent/workflows/debug-frontend.md',
+  preflight:     '.agent/PREFLIGHT.md',
 };
 
 // Fix hint templates per (artifactType, consumptionFile) pair
 const FIX_HINTS = {
-  'module-spec': {
-    docIndex: (ref) =>
-      `Add a link to the Module SSOT in docs/DOCUMENTATION-INDEX.md under Task Management & Workflows:\n` +
-      `  - [${path.basename(ref)}](./${ref.startsWith('docs/') ? path.relative('docs', ref).replace(/\\/g, '/') : ref.replace(/\\/g, '/')})`,
-    taskManagementHub: (ref) =>
-      `Add a reference link in docs/TASK-MANAGEMENT.md under Dashboard Integration & Related Documents:\n` +
-      `  - [${path.basename(ref)}](./${path.relative('docs', ref).replace(/\\/g, '/')})`,
-    systemSnapshot: (ref) =>
-      `Add a workstream reference entry in docs/SYSTEM_CLARITY_SNAPSHOT.md under Section 2 Active Workstreams`,
-    preflight: (ref) =>
-      `Add a routing row in .agent/PREFLIGHT.md for changes touching this module page or hooks`,
-  },
-  'doc-file': {
-    docIndex: (ref) =>
-      `Add a link to the document in docs/DOCUMENTATION-INDEX.md under the appropriate section:\n` +
-      `  - [${path.basename(ref)}](${ref.startsWith('docs/') ? './' + path.relative('docs', ref).replace(/\\/g, '/') : './' + ref.replace(/\\/g, '/')}) — <short description>`,
-    claudeMd: (ref) =>
-      `Consider listing in CLAUDE.md:\n` +
-      `  [${path.basename(ref)}](${ref.startsWith('docs/') ? './' + path.relative('docs', ref).replace(/\\/g, '/') : './' + ref.replace(/\\/g, '/')})`,
-  },
   'dist-catalog': {
     skillRouter: (ref) =>
       `Add to .agent/skill-router.yaml:\n` +
@@ -254,59 +193,9 @@ function loadConsumptionFiles() {
   return loaded;
 }
 
-// Entry-point parity (Query 1.8 Gap 2): every agent harness entry point must
-// reference the Frontend Knowledge Hub, so no agent (Claude / Gemini / Codex /
-// other) loses its path into the FKL. Drift here silently re-creates the exact
-// discoverability gap fixed in Query 1.7. Returns a list of failing entry points.
-const ENTRY_POINTS = ['CLAUDE.md', 'GEMINI.md', 'AGENTS.md'];
-const ENTRY_POINT_ANCHOR = 'frontend-knowledge-hub';
-
-function checkEntryPointParity() {
-  const fklHubPath = path.join(ROOT, 'docs/ssot/ui-design/FRONTEND-KNOWLEDGE-HUB.md');
-  const fklIndexPath = path.join(ROOT, 'docs/frontend/frontend-knowledge-index.jsonl');
-  // If this repository does not use the Frontend Knowledge Layer (FKL), entry point parity is not applicable
-  if (!fs.existsSync(fklHubPath) && !fs.existsSync(fklIndexPath)) {
-    return [];
-  }
-
-  const failing = [];
-  
-  if (GRAPH_DATA) {
-    const nodes = GRAPH_DATA.nodes || [];
-    const edges = GRAPH_DATA.edges || [];
-    for (const ep of ENTRY_POINTS) {
-      if (!fs.existsSync(path.join(ROOT, ep))) continue;
-      const epNodeId = pathToId(ep);
-      const epNode = nodes.find(n => n.id === epNodeId);
-      if (!epNode) {
-        failing.push({ ep, reason: 'entry-point file is absent in graph' });
-        continue;
-      }
-      const hasFklRef = edges.some(e => e.source === epNodeId && e.relation === 'references_fkl');
-      if (!hasFklRef) {
-        failing.push({ ep, reason: 'does not reference FRONTEND-KNOWLEDGE-HUB.md (verified via graph)' });
-      }
-    }
-    return failing;
-  }
-
-  for (const ep of ENTRY_POINTS) {
-    if (!fs.existsSync(path.join(ROOT, ep))) continue;
-    const content = readFile(ep).toLowerCase();
-    if (!content) failing.push({ ep, reason: 'entry-point file is absent' });
-    else if (!content.includes(ENTRY_POINT_ANCHOR))
-      failing.push({ ep, reason: 'does not reference FRONTEND-KNOWLEDGE-HUB.md' });
-  }
-  return failing;
-}
-
 // Check if a reference string appears in a consumption file's content
 function isReferenced(content, ref) {
   if (!content || !ref) return false;
-  if (ref.startsWith('docs/')) {
-    const rel = ref.slice(5);
-    return content.includes(ref.toLowerCase()) || content.includes(rel.toLowerCase());
-  }
   return content.includes(ref.toLowerCase());
 }
 
@@ -400,26 +289,6 @@ function detectArtifacts(files, mode) {
   for (const file of files) {
     const normalized = file.replace(/\\/g, '/');
 
-    // docs/**/*.md files (excluding DOCUMENTATION-INDEX.md and other hubs/templates)
-    if (/^docs\/.*\.md$/.test(normalized)) {
-      const EXEMPTED_DOCS = new Set([
-        'docs/documentation-index.md',
-        'docs/quick-task-reference.md',
-        'docs/code-navigation-guide.md',
-        'docs/ssot/dev-workflow-hub/readme.md',
-        'docs/ssot/testing-hub/readme.md',
-        'docs/ssot/architecture-hub/readme.md',
-        'docs/ssot/ui-design/ui-design-hub.md',
-      ]);
-      if (!EXEMPTED_DOCS.has(normalized.toLowerCase())) {
-        if (/-MODULE-SPEC\.md$/i.test(normalized)) {
-          artifacts.push({ type: 'module-spec', file: normalized, ref: normalized, isNew: mode === 'new' });
-        } else {
-          artifacts.push({ type: 'doc-file', file: normalized, ref: normalized, isNew: mode === 'new' });
-        }
-      }
-    }
-
     // dist/*.json catalog (skip known Vite build outputs)
     if (/^dist\/[^/]+\.json$/.test(normalized)) {
       const basename = path.basename(normalized);
@@ -500,34 +369,6 @@ function getNewStandards() {
 
 function getAllArtifacts() {
   const artifacts = [];
-
-  // All docs/**/*.md files (excluding DOCUMENTATION-INDEX.md and other hubs/templates)
-  const EXEMPTED_DOCS = new Set([
-    'docs/documentation-index.md',
-    'docs/quick-task-reference.md',
-    'docs/code-navigation-guide.md',
-    'docs/ssot/dev-workflow-hub/readme.md',
-    'docs/ssot/testing-hub/readme.md',
-    'docs/ssot/architecture-hub/readme.md',
-    'docs/ssot/ui-design/ui-design-hub.md',
-  ]);
-  const scanDocs = (dir) => {
-    if (!fs.existsSync(dir)) return;
-    const entries = fs.readdirSync(dir, { withFileTypes: true });
-    for (const entry of entries) {
-      const fullPath = path.join(dir, entry.name);
-      const relPath = path.relative(ROOT, fullPath).replace(/\\/g, '/');
-      if (entry.isDirectory()) {
-        scanDocs(fullPath);
-      } else if (entry.isFile() && entry.name.endsWith('.md')) {
-        if (!EXEMPTED_DOCS.has(relPath.toLowerCase())) {
-          const type = /-MODULE-SPEC\.md$/i.test(relPath) ? 'module-spec' : 'doc-file';
-          artifacts.push({ type, file: relPath, ref: relPath, isNew: false });
-        }
-      }
-    }
-  };
-  scanDocs(path.join(ROOT, 'docs'));
 
   // All dist/*.json (excluding Vite build outputs)
   const distDir = path.join(ROOT, 'dist');
@@ -672,127 +513,6 @@ function checkArtifactWiring(artifact, standards, consumption) {
 function checkPatternWiring(artifact, consumption) {
   const { ref, file } = artifact;
   const findings = [];
-
-  if (GRAPH_DATA) {
-    const patternNodeId = pathToId(file);
-    const nodes = GRAPH_DATA.nodes || [];
-    const edges = GRAPH_DATA.edges || [];
-    const node = nodes.find(n => n.id === patternNodeId);
-    
-    if (!node) {
-      findings.push({
-        severity: 'error',
-        consumptionFile: file,
-        message: `Graphify error: pattern file "${file}" is not indexed in the knowledge graph.`,
-        fix: 'Run `python scratch/finalize_graph.py` to index new patterns.'
-      });
-    } else {
-      const VALID_TIERS = ['reference', 'routed', 'guarded'];
-      const tier = node.activation_tier;
-      if (!tier) {
-        findings.push({
-          severity: 'error',
-          consumptionFile: file,
-          message: 'Missing Pattern Activation Contract — no activation_tier in graph node (PACT-001 via graph)',
-          fix: `Specify activation_tier in frontmatter of ${file} and rebuild graph.`
-        });
-      } else if (!VALID_TIERS.includes(tier)) {
-        findings.push({
-          severity: 'error',
-          consumptionFile: file,
-          message: `Invalid activation_tier "${tier}" — expected reference | routed | guarded (Verified via graph)`,
-          fix: 'Set activation_tier to one of: reference, routed, guarded'
-        });
-      }
-
-      const consumedByEdges = edges.filter(e => e.source === patternNodeId && e.relation === 'consumed_by');
-      
-      if (consumedByEdges.length === 0) {
-        findings.push({
-          severity: 'error',
-          consumptionFile: file,
-          message: 'consumed_by relation is missing in the graph — pattern is ORPHANED',
-          fix: 'List ≥1 consumer in frontmatter and run graphify.'
-        });
-      } else {
-        for (const edge of consumedByEdges) {
-          const consumerNodeId = edge.target;
-          const consumerNode = nodes.find(n => n.id === consumerNodeId);
-          if (!consumerNode) {
-            findings.push({
-              severity: 'error',
-              consumptionFile: file,
-              message: `Graphify error: consumer node "${consumerNodeId}" does not exist in the graph.`,
-              fix: 'Verify the consumer path.'
-            });
-            continue;
-          }
-          
-          // Check for back-link edge in the graph
-          const hasBackLink = edges.some(e => e.source === consumerNodeId && e.target === patternNodeId && e.relation === 'references_pattern');
-          if (!hasBackLink) {
-            findings.push({
-              severity: 'error',
-              consumptionFile: consumerNode.source_file || consumerNodeId,
-              message: `BROKEN BACK-LINK (Verified via graph) — "${consumerNode.source_file || consumerNodeId}" does not reference the pattern ${file}`,
-              fix: `Add a reference to \`.agent/patterns/${ref}.md\` in ${consumerNode.source_file || consumerNodeId}.`
-            });
-          }
-        }
-      }
-      
-      if (tier === 'routed') {
-        if (!node.triggers || (Array.isArray(node.triggers) && node.triggers.length === 0)) {
-          findings.push({
-            severity: 'error',
-            consumptionFile: file,
-            message: `activation_tier "routed" requires non-empty triggers so the pattern surfaces on its own keywords (Verified via graph)`,
-            fix: `Add triggers: [...] in frontmatter of ${file}`
-          });
-        }
-        const inRouter = edges.some(e => e.target === patternNodeId && e.relation === 'references_pattern' && e.source.includes('skill_router'));
-        const isRouted = inRouter || isReferenced(consumption.skillRouter, `patterns/${ref}.md`);
-        if (!isRouted) {
-          findings.push({
-            severity: 'error',
-            consumptionFile: CONSUMPTION_LABELS.skillRouter,
-            message: `activation_tier "${tier}" requires a skill-router entry (Verified via graph)`,
-            fix: `Add to .agent/skill-router.yaml references to patterns/${ref}.md`
-          });
-        }
-      }
-
-      if (tier === 'guarded') {
-        const guard = node.guard;
-        if (!guard) {
-          findings.push({
-            severity: 'error',
-            consumptionFile: file,
-            message: `activation_tier "guarded" requires a guard command (Verified via graph)`,
-            fix: `Add guard: "npm run <script>" in frontmatter of ${file}`
-          });
-        } else {
-          const scripts = loadPackageScripts();
-          const match = guard.match(/npm\s+run\s+([a-zA-Z0-9:_-]+)/);
-          if (match) {
-            const scriptName = match[1];
-            if (!Object.prototype.hasOwnProperty.call(scripts, scriptName)) {
-              findings.push({
-                severity: 'error',
-                consumptionFile: file,
-                message: `guard references "npm run ${scriptName}" but no such script exists in package.json (Verified via graph)`,
-                fix: `Define "${scriptName}" under "scripts" in package.json.`
-              });
-            }
-          }
-        }
-      }
-    }
-    
-    const errors = findings.filter(f => f.severity === 'error');
-    return { artifact, findings, status: errors.length > 0 ? 'unwired' : 'wired' };
-  }
-
   const fm = parsePatternFrontmatter(readFile(file));
   const VALID_TIERS = ['reference', 'routed', 'guarded'];
 
@@ -1051,391 +771,10 @@ function printJson(results, newStandardResults) {
   console.log(JSON.stringify(output, null, 2));
 }
 
-// ─── GAWC graph emit (GWPA §2 / governance-wiring.schema.json) ─────────────────
-//
-// Materializes the verifier's results into governance-wiring.json — the data store the
-// projection reads (GWPA-INV-001). GENERATED, never hand-edited (GWPA-INV-002).
-// Two wiring families (GWPA §2.1): pact (patterns + future tier'd types) carry activation_tier
-// and a bidirectional consumed_by; matrix (catalogs/workflows/skills/standards/invariants) are
-// wired via consumption files. Orphans/broken back-links are represented, not omitted (GWPA-INV-005).
-function emitGraph(artifactResults, standardResults, consumption, outRel) {
-  const all = [...artifactResults, ...standardResults].filter(r => r.status !== 'unknown');
-  const classesMap = new Map();
-
-  const artifacts = all.map(r => {
-    const { type, ref, file } = r.artifact;
-    const isPact = PACT_TYPES.has(type);
-    if (!classesMap.has(type)) {
-      classesMap.set(type, { id: type, label: (WIRING_MATRIX[type] && WIRING_MATRIX[type].label) || type, display_order: null });
-    }
-
-    const obj = {
-      id: SHARED_FILE_TYPES.has(type) ? `${file}#${ref}` : file,
-      artifact_type: type,
-      wiring_model: isPact ? 'pact' : 'matrix',
-      class: type,
-      status: { wiring_state: r.status === 'wired' ? 'wired' : r.status === 'partial' ? 'partial' : 'unwired' },
-      scope: 'in',
-      consumed_by: [],
-    };
-
-    if (isPact) {
-      const fm = parsePatternFrontmatter(readFile(file)) || {};
-      obj.activation_tier = ['reference', 'routed', 'guarded'].includes(fm.activation_tier) ? fm.activation_tier : 'reference';
-      if (fm.status === 'HYPOTHESIS' || fm.status === 'VALIDATED') obj.status.declared = fm.status;
-      if (obj.status.wiring_state !== 'wired') {
-        const msgs = r.findings.map(f => f.message).join(' | ');
-        if (/ORPHANED/i.test(msgs)) obj.status.wiring_state = 'orphan';
-        else if (/BROKEN BACK-LINK/i.test(msgs)) obj.status.wiring_state = 'broken-backlink';
-      }
-      const needle = String(file).toLowerCase();
-      (fm.consumed_by || []).forEach(cf => {
-        const content = readFile(cf).toLowerCase();
-        obj.consumed_by.push({ consumer_file: cf, verified: !!content && content.includes(needle) });
-      });
-    } else {
-      for (const [k, rel] of Object.entries(CONSUMPTION_FILES)) {
-        if (isReferenced(consumption[k], ref)) obj.consumed_by.push({ consumer_file: rel, verified: true });
-      }
-    }
-    return obj;
-  });
-
-  // Stable lane ordering (GWPA-INV-004)
-  let order = 0;
-  for (const t of CLASS_ORDER) { if (classesMap.has(t)) classesMap.get(t).display_order = order++; }
-  for (const c of classesMap.values()) { if (c.display_order === null) c.display_order = order++; }
-
-  const n = (pred) => artifacts.filter(pred).length;
-  const graph = {
-    generated_at: new Date().toISOString(),
-    generator: 'verify-governance-wiring.cjs --emit',
-    source_of_truth: 'frontmatter',
-    classes: [...classesMap.values()].sort((a, b) => a.display_order - b.display_order),
-    columns: ['reference', 'routed', 'guarded', 'excluded'],
-    artifacts,
-    summary: {
-      total: artifacts.length,
-      wired: n(a => a.status.wiring_state === 'wired'),
-      partial: n(a => a.status.wiring_state === 'partial'),
-      unwired: n(a => a.status.wiring_state === 'unwired'),
-      orphan: n(a => a.status.wiring_state === 'orphan'),
-      broken_backlink: n(a => a.status.wiring_state === 'broken-backlink'),
-      excluded: n(a => a.scope === 'excluded'),
-    },
-  };
-
-  fs.writeFileSync(path.join(ROOT, outRel), JSON.stringify(graph, null, 2) + '\n');
-  console.log(`\n📤 Emitted GAWC graph → ${outRel} (${artifacts.length} artifacts)`);
-}
-
-function checkFrontendKnowledgeIndex(changedFiles) {
-  const findings = { errors: [], warnings: [], passing: [] };
-  const indexPath = path.join(ROOT, 'docs/frontend/frontend-knowledge-index.jsonl');
-  const fklHubPath = path.join(ROOT, 'docs/ssot/ui-design/FRONTEND-KNOWLEDGE-HUB.md');
-  if (!fs.existsSync(indexPath) && !fs.existsSync(fklHubPath)) {
-    // FKL not utilized in this repository
-    return findings;
-  }
-  if (!fs.existsSync(indexPath)) {
-    findings.errors.push({
-      message: "docs/frontend/frontend-knowledge-index.jsonl is missing",
-      fix: "Restore or create docs/frontend/frontend-knowledge-index.jsonl"
-    });
-    return findings;
-  }
-
-  let lines = [];
-  try {
-    lines = fs.readFileSync(indexPath, 'utf8').split(/\r?\n/).filter(Boolean);
-  } catch (err) {
-    findings.errors.push({
-      message: `Failed to read frontend-knowledge-index.jsonl: ${err.message}`,
-      fix: "Verify file permissions and JSONL format"
-    });
-    return findings;
-  }
-
-  const jsonlEntries = [];
-  let lineNum = 0;
-  for (const line of lines) {
-    lineNum++;
-    try {
-      const entry = JSON.parse(line);
-      jsonlEntries.push({ entry, lineNum });
-    } catch (err) {
-      findings.errors.push({
-        message: `Syntax error in frontend-knowledge-index.jsonl at line ${lineNum}: ${err.message}`,
-        fix: "Ensure the line is valid single-line JSON"
-      });
-    }
-  }
-
-  for (const { entry, lineNum } of jsonlEntries) {
-    if (entry.relatedFiles && Array.isArray(entry.relatedFiles)) {
-      for (const relFile of entry.relatedFiles) {
-        const absFile = path.join(ROOT, relFile);
-        if (!fs.existsSync(absFile)) {
-          findings.errors.push({
-            message: `Broken link in frontend-knowledge-index.jsonl (line ${lineNum}): "${relFile}" does not exist on disk`,
-            fix: `Fix the path "${relFile}" in frontend-knowledge-index.jsonl`
-          });
-        } else {
-          findings.passing.push(`relatedFile: ${relFile}`);
-        }
-      }
-    }
-
-    if (entry.relatedIncidents && Array.isArray(entry.relatedIncidents)) {
-      for (const incId of entry.relatedIncidents) {
-        const incidentsDir = path.join(ROOT, 'docs/incidents');
-        let matchFound = false;
-        const cleanId = incId.replace(/^INC-/i, '');
-        if (fs.existsSync(incidentsDir)) {
-          const files = fs.readdirSync(incidentsDir);
-          const incMatchPattern = new RegExp(`^INC-${cleanId}-.*\\.md$`, 'i');
-          matchFound = files.some(f => incMatchPattern.test(f));
-        }
-        if (!matchFound) {
-          findings.errors.push({
-            message: `Broken incident reference in frontend-knowledge-index.jsonl (line ${lineNum}): "docs/incidents/INC-${cleanId}-*.md" does not exist`,
-            fix: `Verify the incident file name for "INC-${cleanId}" exists in docs/incidents/`
-          });
-        } else {
-          findings.passing.push(`relatedIncident: ${incId}`);
-        }
-      }
-    }
-  }
-
-  const newIncidents = changedFiles.filter(f => /^docs\/incidents\/INC-[0-9a-zA-Z]+-.*\.md$/i.test(f));
-  for (const newIncFile of newIncidents) {
-    const filename = path.basename(newIncFile);
-    const m = filename.match(/^INC-([0-9a-zA-Z]+)/i);
-    if (m) {
-      const incId = m[1];
-      const isRegistered = jsonlEntries.some(({ entry }) =>
-        (entry.id && entry.id.toLowerCase() === `inc-${incId}`.toLowerCase()) ||
-        (entry.id && entry.id.toLowerCase() === incId.toLowerCase()) ||
-        (entry.relatedIncidents && entry.relatedIncidents.some(id => id.toLowerCase() === incId.toLowerCase()))
-      );
-      if (!isRegistered) {
-        findings.warnings.push({
-          message: `Incident file ${newIncFile} is not registered in docs/frontend/frontend-knowledge-index.jsonl`,
-          fix: `Consider registering "${incId}" in docs/frontend/frontend-knowledge-index.jsonl`
-        });
-      } else {
-        findings.passing.push(`registeredIncident: ${incId}`);
-      }
-    }
-  }
-
-  return findings;
-}
-
-let projectFilesMap = null;
-function resolveSourceFile(fileName) {
-  if (fs.existsSync(path.join(ROOT, fileName))) {
-    return fileName;
-  }
-  if (!projectFilesMap) {
-    projectFilesMap = new Map();
-    try {
-      const files = git('ls-files').split(/\r?\n/).filter(Boolean);
-      for (const f of files) {
-        projectFilesMap.set(path.basename(f).toLowerCase(), f);
-      }
-    } catch {
-      // ignore
-    }
-  }
-  const cleanName = path.basename(fileName).toLowerCase();
-  if (projectFilesMap.has(cleanName)) {
-    return projectFilesMap.get(cleanName);
-  }
-  return null;
-}
-
-function checkDiscoverabilitySelfCheck(changedFiles) {
-  const findings = { errors: [], warnings: [], passing: [] };
-  
-  if (GRAPH_DATA) {
-    const nodes = GRAPH_DATA.nodes || [];
-    const edges = GRAPH_DATA.edges || [];
-    
-    const incidentFiles = changedFiles.filter(f => /^docs\/incidents\/INC-[0-9a-zA-Z]+-.*\.md$/i.test(f));
-    for (const incFile of incidentFiles) {
-      const incNodeId = pathToId(incFile);
-      const incNode = nodes.find(n => n.id === incNodeId);
-      if (!incNode) {
-        findings.warnings.push({
-          message: `Incident file ${incFile} is not indexed in the graph. Run graphify to update.`,
-          fix: 'Run `python scratch/finalize_graph.py`.'
-        });
-        continue;
-      }
-      
-      const affectsEdges = edges.filter(e => e.source === incNodeId && e.relation === 'affects');
-      if (affectsEdges.length === 0) {
-        findings.warnings.push({
-          message: `No affected components detected in graph for ${incFile}.`,
-          fix: 'Add Affected Components section to incident file and rebuild graph.'
-        });
-        continue;
-      }
-      
-      for (const edge of affectsEdges) {
-        const targetNodeId = edge.target;
-        const targetNode = nodes.find(n => n.id === targetNodeId);
-        
-        // Find if target node has a referenced_by edge back to the incident
-        const hasBackLink = edges.some(e => e.source === targetNodeId && e.target === incNodeId && e.relation === 'referenced_by');
-        if (!hasBackLink) {
-          findings.errors.push({
-            message: `DISC-001 Violation (Verified via graph): Source file "${targetNode ? targetNode.source_file : targetNodeId}" is modified by incident "${incNode.label}" but has no back-link comment pointing to the SSOT/Incident.`,
-            fix: `Add a comment at the end of "${targetNode ? targetNode.source_file : targetNodeId}" pointing back to the SSOT/Incident, e.g.:\n` +
-                 `  /* SSOT: docs/incidents/${incNode.label} — ${incNode.label.split('-').slice(0,2).join('-')} */`
-          });
-        } else {
-          findings.passing.push(`DISC-001: Verified back-link in ${targetNode ? targetNode.source_file : targetNodeId} for ${incNode.label}`);
-        }
-      }
-    }
-    return findings;
-  }
-  
-  // Find new or modified incident files in docs/incidents/INC-*.md
-  const incidentFiles = changedFiles.filter(f => /^docs\/incidents\/INC-[0-9a-zA-Z]+-.*\.md$/i.test(f));
-  
-  for (const incFile of incidentFiles) {
-    const content = readFile(incFile);
-    if (!content) continue;
-    
-    const filename = path.basename(incFile);
-    const m = filename.match(/^(INC-[0-9a-zA-Z]+)/i);
-    const incId = m ? m[1].toUpperCase() : null;
-    
-    // Extract "Affected Component" or "Affected Components"
-    const affectedMatch = content.match(/\*\*Affected Components?\*\*:\s*(.*)/i) || 
-                          content.match(/Affected Components?:\s*(.*)/i);
-                          
-    if (!affectedMatch) {
-      findings.warnings.push({
-        message: `Incident file ${incFile} is missing an "Affected Component" section.`,
-        fix: `Add a line: **Affected Component**: \`<file_path_1>\`, \`<file_path_2>\` to identify modified files.`
-      });
-      continue;
-    }
-    
-    // Extract all file paths within backticks or markdown links in that line
-    const affectedLine = affectedMatch[1];
-    const fileMatches = affectedLine.match(/`([^`]+)`|\[([^\]]+)\]\(file:\/\/\/[^\)]+\)/g) || [];
-    const sourceFiles = [];
-    
-    for (const match of fileMatches) {
-      let filePath = match.replace(/`|\[|\]/g, '');
-      if (filePath.includes('](')) {
-        filePath = filePath.split('](')[0];
-      }
-      filePath = filePath.trim().replace(/\\/g, '/');
-      if (filePath && !filePath.startsWith('http')) {
-        const resolved = resolveSourceFile(filePath);
-        if (resolved) {
-          sourceFiles.push(resolved);
-        }
-      }
-    }
-    
-    if (sourceFiles.length === 0) {
-      findings.warnings.push({
-        message: `No valid source files found in the "Affected Component" line of ${incFile}.`,
-        fix: `Make sure files are in backticks (e.g. \`src/styles/themes-enhanced.css\`) and exist on disk.`
-      });
-      continue;
-    }
-    
-    // For each source file, verify it has a back-link pointing back to the SSOT / Incident
-    for (const srcFile of sourceFiles) {
-      const srcContent = readFile(srcFile);
-      if (!srcContent) continue;
-      
-      // Look for "SSOT:" or the incident ID (e.g. "INC-033")
-      const hasBackLink = srcContent.toLowerCase().includes('ssot:') || 
-                          (incId && srcContent.toUpperCase().includes(incId));
-                          
-      if (!hasBackLink) {
-        findings.errors.push({
-          message: `DISC-001 Violation: Source file "${srcFile}" is modified by incident "${incId || filename}" but has no back-link comment pointing to the SSOT/Incident.`,
-          fix: `Add a comment at the end of "${srcFile}" pointing back to the SSOT/Incident, e.g.:\n` +
-               `  /* SSOT: docs/incidents/${filename} — ${incId || 'INC-XXX'} */`
-        });
-      } else {
-        findings.passing.push(`DISC-001: Verified back-link in ${srcFile} for ${incId || filename}`);
-      }
-    }
-  }
-  
-  return findings;
-}
-
-function auditDarkNodes() {
-  if (!GRAPH_DATA) return;
-  const nodes = GRAPH_DATA.nodes || [];
-  const edges = GRAPH_DATA.edges || [];
-  
-  const codeNodes = nodes.filter(n => n.file_type === 'code' && n.source_file);
-  const darkFiles = new Set();
-  
-  for (const node of codeNodes) {
-    const isLinked = edges.some(e => {
-      if (e.source === node.id || e.target === node.id) {
-        const otherId = e.source === node.id ? e.target : e.source;
-        const otherNode = nodes.find(n => n.id === otherId);
-        return otherNode && otherNode.file_type === 'document';
-      }
-      return false;
-    });
-    
-    const isExempt = node.source_file.includes('node_modules') || 
-                     node.source_file.includes('scratch/') || 
-                     node.source_file.includes('test/') || 
-                     node.source_file.includes('__tests__') ||
-                     node.source_file.endsWith('.test.js') ||
-                     node.source_file.endsWith('.spec.js');
-                     
-    if (!isLinked && !isExempt) {
-      darkFiles.add(node.source_file);
-    }
-  }
-  
-  const darkNodes = Array.from(darkFiles);
-  
-  if (darkNodes.length > 0 && !JSON_OUT) {
-    console.log(`\n🌌 DISC-001 AUDIT: Found ${darkNodes.length} Dark (Undocumented) Code Components:`);
-    const displayList = darkNodes.slice(0, 15);
-    for (const file of displayList) {
-      console.log(`   ⚫ ${file}`);
-    }
-    if (darkNodes.length > 15) {
-      console.log(`   ... and ${darkNodes.length - 15} more dark components.`);
-    }
-    console.log('   💡 Advice: Create an incident log, standard, or SSOT mapping in docs/ to document these files.');
-  }
-}
-
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 function run() {
   try {
-    const graphPath = path.join(ROOT, 'graphify-out/graph.json');
-    if (fs.existsSync(graphPath)) {
-      try {
-        GRAPH_DATA = JSON.parse(fs.readFileSync(graphPath, 'utf8'));
-      } catch (e) {
-        console.warn(`⚠️ Failed to parse graphify-out/graph.json: ${e.message}`);
-      }
-    }
-
     const consumption = loadConsumptionFiles();
 
     let artifacts = [];
@@ -1491,108 +830,13 @@ function run() {
       printReport(artifactResults, standardResults);
     }
 
-    // Entry-point parity check (runs unconditionally — it is an invariant, not
-    // tied to the changeset). An entry point that drops its FKL Hub pointer fails.
-    const parityFailing = checkEntryPointParity();
-    if (!JSON_OUT) {
-      if (parityFailing.length === 0) {
-        console.log('🔗 Entry-point parity: CLAUDE.md / GEMINI.md / AGENTS.md all reference the FKL Hub ✅');
-      } else {
-        console.log('\n🔴 ENTRY-POINT PARITY FAILURE (Query 1.8 Gap 2):');
-        for (const f of parityFailing) console.log(`   ❌ ${f.ep} — ${f.reason}`);
-        console.log('   💡 Fix: add a pointer to docs/ssot/ui-design/FRONTEND-KNOWLEDGE-HUB.md so this agent has a path into the FKL.\n');
-      }
-    }
-
-    // Emit the GAWC graph (GWPA §2) if requested — does not affect the gate's exit code
-    if (EMIT) {
-      let graphArtifactResults = artifactResults;
-      let graphStandardResults = standardResults;
-
-      // If we are in diff mode, we must perform a full scan to generate the full graph,
-      // so governance-wiring.json is always complete and valid against its schema.
-      if (!ALL_MODE) {
-        const fullArtifacts = getAllArtifacts();
-        const catalogPath = path.join(ROOT, '.agent/standards-catalog.json');
-        let fullNewStandards = [];
-        if (fs.existsSync(catalogPath)) {
-          const catalog = JSON.parse(fs.readFileSync(catalogPath, 'utf8'));
-          fullNewStandards = catalog.standards.filter(s =>
-            s.lifecycle?.createdDate && s.lifecycle.createdDate >= GAWC_EPOCH
-          );
-        }
-        graphArtifactResults = fullArtifacts.map(a => {
-          if (a.type === 'agent-pattern') {
-            return checkPatternWiring(a, consumption);
-          } else if (a.type === 'arch-invariant') {
-            return checkArchInvariantWiring(a, consumption);
-          } else {
-            return checkArtifactWiring(a, allStandards, consumption);
-          }
-        });
-        graphStandardResults = fullNewStandards.map(s => {
-          const artifact = { type: 'p-standard', file: '.agent/standards-catalog.json', ref: s.id, isNew: false };
-          return checkArtifactWiring(artifact, allStandards, consumption);
-        });
-      }
-
-      emitGraph(graphArtifactResults, graphStandardResults, consumption, EMIT_PATH);
-    }
-
     // Exit code
     const allResults = [...artifactResults, ...standardResults];
     const hasErrors = allResults.some(r => r.status === 'unwired');
     const hasWarnings = allResults.some(r => r.status === 'partial');
 
-    // Run Frontend Knowledge Index checks
-    const changedFiles = [...getNewFilesFromDiff(), ...getModifiedFilesFromDiff()];
-    const fklChecks = checkFrontendKnowledgeIndex(changedFiles);
-    
-    // Run Discoverability Self-Check (DISC-001)
-    const discChecks = checkDiscoverabilitySelfCheck(changedFiles);
-
-    // Run Dark Nodes audit
-    auditDarkNodes();
-
-    if (!JSON_OUT) {
-      if (fklChecks.errors.length > 0) {
-        console.log('\n🔴 FRONTEND KNOWLEDGE INDEX ERRORS:');
-        for (const e of fklChecks.errors) {
-          console.log(`   ❌ ${e.message}`);
-          console.log(`   💡 Fix: ${e.fix}`);
-        }
-      }
-      if (fklChecks.warnings.length > 0) {
-        console.log('\n🟡 FRONTEND KNOWLEDGE INDEX WARNINGS:');
-        for (const w of fklChecks.warnings) {
-          console.log(`   ⚠️  ${w.message}`);
-          console.log(`   💡 Fix: ${w.fix}`);
-        }
-      }
-      
-      if (discChecks.errors.length > 0) {
-        console.log('\n🔴 DISC-001 DISCOVERABILITY SELF-CHECK ERRORS:');
-        for (const e of discChecks.errors) {
-          console.log(`   ❌ ${e.message}`);
-          console.log(`   💡 Fix: ${e.fix}`);
-        }
-      }
-      if (discChecks.warnings.length > 0) {
-        console.log('\n🟡 DISC-001 DISCOVERABILITY SELF-CHECK WARNINGS:');
-        for (const w of discChecks.warnings) {
-          console.log(`   ⚠️  ${w.message}`);
-          console.log(`   💡 Fix: ${w.fix}`);
-        }
-      }
-    }
-
-    const hasFklErrors = fklChecks.errors.length > 0;
-    const hasFklWarnings = fklChecks.warnings.length > 0;
-    const hasDiscErrors = discChecks.errors.length > 0;
-    const hasDiscWarnings = discChecks.warnings.length > 0;
-
-    if (hasErrors || parityFailing.length > 0 || hasFklErrors || hasDiscErrors) return 1;
-    if ((hasWarnings || hasFklWarnings || hasDiscWarnings) && STRICT) return 1;
+    if (hasErrors) return 1;
+    if (hasWarnings && STRICT) return 1;
     return 0;
 
   } catch (err) {

@@ -82,6 +82,11 @@ exists so that gap gets caught before the write, not after.
        escalatedAt: null, escalationReason: null
      },
      originProfileId: string,    // REQUIRED by rules — = assignedTo.profileId
+     workstreamId: string|null,  // ADR-030/TASK-247 stage-gate FK, optional —
+                                 // null (or omit) files the task under "General /
+                                 // Unassigned"; list a project's stages via
+                                 // npm run db:workstreams [projectId], or read
+                                 // projects/{projectId}/workstreams directly
      schemaVersion: 1,
      _derived: null,
      createdAt: serverTimestamp(), lastUpdatedAt: serverTimestamp(),
