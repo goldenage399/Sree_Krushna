@@ -165,6 +165,23 @@
       flex-wrap: wrap;
     }
 
+    @media (max-width: 768px) {
+      .shop-filter-pills {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+        width: 100%;
+        padding: 4px 2px 6px;
+        mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
+        -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
+      }
+      .shop-filter-pills::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
     .shop-pill {
       padding: 6px 12px;
       border-radius: 20px;
@@ -383,4 +400,135 @@
       width: 20px;
       height: 20px;
       cursor: pointer;
+    }
+
+    /* ==========================================================================
+       LEVEL 2: CATALOG OPERATING MODE SWITCHER (P-SHOPPING-JOURNEY-HUBS-001)
+       Standard: STD-MOD-COMP-001 | Rulings: AC-DEC-2026-037 / UI-DEC-2026-033
+       ========================================================================== */
+    .catalog-subnav-strip {
+      position: sticky;
+      top: var(--shopping-sticky-offset, 12px);
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(18, 23, 34, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--shop-border);
+      border-radius: var(--shop-radius-md);
+      padding: 8px 10px;
+      margin-bottom: 24px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+    .catalog-subnav-strip::-webkit-scrollbar {
+      display: none;
+    }
+
+    .catalog-subnav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      min-height: 40px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--shop-text-secondary);
+      cursor: pointer;
+      transition: all 0.18s ease;
+      white-space: nowrap;
+      user-select: none;
+      flex-shrink: 0;
+    }
+    .catalog-subnav-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .catalog-subnav-btn:focus-visible {
+      outline: 2px solid var(--shop-gold);
+      outline-offset: 2px;
+    }
+    .catalog-subnav-btn.active {
+      color: var(--shop-gold);
+      background: rgba(212, 168, 67, 0.12);
+      border-color: rgba(212, 168, 67, 0.35);
+      box-shadow: 0 0 14px rgba(212, 168, 67, 0.16);
+    }
+    .catalog-subnav-btn.subnav-view-all.active {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
+      box-shadow: none;
+    }
+    .subnav-btn-icon {
+      font-size: 15px;
+      line-height: 1;
+    }
+
+    /* Responsive Edge Fade on Mobile */
+    @media (max-width: 768px) {
+      .catalog-subnav-strip {
+        padding: 6px 8px;
+        gap: 6px;
+        mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
+        -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
+      }
+      .catalog-subnav-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+        min-height: 38px;
+      }
+    }
+
+    /* Non-Destructive Inactive Container Hiding Rules (Review 6.4 Correction 3) */
+    /* Mode 1: Items Checklist (Default Execution Anchor) - 0px scroll to items */
+    #catalogViewSection.mode-items #shoppingStepper,
+    #catalogViewSection.mode-items #shoppingClusterPods,
+    #catalogViewSection.mode-items #shoppingStoreNavigator {
+      display: none !important;
+    }
+
+    /* Mode 2: 5-Day Itinerary (Timeline + Filtered Items) */
+    #catalogViewSection.mode-itinerary #shoppingClusterPods,
+    #catalogViewSection.mode-itinerary #shoppingStoreNavigator {
+      display: none !important;
+    }
+
+    /* Mode 3: Clustered Decision Pods (Consensus Voting) */
+    #catalogViewSection.mode-clusters #shoppingStepper,
+    #catalogViewSection.mode-clusters #shoppingStoreNavigator,
+    #catalogViewSection.mode-clusters .shop-toolbar,
+    #catalogViewSection.mode-clusters #itemsGrid {
+      display: none !important;
+    }
+
+    /* Mode 4: Retail Stores (Market Directory & Navigation) */
+    #catalogViewSection.mode-stores #shoppingStepper,
+    #catalogViewSection.mode-stores #shoppingClusterPods,
+    #catalogViewSection.mode-stores .shop-toolbar,
+    #catalogViewSection.mode-stores #itemsGrid {
+      display: none !important;
+    }
+
+    /* Mode 5: Full Run Sheet (All sections retain their native layouts) */
+
+    /* Independent Clean Print Unrolling (Review 6.4 Correction 2) */
+    @media print {
+      .catalog-subnav-strip {
+        display: none !important;
+      }
+      #catalogViewSection #shoppingStepper,
+      #catalogViewSection #shoppingClusterPods,
+      #catalogViewSection #shoppingStoreNavigator,
+      #catalogViewSection .shop-toolbar,
+      #catalogViewSection #itemsGrid {
+        display: revert !important;
+      }
     }

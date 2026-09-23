@@ -168,19 +168,21 @@ service cloud.firestore {
     // ===============================================================
     function isValidShoppingItemOverlay(d) {
       return d.keys().hasAll(['status','updatedBy','updatedAt']) &&
-        d.keys().hasOnly(['status','actualPrice','actualStore','notes','purchasedBy','updatedBy','updatedAt']) &&
+        d.keys().hasOnly(['status','actualPrice','actualStore','notes','purchasedBy','updatedBy','updatedAt','options','selectedOptionIndex']) &&
         d.status in ['Planned','Shortlisted','In_Trial','Ordered','Purchased','Dropped'] &&
         (!('actualPrice' in d) || d.actualPrice is number || (d.actualPrice is string && d.actualPrice.size() <= 80)) &&
         (!('actualStore' in d) || (d.actualStore is string && d.actualStore.size() <= 100)) &&
         (!('notes' in d) || (d.notes is string && d.notes.size() <= 500)) &&
         (!('purchasedBy' in d) || (d.purchasedBy is string && d.purchasedBy.size() <= 80)) &&
+        (!('selectedOptionIndex' in d) || (d.selectedOptionIndex is int && d.selectedOptionIndex >= 0)) &&
+        (!('options' in d) || (d.options is list && d.options.size() <= 20)) &&
         d.updatedBy == request.auth.token.email &&
         d.updatedAt == request.time;
     }
 
     function isValidAdhocShoppingItem(d) {
       return d.keys().hasAll(['id','title','category','status','updatedBy','updatedAt']) &&
-        d.keys().hasOnly(['id','title','category','chapterId','role','priceRange','status','store','actualPrice','actualStore','notes','addedBy','purchasedBy','updatedBy','updatedAt']) &&
+        d.keys().hasOnly(['id','title','category','chapterId','role','priceRange','status','store','actualPrice','actualStore','notes','addedBy','purchasedBy','updatedBy','updatedAt','options','selectedOptionIndex']) &&
         d.id is string && d.id.size() > 0 && d.id.size() <= 40 &&
         d.title is string && d.title.size() > 0 && d.title.size() <= 200 &&
         d.category in ['bridal','groom','jewellery','sara','engagement','puja_samagri','general'] &&
@@ -194,6 +196,8 @@ service cloud.firestore {
         (!('notes' in d) || (d.notes is string && d.notes.size() <= 500)) &&
         (!('addedBy' in d) || (d.addedBy is string && d.addedBy.size() <= 80)) &&
         (!('purchasedBy' in d) || (d.purchasedBy is string && d.purchasedBy.size() <= 80)) &&
+        (!('selectedOptionIndex' in d) || (d.selectedOptionIndex is int && d.selectedOptionIndex >= 0)) &&
+        (!('options' in d) || (d.options is list && d.options.size() <= 20)) &&
         d.updatedBy == request.auth.token.email &&
         d.updatedAt == request.time;
     }

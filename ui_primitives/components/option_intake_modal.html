@@ -1,26 +1,29 @@
 <!-- Universal Option Intake Modal Primitive (Adapted from PIO ImageUploadWidget) -->
-<div class="sk-modal-backdrop" id="skOptionIntakeBackdrop" role="dialog" aria-modal="true" aria-labelledby="skOptionIntakeTitle">
+<!-- SSOT: User_Created/Discussion Threads/Council/260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md § "Tri-Modal Visual Ingestion" — P-COLLAB-VISUAL-INTAKE-001 -->
+<div class="sk-modal-backdrop" id="skOptionIntakeBackdrop" role="dialog" aria-modal="true" aria-labelledby="skOptionIntakeTitle" onclick="if(event.target===this && window.closeOptionIntakeModal) window.closeOptionIntakeModal()">
   <div class="sk-modal-card sk-intake-card">
     <div class="sk-intake-header">
       <h3 id="skOptionIntakeTitle" class="sk-intake-title">Add Shopping / Decor Option</h3>
       <button type="button" class="sk-modal-close" id="skOptionIntakeClose" aria-label="Close modal">✕</button>
     </div>
 
+    <input type="hidden" id="skOptionItemId" value="">
+
     <!-- Tabbed Intake Selector -->
     <div class="sk-intake-tabs" role="tablist">
-      <button type="button" class="sk-intake-tab is-active" id="skTabDriveLink" role="tab" aria-selected="true" data-tab="drive">📎 Google Drive Link</button>
-      <button type="button" class="sk-intake-tab" id="skTabDeviceUpload" role="tab" aria-selected="false" data-tab="device">📷 Device / Camera</button>
+      <button type="button" class="sk-intake-tab is-active" id="skTabDriveLink" role="tab" aria-selected="true" data-tab="drive">📌 Pinterest / Web Link</button>
+      <button type="button" class="sk-intake-tab" id="skTabDeviceUpload" role="tab" aria-selected="false" data-tab="device">📷 Device / Showroom Photo</button>
     </div>
 
     <div class="sk-intake-body">
-      <!-- Tab Pane 1: Drive Link -->
+      <!-- Tab Pane 1: Image / Pinterest Link -->
       <div class="sk-tab-pane is-active" id="skPaneDrive">
-        <label class="sk-intake-label" for="skDriveUrlInput">Google Drive or Image URL</label>
+        <label class="sk-intake-label" for="skDriveUrlInput">Pinterest Image Link, Web Image URL, or Google Drive</label>
         <div class="sk-input-group">
-          <input type="url" class="sk-intake-input" id="skDriveUrlInput" placeholder="https://drive.google.com/file/d/..." autocomplete="off">
+          <input type="url" class="sk-intake-input" id="skDriveUrlInput" placeholder="https://i.pinimg.com/...jpg, pin.it/..., or Image URL" autocomplete="off">
           <button type="button" class="sk-btn sk-btn-secondary" id="skBtnVerifyDrive">Verify Link</button>
         </div>
-        <small class="sk-intake-hint">Shared Google Drive links automatically render with high-res zero-CORS previews.</small>
+        <small class="sk-intake-hint">Direct Pinterest images (i.pinimg.com), web image URLs, and Google Drive links render natively.</small>
         
         <!-- Live Proof Preview Card (Adapted from PIO ProofPreviewWidget) -->
         <div class="sk-proof-preview-card" id="skDriveProofCard" style="display: none;">

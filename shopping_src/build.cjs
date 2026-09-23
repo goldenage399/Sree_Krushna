@@ -12,6 +12,17 @@ const rootDir = path.resolve(baseDir, '..');
 
 console.log('⚡ Building Shopping Registry from modular components (SDCA)...');
 
+// Synchronize Visual Asset Taxonomy and Enrich Data (P-UNIVERSAL-VISUAL-ASSET-001 / AC-DEC-2026-035)
+try {
+  const syncAssets = require('../scripts/sync-shopping-assets.cjs');
+  if (syncAssets && syncAssets.buildRegistry) {
+    const reg = syncAssets.buildRegistry();
+    syncAssets.enrichShoppingData(reg);
+  }
+} catch (err) {
+  console.warn('⚠️ Shopping asset sync warning:', err.message);
+}
+
 // Syntax Gate on controller.js
 const controllerPath = path.join(baseDir, 'scripts', 'controller.js');
 try {

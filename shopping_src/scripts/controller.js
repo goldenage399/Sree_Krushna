@@ -1,3 +1,8 @@
+/**
+ * SSOT: User_Created/Discussion Threads/Council/260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md § "Council Decision AC-DEC-2026-035"
+ * Standard: P-COLLAB-VISUAL-INTAKE-001 / INC-094
+ * Description: Shopping Registry Controller with Tri-Modal Visual Ingestion, Multi-Image Option Pods, and Deep-Link Sharing.
+ */
 (function() {
     const data = window.SHOPPING_REGISTRY_DATA || { chapters: [], clusters: [], stores: [], items: [] };
     const chapters = data.chapters || [];
@@ -13,7 +18,11 @@
     let userSelections = JSON.parse(localStorage.getItem('sk_shopping_selections') || '{}');
     let itemPurchased = JSON.parse(localStorage.getItem('sk_shopping_purchased') || '{}');
     let stakeholderApprovals = JSON.parse(localStorage.getItem('sk_shopping_approvals') || '{}');
+    let itemOptionSelected = JSON.parse(localStorage.getItem('sk_shopping_item_options') || '{}');
+    let itemCustomOptions = JSON.parse(localStorage.getItem('sk_shopping_custom_options') || '{}');
+    let catalogViewMode = localStorage.getItem('sk_shopping_catalog_view') || 'thumbnails';
     let activeStoreCategory = 'all';
+    window.catalogSubView = 'items';
 
     // DOM Elements
     const shopWelcomeBanner = document.getElementById('shopWelcomeBanner');
@@ -45,7 +54,36 @@
       localStorage.setItem('sk_shopping_selections', JSON.stringify(userSelections));
       localStorage.setItem('sk_shopping_purchased', JSON.stringify(itemPurchased));
       localStorage.setItem('sk_shopping_approvals', JSON.stringify(stakeholderApprovals));
+      localStorage.setItem('sk_shopping_custom_options', JSON.stringify(itemCustomOptions));
       updateKpis();
+    }
+
+    function getItemImages(item) {
+      if (!item) return [];
+      const baseImages = Array.isArray(item.images) ? [...item.images] : [];
+      const fsItem = firestoreShoppingCache ? firestoreShoppingCache[item.id] : null;
+      const fsOptions = (fsItem && Array.isArray(fsItem.options)) ? fsItem.options : null;
+      const localOpts = Array.isArray(itemCustomOptions[item.id]) ? itemCustomOptions[item.id] : [];
+      const customOpts = (fsOptions && fsOptions.length > 0) ? fsOptions : localOpts;
+
+      const allImages = [...baseImages];
+      customOpts.forEach(opt => {
+        if (!allImages.some(img => img.optionIndex === opt.optionIndex)) {
+          allImages.push(opt);
+        }
+      });
+      return allImages;
+    }
+
+    function getActiveOptionIndex(itemId) {
+      const fsItem = firestoreShoppingCache ? firestoreShoppingCache[itemId] : null;
+      if (fsItem && typeof fsItem.selectedOptionIndex === 'number') {
+        return fsItem.selectedOptionIndex;
+      }
+      if (itemOptionSelected[itemId] !== undefined) {
+        return Number(itemOptionSelected[itemId]);
+      }
+      return 0;
     }
 
     function showToast(msg, icon = '📋') {
@@ -63,6 +101,111 @@
       window.open(url, '_blank', 'noopener,noreferrer');
     };
 
+    // ========================================================================
+    // LEVEL 2 CATALOG OPERATING MODES & CROSS-CONTEXT NAVIGATION (AC-DEC-2026-037)
+    // Standards: P-SHOPPING-JOURNEY-HUBS-001 / STD-MOD-COMP-001
+    // ========================================================================
+    function setCatalogSubView(subview, targetId) {
+      const allowedViews = ['items', 'itinerary', 'clusters', 'stores', 'all'];
+      const targetView = allowedViews.includes(subview) ? subview : 'items';
+      window.catalogSubView = targetView;
+
+      if (window.currentShoppingView !== 'catalog' && typeof window.switchShoppingView === 'function') {
+        window.switchShoppingView('catalog');
+      }
+
+      const catalogSection = document.getElementById('catalogViewSection');
+      if (catalogSection) {
+        allowedViews.forEach(v => catalogSection.classList.remove(`mode-${v}`));
+        catalogSection.classList.add(`mode-${targetView}`);
+      }
+
+      const subnavBtns = document.querySelectorAll('.catalog-subnav-btn');
+      subnavBtns.forEach(btn => {
+        const isCurrent = btn.getAttribute('data-subview') === targetView;
+        btn.classList.toggle('active', isCurrent);
+        btn.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
+      });
+
+      // Synchronize URL query state if on catalog view
+      try {
+        const url = new URL(window.location.href);
+        if (targetView !== 'items') {
+          url.searchParams.set('subview', targetView);
+        } else {
+          url.searchParams.delete('subview');
+        }
+        window.history.replaceState({}, '', url.toString());
+      } catch (e) {
+        // Safe fallback in restricted environments
+      }
+
+      if (targetId) {
+        setTimeout(() => {
+          const el = document.getElementById(targetId);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            el.style.outline = '2px solid var(--shop-gold, #d4af37)';
+            el.style.boxShadow = '0 0 16px rgba(212, 175, 55, 0.4)';
+            setTimeout(() => {
+              el.style.outline = '';
+              el.style.boxShadow = '';
+            }, 3000);
+          }
+        }, 120);
+      }
+    }
+    window.setCatalogSubView = setCatalogSubView;
+
+    function jumpToStore(storeNameOrId) {
+      if (!storeNameOrId) return;
+      setCatalogSubView('stores');
+      setTimeout(() => {
+        const cleanName = storeNameOrId.trim().toLowerCase();
+        const matched = stores.find(s => 
+          (s.id && s.id.toLowerCase() === cleanName) ||
+          s.name.toLowerCase() === cleanName ||
+          s.name.toLowerCase().includes(cleanName) ||
+          cleanName.includes(s.name.toLowerCase())
+        );
+        const storeDomId = matched ? (matched.id || `store_${matched.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`) : null;
+        if (storeDomId) {
+          const card = document.getElementById(storeDomId);
+          if (card) {
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            card.style.outline = '2px solid var(--shop-gold, #d4af37)';
+            card.style.boxShadow = '0 0 16px rgba(212, 175, 55, 0.4)';
+            setTimeout(() => {
+              card.style.outline = '';
+              card.style.boxShadow = '';
+            }, 3000);
+          }
+        }
+      }, 100);
+    }
+    window.jumpToStore = jumpToStore;
+
+    function jumpToChapter(chapterId) {
+      if (!chapterId) return;
+      activeChapter = chapterId;
+      renderChapters();
+      renderItems();
+      setCatalogSubView('itinerary');
+      setTimeout(() => {
+        const milestoneTrack = document.getElementById('chapterMilestoneTrack');
+        if (milestoneTrack) {
+          milestoneTrack.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+    window.jumpToChapter = jumpToChapter;
+
+    function focusCluster(clusterId) {
+      if (!clusterId) return;
+      setCatalogSubView('clusters', 'cluster-' + clusterId);
+    }
+    window.focusCluster = focusCluster;
+
     // URL Query Param Parser & Deep-Link Wiring
     function parseUrlParams() {
       const params = new URLSearchParams(window.location.search);
@@ -79,93 +222,6 @@
         welcomeBannerIcon.textContent = "👭";
         welcomeBannerTitle.textContent = "Sisters' Styling & Wardrobe Review Hub!";
         welcomeBannerSub.textContent = "Vote on Sangeet Lehengas, Groom Sherwani styling, and your matching festive sarees!";
-      }
-
-      const paramChapter = params.get('chapter');
-      if (paramChapter && chapters.some(c => c.id === paramChapter)) {
-        activeChapter = paramChapter;
-      }
-
-      const paramCluster = params.get('cluster');
-      if (paramCluster) {
-        const matchedCluster = clusters.find(c => c.id === paramCluster);
-        if (matchedCluster && matchedCluster.chapterId) {
-          activeChapter = matchedCluster.chapterId;
-        }
-        setTimeout(() => {
-          const el = document.getElementById('cluster-' + paramCluster) || (matchedCluster && document.getElementById('cluster-' + matchedCluster.id));
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            if (params.get('comments') === 'true' || params.get('drawer') === 'true') {
-              if (window.SKPrimitives && window.SKPrimitives.openComments) {
-                window.SKPrimitives.openComments(paramCluster, {
-                  title: matchedCluster ? matchedCluster.title : paramCluster,
-                  badge: paramCluster,
-                  sub: matchedCluster ? matchedCluster.description : ''
-                });
-              }
-            }
-          }
-        }, 350);
-      }
-
-      const paramOption = params.get('option');
-      if (paramOption) {
-        let targetCluster = null;
-        let targetOpt = null;
-        for (const c of clusters) {
-          const found = c.options.find(o => o.optionId === paramOption || `${c.id}-${o.optionId}` === paramOption);
-          if (found) {
-            targetCluster = c;
-            targetOpt = found;
-            break;
-          }
-        }
-        if (targetCluster && targetCluster.chapterId) {
-          activeChapter = targetCluster.chapterId;
-        }
-        setTimeout(() => {
-          const optCard = document.querySelector(`[data-option-id="${paramOption}"]`) || (targetCluster && targetOpt && document.getElementById(`opt-${targetCluster.id}-${targetOpt.optionId}`));
-          if (optCard) {
-            optCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            optCard.style.outline = '2px solid var(--shop-gold, #d4af37)';
-            setTimeout(() => { optCard.style.outline = ''; }, 3000);
-          } else if (targetCluster) {
-            const el = document.getElementById('cluster-' + targetCluster.id);
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-          if (window.SKPrimitives && window.SKPrimitives.openComments) {
-            const key = targetCluster ? targetCluster.id : paramOption;
-            window.SKPrimitives.openComments(key, {
-              title: targetOpt ? targetOpt.title : paramOption,
-              badge: targetOpt ? `Option ${targetOpt.optionId}` : paramOption,
-              sub: targetOpt ? `${targetOpt.store} • ${targetOpt.priceTier}` : ''
-            });
-          }
-        }, 350);
-      }
-
-      const paramItem = params.get('item');
-      if (paramItem) {
-        const item = items.find(i => i.id === paramItem || i.code === paramItem);
-        if (item && item.chapterId) {
-          activeChapter = item.chapterId;
-        }
-        setTimeout(() => {
-          const card = document.getElementById('card-' + paramItem) || (item && document.getElementById('card-' + item.id));
-          if (card) {
-            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            card.style.outline = '2px solid var(--shop-gold, #d4af37)';
-            setTimeout(() => { card.style.outline = ''; }, 3000);
-            if (window.SKPrimitives && window.SKPrimitives.openComments) {
-              window.SKPrimitives.openComments(item.id, {
-                title: item.title,
-                badge: item.id,
-                sub: `${item.store} • ${item.priceRange}`
-              });
-            }
-          }
-        }, 350);
       }
 
       const paramView = params.get('view') || params.get('tab');
@@ -187,6 +243,123 @@
         setTimeout(() => {
           if (window.switchShoppingView) window.switchShoppingView('table');
         }, 100);
+      }
+
+      const paramCatalogView = params.get('catalog_mode') || params.get('catalog_view') || params.get('catalog_layout');
+      if (paramCatalogView === 'compact' || paramCatalogView === 'list') {
+        catalogViewMode = 'compact';
+      } else if (paramCatalogView === 'thumbnails' || paramCatalogView === 'cards') {
+        catalogViewMode = 'thumbnails';
+      }
+
+      // Deterministic Precedence Ladder for Catalog Operating Modes (Review 6.4 / AC-DEC-2026-037)
+      const paramCluster = params.get('cluster');
+      const paramOption = params.get('option');
+      const paramStore = params.get('store');
+      const paramChapter = params.get('chapter');
+      const paramItem = params.get('item');
+      const paramSubView = params.get('subview');
+
+      if (paramCluster || (!paramItem && paramOption)) {
+        // Priority 1: Cluster / Option (Decision Pods)
+        setCatalogSubView('clusters');
+        let targetCluster = null;
+        let targetOpt = null;
+
+        if (paramCluster) {
+          targetCluster = clusters.find(c => c.id === paramCluster);
+        }
+        if (paramOption) {
+          for (const c of clusters) {
+            const found = c.options.find(o => o.optionId === paramOption || `${c.id}-${o.optionId}` === paramOption);
+            if (found) {
+              targetCluster = c;
+              targetOpt = found;
+              break;
+            }
+          }
+        }
+
+        if (targetCluster && targetCluster.chapterId) {
+          activeChapter = targetCluster.chapterId;
+        }
+
+        setTimeout(() => {
+          const optCard = paramOption ? (document.querySelector(`[data-option-id="${paramOption}"]`) || (targetCluster && targetOpt && document.getElementById(`opt-${targetCluster.id}-${targetOpt.optionId}`))) : null;
+          if (optCard) {
+            optCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            optCard.style.outline = '2px solid var(--shop-gold, #d4af37)';
+            optCard.style.boxShadow = '0 0 16px rgba(212, 175, 55, 0.4)';
+            setTimeout(() => { optCard.style.outline = ''; optCard.style.boxShadow = ''; }, 3000);
+          } else if (targetCluster) {
+            const el = document.getElementById('cluster-' + targetCluster.id);
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              el.style.outline = '2px solid var(--shop-gold, #d4af37)';
+              el.style.boxShadow = '0 0 16px rgba(212, 175, 55, 0.4)';
+              setTimeout(() => { el.style.outline = ''; el.style.boxShadow = ''; }, 3000);
+            }
+          }
+          if (params.get('comments') === 'true' || params.get('drawer') === 'true') {
+            if (window.SKPrimitives && window.SKPrimitives.openComments) {
+              const key = targetCluster ? targetCluster.id : paramOption;
+              window.SKPrimitives.openComments(key, {
+                title: targetOpt ? targetOpt.title : (targetCluster ? targetCluster.title : paramOption),
+                badge: targetOpt ? `Option ${targetOpt.optionId}` : (targetCluster ? targetCluster.id : paramOption),
+                sub: targetOpt ? `${targetOpt.store} • ${targetOpt.priceTier}` : (targetCluster ? targetCluster.description : '')
+              });
+            }
+          }
+        }, 350);
+      } else if (paramStore) {
+        // Priority 2: Store Navigator & Directory
+        jumpToStore(paramStore);
+      } else if (paramChapter) {
+        // Priority 3: Chapter Itinerary
+        if (chapters.some(c => c.id === paramChapter)) {
+          activeChapter = paramChapter;
+        }
+        setCatalogSubView('itinerary');
+      } else if (paramItem) {
+        // Priority 4: Item Checklist
+        setCatalogSubView('items');
+        const item = items.find(i => i.id === paramItem || i.code === paramItem);
+        if (item && item.chapterId) {
+          activeChapter = item.chapterId;
+        }
+        if (paramOption !== null && paramOption !== undefined) {
+          const optIdx = parseInt(paramOption, 10);
+          if (!isNaN(optIdx)) {
+            const targetId = item ? item.id : paramItem;
+            itemOptionSelected[targetId] = optIdx;
+            localStorage.setItem('sk_shopping_item_options', JSON.stringify(itemOptionSelected));
+          }
+        }
+        setTimeout(() => {
+          const card = document.getElementById('card-' + paramItem) || (item && document.getElementById('card-' + item.id));
+          if (card) {
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            card.classList.add('highlight-target-item');
+            card.style.outline = '2px solid var(--shop-gold, #d4af37)';
+            setTimeout(() => {
+              card.classList.remove('highlight-target-item');
+              card.style.outline = '';
+            }, 3000);
+            if (window.SKPrimitives && window.SKPrimitives.openComments) {
+              window.SKPrimitives.openComments(item ? item.id : paramItem, {
+                title: item ? item.title : paramItem,
+                badge: item ? item.id : paramItem,
+                sub: item ? `${item.store} • ${item.priceRange}` : ''
+              });
+            }
+          }
+        }, 350);
+      } else if (paramSubView) {
+        // Priority 5: Explicit subview parameter
+        setCatalogSubView(paramSubView);
+      } else {
+        // Priority 6: Default fallback
+        setCatalogSubView('items');
       }
     }
 
@@ -294,7 +467,7 @@
                     </div>
                     <div class="shop-pod-color">${opt.color} • ${opt.weave}</div>
                     <div class="shop-pod-highlight">${opt.highlight}</div>
-                    <div class="shop-pod-store">📍 ${opt.store}</div>
+                    <div class="shop-pod-store" onclick="event.stopPropagation(); window.jumpToStore('${opt.store.replace(/'/g, "\\'")}')" style="cursor: pointer;" title="View store in directory">📍 ${opt.store}</div>
                     <div style="display: flex; gap: 6px; margin-top: 10px; align-items: stretch; flex-wrap: wrap;">
                       <button class="shop-pod-radio-btn" type="button" style="flex: 1; min-width: 120px; margin-top: 0;">
                         <span>${isSelected ? '🔘' : '⚪'}</span>
@@ -365,8 +538,9 @@
 
       storesGrid.innerHTML = filteredStores.map(s => {
         const mapsLink = s.mapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.name + ', ' + s.address)}`;
+        const storeDomId = s.id || `store_${s.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
         return `
-          <div class="shop-store-card">
+          <div class="shop-store-card" id="${storeDomId}">
             <div class="shop-store-name"><span>🏬</span> <span>${s.name}</span></div>
             <div class="shop-store-zone">${s.zone}</div>
             <div class="shop-store-specialty">${s.specialty}</div>
@@ -381,8 +555,70 @@
       }).join('');
     }
 
-    // Render Item Checklist Grid
+    // Visual Dual-View Switching & Option Selection API (P-UNIVERSAL-VISUAL-ASSET-001)
+    window.setCatalogViewMode = function(mode) {
+      catalogViewMode = (mode === 'compact') ? 'compact' : 'thumbnails';
+      localStorage.setItem('sk_shopping_catalog_view', catalogViewMode);
+      syncCatalogViewUI();
+      renderItems();
+    };
+
+    function syncCatalogViewUI() {
+      const btnCards = document.getElementById('btnCatalogCards');
+      const btnList = document.getElementById('btnCatalogList');
+      if (btnCards && btnList) {
+        btnCards.classList.toggle('active', catalogViewMode === 'thumbnails');
+        btnList.classList.toggle('active', catalogViewMode === 'compact');
+      }
+      if (itemsGrid) {
+        itemsGrid.classList.remove('view-thumbnails', 'view-compact-list');
+        itemsGrid.classList.add(catalogViewMode === 'compact' ? 'view-compact-list' : 'view-thumbnails');
+      }
+    }
+
+    window.selectItemOption = function(itemId, optionIndex) {
+      itemOptionSelected[itemId] = optionIndex;
+      localStorage.setItem('sk_shopping_item_options', JSON.stringify(itemOptionSelected));
+      if (typeof window.fsSetShoppingItemStatus === 'function') {
+        window.fsSetShoppingItemStatus(itemId, { selectedOptionIndex: optionIndex })
+          .catch(err => console.warn('Firestore option sync skipped:', err));
+      }
+      renderItems();
+    };
+
+    window.shareItemOption = function(itemId, optionIndex) {
+      const item = items.find(i => i.id === itemId);
+      const title = item ? item.title : itemId;
+      const allImgs = getItemImages(item);
+      const activeImg = allImgs.find(img => img.optionIndex === optionIndex) || allImgs[0];
+      const optLabel = activeImg ? (activeImg.label || `Option ${optionIndex}`) : `Option ${optionIndex}`;
+
+      const shareUrl = (typeof SKPrimitives !== 'undefined' && SKPrimitives.getStakeholderUrl)
+        ? SKPrimitives.getStakeholderUrl('shopping-registry.html', { item: itemId, option: optionIndex, mode: 'family' })
+        : `${window.location.origin}/shopping-registry.html?item=${itemId}&option=${optionIndex}&mode=family`;
+
+      const text = `✨ *Wedding Wardrobe Review — ${title} (${optLabel})*\nCheck out this candidate look for *${title}* in the Sree Krushna Shopping Registry!\n👉 Tap to view and compare looks: ${shareUrl}`;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast(`Link for ${optLabel} copied! Ready to paste into WhatsApp.`, '📱');
+        });
+      } else {
+        prompt('Copy Look Link:', text);
+      }
+
+      if (navigator.share && window.innerWidth <= 768) {
+        navigator.share({
+          title: `${title} - ${optLabel}`,
+          text: text,
+          url: shareUrl
+        }).catch(() => {});
+      }
+    };
+
+    // Render Item Checklist Grid (Supporting Dual Views: Thumbnail Cards & Compact List)
     function renderItems() {
+      syncCatalogViewUI();
       const q = searchQuery.toLowerCase().trim();
 
       const filtered = items.filter(item => {
@@ -408,26 +644,137 @@
         return;
       }
 
+      const catIcons = { bridal: '🥻', groom: '👑', jewellery: '💎', sara: '🎁', engagement: '💍', heirlooms: '👑' };
+
       itemsGrid.innerHTML = filtered.map(item => {
         const isBought = !!itemPurchased[item.id];
         const approvals = stakeholderApprovals[item.id] || item.approvals || {};
+        const allImages = getItemImages(item);
+        const hasImages = (allImages.length > 0);
+        const activeOptIdx = getActiveOptionIndex(item.id);
+        const activeImage = hasImages ? (allImages.find(img => img.optionIndex === activeOptIdx) || allImages[0]) : null;
+        const catIcon = catIcons[item.category] || '🛍️';
+
+        // ------------------------------------------------------------------
+        // VIEW MODE 2: COMPACT LIST VIEW
+        // ------------------------------------------------------------------
+        if (catalogViewMode === 'compact') {
+          const avatarHtml = (hasImages && activeImage)
+            ? `<div class="shop-compact-avatar" onclick="window.openShoppingLightbox('${item.title.replace(/'/g, "\\'")}', '${activeImage.src}', '<strong>${item.id}:</strong> ${(activeImage.label || '').replace(/'/g, "\\'")} • ${item.store} • ${item.priceRange}')" title="Inspect ${item.title}">
+                <img src="${activeImage.src}" alt="${item.title}" loading="lazy">
+                ${allImages.length > 1 ? `<span class="shop-compact-avatar-badge">${allImages.length}</span>` : ''}
+               </div>`
+            : `<div class="shop-compact-avatar" title="${item.title}">
+                <span class="shop-compact-avatar-placeholder">${catIcon}</span>
+               </div>`;
+
+          return `
+            <article class="shop-compact-row ${isBought ? 'purchased' : ''}" id="card-${item.id}">
+              <label class="shop-compact-check-wrap" title="${isBought ? 'Mark Unpurchased' : 'Mark as Purchased'}">
+                <input type="checkbox" ${isBought ? 'checked' : ''} onchange="window.togglePurchased('${item.id}', this.checked)">
+              </label>
+
+              ${avatarHtml}
+
+              <div class="shop-compact-main">
+                <div class="shop-compact-header">
+                  <span class="shop-id-badge">${item.id}</span>
+                  <h4 class="shop-compact-title" title="${item.title}">${item.title}</h4>
+                  <span class="shop-compact-price">${item.priceRange}</span>
+                </div>
+                <div class="shop-compact-sub">
+                  <span>🎨 ${item.suggestedColor}</span> • <span class="shop-link-badge" onclick="window.jumpToStore('${item.store.replace(/'/g, "\\'")}')" style="cursor: pointer; text-decoration: underline dotted;" title="Jump to Store">🏬 ${item.store}</span> • <span class="shop-link-badge" onclick="window.jumpToChapter('${item.chapterId}')" style="cursor: pointer; text-decoration: underline dotted;" title="Jump to Itinerary Chapter">📖 ${item.role}</span>
+                </div>
+                <div class="shop-compact-tags">
+                  <span class="shop-mini-vote ${approvals.bride ? 'approved' : ''}" onclick="window.toggleApproval('${item.id}', 'bride')" title="Toggle Bride Approval">👰 ${approvals.bride ? '✓' : '○'}</span>
+                  <span class="shop-mini-vote ${approvals.sisters ? 'approved' : ''}" onclick="window.toggleApproval('${item.id}', 'sisters')" title="Toggle Sisters Approval">👭 ${approvals.sisters ? '✓' : '○'}</span>
+                  <span class="shop-mini-vote ${approvals.inlaws ? 'approved' : ''}" onclick="window.toggleApproval('${item.id}', 'inlaws')" title="Toggle In-Laws Approval">🤝 ${approvals.inlaws ? '✓' : '○'}</span>
+                  ${item.clusterId ? `<span class="shop-mini-vote" onclick="window.focusCluster('${item.clusterId}')" title="Compare Alternatives" style="cursor: pointer;">⚖️ Compare</span>` : ''}
+                </div>
+              </div>
+
+              <div class="shop-compact-actions">
+                <button class="shop-share-look-btn" type="button" onclick="window.shareItemOption('${item.id}', ${activeImage ? activeImage.optionIndex : 0})" title="Share Look Link">
+                  <span>📤</span>
+                </button>
+                <button class="shop-btn shop-btn-sm" type="button" onclick="window.openOptionIntakeModal('${item.id}')" title="Add Look" style="font-size: 11px; padding: 3px 7px;">
+                  <span>➕</span>
+                </button>
+                <button class="shop-visual-search-btn" type="button" onclick="window.openVisualSearch('${(item.visualSearchQuery || (item.title + ' ' + (item.suggestedColor || '') + ' ' + (item.spec || ''))).replace(/'/g, "\\'")}')" title="Google Images Visual AI Search">
+                  <span>🔍</span> <span>Search ↗</span>
+                </button>
+              </div>
+            </article>
+          `;
+        }
+
+        // ------------------------------------------------------------------
+        // VIEW MODE 1: THUMBNAIL CARDS VIEW
+        // ------------------------------------------------------------------
+        let mediaHtml = '';
+        if (hasImages && activeImage) {
+          mediaHtml = `
+            <div class="shop-card-media-wrapper" onclick="window.openShoppingLightbox('${item.title.replace(/'/g, "\\'")}', '${activeImage.src}', '<strong>${item.id}:</strong> ${(activeImage.label || '').replace(/'/g, "\\'")} • ${item.store} • ${item.priceRange}')" title="Click to inspect in Lightbox">
+              <img src="${activeImage.src}" alt="${item.title}" class="shop-card-media-img" loading="lazy">
+              <div class="shop-media-overlay-top">
+                <span class="shop-media-badge-id">${item.id}</span>
+                <span class="shop-media-badge-price">${item.priceRange}</span>
+              </div>
+              <div class="shop-media-overlay-bottom">
+                <span class="shop-media-badge-count">📸 ${allImages.length === 1 ? '1 Look' : `${allImages.length} Looks`}</span>
+                <span class="shop-media-hover-hint">🔍 Inspect</span>
+              </div>
+            </div>
+          `;
+        } else {
+          mediaHtml = `
+            <div class="shop-card-media-placeholder">
+              <span class="shop-placeholder-icon">${catIcon}</span>
+              <span class="shop-placeholder-title">${item.title}</span>
+              <span class="shop-placeholder-sub">Curated liturgical specification • Reference photos pending showroom selection</span>
+              <button type="button" class="shop-btn-add-look" onclick="window.openOptionIntakeModal('${item.id}')">➕ Add Pinterest / Showroom Look</button>
+            </div>
+          `;
+        }
+
+        const optionsBarHtml = `
+          <div class="shop-card-options-bar">
+            ${allImages.map(img => `
+              <button type="button" class="shop-option-chip ${img.optionIndex === (activeImage ? activeImage.optionIndex : 0) ? 'active' : ''}" onclick="event.stopPropagation(); window.selectItemOption('${item.id}', ${img.optionIndex})" title="${img.label || `Option ${img.optionIndex}`}">
+                ${img.isDefault ? '🌟 Concept' : (img.type === 'pinterest_direct' || (img.src && img.src.includes('pinimg')) ? '📌 Option ' + img.optionIndex : `Look ${img.optionIndex}`)}
+              </button>
+            `).join('')}
+            <button type="button" class="shop-option-chip shop-option-chip-add" onclick="event.stopPropagation(); window.openOptionIntakeModal('${item.id}')" title="Add a candidate look for this item">
+              ➕ Add Look
+            </button>
+          </div>
+        `;
 
         return `
           <article class="shop-item-card ${isBought ? 'purchased' : ''}" id="card-${item.id}">
             <div>
+              ${mediaHtml}
+              ${optionsBarHtml}
               <div class="shop-item-top">
                 <span class="shop-id-badge">${item.id}</span>
                 <span style="font-size: 11px; font-weight: 700; color: var(--shop-gold);">${item.priceRange}</span>
               </div>
               <h3 class="shop-item-title">${item.title}</h3>
-              <div class="shop-item-role">✨ ${item.role}</div>
+              <div class="shop-item-role" onclick="window.jumpToChapter('${item.chapterId}')" style="cursor: pointer; text-decoration: underline dotted;" title="Jump to Itinerary Chapter">✨ ${item.role}</div>
               <div class="shop-spec-box">
                 <strong>Specification:</strong> ${item.spec}
               </div>
               <div class="shop-meta-row">
                 <span class="shop-meta-tag">🎨 <strong>Color:</strong> ${item.suggestedColor}</span>
-                <span class="shop-meta-tag">🏬 <strong>Store:</strong> ${item.store}</span>
+                <span class="shop-meta-tag" onclick="window.jumpToStore('${item.store.replace(/'/g, "\\'")}')" style="cursor: pointer; text-decoration: underline dotted;" title="Jump to Store in Directory">🏬 <strong>Store:</strong> ${item.store}</span>
               </div>
+              ${activeImage && activeImage.referenceUrl ? `
+                <div style="margin-top: 6px;">
+                  <a href="${activeImage.referenceUrl}" target="_blank" rel="noopener" class="shop-ref-link-chip" onclick="event.stopPropagation()">
+                    📌 View on Pinterest ↗
+                  </a>
+                </div>
+              ` : ''}
               
               <!-- Multi-Stakeholder Consensus Bar -->
               <div class="shop-stakeholder-bar">
@@ -450,6 +797,9 @@
                 <span>${isBought ? '✓ In Shopping Bag (Purchased)' : 'Mark as Purchased'}</span>
               </label>
               <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                <button class="shop-share-look-btn" type="button" onclick="window.shareItemOption('${item.id}', ${activeImage ? activeImage.optionIndex : 0})" title="Share this look with family">
+                  <span>📤 Share Look</span>
+                </button>
                 <button class="shop-visual-search-btn" type="button" onclick="window.openVisualSearch('${(item.visualSearchQuery || (item.title + ' ' + (item.suggestedColor || '') + ' ' + (item.spec || ''))).replace(/'/g, "\\'")}')" title="Google Images Visual AI Search">
                   <span>🔍</span> Visual Search ↗
                 </button>
@@ -485,10 +835,8 @@
     };
 
     window.focusCluster = function(clusterId) {
-      const el = document.getElementById('cluster-' + clusterId);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
+      if (!clusterId) return;
+      setCatalogSubView('clusters', 'cluster-' + clusterId);
     };
 
     // Filter pills
@@ -496,6 +844,9 @@
       pill.addEventListener('click', () => {
         shopFilterPills.forEach(p => p.classList.remove('active'));
         pill.classList.add('active');
+        if (typeof pill.scrollIntoView === 'function') {
+          pill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
         activeFilter = pill.getAttribute('data-filter');
         renderItems();
       });
@@ -507,6 +858,9 @@
       pill.addEventListener('click', () => {
         storePills.forEach(p => p.classList.remove('active'));
         pill.classList.add('active');
+        if (typeof pill.scrollIntoView === 'function') {
+          pill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
         activeStoreCategory = pill.getAttribute('data-store-cat') || 'all';
         renderStores();
       });
@@ -1574,6 +1928,8 @@
             }
             if (window.currentShoppingView === 'table') {
               window.renderShoppingTable();
+            } else {
+              renderItems();
             }
           }, (err) => {
             console.warn('Firestore shopping listener permission/network notice:', err);
@@ -1905,7 +2261,7 @@
       });
     }
 
-    // Wire Option Intake Modal (Adapted from PIO ImageUploadWidget)
+    // Wire Option Intake Modal (Adapted from PIO ImageUploadWidget / P-PINTEREST-INTAKE-001)
     const btnOpenShoppingIntake = document.getElementById('btnOpenShoppingIntake');
     const intakeBackdrop = document.getElementById('skOptionIntakeBackdrop');
     const btnCloseIntake = document.getElementById('skOptionIntakeClose');
@@ -1920,63 +2276,219 @@
     const proofCard = document.getElementById('skDriveProofCard');
     const proofImg = document.getElementById('skDriveProofImg');
     const proofId = document.getElementById('skDriveFileId');
+    const fileInput = document.getElementById('skFileInput');
+    let localUploadedDataUrl = '';
+
+    window.openOptionIntakeModal = function(itemId) {
+      if (!intakeBackdrop) return;
+      const item = items.find(i => i.id === itemId);
+      const itemIdInput = document.getElementById('skOptionItemId');
+      const modalTitle = document.getElementById('skOptionIntakeTitle');
+      const titleInput = document.getElementById('skOptionTitle');
+      const categorySelect = document.getElementById('skOptionCategory');
+      const priceInput = document.getElementById('skOptionPrice');
+      const vendorInput = document.getElementById('skOptionVendor');
+
+      if (itemIdInput) itemIdInput.value = itemId || '';
+      if (modalTitle) modalTitle.textContent = item ? `Add Look for ${item.title} (${item.id})` : 'Add Shopping / Decor Option';
+
+      if (item) {
+        const existingImgs = getItemImages(item);
+        const nextIdx = existingImgs.length;
+        if (titleInput) titleInput.value = `${item.title} (Option ${nextIdx})`;
+        if (categorySelect && item.category) {
+          const catMap = { bridal: 'saree', groom: 'kurta', jewellery: 'jewelry' };
+          if (catMap[item.category]) categorySelect.value = catMap[item.category];
+        }
+        if (vendorInput && item.store) vendorInput.value = item.store;
+      } else {
+        if (titleInput) titleInput.value = '';
+      }
+
+      if (driveInput) driveInput.value = '';
+      if (proofCard) proofCard.style.display = 'none';
+      if (fileInput) fileInput.value = '';
+      if (priceInput) priceInput.value = '';
+      localUploadedDataUrl = '';
+
+      intakeBackdrop.classList.add('is-active');
+    };
+
+    window.closeOptionIntakeModal = function() {
+      if (intakeBackdrop) intakeBackdrop.classList.remove('is-active');
+    };
 
     if (btnOpenShoppingIntake && intakeBackdrop) {
       btnOpenShoppingIntake.addEventListener('click', () => {
-        intakeBackdrop.classList.add('is-active');
+        window.openOptionIntakeModal('');
+      });
+    }
+
+    if (btnCloseIntake) btnCloseIntake.addEventListener('click', window.closeOptionIntakeModal);
+    if (btnCancelIntake) btnCancelIntake.addEventListener('click', window.closeOptionIntakeModal);
+
+    // 3-Trigger Dismissibility (INV-LIFECYCLE-03)
+    if (intakeBackdrop) {
+      intakeBackdrop.addEventListener('click', (e) => {
+        if (e.target === intakeBackdrop) window.closeOptionIntakeModal();
+      });
+    }
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && intakeBackdrop && intakeBackdrop.classList.contains('is-active')) {
+        window.closeOptionIntakeModal();
+      }
+    });
+
+    if (tabDrive && tabDevice) {
+      tabDrive.addEventListener('click', () => {
+        tabDrive.classList.add('is-active');
+        tabDevice.classList.remove('is-active');
+        if (paneDrive) paneDrive.style.display = 'block';
+        if (paneDevice) paneDevice.style.display = 'none';
       });
 
-      const closeIntake = () => {
-        intakeBackdrop.classList.remove('is-active');
-      };
+      tabDevice.addEventListener('click', () => {
+        tabDevice.classList.add('is-active');
+        tabDrive.classList.remove('is-active');
+        if (paneDevice) paneDevice.style.display = 'block';
+        if (paneDrive) paneDrive.style.display = 'none';
+      });
+    }
 
-      if (btnCloseIntake) btnCloseIntake.addEventListener('click', closeIntake);
-      if (btnCancelIntake) btnCancelIntake.addEventListener('click', closeIntake);
-
-      if (tabDrive && tabDevice) {
-        tabDrive.addEventListener('click', () => {
-          tabDrive.classList.add('is-active');
-          tabDevice.classList.remove('is-active');
-          if (paneDrive) paneDrive.style.display = 'block';
-          if (paneDevice) paneDevice.style.display = 'none';
-        });
-
-        tabDevice.addEventListener('click', () => {
-          tabDevice.classList.add('is-active');
-          tabDrive.classList.remove('is-active');
-          if (paneDevice) paneDevice.style.display = 'block';
-          if (paneDrive) paneDrive.style.display = 'none';
-        });
-      }
-
-      const verifyDriveLink = () => {
-        const url = driveInput ? driveInput.value.trim() : '';
-        if (!url) return;
-        const resolved = (window.SKPrimitives && window.SKPrimitives.resolveDriveAsset)
-          ? window.SKPrimitives.resolveDriveAsset(url, { cardWidth: 200 })
-          : null;
-        if (resolved && resolved.isDrive) {
-          if (proofCard) proofCard.style.display = 'flex';
-          if (proofImg) proofImg.src = resolved.cardThumbnail;
-          if (proofId) proofId.textContent = 'Drive ID: ' + resolved.driveId;
-          showToast('Google Drive asset recognized with zero-CORS preview!', '✓');
-        } else {
-          showToast('Direct URL registered.', '✓');
+    if (fileInput) {
+      fileInput.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (evt) => {
+            localUploadedDataUrl = evt.target.result;
+            showToast(`Showroom photo loaded (${Math.round(file.size / 1024)} KB)!`, '📷');
+          };
+          reader.readAsDataURL(file);
         }
-      };
+      });
+    }
 
-      if (btnVerifyDrive) btnVerifyDrive.addEventListener('click', verifyDriveLink);
-      if (driveInput) driveInput.addEventListener('change', verifyDriveLink);
-
-      if (btnSubmitOption) {
-        btnSubmitOption.addEventListener('click', () => {
-          const title = document.getElementById('skOptionTitle')?.value.trim() || 'New Option';
-          const price = document.getElementById('skOptionPrice')?.value.trim() || '—';
-          const category = document.getElementById('skOptionCategory')?.value || 'other';
-          showToast(`Option "${title}" added to ${category.toUpperCase()}!`, '🎉');
-          closeIntake();
-        });
+    const verifyDriveLink = () => {
+      const url = driveInput ? driveInput.value.trim() : '';
+      if (!url) return;
+      if (url.includes('i.pinimg.com')) {
+        if (proofCard) proofCard.style.display = 'flex';
+        if (proofImg) proofImg.src = url;
+        if (proofId) proofId.textContent = 'Pinterest CDN (Direct Render)';
+        showToast('Direct Pinterest image verified!', '📌');
+        return;
       }
+      if (url.includes('pin.it') || url.includes('pinterest.com/pin/')) {
+        if (proofCard) proofCard.style.display = 'flex';
+        if (proofImg) proofImg.src = './assets/shopping/vivaha_pata/vivaha_pata_0.jpg';
+        if (proofId) proofId.textContent = 'Pinterest Web Pin (External Reference)';
+        showToast('Pinterest Web Pin saved as reference chip!', '📌');
+        return;
+      }
+      const resolved = (window.SKPrimitives && window.SKPrimitives.resolveDriveAsset)
+        ? window.SKPrimitives.resolveDriveAsset(url, { cardWidth: 200 })
+        : null;
+      if (resolved && resolved.isDrive) {
+        if (proofCard) proofCard.style.display = 'flex';
+        if (proofImg) proofImg.src = resolved.cardThumbnail;
+        if (proofId) proofId.textContent = 'Drive ID: ' + resolved.driveId;
+        showToast('Google Drive asset recognized with zero-CORS preview!', '✓');
+      } else {
+        if (proofCard) proofCard.style.display = 'flex';
+        if (proofImg) proofImg.src = url;
+        if (proofId) proofId.textContent = 'Web Image URL';
+        showToast('Web image link registered.', '✓');
+      }
+    };
+
+    if (btnVerifyDrive) btnVerifyDrive.addEventListener('click', verifyDriveLink);
+    if (driveInput) driveInput.addEventListener('change', verifyDriveLink);
+
+    if (btnSubmitOption) {
+      btnSubmitOption.addEventListener('click', () => {
+        const itemId = document.getElementById('skOptionItemId')?.value.trim() || '';
+        const title = document.getElementById('skOptionTitle')?.value.trim() || 'New Candidate Look';
+        const price = document.getElementById('skOptionPrice')?.value.trim() || '';
+        const category = document.getElementById('skOptionCategory')?.value || 'other';
+        const vendor = document.getElementById('skOptionVendor')?.value.trim() || '';
+        const urlInput = driveInput ? driveInput.value.trim() : '';
+
+        let src = '';
+        let referenceUrl = '';
+        let type = 'web_image';
+
+        if (localUploadedDataUrl) {
+          src = localUploadedDataUrl;
+          type = 'showroom_upload';
+        } else if (urlInput) {
+          if (urlInput.includes('i.pinimg.com')) {
+            src = urlInput;
+            type = 'pinterest_direct';
+          } else if (urlInput.includes('pin.it') || urlInput.includes('pinterest.com/pin/')) {
+            referenceUrl = urlInput;
+            type = 'pinterest_pin';
+            const matchedItem = items.find(i => i.id === itemId);
+            src = (matchedItem && matchedItem.images && matchedItem.images[0])
+              ? matchedItem.images[0].src
+              : './assets/shopping/vivaha_pata/vivaha_pata_0.jpg';
+          } else {
+            const resolved = (window.SKPrimitives && window.SKPrimitives.resolveDriveAsset)
+              ? window.SKPrimitives.resolveDriveAsset(urlInput, { cardWidth: 800 })
+              : null;
+            if (resolved && resolved.isDrive) {
+              src = resolved.cardThumbnail;
+              type = 'drive';
+            } else {
+              src = urlInput;
+              type = 'web_image';
+            }
+          }
+        }
+
+        if (itemId) {
+          const item = items.find(i => i.id === itemId);
+          if (!itemCustomOptions[itemId]) {
+            itemCustomOptions[itemId] = [];
+          }
+          const existingImgs = getItemImages(item);
+          const nextOptIndex = existingImgs.length > 0
+            ? Math.max(...existingImgs.map(img => img.optionIndex)) + 1
+            : 1;
+
+          const newOption = {
+            optionIndex: nextOptIndex,
+            isDefault: false,
+            label: title,
+            src: src || (item && item.images && item.images[0] ? item.images[0].src : ''),
+            referenceUrl: referenceUrl || urlInput,
+            type: type,
+            store: vendor || (item ? item.store : ''),
+            priceTier: price ? `₹${price}` : (item ? item.priceRange : ''),
+            addedAt: new Date().toISOString()
+          };
+
+          itemCustomOptions[itemId].push(newOption);
+          localStorage.setItem('sk_shopping_custom_options', JSON.stringify(itemCustomOptions));
+
+          itemOptionSelected[itemId] = nextOptIndex;
+          localStorage.setItem('sk_shopping_item_options', JSON.stringify(itemOptionSelected));
+
+          if (typeof window.fsSetShoppingItemStatus === 'function') {
+            window.fsSetShoppingItemStatus(itemId, {
+              options: itemCustomOptions[itemId],
+              selectedOptionIndex: nextOptIndex
+            }).catch(err => console.warn('Firestore options sync skipped/offline:', err));
+          }
+
+          renderItems();
+          showToast(`Candidate look "${title}" added for ${itemId}!`, '📸');
+          window.closeOptionIntakeModal();
+        } else {
+          showToast(`Option "${title}" recorded!`, '🎉');
+          window.closeOptionIntakeModal();
+        }
+      });
     }
 
     // Initialize & Re-render API

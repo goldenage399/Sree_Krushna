@@ -1,10 +1,10 @@
 /**
  * Sree Krushna Marriage OS — Wedding Trousseau, "Sara" Gifting & Shopping Registry Data
- * Standard: SPEC-PROC-TROUSSEAU-001 / P-SHOPPING-CONSENSUS-001 / P-COMPARE-SHARE-001
- * Ruling: AC-DEC-2026-018 / UI-DEC-2026-014
+ * Standard: SPEC-PROC-TROUSSEAU-001 / P-SHOPPING-CONSENSUS-001 / P-UNIVERSAL-VISUAL-ASSET-001
+ * Ruling: AC-DEC-2026-035 / UI-DEC-2026-031
  * 
  * Aggregates all wedding shopping items, 4-stage chapters, multi-stakeholder consensus
- * clusters, Bhubaneswar retail stores, and WhatsApp sharing templates.
+ * clusters, Bhubaneswar retail stores, WhatsApp sharing templates, and visual asset registry.
  */
 
 window.SHOPPING_REGISTRY_DATA = {
@@ -454,7 +454,17 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "vivaha_pata",
+      "images": [
+        {
+          "optionIndex": 0,
+          "isDefault": true,
+          "label": "Sambalpuri Khandua Pata (Curated Concept)",
+          "src": "./assets/shopping/vivaha_pata/vivaha_pata_0.jpg",
+          "filename": "vivaha_pata_0.jpg"
+        }
+      ]
     },
     {
       "id": "TRS-BR-02",
@@ -473,7 +483,17 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": false
-      }
+      },
+      "slug": "sangeet_lehenga",
+      "images": [
+        {
+          "optionIndex": 0,
+          "isDefault": true,
+          "label": "Midnight Blue Velvet Lehenga (Curated Concept)",
+          "src": "./assets/shopping/sangeet_lehenga/sangeet_lehenga_0.jpg",
+          "filename": "sangeet_lehenga_0.jpg"
+        }
+      ]
     },
     {
       "id": "TRS-BR-03",
@@ -491,7 +511,17 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": false,
         "inlaws": false
-      }
+      },
+      "slug": "haldi_saree",
+      "images": [
+        {
+          "optionIndex": 0,
+          "isDefault": true,
+          "label": "Mustard Cotton-Silk Handloom (Curated Concept)",
+          "src": "./assets/shopping/haldi_saree/haldi_saree_0.jpg",
+          "filename": "haldi_saree_0.jpg"
+        }
+      ]
     },
     {
       "id": "TRS-BR-04",
@@ -509,7 +539,17 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": false,
         "inlaws": false
-      }
+      },
+      "slug": "mehndi_lehenga",
+      "images": [
+        {
+          "optionIndex": 0,
+          "isDefault": true,
+          "label": "Emerald Organza Lehenga (Curated Concept)",
+          "src": "./assets/shopping/mehndi_lehenga/mehndi_lehenga_0.jpg",
+          "filename": "mehndi_lehenga_0.jpg"
+        }
+      ]
     },
     {
       "id": "TRS-BR-05",
@@ -527,7 +567,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": false,
         "sisters": false,
         "inlaws": true
-      }
+      },
+      "slug": "reception_grand_silk_saree",
+      "images": []
     },
     {
       "id": "TRS-BR-06",
@@ -545,7 +587,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "bridal_odhani_mandap_veil",
+      "images": []
     },
     {
       "id": "TRS-BR-07",
@@ -563,7 +607,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": false,
         "sisters": true,
         "inlaws": false
-      }
+      },
+      "slug": "post_wedding_daily_handloom_silks_set_of_5",
+      "images": []
     },
     {
       "id": "TRS-GR-01",
@@ -582,7 +628,17 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "mandap_dhoti",
+      "images": [
+        {
+          "optionIndex": 0,
+          "isDefault": true,
+          "label": "Raw Silk Tussar Dhoti-Kurta (Curated Concept)",
+          "src": "./assets/shopping/mandap_dhoti/mandap_dhoti_0.jpg",
+          "filename": "mandap_dhoti_0.jpg"
+        }
+      ]
     },
     {
       "id": "TRS-GR-02",
@@ -600,7 +656,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": false,
         "inlaws": true
-      }
+      },
+      "slug": "ceremonial_silk_patta_angavastra",
+      "images": []
     },
     {
       "id": "TRS-GR-03",
@@ -618,7 +676,17 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": false
-      }
+      },
+      "slug": "barat_sherwani",
+      "images": [
+        {
+          "optionIndex": 0,
+          "isDefault": true,
+          "label": "Champagne Gold Jacquard Sherwani (Curated Concept)",
+          "src": "./assets/shopping/barat_sherwani/barat_sherwani_0.jpg",
+          "filename": "barat_sherwani_0.jpg"
+        }
+      ]
     },
     {
       "id": "TRS-GR-04",
@@ -636,7 +704,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": false,
         "sisters": true,
         "inlaws": false
-      }
+      },
+      "slug": "groom_safa_turban_feather_kalgi",
+      "images": []
     },
     {
       "id": "TRS-GR-05",
@@ -654,7 +724,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": false
-      }
+      },
+      "slug": "barat_stole_multi_layer_pearl_mala",
+      "images": []
     },
     {
       "id": "TRS-GR-06",
@@ -672,7 +744,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": false
-      }
+      },
+      "slug": "sangeet_tuxedo_royal_bandhgala",
+      "images": []
     },
     {
       "id": "TRS-GR-07",
@@ -690,7 +764,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": false,
         "inlaws": false
-      }
+      },
+      "slug": "haldi_cotton_silk_kurta_pajama",
+      "images": []
     },
     {
       "id": "TRS-GR-08",
@@ -708,7 +784,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": false,
         "sisters": true,
         "inlaws": false
-      }
+      },
+      "slug": "traditional_mojaris_juttis_2_pairs",
+      "images": []
     },
     {
       "id": "TRS-JW-01",
@@ -726,7 +804,17 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "chandra_haar",
+      "images": [
+        {
+          "optionIndex": 0,
+          "isDefault": true,
+          "label": "22K Temple Gold Choker (Curated Concept)",
+          "src": "./assets/shopping/chandra_haar/chandra_haar_0.jpg",
+          "filename": "chandra_haar_0.jpg"
+        }
+      ]
     },
     {
       "id": "TRS-JW-02",
@@ -744,7 +832,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": false,
         "inlaws": true
-      }
+      },
+      "slug": "long_sita_haar_layered_necklace",
+      "images": []
     },
     {
       "id": "TRS-JW-03",
@@ -762,7 +852,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": false
-      }
+      },
+      "slug": "matha_patti_maang_tikka",
+      "images": []
     },
     {
       "id": "TRS-JW-04",
@@ -780,7 +872,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": false,
         "inlaws": false
-      }
+      },
+      "slug": "traditional_tiered_jhumkas_kaanbali",
+      "images": []
     },
     {
       "id": "TRS-JW-05",
@@ -798,7 +892,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "gold_kadas_bangles_set_of_4",
+      "images": []
     },
     {
       "id": "TRS-JW-06",
@@ -816,7 +912,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": false
-      }
+      },
+      "slug": "kamarbandh_gold_waist_chain",
+      "images": []
     },
     {
       "id": "TRS-JW-07",
@@ -834,7 +932,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "silver_bridal_payal_cuttack_tarakasi_nupur",
+      "images": []
     },
     {
       "id": "TRS-JW-08",
@@ -852,7 +952,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": false,
         "inlaws": true
-      }
+      },
+      "slug": "silver_bichhiya_toe_rings_2_sets",
+      "images": []
     },
     {
       "id": "TRS-JW-09",
@@ -870,7 +972,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": false,
         "sisters": false,
         "inlaws": true
-      }
+      },
+      "slug": "silver_sindoor_farua_ceremonial_kajal_lata",
+      "images": []
     },
     {
       "id": "TRS-SA-01",
@@ -889,7 +993,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "samandhi_vastra_mother_in_law_silk_saree",
+      "images": []
     },
     {
       "id": "TRS-SA-02",
@@ -908,7 +1014,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "samandhi_vastra_father_in_law_suiting_dhoti",
+      "images": []
     },
     {
       "id": "TRS-SA-03",
@@ -926,7 +1034,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": false
-      }
+      },
+      "slug": "bride_s_immediate_siblings_hampers",
+      "images": []
     },
     {
       "id": "TRS-SA-04",
@@ -944,7 +1054,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": false,
         "sisters": true,
         "inlaws": false
-      }
+      },
+      "slug": "groom_s_sisters_wardrobe_2_sets_each",
+      "images": []
     },
     {
       "id": "TRS-SA-05",
@@ -962,7 +1074,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "ceremonial_shringar_kula_trunk_kit",
+      "images": []
     },
     {
       "id": "TRS-SA-06",
@@ -980,7 +1094,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "auspicious_dry_fruit_odia_pitha_hampers_5_baskets",
+      "images": []
     },
     {
       "id": "TRS-OD-01",
@@ -998,7 +1114,17 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "khandua_pata",
+      "images": [
+        {
+          "optionIndex": 0,
+          "isDefault": true,
+          "label": "Holy Gita Govinda Nuapatna Pata (Curated Concept)",
+          "src": "./assets/shopping/khandua_pata/khandua_pata_0.jpg",
+          "filename": "khandua_pata_0.jpg"
+        }
+      ]
     },
     {
       "id": "TRS-OD-02",
@@ -1016,7 +1142,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "balakati_hand_cast_bell_metal_kansa_7_piece_dining_service",
+      "images": []
     },
     {
       "id": "TRS-OD-03",
@@ -1034,7 +1162,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "cuttack_tarakasi_silver_filigree_sindura_phuda_pana_batta",
+      "images": []
     },
     {
       "id": "TRS-OD-04",
@@ -1052,7 +1182,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "sambalpuri_handloom_groom_joda_silk_dhoti_set",
+      "images": []
     },
     {
       "id": "TRS-EG-01",
@@ -1072,7 +1204,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "diamond_gold_engagement_rings_bride_groom",
+      "images": []
     },
     {
       "id": "TRS-EG-02",
@@ -1091,7 +1225,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "bride_engagement_saree_pastel_silk_lehenga",
+      "images": []
     },
     {
       "id": "TRS-EG-03",
@@ -1110,7 +1246,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "groom_engagement_kurta_ensemble_indo_western_suit",
+      "images": []
     },
     {
       "id": "TRS-EG-04",
@@ -1129,7 +1267,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "decorative_ring_platter_nirbandha_sagan_thali_hampers",
+      "images": []
     },
     {
       "id": "TRS-EG-05",
@@ -1148,7 +1288,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "in_laws_elder_return_vastra_odia_sweets_hampers",
+      "images": []
     },
     {
       "id": "TRS-OD-05",
@@ -1167,7 +1309,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "odia_sacred_bridal_groom_mukuta_set_shola_silver_filigree",
+      "images": []
     },
     {
       "id": "TRS-OD-06",
@@ -1186,7 +1330,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "baula_patta_saree_hastaganthi_bandhana_vastra_set",
+      "images": []
     },
     {
       "id": "TRS-BR-08",
@@ -1205,7 +1351,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "bride_haldi_handloom_yellow_saree_fresh_floral_jewellery_suite",
+      "images": []
     },
     {
       "id": "TRS-GR-10",
@@ -1224,7 +1372,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "groom_mangala_snana_haldi_tussar_silk_kurta_dhoti_ensemble",
+      "images": []
     },
     {
       "id": "TRS-OD-07",
@@ -1243,9 +1393,9 @@ window.SHOPPING_REGISTRY_DATA = {
         "bride": true,
         "sisters": true,
         "inlaws": true
-      }
+      },
+      "slug": "sacred_bamboo_kula_odia_alaktaka_alta_ritual_set",
+      "images": []
     }
   ]
 };
-
-/* SSOT: docs/incidents/INC-089-liturgical-attire-conflation-and-trousseau-catalog-drift.md — INC-089 */

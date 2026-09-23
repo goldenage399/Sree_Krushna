@@ -415,3 +415,17 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 480px) {
+  .shop-view-switcher {
+    gap: 4px;
+    padding: 4px;
+    margin: 12px 0 16px;
+  }
+  .shop-view-tab {
+    padding: 8px 6px;
+    font-size: 12px;
+    gap: 4px;
+    min-height: 44px;
+  }
+}

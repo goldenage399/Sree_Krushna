@@ -1,0 +1,167 @@
+{
+  "version": "1.0.0",
+  "standard": "P-UNIVERSAL-VISUAL-ASSET-001",
+  "updated_at": "2026-09-23T19:44:38.309Z",
+  "items": [
+    {
+      "itemId": "TRS-BR-01",
+      "slug": "vivaha_pata",
+      "folder": "assets/shopping/vivaha_pata",
+      "title": "Sacred Vivaha Pata (Hastaganthi Saree)",
+      "category": "bridal",
+      "chapterId": "chapter_bridal_silks",
+      "optionsCount": 1,
+      "options": [
+        {
+          "optionIndex": 0,
+          "isDefault": true,
+          "label": "Sambalpuri Khandua Pata (Curated Concept)",
+          "filename": "vivaha_pata_0.jpg",
+          "fileSrc": "./assets/shopping/vivaha_pata/vivaha_pata_0.jpg",
+          "aspectRatio": "3:4",
+          "format": "jpg"
+        }
+      ]
+    },
+    {
+      "itemId": "TRS-BR-02",
+      "slug": "sangeet_lehenga",
+      "folder": "assets/shopping/sangeet_lehenga",
+      "title": "Bridal Sangeet Lehenga & Choli",
+      "category": "bridal",
+      "chapterId": "chapter_bridal_silks",
+      "optionsCount": 1,
+      "options": [
+        {
+          "optionIndex": 0,
+          "isDefault": true,
+          "label": "Midnight Blue Velvet Lehenga (Curated Concept)",
+          "filename": "sangeet_lehenga_0.jpg",
+          "fileSrc": "./assets/shopping/sangeet_lehenga/sangeet_lehenga_0.jpg",
+          "aspectRatio": "3:4",
+          "format": "jpg"
+        }
+      ]
+    },
+    {
+      "itemId": "TRS-BR-03",
+      "slug": "haldi_saree",
+      "folder": "assets/shopping/haldi_saree",
+      "title": "Haldi Mangala Snana Saree",
+      "category": "bridal",
+      "chapterId": "chapter_bridal_silks",
+      "optionsCount": 1,
+      "options": [
+        {
+          "optionIndex": 0,
+          "isDefault": true,
+          "label": "Mustard Cotton-Silk Handloom (Curated Concept)",
+          "filename": "haldi_saree_0.jpg",
+          "fileSrc": "./assets/shopping/haldi_saree/haldi_saree_0.jpg",
+          "aspectRatio": "3:4",
+          "format": "jpg"
+        }
+      ]
+    },
+    {
+      "itemId": "TRS-BR-04",
+      "slug": "mehndi_lehenga",
+      "folder": "assets/shopping/mehndi_lehenga",
+      "title": "Mehendi Garden Promenade Outfit",
+      "category": "bridal",
+      "chapterId": "chapter_bridal_silks",
+      "optionsCount": 1,
+      "options": [
+        {
+          "optionIndex": 0,
+          "isDefault": true,
+          "label": "Emerald Organza Lehenga (Curated Concept)",
+          "filename": "mehndi_lehenga_0.jpg",
+          "fileSrc": "./assets/shopping/mehndi_lehenga/mehndi_lehenga_0.jpg",
+          "aspectRatio": "3:4",
+          "format": "jpg"
+        }
+      ]
+    },
+    {
+      "itemId": "TRS-GR-01",
+      "slug": "mandap_dhoti",
+      "folder": "assets/shopping/mandap_dhoti",
+      "title": "Mandap Pure Silk Dhoti & Kurta",
+      "category": "groom",
+      "chapterId": "chapter_groom_wear",
+      "optionsCount": 1,
+      "options": [
+        {
+          "optionIndex": 0,
+          "isDefault": true,
+          "label": "Raw Silk Tussar Dhoti-Kurta (Curated Concept)",
+          "filename": "mandap_dhoti_0.jpg",
+          "fileSrc": "./assets/shopping/mandap_dhoti/mandap_dhoti_0.jpg",
+          "aspectRatio": "3:4",
+          "format": "jpg"
+        }
+      ]
+    },
+    {
+      "itemId": "TRS-GR-03",
+      "slug": "barat_sherwani",
+      "folder": "assets/shopping/barat_sherwani",
+      "title": "Barat Royal Sherwani",
+      "category": "groom",
+      "chapterId": "chapter_groom_wear",
+      "optionsCount": 1,
+      "options": [
+        {
+          "optionIndex": 0,
+          "isDefault": true,
+          "label": "Champagne Gold Jacquard Sherwani (Curated Concept)",
+          "filename": "barat_sherwani_0.jpg",
+          "fileSrc": "./assets/shopping/barat_sherwani/barat_sherwani_0.jpg",
+          "aspectRatio": "3:4",
+          "format": "jpg"
+        }
+      ]
+    },
+    {
+      "itemId": "TRS-JW-01",
+      "slug": "chandra_haar",
+      "folder": "assets/shopping/chandra_haar",
+      "title": "Chandra Haar / Temple Gold Choker",
+      "category": "jewellery",
+      "chapterId": "chapter_jewellery",
+      "optionsCount": 1,
+      "options": [
+        {
+          "optionIndex": 0,
+          "isDefault": true,
+          "label": "22K Temple Gold Choker (Curated Concept)",
+          "filename": "chandra_haar_0.jpg",
+          "fileSrc": "./assets/shopping/chandra_haar/chandra_haar_0.jpg",
+          "aspectRatio": "3:4",
+          "format": "jpg"
+        }
+      ]
+    },
+    {
+      "itemId": "TRS-OD-01",
+      "slug": "khandua_pata",
+      "folder": "assets/shopping/khandua_pata",
+      "title": "Nuapatna Khandua Pata",
+      "category": "heirlooms",
+      "chapterId": "chapter_bridal_silks",
+      "optionsCount": 1,
+      "options": [
+        {
+          "optionIndex": 0,
+          "isDefault": true,
+          "label": "Holy Gita Govinda Nuapatna Pata (Curated Concept)",
+          "filename": "khandua_pata_0.jpg",
+          "fileSrc": "./assets/shopping/khandua_pata/khandua_pata_0.jpg",
+          "aspectRatio": "3:4",
+          "format": "jpg"
+        }
+      ]
+    }
+  ]
+}

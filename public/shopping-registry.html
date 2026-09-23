@@ -1740,6 +1740,23 @@
       flex-wrap: wrap;
     }
 
+    @media (max-width: 768px) {
+      .shop-filter-pills {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+        width: 100%;
+        padding: 4px 2px 6px;
+        mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
+        -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
+      }
+      .shop-filter-pills::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
     .shop-pill {
       padding: 6px 12px;
       border-radius: 20px;
@@ -1958,6 +1975,137 @@
       width: 20px;
       height: 20px;
       cursor: pointer;
+    }
+
+    /* ==========================================================================
+       LEVEL 2: CATALOG OPERATING MODE SWITCHER (P-SHOPPING-JOURNEY-HUBS-001)
+       Standard: STD-MOD-COMP-001 | Rulings: AC-DEC-2026-037 / UI-DEC-2026-033
+       ========================================================================== */
+    .catalog-subnav-strip {
+      position: sticky;
+      top: var(--shopping-sticky-offset, 12px);
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(18, 23, 34, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--shop-border);
+      border-radius: var(--shop-radius-md);
+      padding: 8px 10px;
+      margin-bottom: 24px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+    .catalog-subnav-strip::-webkit-scrollbar {
+      display: none;
+    }
+
+    .catalog-subnav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      min-height: 40px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--shop-text-secondary);
+      cursor: pointer;
+      transition: all 0.18s ease;
+      white-space: nowrap;
+      user-select: none;
+      flex-shrink: 0;
+    }
+    .catalog-subnav-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .catalog-subnav-btn:focus-visible {
+      outline: 2px solid var(--shop-gold);
+      outline-offset: 2px;
+    }
+    .catalog-subnav-btn.active {
+      color: var(--shop-gold);
+      background: rgba(212, 168, 67, 0.12);
+      border-color: rgba(212, 168, 67, 0.35);
+      box-shadow: 0 0 14px rgba(212, 168, 67, 0.16);
+    }
+    .catalog-subnav-btn.subnav-view-all.active {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
+      box-shadow: none;
+    }
+    .subnav-btn-icon {
+      font-size: 15px;
+      line-height: 1;
+    }
+
+    /* Responsive Edge Fade on Mobile */
+    @media (max-width: 768px) {
+      .catalog-subnav-strip {
+        padding: 6px 8px;
+        gap: 6px;
+        mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
+        -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
+      }
+      .catalog-subnav-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+        min-height: 38px;
+      }
+    }
+
+    /* Non-Destructive Inactive Container Hiding Rules (Review 6.4 Correction 3) */
+    /* Mode 1: Items Checklist (Default Execution Anchor) - 0px scroll to items */
+    #catalogViewSection.mode-items #shoppingStepper,
+    #catalogViewSection.mode-items #shoppingClusterPods,
+    #catalogViewSection.mode-items #shoppingStoreNavigator {
+      display: none !important;
+    }
+
+    /* Mode 2: 5-Day Itinerary (Timeline + Filtered Items) */
+    #catalogViewSection.mode-itinerary #shoppingClusterPods,
+    #catalogViewSection.mode-itinerary #shoppingStoreNavigator {
+      display: none !important;
+    }
+
+    /* Mode 3: Clustered Decision Pods (Consensus Voting) */
+    #catalogViewSection.mode-clusters #shoppingStepper,
+    #catalogViewSection.mode-clusters #shoppingStoreNavigator,
+    #catalogViewSection.mode-clusters .shop-toolbar,
+    #catalogViewSection.mode-clusters #itemsGrid {
+      display: none !important;
+    }
+
+    /* Mode 4: Retail Stores (Market Directory & Navigation) */
+    #catalogViewSection.mode-stores #shoppingStepper,
+    #catalogViewSection.mode-stores #shoppingClusterPods,
+    #catalogViewSection.mode-stores .shop-toolbar,
+    #catalogViewSection.mode-stores #itemsGrid {
+      display: none !important;
+    }
+
+    /* Mode 5: Full Run Sheet (All sections retain their native layouts) */
+
+    /* Independent Clean Print Unrolling (Review 6.4 Correction 2) */
+    @media print {
+      .catalog-subnav-strip {
+        display: none !important;
+      }
+      #catalogViewSection #shoppingStepper,
+      #catalogViewSection #shoppingClusterPods,
+      #catalogViewSection #shoppingStoreNavigator,
+      #catalogViewSection .shop-toolbar,
+      #catalogViewSection #itemsGrid {
+        display: revert !important;
+      }
     }
 
     /* Toast */
@@ -2549,6 +2697,20 @@
   }
   .survey-tiers-grid, .survey-tailor-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .shop-view-switcher {
+    gap: 4px;
+    padding: 4px;
+    margin: 12px 0 16px;
+  }
+  .shop-view-tab {
+    padding: 8px 6px;
+    font-size: 12px;
+    gap: 4px;
+    min-height: 44px;
   }
 }
 
@@ -3295,6 +3457,716 @@ tr.row-pulse td {
   }
 }
 
+
+    /**
+ * Sree Krushna Marriage OS — Shopping Catalog Dual-View & Visual Asset Styles
+ * Standard: P-UNIVERSAL-VISUAL-ASSET-001 / STD-MOD-COMP-001 / AC-DEC-2026-035 / UI-DEC-2026-031
+ * Scope: Segmented Cards/List switcher, 4:5 image cards, showroom option pills,
+ *        micro-avatar compact list view, and responsive container queries across all viewports.
+ */
+
+/* Toolbar Controls & Segmented Switcher */
+.shop-toolbar-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.shop-catalog-view-toggle {
+  display: inline-flex;
+  align-items: center;
+  background: var(--shop-surface-elevated, #1a2236);
+  border: 1px solid var(--shop-border, rgba(255, 255, 255, 0.12));
+  border-radius: 20px;
+  padding: 3px;
+  gap: 2px;
+  user-select: none;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.35);
+  flex-shrink: 0;
+}
+
+.shop-view-mode-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  color: var(--shop-text-secondary, #94a3b8);
+  padding: 5px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  min-height: 30px;
+  line-height: 1;
+}
+
+.shop-view-mode-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.shop-view-mode-btn.active {
+  background: var(--shop-gold, #d4af37);
+  color: #0b1120;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(212, 175, 55, 0.35);
+}
+
+/* ==========================================================================
+   VIEW MODE 1: THUMBNAIL CARDS VIEW (.view-thumbnails)
+   ========================================================================== */
+.shop-items-grid.view-thumbnails {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+  gap: 18px;
+}
+
+/* Visual Card Media Container (4:5 Aspect Ratio) */
+.shop-card-media-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: 380px;
+  border-radius: var(--shop-radius-sm, 8px);
+  overflow: hidden;
+  background: #080d1a;
+  margin-bottom: 12px;
+  cursor: pointer;
+  border: 1px solid var(--shop-border, rgba(255, 255, 255, 0.1));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.shop-card-media-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: block;
+}
+
+.shop-card-media-wrapper:hover .shop-card-media-img {
+  transform: scale(1.035);
+}
+
+/* Overlay Badges on Card Media */
+.shop-media-overlay-top {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.shop-media-overlay-bottom {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.shop-media-badge-id {
+  font-family: monospace;
+  font-weight: 700;
+  font-size: 11px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--shop-gold, #d4af37);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.shop-media-badge-price {
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #34d399;
+  border: 1px solid rgba(52, 211, 153, 0.4);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.shop-media-badge-count {
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 3px 8px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.shop-media-hover-hint {
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(212, 175, 55, 0.9);
+  color: #0b1120;
+  padding: 3px 8px;
+  border-radius: 4px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.shop-card-media-wrapper:hover .shop-media-hover-hint {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Showroom Option Switcher Pills */
+.shop-card-options-bar {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 2px 2px 8px;
+  margin-bottom: 8px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.shop-card-options-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.shop-option-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--shop-bg, #0f172a);
+  border: 1px solid var(--shop-border, rgba(255, 255, 255, 0.12));
+  color: var(--shop-text-secondary, #94a3b8);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.shop-option-chip:hover {
+  border-color: var(--shop-gold, #d4af37);
+  color: #ffffff;
+}
+
+.shop-option-chip.active {
+  background: rgba(212, 175, 55, 0.18);
+  border-color: var(--shop-gold, #d4af37);
+  color: var(--shop-gold, #d4af37);
+  font-weight: 700;
+}
+
+/* Fallback SVG Placeholder for Items Awaiting Photos */
+.shop-card-media-placeholder {
+  width: 100%;
+  height: 180px;
+  border-radius: var(--shop-radius-sm, 8px);
+  margin-bottom: 12px;
+  background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.12) 0%, rgba(15, 23, 42, 0.95) 75%);
+  border: 1px dashed rgba(212, 175, 55, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 16px;
+  box-sizing: border-box;
+  gap: 6px;
+  position: relative;
+  user-select: none;
+}
+
+.shop-placeholder-icon {
+  font-size: 32px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+}
+
+.shop-placeholder-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--shop-gold, #d4af37);
+  letter-spacing: 0.3px;
+}
+
+.shop-placeholder-sub {
+  font-size: 11px;
+  color: var(--shop-text-muted, #64748b);
+  max-width: 220px;
+  line-height: 1.35;
+}
+
+/* ==========================================================================
+   VIEW MODE 2: COMPACT LIST VIEW (.view-compact-list)
+   ========================================================================== */
+.shop-items-grid.view-compact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shop-compact-row {
+  background: var(--shop-surface, #141c2e);
+  border: 1px solid var(--shop-border, rgba(255, 255, 255, 0.08));
+  border-radius: var(--shop-radius-sm, 8px);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  transition: all 0.18s ease;
+  position: relative;
+}
+
+.shop-compact-row:hover {
+  border-color: var(--shop-border-focus, #38bdf8);
+  background: var(--shop-surface-elevated, #1a2236);
+}
+
+.shop-compact-row.purchased {
+  border-color: var(--shop-emerald, #10b981);
+  background: rgba(16, 185, 129, 0.04);
+}
+
+/* Left Checkbox */
+.shop-compact-check-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.shop-compact-check-wrap input[type="checkbox"] {
+  accent-color: var(--shop-emerald, #10b981);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin: 0;
+}
+
+/* 48px Avatar / Thumbnail */
+.shop-compact-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+  cursor: pointer;
+  border: 1px solid var(--shop-border, rgba(255, 255, 255, 0.12));
+  background: #080d1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shop-compact-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.shop-compact-avatar:hover img {
+  transform: scale(1.08);
+}
+
+.shop-compact-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  background: rgba(212, 175, 55, 0.1);
+  color: var(--shop-gold, #d4af37);
+  user-select: none;
+}
+
+.shop-compact-avatar-badge {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+  line-height: 1;
+}
+
+/* Center Content */
+.shop-compact-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.shop-compact-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.shop-compact-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 380px;
+}
+
+.shop-compact-price {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--shop-gold, #d4af37);
+  white-space: nowrap;
+}
+
+.shop-compact-sub {
+  font-size: 11.5px;
+  color: var(--shop-text-secondary, #94a3b8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+}
+
+.shop-compact-tags {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.shop-mini-vote {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--shop-border, rgba(255, 255, 255, 0.1));
+  background: var(--shop-bg, #0f172a);
+  color: var(--shop-text-secondary, #94a3b8);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  transition: all 0.12s ease;
+}
+
+.shop-mini-vote.approved {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: var(--shop-emerald, #10b981);
+  color: #ffffff;
+}
+
+/* Right Actions */
+.shop-compact-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   MULTI-VIEWPORT & CONTAINER QUERY ADAPTATION (300px to 4K)
+   ========================================================================== */
+@container shoppingRegistry (max-width: 680px) {
+  .shop-toolbar-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .shop-search-box {
+    flex: 1;
+    min-width: 160px;
+  }
+
+  .shop-compact-title {
+    max-width: 220px;
+  }
+
+  .shop-compact-sub {
+    max-width: 220px;
+  }
+}
+
+@container shoppingRegistry (max-width: 480px) {
+  .shop-toolbar-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .shop-catalog-view-toggle {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .shop-view-mode-btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .shop-compact-row {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .shop-compact-avatar {
+    width: 42px;
+    height: 42px;
+  }
+
+  .shop-compact-title {
+    font-size: 12.5px;
+    max-width: 150px;
+  }
+
+  .shop-compact-sub {
+    font-size: 11px;
+    max-width: 150px;
+  }
+
+  .shop-compact-actions .shop-visual-search-btn span:last-child {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .shop-toolbar-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .shop-catalog-view-toggle {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .shop-view-mode-btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .shop-compact-title {
+    max-width: 150px;
+  }
+}
+
+
+    /**
+ * Sree Krushna Marriage OS — Shopping Option Pods & Deep-Link Sharing Styles
+ * SSOT: User_Created/Discussion Threads/Council/260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md § "Visual Component System"
+ * Standard: P-COLLAB-VISUAL-INTAKE-001
+ * Scope: Multi-image Option Pods, deep-link target pulse, Pinterest badge styling,
+ *        [📤 Share Look] button, and in-situ intake modal integrations.
+ */
+
+/* 1. Deep-Link Target Pulse (P-COLLAB-OPTION-SHARE-001) */
+@keyframes targetPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.8), 0 4px 16px rgba(0, 0, 0, 0.4);
+    border-color: var(--shop-gold, #d4af37);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(212, 175, 55, 0.25), 0 8px 28px rgba(212, 175, 55, 0.4);
+    border-color: var(--shop-gold-bright, #fef08a);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0), 0 4px 16px rgba(0, 0, 0, 0.4);
+    border-color: var(--shop-border, rgba(255, 255, 255, 0.12));
+  }
+}
+
+.highlight-target-item {
+  animation: targetPulse 2.4s ease-out;
+  border-color: var(--shop-gold, #d4af37) !important;
+}
+
+/* 2. Interactive Option Pod Strip (P-MULTI-IMAGE-CONTAINER-001) */
+.shop-card-options-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 4px 2px 8px;
+  margin-bottom: 8px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.shop-card-options-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.shop-option-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid var(--shop-border, rgba(255, 255, 255, 0.12));
+  color: var(--shop-text-secondary, #94a3b8);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.shop-option-chip:hover {
+  color: #fff;
+  border-color: rgba(212, 175, 55, 0.4);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.shop-option-chip.active {
+  background: rgba(212, 175, 55, 0.18);
+  border-color: var(--shop-gold, #d4af37);
+  color: var(--shop-gold-bright, #fef08a);
+  font-weight: 700;
+  box-shadow: 0 1px 4px rgba(212, 175, 55, 0.25);
+}
+
+.shop-option-chip-add {
+  border: 1px dashed rgba(212, 175, 55, 0.5) !important;
+  background: rgba(212, 175, 55, 0.08) !important;
+  color: var(--shop-gold, #d4af37) !important;
+}
+
+.shop-option-chip-add:hover {
+  border-style: solid !important;
+  background: rgba(212, 175, 55, 0.22) !important;
+  color: #ffffff !important;
+}
+
+/* 3. Dedicated Share Look Button (P-COLLAB-OPTION-SHARE-001) */
+.shop-share-look-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(212, 175, 55, 0.12);
+  color: var(--shop-gold-bright, #fef08a);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1.2;
+}
+
+.shop-share-look-btn:hover {
+  background: var(--shop-gold, #d4af37);
+  color: #0b1120;
+  border-color: var(--shop-gold, #d4af37);
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+}
+
+.shop-share-look-btn:active {
+  transform: scale(0.97);
+}
+
+/* 4. Pinterest & Showroom Badges */
+.shop-badge-pinterest {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: #e60023;
+  font-weight: 700;
+}
+
+.shop-badge-showroom {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+.shop-ref-link-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #e60023;
+  text-decoration: none;
+  background: rgba(230, 0, 35, 0.1);
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(230, 0, 35, 0.25);
+  margin-top: 4px;
+  transition: all 0.18s ease;
+}
+
+.shop-ref-link-chip:hover {
+  background: #e60023;
+  color: #fff;
+}
+
+/* 5. Placeholder Media State with Add Look affordance */
+.shop-card-media-placeholder .shop-btn-add-look {
+  margin-top: 10px;
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid var(--shop-gold, #d4af37);
+  color: var(--shop-gold-bright, #fef08a);
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.shop-card-media-placeholder .shop-btn-add-look:hover {
+  background: var(--shop-gold, #d4af37);
+  color: #0b1120;
+}
+
   </style>
 </head>
 <body>
@@ -3395,8 +4267,8 @@ tr.row-pulse td {
     </button>
   </div>
 
-  <!-- Catalog View Container -->
-  <div id="catalogViewSection">
+  <!-- Catalog View Container (P-SHOPPING-JOURNEY-HUBS-001) -->
+  <div id="catalogViewSection" class="mode-items">
   <!-- KPI Metrics Banner -->
   <section class="shop-kpis" id="shopKpis">
     <div class="shop-kpi-card">
@@ -3420,6 +4292,30 @@ tr.row-pulse td {
       <span class="shop-kpi-sub">Janpath, Saheed Nagar, Unit-2</span>
     </div>
   </section>
+
+  <!-- Level 2: Catalog Operating Mode Switcher (P-SHOPPING-JOURNEY-HUBS-001) -->
+  <nav class="catalog-subnav-strip" id="catalogSubnavStrip" role="tablist" aria-label="Catalog Operating Modes">
+    <button type="button" class="catalog-subnav-btn active" data-subview="items" role="tab" aria-selected="true" aria-controls="itemsGrid" onclick="window.setCatalogSubView('items')" title="Master Inventory Checklist (44 Items)">
+      <span class="subnav-btn-icon">📋</span>
+      <span class="subnav-btn-label">Items Checklist (44)</span>
+    </button>
+    <button type="button" class="catalog-subnav-btn" data-subview="itinerary" role="tab" aria-selected="false" aria-controls="shoppingStepper" onclick="window.setCatalogSubView('itinerary')" title="5-Day Bhubaneswar Shopping Itinerary">
+      <span class="subnav-btn-icon">🧭</span>
+      <span class="subnav-btn-label">5-Day Itinerary</span>
+    </button>
+    <button type="button" class="catalog-subnav-btn" data-subview="clusters" role="tab" aria-selected="false" aria-controls="shoppingClusterPods" onclick="window.setCatalogSubView('clusters')" title="Clustered Decision Pods &amp; Alternatives">
+      <span class="subnav-btn-icon">🤝</span>
+      <span class="subnav-btn-label">Decision Pods (5)</span>
+    </button>
+    <button type="button" class="catalog-subnav-btn" data-subview="stores" role="tab" aria-selected="false" aria-controls="shoppingStoreNavigator" onclick="window.setCatalogSubView('stores')" title="Bhubaneswar Market Directory &amp; Navigation">
+      <span class="subnav-btn-icon">📍</span>
+      <span class="subnav-btn-label">Retail Stores (8)</span>
+    </button>
+    <button type="button" class="catalog-subnav-btn subnav-view-all" data-subview="all" role="tab" aria-selected="false" onclick="window.setCatalogSubView('all')" title="Full Unrolled Operational Run Sheet">
+      <span class="subnav-btn-icon">👁️</span>
+      <span class="subnav-btn-label">Full Run Sheet</span>
+    </button>
+  </nav>
 
   <!-- 4-Stage Itinerary Stepper -->
   <section class="shop-stepper-section" id="shoppingStepper">
@@ -3476,9 +4372,19 @@ tr.row-pulse td {
       <button class="shop-pill" data-filter="sara">🎁 In-Laws 'Sara' (8)</button>
       <button class="shop-pill" data-filter="purchased">✓ Purchased</button>
     </div>
-    <div class="shop-search-box">
-      <span class="shop-search-icon">🔍</span>
-      <input type="text" id="shopSearchInput" class="shop-search-input" placeholder="Search items, fabrics, stores...">
+    <div class="shop-toolbar-controls">
+      <div class="shop-search-box">
+        <span class="shop-search-icon">🔍</span>
+        <input type="text" id="shopSearchInput" class="shop-search-input" placeholder="Search items, fabrics, stores...">
+      </div>
+      <div class="shop-catalog-view-toggle" id="shopCatalogViewToggle" role="group" aria-label="Catalog Display Mode">
+        <button type="button" class="shop-view-mode-btn active" id="btnCatalogCards" onclick="window.setCatalogViewMode('thumbnails')" title="Visual Cards View (Photo Thumbnails &amp; Showroom Options)">
+          <span>🖼️</span> Cards
+        </button>
+        <button type="button" class="shop-view-mode-btn" id="btnCatalogList" onclick="window.setCatalogViewMode('compact')" title="Compact List View (High-Density Mobile Ticking)">
+          <span>📋</span> List
+        </button>
+      </div>
     </div>
   </div>
 
@@ -4375,28 +5281,31 @@ tr.row-pulse td {
 
 
 <!-- Universal Option Intake Modal Primitive (Adapted from PIO ImageUploadWidget) -->
-<div class="sk-modal-backdrop" id="skOptionIntakeBackdrop" role="dialog" aria-modal="true" aria-labelledby="skOptionIntakeTitle">
+<!-- SSOT: User_Created/Discussion Threads/Council/260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md § "Tri-Modal Visual Ingestion" — P-COLLAB-VISUAL-INTAKE-001 -->
+<div class="sk-modal-backdrop" id="skOptionIntakeBackdrop" role="dialog" aria-modal="true" aria-labelledby="skOptionIntakeTitle" onclick="if(event.target===this && window.closeOptionIntakeModal) window.closeOptionIntakeModal()">
   <div class="sk-modal-card sk-intake-card">
     <div class="sk-intake-header">
       <h3 id="skOptionIntakeTitle" class="sk-intake-title">Add Shopping / Decor Option</h3>
       <button type="button" class="sk-modal-close" id="skOptionIntakeClose" aria-label="Close modal">✕</button>
     </div>
 
+    <input type="hidden" id="skOptionItemId" value="">
+
     <!-- Tabbed Intake Selector -->
     <div class="sk-intake-tabs" role="tablist">
-      <button type="button" class="sk-intake-tab is-active" id="skTabDriveLink" role="tab" aria-selected="true" data-tab="drive">📎 Google Drive Link</button>
-      <button type="button" class="sk-intake-tab" id="skTabDeviceUpload" role="tab" aria-selected="false" data-tab="device">📷 Device / Camera</button>
+      <button type="button" class="sk-intake-tab is-active" id="skTabDriveLink" role="tab" aria-selected="true" data-tab="drive">📌 Pinterest / Web Link</button>
+      <button type="button" class="sk-intake-tab" id="skTabDeviceUpload" role="tab" aria-selected="false" data-tab="device">📷 Device / Showroom Photo</button>
     </div>
 
     <div class="sk-intake-body">
-      <!-- Tab Pane 1: Drive Link -->
+      <!-- Tab Pane 1: Image / Pinterest Link -->
       <div class="sk-tab-pane is-active" id="skPaneDrive">
-        <label class="sk-intake-label" for="skDriveUrlInput">Google Drive or Image URL</label>
+        <label class="sk-intake-label" for="skDriveUrlInput">Pinterest Image Link, Web Image URL, or Google Drive</label>
         <div class="sk-input-group">
-          <input type="url" class="sk-intake-input" id="skDriveUrlInput" placeholder="https://drive.google.com/file/d/..." autocomplete="off">
+          <input type="url" class="sk-intake-input" id="skDriveUrlInput" placeholder="https://i.pinimg.com/...jpg, pin.it/..., or Image URL" autocomplete="off">
           <button type="button" class="sk-btn sk-btn-secondary" id="skBtnVerifyDrive">Verify Link</button>
         </div>
-        <small class="sk-intake-hint">Shared Google Drive links automatically render with high-res zero-CORS previews.</small>
+        <small class="sk-intake-hint">Direct Pinterest images (i.pinimg.com), web image URLs, and Google Drive links render natively.</small>
         
         <!-- Live Proof Preview Card (Adapted from PIO ProofPreviewWidget) -->
         <div class="sk-proof-preview-card" id="skDriveProofCard" style="display: none;">
@@ -5615,6 +6524,11 @@ tr.row-pulse td {
 
 
 
+/**
+ * SSOT: User_Created/Discussion Threads/Council/260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md § "Council Decision AC-DEC-2026-035"
+ * Standard: P-COLLAB-VISUAL-INTAKE-001 / INC-094
+ * Description: Shopping Registry Controller with Tri-Modal Visual Ingestion, Multi-Image Option Pods, and Deep-Link Sharing.
+ */
 (function() {
     const data = window.SHOPPING_REGISTRY_DATA || { chapters: [], clusters: [], stores: [], items: [] };
     const chapters = data.chapters || [];
@@ -5630,7 +6544,11 @@ tr.row-pulse td {
     let userSelections = JSON.parse(localStorage.getItem('sk_shopping_selections') || '{}');
     let itemPurchased = JSON.parse(localStorage.getItem('sk_shopping_purchased') || '{}');
     let stakeholderApprovals = JSON.parse(localStorage.getItem('sk_shopping_approvals') || '{}');
+    let itemOptionSelected = JSON.parse(localStorage.getItem('sk_shopping_item_options') || '{}');
+    let itemCustomOptions = JSON.parse(localStorage.getItem('sk_shopping_custom_options') || '{}');
+    let catalogViewMode = localStorage.getItem('sk_shopping_catalog_view') || 'thumbnails';
     let activeStoreCategory = 'all';
+    window.catalogSubView = 'items';
 
     // DOM Elements
     const shopWelcomeBanner = document.getElementById('shopWelcomeBanner');
@@ -5662,7 +6580,36 @@ tr.row-pulse td {
       localStorage.setItem('sk_shopping_selections', JSON.stringify(userSelections));
       localStorage.setItem('sk_shopping_purchased', JSON.stringify(itemPurchased));
       localStorage.setItem('sk_shopping_approvals', JSON.stringify(stakeholderApprovals));
+      localStorage.setItem('sk_shopping_custom_options', JSON.stringify(itemCustomOptions));
       updateKpis();
+    }
+
+    function getItemImages(item) {
+      if (!item) return [];
+      const baseImages = Array.isArray(item.images) ? [...item.images] : [];
+      const fsItem = firestoreShoppingCache ? firestoreShoppingCache[item.id] : null;
+      const fsOptions = (fsItem && Array.isArray(fsItem.options)) ? fsItem.options : null;
+      const localOpts = Array.isArray(itemCustomOptions[item.id]) ? itemCustomOptions[item.id] : [];
+      const customOpts = (fsOptions && fsOptions.length > 0) ? fsOptions : localOpts;
+
+      const allImages = [...baseImages];
+      customOpts.forEach(opt => {
+        if (!allImages.some(img => img.optionIndex === opt.optionIndex)) {
+          allImages.push(opt);
+        }
+      });
+      return allImages;
+    }
+
+    function getActiveOptionIndex(itemId) {
+      const fsItem = firestoreShoppingCache ? firestoreShoppingCache[itemId] : null;
+      if (fsItem && typeof fsItem.selectedOptionIndex === 'number') {
+        return fsItem.selectedOptionIndex;
+      }
+      if (itemOptionSelected[itemId] !== undefined) {
+        return Number(itemOptionSelected[itemId]);
+      }
+      return 0;
     }
 
     function showToast(msg, icon = '📋') {
@@ -5680,6 +6627,111 @@ tr.row-pulse td {
       window.open(url, '_blank', 'noopener,noreferrer');
     };
 
+    // ========================================================================
+    // LEVEL 2 CATALOG OPERATING MODES & CROSS-CONTEXT NAVIGATION (AC-DEC-2026-037)
+    // Standards: P-SHOPPING-JOURNEY-HUBS-001 / STD-MOD-COMP-001
+    // ========================================================================
+    function setCatalogSubView(subview, targetId) {
+      const allowedViews = ['items', 'itinerary', 'clusters', 'stores', 'all'];
+      const targetView = allowedViews.includes(subview) ? subview : 'items';
+      window.catalogSubView = targetView;
+
+      if (window.currentShoppingView !== 'catalog' && typeof window.switchShoppingView === 'function') {
+        window.switchShoppingView('catalog');
+      }
+
+      const catalogSection = document.getElementById('catalogViewSection');
+      if (catalogSection) {
+        allowedViews.forEach(v => catalogSection.classList.remove(`mode-${v}`));
+        catalogSection.classList.add(`mode-${targetView}`);
+      }
+
+      const subnavBtns = document.querySelectorAll('.catalog-subnav-btn');
+      subnavBtns.forEach(btn => {
+        const isCurrent = btn.getAttribute('data-subview') === targetView;
+        btn.classList.toggle('active', isCurrent);
+        btn.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
+      });
+
+      // Synchronize URL query state if on catalog view
+      try {
+        const url = new URL(window.location.href);
+        if (targetView !== 'items') {
+          url.searchParams.set('subview', targetView);
+        } else {
+          url.searchParams.delete('subview');
+        }
+        window.history.replaceState({}, '', url.toString());
+      } catch (e) {
+        // Safe fallback in restricted environments
+      }
+
+      if (targetId) {
+        setTimeout(() => {
+          const el = document.getElementById(targetId);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            el.style.outline = '2px solid var(--shop-gold, #d4af37)';
+            el.style.boxShadow = '0 0 16px rgba(212, 175, 55, 0.4)';
+            setTimeout(() => {
+              el.style.outline = '';
+              el.style.boxShadow = '';
+            }, 3000);
+          }
+        }, 120);
+      }
+    }
+    window.setCatalogSubView = setCatalogSubView;
+
+    function jumpToStore(storeNameOrId) {
+      if (!storeNameOrId) return;
+      setCatalogSubView('stores');
+      setTimeout(() => {
+        const cleanName = storeNameOrId.trim().toLowerCase();
+        const matched = stores.find(s => 
+          (s.id && s.id.toLowerCase() === cleanName) ||
+          s.name.toLowerCase() === cleanName ||
+          s.name.toLowerCase().includes(cleanName) ||
+          cleanName.includes(s.name.toLowerCase())
+        );
+        const storeDomId = matched ? (matched.id || `store_${matched.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`) : null;
+        if (storeDomId) {
+          const card = document.getElementById(storeDomId);
+          if (card) {
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            card.style.outline = '2px solid var(--shop-gold, #d4af37)';
+            card.style.boxShadow = '0 0 16px rgba(212, 175, 55, 0.4)';
+            setTimeout(() => {
+              card.style.outline = '';
+              card.style.boxShadow = '';
+            }, 3000);
+          }
+        }
+      }, 100);
+    }
+    window.jumpToStore = jumpToStore;
+
+    function jumpToChapter(chapterId) {
+      if (!chapterId) return;
+      activeChapter = chapterId;
+      renderChapters();
+      renderItems();
+      setCatalogSubView('itinerary');
+      setTimeout(() => {
+        const milestoneTrack = document.getElementById('chapterMilestoneTrack');
+        if (milestoneTrack) {
+          milestoneTrack.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+    window.jumpToChapter = jumpToChapter;
+
+    function focusCluster(clusterId) {
+      if (!clusterId) return;
+      setCatalogSubView('clusters', 'cluster-' + clusterId);
+    }
+    window.focusCluster = focusCluster;
+
     // URL Query Param Parser & Deep-Link Wiring
     function parseUrlParams() {
       const params = new URLSearchParams(window.location.search);
@@ -5696,93 +6748,6 @@ tr.row-pulse td {
         welcomeBannerIcon.textContent = "👭";
         welcomeBannerTitle.textContent = "Sisters' Styling & Wardrobe Review Hub!";
         welcomeBannerSub.textContent = "Vote on Sangeet Lehengas, Groom Sherwani styling, and your matching festive sarees!";
-      }
-
-      const paramChapter = params.get('chapter');
-      if (paramChapter && chapters.some(c => c.id === paramChapter)) {
-        activeChapter = paramChapter;
-      }
-
-      const paramCluster = params.get('cluster');
-      if (paramCluster) {
-        const matchedCluster = clusters.find(c => c.id === paramCluster);
-        if (matchedCluster && matchedCluster.chapterId) {
-          activeChapter = matchedCluster.chapterId;
-        }
-        setTimeout(() => {
-          const el = document.getElementById('cluster-' + paramCluster) || (matchedCluster && document.getElementById('cluster-' + matchedCluster.id));
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            if (params.get('comments') === 'true' || params.get('drawer') === 'true') {
-              if (window.SKPrimitives && window.SKPrimitives.openComments) {
-                window.SKPrimitives.openComments(paramCluster, {
-                  title: matchedCluster ? matchedCluster.title : paramCluster,
-                  badge: paramCluster,
-                  sub: matchedCluster ? matchedCluster.description : ''
-                });
-              }
-            }
-          }
-        }, 350);
-      }
-
-      const paramOption = params.get('option');
-      if (paramOption) {
-        let targetCluster = null;
-        let targetOpt = null;
-        for (const c of clusters) {
-          const found = c.options.find(o => o.optionId === paramOption || `${c.id}-${o.optionId}` === paramOption);
-          if (found) {
-            targetCluster = c;
-            targetOpt = found;
-            break;
-          }
-        }
-        if (targetCluster && targetCluster.chapterId) {
-          activeChapter = targetCluster.chapterId;
-        }
-        setTimeout(() => {
-          const optCard = document.querySelector(`[data-option-id="${paramOption}"]`) || (targetCluster && targetOpt && document.getElementById(`opt-${targetCluster.id}-${targetOpt.optionId}`));
-          if (optCard) {
-            optCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            optCard.style.outline = '2px solid var(--shop-gold, #d4af37)';
-            setTimeout(() => { optCard.style.outline = ''; }, 3000);
-          } else if (targetCluster) {
-            const el = document.getElementById('cluster-' + targetCluster.id);
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-          if (window.SKPrimitives && window.SKPrimitives.openComments) {
-            const key = targetCluster ? targetCluster.id : paramOption;
-            window.SKPrimitives.openComments(key, {
-              title: targetOpt ? targetOpt.title : paramOption,
-              badge: targetOpt ? `Option ${targetOpt.optionId}` : paramOption,
-              sub: targetOpt ? `${targetOpt.store} • ${targetOpt.priceTier}` : ''
-            });
-          }
-        }, 350);
-      }
-
-      const paramItem = params.get('item');
-      if (paramItem) {
-        const item = items.find(i => i.id === paramItem || i.code === paramItem);
-        if (item && item.chapterId) {
-          activeChapter = item.chapterId;
-        }
-        setTimeout(() => {
-          const card = document.getElementById('card-' + paramItem) || (item && document.getElementById('card-' + item.id));
-          if (card) {
-            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            card.style.outline = '2px solid var(--shop-gold, #d4af37)';
-            setTimeout(() => { card.style.outline = ''; }, 3000);
-            if (window.SKPrimitives && window.SKPrimitives.openComments) {
-              window.SKPrimitives.openComments(item.id, {
-                title: item.title,
-                badge: item.id,
-                sub: `${item.store} • ${item.priceRange}`
-              });
-            }
-          }
-        }, 350);
       }
 
       const paramView = params.get('view') || params.get('tab');
@@ -5804,6 +6769,123 @@ tr.row-pulse td {
         setTimeout(() => {
           if (window.switchShoppingView) window.switchShoppingView('table');
         }, 100);
+      }
+
+      const paramCatalogView = params.get('catalog_mode') || params.get('catalog_view') || params.get('catalog_layout');
+      if (paramCatalogView === 'compact' || paramCatalogView === 'list') {
+        catalogViewMode = 'compact';
+      } else if (paramCatalogView === 'thumbnails' || paramCatalogView === 'cards') {
+        catalogViewMode = 'thumbnails';
+      }
+
+      // Deterministic Precedence Ladder for Catalog Operating Modes (Review 6.4 / AC-DEC-2026-037)
+      const paramCluster = params.get('cluster');
+      const paramOption = params.get('option');
+      const paramStore = params.get('store');
+      const paramChapter = params.get('chapter');
+      const paramItem = params.get('item');
+      const paramSubView = params.get('subview');
+
+      if (paramCluster || (!paramItem && paramOption)) {
+        // Priority 1: Cluster / Option (Decision Pods)
+        setCatalogSubView('clusters');
+        let targetCluster = null;
+        let targetOpt = null;
+
+        if (paramCluster) {
+          targetCluster = clusters.find(c => c.id === paramCluster);
+        }
+        if (paramOption) {
+          for (const c of clusters) {
+            const found = c.options.find(o => o.optionId === paramOption || `${c.id}-${o.optionId}` === paramOption);
+            if (found) {
+              targetCluster = c;
+              targetOpt = found;
+              break;
+            }
+          }
+        }
+
+        if (targetCluster && targetCluster.chapterId) {
+          activeChapter = targetCluster.chapterId;
+        }
+
+        setTimeout(() => {
+          const optCard = paramOption ? (document.querySelector(`[data-option-id="${paramOption}"]`) || (targetCluster && targetOpt && document.getElementById(`opt-${targetCluster.id}-${targetOpt.optionId}`))) : null;
+          if (optCard) {
+            optCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            optCard.style.outline = '2px solid var(--shop-gold, #d4af37)';
+            optCard.style.boxShadow = '0 0 16px rgba(212, 175, 55, 0.4)';
+            setTimeout(() => { optCard.style.outline = ''; optCard.style.boxShadow = ''; }, 3000);
+          } else if (targetCluster) {
+            const el = document.getElementById('cluster-' + targetCluster.id);
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              el.style.outline = '2px solid var(--shop-gold, #d4af37)';
+              el.style.boxShadow = '0 0 16px rgba(212, 175, 55, 0.4)';
+              setTimeout(() => { el.style.outline = ''; el.style.boxShadow = ''; }, 3000);
+            }
+          }
+          if (params.get('comments') === 'true' || params.get('drawer') === 'true') {
+            if (window.SKPrimitives && window.SKPrimitives.openComments) {
+              const key = targetCluster ? targetCluster.id : paramOption;
+              window.SKPrimitives.openComments(key, {
+                title: targetOpt ? targetOpt.title : (targetCluster ? targetCluster.title : paramOption),
+                badge: targetOpt ? `Option ${targetOpt.optionId}` : (targetCluster ? targetCluster.id : paramOption),
+                sub: targetOpt ? `${targetOpt.store} • ${targetOpt.priceTier}` : (targetCluster ? targetCluster.description : '')
+              });
+            }
+          }
+        }, 350);
+      } else if (paramStore) {
+        // Priority 2: Store Navigator & Directory
+        jumpToStore(paramStore);
+      } else if (paramChapter) {
+        // Priority 3: Chapter Itinerary
+        if (chapters.some(c => c.id === paramChapter)) {
+          activeChapter = paramChapter;
+        }
+        setCatalogSubView('itinerary');
+      } else if (paramItem) {
+        // Priority 4: Item Checklist
+        setCatalogSubView('items');
+        const item = items.find(i => i.id === paramItem || i.code === paramItem);
+        if (item && item.chapterId) {
+          activeChapter = item.chapterId;
+        }
+        if (paramOption !== null && paramOption !== undefined) {
+          const optIdx = parseInt(paramOption, 10);
+          if (!isNaN(optIdx)) {
+            const targetId = item ? item.id : paramItem;
+            itemOptionSelected[targetId] = optIdx;
+            localStorage.setItem('sk_shopping_item_options', JSON.stringify(itemOptionSelected));
+          }
+        }
+        setTimeout(() => {
+          const card = document.getElementById('card-' + paramItem) || (item && document.getElementById('card-' + item.id));
+          if (card) {
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            card.classList.add('highlight-target-item');
+            card.style.outline = '2px solid var(--shop-gold, #d4af37)';
+            setTimeout(() => {
+              card.classList.remove('highlight-target-item');
+              card.style.outline = '';
+            }, 3000);
+            if (window.SKPrimitives && window.SKPrimitives.openComments) {
+              window.SKPrimitives.openComments(item ? item.id : paramItem, {
+                title: item ? item.title : paramItem,
+                badge: item ? item.id : paramItem,
+                sub: item ? `${item.store} • ${item.priceRange}` : ''
+              });
+            }
+          }
+        }, 350);
+      } else if (paramSubView) {
+        // Priority 5: Explicit subview parameter
+        setCatalogSubView(paramSubView);
+      } else {
+        // Priority 6: Default fallback
+        setCatalogSubView('items');
       }
     }
 
@@ -5911,7 +6993,7 @@ tr.row-pulse td {
                     </div>
                     <div class="shop-pod-color">${opt.color} • ${opt.weave}</div>
                     <div class="shop-pod-highlight">${opt.highlight}</div>
-                    <div class="shop-pod-store">📍 ${opt.store}</div>
+                    <div class="shop-pod-store" onclick="event.stopPropagation(); window.jumpToStore('${opt.store.replace(/'/g, "\\'")}')" style="cursor: pointer;" title="View store in directory">📍 ${opt.store}</div>
                     <div style="display: flex; gap: 6px; margin-top: 10px; align-items: stretch; flex-wrap: wrap;">
                       <button class="shop-pod-radio-btn" type="button" style="flex: 1; min-width: 120px; margin-top: 0;">
                         <span>${isSelected ? '🔘' : '⚪'}</span>
@@ -5982,8 +7064,9 @@ tr.row-pulse td {
 
       storesGrid.innerHTML = filteredStores.map(s => {
         const mapsLink = s.mapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.name + ', ' + s.address)}`;
+        const storeDomId = s.id || `store_${s.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
         return `
-          <div class="shop-store-card">
+          <div class="shop-store-card" id="${storeDomId}">
             <div class="shop-store-name"><span>🏬</span> <span>${s.name}</span></div>
             <div class="shop-store-zone">${s.zone}</div>
             <div class="shop-store-specialty">${s.specialty}</div>
@@ -5998,8 +7081,70 @@ tr.row-pulse td {
       }).join('');
     }
 
-    // Render Item Checklist Grid
+    // Visual Dual-View Switching & Option Selection API (P-UNIVERSAL-VISUAL-ASSET-001)
+    window.setCatalogViewMode = function(mode) {
+      catalogViewMode = (mode === 'compact') ? 'compact' : 'thumbnails';
+      localStorage.setItem('sk_shopping_catalog_view', catalogViewMode);
+      syncCatalogViewUI();
+      renderItems();
+    };
+
+    function syncCatalogViewUI() {
+      const btnCards = document.getElementById('btnCatalogCards');
+      const btnList = document.getElementById('btnCatalogList');
+      if (btnCards && btnList) {
+        btnCards.classList.toggle('active', catalogViewMode === 'thumbnails');
+        btnList.classList.toggle('active', catalogViewMode === 'compact');
+      }
+      if (itemsGrid) {
+        itemsGrid.classList.remove('view-thumbnails', 'view-compact-list');
+        itemsGrid.classList.add(catalogViewMode === 'compact' ? 'view-compact-list' : 'view-thumbnails');
+      }
+    }
+
+    window.selectItemOption = function(itemId, optionIndex) {
+      itemOptionSelected[itemId] = optionIndex;
+      localStorage.setItem('sk_shopping_item_options', JSON.stringify(itemOptionSelected));
+      if (typeof window.fsSetShoppingItemStatus === 'function') {
+        window.fsSetShoppingItemStatus(itemId, { selectedOptionIndex: optionIndex })
+          .catch(err => console.warn('Firestore option sync skipped:', err));
+      }
+      renderItems();
+    };
+
+    window.shareItemOption = function(itemId, optionIndex) {
+      const item = items.find(i => i.id === itemId);
+      const title = item ? item.title : itemId;
+      const allImgs = getItemImages(item);
+      const activeImg = allImgs.find(img => img.optionIndex === optionIndex) || allImgs[0];
+      const optLabel = activeImg ? (activeImg.label || `Option ${optionIndex}`) : `Option ${optionIndex}`;
+
+      const shareUrl = (typeof SKPrimitives !== 'undefined' && SKPrimitives.getStakeholderUrl)
+        ? SKPrimitives.getStakeholderUrl('shopping-registry.html', { item: itemId, option: optionIndex, mode: 'family' })
+        : `${window.location.origin}/shopping-registry.html?item=${itemId}&option=${optionIndex}&mode=family`;
+
+      const text = `✨ *Wedding Wardrobe Review — ${title} (${optLabel})*\nCheck out this candidate look for *${title}* in the Sree Krushna Shopping Registry!\n👉 Tap to view and compare looks: ${shareUrl}`;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast(`Link for ${optLabel} copied! Ready to paste into WhatsApp.`, '📱');
+        });
+      } else {
+        prompt('Copy Look Link:', text);
+      }
+
+      if (navigator.share && window.innerWidth <= 768) {
+        navigator.share({
+          title: `${title} - ${optLabel}`,
+          text: text,
+          url: shareUrl
+        }).catch(() => {});
+      }
+    };
+
+    // Render Item Checklist Grid (Supporting Dual Views: Thumbnail Cards & Compact List)
     function renderItems() {
+      syncCatalogViewUI();
       const q = searchQuery.toLowerCase().trim();
 
       const filtered = items.filter(item => {
@@ -6025,26 +7170,137 @@ tr.row-pulse td {
         return;
       }
 
+      const catIcons = { bridal: '🥻', groom: '👑', jewellery: '💎', sara: '🎁', engagement: '💍', heirlooms: '👑' };
+
       itemsGrid.innerHTML = filtered.map(item => {
         const isBought = !!itemPurchased[item.id];
         const approvals = stakeholderApprovals[item.id] || item.approvals || {};
+        const allImages = getItemImages(item);
+        const hasImages = (allImages.length > 0);
+        const activeOptIdx = getActiveOptionIndex(item.id);
+        const activeImage = hasImages ? (allImages.find(img => img.optionIndex === activeOptIdx) || allImages[0]) : null;
+        const catIcon = catIcons[item.category] || '🛍️';
+
+        // ------------------------------------------------------------------
+        // VIEW MODE 2: COMPACT LIST VIEW
+        // ------------------------------------------------------------------
+        if (catalogViewMode === 'compact') {
+          const avatarHtml = (hasImages && activeImage)
+            ? `<div class="shop-compact-avatar" onclick="window.openShoppingLightbox('${item.title.replace(/'/g, "\\'")}', '${activeImage.src}', '<strong>${item.id}:</strong> ${(activeImage.label || '').replace(/'/g, "\\'")} • ${item.store} • ${item.priceRange}')" title="Inspect ${item.title}">
+                <img src="${activeImage.src}" alt="${item.title}" loading="lazy">
+                ${allImages.length > 1 ? `<span class="shop-compact-avatar-badge">${allImages.length}</span>` : ''}
+               </div>`
+            : `<div class="shop-compact-avatar" title="${item.title}">
+                <span class="shop-compact-avatar-placeholder">${catIcon}</span>
+               </div>`;
+
+          return `
+            <article class="shop-compact-row ${isBought ? 'purchased' : ''}" id="card-${item.id}">
+              <label class="shop-compact-check-wrap" title="${isBought ? 'Mark Unpurchased' : 'Mark as Purchased'}">
+                <input type="checkbox" ${isBought ? 'checked' : ''} onchange="window.togglePurchased('${item.id}', this.checked)">
+              </label>
+
+              ${avatarHtml}
+
+              <div class="shop-compact-main">
+                <div class="shop-compact-header">
+                  <span class="shop-id-badge">${item.id}</span>
+                  <h4 class="shop-compact-title" title="${item.title}">${item.title}</h4>
+                  <span class="shop-compact-price">${item.priceRange}</span>
+                </div>
+                <div class="shop-compact-sub">
+                  <span>🎨 ${item.suggestedColor}</span> • <span class="shop-link-badge" onclick="window.jumpToStore('${item.store.replace(/'/g, "\\'")}')" style="cursor: pointer; text-decoration: underline dotted;" title="Jump to Store">🏬 ${item.store}</span> • <span class="shop-link-badge" onclick="window.jumpToChapter('${item.chapterId}')" style="cursor: pointer; text-decoration: underline dotted;" title="Jump to Itinerary Chapter">📖 ${item.role}</span>
+                </div>
+                <div class="shop-compact-tags">
+                  <span class="shop-mini-vote ${approvals.bride ? 'approved' : ''}" onclick="window.toggleApproval('${item.id}', 'bride')" title="Toggle Bride Approval">👰 ${approvals.bride ? '✓' : '○'}</span>
+                  <span class="shop-mini-vote ${approvals.sisters ? 'approved' : ''}" onclick="window.toggleApproval('${item.id}', 'sisters')" title="Toggle Sisters Approval">👭 ${approvals.sisters ? '✓' : '○'}</span>
+                  <span class="shop-mini-vote ${approvals.inlaws ? 'approved' : ''}" onclick="window.toggleApproval('${item.id}', 'inlaws')" title="Toggle In-Laws Approval">🤝 ${approvals.inlaws ? '✓' : '○'}</span>
+                  ${item.clusterId ? `<span class="shop-mini-vote" onclick="window.focusCluster('${item.clusterId}')" title="Compare Alternatives" style="cursor: pointer;">⚖️ Compare</span>` : ''}
+                </div>
+              </div>
+
+              <div class="shop-compact-actions">
+                <button class="shop-share-look-btn" type="button" onclick="window.shareItemOption('${item.id}', ${activeImage ? activeImage.optionIndex : 0})" title="Share Look Link">
+                  <span>📤</span>
+                </button>
+                <button class="shop-btn shop-btn-sm" type="button" onclick="window.openOptionIntakeModal('${item.id}')" title="Add Look" style="font-size: 11px; padding: 3px 7px;">
+                  <span>➕</span>
+                </button>
+                <button class="shop-visual-search-btn" type="button" onclick="window.openVisualSearch('${(item.visualSearchQuery || (item.title + ' ' + (item.suggestedColor || '') + ' ' + (item.spec || ''))).replace(/'/g, "\\'")}')" title="Google Images Visual AI Search">
+                  <span>🔍</span> <span>Search ↗</span>
+                </button>
+              </div>
+            </article>
+          `;
+        }
+
+        // ------------------------------------------------------------------
+        // VIEW MODE 1: THUMBNAIL CARDS VIEW
+        // ------------------------------------------------------------------
+        let mediaHtml = '';
+        if (hasImages && activeImage) {
+          mediaHtml = `
+            <div class="shop-card-media-wrapper" onclick="window.openShoppingLightbox('${item.title.replace(/'/g, "\\'")}', '${activeImage.src}', '<strong>${item.id}:</strong> ${(activeImage.label || '').replace(/'/g, "\\'")} • ${item.store} • ${item.priceRange}')" title="Click to inspect in Lightbox">
+              <img src="${activeImage.src}" alt="${item.title}" class="shop-card-media-img" loading="lazy">
+              <div class="shop-media-overlay-top">
+                <span class="shop-media-badge-id">${item.id}</span>
+                <span class="shop-media-badge-price">${item.priceRange}</span>
+              </div>
+              <div class="shop-media-overlay-bottom">
+                <span class="shop-media-badge-count">📸 ${allImages.length === 1 ? '1 Look' : `${allImages.length} Looks`}</span>
+                <span class="shop-media-hover-hint">🔍 Inspect</span>
+              </div>
+            </div>
+          `;
+        } else {
+          mediaHtml = `
+            <div class="shop-card-media-placeholder">
+              <span class="shop-placeholder-icon">${catIcon}</span>
+              <span class="shop-placeholder-title">${item.title}</span>
+              <span class="shop-placeholder-sub">Curated liturgical specification • Reference photos pending showroom selection</span>
+              <button type="button" class="shop-btn-add-look" onclick="window.openOptionIntakeModal('${item.id}')">➕ Add Pinterest / Showroom Look</button>
+            </div>
+          `;
+        }
+
+        const optionsBarHtml = `
+          <div class="shop-card-options-bar">
+            ${allImages.map(img => `
+              <button type="button" class="shop-option-chip ${img.optionIndex === (activeImage ? activeImage.optionIndex : 0) ? 'active' : ''}" onclick="event.stopPropagation(); window.selectItemOption('${item.id}', ${img.optionIndex})" title="${img.label || `Option ${img.optionIndex}`}">
+                ${img.isDefault ? '🌟 Concept' : (img.type === 'pinterest_direct' || (img.src && img.src.includes('pinimg')) ? '📌 Option ' + img.optionIndex : `Look ${img.optionIndex}`)}
+              </button>
+            `).join('')}
+            <button type="button" class="shop-option-chip shop-option-chip-add" onclick="event.stopPropagation(); window.openOptionIntakeModal('${item.id}')" title="Add a candidate look for this item">
+              ➕ Add Look
+            </button>
+          </div>
+        `;
 
         return `
           <article class="shop-item-card ${isBought ? 'purchased' : ''}" id="card-${item.id}">
             <div>
+              ${mediaHtml}
+              ${optionsBarHtml}
               <div class="shop-item-top">
                 <span class="shop-id-badge">${item.id}</span>
                 <span style="font-size: 11px; font-weight: 700; color: var(--shop-gold);">${item.priceRange}</span>
               </div>
               <h3 class="shop-item-title">${item.title}</h3>
-              <div class="shop-item-role">✨ ${item.role}</div>
+              <div class="shop-item-role" onclick="window.jumpToChapter('${item.chapterId}')" style="cursor: pointer; text-decoration: underline dotted;" title="Jump to Itinerary Chapter">✨ ${item.role}</div>
               <div class="shop-spec-box">
                 <strong>Specification:</strong> ${item.spec}
               </div>
               <div class="shop-meta-row">
                 <span class="shop-meta-tag">🎨 <strong>Color:</strong> ${item.suggestedColor}</span>
-                <span class="shop-meta-tag">🏬 <strong>Store:</strong> ${item.store}</span>
+                <span class="shop-meta-tag" onclick="window.jumpToStore('${item.store.replace(/'/g, "\\'")}')" style="cursor: pointer; text-decoration: underline dotted;" title="Jump to Store in Directory">🏬 <strong>Store:</strong> ${item.store}</span>
               </div>
+              ${activeImage && activeImage.referenceUrl ? `
+                <div style="margin-top: 6px;">
+                  <a href="${activeImage.referenceUrl}" target="_blank" rel="noopener" class="shop-ref-link-chip" onclick="event.stopPropagation()">
+                    📌 View on Pinterest ↗
+                  </a>
+                </div>
+              ` : ''}
               
               <!-- Multi-Stakeholder Consensus Bar -->
               <div class="shop-stakeholder-bar">
@@ -6067,6 +7323,9 @@ tr.row-pulse td {
                 <span>${isBought ? '✓ In Shopping Bag (Purchased)' : 'Mark as Purchased'}</span>
               </label>
               <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                <button class="shop-share-look-btn" type="button" onclick="window.shareItemOption('${item.id}', ${activeImage ? activeImage.optionIndex : 0})" title="Share this look with family">
+                  <span>📤 Share Look</span>
+                </button>
                 <button class="shop-visual-search-btn" type="button" onclick="window.openVisualSearch('${(item.visualSearchQuery || (item.title + ' ' + (item.suggestedColor || '') + ' ' + (item.spec || ''))).replace(/'/g, "\\'")}')" title="Google Images Visual AI Search">
                   <span>🔍</span> Visual Search ↗
                 </button>
@@ -6102,10 +7361,8 @@ tr.row-pulse td {
     };
 
     window.focusCluster = function(clusterId) {
-      const el = document.getElementById('cluster-' + clusterId);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
+      if (!clusterId) return;
+      setCatalogSubView('clusters', 'cluster-' + clusterId);
     };
 
     // Filter pills
@@ -6113,6 +7370,9 @@ tr.row-pulse td {
       pill.addEventListener('click', () => {
         shopFilterPills.forEach(p => p.classList.remove('active'));
         pill.classList.add('active');
+        if (typeof pill.scrollIntoView === 'function') {
+          pill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
         activeFilter = pill.getAttribute('data-filter');
         renderItems();
       });
@@ -6124,6 +7384,9 @@ tr.row-pulse td {
       pill.addEventListener('click', () => {
         storePills.forEach(p => p.classList.remove('active'));
         pill.classList.add('active');
+        if (typeof pill.scrollIntoView === 'function') {
+          pill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
         activeStoreCategory = pill.getAttribute('data-store-cat') || 'all';
         renderStores();
       });
@@ -7191,6 +8454,8 @@ tr.row-pulse td {
             }
             if (window.currentShoppingView === 'table') {
               window.renderShoppingTable();
+            } else {
+              renderItems();
             }
           }, (err) => {
             console.warn('Firestore shopping listener permission/network notice:', err);
@@ -7522,7 +8787,7 @@ tr.row-pulse td {
       });
     }
 
-    // Wire Option Intake Modal (Adapted from PIO ImageUploadWidget)
+    // Wire Option Intake Modal (Adapted from PIO ImageUploadWidget / P-PINTEREST-INTAKE-001)
     const btnOpenShoppingIntake = document.getElementById('btnOpenShoppingIntake');
     const intakeBackdrop = document.getElementById('skOptionIntakeBackdrop');
     const btnCloseIntake = document.getElementById('skOptionIntakeClose');
@@ -7537,63 +8802,219 @@ tr.row-pulse td {
     const proofCard = document.getElementById('skDriveProofCard');
     const proofImg = document.getElementById('skDriveProofImg');
     const proofId = document.getElementById('skDriveFileId');
+    const fileInput = document.getElementById('skFileInput');
+    let localUploadedDataUrl = '';
+
+    window.openOptionIntakeModal = function(itemId) {
+      if (!intakeBackdrop) return;
+      const item = items.find(i => i.id === itemId);
+      const itemIdInput = document.getElementById('skOptionItemId');
+      const modalTitle = document.getElementById('skOptionIntakeTitle');
+      const titleInput = document.getElementById('skOptionTitle');
+      const categorySelect = document.getElementById('skOptionCategory');
+      const priceInput = document.getElementById('skOptionPrice');
+      const vendorInput = document.getElementById('skOptionVendor');
+
+      if (itemIdInput) itemIdInput.value = itemId || '';
+      if (modalTitle) modalTitle.textContent = item ? `Add Look for ${item.title} (${item.id})` : 'Add Shopping / Decor Option';
+
+      if (item) {
+        const existingImgs = getItemImages(item);
+        const nextIdx = existingImgs.length;
+        if (titleInput) titleInput.value = `${item.title} (Option ${nextIdx})`;
+        if (categorySelect && item.category) {
+          const catMap = { bridal: 'saree', groom: 'kurta', jewellery: 'jewelry' };
+          if (catMap[item.category]) categorySelect.value = catMap[item.category];
+        }
+        if (vendorInput && item.store) vendorInput.value = item.store;
+      } else {
+        if (titleInput) titleInput.value = '';
+      }
+
+      if (driveInput) driveInput.value = '';
+      if (proofCard) proofCard.style.display = 'none';
+      if (fileInput) fileInput.value = '';
+      if (priceInput) priceInput.value = '';
+      localUploadedDataUrl = '';
+
+      intakeBackdrop.classList.add('is-active');
+    };
+
+    window.closeOptionIntakeModal = function() {
+      if (intakeBackdrop) intakeBackdrop.classList.remove('is-active');
+    };
 
     if (btnOpenShoppingIntake && intakeBackdrop) {
       btnOpenShoppingIntake.addEventListener('click', () => {
-        intakeBackdrop.classList.add('is-active');
+        window.openOptionIntakeModal('');
+      });
+    }
+
+    if (btnCloseIntake) btnCloseIntake.addEventListener('click', window.closeOptionIntakeModal);
+    if (btnCancelIntake) btnCancelIntake.addEventListener('click', window.closeOptionIntakeModal);
+
+    // 3-Trigger Dismissibility (INV-LIFECYCLE-03)
+    if (intakeBackdrop) {
+      intakeBackdrop.addEventListener('click', (e) => {
+        if (e.target === intakeBackdrop) window.closeOptionIntakeModal();
+      });
+    }
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && intakeBackdrop && intakeBackdrop.classList.contains('is-active')) {
+        window.closeOptionIntakeModal();
+      }
+    });
+
+    if (tabDrive && tabDevice) {
+      tabDrive.addEventListener('click', () => {
+        tabDrive.classList.add('is-active');
+        tabDevice.classList.remove('is-active');
+        if (paneDrive) paneDrive.style.display = 'block';
+        if (paneDevice) paneDevice.style.display = 'none';
       });
 
-      const closeIntake = () => {
-        intakeBackdrop.classList.remove('is-active');
-      };
+      tabDevice.addEventListener('click', () => {
+        tabDevice.classList.add('is-active');
+        tabDrive.classList.remove('is-active');
+        if (paneDevice) paneDevice.style.display = 'block';
+        if (paneDrive) paneDrive.style.display = 'none';
+      });
+    }
 
-      if (btnCloseIntake) btnCloseIntake.addEventListener('click', closeIntake);
-      if (btnCancelIntake) btnCancelIntake.addEventListener('click', closeIntake);
-
-      if (tabDrive && tabDevice) {
-        tabDrive.addEventListener('click', () => {
-          tabDrive.classList.add('is-active');
-          tabDevice.classList.remove('is-active');
-          if (paneDrive) paneDrive.style.display = 'block';
-          if (paneDevice) paneDevice.style.display = 'none';
-        });
-
-        tabDevice.addEventListener('click', () => {
-          tabDevice.classList.add('is-active');
-          tabDrive.classList.remove('is-active');
-          if (paneDevice) paneDevice.style.display = 'block';
-          if (paneDrive) paneDrive.style.display = 'none';
-        });
-      }
-
-      const verifyDriveLink = () => {
-        const url = driveInput ? driveInput.value.trim() : '';
-        if (!url) return;
-        const resolved = (window.SKPrimitives && window.SKPrimitives.resolveDriveAsset)
-          ? window.SKPrimitives.resolveDriveAsset(url, { cardWidth: 200 })
-          : null;
-        if (resolved && resolved.isDrive) {
-          if (proofCard) proofCard.style.display = 'flex';
-          if (proofImg) proofImg.src = resolved.cardThumbnail;
-          if (proofId) proofId.textContent = 'Drive ID: ' + resolved.driveId;
-          showToast('Google Drive asset recognized with zero-CORS preview!', '✓');
-        } else {
-          showToast('Direct URL registered.', '✓');
+    if (fileInput) {
+      fileInput.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (evt) => {
+            localUploadedDataUrl = evt.target.result;
+            showToast(`Showroom photo loaded (${Math.round(file.size / 1024)} KB)!`, '📷');
+          };
+          reader.readAsDataURL(file);
         }
-      };
+      });
+    }
 
-      if (btnVerifyDrive) btnVerifyDrive.addEventListener('click', verifyDriveLink);
-      if (driveInput) driveInput.addEventListener('change', verifyDriveLink);
-
-      if (btnSubmitOption) {
-        btnSubmitOption.addEventListener('click', () => {
-          const title = document.getElementById('skOptionTitle')?.value.trim() || 'New Option';
-          const price = document.getElementById('skOptionPrice')?.value.trim() || '—';
-          const category = document.getElementById('skOptionCategory')?.value || 'other';
-          showToast(`Option "${title}" added to ${category.toUpperCase()}!`, '🎉');
-          closeIntake();
-        });
+    const verifyDriveLink = () => {
+      const url = driveInput ? driveInput.value.trim() : '';
+      if (!url) return;
+      if (url.includes('i.pinimg.com')) {
+        if (proofCard) proofCard.style.display = 'flex';
+        if (proofImg) proofImg.src = url;
+        if (proofId) proofId.textContent = 'Pinterest CDN (Direct Render)';
+        showToast('Direct Pinterest image verified!', '📌');
+        return;
       }
+      if (url.includes('pin.it') || url.includes('pinterest.com/pin/')) {
+        if (proofCard) proofCard.style.display = 'flex';
+        if (proofImg) proofImg.src = './assets/shopping/vivaha_pata/vivaha_pata_0.jpg';
+        if (proofId) proofId.textContent = 'Pinterest Web Pin (External Reference)';
+        showToast('Pinterest Web Pin saved as reference chip!', '📌');
+        return;
+      }
+      const resolved = (window.SKPrimitives && window.SKPrimitives.resolveDriveAsset)
+        ? window.SKPrimitives.resolveDriveAsset(url, { cardWidth: 200 })
+        : null;
+      if (resolved && resolved.isDrive) {
+        if (proofCard) proofCard.style.display = 'flex';
+        if (proofImg) proofImg.src = resolved.cardThumbnail;
+        if (proofId) proofId.textContent = 'Drive ID: ' + resolved.driveId;
+        showToast('Google Drive asset recognized with zero-CORS preview!', '✓');
+      } else {
+        if (proofCard) proofCard.style.display = 'flex';
+        if (proofImg) proofImg.src = url;
+        if (proofId) proofId.textContent = 'Web Image URL';
+        showToast('Web image link registered.', '✓');
+      }
+    };
+
+    if (btnVerifyDrive) btnVerifyDrive.addEventListener('click', verifyDriveLink);
+    if (driveInput) driveInput.addEventListener('change', verifyDriveLink);
+
+    if (btnSubmitOption) {
+      btnSubmitOption.addEventListener('click', () => {
+        const itemId = document.getElementById('skOptionItemId')?.value.trim() || '';
+        const title = document.getElementById('skOptionTitle')?.value.trim() || 'New Candidate Look';
+        const price = document.getElementById('skOptionPrice')?.value.trim() || '';
+        const category = document.getElementById('skOptionCategory')?.value || 'other';
+        const vendor = document.getElementById('skOptionVendor')?.value.trim() || '';
+        const urlInput = driveInput ? driveInput.value.trim() : '';
+
+        let src = '';
+        let referenceUrl = '';
+        let type = 'web_image';
+
+        if (localUploadedDataUrl) {
+          src = localUploadedDataUrl;
+          type = 'showroom_upload';
+        } else if (urlInput) {
+          if (urlInput.includes('i.pinimg.com')) {
+            src = urlInput;
+            type = 'pinterest_direct';
+          } else if (urlInput.includes('pin.it') || urlInput.includes('pinterest.com/pin/')) {
+            referenceUrl = urlInput;
+            type = 'pinterest_pin';
+            const matchedItem = items.find(i => i.id === itemId);
+            src = (matchedItem && matchedItem.images && matchedItem.images[0])
+              ? matchedItem.images[0].src
+              : './assets/shopping/vivaha_pata/vivaha_pata_0.jpg';
+          } else {
+            const resolved = (window.SKPrimitives && window.SKPrimitives.resolveDriveAsset)
+              ? window.SKPrimitives.resolveDriveAsset(urlInput, { cardWidth: 800 })
+              : null;
+            if (resolved && resolved.isDrive) {
+              src = resolved.cardThumbnail;
+              type = 'drive';
+            } else {
+              src = urlInput;
+              type = 'web_image';
+            }
+          }
+        }
+
+        if (itemId) {
+          const item = items.find(i => i.id === itemId);
+          if (!itemCustomOptions[itemId]) {
+            itemCustomOptions[itemId] = [];
+          }
+          const existingImgs = getItemImages(item);
+          const nextOptIndex = existingImgs.length > 0
+            ? Math.max(...existingImgs.map(img => img.optionIndex)) + 1
+            : 1;
+
+          const newOption = {
+            optionIndex: nextOptIndex,
+            isDefault: false,
+            label: title,
+            src: src || (item && item.images && item.images[0] ? item.images[0].src : ''),
+            referenceUrl: referenceUrl || urlInput,
+            type: type,
+            store: vendor || (item ? item.store : ''),
+            priceTier: price ? `₹${price}` : (item ? item.priceRange : ''),
+            addedAt: new Date().toISOString()
+          };
+
+          itemCustomOptions[itemId].push(newOption);
+          localStorage.setItem('sk_shopping_custom_options', JSON.stringify(itemCustomOptions));
+
+          itemOptionSelected[itemId] = nextOptIndex;
+          localStorage.setItem('sk_shopping_item_options', JSON.stringify(itemOptionSelected));
+
+          if (typeof window.fsSetShoppingItemStatus === 'function') {
+            window.fsSetShoppingItemStatus(itemId, {
+              options: itemCustomOptions[itemId],
+              selectedOptionIndex: nextOptIndex
+            }).catch(err => console.warn('Firestore options sync skipped/offline:', err));
+          }
+
+          renderItems();
+          showToast(`Candidate look "${title}" added for ${itemId}!`, '📸');
+          window.closeOptionIntakeModal();
+        } else {
+          showToast(`Option "${title}" recorded!`, '🎉');
+          window.closeOptionIntakeModal();
+        }
+      });
     }
 
     // Initialize & Re-render API

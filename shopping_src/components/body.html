@@ -94,8 +94,8 @@
     </button>
   </div>
 
-  <!-- Catalog View Container -->
-  <div id="catalogViewSection">
+  <!-- Catalog View Container (P-SHOPPING-JOURNEY-HUBS-001) -->
+  <div id="catalogViewSection" class="mode-items">
   <!-- KPI Metrics Banner -->
   <section class="shop-kpis" id="shopKpis">
     <div class="shop-kpi-card">
@@ -119,6 +119,30 @@
       <span class="shop-kpi-sub">Janpath, Saheed Nagar, Unit-2</span>
     </div>
   </section>
+
+  <!-- Level 2: Catalog Operating Mode Switcher (P-SHOPPING-JOURNEY-HUBS-001) -->
+  <nav class="catalog-subnav-strip" id="catalogSubnavStrip" role="tablist" aria-label="Catalog Operating Modes">
+    <button type="button" class="catalog-subnav-btn active" data-subview="items" role="tab" aria-selected="true" aria-controls="itemsGrid" onclick="window.setCatalogSubView('items')" title="Master Inventory Checklist (44 Items)">
+      <span class="subnav-btn-icon">📋</span>
+      <span class="subnav-btn-label">Items Checklist (44)</span>
+    </button>
+    <button type="button" class="catalog-subnav-btn" data-subview="itinerary" role="tab" aria-selected="false" aria-controls="shoppingStepper" onclick="window.setCatalogSubView('itinerary')" title="5-Day Bhubaneswar Shopping Itinerary">
+      <span class="subnav-btn-icon">🧭</span>
+      <span class="subnav-btn-label">5-Day Itinerary</span>
+    </button>
+    <button type="button" class="catalog-subnav-btn" data-subview="clusters" role="tab" aria-selected="false" aria-controls="shoppingClusterPods" onclick="window.setCatalogSubView('clusters')" title="Clustered Decision Pods &amp; Alternatives">
+      <span class="subnav-btn-icon">🤝</span>
+      <span class="subnav-btn-label">Decision Pods (5)</span>
+    </button>
+    <button type="button" class="catalog-subnav-btn" data-subview="stores" role="tab" aria-selected="false" aria-controls="shoppingStoreNavigator" onclick="window.setCatalogSubView('stores')" title="Bhubaneswar Market Directory &amp; Navigation">
+      <span class="subnav-btn-icon">📍</span>
+      <span class="subnav-btn-label">Retail Stores (8)</span>
+    </button>
+    <button type="button" class="catalog-subnav-btn subnav-view-all" data-subview="all" role="tab" aria-selected="false" onclick="window.setCatalogSubView('all')" title="Full Unrolled Operational Run Sheet">
+      <span class="subnav-btn-icon">👁️</span>
+      <span class="subnav-btn-label">Full Run Sheet</span>
+    </button>
+  </nav>
 
   <!-- 4-Stage Itinerary Stepper -->
   <section class="shop-stepper-section" id="shoppingStepper">
@@ -175,9 +199,19 @@
       <button class="shop-pill" data-filter="sara">🎁 In-Laws 'Sara' (8)</button>
       <button class="shop-pill" data-filter="purchased">✓ Purchased</button>
     </div>
-    <div class="shop-search-box">
-      <span class="shop-search-icon">🔍</span>
-      <input type="text" id="shopSearchInput" class="shop-search-input" placeholder="Search items, fabrics, stores...">
+    <div class="shop-toolbar-controls">
+      <div class="shop-search-box">
+        <span class="shop-search-icon">🔍</span>
+        <input type="text" id="shopSearchInput" class="shop-search-input" placeholder="Search items, fabrics, stores...">
+      </div>
+      <div class="shop-catalog-view-toggle" id="shopCatalogViewToggle" role="group" aria-label="Catalog Display Mode">
+        <button type="button" class="shop-view-mode-btn active" id="btnCatalogCards" onclick="window.setCatalogViewMode('thumbnails')" title="Visual Cards View (Photo Thumbnails &amp; Showroom Options)">
+          <span>🖼️</span> Cards
+        </button>
+        <button type="button" class="shop-view-mode-btn" id="btnCatalogList" onclick="window.setCatalogViewMode('compact')" title="Compact List View (High-Density Mobile Ticking)">
+          <span>📋</span> List
+        </button>
+      </div>
     </div>
   </div>
 
