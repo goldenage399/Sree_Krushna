@@ -83,11 +83,15 @@
       
       <!-- Top Header Row -->
       <header role="banner" data-testid="app-header">
-        <div class="brand" data-testid="brand-block">
-          <div class="brand-logo-seal" aria-hidden="true">👑</div>
+        <div class="brand brand-nav-trigger" id="brandNavTrigger" data-testid="brand-block" role="button" tabindex="0" onclick="toggleQuickActionsMenu(event)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleQuickActionsMenu(event);}" aria-haspopup="dialog" aria-expanded="false" aria-label="Open Application Navigation &amp; Module Directory" title="Click to view all 13 modules">
+          <div class="brand-logo-seal" aria-hidden="true">
+            <span class="seal-icon">👑</span>
+            <span class="seal-nav-indicator" title="Open Menu">☰</span>
+          </div>
           <div class="brand-title">
             <div class="brand-heading-row">
               <h1 data-testid="app-heading">Sree Krushna</h1>
+              <span class="brand-nav-chevron" aria-hidden="true">▾</span>
               <span class="brand-badge" data-testid="app-badge">SSOT v2.0</span>
             </div>
             <p data-testid="app-tagline" class="brand-tagline">The Sacred Union &bull; Single Source of Truth</p>
@@ -142,43 +146,6 @@
             <span class="btn-text">Share Links</span>
           </button>
 
-          <!-- Consolidated Mobile / Tablet Quick-Action Dropdown (AC-DEC-2026-034 / UI-DEC-2026-030) -->
-          <div class="quick-actions-dropdown" id="quickActionsDropdown">
-            <button id="headerQuickActionsBtn" class="header-action-btn btn-gold quick-actions-trigger" data-testid="quick-actions-trigger" aria-label="Open Quick Actions Menu" aria-haspopup="true" aria-expanded="false" onclick="toggleQuickActionsMenu(event)">
-              <span class="btn-icon">⚡</span>
-              <span class="btn-text">Actions</span>
-              <span class="dropdown-chevron" aria-hidden="true">▾</span>
-            </button>
-            <div id="headerQuickActionsPopover" class="quick-actions-popover" role="menu" aria-label="Quick Actions Menu" style="display: none;">
-              <div class="qa-group-title">⚡ Quick Actions &amp; Tools</div>
-              <button class="qa-item-btn" onclick="toggleQuickActionsMenu(event); openExecutiveShareModal();">
-                <span class="qa-item-icon">🔗</span>
-                <span>Share Links &amp; Portals</span>
-              </button>
-              <button class="qa-item-btn" onclick="toggleQuickActionsMenu(event); openInspirationModal();">
-                <span class="qa-item-icon">💡</span>
-                <span>Share Idea / Inspiration</span>
-              </button>
-              <button class="qa-item-btn" onclick="toggleQuickActionsMenu(event); openIntakeLedgerModal();">
-                <span class="qa-item-icon">📨</span>
-                <span>Intake Ledger</span>
-              </button>
-              <div class="qa-group-title">🏛️ Modules &amp; Decisions</div>
-              <button class="qa-item-btn" onclick="toggleQuickActionsMenu(event); switchTab('tab-cockpit');">
-                <span class="qa-item-icon">🎪</span>
-                <span>Decorator Cockpit</span>
-              </button>
-              <a href="./decision-registry.html" class="qa-item-btn" onclick="toggleQuickActionsMenu(event);">
-                <span class="qa-item-icon">⚖️</span>
-                <span>Decision Registry</span>
-              </a>
-              <button class="qa-item-btn" onclick="toggleQuickActionsMenu(event); switchTab('tab-shopping');">
-                <span class="qa-item-icon">🛍️</span>
-                <span>Shopping Registry</span>
-              </button>
-            </div>
-          </div>
-
           <!-- Theme Switcher Toggle -->
           <button id="themeToggleBtn" class="header-action-btn btn-ghost theme-toggle-btn" data-testid="theme-toggle-button" aria-label="Toggle Bright/Dark Theme" onclick="toggleTheme()">
             <span id="themeToggleIcon">☀️</span>
@@ -224,6 +191,10 @@
 
       <!-- Navigation Tabs -->
       <nav class="tab-nav" role="tablist" aria-label="Main Application Modules" data-testid="module-navigation">
+        <button id="tabNavModulesBtn" class="tab-nav-more-btn" aria-label="Open All Modules Directory" onclick="toggleQuickActionsMenu(event)" title="View all 13 modules in directory">
+          <span>☰ All Modules</span>
+          <span class="nav-modules-count">13</span>
+        </button>
         <button class="nav-btn active" role="tab" aria-selected="true" aria-controls="tab-dashboard" data-testid="nav-tab-dashboard" onclick="switchTab('tab-dashboard')">📊 Command Center</button>
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-swimlane" data-testid="nav-tab-swimlane" onclick="switchTab('tab-swimlane')">⏱️ Swimlanes</button>
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-planning" data-testid="nav-tab-planning" onclick="switchTab('tab-planning')">🗓️ Planning & Operations</button>
@@ -239,6 +210,113 @@
         <button class="nav-btn" role="tab" aria-selected="false" aria-controls="tab-intake" data-testid="nav-tab-intake" onclick="switchTab('tab-intake')">📨 Intake Ledger</button>
       </nav>
 
+    </div>
+
+    <!-- Executive Module Directory & Navigation Drawer (AC-DEC-2026-036 / P-BRAND-NAV-HYBRID-001) -->
+    <!-- Positioned outside stickyHeaderShell to decouple from backdrop-filter & will-change containing block -->
+    <div class="quick-actions-drawer-container" id="quickActionsDropdown">
+      <div id="headerQuickActionsPopover" class="quick-actions-popover executive-drawer-popover" role="dialog" aria-modal="true" aria-label="Executive Module Directory &amp; Quick Actions" style="display: none;">
+        <div class="sheet-drag-handle" aria-hidden="true"></div>
+        <div class="executive-drawer-header">
+          <div class="executive-drawer-title">
+            <span>📂</span>
+            <span>Executive Module Directory</span>
+          </div>
+          <button id="closeExecutiveDrawerBtn" class="executive-drawer-close-btn" aria-label="Close Directory" onclick="toggleQuickActionsMenu(event)">✕</button>
+        </div>
+
+        <div class="executive-drawer-body">
+          <!-- Group 1: Quick Tools & Portals -->
+          <div class="qa-group-title">⚡ Quick Tools &amp; Portals</div>
+          <div class="qa-grid-section">
+            <button class="qa-item-btn" onclick="toggleQuickActionsMenu(event); openExecutiveShareModal();">
+              <span class="qa-item-icon">🔗</span>
+              <span>Share Links</span>
+            </button>
+            <button class="qa-item-btn" onclick="toggleQuickActionsMenu(event); openInspirationModal();">
+              <span class="qa-item-icon">💡</span>
+              <span>Share Idea</span>
+            </button>
+            <button class="qa-item-btn" onclick="toggleQuickActionsMenu(event); openIntakeLedgerModal();">
+              <span class="qa-item-icon">📨</span>
+              <span>Intake Ledger</span>
+            </button>
+          </div>
+
+          <!-- Group 2: Strategy & Operations -->
+          <div class="qa-group-title">📊 Strategy &amp; Operations</div>
+          <div class="qa-grid-section">
+            <button class="qa-item-btn drawer-module-item active" data-tab-target="tab-dashboard" onclick="toggleQuickActionsMenu(event); switchTab('tab-dashboard');">
+              <span class="qa-item-icon">📊</span>
+              <span>Command Center</span>
+            </button>
+            <button class="qa-item-btn drawer-module-item" data-tab-target="tab-swimlane" onclick="toggleQuickActionsMenu(event); switchTab('tab-swimlane');">
+              <span class="qa-item-icon">⏱️</span>
+              <span>Swimlanes</span>
+            </button>
+            <button class="qa-item-btn drawer-module-item" data-tab-target="tab-planning" onclick="toggleQuickActionsMenu(event); switchTab('tab-planning');">
+              <span class="qa-item-icon">🗓️</span>
+              <span>Planning &amp; Ops</span>
+            </button>
+            <button class="qa-item-btn drawer-module-item" data-tab-target="tab-dopkos" onclick="toggleQuickActionsMenu(event); switchTab('tab-dopkos');">
+              <span class="qa-item-icon">🕸️</span>
+              <span>Precedence DAG</span>
+            </button>
+            <button class="qa-item-btn drawer-module-item" data-tab-target="tab-tasks" onclick="toggleQuickActionsMenu(event); switchTab('tab-tasks');">
+              <span class="qa-item-icon">📋</span>
+              <span>Tasks (CRUD)</span>
+            </button>
+          </div>
+
+          <!-- Group 3: Liturgy & Culture -->
+          <div class="qa-group-title">🕉️ Liturgy &amp; Culture</div>
+          <div class="qa-grid-section">
+            <button class="qa-item-btn drawer-module-item" data-tab-target="tab-rituals" onclick="toggleQuickActionsMenu(event); switchTab('tab-rituals');">
+              <span class="qa-item-icon">🕉️</span>
+              <span>Vedic Liturgy</span>
+            </button>
+            <button class="qa-item-btn drawer-module-item" data-tab-target="tab-vision" onclick="toggleQuickActionsMenu(event); switchTab('tab-vision');">
+              <span class="qa-item-icon">🎨</span>
+              <span>Vision Studio</span>
+            </button>
+          </div>
+
+          <!-- Group 4: Commercials & Decisions -->
+          <div class="qa-group-title">🛍️ Commercials &amp; Selection</div>
+          <div class="qa-grid-section">
+            <button class="qa-item-btn drawer-module-item" data-tab-target="tab-cockpit" onclick="toggleQuickActionsMenu(event); switchTab('tab-cockpit');">
+              <span class="qa-item-icon">🎪</span>
+              <span>Decorator Cockpit</span>
+            </button>
+            <button class="qa-item-btn drawer-module-item" data-tab-target="tab-shopping" onclick="toggleQuickActionsMenu(event); switchTab('tab-shopping');">
+              <span class="qa-item-icon">🛍️</span>
+              <span>Shopping</span>
+            </button>
+            <button class="qa-item-btn drawer-module-item" data-tab-target="tab-procurement" onclick="toggleQuickActionsMenu(event); switchTab('tab-procurement');">
+              <span class="qa-item-icon">🤝</span>
+              <span>Vendors</span>
+            </button>
+            <button class="qa-item-btn drawer-module-item" data-tab-target="tab-decision-registry" onclick="toggleQuickActionsMenu(event); switchTab('tab-decision-registry');">
+              <span class="qa-item-icon">⚖️</span>
+              <span>Decision Registry</span>
+            </button>
+          </div>
+
+          <!-- Group 5: Governance & Audit -->
+          <div class="qa-group-title">🛡️ Governance &amp; Audit</div>
+          <div class="qa-grid-section">
+            <button class="qa-item-btn drawer-module-item" data-tab-target="tab-governance" onclick="toggleQuickActionsMenu(event); switchTab('tab-governance');">
+              <span class="qa-item-icon">🛡️</span>
+              <span>Custody</span>
+            </button>
+            <button class="qa-item-btn drawer-module-item" data-tab-target="tab-intake" onclick="toggleQuickActionsMenu(event); switchTab('tab-intake');">
+              <span class="qa-item-icon">📨</span>
+              <span>Intake Ledger</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="headerQuickActionsBackdrop" class="quick-actions-backdrop" onclick="toggleQuickActionsMenu(event)" aria-hidden="true"></div>
     </div>
 
     <main role="main" data-testid="main-content">
@@ -600,7 +678,7 @@
           </div>
           <div class="ritual-grid" data-testid="ritual-grid">
             
-            <div class="ritual-card" data-testid="ritual-card-RIT-001" data-entity-id="RIT-001" onclick="showRitualModal('RIT-001: Nirbandha & Ashirbad', 'Vedic promise of alliance, Lagna Patrika affirmation, and ring exchange.', 'SAM-001 (Betel nuts, Raw rice, Sandalwood, Coconut)', 'Officiating Priest: Yes', '45 Mins')">
+            <div class="ritual-card" data-testid="ritual-card-RIT-001" data-entity-id="RIT-001" role="button" tabindex="0" aria-haspopup="dialog" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}" onclick="showRitualModal('RIT-001: Nirbandha & Ashirbad', 'Vedic promise of alliance, Lagna Patrika affirmation, and ring exchange.', 'SAM-001 (Betel nuts, Raw rice, Sandalwood, Coconut)', 'Officiating Priest: Yes', '45 Mins')">
               <h3>RIT-001: Nirbandha & Ashirbad</h3>
               <p>Formal Vedic promise of alliance, horoscope affirmation, and ring exchange in presence of family elders.</p>
               <div class="ritual-meta">
@@ -609,7 +687,7 @@
               </div>
             </div>
 
-            <div class="ritual-card" data-testid="ritual-card-RIT-002" data-entity-id="RIT-002" onclick="showRitualModal('RIT-002: Deva Nimantrana', 'First consecrated invitation package offered to Lord Jagannath at Puri with Pana Gua and sacred Pata cloth.', 'SAM-002 (Puri Pata cloth, Betel leaves, Jagannath card)', 'Temple Priests', 'Puri Mandir')">
+            <div class="ritual-card" data-testid="ritual-card-RIT-002" data-entity-id="RIT-002" role="button" tabindex="0" aria-haspopup="dialog" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}" onclick="showRitualModal('RIT-002: Deva Nimantrana', 'First consecrated invitation package offered to Lord Jagannath at Puri with Pana Gua and sacred Pata cloth.', 'SAM-002 (Puri Pata cloth, Betel leaves, Jagannath card)', 'Temple Priests', 'Puri Mandir')">
               <h3>RIT-002: Deva Nimantrana</h3>
               <p>First consecrated invitation offering to Lord Jagannath at Puri seeking divine protection and eternal blessings.</p>
               <div class="ritual-meta">
@@ -618,7 +696,7 @@
               </div>
             </div>
 
-            <div class="ritual-card" data-testid="ritual-card-RIT-003" data-entity-id="RIT-003" onclick="showRitualModal('RIT-003: Mangan & Haldi Snana', 'Turmeric application by 7 married women (Sadhaba), maternal uncle yellow attire gifting, and sacred Snana.', 'SAM-003 (Raw turmeric, Bathing oil, Mangala Ghata)', 'Maternal Uncle & Sadhaba', '60 Mins')">
+            <div class="ritual-card" data-testid="ritual-card-RIT-003" data-entity-id="RIT-003" role="button" tabindex="0" aria-haspopup="dialog" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}" onclick="showRitualModal('RIT-003: Mangan & Haldi Snana', 'Turmeric application by 7 married women (Sadhaba), maternal uncle yellow attire gifting, and sacred Snana.', 'SAM-003 (Raw turmeric, Bathing oil, Mangala Ghata)', 'Maternal Uncle & Sadhaba', '60 Mins')">
               <h3>RIT-003: Mangan & Haldi Snana</h3>
               <p>Auspicious turmeric application by 7 married women and ceremonial bath before wedding day.</p>
               <div class="ritual-meta">
@@ -627,7 +705,7 @@
               </div>
             </div>
 
-            <div class="ritual-card" data-testid="ritual-card-RIT-004" data-entity-id="RIT-004" onclick="showRitualModal('RIT-004: Baranugam & Barat Reception', 'Welcoming the groom as Lord Narayana at the venue arch with aarti thali, tender coconut, and Varamala exchange.', 'SAM-004 (Aarti Thali, Varamala Garlands, Coconut)', 'Bride Mother & Elders', '45 Mins')">
+            <div class="ritual-card" data-testid="ritual-card-RIT-004" data-entity-id="RIT-004" role="button" tabindex="0" aria-haspopup="dialog" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}" onclick="showRitualModal('RIT-004: Baranugam & Barat Reception', 'Welcoming the groom as Lord Narayana at the venue arch with aarti thali, tender coconut, and Varamala exchange.', 'SAM-004 (Aarti Thali, Varamala Garlands, Coconut)', 'Bride Mother & Elders', '45 Mins')">
               <h3>RIT-004: Baranugam & Varamala</h3>
               <p>Welcoming groom as Lord Narayana, entrance aarti, and mutual Varamala garland exchange.</p>
               <div class="ritual-meta">
@@ -636,7 +714,7 @@
               </div>
             </div>
 
-            <div class="ritual-card" data-testid="ritual-card-RIT-005" data-entity-id="RIT-005" onclick="showRitualModal('RIT-005: Kanyadaan & Hastaganthi', 'Sacred Vedic handover of the bride by parents with Kusha grass and tying of the consecrated cloth knot.', 'SAM-005 (Kusha grass, Cow Ghee, Baula Patani Silk)', 'Kanyadata & Groom', '45 Mins')">
+            <div class="ritual-card" data-testid="ritual-card-RIT-005" data-entity-id="RIT-005" role="button" tabindex="0" aria-haspopup="dialog" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}" onclick="showRitualModal('RIT-005: Kanyadaan & Hastaganthi', 'Sacred Vedic handover of the bride by parents with Kusha grass and tying of the consecrated cloth knot.', 'SAM-005 (Kusha grass, Cow Ghee, Baula Patani Silk)', 'Kanyadata & Groom', '45 Mins')">
               <h3>RIT-005: Kanyadaan & Hastaganthi</h3>
               <p>Sacred giving away of the bride with Kusha grass, sacred water, and tying of the Hastaganthi cloth knot.</p>
               <div class="ritual-meta">
@@ -645,7 +723,7 @@
               </div>
             </div>
 
-            <div class="ritual-card" data-testid="ritual-card-RIT-006" data-entity-id="RIT-006" onclick="showRitualModal('RIT-006: Lajahoma & Agni Pradakshina', 'Brother pours puffed rice (Khai/Laja) into sacred fire; couple circumambulates Agni and performs Ashmarohana stone-treading.', 'SAM-005 (Khai/Laja, Samidha, Silaputa stone)', 'Bride Brother & Purohit', '40 Mins')">
+            <div class="ritual-card" data-testid="ritual-card-RIT-006" data-entity-id="RIT-006" role="button" tabindex="0" aria-haspopup="dialog" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}" onclick="showRitualModal('RIT-006: Lajahoma & Agni Pradakshina', 'Brother pours puffed rice (Khai/Laja) into sacred fire; couple circumambulates Agni and performs Ashmarohana stone-treading.', 'SAM-005 (Khai/Laja, Samidha, Silaputa stone)', 'Bride Brother & Purohit', '40 Mins')">
               <h3>RIT-006: Lajahoma & Pradakshina</h3>
               <p>Puffed rice oblations by brother, stone-treading (*Ashmarohana*), and circumambulation of sacred fire.</p>
               <div class="ritual-meta">
@@ -654,7 +732,7 @@
               </div>
             </div>
 
-            <div class="ritual-card" data-testid="ritual-card-RIT-007" data-entity-id="RIT-007" onclick="showRitualModal('RIT-007: Saptapadi (Seven Vows)', 'Seven sacred steps around Agni Deva invoking friendship, nourishment, health, prosperity, and spiritual companionship.', 'SAM-005 (7 Betel nuts, Raw rice, Kusha)', 'Officiating Purohit', '30 Mins')">
+            <div class="ritual-card" data-testid="ritual-card-RIT-007" data-entity-id="RIT-007" role="button" tabindex="0" aria-haspopup="dialog" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}" onclick="showRitualModal('RIT-007: Saptapadi (Seven Vows)', 'Seven sacred steps around Agni Deva invoking friendship, nourishment, health, prosperity, and spiritual companionship.', 'SAM-005 (7 Betel nuts, Raw rice, Kusha)', 'Officiating Purohit', '30 Mins')">
               <h3>RIT-007: Saptapadi (Seven Vows)</h3>
               <p>Seven sacred steps sealing eternal Vedic vows: *Sakha Saptapada Bhava*.</p>
               <div class="ritual-meta">
@@ -663,7 +741,7 @@
               </div>
             </div>
 
-            <div class="ritual-card" data-testid="ritual-card-RIT-008" data-entity-id="RIT-008" onclick="showRitualModal('RIT-008: Sindoor Daan & Mangalsutra', 'Application of sacred vermilion on bride forehead parting using Odia Mukuta / gold ring, followed by Mangalsutra Dharan.', 'SAM-005 (Pure Sindoor, Mangalsutra AST-003)', 'Groom & Bride', '20 Mins')">
+            <div class="ritual-card" data-testid="ritual-card-RIT-008" data-entity-id="RIT-008" role="button" tabindex="0" aria-haspopup="dialog" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}" onclick="showRitualModal('RIT-008: Sindoor Daan & Mangalsutra', 'Application of sacred vermilion on bride forehead parting using Odia Mukuta / gold ring, followed by Mangalsutra Dharan.', 'SAM-005 (Pure Sindoor, Mangalsutra AST-003)', 'Groom & Bride', '20 Mins')">
               <h3>RIT-008: Sindoor Daan</h3>
               <p>Auspicious application of sacred vermilion and Mangalsutra Dharan sealing marital sanctity.</p>
               <div class="ritual-meta">
@@ -672,7 +750,7 @@
               </div>
             </div>
 
-            <div class="ritual-card" data-testid="ritual-card-RIT-009" data-entity-id="RIT-009" onclick="showRitualModal('RIT-009: Kanyavida (Farewell)', 'Emotional farewell of the bride tossing rice over her shoulder into her mothers hands, blessing maternal home.', 'Raw rice, Traditional Vida Thali', 'Bride & Mother', '30 Mins')">
+            <div class="ritual-card" data-testid="ritual-card-RIT-009" data-entity-id="RIT-009" role="button" tabindex="0" aria-haspopup="dialog" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}" onclick="showRitualModal('RIT-009: Kanyavida (Farewell)', 'Emotional farewell of the bride tossing rice over her shoulder into her mothers hands, blessing maternal home.', 'Raw rice, Traditional Vida Thali', 'Bride & Mother', '30 Mins')">
               <h3>RIT-009: Kanyavida (Farewell)</h3>
               <p>Emotional bridal departure (*Bahaghara Vida*) and maternal rice-tossing blessings.</p>
               <div class="ritual-meta">
@@ -681,7 +759,7 @@
               </div>
             </div>
 
-            <div class="ritual-card" data-testid="ritual-card-RIT-010" data-entity-id="RIT-010" onclick="showRitualModal('RIT-010: Grihapravesh', 'Welcoming bride as Gruhalakshmi at groom home: tipping of rice pot, red Alta footprints, and Kauri Khela icebreaker games.', 'Rice pot, Red Alta, Kauri shells, Brass plate', 'Groom Mother & Family', '45 Mins')">
+            <div class="ritual-card" data-testid="ritual-card-RIT-010" data-entity-id="RIT-010" role="button" tabindex="0" aria-haspopup="dialog" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}" onclick="showRitualModal('RIT-010: Grihapravesh', 'Welcoming bride as Gruhalakshmi at groom home: tipping of rice pot, red Alta footprints, and Kauri Khela icebreaker games.', 'Rice pot, Red Alta, Kauri shells, Brass plate', 'Groom Mother & Family', '45 Mins')">
               <h3>RIT-010: Grihapravesh</h3>
               <p>Welcoming bride as Gruhalakshmi, rice-pot tipping, red Alta footprints, and traditional Kauri Khela games.</p>
               <div class="ritual-meta">
@@ -690,7 +768,7 @@
               </div>
             </div>
 
-            <div class="ritual-card" data-testid="ritual-card-RIT-011" data-entity-id="RIT-011" onclick="showRitualModal('RIT-011: Chauthi Sacred Union', 'Fourth-night Vedic homa, untying of sacred Hastaganthi knot, and entry into consecrated Phula Sajya.', 'SAM-006 (Chauthi Homa items, Floral room decor, Saffron Milk)', 'Priest & Couple', '90 Mins')">
+            <div class="ritual-card" data-testid="ritual-card-RIT-011" data-entity-id="RIT-011" role="button" tabindex="0" aria-haspopup="dialog" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}" onclick="showRitualModal('RIT-011: Chauthi Sacred Union', 'Fourth-night Vedic homa, untying of sacred Hastaganthi knot, and entry into consecrated Phula Sajya.', 'SAM-006 (Chauthi Homa items, Floral room decor, Saffron Milk)', 'Priest & Couple', '90 Mins')">
               <h3>RIT-011: Chauthi Sacred Union</h3>
               <p>4th night Vedic homa, untying of Hastaganthi knot, and entry into the consecrated Phula Sajya.</p>
               <div class="ritual-meta">
@@ -699,7 +777,7 @@
               </div>
             </div>
 
-            <div class="ritual-card" data-testid="ritual-card-RIT-012" data-entity-id="RIT-012" onclick="showRitualModal('RIT-012: Astamangala Feast', '8th day return visit to bride parental home concluding wedding cycle with grand feast in honor of son-in-law.', 'Traditional 21-item Odia feast menu', 'Bride Parents', 'Lunch')">
+            <div class="ritual-card" data-testid="ritual-card-RIT-012" data-entity-id="RIT-012" role="button" tabindex="0" aria-haspopup="dialog" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}" onclick="showRitualModal('RIT-012: Astamangala Feast', '8th day return visit to bride parental home concluding wedding cycle with grand feast in honor of son-in-law.', 'Traditional 21-item Odia feast menu', 'Bride Parents', 'Lunch')">
               <h3>RIT-012: Astamangala Feast</h3>
               <p>Eighth-day return feast (*Jwai Bhoji*) at bride's maternal home concluding the wedding cycle.</p>
               <div class="ritual-meta">
@@ -799,9 +877,9 @@
           </div>
 
           <!-- 3. Family Co-Creation & Ingested Inspirations Feed -->
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 32px; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-            <h4 style="font-family: var(--font-display); color: var(--gold-bright); margin: 0;">💡 Family Ideas & Ingested Inspirations (<span id="ideas-count">0</span>)</h4>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+          <div class="vision-toolbar-row" style="margin-top: 32px; margin-bottom: 12px;">
+            <h4 style="font-family: var(--font-display); color: var(--gold-bright); margin: 0; white-space: nowrap;">💡 Family Ideas & Ingested Inspirations (<span id="ideas-count">0</span>)</h4>
+            <div class="subnav-filter-strip" role="toolbar" aria-label="Idea Filter Options">
               <button id="filter-ideas-all" class="theme-toggle-btn idea-filter-btn active" onclick="filterIdeas('ALL')" style="font-size: 0.75rem; padding: 4px 10px;">All</button>
               <button id="filter-ideas-staged" class="theme-toggle-btn idea-filter-btn" onclick="filterIdeas('STAGED')" style="font-size: 0.75rem; padding: 4px 10px;">Active</button>
               <button id="filter-ideas-withdrawn" class="theme-toggle-btn idea-filter-btn" onclick="filterIdeas('WITHDRAWN')" style="font-size: 0.75rem; padding: 4px 10px;">Withdrawn</button>
@@ -978,8 +1056,8 @@
           </div>
 
           <!-- Top Action & Filter Row -->
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <div class="intake-toolbar-row" style="margin-bottom: 20px;">
+            <div class="subnav-filter-strip" role="toolbar" aria-label="Intake Domain Filters">
               <button class="theme-toggle-btn ledger-tab-filter-btn active" data-domain="ALL" onclick="filterIntakeLedger('ALL')">All Requests (<span id="ledger-tab-count">5</span>)</button>
               <button class="theme-toggle-btn ledger-tab-filter-btn" data-domain="VISION" onclick="filterIntakeLedger('VISION')">💡 Vision</button>
               <button class="theme-toggle-btn ledger-tab-filter-btn" data-domain="TASKS" onclick="filterIntakeLedger('TASKS')">📋 Tasks</button>

@@ -782,7 +782,7 @@
         return `
           <div class="dr-compare-card ${isCurrent ? 'current' : ''}">
             <div class="dr-compare-card-media">
-              <img class="dr-compare-card-img" src="${p.photoSrc}" alt="${p.title}">
+              <img class="dr-compare-card-img" src="${p.photoSrc}" alt="${p.title}" loading="lazy" decoding="async">
               <div class="dr-plate-tag-bar">
                 <span class="dr-plate-id-badge">${p.id}</span>
                 <span class="dr-plate-status-badge ${p.status}">${p.statusBadge}</span>
@@ -817,7 +817,7 @@
         const isActive = (idx === activeModalPlateIndex);
         return `
           <div class="dr-lightbox-thumb ${isActive ? 'active' : ''}" onclick="window.openLightbox(${idx}, ${isCompareMode})" title="${p.id}: ${p.title}">
-            <img src="${p.photoSrc}" alt="${p.id}" onerror="this.src='./assets/decor/marquee/photo-luxury-marquee-chandeliers.jpg'">
+            <img src="${p.photoSrc}" alt="${p.id}" loading="lazy" decoding="async" onerror="this.src='./assets/decor/marquee/photo-luxury-marquee-chandeliers.jpg'">
           </div>
         `;
       }).join('');

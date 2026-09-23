@@ -241,6 +241,15 @@
     @media (max-width: 900px) {
       .dr-milestone-track {
         grid-template-columns: repeat(5, minmax(180px, 1fr));
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+        mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
+        -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
+      }
+      .dr-milestone-track::-webkit-scrollbar {
+        display: none;
       }
     }
 
@@ -872,6 +881,29 @@
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
+    }
+
+    @media (max-width: 768px) {
+      .dr-filter-pills {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+        width: 100%;
+        padding: 4px 2px 6px;
+        mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
+        -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
+      }
+      .dr-filter-pills::-webkit-scrollbar {
+        display: none;
+      }
+      .dr-pill {
+        flex-shrink: 0;
+        white-space: nowrap;
+        min-height: 40px;
+        padding: 8px 14px;
+      }
     }
 
     .dr-pill {

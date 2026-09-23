@@ -1048,6 +1048,24 @@ window.dataLayer = window.dataLayer || [];
       if (matchingBtn) {
         matchingBtn.classList.add('active');
         matchingBtn.setAttribute('aria-selected', 'true');
+        if (typeof matchingBtn.scrollIntoView === 'function') {
+          matchingBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+      }
+
+      // Synchronize active state in drawer module items and close menu
+      document.querySelectorAll('.drawer-module-item').forEach(item => {
+        const itemTarget = item.getAttribute('data-tab-target');
+        if (itemTarget === targetId) {
+          item.classList.add('active');
+          item.setAttribute('aria-current', 'page');
+        } else {
+          item.classList.remove('active');
+          item.removeAttribute('aria-current');
+        }
+      });
+      if (typeof closeQuickActionsMenu === 'function') {
+        closeQuickActionsMenu();
       }
 
       sessionStorage.setItem('sree_krushna_active_tab', targetId);
@@ -1643,40 +1661,66 @@ window.dataLayer = window.dataLayer || [];
       }
     }
 
-    // Consolidated Mobile/Tablet Quick Actions Menu Engine (AC-DEC-2026-034 / UI-DEC-2026-030)
+    // Consolidated Mobile/Tablet Quick Actions & Executive Module Directory (AC-DEC-2026-034 / UI-DEC-2026-030 / AC-DEC-2026-036)
     function toggleQuickActionsMenu(e) {
-      if (e) e.stopPropagation();
+      if (e) {
+        if (typeof e.stopPropagation === 'function') e.stopPropagation();
+        if (typeof e.preventDefault === 'function' && e.target && e.target.tagName === 'A') e.preventDefault();
+      }
       const popover = document.getElementById('headerQuickActionsPopover');
-      const trigger = document.getElementById('headerQuickActionsBtn');
+      const backdrop = document.getElementById('headerQuickActionsBackdrop');
+      const brand = document.querySelector('.brand') || document.getElementById('brandNavTrigger');
+      const tabNavBtn = document.getElementById('tabNavModulesBtn');
       const dropdown = document.getElementById('quickActionsDropdown');
       if (!popover) return;
 
       const isHidden = popover.style.display === 'none' || !popover.classList.contains('active');
       if (isHidden) {
-        popover.style.display = 'block';
+        popover.style.display = 'flex';
         popover.classList.add('active');
+        if (backdrop) {
+          backdrop.style.display = 'block';
+          backdrop.classList.add('active');
+        }
         if (dropdown) dropdown.classList.add('active');
-        if (trigger) trigger.setAttribute('aria-expanded', 'true');
+        if (brand) brand.setAttribute('aria-expanded', 'true');
+        if (tabNavBtn) tabNavBtn.setAttribute('aria-expanded', 'true');
       } else {
-        popover.style.display = 'none';
-        popover.classList.remove('active');
-        if (dropdown) dropdown.classList.remove('active');
-        if (trigger) trigger.setAttribute('aria-expanded', 'false');
+        closeQuickActionsMenu();
       }
     }
 
-    // Dismiss Quick Actions Popover on Outside Click
+    function closeQuickActionsMenu() {
+      const popover = document.getElementById('headerQuickActionsPopover');
+      const backdrop = document.getElementById('headerQuickActionsBackdrop');
+      const dropdown = document.getElementById('quickActionsDropdown');
+      const brand = document.querySelector('.brand') || document.getElementById('brandNavTrigger');
+      const tabNavBtn = document.getElementById('tabNavModulesBtn');
+      if (popover) {
+        popover.style.display = 'none';
+        popover.classList.remove('active');
+      }
+      if (backdrop) {
+        backdrop.style.display = 'none';
+        backdrop.classList.remove('active');
+      }
+      if (dropdown) dropdown.classList.remove('active');
+      if (brand) brand.setAttribute('aria-expanded', 'false');
+      if (tabNavBtn) tabNavBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    // Dismiss Quick Actions Popover on Outside Click / Backdrop Click (INV-LIFECYCLE-03)
     document.addEventListener('click', (e) => {
       if (!e) return;
       const popover = document.getElementById('headerQuickActionsPopover');
-      const dropdown = document.getElementById('quickActionsDropdown');
+      const brand = document.querySelector('.brand') || document.getElementById('brandNavTrigger');
+      const tabNavBtn = document.getElementById('tabNavModulesBtn');
       if (popover && popover.classList.contains('active')) {
-        if (!dropdown || !e.target || !dropdown.contains(e.target)) {
-          popover.style.display = 'none';
-          popover.classList.remove('active');
-          if (dropdown) dropdown.classList.remove('active');
-          const trigger = document.getElementById('headerQuickActionsBtn');
-          if (trigger) trigger.setAttribute('aria-expanded', 'false');
+        const clickedInsidePopover = popover.contains(e.target);
+        const clickedInsideBrand = brand && brand.contains(e.target);
+        const clickedInsideTabNavBtn = tabNavBtn && tabNavBtn.contains(e.target);
+        if (!clickedInsidePopover && !clickedInsideBrand && !clickedInsideTabNavBtn) {
+          closeQuickActionsMenu();
         }
       }
     });
@@ -1685,13 +1729,8 @@ window.dataLayer = window.dataLayer || [];
     document.addEventListener('keydown', (e) => {
       if (!e || e.key !== 'Escape') return;
       const popover = document.getElementById('headerQuickActionsPopover');
-      const dropdown = document.getElementById('quickActionsDropdown');
       if (popover && popover.classList.contains('active')) {
-        popover.style.display = 'none';
-        popover.classList.remove('active');
-        if (dropdown) dropdown.classList.remove('active');
-        const trigger = document.getElementById('headerQuickActionsBtn');
-        if (trigger) trigger.setAttribute('aria-expanded', 'false');
+        closeQuickActionsMenu();
       }
     });
 
@@ -2367,6 +2406,8 @@ window.dataLayer = window.dataLayer || [];
     window.openExecutiveShareModal = openExecutiveShareModal;
     window.closeExecutiveShareModal = closeExecutiveShareModal;
     window.toggleQuickActionsMenu = toggleQuickActionsMenu;
+    window.closeQuickActionsMenu = closeQuickActionsMenu;
+    window.openExecutiveDrawer = toggleQuickActionsMenu;
     window.copyShareItem = copyShareItem;
     window.openShareWhatsApp = openShareWhatsApp;
     window.getStakeholderSharePayload = getStakeholderSharePayload;
