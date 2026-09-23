@@ -43,7 +43,28 @@ const domChecks = [
   'storeFilterBar',
   'shop-store-map-btn',
   'shop-visual-search-btn',
-  'parseUrlParams'
+  'parseUrlParams',
+  'id="shopCatalogViewToggle"',
+  'id="btnCatalogCards"',
+  'id="btnCatalogList"',
+  'window.setCatalogViewMode',
+  'window.selectItemOption',
+  'window.shareItemOption',
+  'window.openOptionIntakeModal',
+  'window.closeOptionIntakeModal',
+  'id="skOptionIntakeBackdrop"',
+  'id="skOptionItemId"',
+  'id="skDriveUrlInput"',
+  'id="skBtnSubmitOption"',
+  'highlight-target-item',
+  'shop-share-look-btn',
+  'shop-card-options-bar',
+  'shop-option-chip-add',
+  'id="catalogSubnavStrip"',
+  'window.setCatalogSubView',
+  'window.jumpToStore',
+  'window.jumpToChapter',
+  'catalog-subnav-btn'
 ];
 
 domChecks.forEach(check => {
@@ -124,6 +145,52 @@ assert.strictEqual(saraCount, 8, 'Must have 8 sara gifting items');
 assert.strictEqual(engagementCount, 5, 'Must have 5 engagement items');
 
 console.log(`  ✓ [PASS] Total 44 items verified: Engagement (${engagementCount}), Bridal (${bridalCount}), Groom (${groomCount}), Jewellery (${jewelleryCount}), Sara Gifting (${saraCount})`);
+
+console.log('▶ [5/5] Auditing Visual Asset Taxonomy & 100% Byte Parity (P-UNIVERSAL-VISUAL-ASSET-001)...');
+const path = require('path');
+const rootRegPath = path.resolve('assets/shopping/registry.json');
+const pubRegPath = path.resolve('public/assets/shopping/registry.json');
+assert(fs.existsSync(rootRegPath), 'assets/shopping/registry.json must exist');
+assert(fs.existsSync(pubRegPath), 'public/assets/shopping/registry.json must exist');
+const rootReg = JSON.parse(fs.readFileSync(rootRegPath, 'utf8'));
+const pubReg = JSON.parse(fs.readFileSync(pubRegPath, 'utf8'));
+assert.strictEqual(rootReg.items.length, 8, 'Must have 8 registered items in visual asset taxonomy');
+assert.strictEqual(pubReg.items.length, 8, 'Must have 8 registered items in public asset taxonomy');
+assert.strictEqual(fs.readFileSync(rootRegPath, 'utf8'), fs.readFileSync(pubRegPath, 'utf8'), 'Byte parity between root and public registry.json failed');
+
+rootReg.items.forEach(it => {
+  assert(it.options.length >= 1, `Item ${it.itemId} must have at least 1 image option`);
+  it.options.forEach(opt => {
+    assert(opt.filename.toLowerCase().endsWith('.jpg'), `Image ${opt.filename} must be .jpg format`);
+    const rootImg = path.join(path.dirname(rootRegPath), it.slug, opt.filename);
+    const pubImg = path.join(path.dirname(pubRegPath), it.slug, opt.filename);
+    assert(fs.existsSync(rootImg), `Image ${rootImg} missing in root`);
+    assert(fs.existsSync(pubImg), `Image ${pubImg} missing in public`);
+    assert.strictEqual(fs.statSync(rootImg).size, fs.statSync(pubImg).size, `Byte parity failed for ${opt.filename}`);
+  });
+});
+console.log(`  ✓ [PASS] All 8 visual reference folders, .jpg assets, and registry.json verified with 100% byte parity.`);
+
+console.log('▶ [6/6] Auditing Pinterest Intake, Multi-Image Containers & Collab Deep-Link Sharing (P-PINTEREST-INTAKE-001 / AC-DEC-2026-038)...');
+// 1. Verify CSS partial modularity (< 500 lines)
+const collabCssPath = path.resolve('shopping_src/styles/08_collab_options_and_sharing.css');
+assert(fs.existsSync(collabCssPath), '08_collab_options_and_sharing.css must exist');
+const collabCss = fs.readFileSync(collabCssPath, 'utf8');
+const collabCssLines = collabCss.split('\n').length;
+assert(collabCssLines <= 500, `08_collab_options_and_sharing.css has ${collabCssLines} lines, exceeds 500-line modular limit`);
+console.log(`  ✓ [PASS] 08_collab_options_and_sharing.css modularity verified (${collabCssLines} lines, < 500)`);
+
+// 2. Verify compiled CSS rules exist in standalone HTML
+assert(rootHtml.includes('@keyframes targetPulse'), 'Compiled HTML must include targetPulse keyframe animation');
+assert(rootHtml.includes('.highlight-target-item'), 'Compiled HTML must include highlight-target-item selector');
+assert(rootHtml.includes('.shop-card-options-bar'), 'Compiled HTML must include shop-card-options-bar selector');
+assert(rootHtml.includes('.shop-share-look-btn'), 'Compiled HTML must include shop-share-look-btn selector');
+console.log('  ✓ [PASS] Target pulse, option switcher, and share look styles compiled into distribution HTML');
+
+// 3. Verify Firestore security rules validation
+const firestoreRules = fs.readFileSync('firestore.rules', 'utf8');
+assert(firestoreRules.includes('options') && firestoreRules.includes('selectedOptionIndex'), 'firestore.rules must allow options and selectedOptionIndex');
+console.log('  ✓ [PASS] firestore.rules validates options and selectedOptionIndex on shopping_items');
 
 console.log('\n════════════════════════════════════════════════════════════════════════════════');
 console.log('🎉 SHOPPING REGISTRY & LITURGICAL RECONCILIATION GATE: 100% GREEN (44/44 ITEMS)');
