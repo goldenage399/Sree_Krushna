@@ -48,6 +48,7 @@ All entities must use standardized 3-digit padded identifiers:
 - **3-Tier Multi-Surface Deployment**: See [260916_arch_council_multi_surface_web_app_and_shopping_deployment.md](./User_Created/Discussion Threads/Council/260916_arch_council_multi_surface_web_app_and_shopping_deployment.md) (`AC-DEC-2026-026` / `P-MULTI-SURFACE-DEPLOY-001`).
 - **Universal Quick-Share Architecture**: See [260916_arch_council_universal_executive_quick_share_and_deep_link_architecture.md](./User_Created/Discussion Threads/Council/260916_arch_council_universal_executive_quick_share_and_deep_link_architecture.md) (`AC-DEC-2026-027` / `UI-DEC-2026-023` / `P-QUICK-SHARE-001`).
 - **Mutable Table & Multi-Viewport Architecture**: See [SPEC-ARCH-MUTABLE-TABLE-001.md](./docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md) (`FKL-DI-022` / `INV-SDCA-004` / `AC-DEC-2026-034`).
+- **Tri-Modal Visual Intake & Collaborative Deep-Link Sharing**: See [260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md](./User_Created/Discussion Threads/Council/260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md) (`AC-DEC-2026-035` / `P-COLLAB-VISUAL-INTAKE-001` / `INC-094`).
 
 
 ### 5. Dynamic UI Lifecycle & Modal Dismissibility Invariant (`STD-UI-LIFECYCLE-001` / `DEC-003`)
@@ -178,3 +179,4 @@ This repository implements the following universal patterns:
 - `.agent/patterns/canonical-stakeholder-deep-link-station.md`
 - `.agent/patterns/dynamic-module-timing-race-and-auth-reconnect.md`
 - `.agent/patterns/sdca-container-query-scoping.md`
+- `.agent/patterns/collab-visual-intake-and-deep-link-sharing.md`

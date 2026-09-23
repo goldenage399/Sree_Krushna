@@ -7,14 +7,15 @@
     "targetEnvironment": "Multi-Repo SAP Spoke",
     "governanceModel": "AI-Driven Development (Antigravity Agent)",
     "sourceOfTruth": "GEMINI.md",
-    "totalStandards": 5,
-    "lastUpdated": "2026-09-15"
+    "totalStandards": 6,
+    "lastUpdated": "2026-09-24"
   },
   "categories": {
     "governance": "Process and workflow controls",
     "data-integrity": "Schema validity and entity relations",
     "documentation": "SSOT, hubs, and schema specifications",
-    "memory": "Persistent context and session telemetry"
+    "memory": "Persistent context and session telemetry",
+    "ui-quality": "Frontend visual hierarchy, responsive layout, and collaborative interaction standards"
   },
   "standards": [
     {
@@ -89,6 +90,27 @@
         "GEMINI.md",
         "CLAUDE.md",
         "scripts/verify-modular-architecture.cjs"
+      ]
+    },
+    {
+      "id": "P-COLLAB-VISUAL-INTAKE-001",
+      "category": "ui-quality",
+      "name": "Tri-Modal Visual Intake & Collaborative Deep-Link Sharing Standard",
+      "description": "Visual procurement and decor modules must provide showroom photo ingestion, Pinterest CDN normalization, multi-option container pods, and URL deep-linking with active option state (?item=X&option=Y).",
+      "severity": "HIGH",
+      "enforcement": {
+        "checkpoints": [
+          "pre-commit",
+          "PIRR"
+        ],
+        "manualOnly": false,
+        "automatedGate": "npm run test:shopping"
+      },
+      "references": [
+        "User_Created/Discussion Threads/Council/260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md",
+        ".agent/patterns/collab-visual-intake-and-deep-link-sharing.md",
+        "GEMINI.md",
+        "CLAUDE.md"
       ]
     }
   ]

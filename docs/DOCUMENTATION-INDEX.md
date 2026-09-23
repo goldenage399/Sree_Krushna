@@ -30,5 +30,6 @@ Welcome to the **Sree Krushna Marriage OS** documentation catalog.
 - [INC-091-unvetted-ideation-creep-and-incubation-firewall-boundary.md](./incidents/INC-091-unvetted-ideation-creep-and-incubation-firewall-boundary.md) — Unvetted Ideation Creep into Operational SSOTs & Incubation Firewall Breach (INV-INCUBATION-FIREWALL-001 / P-IDEA-FIREWALL-001)
 - [INC-092-dynamic-module-timing-race-and-unauthenticated-local-fallback.md](./incidents/INC-092-dynamic-module-timing-race-and-unauthenticated-local-fallback.md) — Dynamic ES Module Timing Race & Unauthenticated Local Mode Fallback in Showroom Shopping Table (STD-UI-LIFECYCLE-001 / dynamic-module-timing-race-and-auth-reconnect)
 - [INC-093-sdca-compiler-regex-container-query-mangling.md](./incidents/INC-093-sdca-compiler-regex-container-query-mangling.md) — SDCA Build Compiler Regex At-Rule Container Query Mangling (STD-MOD-COMP-001 / INV-SDCA-004 / sdca-container-query-scoping)
+- [INC-094-duplicate-urlparam-scope-shadowing-and-pre-emit-syntax-gate.md](./incidents/INC-094-duplicate-urlparam-scope-shadowing-and-pre-emit-syntax-gate.md) — Duplicate URL Parameter Variable Re-declaration & Validation via SDCA Pre-Emit Syntax Gate (STD-MOD-COMP-001 / INV-SDCA-003 / P-COLLAB-VISUAL-INTAKE-001)
 
 

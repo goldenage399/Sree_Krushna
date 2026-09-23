@@ -117,7 +117,7 @@ Before starting any non-trivial task, scan the repo's AI instruction files for `
 
 ### Step 0.3: Standards Catalog Load (CONDITIONAL — Catalog Discovery Protocol)
 
-> **🟡 Trigger**: Only when domain keywords are detected in the task description: `auth`, `firebase`, `ui`, `modal`, `form`, `routing`, `css`, `tag`, `profile`, `p83`, `p84`, `p89`, `p-pcp`, `p-isg`. Skip for pure governance or doc-only tasks.
+> **🟡 Trigger**: Only when domain keywords are detected in the task description: `auth`, `firebase`, `ui`, `modal`, `form`, `routing`, `css`, `tag`, `profile`, `p83`, `p84`, `p89`, `p-pcp`, `p-isg`, `p-collab-visual-intake-001`. Skip for pure governance or doc-only tasks.
 > **Duration**: ~1 min | **Source**: `.agent/standards-catalog.json` (or `.agent/pks-catalog.json` in Capsicum)
 
 Ground enforcement context before any task work begins:
