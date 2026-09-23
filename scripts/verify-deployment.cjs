@@ -450,6 +450,21 @@ check('Layer 9: Interactive Drawer & Slide-Over Panel State Machine Contract', (
   }
 });
 
+// ── LAYER 10: Dynamic UI Lifecycle & 3-Trigger Dismissibility Contract ────────
+check('Layer 10: Dynamic UI Lifecycle & 3-Trigger Dismissibility Contract (STD-UI-LIFECYCLE-001)', () => {
+  const lifecycleScript = path.join(ROOT_DIR, 'scripts/verify-ui-lifecycle.cjs');
+  if (!fs.existsSync(lifecycleScript)) {
+    logFail('scripts/verify-ui-lifecycle.cjs is missing!');
+    return;
+  }
+  try {
+    execFileSync(process.execPath, [lifecycleScript], { stdio: 'pipe' });
+    logPass('All Dynamic UI Lifecycle & 3-Trigger Dismissibility checks passed (100% GREEN)');
+  } catch (err) {
+    logFail('Dynamic UI Lifecycle verification FAILED!', err.stdout ? err.stdout.toString() : err.message);
+  }
+});
+
 // ── SUMMARY & EXIT CODE ──────────────────────────────────────────────────────
 console.log('\n===============================================================');
 if (failureCount === 0) {
