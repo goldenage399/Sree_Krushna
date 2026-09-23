@@ -3654,11 +3654,360 @@ We have upgraded the Bhubaneswar Shopping Registry (`https://sree-krushna-foreve
 4. **Test Universal Lightbox**:
    - Tap the active image to open the full-screen Lightbox with pinch-to-zoom and pan.
 
-# Query 3.8 -
+# Query 3.8 -[capture-pattern](recipe;file:///d%3A/GitHub_Repo/Sree_Krushna/.agent/workflows/capture-pattern.md) [register-standard](recipe;file:///d%3A/GitHub_Repo/Sree_Krushna/.agent/workflows/register-standard.md) disc pact, [post-incident-analysis](recipe;file:///d%3A/GitHub_Repo/Sree_Krushna/.agent/workflows/post-incident-analysis.md) and [phased-commit-orchestrator](slashCommand;phased-commit-orchestrator) and then check if the same can be done for other modules like decorator
 
 # Review 3.8 -
 
-# Response 3.8 -
+# Response 3.8 -Viewed SKILL.md:1-100
+
+Listed directory patterns
+Listed directory incidents
+Viewed standards-catalog.json:1-60
+Viewed standards-catalog.json:60-96
+Viewed Council_Ledger.md:35-46
+Searched for "P-UNIVERSAL-VISUAL-ASSET"
+Viewed verify-governance-wiring.cjs:1-100
+Viewed verify-governance-wiring.cjs:101-200
+Viewed verify-governance-wiring.cjs:350-450
+Viewed verify-governance-wiring.cjs:470-550
+Ran command: `npm run verify:governance-wiring`
+Ran command: `node scripts/verify-governance-wiring.cjs --all`
+Viewed dynamic-module-timing-race-and-auth-reconnect.md:1-60
+Viewed README.md:1-60
+Viewed external-ui-redesign.md:1-50
+Viewed post-incident-governance.md:1-50
+Viewed post-incident-governance.md:150-199
+Searched for "dynamic-module-timing-race-and-auth-reconnect"
+Searched for "dynamic-module-timing-race-and-auth-reconnect"
+Ran command: `git status -s`
+Ran command: `npm run verify:governance-wiring`
+Ran command: `node scripts/verify-governance-wiring.cjs --all`
+Viewed dynamic-module-timing-race-and-auth-reconnect.md:1-45
+Searched for "dynamic-module-timing-race"
+Searched for "dynamic-module-timing-race"
+Viewed post-incident-governance.md:135-160
+Viewed standards-catalog.json:1-60
+Viewed standards-catalog.json:60-96
+Viewed GEMINI.md:1-100
+Viewed GEMINI.md:100-109
+Viewed CLAUDE.md:1-75
+Viewed verify-governance-wiring.cjs:1-100
+Viewed verify-governance-wiring.cjs:101-200
+Viewed verify-governance-wiring.cjs:350-450
+Viewed verify-governance-wiring.cjs:520-600
+Listed directory incidents
+Viewed INC-093-sdca-compiler-regex-container-query-mangling.md:1-60
+Listed directory cockpit_src
+Listed directory components
+Listed directory scripts
+Listed directory styles
+Listed directory data
+Viewed topics_marquee.json:1-60
+Viewed topic_plate_map.json:1-29
+Viewed canonical_plates.json:1-60
+Viewed README.md:1-60
+Viewed README.md:100-141
+Created collab-visual-intake-and-deep-link-sharing.md
+Viewed post-incident-governance.md:140-150
+Edited post-incident-governance.md
+Viewed README.md:102-110
+Edited README.md
+Ran command: `npm run verify:governance-wiring`
+Viewed standards-catalog.json:70-96
+Edited standards-catalog.json
+Edited standards-catalog.json
+Edited standards-catalog.json
+Viewed GEMINI.md:45-55
+Edited GEMINI.md
+Viewed GEMINI.md:45-55
+Edited GEMINI.md
+Ran command: `node -e "console.log(JSON.stringify(fs.readFileSync('GEMINI.md', 'utf8').slice(3350, 3600)))"`
+Ran command: `node -e "
+const fs = require('fs');
+['GEMINI.md', 'CLAUDE.md'].forEach(file => {
+  let content = fs.readFileSync(file, 'utf8');
+  const target1 = '- **Mutable Table & Multi-Viewport Architecture**: See [SPEC-ARCH-MUTABLE-TABLE-001.md](./docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md) (`FKL-DI-022`/`INV-SDCA-004`/`AC-DEC-2026-034`).';
+  const addition1 = '\r\n- **Tri-Modal Visual Intake & Collaborative Deep-Link Sharing**: See [260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md](./User_Created/Discussion Threads/Council/260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md) (`AC-DEC-2026-035`/`P-COLLAB-VISUAL-INTAKE-001`/`INC-094`).';
+  if (!content.includes('P-COLLAB-VISUAL-INTAKE-001')) {
+    content = content.replace(target1, target1 + addition1);
+    const target2 = '## 4. Pattern Activation & PACT-001 Cross-References\r\nThis repository implements the following universal patterns:\r\n';
+    const addition2 = '- **[P-COLLAB-VISUAL-INTAKE-001: Tri-Modal Visual Intake & Collaborative Deep-Link Sharing]**: Showroom photos, Pinterest CDN normalization, multi-option container pods, and URL deep-linking (?item=X&option=Y). Ref: `.agent/patterns/collab-visual-intake-and-deep-link-sharing.md`.\r\n';
+    content = content.replace(target2, target2 + addition2);
+    fs.writeFileSync(file, content, 'utf8');
+    console.log('Updated ' + file);
+  } else {
+    console.log('Already updated ' + file);
+  }
+});
+"`
+Ran command: `git diff GEMINI.md`
+Ran command: `git checkout GEMINI.md CLAUDE.md`
+Viewed GEMINI.md:95-110
+Viewed GEMINI.md:160-178
+Viewed CLAUDE.md:160-178
+Viewed CLAUDE.md:175-181
+Ran command: `node -e "
+const fs = require('fs');
+['GEMINI.md', 'CLAUDE.md'].forEach(file => {
+  let content = fs.readFileSync(file, 'utf8');
+  const target1 = '- **Mutable Table & Multi-Viewport Architecture**: See [SPEC-ARCH-MUTABLE-TABLE-001.md](./docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md) (`FKL-DI-022`/`INV-SDCA-004`/`AC-DEC-2026-034`).';
+  const addition1 = '\r\n- **Tri-Modal Visual Intake & Collaborative Deep-Link Sharing**: See [260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md](./User_Created/Discussion Threads/Council/260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md) (`AC-DEC-2026-035`/`P-COLLAB-VISUAL-INTAKE-001`/`INC-094`).';
+  if (!content.includes('P-COLLAB-VISUAL-INTAKE-001')) {
+    content = content.replace(target1, target1 + addition1);
+  }
+  const target2 = '- .agent/patterns/sdca-container-query-scoping.md';
+  const addition2 = '\r\n- .agent/patterns/collab-visual-intake-and-deep-link-sharing.md';
+  if (!content.includes('collab-visual-intake-and-deep-link-sharing.md')) {
+    content = content.replace(target2, target2 + addition2);
+  }
+  fs.writeFileSync(file, content, 'utf8');
+  console.log('Successfully updated ' + file);
+});
+"`
+Ran command: `git diff GEMINI.md CLAUDE.md`
+Ran command: `git status -s GEMINI.md CLAUDE.md`
+Ran command: `node -e "const lines = fs.readFileSync('GEMINI.md', 'utf8').split(/\r?\n/); console.log(lines.slice(45, 53));"`
+Created update-governance-docs.cjs
+Ran command: `node scripts/update-governance-docs.cjs`
+Ran command: `git diff GEMINI.md CLAUDE.md`
+Ran command: `node -e "const lines = fs.readFileSync('GEMINI.md', 'utf8').split(/\r?\n/); console.log(lines.slice(-5));"`
+Created update-governance-docs.cjs
+Ran command: `node scripts/update-governance-docs.cjs`
+Ran command: `git diff GEMINI.md CLAUDE.md`
+Ran command: `Remove-Item scripts/update-governance-docs.cjs`
+Ran command: `npm run verify:governance-wiring`
+Searched for "STD-MOD-COMP-001"
+Searched for "P-SSOT-DOCS"
+Viewed verify-governance-wiring.cjs:470-520
+Viewed aos-session-open.md:1-60
+Viewed aos-session-open.md:120-180
+Viewed skill-router.yaml:1-60
+Searched for "cockpit-intake"
+Viewed aos-session-open.md:118-124
+Edited aos-session-open.md
+Ran command: `npm run verify:governance-wiring`
+Viewed PREFLIGHT.md:1-14
+Edited PREFLIGHT.md
+Ran command: `npm run verify:governance-wiring`
+Viewed controller.js:1-25
+Viewed 08_collab_options_and_sharing.css:1-25
+Viewed option_intake_modal.html:1-25
+Edited controller.js
+Edited 08_collab_options_and_sharing.css
+Edited option_intake_modal.html
+Ran command: `node shopping_src/build.cjs`
+Ran command: `npm run verify:modular-architecture ; npm run test:shopping ; npm run verify:ui-lifecycle ; npm run verify:deployment ; npm run verify:governance-wiring`
+Created INC-094-duplicate-urlparam-scope-shadowing-and-pre-emit-syntax-gate.md
+Searched for "INC-093"
+Viewed DOCUMENTATION-INDEX.md:25-35
+Edited DOCUMENTATION-INDEX.md
+Ran command: `npm run verify:governance-wiring`
+Viewed SKILL.md:1-100
+Ran command: `git status --short`
+Ran command: `git config user.name ; git config user.email`
+Listed directory decor
+Viewed registry.json:1-60
+Viewed stage.html:1-60
+Searched for "topicVisualButtonsContainer"
+Searched for "canonical_plates"
+Viewed build.cjs:35-65
+Listed directory modals
+Viewed custom_photo_modal.html:1-60
+Ran command: `git add .claude/skills/impeccable/ .agent/skills/enhancement-scaffolder/ .agent/skills/task-firestore-direct-write/ .claude/skills/task-firestore-direct-write/ .agent/skills/repo-task-dependency-grapher/ .claude/skills/repo-task-dependency-grapher/ .agent/skill-router.yaml package.json .deploymentrc.json scripts/verify-governance-wiring.cjs ; git commit -m "chore(tools): upgrade impeccable, task grapher skills, and governance wiring scripts"`
+Ran command: `git add css/dopkos-engine.css public/css/dopkos-engine.css public/css/main.css public/js/app.js public/sw.js sw.js index.html public/index.html templates/web-spa-shell/ decision-registry-fragment.html decision-registry.html public/decision-registry-fragment.html public/decision-registry.html decision_registry_src/ ; git commit -m "feat(shell): upgrade dopkos engine, decision registry responsive layout, and app shell parity"`
+Ran command: `git add shopping_src/ ui_primitives/components/option_intake_modal.html firestore.rules js/shopping-data.js public/js/shopping-data.js assets/shopping/ public/assets/shopping/ scripts/sync-shopping-assets.cjs shopping-registry.html shopping-fragment.html public/shopping-registry.html public/shopping-fragment.html ; git commit -m "feat(shopping): implement tri-modal pinterest intake, multi-image containers, and collaborative deep-linking"`
+Ran command: `git add scripts/test-shopping-registry.cjs ; git commit -m "test(shopping): add phase 6 collaborative option pod assertions and test gates"`
+Ran command: `git status -s`
+Ran command: `git add .agent/patterns/ .agent/standards-catalog.json .agent/PREFLIGHT.md .agent/workflows/ CLAUDE.md GEMINI.md docs/incidents/ docs/DOCUMENTATION-INDEX.md "User_Created/Discussion Threads/" ; git commit -m "docs(governance): institutionalize INC-094, P-COLLAB-VISUAL-INTAKE-001 standard, and council threads"`
+Ran command: `git status`
+Ran command: `git log -n 5 --oneline`
+Ran command: `npm run verify:modular-architecture ; npm run test:shopping ; npm run verify:ui-lifecycle ; npm run verify:deployment ; npm run verify:governance-wiring`
+
+### Executive Summary & Status Report
+
+All requested governance protocols, standard registrations, incident documentation, and phased commits have been completed. A comprehensive feasibility study for extending this architecture to the **Decorator Cockpit** has been conducted.
+
+---
+
+### Part 1: Governance & Standard Institutionalization
+
+#### 1. Pattern Capture (`/capture-pattern` + `PACT-001`)
+
+- **Captured Pattern**: [`.agent/patterns/collab-visual-intake-and-deep-link-sharing.md`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/patterns/collab-visual-intake-and-deep-link-sharing.md)
+  - **Category**: Process / Interaction Design Gate
+  - **Status**: `VALIDATED` | **Tier**: `reference`
+  - **Contract Wiring**: Bidirectionally linked into consumer [`.agent/workflows/post-incident-governance.md`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/workflows/post-incident-governance.md#L145) and indexed in [`.agent/patterns/README.md`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/patterns/README.md#L106).
+  - **Verification**: `npm run verify:governance-wiring` passed with **0 errors / 0 warnings**.
+
+#### 2. Standards Registration (`/register-standard`)
+
+- **Registered Standard**: `P-COLLAB-VISUAL-INTAKE-001` (_Tri-Modal Visual Intake & Collaborative Deep-Link Sharing Standard_)
+  - **Authoritative Catalog**: [`.agent/standards-catalog.json`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/standards-catalog.json#L95-L115) (Category: `ui-quality`, Severity: `HIGH`).
+  - **Operating Manuals**: Registered in [`GEMINI.md`](file:///d:/GitHub_Repo/Sree_Krushna/GEMINI.md#L48) (Section 1.4 & Section 4) and [`CLAUDE.md`](file:///d:/GitHub_Repo/Sree_Krushna/CLAUDE.md#L51).
+  - **Session Discovery**: Added to Step 0.3 trigger list in [`.agent/workflows/aos-session-open.md`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/workflows/aos-session-open.md#L120).
+  - **Pre-Flight Gate**: Registered as Row `R5` in [`.agent/PREFLIGHT.md`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/PREFLIGHT.md#L15).
+
+#### 3. Discoverability Verification (`DISC-001`)
+
+Bidirectional source-to-SSOT comments (`/* SSOT: ... */`) were added across all modified source files:
+
+- [shopping_src/scripts/controller.js:L1-L6](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/scripts/controller.js#L1-L6)
+- [shopping_src/styles/08_collab_options_and_sharing.css:L1-L7](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/styles/08_collab_options_and_sharing.css#L1-L7)
+- [ui_primitives/components/option_intake_modal.html:L1-L3](file:///d:/GitHub_Repo/Sree_Krushna/ui_primitives/components/option_intake_modal.html#L1-L3)
+
+#### 4. Post-Incident Analysis (`/post-incident-analysis`)
+
+- **Documented Incident**: [`docs/incidents/INC-094-duplicate-urlparam-scope-shadowing-and-pre-emit-syntax-gate.md`](file:///d:/GitHub_Repo/Sree_Krushna/docs/incidents/INC-094-duplicate-urlparam-scope-shadowing-and-pre-emit-syntax-gate.md)
+  - **Symptom**: `SyntaxError: Identifier 'paramOption' has already been declared` during Phase 5 deep-linking implementation.
+  - **Escape Prevention**: The pre-emit syntax gate (`node -c <assembled_script>` in `shopping_src/build.cjs`) failed immediately and halted compilation before writing corrupted bytes to root or public artifacts.
+  - **Indexed**: Registered in [`docs/DOCUMENTATION-INDEX.md`](file:///d:/GitHub_Repo/Sree_Krushna/docs/DOCUMENTATION-INDEX.md#L33).
+
+#### 5. Phased Commit Execution (`/phased-commit-orchestrator`)
+
+All uncommitted changes were structured into 5 atomic, logically sequenced commits:
+
+```text
+effb259 - chore(tools): upgrade impeccable, task grapher skills, and governance wiring scripts
+db3ba1f - feat(shell): upgrade dopkos engine, decision registry responsive layout, and app shell parity
+77ef5b9 - feat(shopping): implement tri-modal pinterest intake, multi-image containers, and collaborative deep-linking
+108ba26 - test(shopping): add phase 6 collaborative option pod assertions and test gates
+970ffe6 - docs(governance): institutionalize INC-094, P-COLLAB-VISUAL-INTAKE-001 standard, and council threads
+```
+
+_Current Git Working Tree: Clean (`0 uncommitted files`, branch ahead by 7 commits)._
+
+---
+
+### Part 2: Feasibility Study — Extending to the Decorator Module
+
+Can the same tri-modal visual intake and collaborative sharing framework be extended to the **Decorator Cockpit** (`decorator-cockpit.html`, `cockpit_src/`)?
+
+**Conclusion: YES, 100% FEASIBLE AND HIGHLY RECOMMENDED.** In fact, Decorator procurement has an even higher need for multi-option visual comparisons than apparel shopping.
+
+#### 1. Current State of the Decorator Cockpit
+
+An audit of `cockpit_src/` revealed:
+
+1. **Single-Image Static Data Schema**:
+   In [`cockpit_src/data/canonical_plates.json`](file:///d:/GitHub_Repo/Sree_Krushna/cockpit_src/data/canonical_plates.json) and [`assets/decor/registry.json`](file:///d:/GitHub_Repo/Sree_Krushna/assets/decor/registry.json), each technical plate (e.g. `PLATE-01: Vedic Lotus Mandap`, `PLATE-03: Sangeet Production Stage`) has only **one photo** (`photoSrc`) and **one blueprint** (`blueprintSrc`).
+2. **Prototype Photo Override Modal**:
+   The cockpit already contains an early single-image override dialog ([`cockpit_src/components/modals/custom_photo_modal.html`](file:///d:/GitHub_Repo/Sree_Krushna/cockpit_src/components/modals/custom_photo_modal.html)). However, it only allows overriding that single photo in `localStorage`, lacking:
+   - Multi-option side-by-side or carousel containers (`Option A`, `Option B`, `Option C`).
+   - Family consensus voting or stakeholder preference markers.
+   - Showroom / on-site smartphone photo upload integration.
+   - Deep-linking with URL parameter reflection (`?topic=X&plate=Y&option=Z`).
+
+#### 2. The Practical Need in Decor Planning
+
+During decorator consultations, decorators present 2–3 variants for each major zone:
+
+- **Mandap (Zone A)**: Proposal A (_Vedic Carved Pillars with Marigolds_) vs. Proposal B (_Rajputana Floral Dome_) vs. Proposal C (_Pastel Minimalist Canopy_).
+- **Stage (Zone B)**: Proposal A (_Ultra-wide P3 LED Wall_) vs. Proposal B (_Acoustic Velour Drape with Edison Bulb Array_).
+- **Entrance Tunnel**: Proposal A (_Fairy-Light Tunnel_) vs. Proposal B (_Mughal Floral Archway_).
+
+Currently, family members exchange Pinterest pins and venue photos in disconnected WhatsApp chats. The Decorator Cockpit only shows the canonical template, creating the exact same visual disconnect previously seen in Shopping.
+
+#### 3. Architectural Extension Blueprint
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                   DECORATOR COCKPIT EXTENSION ARCHITECTURE             │
+│                                                                        │
+│   ┌─────────────────────┐  ┌─────────────────────┐  ┌────────────────┐ │
+│   │ Showroom / On-Site  │  │ Pinterest Board /   │  │ External Web / │ │
+│   │ Photos (assets/...) │  │ CDN (i.pinimg.com)  │  │ Vendor Links   │ │
+│   └──────────┬──────────┘  └──────────┬──────────┘  └────────┬───────┘ │
+│              │                        │                      │         │
+│              └────────────────────────┼──────────────────────┘         │
+│                                       ▼                                │
+│                   ┌──────────────────────────────────────┐             │
+│                   │  ui_primitives/option_intake_modal   │             │
+│                   │  (Scoped to target PLATE-01..08)     │             │
+│                   └──────────────────┬───────────────────┘             │
+│                                      │                                 │
+│        ┌─────────────────────────────┴─────────────────────────────┐   │
+│        ▼                                                           ▼   │
+│ ┌───────────────────────────────┐         ┌──────────────────────────┐ │
+│ │ Decorator Lookbook Stage      │         │ Deep-Link Quick-Share    │ │
+│ │ - Option Pod Multi-Thumbnails │         │ - ?topic=0&plate=01&opt=1│ │
+│ │ - Option A (Turnkey Vendor)   │         │ - Auto-scroll to topic   │ │
+│ │ - Option B (Family Pinterest) │         │ - Opens Lookbook Modal   │ │
+│ │ - Consensus Voting Pill Bar   │         │ - WhatsApp Share Payload │ │
+│ └───────────────────────────────┘         └──────────────────────────┘ │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+##### A. Asset Taxonomy Parity (`assets/decor/`)
+
+Mirror the shopping asset folder structure:
+
+```text
+assets/decor/
+├── mandap/
+│   ├── vedic_lotus_mandap_0.jpg   (Canonical Vedic baseline)
+│   ├── vedic_lotus_mandap_1.jpg   (Decorator Alternative Proposal B)
+│   └── plate-01-vedic-lotus-mandap.svg
+├── sangeet/
+│   ├── sangeet_stage_0.jpg
+│   └── plate-03-sangeet-stage-lighting.svg
+└── registry.json                  (Compiled asset index with option arrays)
+```
+
+##### B. Data Schema Evolution
+
+Upgrade `canonical_plates.json` and Firestore `decor_topics` / `decor_plates`:
+
+```json
+{
+  "id": "PLATE-01",
+  "title": "Vedic Lotus Mandap & Elevated Altar",
+  "category": "mandap",
+  "options": [
+    {
+      "label": "Option A (Canonical Vedic Lotus)",
+      "url": "./assets/decor/mandap/photo-mandap-inspiration.jpg",
+      "source": "canonical",
+      "tally": 4
+    },
+    {
+      "label": "Option B (Floral Dome Inspo)",
+      "url": "https://i.pinimg.com/originals/a1/b2/c3/...jpg",
+      "source": "pinterest",
+      "notes": "Added by Groom family from Udaipur reference",
+      "tally": 2
+    }
+  ],
+  "selectedOptionIndex": 0
+}
+```
+
+##### C. Lookbook & Stage UI Upgrades
+
+1. **Stage Visual Strip**: Expand [`cockpit_src/components/stage.html`](file:///d:/GitHub_Repo/Sree_Krushna/cockpit_src/components/stage.html#L21-L30) (`topicVisualStrip`) to show option badges (`Option A`, `Option B`) directly above the spoken script cards.
+2. **Lookbook Modal**: In [`cockpit_src/components/modals/lookbook_modal.html`](file:///d:/GitHub_Repo/Sree_Krushna/cockpit_src/components/modals/lookbook_modal.html), add the multi-option thumbnail carousel and an `[+ Add Decor Inspo]` button that launches the shared `option_intake_modal`.
+3. **Consensus Voting Bar**: Allow family members to vote for Option A vs. Option B on each decor plate.
+
+##### D. Executive Quick-Share Deep-Linking
+
+Implement `window.shareDecorOption(topicId, plateId, optionIndex)`:
+
+- Deep-link URL: `decorator-cockpit.html?topic=3&plate=PLATE-01&option=1`
+- Automatically opens Topic 3, sets the Lookbook plate to `PLATE-01`, highlights `Option B`, and pulses the card.
+- Generates a WhatsApp share payload:
+  > _"🕉️ Sree Krushna Marriage OS — Decor Review: Option B for Vedic Lotus Mandap. Check visual reference & vote: https://<domain>/decorator-cockpit.html?topic=3&plate=PLATE-01&option=1"_
+
+#### 4. Estimated Effort & Next Steps
+
+- **Prerequisites**: Already completed (shared primitives in `ui_primitives/` and standards registered in `P-COLLAB-VISUAL-INTAKE-001`).
+- **Files to Touch**:
+  - `cockpit_src/data/canonical_plates.json` (add options arrays).
+  - `cockpit_src/components/modals/lookbook_modal.html` (integrate option strip).
+  - `cockpit_src/scripts/controller.js` (add `getPlateImages`, `selectPlateOption`, `shareDecorOption`, deep-link parser).
+  - `cockpit_src/styles/05_lookbook_and_modals.css` (import option pod styles).
+  - `cockpit_src/build.cjs` (recompile with SDCA byte parity).
+- **Execution Readiness**: Can be staged as a focused 1-session enhancement following the exact same SDCA and pre-emit test discipline.
+
+Viewed 260918_ShoppingList.md:3343-3349
 
 # Query 3.9 -
 
