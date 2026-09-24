@@ -9140,17 +9140,164 @@ The underlying journey model has already demonstrated why this architecture make
    - `fc.exe /b` — 100% byte parity between root and `/public`.
    - Live Hosting URL: `https://sree-krushna-forever.web.app`.
 
-# Query 6.5 -
+# Query 6.5 -[capture-pattern](recipe;file:///d%3A/GitHub_Repo/Sree_Krushna/.agent/workflows/capture-pattern.md) [register-standard](recipe;file:///d%3A/GitHub_Repo/Sree_Krushna/.agent/workflows/register-standard.md) disc pact, [post-incident-analysis](recipe;file:///d%3A/GitHub_Repo/Sree_Krushna/.agent/workflows/post-incident-analysis.md) and [phased-commit-orchestrator](slashCommand;phased-commit-orchestrator) [ssot-reconciliation](recipe;file:///d%3A/GitHub_Repo/Sree_Krushna/.agent/workflows/ssot-reconciliation.md)
 
 # Review 6.5 -
 
-# Response 6.5 -
+# Response 6.5 -Viewed capture-pattern.md:1-100
 
-# Query 6.6 -
+Viewed post-incident-analysis.md:1-44
+Searched for files: INC-_
+Ran command: `Get-ChildItem docs/incidents/ -Filter "INC-_.md" | Sort-Object Name -Descending | Select-Object -First 10 Name`Ran command:`Get-ChildItem docs/incidents/ -Filter "_containing_"`Viewed Council_Ledger.md:1-53
+Ran command:`Get-ChildItem .agent/patterns/ | Select-Object Name`Ran command:`npm run verify:governance-wiring:all`Ran command:`git diff .agent/workflows/plan.md`Viewed plan.md:1-60
+Ran command:`git log -p -1 .agent/workflows/plan.md`Viewed register-standard.md:1-100
+Viewed INC-094-duplicate-urlparam-scope-shadowing-and-pre-emit-syntax-gate.md:1-98
+Created INC-095-containing-block-trap-and-negative-offset-off-canvas-drawer.md
+Created INC-096-monolithic-vertical-collision-and-catalog-sub-domain-scroll-fatigue.md
+Created containing-block-viewport-escape-gate.md
+Created two-tier-workspace-subview-decoupling.md
+Viewed GEMINI.md:40-140
+Viewed GEMINI.md:140-180
+Edited GEMINI.md
+Viewed GEMINI.md:170-183
+Edited GEMINI.md
+Viewed CLAUDE.md:1-60
+Viewed CLAUDE.md:170-183
+Edited CLAUDE.md
+Edited CLAUDE.md
+Ran command:`Get-ChildItem .agent/patterns/ -Filter "_.md" | Where-Object { $*.Name -ne "README.md" } | Sort-Object Name | ForEach-Object { "- `.agent/patterns/" + $*.Name + "`" }`
+Ran command: `powershell -Command "(Get-ChildItem .agent/patterns/_.md | Where-Object { \$_.Name -ne 'README.md' } | Sort-Object Name).ForEach({ '- `.agent/patterns/' + \$_.Name + '`' })"`
+Ran command: `node -e "const fs = require('fs'); const files = fs.readdirSync('.agent/patterns').filter(f => f.endsWith('.md') && f !== 'README.md').sort(); console.log(files.map(f => '- `.agent/patterns/' + f + '`').join('\n'));"`
+Viewed plan.md:5-15
+Edited plan.md
+Ran command: `npm run verify:governance-wiring:all`
+Viewed skill-router.yaml:1-60
+Viewed skill-router.yaml:15-30
+Edited skill-router.yaml
+Ran command: `npm run verify:governance-wiring:all`
+Ran command: `npm run verify:governance-wiring`
+Viewed 260822_UI_Upgrades.md:9050-9110
+Viewed 260822_UI_Upgrades.md:9110-9380
+Edited 260822_UI_Upgrades.md
+Viewed Council_Ledger.md:38-45
+Viewed 260923_arch_council_top_left_brand_seal_and_navigation_drawer_architecture.md:1-30
+Viewed 260923_arch_council_shopping_catalog_information_architecture_and_domain_decoupling.md:1-20
+Edited 260923_arch_council_top_left_brand_seal_and_navigation_drawer_architecture.md
+Edited 260923_arch_council_shopping_catalog_information_architecture_and_domain_decoupling.md
+Ran command: `npm run verify:governance-wiring:all`
+Ran command: `npm run verify:modular-architecture; npm run test:shopping`
+Viewed SKILL.md:1-100
+Ran command: `git status --short`
+Ran command: `git log -n 5 --oneline`
+Ran command: `git diff HEAD shopping_src/scripts/controller.js`
+Ran command: `git show --stat 970ffe6`
+Ran command: `git diff --stat`
+Ran command: `git show --stat 77ef5b9`
+Ran command: `git status`
+Ran command: `git diff "User_Created/Discussion Threads/Shopping/260918_ShoppingList.md"`
+Ran command: `git add docs/incidents/INC-095-containing-block-trap-and-negative-offset-off-canvas-drawer.md docs/incidents/INC-096-monolithic-vertical-collision-and-catalog-sub-domain-scroll-fatigue.md; git commit -m "docs(incidents): document INC-095 (containing block trap) and INC-096 (catalog domain collision)"`
+Ran command: `git add .agent/patterns/containing-block-viewport-escape-gate.md .agent/patterns/two-tier-workspace-subview-decoupling.md; git commit -m "feat(patterns): codify containing-block-viewport-escape-gate and two-tier-workspace-subview-decoupling"`
+Ran command: `git add .agent/workflows/plan.md .agent/skill-router.yaml; git commit -m "fix(governance): restore ecosystem pattern wiring in plan.md and register missing skills in router"`
+Ran command: `git add GEMINI.md CLAUDE.md "User_Created/Discussion Threads/Council/260923_arch_council_top_left_brand_seal_and_navigation_drawer_architecture.md" "User_Created/Discussion Threads/Council/260923_arch_council_shopping_catalog_information_architecture_and_domain_decoupling.md"; git commit -m "docs(standards): register P-BRAND-NAV-HYBRID-001 and P-SHOPPING-JOURNEY-HUBS-001 in operating manuals and council docs"`
+Ran command: `git add "User_Created/Discussion Threads/UI_Improvements/260822_UI_Upgrades.md" "User_Created/Discussion Threads/Shopping/260918_ShoppingList.md"; git commit -m "docs(discussion): record Response 6.4 certification in UI upgrades and cockpit extension roadmap in shopping thread"`
+Ran command: `git status`
+Ran command: `npm run verify:governance-wiring:all`
+Ran command: `npm run verify:modular-architecture; npm run test:shopping`
+Ran command: `npm run verify:ui-lifecycle; npm run verify:mobile`
+Ran command: `npm run verify:deployment; npm test`
+Ran command: `git status`
+Ran command: `git log -n 6 --oneline`
+Ran command: `npm run verify:governance-wiring:all`
+Ran command: `npm run verify:modular-architecture`
+
+All requested governance, pattern capture, post-incident analysis, standard registration, and phased commit workflows have been executed and verified.
+
+---
+
+### Verification & Governance Status
+
+- **Governance Wiring Audit (`P82`)**: [`npm run verify:governance-wiring:all`](file:///d:/GitHub_Repo/Sree_Krushna/scripts/verify-governance-wiring.cjs)  
+  `187/187` artifacts verified (0 unwired, 100% green).
+- **Modular Component Architecture Gate (`STD-MOD-COMP-001`)**: [`npm run verify:modular-architecture`](file:///d:/GitHub_Repo/Sree_Krushna/scripts/verify-modular-architecture.cjs)  
+  `45/45` checks passed (100% dual-release byte parity).
+- **Mobile UI & Responsive Gate**: `16/16` checks passed.
+- **UI Lifecycle Contract Gate**: `100%` green.
+- **Working Tree**: Clean (`git status`).
+
+---
+
+### Phased Commits Executed (5 Phases)
+
+| Phase       | Commit                                           | Message & Scope                                                                                                          |
+| ----------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| **Phase 1** | [`2b20c59`](file:///d:/GitHub_Repo/Sree_Krushna) | `docs(incidents): document INC-095 (containing block trap) and INC-096 (catalog domain collision)`                       |
+| **Phase 2** | [`682dd13`](file:///d:/GitHub_Repo/Sree_Krushna) | `feat(patterns): codify containing-block-viewport-escape-gate and two-tier-workspace-subview-decoupling`                 |
+| **Phase 3** | [`2d860e4`](file:///d:/GitHub_Repo/Sree_Krushna) | `fix(governance): restore ecosystem pattern wiring in plan.md and register missing skills in router`                     |
+| **Phase 4** | [`447622b`](file:///d:/GitHub_Repo/Sree_Krushna) | `docs(standards): register P-BRAND-NAV-HYBRID-001 and P-SHOPPING-JOURNEY-HUBS-001 in operating manuals and council docs` |
+| **Phase 5** | [`36ba338`](file:///d:/GitHub_Repo/Sree_Krushna) | `docs(discussion): record Response 6.4 certification in UI upgrades and cockpit extension roadmap in shopping thread`    |
+
+---
+
+### Available Next Steps
+
+1. **Remote Sync**: Run `git push origin master` to publish the 12 local commits to `origin`.
+2. **Decorator Cockpit Intake Extension**: Implement the multi-option intake modal and zoom-pan primitives integration in the Decorator Cockpit as mapped in [260918_ShoppingList.md](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Shopping/260918_ShoppingList.md#L3343).
+3. **Other Task**: Proceed with another feature, audit, or review thread.
+
+# Query 6.6 -Decorator Cockpit Intake Extension: Implement the multi-option intake modal and zoom-pan primitives integration in the Decorator Cockpit as mapped in
+
+260918_ShoppingList.md
+.- [enhancement-scaffolder](slashCommand;enhancement-scaffolder)
 
 # Review 6.6 -
 
+1. **Protocol 6 / Enhancement Scaffolding Audit (`SK-006`)**:
+   - **Assigned ID**: `SK-006` in `[UI-QUALITY]` cluster (`docs/enhancements/UI-QUALITY-ENHANCEMENT-CLUSTER.md`).
+   - **Enhancement Spec**: Created comprehensive PRD, component roadmap, and signed-off DoD v1.7 matrix in [`enhancement-notes/SK-006/00_ENHANCEMENT_INDEX.md`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-006/00_ENHANCEMENT_INDEX.md).
+   - **Master Registry**: Synchronized [`ENHANCEMENT-MASTER-REGISTRY.md`](file:///d:/GitHub_Repo/Sree_Krushna/ENHANCEMENT-MASTER-REGISTRY.md) (with `SK-005` and `SK-006`) and incremented `next_id: 7` in [`enhancement-config.json`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-config.json).
+   - **DoD v1.7 Sign-Off**: 6/6 criteria verified and marked `IMPLEMENTED`.
+
+2. **Architectural Implementation (`P-DECOR-MULTI-OPTION-001` / `AC-DEC-2026-039` / `UI-DEC-2026-035`)**:
+   - **Data Layer Evolution**:
+     - Upgraded all 12 plates in [`cockpit_src/data/canonical_plates.json`](file:///d:/GitHub_Repo/Sree_Krushna/cockpit_src/data/canonical_plates.json) and [`assets/decor/registry.json`](file:///d:/GitHub_Repo/Sree_Krushna/assets/decor/registry.json) with `options: [...]` arrays and `selectedOptionIndex: 0`.
+     - Option 0 permanently anchors the canonical Vedic liturgical baseline (`SPEC-PROC-DECOR-ROADMAP-001`), protecting it from accidental override.
+     - Seeded candidate design variants for Mandap (`PLATE-01`), Sangeet Stage (`PLATE-03`), and Arrival Tunnel (`PLATE-05`).
+   - **SDCA Compilation & Primitives Ingestion**:
+     - Updated [`cockpit_src/build.cjs`](file:///d:/GitHub_Repo/Sree_Krushna/cockpit_src/build.cjs) to bundle shared tokens, styles (`00_tokens_base.css`, `01_primitives.css`, `02_zoom_pan.css`), scripts (`drive_normalizer.js`, `zoom_pan_engine.js`, `primitives_core.js`), and `option_intake_modal.html`.
+     - Created dedicated modular stylesheet [`cockpit_src/styles/07_collab_decor_options.css`](file:///d:/GitHub_Repo/Sree_Krushna/cockpit_src/styles/07_collab_decor_options.css) (165 lines, well below the 500-line modular limit).
+   - **UI Components & Controller Wiring**:
+     - Lookbook Cards: Added tactile option switcher bar (`.lookbook-option-bar`), `📸 N Looks` counter badge, `[➕ Look]` launch button, `[✕ Clear]` fallback to Option 0, and `[📤 Share]` deep-link generator.
+     - Lightbox Modal: Enriched [`cockpit_src/components/modals/lightbox_modal.html`](file:///d:/GitHub_Repo/Sree_Krushna/cockpit_src/components/modals/lightbox_modal.html) with `#lbOptionStrip`, `#lbShareLookBtn`, and integrated `ZoomPanEngine` with mousewheel, drag-to-pan, and pinch-to-zoom on `#lightboxImg`.
+     - Controller: Implemented `decorCustomOptions` state, `loadCustomDecorOptions()` with automatic legacy key migration, `selectPlateOption()`, `clearPlateCustomOptions()`, `shareDecorOption()`, and strict 6-stage candidate URL validation.
+     - Guarded initialization with `document.readyState !== 'loading'` (`INV-LIFECYCLE-02`).
+   - **Smoke Suite Hardening**:
+     - Hardened [`scripts/test-cockpit-smoke.cjs`](file:///d:/GitHub_Repo/Sree_Krushna/scripts/test-cockpit-smoke.cjs) with runtime assertions for `skOptionIntakeBackdrop`, `lbOptionStrip`, `ZoomPanEngine`, `selectPlateOption`, `shareDecorOption`, and `CANONICAL_PLATES` options arrays.
+   - **Dual-Release Byte Parity**:
+     - Standalone (`decorator-cockpit.html`) and scoped fragment (`cockpit-fragment.html`) compiled with 100% binary byte parity against `/public`.
+
 # Response 6.6 -
+
+Enhancement **SK-006** (*Decorator Cockpit Multi-Option Visual Ingestion & Zoom-Pan Primitives Integration*) has been fully implemented, verified, and signed off under Protocol 6 and DoD v1.7:
+
+1. **Protocol 6 / Enhancement Registry Complete**:
+   - `SK-006` scaffolded in [`docs/enhancements/UI-QUALITY-ENHANCEMENT-CLUSTER.md`](file:///d:/GitHub_Repo/Sree_Krushna/docs/enhancements/UI-QUALITY-ENHANCEMENT-CLUSTER.md).
+   - Comprehensive PRD, component roadmap, and signed-off DoD v1.7 checklist documented in [`enhancement-notes/SK-006/00_ENHANCEMENT_INDEX.md`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-006/00_ENHANCEMENT_INDEX.md).
+   - Master registry and config updated (`next_id: 7`).
+
+2. **Live Capabilities Delivered**:
+   - **Multi-Option Candidate Looks**: All 12 decor plates now support candidate looks alongside the protected Option 0 Vedic baseline.
+   - **In-Situ Shared Intake Modal**: Pinterest CDN, Google Drive, and showroom/camera uploads with strict 6-stage validation rejecting HTML webpage pins and testing connectivity against HTTP 403 blocks.
+   - **Interactive ZoomPanEngine**: Lightbox modal equipped with mousewheel, drag-to-pan, and pinch-to-zoom for blueprint and photo inspection.
+   - **Collaborative 1-Click WhatsApp Deep-Linking**: `?plate=PLATE-01&option=1` automatically opens the Lookbook, activates the candidate look, scrolls into view, and pulses an animated golden focus beacon.
+   - **1-Click Baseline Reversion**: Any plate with custom options can be instantly restored to Option 0 Vedic baseline via `[✕ Clear]`.
+
+3. **100% Green Verification Suite**:
+   - `npm run test:cockpit` — 5/5 layers passed (100% GREEN).
+   - `npm run verify:modular-architecture` — 45/45 checks passed (`STD-MOD-COMP-001`).
+   - `npm run verify:ui-lifecycle` — 100% passed (`STD-UI-LIFECYCLE-001`).
+   - `npm run test:shopping` — 100% passed (44/44 items).
+   - `npm run verify:governance-wiring:all` — 187/187 artifacts verified.
+   - Dual-release byte parity: 100% byte-for-byte identical across root and `public/`.
 
 # Query 6.7 -
 
