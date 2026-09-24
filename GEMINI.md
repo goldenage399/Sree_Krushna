@@ -199,3 +199,4 @@ This repository implements the following universal patterns:
 - `.agent/patterns/candidate-looks-ergonomics-and-intake.md`
 - `.agent/patterns/contextual-multi-option-comments-engine.md`
 - `.agent/patterns/button-primitive-and-preflight-gate.md`
+- `.agent/patterns/in-context-balance-refresh-cache-busting.md`

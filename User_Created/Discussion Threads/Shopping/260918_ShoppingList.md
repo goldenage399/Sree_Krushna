@@ -6088,6 +6088,7 @@ All 12 module distribution surfaces and fragments were recompiled with 100% byte
 ## 5. `/capture-pattern` — PACT-001 Pattern Ratification
 
 Formalized the operational methodology to prevent orphan button classes and unstyled user-agent fallbacks from recurring:
+
 - **Pattern File**: [`.agent/patterns/button-primitive-and-preflight-gate.md`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/patterns/button-primitive-and-preflight-gate.md)
 - **Activation Tier**: `guarded` (Guarded by `npm run verify:ui-buttons`).
 - **Mandatory Invariants Codified**:
@@ -6101,6 +6102,7 @@ Formalized the operational methodology to prevent orphan button classes and unst
 ## 6. `/harvest-frontend-knowledge` — FKL-001 Registration & DISC-001 Stamping
 
 Harvested and classified the frontend architectural learnings into the Frontend Knowledge Ledger (FKL):
+
 - **Canonical Architecture Spec**: [`docs/references/SPEC-ARCH-BUTTON-PRIMITIVES-001.md`](file:///d:/GitHub_Repo/Sree_Krushna/docs/references/SPEC-ARCH-BUTTON-PRIMITIVES-001.md)
 - **FKL Item Registrations**:
   1. `FKL-DI-024` (Design Invariant):
@@ -6124,6 +6126,7 @@ Harvested and classified the frontend architectural learnings into the Frontend 
 ## 7. `/ssot-reconciliation` — Authority Resolution & SSOT Hardening
 
 Eliminated documentation drift across all architectural and operational rulebooks:
+
 - **Authoritative Source**: [`docs/references/SPEC-ARCH-BUTTON-PRIMITIVES-001.md`](file:///d:/GitHub_Repo/Sree_Krushna/docs/references/SPEC-ARCH-BUTTON-PRIMITIVES-001.md) and [`Council_Ledger.md`](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/Council_Ledger.md) Entry 51 (`AC-DEC-2026-047` / `UI-DEC-2026-043`).
 - **SSOT Hardening in [`GEMINI.md`](file:///d:/GitHub_Repo/Sree_Krushna/GEMINI.md) & [`CLAUDE.md`](file:///d:/GitHub_Repo/Sree_Krushna/CLAUDE.md)**:
   - Linked `STD-UI-PRIMITIVE-002`, `P-BUTTON-PRIMITIVE-GATE-001`, `INC-098`, and `SPEC-ARCH-BUTTON-PRIMITIVES-001.md` under **§ 1. Prime Invariants & Operating Discipline (§ 1.4 Modular Component Architecture Invariant)**.
@@ -6134,6 +6137,7 @@ Eliminated documentation drift across all architectural and operational rulebook
 ## 8. `/post-incident-governance` — Case Study & 6-Surface Audit
 
 Codified the formal incident post-mortem to institutionalize lessons learned:
+
 - **Incident Case Study**: [`docs/incidents/INC-098-orphan-button-tokens-and-preflight-design-system-blind-spot.md`](file:///d:/GitHub_Repo/Sree_Krushna/docs/incidents/INC-098-orphan-button-tokens-and-preflight-design-system-blind-spot.md)
   - **Severity**: Medium (Visual Hierarchy Defect / User-Agent Fallback / Pre-Flight Verification Blind Spot)
   - **Status**: RESOLVED & INSTITUTIONALIZED
@@ -6145,16 +6149,309 @@ Codified the formal incident post-mortem to institutionalize lessons learned:
   5. **Module Surface**: SDCA component templates sanitized across `ui_primitives/components/`, `cockpit_src/template.html`, and `index.html`.
   6. **Governance Surface**: Ratified `AC-DEC-2026-047` / `UI-DEC-2026-043`, created `scripts/verify-ui-button-primitives.cjs`, wired Step 6 into `verify-modular-architecture.cjs`, and registered `FKL-DI-024`, `FKL-AL-008`, `FKL-WI-005`.
 
-
-# Query 6.7 -
+# Query 6.7 -[capture-pattern](recipe;file:///d%3A/GitHub_Repo/Sree_Krushna/.agent/workflows/capture-pattern.md) [harvest-frontend-knowledge](recipe;file:///d%3A/GitHub_Repo/Sree_Krushna/.agent/workflows/harvest-frontend-knowledge.md) [ssot-reconciliation](recipe;file:///d%3A/GitHub_Repo/Sree_Krushna/.agent/workflows/ssot-reconciliation.md) [post-incident-governance](recipe;file:///d%3A/GitHub_Repo/Sree_Krushna/.agent/workflows/post-incident-governance.md)
 
 # Review 6.7 -
 
-# Response 6.7 -
+# Response 6.7 -Viewed capture-pattern.md:1-100
 
-# Query 6.8 -
+Viewed harvest-frontend-knowledge.md:1-100
+Viewed post-incident-governance.md:1-100
+Viewed ssot-reconciliation.md:1-100
+Searched for "FKL-"
+Ran command: `Get-ChildItem docs/incidents/INC-09*.md | Select-Object Name`
+Viewed SPEC-ARCH-CONTEXTUAL-COMMENTS-001.md:1-120
+Viewed 01_primitives.css:1-15
+Viewed verify-ui-button-primitives.cjs:1-20
+Created SPEC-ARCH-BUTTON-PRIMITIVES-001.md
+Ran command: `git status --short`
+Viewed button-primitive-and-preflight-gate.md:1-25
+Edited button-primitive-and-preflight-gate.md
+Viewed SPEC-ARCH-BUTTON-PRIMITIVES-001.md:75-90
+Viewed SPEC-ARCH-BUTTON-PRIMITIVES-001.md:130-155
+Edited SPEC-ARCH-BUTTON-PRIMITIVES-001.md
+Ran command: `npm run verify:governance-wiring:all`
+Viewed 01_primitives.css:1-10
+Edited 01_primitives.css
+Viewed verify-ui-button-primitives.cjs:1-12
+Edited verify-ui-button-primitives.cjs
+Ran command: `node cockpit_src/build.cjs --all; node shopping_src/build.cjs --all; node scripts/build-decision-registry-html.cjs`
+Ran command: `npm run verify:ui-buttons; npm run verify:modular-architecture`
+Viewed INC-097-comments-engine-context-silo-and-cross-option-isolation.md:1-74
+Created INC-098-orphan-button-tokens-and-preflight-design-system-blind-spot.md
+Viewed GEMINI.md:40-60
+Edited GEMINI.md
+Viewed CLAUDE.md:50-60
+Edited CLAUDE.md
+Viewed 00_ENHANCEMENT_INDEX.md:20-32
+Edited 00_ENHANCEMENT_INDEX.md
+Ran command: `npm run verify:governance-wiring:all`
+Ran command: `git diff "User_Created/Discussion Threads/Shopping/260918_ShoppingList.md"`
+Viewed 260918_ShoppingList.md:6065-6095
+Edited 260918_ShoppingList.md
+Ran command: `npm run verify:ui-buttons; npm run verify:modular-architecture; npm run verify:ui-lifecycle; npm run verify:deployment; npm run verify:governance-wiring:all`
+Ran command: `git status --short`
+Ran command: `git add -A`
+Ran command: `git commit -m "docs(governance): institutionalize button primitives & pre-flight gate (INC-098, SPEC-ARCH-BUTTON-PRIMITIVES-001, FKL-DI-024)"`
+Ran command: `git status`
 
-# Review 6.8 -
+# Institutionalization Protocol Executed: Capture Pattern, Harvest Frontend Knowledge, SSOT Reconciliation & Post-Incident Governance
+
+All four requested governance and knowledge workflows have been systematically executed and permanently codified across the repository.
+
+---
+
+## 1. `/capture-pattern` — PACT-001 Pattern Ratification
+
+- **Pattern File**: [`.agent/patterns/button-primitive-and-preflight-gate.md`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/patterns/button-primitive-and-preflight-gate.md)
+- **Standard Identifier**: `STD-UI-PRIMITIVE-002` / `P-BUTTON-PRIMITIVE-GATE-001`
+- **Activation Tier**: `guarded` (Hard-guarded by `npm run verify:ui-buttons`).
+- **Worthiness Filter**: 4/4 criteria satisfied (universal reusability, high recurrence risk of orphan classes, non-obvious cross-layer disconnect, strict binary boundary).
+- **Enforced Invariants**:
+  - `INV-BTN-01`: Zero Naked Buttons (every `<button>` must declare an approved design system class).
+  - `INV-BTN-02`: Zero Orphan Button Classes (`sk-btn*` and `sk-modal-close` referenced in HTML must resolve to active CSS rules).
+  - `INV-BTN-03`: Design System Touch & State Contract (`cursor: pointer`, `:hover`, and 38px/44px touch ergonomics).
+- **Registration**: Stamped in [`.agent/patterns/README.md`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/patterns/README.md) and verified by P82 (`npm run verify:governance-wiring:all`).
+
+---
+
+## 2. `/harvest-frontend-knowledge` — FKL-001 Taxonomy & DISC-001 Back-Links
+
+- **Canonical Architecture Spec**: [`docs/references/SPEC-ARCH-BUTTON-PRIMITIVES-001.md`](file:///d:/GitHub_Repo/Sree_Krushna/docs/references/SPEC-ARCH-BUTTON-PRIMITIVES-001.md)
+- **FKL Item Registrations**:
+  1. `FKL-DI-024` (Design Invariant):
+     - **Title**: Universal UI Button Primitives & Design System Token Contract
+     - **Applies to**: `UniversalButtonPrimitives`, `ModalCloseAffordances`, `OptionIntakeModal`, `WhatsAppModal`
+     - **Work Types**: `WT-02`, `WT-06`
+  2. `FKL-AL-008` (Architectural Learning):
+     - **Title**: Static AST/Regex Pre-Flight Verification for Semantic CSS Class Resolution
+     - **Applies to**: `StaticDOMAnalyzer`, `RegexClassTokenResolution`, `PreFlightVerificationPipeline`
+     - **Work Types**: `WT-06`
+  3. `FKL-WI-005` (Workflow Improvement):
+     - **Title**: Zero Naked Buttons CI & Modular Pre-Flight Gate Integration
+     - **Applies to**: `verify-modular-architecture`, `verify-deployment`, `CIBuildPipeline`
+     - **Work Types**: `WT-09`
+- **DISC-001 Header Stamping**:
+  - [`ui_primitives/styles/01_primitives.css`](file:///d:/GitHub_Repo/Sree_Krushna/ui_primitives/styles/01_primitives.css): Stamped with `/* SSOT: docs/references/SPEC-ARCH-BUTTON-PRIMITIVES-001.md — FKL-DI-024 */` (308 lines, strictly `<= 500` lines per `STD-MOD-COMP-001`).
+  - [`scripts/verify-ui-button-primitives.cjs`](file:///d:/GitHub_Repo/Sree_Krushna/scripts/verify-ui-button-primitives.cjs): Stamped with `/* SSOT: docs/references/SPEC-ARCH-BUTTON-PRIMITIVES-001.md (FKL-AL-008 / FKL-WI-005) */` (306 lines, strictly `<= 500` lines).
+
+---
+
+## 3. `/ssot-reconciliation` — Authority Resolution & SSOT Hardening
+
+- **Authoritative Resolution**: [`docs/references/SPEC-ARCH-BUTTON-PRIMITIVES-001.md`](file:///d:/GitHub_Repo/Sree_Krushna/docs/references/SPEC-ARCH-BUTTON-PRIMITIVES-001.md) and [`Council_Ledger.md`](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/Council_Ledger.md) Entry 51 (`AC-DEC-2026-047` / `UI-DEC-2026-043`).
+- **SSOT Hardening in [`GEMINI.md`](file:///d:/GitHub_Repo/Sree_Krushna/GEMINI.md) & [`CLAUDE.md`](file:///d:/GitHub_Repo/Sree_Krushna/CLAUDE.md)**:
+  - Added `STD-UI-PRIMITIVE-002`, `P-BUTTON-PRIMITIVE-GATE-001`, `INC-098`, and `SPEC-ARCH-BUTTON-PRIMITIVES-001.md` under **§ 1. Prime Invariants & Operating Discipline (§ 1.4 Modular Component Architecture Invariant)**.
+  - Added `.agent/patterns/button-primitive-and-preflight-gate.md` to **§ 4. Pattern Activation & PACT-001 Cross-References**.
+- **Drift Elimination**: Replaced legacy and naked buttons across templates (`index.html`, `cockpit_src/template.html`) and recompiled all 12 standalone and fragment artifacts with 100% binary byte parity to `/public`.
+
+---
+
+## 4. `/post-incident-governance` — Case Study & 6-Surface Audit
+
+- **Case Study Document**: [`docs/incidents/INC-098-orphan-button-tokens-and-preflight-design-system-blind-spot.md`](file:///d:/GitHub_Repo/Sree_Krushna/docs/incidents/INC-098-orphan-button-tokens-and-preflight-design-system-blind-spot.md)
+  - **Severity**: Medium (Visual Hierarchy Defect / User-Agent Fallback / Pre-Flight Verification Blind Spot)
+  - **Status**: RESOLVED & INSTITUTIONALIZED
+- **6-Surface Architectural Mapping**:
+  1. **UI Surface**: Banished user-agent grey 3D bevels by codifying `.sk-btn`, `.sk-btn-primary`, `.sk-btn-secondary`, `.sk-btn-danger`, `.sk-btn-whatsapp`, and `.sk-modal-close` in `01_primitives.css`.
+  2. **Data Surface**: Unaffected (Presentation and token resolution only).
+  3. **Reactive Surface**: Unaffected (Handlers and modal open/close actions preserved).
+  4. **Service Surface**: Unaffected (No external Cloud Functions or Firebase services touched).
+  5. **Module Surface**: SDCA templates sanitized across `ui_primitives/components/`, `cockpit_src/template.html`, and `index.html`.
+  6. **Governance Surface**: Ratified `AC-DEC-2026-047` / `UI-DEC-2026-043`, created `scripts/verify-ui-button-primitives.cjs`, wired Step 6 into `verify-modular-architecture.cjs`, and registered `FKL-DI-024`, `FKL-AL-008`, `FKL-WI-005`.
+
+---
+
+## 5. Verification Suite & Git Log
+
+All automated verification suites pass **100% green**:
+
+- `npm run verify:ui-buttons` — 5/5 checks green, 0 naked buttons across 29 HTML files.
+- `npm run verify:modular-architecture` — 46/46 checks green (includes Step 6 button primitives gate).
+- `npm run verify:ui-lifecycle` — 4/4 checks green.
+- `npm run verify:deployment` — 10/10 deployment layers green, root & public in exact sync.
+- `npm run verify:governance-wiring:all` — 191/191 artifacts fully wired (P82).
+
+**Latest Git Commits**:
+
+- [`5acef29`](file:///d:/GitHub_Repo/Sree_Krushna) — `docs(governance): institutionalize button primitives & pre-flight gate (INC-098, SPEC-ARCH-BUTTON-PRIMITIVES-001, FKL-DI-024)`
+- [`50c84ae`](file:///d:/GitHub_Repo/Sree_Krushna) — `feat(ui): SK-010 Universal UI Button Primitives & Pre-Flight Design System Verification Gate`
+
+Edited 260924_PerformanceAnalysis.md
+Viewed 260918_ShoppingList.md:6000-6008
+Edited 260916_errorResolution
+Edited 260916_errorResolution
+Edited 260916_errorResolution
+
+# Query 6.8 -and such patterns that we established arent yet sap synched ? what do we do about that and thier wiring across multiple repos?
+
+# Review 6.8 -Viewed sap-sync.md:1-100
+
+Viewed sap-sync.md:101-203
+Listed directory GitHub_Repo
+Viewed verify-cross-repo-parity.cjs:1-60
+Ran command: `npm run verify:cross-repo-parity`
+Viewed package.json:1-60
+
+# SAP Synchronization & Cross-Repository Pattern Wiring Architecture
+
+You have hit on one of the most critical structural invariants in our multi-repo ecosystem: **when a high-value pattern, governance standard, or skill improvement is established in one repository, how is it verified, synchronized, and wired across the entire fleet (`d:\GitHub_Repo\*`) without causing broken back-links or build failures?**
+
+Below is the complete architectural breakdown of why they are not yet synced, how the **Shared Alignment Protocol (SAP)** prevents chaotic drift, and the exact step-by-step procedure to wire them across our repositories.
+
+---
+
+## 1. Inventory of Recently Established Patterns Across Repos
+
+In our recent sessions across both repositories, we established several new standards:
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                 RECENTLY ESTABLISHED PATTERNS & STANDARDS                              │
+├──────────────────────────┬─────────────────────────────────────────────────┬───────────────────────────┤
+│ Repository Established   │ Standard / Pattern ID                           │ Portability Tier          │
+├──────────────────────────┼─────────────────────────────────────────────────┼───────────────────────────┤
+│ Sree_Krushna             │ STD-UI-PRIMITIVE-002 / P-BUTTON-PRIMITIVE-001   │ Universal (Any Web App)   │
+│                          │ (button-primitive-and-preflight-gate.md)        │                           │
+├──────────────────────────┼─────────────────────────────────────────────────┼───────────────────────────┤
+│ Sree_Krushna             │ STD-PHASED-DEV-001 / P-TICKET-FIRST-001         │ Universal (Any Repo SDLC) │
+│                          │ (phased-development-ticket-first-gate.md)       │                           │
+├──────────────────────────┼─────────────────────────────────────────────────┼───────────────────────────┤
+│ Sree_Krushna             │ P-CONTEXTUAL-COMMENTS-001                       │ Universal (Collaborative) │
+│                          │ (contextual-multi-option-comments-engine.md)    │                           │
+├──────────────────────────┼─────────────────────────────────────────────────┼───────────────────────────┤
+│ Sree_Krushna             │ P-LOOK-ERGONOMICS-001                           │ Universal (Mobile UX)     │
+│                          │ (candidate-looks-ergonomics-and-intake.md)      │                           │
+├──────────────────────────┼─────────────────────────────────────────────────┼───────────────────────────┤
+│ PIOperationsMgmt_Firebase│ STD-PCL-001 (Domain Index Preflight)            │ Universal (SAP Skill)     │
+│                          │ (prompt-clarity / meta-prompt.md)               │                           │
+├──────────────────────────┼─────────────────────────────────────────────────┼───────────────────────────┤
+│ PIOperationsMgmt_Firebase│ STD-REC-002 (In-Context Balance Refresh)        │ Universal (Data Integrity)│
+│                          │ (in-context-balance-refresh-cache-busting.md)   │                           │
+└──────────────────────────┴─────────────────────────────────────────────────┴───────────────────────────┘
+```
+
+---
+
+## 2. Why Aren't They Automatically Synced? (The PACT-001 / P82 Protection Invariant)
+
+In earlier iterations of agent systems, scripts used naive file-copying (`cp *`). This created serious failure modes:
+
+```
+                      NAIVE FILE COPY (ANTI-PATTERN)
+
+   Repo A (Sree_Krushna)                       Repo B (PIOperations)
+┌────────────────────────┐                  ┌────────────────────────┐
+│ .agent/patterns/       │                  │ .agent/patterns/       │
+│ button-primitive.md    │──[Blind Copy]───▶│ button-primitive.md    │
+│  consumed_by:          │                  │  consumed_by:          │
+│   - GEMINI.md          │                  │   - GEMINI.md (MISSING)│ 💥 P82 FAIL!
+│  guard:                │                  │  guard:                │
+│   "verify:ui-buttons"  │                  │   "verify:ui-buttons"  │ 💥 MISSING SCRIPT!
+└────────────────────────┘                  └────────────────────────┘
+```
+
+### The 3 Governance Traps Prevented by Not Auto-Copying:
+
+1. **The P82 Broken Back-Link Gate**:
+   Every pattern in `.agent/patterns/` carries a **Pattern Activation Contract (PACT-001)**. If you copy a pattern into `PIOperationsMgmt_Firebase` or `BMS`, but that repo’s `GEMINI.md`, `CLAUDE.md`, or workflow files do not reference it, running `npm run verify:governance-wiring:all` immediately **fails with exit code 1** due to a broken back-link.
+2. **The Guard Script Dependency**:
+   Guarded patterns declare `guard: "npm run <script>"`. If `package.json` in the target repo does not define that script (e.g. `verify:ui-buttons` or `verify:ui-lifecycle`), the build immediately crashes.
+3. **The Canonical Hub Authority Ladder**:
+   For whole-file mirrored skills like `prompt-clarity`, **[`Capsicum`](file:///d:/GitHub_Repo/Capsicum)** is the registered Canonical Hub across all 11 repos.
+   When `PIOperationsMgmt_Firebase` added `STD-PCL-001` locally, `verify:cross-repo-parity` flagged it as **Drifted**:
+   ```
+   │ PIOperationsMgmt_Firebase │ ✓ In-Sync │ ✗ Drifted │ ❌ FAIL │
+   ```
+   This prevents arbitrary local experiments in one repo from silently polluting the rest of the fleet before formal promotion.
+
+---
+
+## 3. What Do We Do About That? The 3-Track Synchronization Protocol
+
+To sync and wire these newly established patterns cleanly across all repos, we follow the established **`/sap-sync`** and **`verify-cross-repo-parity`** mechanisms:
+
+```
+                                PROMOTION & SYNC LIFECYCLE
+
+      Origin Repo                                Canonical Hub                           Fleet Repos
+(Sree_Krushna / PIOps)                       (Capsicum / Task-Dashboard)            (BMS, QSR, DashBoard...)
+          │                                              │                                      │
+          │── 1. Promote Verified Improvement ──────────▶│                                      │
+          │      (e.g. STD-PCL-001 or Universal Pattern) │                                      │
+          │                                              │── 2. Run Parity Engine ─────────────▶│
+          │                                              │      (verify-cross-repo-parity.cjs)  │
+          │                                              │                                      │
+          │                                              │── 3. Wire Consumers & Guards ───────▶│
+          │                                              │      (CLAUDE.md, GEMINI.md, P82)     │
+          │                                              │                                      │
+          │◀──────────────────────── 4. 100% Green Verification Across All ────────────────────▶│
+```
+
+---
+
+### Track A: Synchronizing the `prompt-clarity` Skill (`STD-PCL-001`)
+
+In `PIOperationsMgmt_Firebase`, `prompt-clarity` was upgraded with **`STD-PCL-001`** (Domain Index Preflight using `DOCS_HUB.md`, `graphify-out/`, and domain SSOTs).
+
+**Resolution steps**:
+
+1. Promote the enhanced `prompt-clarity` (`SKILL.md` + `meta-prompt.md`) from `PIOperationsMgmt_Firebase` to the Canonical Hub:
+   [`d:\GitHub_Repo\Capsicum\.claude\skills\prompt-clarity\`](file:///d:/GitHub_Repo/Capsicum/.claude/skills/prompt-clarity/)
+   [`d:\GitHub_Repo\Capsicum\.agent\skills\prompt-clarity\`](file:///d:/GitHub_Repo/Capsicum/.agent/skills/prompt-clarity/)
+2. Run the automated parity distributor:
+   ```powershell
+   node scripts/verify-cross-repo-parity.cjs --fix
+   ```
+   This propagates the canonical version to all 11 repos (`Capsicum`, `Task-Dashboard`, `PIOperationsMgmt_Firebase`, `QSR`, `BMS`, `DashBoard`, `Inventory_Mgmt`, `Sree_Krushna`, `SupervisorComplianceMonitoring`, `UG Farmhouse`, `Unified_Uploader`) and verifies internal `.claude` ⟷ `.agent` mirror parity.
+
+---
+
+### Track B: Propagating Universal Process Patterns (`STD-PHASED-DEV-001`, `STD-REC-002`)
+
+Process patterns that do not depend on custom UI widgets are pure reasoning and execution disciplines:
+
+- **`phased-development-ticket-first-gate.md`** (`STD-PHASED-DEV-001` / `AC-DEC-2026-042`): Mandates ticket registration and sequential DoD gates before multi-phase coding.
+- **`in-context-balance-refresh-cache-busting.md`** (`STD-REC-002`): Mandates in-context force-refresh affordances and cache-busting for cached financial/operational calculations.
+
+**Resolution steps**:
+
+1. Copy the pattern file to `d:\GitHub_Repo\<target-repo>\.agent\patterns\`.
+2. Update the target repo’s `GEMINI.md` and `CLAUDE.md` under **Pattern Activation & PACT-001 Cross-References**.
+3. Register the pattern in the target repo's `.agent/patterns/README.md`.
+4. Run `npm run verify:governance-wiring:all` inside the target repo to confirm P82 passes with zero broken links.
+
+---
+
+### Track C: Propagating UI Primitives & Automated Verification Gates (`STD-UI-PRIMITIVE-002`)
+
+For `button-primitive-and-preflight-gate.md` (`SK-010`), the pattern is **guarded** (`activation_tier: guarded`):
+
+- It requires both the script [`scripts/verify-ui-button-primitives.cjs`](file:///d:/GitHub_Repo/Sree_Krushna/scripts/verify-ui-button-primitives.cjs) and the package script `"verify:ui-buttons"`.
+
+**Resolution steps for target UI repos** (e.g. `Task-Dashboard`, `PIOperationsMgmt_Firebase`, `DashBoard`):
+
+1. Copy `scripts/verify-ui-button-primitives.cjs` to the target repo's `scripts/`.
+2. Add `"verify:ui-buttons": "node scripts/verify-ui-button-primitives.cjs"` to `package.json`.
+3. Chain the check into the target repo’s `npm run verify:modular-architecture` or `npm run verify:deployment`.
+4. Copy `.agent/patterns/button-primitive-and-preflight-gate.md` to the target repo.
+5. Wire into the target repo's `GEMINI.md`, `CLAUDE.md`, and `standards-catalog.json`.
+6. Run `npm run verify:governance-wiring:all` and `npm run verify:ui-buttons` to confirm 100% green.
+
+---
+
+## 4. Recommended Action Plan
+
+We can execute this synchronization systematically:
+
+1. **Step 1 — Reconcile Canonical Hub (`Capsicum`)**:
+   Promote `STD-PCL-001` from `PIOperationsMgmt_Firebase` into `Capsicum` so the canonical source holds the latest index preflight standard.
+2. **Step 2 — Fleet-Wide Skill Parity Sweep**:
+   Run `node scripts/verify-cross-repo-parity.cjs --fix` to bring all 11 repositories to 100% byte-parity for `prompt-clarity`.
+3. **Step 3 — Propagate Universal SDCA & Phasing Patterns**:
+   Propagate `phased-development-ticket-first-gate.md` and `button-primitive-and-preflight-gate.md` to `Task-Dashboard` and `PIOperationsMgmt_Firebase` with complete P82 consumer wiring.
+
+Would you like to proceed with **Step 1 and Step 2** to reconcile the canonical hub and run the fleet-wide parity sync?
 
 # Response 6.8 -
 

@@ -19,6 +19,15 @@ begins: detect ambiguity, propose 2-3 concrete reframings, let the user pick,
 *then* answer. It does not summarize or duplicate the actual answer — that's
 downstream. This file only governs the clarification step.
 
+## Step 0 — Domain Index Preflight (STD-PCL-001)
+
+Before analyzing ambiguities or drafting options on domain-specific or architectural requests, ground understanding in repository index maps:
+1. `docs/DOCS_HUB.md` — locate the domain cog and spoke `00_DOCUMENT_HUB.md`.
+2. `graphify-out/GRAPH_REPORT.md` (or `node scripts/query-graph-blast-radius.cjs <component>`) — identify actual component dependencies and consumers.
+3. `docs/SYSTEM_CLARITY_SNAPSHOT.md` — inspect temporal state, active deployments, and related open incidents.
+
+Grounding in canonical indexes prevents manufacturing false alternatives that contradict real codebase architecture.
+
 ## Step 1 — Ambiguity Scan
 
 Run this scan silently on the user's most recent message. Flag it as ambiguous

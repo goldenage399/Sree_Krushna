@@ -33,6 +33,13 @@ guidance against inventing ambiguity).
 
 ## Procedure
 
+0. **Domain Index Preflight (STD-PCL-001)**:
+   Before drafting options or assessing ambiguities across complex modules:
+   - **Root Hub Orientation**: Query `docs/DOCS_HUB.md` to identify the domain cog and locate the domain's spoke `00_DOCUMENT_HUB.md` (or `HUB.md`).
+   - **Architecture & Blast Radius Check**: Query `graphify-out/GRAPH_REPORT.md` (or run `node scripts/query-graph-blast-radius.cjs <component>`) to identify dependencies, consumers, and existing tests.
+   - **Active State Alignment**: Check `docs/SYSTEM_CLARITY_SNAPSHOT.md` to identify recent incidents, active deployments, and related open investigations.
+   Grounding the ambiguity analysis in canonical SSOTs prevents hallucinating missing capabilities and anchors options in verified repo infrastructure.
+
 1. Read `meta-prompt.md` (same directory as this file) — it is the full
    logic definition. Apply its Step 1 ambiguity scan to the user's message.
 2. If ambiguous: present the 2–3 reframings via the harness's interactive question tool (`AskUserQuestion` in Claude Code / `ask_question` in Antigravity / formatted text menu if no interactive tool is available) —
@@ -52,6 +59,8 @@ guidance against inventing ambiguity).
 
 ## Notes specific to this repo
 
+- **Domain Index Preflight (STD-PCL-001)**:
+  Always consult `docs/DOCS_HUB.md` and `graphify-out/GRAPH_REPORT.md` (or run `node scripts/query-graph-blast-radius.cjs <component>`) before framing options so that options reflect actual codebase architecture, domain boundaries, and existing indexes rather than speculative alternatives.
 - **Mandatory Skill-Router Query**:
   Before drafting options, search `.agent/skill-router.yaml` (and `.agent/standards-catalog.json`) for keywords matching each interpretation.
 - **Option Route Binding (Cross-Harness)**:

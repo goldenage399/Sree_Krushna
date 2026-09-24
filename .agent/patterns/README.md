@@ -108,6 +108,7 @@ The tier is a **graduation ladder**: a pattern may start at `reference` and grad
 | [candidate-looks-ergonomics-and-intake.md](candidate-looks-ergonomics-and-intake.md) | `reference` | VALIDATED | `mobile-ui-engineering.md` (Touch Target Integrity), `AC-DEC-2026-045` | universal |
 | [contextual-multi-option-comments-engine.md](contextual-multi-option-comments-engine.md) | `reference` | VALIDATED | `mobile-ui-engineering.md`, `post-incident-governance.md`, `AC-DEC-2026-046` | universal |
 | [button-primitive-and-preflight-gate.md](button-primitive-and-preflight-gate.md) | `guarded` | VALIDATED | `GEMINI.md` (Modular Invariant 4), `CLAUDE.md`, `SK-010`, `verify:ui-buttons` | universal |
+| [in-context-balance-refresh-cache-busting.md](in-context-balance-refresh-cache-busting.md) | `reference` | VALIDATED | `GEMINI.md` (Pattern Activation), `CLAUDE.md` | universal |
 > Update this index whenever a pattern is created or its tier changes via `/capture-pattern`.
 
 ---
