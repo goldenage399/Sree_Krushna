@@ -32,6 +32,8 @@ description: Definitive guide for Mobile UI engineering, responsive rules, and m
 - Minimum spacing between targets: **8px** (prevents accidental taps).
 - Add `padding: 12px` to buttons inside mobile media queries.
 
+> **Option Chip & Gestures Standard**: See `.agent/patterns/candidate-looks-ergonomics-and-intake.md` for Candidate Option Long-Press gestures (500ms), scroll displacement cancellation (>8px), and Lightbox destructive action gating (`P-LOOK-ERGONOMICS-001` / `P-DESTRUCTIVE-GATING-001`).
+
 ```css
 /* Use our existing design tokens */
 .btn-mobile {

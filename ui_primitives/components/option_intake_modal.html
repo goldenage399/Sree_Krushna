@@ -13,6 +13,7 @@
     <div class="sk-intake-tabs" role="tablist">
       <button type="button" class="sk-intake-tab is-active" id="skTabDriveLink" role="tab" aria-selected="true" data-tab="drive">📌 Pinterest / Web Link</button>
       <button type="button" class="sk-intake-tab" id="skTabDeviceUpload" role="tab" aria-selected="false" data-tab="device">📷 Device / Showroom Photo</button>
+      <button type="button" class="sk-intake-tab" id="skTabArchived" role="tab" aria-selected="false" data-tab="archived">🗄️ Trash / Archived (<span id="skArchivedLooksCount">0</span>)</button>
     </div>
 
     <div class="sk-intake-body">
@@ -26,6 +27,15 @@
         <small class="sk-intake-hint" id="skIntakeUrlHint">
           💡 <strong>Direct Image Required:</strong> Right-click image &rarr; <em>Copy Image Address</em> (must end in .jpg/.png or from i.pinimg.com). Web pin links (pin.it/...) will be saved as external bookmarks.
         </small>
+        
+        <!-- Quick Device Upload & Drag-and-Drop Trigger -->
+        <div class="sk-intake-device-quickbar" style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between; background: rgba(255, 255, 255, 0.04); padding: 8px 12px; border-radius: 6px; border: 1px dashed rgba(212, 175, 55, 0.35);">
+          <span style="font-size: 11px; color: var(--shop-muted, #94a3b8);">📂 Have a file on your device?</span>
+          <button type="button" class="sk-btn sk-btn-secondary" id="skBtnQuickUpload" style="font-size: 11px; padding: 4px 10px; display: inline-flex; align-items: center; gap: 4px;">
+            📷 Browse Files / Camera
+          </button>
+        </div>
+
         <div class="sk-intake-alert" id="skIntakeUrlAlert" style="display: none;"></div>
         
         <!-- Live Proof Preview Card (Adapted from PIO ProofPreviewWidget) -->
@@ -41,15 +51,28 @@
       <!-- Tab Pane 2: Local Device / Camera -->
       <div class="sk-tab-pane" id="skPaneDevice" style="display: none;">
         <label class="sk-intake-label" for="skFileInput">Upload Photo or Open Camera</label>
-        <div class="sk-dropzone" id="skDropzone">
+        <div class="sk-dropzone" id="skDropzone" role="button" tabindex="0">
           <span class="sk-dropzone-icon">📷</span>
-          <p class="sk-dropzone-text">Tap to take photo or drag & drop image here</p>
+          <p class="sk-dropzone-text">Tap to take photo / browse device, or drag & drop image here</p>
           <input type="file" id="skFileInput" accept="image/*" class="sk-file-input">
         </div>
       </div>
 
+      <!-- Tab Pane 3: Trash / Archived Looks (30-day retention) -->
+      <div class="sk-tab-pane" id="skPaneArchived" style="display: none;">
+        <div class="sk-archived-banner">
+          <span class="sk-archived-banner-icon">🛡️</span>
+          <div class="sk-archived-banner-text">
+            <strong>Host Trash Bin (30-Day Recovery):</strong> Candidate looks removed from the catalog are retained here for 30 days before permanent deletion. Only the Host can restore them.
+          </div>
+        </div>
+        <div class="sk-archived-looks-list" id="skArchivedLooksList">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
       <!-- Option Metadata Fields -->
-      <div class="sk-intake-grid">
+      <div class="sk-intake-grid" id="skIntakeMetadataGrid">
         <div class="sk-form-group">
           <label class="sk-intake-label" for="skOptionTitle">Option Name / Description</label>
           <input type="text" class="sk-intake-input" id="skOptionTitle" placeholder="e.g. Royal Maroon Silk Saree">

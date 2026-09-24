@@ -1,25 +1,16 @@
 /**
  * Sree Krushna Marriage OS — Shopping Option Pods & Deep-Link Sharing Styles
- * SSOT: User_Created/Discussion Threads/Council/260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md § "Visual Component System"
- * Standard: P-COLLAB-VISUAL-INTAKE-001
+ * SSOT: User_Created/Discussion Threads/Council/260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md
+ * Standard: P-COLLAB-VISUAL-INTAKE-001 / P-LOOK-ERGONOMICS-001 / P-DESTRUCTIVE-GATING-001
  * Scope: Multi-image Option Pods, deep-link target pulse, Pinterest badge styling,
- *        [📤 Share Look] button, and in-situ intake modal integrations.
+ *        [📤 Share Look] button, in-situ intake modal, popover, lightbox admin, and trash bin.
  */
 
 /* 1. Deep-Link Target Pulse (P-COLLAB-OPTION-SHARE-001) */
 @keyframes targetPulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.8), 0 4px 16px rgba(0, 0, 0, 0.4);
-    border-color: var(--shop-gold, #d4af37);
-  }
-  50% {
-    box-shadow: 0 0 0 10px rgba(212, 175, 55, 0.25), 0 8px 28px rgba(212, 175, 55, 0.4);
-    border-color: var(--shop-gold-bright, #fef08a);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0), 0 4px 16px rgba(0, 0, 0, 0.4);
-    border-color: var(--shop-border, rgba(255, 255, 255, 0.12));
-  }
+  0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.8), 0 4px 16px rgba(0, 0, 0, 0.4); border-color: var(--shop-gold, #d4af37); }
+  50% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0.25), 0 8px 28px rgba(212, 175, 55, 0.4); border-color: var(--shop-gold-bright, #fef08a); }
+  100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0), 0 4px 16px rgba(0, 0, 0, 0.4); border-color: var(--shop-border, rgba(255, 255, 255, 0.12)); }
 }
 
 .highlight-target-item {
@@ -38,10 +29,7 @@
   margin-bottom: 8px;
   -webkit-overflow-scrolling: touch;
 }
-
-.shop-card-options-bar::-webkit-scrollbar {
-  display: none;
-}
+.shop-card-options-bar::-webkit-scrollbar { display: none; }
 
 .shop-option-chip {
   display: inline-flex;
@@ -60,13 +48,11 @@
   user-select: none;
   flex-shrink: 0;
 }
-
 .shop-option-chip:hover {
   color: #fff;
   border-color: rgba(212, 175, 55, 0.4);
   background: rgba(255, 255, 255, 0.08);
 }
-
 .shop-option-chip.active {
   background: rgba(212, 175, 55, 0.18);
   border-color: var(--shop-gold, #d4af37);
@@ -74,13 +60,11 @@
   font-weight: 700;
   box-shadow: 0 1px 4px rgba(212, 175, 55, 0.25);
 }
-
 .shop-option-chip-add {
   border: 1px dashed rgba(212, 175, 55, 0.5) !important;
   background: rgba(212, 175, 55, 0.08) !important;
   color: var(--shop-gold, #d4af37) !important;
 }
-
 .shop-option-chip-add:hover {
   border-style: solid !important;
   background: rgba(212, 175, 55, 0.22) !important;
@@ -103,35 +87,17 @@
   transition: all 0.2s ease;
   line-height: 1.2;
 }
-
 .shop-share-look-btn:hover {
   background: var(--shop-gold, #d4af37);
   color: #0b1120;
   border-color: var(--shop-gold, #d4af37);
   box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
 }
-
-.shop-share-look-btn:active {
-  transform: scale(0.97);
-}
+.shop-share-look-btn:active { transform: scale(0.97); }
 
 /* 4. Pinterest & Showroom Badges */
-.shop-badge-pinterest {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  color: #e60023;
-  font-weight: 700;
-}
-
-.shop-badge-showroom {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  color: #38bdf8;
-  font-weight: 600;
-}
-
+.shop-badge-pinterest { display: inline-flex; align-items: center; gap: 3px; color: #e60023; font-weight: 700; }
+.shop-badge-showroom { display: inline-flex; align-items: center; gap: 3px; color: #38bdf8; font-weight: 600; }
 .shop-ref-link-chip {
   display: inline-flex;
   align-items: center;
@@ -146,11 +112,7 @@
   margin-top: 4px;
   transition: all 0.18s ease;
 }
-
-.shop-ref-link-chip:hover {
-  background: #e60023;
-  color: #fff;
-}
+.shop-ref-link-chip:hover { background: #e60023; color: #fff; }
 
 /* 5. Placeholder Media State with Add Look affordance */
 .shop-card-media-placeholder .shop-btn-add-look {
@@ -165,7 +127,6 @@
   cursor: pointer;
   transition: all 0.2s ease;
 }
-
 .shop-card-media-placeholder .shop-btn-add-look:hover {
   background: var(--shop-gold, #d4af37);
   color: #0b1120;
@@ -177,7 +138,6 @@
   color: #fca5a5 !important;
   background: rgba(239, 68, 68, 0.08) !important;
 }
-
 .shop-option-chip-clear:hover {
   background: rgba(239, 68, 68, 0.25) !important;
   color: #ffffff !important;
@@ -193,27 +153,291 @@
   margin-top: 8px;
   transition: all 0.2s ease;
 }
-
-.sk-intake-alert.is-error {
-  background: rgba(239, 68, 68, 0.15);
-  border: 1px solid rgba(239, 68, 68, 0.5);
-  color: #fca5a5;
-}
-
-.sk-intake-alert.is-warning {
-  background: rgba(234, 179, 8, 0.15);
-  border: 1px solid rgba(234, 179, 8, 0.5);
-  color: #fef08a;
-}
-
-.sk-intake-alert.is-success {
-  background: rgba(34, 197, 94, 0.15);
-  border: 1px solid rgba(34, 197, 94, 0.5);
-  color: #86efac;
-}
+.sk-intake-alert.is-error { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.5); color: #fca5a5; }
+.sk-intake-alert.is-warning { background: rgba(234, 179, 8, 0.15); border: 1px solid rgba(234, 179, 8, 0.5); color: #fef08a; }
+.sk-intake-alert.is-success { background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.5); color: #86efac; }
 
 /* 8. Fallback Image Subtle State Indicator */
-.shop-card-media-img.is-fallback {
-  filter: contrast(0.95) brightness(0.95);
+.shop-card-media-img.is-fallback { filter: contrast(0.95) brightness(0.95); }
+
+/* 9. Remarks & Comments Action Button (P-COLLAB-COMMENTS-001) */
+.shop-remarks-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(56, 189, 248, 0.12);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1.2;
+}
+.shop-remarks-btn:hover {
+  background: #38bdf8;
+  color: #0b1120;
+  border-color: #38bdf8;
+  box-shadow: 0 2px 8px rgba(56, 189, 248, 0.3);
+}
+.shop-remarks-btn:active { transform: scale(0.97); }
+
+/* 10. Option Chip Action Popover & Lightbox Destructive Gating (AC-DEC-2026-045) */
+.shop-option-chip-group {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  flex-shrink: 0;
+}
+.sk-chip-popover {
+  position: fixed;
+  z-index: 100020;
+  background: rgba(15, 23, 42, 0.96);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.7), 0 0 15px rgba(212, 175, 55, 0.2);
+  border-radius: 10px;
+  padding: 10px 12px;
+  min-width: 220px;
+  max-width: 300px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: skPopoverFadeIn 0.15s ease-out;
+}
+@keyframes skPopoverFadeIn {
+  from { opacity: 0; transform: translateY(-4px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.sk-chip-popover-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 6px;
+}
+.sk-chip-popover-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--shop-gold, #d4af37);
+  letter-spacing: 0.02em;
+}
+.sk-chip-popover-close {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 2px 6px;
+  line-height: 1;
+  border-radius: 4px;
+}
+.sk-chip-popover-close:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+.sk-chip-popover-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.sk-chip-popover-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  color: #f1f5f9;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.sk-chip-popover-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--shop-gold, #d4af37);
+  color: #ffffff;
+}
+.sk-chip-popover-btn.is-destructive {
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.08);
+}
+.sk-chip-popover-btn.is-destructive:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  color: #ffffff;
+}
+.sk-chip-popover-hint {
+  font-size: 10px;
+  color: #94a3b8;
+  font-style: italic;
+  padding: 2px 4px;
+  line-height: 1.3;
 }
 
+/* Lightbox Sequestered Administrative Bar (P-DESTRUCTIVE-GATING-001) */
+.sk-lightbox-admin-bar {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.18);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.sk-lb-admin-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  width: 100%;
+  margin-bottom: 2px;
+}
+.sk-lb-btn-archive {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.sk-lb-btn-archive:hover {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: #ef4444;
+  color: #ffffff;
+}
+.sk-lb-btn-clear {
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #fcd34d;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.sk-lb-btn-clear:hover {
+  background: rgba(245, 158, 11, 0.25);
+  border-color: #f59e0b;
+  color: #ffffff;
+}
+
+/* Drag-over Visual Feedback */
+.sk-intake-card.is-drag-over,
+.sk-dropzone.is-drag-over {
+  border-color: var(--shop-gold, #d4af37) !important;
+  background: rgba(212, 175, 55, 0.12) !important;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3) !important;
+}
+
+/* 11. Archived Trash Bin & Recovery Styles (AC-DEC-2026-040) */
+.sk-archived-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  margin-bottom: 14px;
+}
+.sk-archived-banner-icon { font-size: 18px; line-height: 1.2; }
+.sk-archived-banner-text { font-size: 12px; color: #fde68a; line-height: 1.4; }
+
+.sk-archived-looks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.sk-archived-look-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--sk-border, rgba(255, 255, 255, 0.1));
+  transition: border-color 0.2s ease;
+}
+.sk-archived-look-card:hover { border-color: rgba(212, 175, 55, 0.35); }
+.sk-archived-look-thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  object-fit: cover;
+  background: #1e293b;
+  flex-shrink: 0;
+}
+.sk-archived-look-info { flex: 1; min-width: 0; }
+.sk-archived-look-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #f1f5f9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 2px;
+}
+.sk-archived-look-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: #94a3b8;
+}
+.sk-archived-countdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.15);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+.sk-restore-look-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.sk-restore-look-btn:hover {
+  background: #22c55e;
+  color: #0b1120;
+  border-color: #22c55e;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+}
+.sk-restore-look-btn:active { transform: scale(0.97); }
+.sk-archived-empty {
+  text-align: center;
+  padding: 30px 10px;
+  color: #64748b;
+  font-size: 12.5px;
+}

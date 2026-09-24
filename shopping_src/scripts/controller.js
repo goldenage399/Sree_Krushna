@@ -24,16 +24,25 @@
     let activeStoreCategory = 'all';
     window.catalogSubView = 'items';
 
-    // Automatic Sanitizer & Reset: Clear false/invalidated looks for Sacred Vivaha Pata (TRS-BR-01)
+    // Candidate Look 30-Day Archival Retention Constant (AC-DEC-2026-040)
+    const ARCHIVE_RETENTION_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
+
+    // Host Identity & RBAC Gate (AC-DEC-2026-040 / SK-007)
+    function isHostUser() {
+      const isLocal = ['localhost', '127.0.0.1', ''].includes(window.location.hostname);
+      if (isLocal) return true;
+      const user = window.currentUser;
+      if (!user) return false;
+      const email = (user.email || '').toLowerCase().trim();
+      if (email === 'goldenage399@gmail.com' || email === 'krushna.s.panda@gmail.com') return true;
+      if (user.role === 'host' || user.role === 'groom' || user.designation === 'super_admin' || user.isOwner === true) return true;
+      return false;
+    }
+    window.isHostUser = isHostUser;
+
+    // Automatic Sanitizer: Filter out corrupted/invalid Pinterest URLs (P-COLLAB-VISUAL-INTAKE-001)
     function sanitizeCustomOptions() {
       let dirty = false;
-      if (itemCustomOptions['TRS-BR-01']) {
-        delete itemCustomOptions['TRS-BR-01'];
-        if (itemOptionSelected['TRS-BR-01']) {
-          delete itemOptionSelected['TRS-BR-01'];
-        }
-        dirty = true;
-      }
       Object.keys(itemCustomOptions).forEach(k => {
         if (Array.isArray(itemCustomOptions[k])) {
           const origLen = itemCustomOptions[k].length;
@@ -56,6 +65,10 @@
 
     window.clearItemCustomOptions = function(itemId) {
       if (!itemId) return;
+      if (!isHostUser()) {
+        showToast('Only the Host can clear looks.', '🔒');
+        return;
+      }
       let changed = false;
       if (itemCustomOptions[itemId]) {
         delete itemCustomOptions[itemId];
@@ -111,6 +124,21 @@
       updateKpis();
     }
 
+    function getArchivedItemOptions(itemId) {
+      if (!itemId) return [];
+      const fsItem = firestoreShoppingCache ? firestoreShoppingCache[itemId] : null;
+      const fsOptions = (fsItem && Array.isArray(fsItem.options)) ? fsItem.options : null;
+      const localOpts = Array.isArray(itemCustomOptions[itemId]) ? itemCustomOptions[itemId] : [];
+      const customOpts = (fsOptions && fsOptions.length > 0) ? fsOptions : localOpts;
+      const now = Date.now();
+      return customOpts.filter(opt => {
+        if (!opt || !opt.isArchived) return false;
+        const archTime = opt.archivedAt ? new Date(opt.archivedAt).getTime() : now;
+        return (now - archTime) < ARCHIVE_RETENTION_MS;
+      });
+    }
+    window.getArchivedItemOptions = getArchivedItemOptions;
+
     function getItemImages(item) {
       if (!item) return [];
       const baseImages = Array.isArray(item.images) ? [...item.images] : [];
@@ -121,6 +149,7 @@
 
       const allImages = [...baseImages];
       customOpts.forEach(opt => {
+        if (!opt || opt.isArchived) return; // Active Query Guard: filter out archived looks (AC-DEC-2026-040)
         if (!allImages.some(img => img.optionIndex === opt.optionIndex)) {
           allImages.push(opt);
         }
@@ -129,12 +158,23 @@
     }
 
     function getActiveOptionIndex(itemId) {
+      const item = items.find(i => i.id === itemId);
+      const availableImgs = getItemImages(item);
       const fsItem = firestoreShoppingCache ? firestoreShoppingCache[itemId] : null;
+      let candidateIdx = 0;
       if (fsItem && typeof fsItem.selectedOptionIndex === 'number') {
-        return fsItem.selectedOptionIndex;
+        candidateIdx = fsItem.selectedOptionIndex;
+      } else if (itemOptionSelected[itemId] !== undefined) {
+        candidateIdx = Number(itemOptionSelected[itemId]);
       }
-      if (itemOptionSelected[itemId] !== undefined) {
-        return Number(itemOptionSelected[itemId]);
+
+      // If candidate option exists in active (non-archived) images, use it
+      if (availableImgs.some(img => img.optionIndex === candidateIdx)) {
+        return candidateIdx;
+      }
+      // Dynamic Fallback Invariant (INV-OPTION-FALLBACK-001): First available non-archived option
+      if (availableImgs.length > 0) {
+        return availableImgs[0].optionIndex;
       }
       return 0;
     }
@@ -630,6 +670,10 @@
     }
 
     window.selectItemOption = function(itemId, optionIndex) {
+      if (window.chipGestureHandled) {
+        window.chipGestureHandled = false;
+        return;
+      }
       itemOptionSelected[itemId] = optionIndex;
       localStorage.setItem('sk_shopping_item_options', JSON.stringify(itemOptionSelected));
       if (typeof window.fsSetShoppingItemStatus === 'function') {
@@ -666,6 +710,95 @@
           text: text,
           url: shareUrl
         }).catch(() => {});
+      }
+    };
+
+    window.archiveItemOption = function(itemId, optionIndex) {
+      if (!isHostUser()) {
+        showToast('Only the Host can delete candidate looks.', '🔒');
+        return;
+      }
+      if (optionIndex === 0) {
+        showToast('Cannot delete canonical baseline concept.', '⚠️');
+        return;
+      }
+      const customOpts = itemCustomOptions[itemId] || [];
+      const target = customOpts.find(opt => opt.optionIndex === optionIndex);
+      if (!target) {
+        showToast('Look not found in custom list.', '⚠️');
+        return;
+      }
+      target.isArchived = true;
+      target.archivedAt = new Date().toISOString();
+      localStorage.setItem('sk_shopping_custom_options', JSON.stringify(itemCustomOptions));
+
+      // Dynamic Fallback Invariant (INV-OPTION-FALLBACK-001):
+      // If currently selected look was archived, switch to first available non-archived look
+      const item = items.find(i => i.id === itemId);
+      const remaining = getItemImages(item);
+      const nextActive = remaining.length > 0 ? remaining[0].optionIndex : 0;
+      itemOptionSelected[itemId] = nextActive;
+      localStorage.setItem('sk_shopping_item_options', JSON.stringify(itemOptionSelected));
+
+      if (typeof window.fsSetShoppingItemStatus === 'function') {
+        window.fsSetShoppingItemStatus(itemId, {
+          options: itemCustomOptions[itemId],
+          selectedOptionIndex: nextActive
+        }).catch(err => console.warn('Firestore archive sync error:', err));
+      }
+
+      renderItems();
+      if (typeof window.updateSurveyUI === 'function') window.updateSurveyUI();
+      showToast('Candidate look moved to 30-day Trash Archive.', '🗑️');
+    };
+
+    window.restoreItemOption = function(itemId, optionIndex) {
+      if (!isHostUser()) {
+        showToast('Only the Host can restore candidate looks.', '🔒');
+        return;
+      }
+      const customOpts = itemCustomOptions[itemId] || [];
+      const target = customOpts.find(opt => opt.optionIndex === optionIndex);
+      if (!target) {
+        showToast('Archived look not found.', '⚠️');
+        return;
+      }
+      delete target.isArchived;
+      delete target.archivedAt;
+      localStorage.setItem('sk_shopping_custom_options', JSON.stringify(itemCustomOptions));
+
+      itemOptionSelected[itemId] = optionIndex;
+      localStorage.setItem('sk_shopping_item_options', JSON.stringify(itemOptionSelected));
+
+      if (typeof window.fsSetShoppingItemStatus === 'function') {
+        window.fsSetShoppingItemStatus(itemId, {
+          options: itemCustomOptions[itemId],
+          selectedOptionIndex: optionIndex
+        }).catch(err => console.warn('Firestore restore sync error:', err));
+      }
+
+      renderItems();
+      if (typeof window.updateSurveyUI === 'function') window.updateSurveyUI();
+      if (typeof renderArchivedLooksInModal === 'function') renderArchivedLooksInModal(itemId);
+      showToast(`Look ${optionIndex} restored to catalog!`, '♻️');
+    };
+
+    window.openItemRemarks = function(itemId, optionIndex) {
+      const optUid = `${itemId}_opt_${optionIndex}`;
+      const item = items.find(i => i.id === itemId);
+      const title = item ? `${item.title} (Option ${optionIndex})` : optUid;
+      if (window.SKPrimitives && window.SKPrimitives.openComments) {
+        window.SKPrimitives.openComments(optUid, {
+          title: title,
+          category: item ? item.category : 'shopping',
+          vendor: item ? item.store : 'Shopping Registry'
+        });
+      } else if (window.openCommentsDrawer) {
+        window.openCommentsDrawer(optUid, {
+          title: title,
+          category: item ? item.category : 'shopping',
+          vendor: item ? item.store : 'Shopping Registry'
+        });
       }
     };
 
@@ -706,6 +839,11 @@
         const hasImages = (allImages.length > 0);
         const activeOptIdx = getActiveOptionIndex(item.id);
         const activeImage = hasImages ? (allImages.find(img => img.optionIndex === activeOptIdx) || allImages[0]) : null;
+        const isHost = isHostUser();
+        const curOptIdx = activeImage ? activeImage.optionIndex : 0;
+        const remarksUid = `${item.id}_opt_${curOptIdx}`;
+        const remarksCount = (window.SKPrimitives && window.SKPrimitives.getCommentCount) ? window.SKPrimitives.getCommentCount(remarksUid) : 0;
+        const archivedCount = getArchivedItemOptions(item.id).length;
         const catIcon = catIcons[item.category] || '🛍️';
 
         // ------------------------------------------------------------------
@@ -714,7 +852,7 @@
         if (catalogViewMode === 'compact') {
           const fallbackPath = `./assets/shopping/${item.slug || 'vivaha_pata'}/${item.slug || 'vivaha_pata'}_0.jpg`;
           const avatarHtml = (hasImages && activeImage)
-            ? `<div class="shop-compact-avatar" onclick="window.openShoppingLightbox('${item.title.replace(/'/g, "\\'")}', '${activeImage.src}', '<strong>${item.id}:</strong> ${(activeImage.label || '').replace(/'/g, "\\'")} • ${item.store} • ${item.priceRange}')" title="Inspect ${item.title}">
+            ? `<div class="shop-compact-avatar" onclick="window.openShoppingLightbox('${item.title.replace(/'/g, "\\'")}', '${activeImage.src}', '<strong>${item.id}:</strong> ${(activeImage.label || '').replace(/'/g, "\\'")} • ${item.store} • ${item.priceRange}', '${item.id}', ${curOptIdx})" title="Inspect ${item.title}">
                 <img src="${activeImage.src}" alt="${item.title}" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null; this.src='${fallbackPath}';">
                 ${allImages.length > 1 ? `<span class="shop-compact-avatar-badge">${allImages.length}</span>` : ''}
                </div>`
@@ -748,7 +886,10 @@
               </div>
 
               <div class="shop-compact-actions">
-                <button class="shop-share-look-btn" type="button" onclick="window.shareItemOption('${item.id}', ${activeImage ? activeImage.optionIndex : 0})" title="Share Look Link">
+                <button class="shop-remarks-btn" type="button" onclick="window.openItemRemarks('${item.id}', ${curOptIdx})" title="Family Remarks & Comments" style="font-size: 11px; padding: 3px 7px;">
+                  <span>💬 ${remarksCount > 0 ? remarksCount : ''}</span>
+                </button>
+                <button class="shop-share-look-btn" type="button" onclick="window.shareItemOption('${item.id}', ${curOptIdx})" title="Share Look Link">
                   <span>📤</span>
                 </button>
                 <button class="shop-btn shop-btn-sm" type="button" onclick="window.openOptionIntakeModal('${item.id}')" title="Add Look" style="font-size: 11px; padding: 3px 7px;">
@@ -769,7 +910,7 @@
         const fallbackPath = `./assets/shopping/${item.slug || 'vivaha_pata'}/${item.slug || 'vivaha_pata'}_0.jpg`;
         if (hasImages && activeImage) {
           mediaHtml = `
-            <div class="shop-card-media-wrapper" onclick="window.openShoppingLightbox('${item.title.replace(/'/g, "\\'")}', '${activeImage.src}', '<strong>${item.id}:</strong> ${(activeImage.label || '').replace(/'/g, "\\'")} • ${item.store} • ${item.priceRange}')" title="Click to inspect in Lightbox">
+            <div class="shop-card-media-wrapper" onclick="window.openShoppingLightbox('${item.title.replace(/'/g, "\\'")}', '${activeImage.src}', '<strong>${item.id}:</strong> ${(activeImage.label || '').replace(/'/g, "\\'")} • ${item.store} • ${item.priceRange}', '${item.id}', ${curOptIdx})" title="Click to inspect in Lightbox">
               <img src="${activeImage.src}" alt="${item.title}" class="shop-card-media-img" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null; this.src='${fallbackPath}'; this.classList.add('is-fallback');">
               <div class="shop-media-overlay-top">
                 <span class="shop-media-badge-id">${item.id}</span>
@@ -796,16 +937,24 @@
         const optionsBarHtml = `
           <div class="shop-card-options-bar">
             ${allImages.map(img => `
-              <button type="button" class="shop-option-chip ${img.optionIndex === (activeImage ? activeImage.optionIndex : 0) ? 'active' : ''}" onclick="event.stopPropagation(); window.selectItemOption('${item.id}', ${img.optionIndex})" title="${img.label || `Option ${img.optionIndex}`}">
-                ${img.isDefault ? '🌟 Concept' : (img.type === 'pinterest_direct' || (img.src && img.src.includes('pinimg')) ? '📌 Option ' + img.optionIndex : (img.type === 'pinterest_pin' || (img.referenceUrl && /pinterest|pin\.it/i.test(img.referenceUrl)) ? '📌 Pin ' + img.optionIndex : `Look ${img.optionIndex}`))}
-              </button>
+              <div class="shop-option-chip-group">
+                <button type="button" 
+                  class="shop-option-chip ${img.optionIndex === curOptIdx ? 'active' : ''}" 
+                  data-item-id="${item.id}"
+                  data-opt-idx="${img.optionIndex}"
+                  data-is-default="${img.isDefault ? '1' : '0'}"
+                  onclick="event.stopPropagation(); window.selectItemOption('${item.id}', ${img.optionIndex})" 
+                  title="${(img.label || `Option ${img.optionIndex}`) + (img.optionIndex > 0 ? ' (Hold or right-click to manage)' : '')}">
+                  ${img.isDefault ? '🌟 Concept' : (img.type === 'pinterest_direct' || (img.src && img.src.includes('pinimg')) ? '📌 Option ' + img.optionIndex : (img.type === 'pinterest_pin' || (img.referenceUrl && /pinterest|pin\.it/i.test(img.referenceUrl)) ? '📌 Pin ' + img.optionIndex : `Look ${img.optionIndex}`))}
+                </button>
+              </div>
             `).join('')}
             <button type="button" class="shop-option-chip shop-option-chip-add" onclick="event.stopPropagation(); window.openOptionIntakeModal('${item.id}')" title="Add a candidate look for this item">
               ➕ Add Look
             </button>
-            ${customCount > 0 ? `
-              <button type="button" class="shop-option-chip shop-option-chip-clear" onclick="event.stopPropagation(); window.clearItemCustomOptions('${item.id}')" title="Clear added custom looks and revert to canonical concept">
-                ✕ Clear
+            ${archivedCount > 0 ? `
+              <button type="button" class="shop-option-chip" onclick="event.stopPropagation(); window.openOptionIntakeModal('${item.id}', 'archived')" style="background: rgba(245, 158, 11, 0.12); color: #fbbf24; border-color: rgba(245, 158, 11, 0.35);" title="Open Trash Bin (${archivedCount} archived look${archivedCount > 1 ? 's' : ''})">
+                🗄️ Trash (${archivedCount})
               </button>
             ` : ''}
           </div>
@@ -858,7 +1007,10 @@
                 <span>${isBought ? '✓ In Shopping Bag (Purchased)' : 'Mark as Purchased'}</span>
               </label>
               <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
-                <button class="shop-share-look-btn" type="button" onclick="window.shareItemOption('${item.id}', ${activeImage ? activeImage.optionIndex : 0})" title="Share this look with family">
+                <button class="shop-remarks-btn" type="button" onclick="window.openItemRemarks('${item.id}', ${curOptIdx})" title="Family Remarks & Comments">
+                  <span>💬 ${remarksCount > 0 ? `${remarksCount} Remarks` : 'Remarks'}</span>
+                </button>
+                <button class="shop-share-look-btn" type="button" onclick="window.shareItemOption('${item.id}', ${curOptIdx})" title="Share this look with family">
                   <span>📤 Share Look</span>
                 </button>
                 <button class="shop-visual-search-btn" type="button" onclick="window.openVisualSearch('${(item.visualSearchQuery || (item.title + ' ' + (item.suggestedColor || '') + ' ' + (item.spec || ''))).replace(/'/g, "\\'")}')" title="Google Images Visual AI Search">
@@ -2297,10 +2449,39 @@
       });
     }
 
-    window.openShoppingLightbox = function(title, photoUrl, caption) {
+    window.openShoppingLightbox = function(title, photoUrl, caption, itemId, activeOptIdx) {
       if (!lightboxBackdrop || !lightboxImg) return;
       if (lightboxTitle) lightboxTitle.textContent = title;
-      if (lightboxCaption) lightboxCaption.innerHTML = caption || '';
+
+      let fullCaption = caption || '';
+      if (itemId && isHostUser()) {
+        const customOpts = (itemCustomOptions[itemId] || []).filter(o => !o.isArchived);
+        const hasCustom = customOpts.length > 0;
+        const optNumber = (typeof activeOptIdx === 'number') ? activeOptIdx : 0;
+
+        let adminBarHtml = '<div class="sk-lightbox-admin-bar">';
+        adminBarHtml += '<div class="sk-lb-admin-title">🛡️ Host Management Controls</div>';
+
+        if (optNumber > 0) {
+          adminBarHtml += `
+            <button type="button" class="sk-lb-btn-archive" onclick="event.stopPropagation(); window.archiveAndCloseLightbox('${itemId}', ${optNumber})">
+              🗑️ Move Option ${optNumber} to Trash Bin
+            </button>
+          `;
+        }
+
+        if (hasCustom) {
+          adminBarHtml += `
+            <button type="button" class="sk-lb-btn-clear" onclick="event.stopPropagation(); window.clearAndCloseLightbox('${itemId}')">
+              ⚠️ Clear All Custom Looks (Revert to Concept)
+            </button>
+          `;
+        }
+        adminBarHtml += '</div>';
+        fullCaption += adminBarHtml;
+      }
+
+      if (lightboxCaption) lightboxCaption.innerHTML = fullCaption;
 
       const resolved = (window.SKPrimitives && window.SKPrimitives.resolveDriveAsset)
         ? window.SKPrimitives.resolveDriveAsset(photoUrl, { zoomWidth: 1600 })
@@ -2309,6 +2490,20 @@
       lightboxImg.src = resolved.zoomUrl || photoUrl;
       lightboxBackdrop.classList.add('is-active');
       if (lightboxZoomEngine) lightboxZoomEngine.fit();
+    };
+
+    window.archiveAndCloseLightbox = function(itemId, optIdx) {
+      if (confirm(`Move Option ${optIdx} to 30-day Trash Bin?`)) {
+        window.archiveItemOption(itemId, optIdx);
+        if (lightboxBackdrop) lightboxBackdrop.classList.remove('is-active');
+      }
+    };
+
+    window.clearAndCloseLightbox = function(itemId) {
+      if (confirm('Clear all added custom looks for this item and revert to canonical concept?')) {
+        window.clearItemCustomOptions(itemId);
+        if (lightboxBackdrop) lightboxBackdrop.classList.remove('is-active');
+      }
     };
 
     if (lightboxClose) {
@@ -2330,8 +2525,10 @@
     const btnSubmitOption = document.getElementById('skBtnSubmitOption');
     const tabDrive = document.getElementById('skTabDriveLink');
     const tabDevice = document.getElementById('skTabDeviceUpload');
+    const tabArchived = document.getElementById('skTabArchived');
     const paneDrive = document.getElementById('skPaneDrive');
     const paneDevice = document.getElementById('skPaneDevice');
+    const paneArchived = document.getElementById('skPaneArchived');
     const driveInput = document.getElementById('skDriveUrlInput');
     const btnVerifyDrive = document.getElementById('skBtnVerifyDrive');
     const proofCard = document.getElementById('skDriveProofCard');
@@ -2340,7 +2537,77 @@
     const fileInput = document.getElementById('skFileInput');
     let localUploadedDataUrl = '';
 
-    window.openOptionIntakeModal = function(itemId) {
+    function switchIntakeTab(activeTab) {
+      if (tabDrive) {
+        tabDrive.classList.toggle('is-active', activeTab === 'drive');
+        tabDrive.setAttribute('aria-selected', activeTab === 'drive' ? 'true' : 'false');
+      }
+      if (tabDevice) {
+        tabDevice.classList.toggle('is-active', activeTab === 'device');
+        tabDevice.setAttribute('aria-selected', activeTab === 'device' ? 'true' : 'false');
+      }
+      if (tabArchived) {
+        tabArchived.classList.toggle('is-active', activeTab === 'archived');
+        tabArchived.setAttribute('aria-selected', activeTab === 'archived' ? 'true' : 'false');
+      }
+
+      if (paneDrive) paneDrive.style.display = (activeTab === 'drive') ? 'block' : 'none';
+      if (paneDevice) paneDevice.style.display = (activeTab === 'device') ? 'block' : 'none';
+      if (paneArchived) paneArchived.style.display = (activeTab === 'archived') ? 'block' : 'none';
+
+      const intakeGrid = document.getElementById('skIntakeMetadataGrid');
+      if (intakeGrid) intakeGrid.style.display = (activeTab === 'archived') ? 'none' : 'grid';
+      if (btnSubmitOption) btnSubmitOption.style.display = (activeTab === 'archived') ? 'none' : 'inline-block';
+    }
+
+    function renderArchivedLooksInModal(itemId) {
+      const container = document.getElementById('skArchivedLooksList');
+      const countEl = document.getElementById('skArchivedLooksCount');
+      if (!container) return;
+      const archived = getArchivedItemOptions(itemId);
+      if (countEl) countEl.textContent = archived.length;
+
+      if (archived.length === 0) {
+        container.innerHTML = `
+          <div class="sk-archived-empty">
+            <span style="font-size: 24px; display: block; margin-bottom: 6px;">🗑️</span>
+            <p>No candidate looks in the 30-day Trash Bin for this item.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const now = Date.now();
+      container.innerHTML = archived.map(opt => {
+        const archTime = opt.archivedAt ? new Date(opt.archivedAt).getTime() : now;
+        const elapsedDays = Math.floor((now - archTime) / (24 * 60 * 60 * 1000));
+        const remainingDays = Math.max(0, 30 - elapsedDays);
+        const fallbackSrc = './assets/shopping/vivaha_pata/vivaha_pata_0.jpg';
+        return `
+          <div class="sk-archived-look-card">
+            <img class="sk-archived-look-thumb" src="${opt.src}" alt="${opt.label || 'Look'}" onerror="this.src='${fallbackSrc}'" referrerpolicy="no-referrer">
+            <div class="sk-archived-look-info">
+              <div class="sk-archived-look-title">Option ${opt.optionIndex}: ${opt.label || 'Candidate Look'}</div>
+              <div class="sk-archived-look-meta">
+                <span class="sk-archived-countdown">⏳ ${remainingDays} days left</span>
+                ${opt.priceTier ? `<span>• ${opt.priceTier}</span>` : ''}
+                ${opt.store ? `<span>• ${opt.store}</span>` : ''}
+              </div>
+            </div>
+            ${isHostUser() ? `
+              <button type="button" class="sk-restore-look-btn" onclick="window.restoreItemOption('${itemId}', ${opt.optionIndex})">
+                ♻️ Restore
+              </button>
+            ` : `
+              <span style="font-size: 11px; color: #64748b;">Host Only</span>
+            `}
+          </div>
+        `;
+      }).join('');
+    }
+    window.renderArchivedLooksInModal = renderArchivedLooksInModal;
+
+    window.openOptionIntakeModal = function(itemId, initialTab = 'drive') {
       if (!intakeBackdrop) return;
       const item = items.find(i => i.id === itemId);
       const itemIdInput = document.getElementById('skOptionItemId');
@@ -2378,6 +2645,9 @@
         alertEl.textContent = '';
       }
 
+      renderArchivedLooksInModal(itemId);
+      switchIntakeTab(initialTab === 'archived' ? 'archived' : 'drive');
+
       intakeBackdrop.classList.add('is-active');
     };
 
@@ -2406,35 +2676,298 @@
       }
     });
 
-    if (tabDrive && tabDevice) {
-      tabDrive.addEventListener('click', () => {
-        tabDrive.classList.add('is-active');
-        tabDevice.classList.remove('is-active');
-        if (paneDrive) paneDrive.style.display = 'block';
-        if (paneDevice) paneDevice.style.display = 'none';
-      });
+    if (tabDrive) tabDrive.addEventListener('click', () => switchIntakeTab('drive'));
+    if (tabDevice) tabDevice.addEventListener('click', () => switchIntakeTab('device'));
+    if (tabArchived) tabArchived.addEventListener('click', () => switchIntakeTab('archived'));
 
-      tabDevice.addEventListener('click', () => {
-        tabDevice.classList.add('is-active');
-        tabDrive.classList.remove('is-active');
-        if (paneDevice) paneDevice.style.display = 'block';
-        if (paneDrive) paneDrive.style.display = 'none';
+    // Client-Side Canvas Image Compressor (AC-DEC-2026-045 / P-PROGRESSIVE-INTAKE-001)
+    function compressImageFile(file, maxWidth = 1400, quality = 0.82) {
+      return new Promise((resolve) => {
+        if (!file || !file.type.startsWith('image/')) {
+          resolve(null);
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          const img = new Image();
+          img.onload = () => {
+            let w = img.width;
+            let h = img.height;
+            if (w > maxWidth || h > maxWidth) {
+              if (w > h) {
+                h = Math.round((h * maxWidth) / w);
+                w = maxWidth;
+              } else {
+                w = Math.round((w * maxWidth) / h);
+                h = maxWidth;
+              }
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+            const dataUrl = canvas.toDataURL('image/jpeg', quality);
+            resolve({
+              dataUrl,
+              originalSize: file.size,
+              compressedSize: Math.round(dataUrl.length * 0.75)
+            });
+          };
+          img.onerror = () => resolve({
+            dataUrl: evt.target.result,
+            originalSize: file.size,
+            compressedSize: file.size
+          });
+          img.src = evt.target.result;
+        };
+        reader.onerror = () => resolve(null);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function processSelectedImageFile(file) {
+      if (!file) return;
+      if (!file.type.startsWith('image/')) {
+        showToast('Please select a valid image file (JPEG, PNG, WebP).', '⚠️');
+        return;
+      }
+      showToast('Optimizing & loading photo...', '⏳');
+      const res = await compressImageFile(file, 1400, 0.82);
+      if (!res || !res.dataUrl) {
+        showToast('Failed to process image file.', '⚠️');
+        return;
+      }
+      localUploadedDataUrl = res.dataUrl;
+      switchIntakeTab('device');
+
+      const titleInput = document.getElementById('skOptionTitle');
+      if (titleInput && (!titleInput.value || titleInput.value.includes('New Candidate Look'))) {
+        const cleanName = file.name ? file.name.replace(/\.[^/.]+$/, '') : 'Showroom Selection';
+        titleInput.value = cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
+      }
+
+      if (proofCard && proofImg) {
+        proofImg.src = localUploadedDataUrl;
+        proofCard.style.display = 'flex';
+        const badgeEl = document.getElementById('skDriveProofBadge');
+        if (badgeEl) badgeEl.textContent = `✓ Showroom Photo (${Math.round(res.compressedSize / 1024)} KB)`;
+        if (proofId) proofId.textContent = `Name: ${file.name || 'Device Photo'}`;
+      }
+
+      showToast(`Showroom photo loaded (${Math.round(res.compressedSize / 1024)} KB)!`, '📷');
+    }
+
+    const intakeCard = intakeBackdrop ? intakeBackdrop.querySelector('.sk-intake-card') : null;
+    const dropzone = document.getElementById('skDropzone');
+    const btnQuickUpload = document.getElementById('skBtnQuickUpload');
+
+    if (btnQuickUpload && fileInput) {
+      btnQuickUpload.addEventListener('click', (e) => {
+        e.preventDefault();
+        fileInput.click();
+      });
+    }
+
+    if (dropzone && fileInput) {
+      dropzone.addEventListener('click', () => {
+        fileInput.click();
+      });
+      dropzone.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          fileInput.click();
+        }
       });
     }
 
     if (fileInput) {
       fileInput.addEventListener('change', (e) => {
         const file = e.target.files && e.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = (evt) => {
-            localUploadedDataUrl = evt.target.result;
-            showToast(`Showroom photo loaded (${Math.round(file.size / 1024)} KB)!`, '📷');
-          };
-          reader.readAsDataURL(file);
+        if (file) processSelectedImageFile(file);
+      });
+    }
+
+    // Modal-Wide HTML5 Drag and Drop (Windows Desktop & Browser)
+    if (intakeBackdrop) {
+      ['dragenter', 'dragover'].forEach(evtName => {
+        intakeBackdrop.addEventListener(evtName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (intakeCard) intakeCard.classList.add('is-drag-over');
+          if (dropzone) dropzone.classList.add('is-drag-over');
+        });
+      });
+
+      ['dragleave', 'dragend'].forEach(evtName => {
+        intakeBackdrop.addEventListener(evtName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (intakeCard) intakeCard.classList.remove('is-drag-over');
+          if (dropzone) dropzone.classList.remove('is-drag-over');
+        });
+      });
+
+      intakeBackdrop.addEventListener('drop', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (intakeCard) intakeCard.classList.remove('is-drag-over');
+        if (dropzone) dropzone.classList.remove('is-drag-over');
+
+        const dt = e.dataTransfer;
+        if (dt && dt.files && dt.files.length > 0) {
+          const file = dt.files[0];
+          processSelectedImageFile(file);
         }
       });
     }
+
+    // Option Chip Gestures & Contextual Popover (AC-DEC-2026-045 / P-LOOK-ERGONOMICS-001)
+    let chipPopoverEl = document.getElementById('skChipActionPopover');
+    if (!chipPopoverEl) {
+      chipPopoverEl = document.createElement('div');
+      chipPopoverEl.id = 'skChipActionPopover';
+      chipPopoverEl.className = 'sk-chip-popover';
+      chipPopoverEl.style.display = 'none';
+      document.body.appendChild(chipPopoverEl);
+    }
+
+    let chipTimer = null;
+    let chipStartX = 0;
+    let chipStartY = 0;
+    window.chipGestureHandled = false;
+
+    window.closeOptionChipPopover = function() {
+      if (chipPopoverEl) chipPopoverEl.style.display = 'none';
+    };
+
+    window.showOptionChipPopover = function(chipEl, itemId, optIdx, isDefault) {
+      if (!chipPopoverEl || !chipEl) return;
+      const item = items.find(i => i.id === itemId);
+      if (!item) return;
+
+      const allImgs = getItemImages(item);
+      const img = allImgs.find(i => i.optionIndex === optIdx) || allImgs[0];
+      const isHost = isHostUser();
+
+      const lookTitle = img ? (img.label || `Option ${optIdx}`) : `Option ${optIdx}`;
+      const isConcept = isDefault || optIdx === 0;
+
+      let actionsHtml = `
+        <div class="sk-chip-popover-header">
+          <span class="sk-chip-popover-title">⚙️ ${lookTitle}</span>
+          <button type="button" class="sk-chip-popover-close" onclick="window.closeOptionChipPopover()" aria-label="Close">✕</button>
+        </div>
+        <div class="sk-chip-popover-actions">
+          <button type="button" class="sk-chip-popover-btn" onclick="window.closeOptionChipPopover(); window.openShoppingLightbox('${item.title.replace(/'/g, "\\'")}', '${img ? img.src : ''}', '<strong>${item.id}:</strong> ${(img && img.label ? img.label : '').replace(/'/g, "\\'")} • ${item.store} • ${item.priceRange}', '${item.id}', ${optIdx})">
+            🔍 Inspect in Lightbox
+          </button>
+          <button type="button" class="sk-chip-popover-btn" onclick="window.closeOptionChipPopover(); if (window.SKPrimitives && window.SKPrimitives.openComments) window.SKPrimitives.openComments('${item.id}_opt_${optIdx}', { title: '${item.title.replace(/'/g, "\\'")}', optionIndex: ${optIdx}, imageUrl: '${img ? img.src : ''}' })">
+            💬 Remarks & Discussion
+          </button>
+      `;
+
+      if (!isConcept && isHost) {
+        actionsHtml += `
+          <button type="button" class="sk-chip-popover-btn is-destructive" onclick="window.closeOptionChipPopover(); window.archiveItemOption('${item.id}', ${optIdx})">
+            🗑️ Move to 30-Day Trash Bin
+          </button>
+        `;
+      } else if (!isConcept && !isHost) {
+        actionsHtml += `
+          <div class="sk-chip-popover-hint">🛡️ Archiving looks is restricted to Wedding Hosts.</div>
+        `;
+      }
+
+      actionsHtml += '</div>';
+      chipPopoverEl.innerHTML = actionsHtml;
+      chipPopoverEl.style.display = 'flex';
+
+      const rect = chipEl.getBoundingClientRect();
+      const popoverWidth = 240;
+      let left = rect.left;
+      if (left + popoverWidth > window.innerWidth - 12) {
+        left = Math.max(12, window.innerWidth - popoverWidth - 12);
+      }
+      let top = rect.bottom + 6;
+      if (top + 160 > window.innerHeight) {
+        top = Math.max(12, rect.top - 165);
+      }
+
+      chipPopoverEl.style.left = `${left}px`;
+      chipPopoverEl.style.top = `${top}px`;
+    };
+
+    document.addEventListener('click', (e) => {
+      if (chipPopoverEl && chipPopoverEl.style.display !== 'none') {
+        if (!chipPopoverEl.contains(e.target) && !e.target.closest('.shop-option-chip')) {
+          window.closeOptionChipPopover();
+        }
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        window.closeOptionChipPopover();
+      }
+    });
+
+    // Gesture delegation on document for .shop-option-chip
+    document.addEventListener('pointerdown', (e) => {
+      const chip = e.target.closest('.shop-option-chip[data-opt-idx]');
+      if (!chip) return;
+      chipStartX = e.clientX;
+      chipStartY = e.clientY;
+
+      if (chipTimer) clearTimeout(chipTimer);
+      chipTimer = setTimeout(() => {
+        window.chipGestureHandled = true;
+        const itemId = chip.getAttribute('data-item-id');
+        const optIdx = parseInt(chip.getAttribute('data-opt-idx'), 10);
+        const isDef = chip.getAttribute('data-is-default') === '1';
+        window.showOptionChipPopover(chip, itemId, optIdx, isDef);
+      }, 500);
+    });
+
+    document.addEventListener('pointermove', (e) => {
+      if (!chipTimer) return;
+      if (Math.hypot(e.clientX - chipStartX, e.clientY - chipStartY) > 8) {
+        clearTimeout(chipTimer);
+        chipTimer = null;
+      }
+    });
+
+    document.addEventListener('pointerup', () => {
+      if (chipTimer) {
+        clearTimeout(chipTimer);
+        chipTimer = null;
+      }
+    });
+
+    document.addEventListener('pointercancel', () => {
+      if (chipTimer) {
+        clearTimeout(chipTimer);
+        chipTimer = null;
+      }
+    });
+
+    window.addEventListener('scroll', () => {
+      if (chipTimer) {
+        clearTimeout(chipTimer);
+        chipTimer = null;
+      }
+    }, { passive: true });
+
+    document.addEventListener('contextmenu', (e) => {
+      const chip = e.target.closest('.shop-option-chip[data-opt-idx]');
+      if (!chip) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const itemId = chip.getAttribute('data-item-id');
+      const optIdx = parseInt(chip.getAttribute('data-opt-idx'), 10);
+      const isDef = chip.getAttribute('data-is-default') === '1';
+      window.showOptionChipPopover(chip, itemId, optIdx, isDef);
+    });
 
     // Candidate Image Validation Gates (P-COLLAB-VISUAL-INTAKE-001)
     // Candidate Image Validation Gates (P-COLLAB-VISUAL-INTAKE-001)
@@ -2621,10 +3154,10 @@
             if (!itemCustomOptions[itemId]) {
               itemCustomOptions[itemId] = [];
             }
-            const existingImgs = getItemImages(item);
-            const nextOptIndex = existingImgs.length > 0
-              ? Math.max(...existingImgs.map(img => img.optionIndex)) + 1
-              : 1;
+            const baseImgs = (item && item.images) ? item.images : [];
+            const allCustom = itemCustomOptions[itemId] || [];
+            const maxIdx = Math.max(0, ...baseImgs.map(img => img.optionIndex || 0), ...allCustom.map(opt => opt.optionIndex || 0));
+            const nextOptIndex = maxIdx + 1;
 
             const newOption = {
               optionIndex: nextOptIndex,

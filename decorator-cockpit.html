@@ -543,6 +543,413 @@
   padding-top: 14px;
 }
 
+/* --- Primitive: 03_comments_drawer.css --- */
+/**
+ * Sree Krushna Marriage OS — Collaborative Comments Drawer Styles
+ * Standard: STD-MOD-COMP-001 | Ruling: AC-DEC-2026-021 / UI-DEC-2026-017
+ * Scope: Slide-over drawer, mobile bottom sheet, reactions bar, stakeholder filters, and composer
+ */
+
+/* Drawer Backdrop */
+.sk-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(8, 10, 15, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 100010;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.sk-drawer-backdrop.is-active,
+.sk-drawer-backdrop:has(.sk-comments-drawer.is-active) {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Slide-Over Drawer Shell (Desktop) */
+.sk-comments-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 440px;
+  max-width: 92vw;
+  height: 100vh;
+  background: var(--sk-surface-elevated, #131620);
+  border-left: 1px solid var(--sk-border, rgba(255, 255, 255, 0.12));
+  box-shadow: -10px 0 36px rgba(0, 0, 0, 0.55);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+.sk-drawer-backdrop.is-active .sk-comments-drawer,
+.sk-comments-drawer.is-active {
+  transform: translateX(0);
+}
+
+/* Drawer Header */
+.sk-drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--sk-border, rgba(255, 255, 255, 0.1));
+}
+
+.sk-drawer-title-wrap {
+  flex: 1;
+  padding-right: 12px;
+}
+
+.sk-drawer-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.sk-drawer-opt-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--sk-radius-full, 9999px);
+  background: rgba(212, 175, 55, 0.15);
+  color: var(--sk-gold, #d4af37);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.sk-drawer-align-pill {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--sk-radius-full, 9999px);
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--sk-emerald, #10b981);
+}
+
+.sk-drawer-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--sk-text-primary, #ffffff);
+  line-height: 1.3;
+}
+
+.sk-drawer-sub {
+  margin: 3px 0 0;
+  font-size: 11px;
+  color: var(--sk-text-secondary, #94a3b8);
+}
+
+.sk-drawer-close-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--sk-border, rgba(255, 255, 255, 0.12));
+  color: var(--sk-text-secondary, #94a3b8);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sk-drawer-close-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+/* Quick Reactions Bar */
+.sk-reactions-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--sk-border, rgba(255, 255, 255, 0.08));
+}
+
+.sk-reactions-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--sk-text-secondary, #94a3b8);
+  white-space: nowrap;
+}
+
+.sk-reactions-group {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+}
+
+.sk-reaction-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--sk-surface, rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--sk-border, rgba(255, 255, 255, 0.1));
+  border-radius: 16px;
+  padding: 4px 10px;
+  font-size: 12px;
+  color: var(--sk-text-primary, #ffffff);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sk-reaction-btn:hover {
+  background: rgba(212, 175, 55, 0.12);
+  border-color: var(--sk-gold, #d4af37);
+  transform: translateY(-1px);
+}
+
+.sk-reaction-btn.user-reacted {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: var(--sk-gold, #d4af37);
+  color: var(--sk-gold, #d4af37);
+}
+
+/* Stakeholder Filter Strip */
+.sk-stakeholder-strip {
+  display: flex;
+  gap: 6px;
+  padding: 10px 20px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--sk-border, rgba(255, 255, 255, 0.06));
+}
+
+.sk-stakeholder-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.sk-role-pill {
+  background: transparent;
+  border: 1px solid var(--sk-border, rgba(255, 255, 255, 0.1));
+  border-radius: var(--sk-radius-full, 9999px);
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--sk-text-secondary, #94a3b8);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.sk-role-pill:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.sk-role-pill.is-active {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: var(--sk-gold, #d4af37);
+  color: var(--sk-gold, #d4af37);
+}
+
+/* Comments Stream */
+.sk-comments-stream {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sk-comment-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--sk-border, rgba(255, 255, 255, 0.08));
+  border-radius: var(--sk-radius-md, 8px);
+  padding: 12px 14px;
+  transition: background 0.2s ease;
+}
+
+.sk-comment-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.sk-comment-card.is-internal {
+  border-left: 3px solid #8b5cf6;
+  background: rgba(139, 92, 246, 0.04);
+}
+
+.sk-comment-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.sk-comment-author-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sk-comment-avatar {
+  font-size: 18px;
+}
+
+.sk-comment-author {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--sk-text-primary, #ffffff);
+}
+
+.sk-comment-role-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--sk-text-secondary, #94a3b8);
+}
+
+.sk-comment-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sk-comment-tier-tag {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(139, 92, 246, 0.15);
+  color: #a78bfa;
+}
+
+.sk-comment-time {
+  font-size: 10px;
+  color: var(--sk-text-tertiary, #64748b);
+}
+
+.sk-comment-text {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--sk-text-secondary, #cbd5e1);
+}
+
+/* Empty State */
+.sk-comments-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--sk-text-tertiary, #64748b);
+}
+
+.sk-comments-empty-icon {
+  font-size: 32px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Sticky Post Composer */
+.sk-composer-container {
+  padding: 14px 20px;
+  border-top: 1px solid var(--sk-border, rgba(255, 255, 255, 0.1));
+  background: rgba(10, 12, 18, 0.95);
+  backdrop-filter: blur(8px);
+}
+
+.sk-composer-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.sk-composer-role-select {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--sk-text-secondary, #94a3b8);
+}
+
+.sk-select-sm {
+  background: var(--sk-surface, #1e2230);
+  border: 1px solid var(--sk-border, rgba(255, 255, 255, 0.15));
+  border-radius: 6px;
+  color: #fff;
+  font-size: 11px;
+  padding: 3px 6px;
+}
+
+.sk-composer-tier-toggle label {
+  font-size: 11px;
+  color: #a78bfa;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.sk-composer-input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.sk-textarea-sm {
+  flex: 1;
+  background: var(--sk-surface, #1e2230);
+  border: 1px solid var(--sk-border, rgba(255, 255, 255, 0.15));
+  border-radius: 6px;
+  color: #fff;
+  font-size: 12px;
+  padding: 8px 10px;
+  resize: none;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.sk-textarea-sm:focus {
+  outline: none;
+  border-color: var(--sk-gold, #d4af37);
+}
+
+.sk-btn-post {
+  padding: 0 16px;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Mobile Responsive Bottom Sheet (< 768px) */
+@media (max-width: 767px) {
+  .sk-comments-drawer {
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 100%;
+    height: 85vh;
+    border-left: none;
+    border-top: 1px solid var(--sk-border, rgba(255, 255, 255, 0.15));
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    transform: translateY(100%);
+  }
+
+  .sk-drawer-backdrop.is-active .sk-comments-drawer,
+  .sk-comments-drawer.is-active {
+    transform: translateY(0);
+  }
+}
+
 /* --- File: 00_embedded_fonts.css --- */
 /* Locally embedded fonts (Inter, JetBrains Mono, Outfit) — latin + latin-ext subsets, deduplicated (each family is served as one variable-font file per subset regardless of weight). Self-hosted as base64 data URIs so the Cockpit has zero network dependency. */
 @font-face {
@@ -3865,6 +4272,7 @@ body {
     <div class="sk-intake-tabs" role="tablist">
       <button type="button" class="sk-intake-tab is-active" id="skTabDriveLink" role="tab" aria-selected="true" data-tab="drive">📌 Pinterest / Web Link</button>
       <button type="button" class="sk-intake-tab" id="skTabDeviceUpload" role="tab" aria-selected="false" data-tab="device">📷 Device / Showroom Photo</button>
+      <button type="button" class="sk-intake-tab" id="skTabArchived" role="tab" aria-selected="false" data-tab="archived">🗄️ Trash / Archived (<span id="skArchivedLooksCount">0</span>)</button>
     </div>
 
     <div class="sk-intake-body">
@@ -3878,6 +4286,15 @@ body {
         <small class="sk-intake-hint" id="skIntakeUrlHint">
           💡 <strong>Direct Image Required:</strong> Right-click image &rarr; <em>Copy Image Address</em> (must end in .jpg/.png or from i.pinimg.com). Web pin links (pin.it/...) will be saved as external bookmarks.
         </small>
+        
+        <!-- Quick Device Upload & Drag-and-Drop Trigger -->
+        <div class="sk-intake-device-quickbar" style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between; background: rgba(255, 255, 255, 0.04); padding: 8px 12px; border-radius: 6px; border: 1px dashed rgba(212, 175, 55, 0.35);">
+          <span style="font-size: 11px; color: var(--shop-muted, #94a3b8);">📂 Have a file on your device?</span>
+          <button type="button" class="sk-btn sk-btn-secondary" id="skBtnQuickUpload" style="font-size: 11px; padding: 4px 10px; display: inline-flex; align-items: center; gap: 4px;">
+            📷 Browse Files / Camera
+          </button>
+        </div>
+
         <div class="sk-intake-alert" id="skIntakeUrlAlert" style="display: none;"></div>
         
         <!-- Live Proof Preview Card (Adapted from PIO ProofPreviewWidget) -->
@@ -3893,15 +4310,28 @@ body {
       <!-- Tab Pane 2: Local Device / Camera -->
       <div class="sk-tab-pane" id="skPaneDevice" style="display: none;">
         <label class="sk-intake-label" for="skFileInput">Upload Photo or Open Camera</label>
-        <div class="sk-dropzone" id="skDropzone">
+        <div class="sk-dropzone" id="skDropzone" role="button" tabindex="0">
           <span class="sk-dropzone-icon">📷</span>
-          <p class="sk-dropzone-text">Tap to take photo or drag & drop image here</p>
+          <p class="sk-dropzone-text">Tap to take photo / browse device, or drag & drop image here</p>
           <input type="file" id="skFileInput" accept="image/*" class="sk-file-input">
         </div>
       </div>
 
+      <!-- Tab Pane 3: Trash / Archived Looks (30-day retention) -->
+      <div class="sk-tab-pane" id="skPaneArchived" style="display: none;">
+        <div class="sk-archived-banner">
+          <span class="sk-archived-banner-icon">🛡️</span>
+          <div class="sk-archived-banner-text">
+            <strong>Host Trash Bin (30-Day Recovery):</strong> Candidate looks removed from the catalog are retained here for 30 days before permanent deletion. Only the Host can restore them.
+          </div>
+        </div>
+        <div class="sk-archived-looks-list" id="skArchivedLooksList">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
       <!-- Option Metadata Fields -->
-      <div class="sk-intake-grid">
+      <div class="sk-intake-grid" id="skIntakeMetadataGrid">
         <div class="sk-form-group">
           <label class="sk-intake-label" for="skOptionTitle">Option Name / Description</label>
           <input type="text" class="sk-intake-input" id="skOptionTitle" placeholder="e.g. Royal Maroon Silk Saree">
@@ -3933,6 +4363,89 @@ body {
       <button type="button" class="sk-btn sk-btn-secondary" id="skBtnCancelIntake">Cancel</button>
       <button type="button" class="sk-btn sk-btn-primary" id="skBtnSubmitOption">Add Option to Review</button>
     </div>
+  </div>
+</div>
+
+
+  <!-- Universal Multi-Tier Collaborative Comments Drawer Primitive (STD-MOD-COMP-001 / AC-DEC-2026-021) -->
+<div class="sk-drawer-backdrop" id="skCommentsDrawerBackdrop" role="dialog" aria-modal="true" aria-labelledby="skCommentsDrawerTitle" onclick="if(event.target === this){ if(window.closeCommentsDrawer) window.closeCommentsDrawer(); else { this.classList.remove('is-active'); const d = document.getElementById('skCommentsDrawer'); if(d) d.classList.remove('is-active'); } }">
+  <div class="sk-comments-drawer" id="skCommentsDrawer">
+    
+    <!-- Drawer Header -->
+    <div class="sk-drawer-header">
+      <div class="sk-drawer-title-wrap">
+        <div class="sk-drawer-badge-row">
+          <span class="sk-drawer-opt-badge" id="skCommentsOptionBadge">OPT-01</span>
+          <span class="sk-drawer-align-pill" id="skCommentsAlignmentPill">✨ Open for Family Remarks</span>
+        </div>
+        <h3 class="sk-drawer-title" id="skCommentsDrawerTitle">Option Discussion</h3>
+        <p class="sk-drawer-sub" id="skCommentsDrawerSub">Bhubaneswar Shopping & Decor Review</p>
+      </div>
+      <button type="button" class="sk-drawer-close-btn" id="skBtnCloseComments" aria-label="Close discussion drawer" onclick="if(window.closeCommentsDrawer) window.closeCommentsDrawer(); else { const b = document.getElementById('skCommentsDrawerBackdrop'); if(b) b.classList.remove('is-active'); const d = document.getElementById('skCommentsDrawer'); if(d) d.classList.remove('is-active'); }">✕</button>
+    </div>
+
+    <!-- Quick Emoji Reaction Bar (AC-DEC-2026-021) -->
+    <div class="sk-reactions-bar">
+      <span class="sk-reactions-label">Quick Reactions:</span>
+      <div class="sk-reactions-group">
+        <button type="button" class="sk-reaction-btn" data-reaction="love" id="skReactionLove" title="Love it!">
+          <span>❤️</span> <strong class="count">0</strong>
+        </button>
+        <button type="button" class="sk-reaction-btn" data-reaction="approve" id="skReactionApprove" title="Looks great, approved!">
+          <span>👍</span> <strong class="count">0</strong>
+        </button>
+        <button type="button" class="sk-reaction-btn" data-reaction="doubt" id="skReactionDoubt" title="Have questions or doubts">
+          <span>🤔</span> <strong class="count">0</strong>
+        </button>
+        <button type="button" class="sk-reaction-btn" data-reaction="blocker" id="skReactionBlocker" title="Concern / Blocker">
+          <span>🚫</span> <strong class="count">0</strong>
+        </button>
+      </div>
+    </div>
+
+    <!-- Stakeholder Perspective Filter Strip -->
+    <div class="sk-stakeholder-strip" id="skStakeholderFilters">
+      <button type="button" class="sk-role-pill is-active" data-role="all">All Opinions (<span id="skCountAll">0</span>)</button>
+      <button type="button" class="sk-role-pill" data-role="bride">👰 Bride</button>
+      <button type="button" class="sk-role-pill" data-role="sisters">👭 Sisters</button>
+      <button type="button" class="sk-role-pill" data-role="inlaws">🎁 In-Laws</button>
+      <button type="button" class="sk-role-pill" data-role="elders">🪔 Elders</button>
+      <button type="button" class="sk-role-pill" data-role="host">👑 Host/Groom</button>
+    </div>
+
+    <!-- Comments & Remarks Stream -->
+    <div class="sk-comments-stream" id="skCommentsStream">
+      <!-- Injected dynamically by comments_engine.js -->
+    </div>
+
+    <!-- Sticky Post Composer (Tier 1 vs Tier 2 Visibility) -->
+    <div class="sk-composer-container">
+      <div class="sk-composer-controls">
+        <div class="sk-composer-role-select">
+          <label for="skCommentRoleSelect">Posting as:</label>
+          <select id="skCommentRoleSelect" class="sk-select-sm">
+            <option value="bride">👰 Bride (Sree)</option>
+            <option value="sisters" selected>👭 Sister (Family)</option>
+            <option value="inlaws">🎁 In-Laws (Bride Side)</option>
+            <option value="elders">🪔 Elder (Advisory)</option>
+            <option value="host">👑 Groom / Executive Host</option>
+          </select>
+        </div>
+        <div class="sk-composer-tier-toggle">
+          <label title="Host Internal is only visible to the groom and parents; Family Public is visible to everyone.">
+            <input type="checkbox" id="skCommentIsInternal">
+            <span>🔒 Host Internal</span>
+          </label>
+        </div>
+      </div>
+      <div class="sk-composer-input-row">
+        <textarea id="skCommentInput" class="sk-textarea-sm" rows="2" placeholder="Share your opinion, suggestion, or question on this option..."></textarea>
+        <button type="button" id="skBtnPostComment" class="sk-btn sk-btn-primary sk-btn-post">
+          <span>💬</span> Post
+        </button>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -4790,6 +5303,410 @@ body {
 
 
 /**
+ * Sree Krushna Marriage OS — Collaborative Comments & Opinions Engine
+ * Standard: STD-MOD-COMP-001 | Ruling: AC-DEC-2026-021 / UI-DEC-2026-017
+ * Scope: Multi-tier comments, emoji reactions, stakeholder filtering, and persistent discussion threads.
+ */
+
+(function(global) {
+  'use strict';
+
+  const STORAGE_KEY_COMMENTS = 'sk_option_comments_v1';
+  const STORAGE_KEY_REACTIONS = 'sk_option_reactions_v1';
+
+  // Seed sample comments for realistic family review out-of-the-box
+  const SEED_COMMENTS = {
+    'PLATE-01': [
+      {
+        id: 'c-01',
+        author: 'Sree (Bride)',
+        role: 'bride',
+        roleIcon: '👰',
+        text: 'The layered lotus petals and central brass kalasam are breathtaking! Can we ensure genuine bell metal vilakku lamps?',
+        timestamp: 'Today at 09:15 AM',
+        isInternal: false
+      },
+      {
+        id: 'c-02',
+        author: 'Sunita (Sister)',
+        role: 'sisters',
+        roleIcon: '👭',
+        text: 'Looks exceptionally grand for photography! Make sure the havan pit has high smoke exhaust so eyes don’t sting during the 2-hour Vedic purnahuti.',
+        timestamp: 'Today at 10:40 AM',
+        isInternal: false
+      },
+      {
+        id: 'c-03',
+        author: 'Krushna (Host/Groom)',
+        role: 'host',
+        roleIcon: '👑',
+        text: 'Tentage contractor verified that the 24ft lotus dome easily fits inside the Marquee hall with 4ft aisle clearance.',
+        timestamp: 'Today at 11:05 AM',
+        isInternal: true
+      }
+    ],
+    'cluster_vivaha_pata': [
+      {
+        id: 'c-10',
+        author: 'Sree (Bride)',
+        role: 'bride',
+        roleIcon: '👰',
+        text: 'The crimson red Berhampuri Patta with temple border is timeless. Utkalika confirmed they have 3 fresh handloom pieces ready for our Day 1 visit.',
+        timestamp: 'Yesterday at 04:30 PM',
+        isInternal: false
+      },
+      {
+        id: 'c-11',
+        author: 'Aparna (Sister)',
+        role: 'sisters',
+        roleIcon: '👭',
+        text: 'Let us definitely pair it with a contrast mustard-gold pure raw silk blouse piece. Master Canteen weavers have antique zari options.',
+        timestamp: 'Yesterday at 05:12 PM',
+        isInternal: false
+      },
+      {
+        id: 'c-12',
+        author: 'Patra Family (In-Laws)',
+        role: 'inlaws',
+        roleIcon: '🎁',
+        text: 'Traditional Berhampuri silk is deeply auspicious for Telugu and Odia Vedic rites. We fully approve Option A.',
+        timestamp: 'Yesterday at 06:45 PM',
+        isInternal: false
+      }
+    ]
+  };
+
+  const SEED_REACTIONS = {
+    'PLATE-01': { love: 4, approve: 2, doubt: 1, blocker: 0, userReactions: ['love'] },
+    'cluster_vivaha_pata': { love: 5, approve: 3, doubt: 0, blocker: 0, userReactions: ['love', 'approve'] }
+  };
+
+  class CommentsEngine {
+    constructor() {
+      this.comments = this._loadData(STORAGE_KEY_COMMENTS, SEED_COMMENTS);
+      this.reactions = this._loadData(STORAGE_KEY_REACTIONS, SEED_REACTIONS);
+      this.activeOptionId = null;
+      this.activeFilterRole = 'all';
+
+      this._initDomListeners();
+    }
+
+    _loadData(key, seed) {
+      try {
+        const raw = localStorage.getItem(key);
+        if (raw) return JSON.parse(raw);
+      } catch (e) {
+        console.warn('Storage read error for', key, e);
+      }
+      return Object.assign({}, seed);
+    }
+
+    _saveData(key, data) {
+      try {
+        localStorage.setItem(key, JSON.stringify(data));
+      } catch (e) {
+        console.warn('Storage write error for', key, e);
+      }
+    }
+
+    _initDomListeners() {
+      if (typeof document === 'undefined') return;
+
+      const bind = () => this._bindDomEvents();
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bind);
+      } else {
+        bind();
+      }
+
+      // Universal Escape key listener
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          const backdrop = document.getElementById('skCommentsDrawerBackdrop');
+          const drawer = document.getElementById('skCommentsDrawer');
+          if ((backdrop && backdrop.classList.contains('is-active')) || (drawer && drawer.classList.contains('is-active'))) {
+            this.closeDrawer();
+          }
+        }
+      });
+    }
+
+    _bindDomEvents() {
+      const backdrop = document.getElementById('skCommentsDrawerBackdrop');
+      const drawer = document.getElementById('skCommentsDrawer');
+      const closeBtn = document.getElementById('skBtnCloseComments');
+      const postBtn = document.getElementById('skBtnPostComment');
+      const filtersWrap = document.getElementById('skStakeholderFilters');
+
+      if (closeBtn) {
+        closeBtn.onclick = (e) => {
+          if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+          this.closeDrawer();
+        };
+      }
+
+      if (backdrop) {
+        backdrop.onclick = (e) => {
+          if (e.target === backdrop) {
+            if (e) {
+              e.preventDefault();
+              e.stopPropagation();
+            }
+            this.closeDrawer();
+          }
+        };
+      }
+
+      if (postBtn) {
+        postBtn.onclick = () => this._handlePostSubmit();
+      }
+
+      // Reaction buttons
+      ['love', 'approve', 'doubt', 'blocker'].forEach(type => {
+        const btn = document.querySelector(`.sk-reaction-btn[data-reaction="${type}"]`);
+        if (btn) {
+          btn.onclick = () => this._handleReactionClick(type);
+        }
+      });
+
+      // Filter pills
+      if (filtersWrap) {
+        filtersWrap.onclick = (e) => {
+          const pill = e.target.closest('.sk-role-pill');
+          if (!pill) return;
+          filtersWrap.querySelectorAll('.sk-role-pill').forEach(p => p.classList.remove('is-active'));
+          pill.classList.add('is-active');
+          this.activeFilterRole = pill.dataset.role || 'all';
+          this.renderCommentsList();
+        };
+      }
+    }
+
+    openDrawer(optionId, meta = {}) {
+      this._bindDomEvents();
+      this.activeOptionId = optionId;
+      this.activeFilterRole = 'all';
+
+      const backdrop = document.getElementById('skCommentsDrawerBackdrop');
+      const drawer = document.getElementById('skCommentsDrawer');
+      if (!backdrop && !drawer) return;
+
+      const titleEl = document.getElementById('skCommentsDrawerTitle');
+      const badgeEl = document.getElementById('skCommentsOptionBadge');
+      const subEl = document.getElementById('skCommentsDrawerSub');
+      const pillEl = document.getElementById('skCommentsAlignmentPill');
+
+      if (titleEl) titleEl.textContent = meta.title || `Option ${optionId}`;
+      if (badgeEl) badgeEl.textContent = meta.badge || optionId;
+      if (subEl) subEl.textContent = meta.sub || 'Family Consensus & Remarks';
+      if (pillEl) pillEl.textContent = meta.alignment || '✨ Open for Remarks';
+
+      // Reset filters
+      const filtersWrap = document.getElementById('skStakeholderFilters');
+      if (filtersWrap) {
+        filtersWrap.querySelectorAll('.sk-role-pill').forEach(p => {
+          p.classList.toggle('is-active', p.dataset.role === 'all');
+        });
+      }
+
+      this.renderReactions();
+      this.renderCommentsList();
+      if (backdrop) backdrop.classList.add('is-active');
+      if (drawer) drawer.classList.add('is-active');
+    }
+
+    closeDrawer() {
+      const backdrop = document.getElementById('skCommentsDrawerBackdrop');
+      if (backdrop) backdrop.classList.remove('is-active');
+      const drawer = document.getElementById('skCommentsDrawer');
+      if (drawer) drawer.classList.remove('is-active');
+      this.activeOptionId = null;
+    }
+
+    renderReactions() {
+      if (!this.activeOptionId) return;
+      const data = this.reactions[this.activeOptionId] || { love: 0, approve: 0, doubt: 0, blocker: 0, userReactions: [] };
+
+      ['love', 'approve', 'doubt', 'blocker'].forEach(type => {
+        const btn = document.querySelector(`.sk-reaction-btn[data-reaction="${type}"]`);
+        if (!btn) return;
+        const countEl = btn.querySelector('.count');
+        if (countEl) countEl.textContent = data[type] || 0;
+        const hasReacted = (data.userReactions || []).includes(type);
+        btn.classList.toggle('user-reacted', hasReacted);
+      });
+    }
+
+    _handleReactionClick(type) {
+      if (!this.activeOptionId) return;
+      if (!this.reactions[this.activeOptionId]) {
+        this.reactions[this.activeOptionId] = { love: 0, approve: 0, doubt: 0, blocker: 0, userReactions: [] };
+      }
+      const data = this.reactions[this.activeOptionId];
+      if (!data.userReactions) data.userReactions = [];
+
+      const idx = data.userReactions.indexOf(type);
+      if (idx >= 0) {
+        data.userReactions.splice(idx, 1);
+        data[type] = Math.max(0, (data[type] || 1) - 1);
+      } else {
+        data.userReactions.push(type);
+        data[type] = (data[type] || 0) + 1;
+      }
+
+      this._saveData(STORAGE_KEY_REACTIONS, this.reactions);
+      this.renderReactions();
+    }
+
+    renderCommentsList() {
+      const stream = document.getElementById('skCommentsStream');
+      if (!stream) return;
+
+      const list = this.comments[this.activeOptionId] || [];
+      const filtered = (this.activeFilterRole === 'all')
+        ? list
+        : list.filter(c => c.role === this.activeFilterRole);
+
+      // Update total count
+      const countEl = document.getElementById('skCountAll');
+      if (countEl) countEl.textContent = list.length;
+
+      if (filtered.length === 0) {
+        stream.innerHTML = `
+          <div class="sk-comments-empty">
+            <span class="sk-comments-empty-icon">💭</span>
+            <p>No opinions posted yet under this filter.</p>
+            <p style="font-size: 11px;">Be the first to share your recommendation!</p>
+          </div>
+        `;
+        return;
+      }
+
+      stream.innerHTML = filtered.map(c => `
+        <div class="sk-comment-card ${c.isInternal ? 'is-internal' : ''}">
+          <div class="sk-comment-top">
+            <div class="sk-comment-author-wrap">
+              <span class="sk-comment-avatar">${c.roleIcon || '👤'}</span>
+              <span class="sk-comment-author">${c.author}</span>
+              <span class="sk-comment-role-badge">${c.role ? c.role.toUpperCase() : 'FAMILY'}</span>
+            </div>
+            <div class="sk-comment-meta">
+              ${c.isInternal ? '<span class="sk-comment-tier-tag">🔒 HOST ONLY</span>' : ''}
+              <span class="sk-comment-time">${c.timestamp}</span>
+            </div>
+          </div>
+          <p class="sk-comment-text">${c.text}</p>
+        </div>
+      `).join('');
+    }
+
+    _sanitizeText(str) {
+      if (!str) return '';
+      return String(str)
+        .slice(0, 500)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    _handlePostSubmit() {
+      const input = document.getElementById('skCommentInput');
+      const roleSelect = document.getElementById('skCommentRoleSelect');
+      const internalCheck = document.getElementById('skCommentIsInternal');
+      if (!input || !this.activeOptionId) return;
+
+      const rawText = input.value.trim();
+      if (!rawText) return;
+      const text = this._sanitizeText(rawText);
+
+      const role = roleSelect ? roleSelect.value : 'sisters';
+      const isInternal = internalCheck ? internalCheck.checked : false;
+
+      const roleMap = {
+        bride: { label: 'Sree (Bride)', icon: '👰' },
+        sisters: { label: 'Sister (Family)', icon: '👭' },
+        inlaws: { label: 'Patra Family (In-Laws)', icon: '🎁' },
+        elders: { label: 'Elder (Mama/Mami)', icon: '🪔' },
+        host: { label: 'Krushna (Host/Groom)', icon: '👑' }
+      };
+
+      const authorInfo = roleMap[role] || { label: 'Family Member', icon: '👤' };
+
+      const newComment = {
+        id: 'c-' + Date.now(),
+        author: authorInfo.label,
+        role: role,
+        roleIcon: authorInfo.icon,
+        text: text,
+        timestamp: 'Just now',
+        isInternal: isInternal
+      };
+
+      if (!this.comments[this.activeOptionId]) {
+        this.comments[this.activeOptionId] = [];
+      }
+      this.comments[this.activeOptionId].push(newComment);
+      this._saveData(STORAGE_KEY_COMMENTS, this.comments);
+
+      // Real-time Firestore sync bridge (AC-DEC-2026-041 / SK-007)
+      if (this.activeOptionId && this.activeOptionId.includes('_opt_')) {
+        const itemId = this.activeOptionId.split('_opt_')[0];
+        if (typeof global.fsSetShoppingItemStatus === 'function') {
+          global.fsSetShoppingItemStatus(itemId, {
+            [`comments_${this.activeOptionId}`]: this.comments[this.activeOptionId]
+          }).catch(err => console.warn('Firestore comments sync skipped:', err));
+        }
+      }
+
+      input.value = '';
+      this.renderCommentsList();
+
+      if (global.SKPrimitives && global.SKPrimitives.showToast) {
+        global.SKPrimitives.showToast('Opinion posted and saved!', 2000);
+      }
+    }
+
+    syncExternalComments(optionId, commentsList) {
+      if (!optionId || !Array.isArray(commentsList)) return;
+      this.comments[optionId] = commentsList;
+      this._saveData(STORAGE_KEY_COMMENTS, this.comments);
+      if (this.activeOptionId === optionId) {
+        this.renderCommentsList();
+      }
+    }
+
+    getCommentCount(optionId) {
+      const list = this.comments[optionId] || [];
+      return list.length;
+    }
+  }
+
+  global.SKCommentsEngine = new CommentsEngine();
+  global.openCommentsDrawer = function(optionId, meta) {
+    if (global.SKCommentsEngine) {
+      global.SKCommentsEngine.openDrawer(optionId, meta);
+    }
+  };
+  global.closeCommentsDrawer = function() {
+    if (global.SKCommentsEngine) {
+      global.SKCommentsEngine.closeDrawer();
+    } else {
+      const backdrop = document.getElementById('skCommentsDrawerBackdrop');
+      if (backdrop) backdrop.classList.remove('is-active');
+      const drawer = document.getElementById('skCommentsDrawer');
+      if (drawer) drawer.classList.remove('is-active');
+    }
+  };
+})(typeof window !== 'undefined' ? window : this);
+
+
+/**
  * Sree Krushna Marriage OS — Universal UI Primitives Core Helper Library
  * Standard: STD-MOD-COMP-001 | Ruling: AC-DEC-2026-019 / AC-DEC-2026-022
  * Scope: Zero-dependency DOM helpers for carousels, modals, toasts, Drive CDN normalization, and zoom/pan.
@@ -5599,6 +6516,27 @@ body {
       }
     }
 
+    function openDecorRemarks(plateId, optIndex) {
+      const plate = VISUAL_PLATES.find(p => p.id === plateId);
+      const idx = (typeof optIndex === 'number') ? optIndex : (plate ? (plate.selectedOptionIndex || 0) : 0);
+      const optUid = `${plateId}_opt_${idx}`;
+      const title = plate ? `${plate.title} (${plateId})` : optUid;
+      if (window.SKPrimitives && window.SKPrimitives.openComments) {
+        window.SKPrimitives.openComments(optUid, {
+          title: `${title} (Option ${idx + 1})`,
+          category: 'mandap',
+          vendor: 'Decorator Negotiation Cockpit'
+        });
+      } else if (window.openCommentsDrawer) {
+        window.openCommentsDrawer(optUid, {
+          title: `${title} (Option ${idx + 1})`,
+          category: 'mandap',
+          vendor: 'Decorator Negotiation Cockpit'
+        });
+      }
+    }
+    window.openDecorRemarks = openDecorRemarks;
+
     function validateCandidateImageUrl(url) {
       if (!url || !url.trim()) {
         return { valid: false, type: 'empty', error: 'Please provide a direct image link or upload a showroom photo.' };
@@ -5731,6 +6669,20 @@ body {
         alertEl.className = 'sk-intake-alert';
         alertEl.textContent = '';
       }
+
+      // Reset tabs and ensure Trash tab is hidden for Cockpit
+      const tabArch = document.getElementById('skTabArchived');
+      if (tabArch) tabArch.style.display = 'none';
+      const paneArch = document.getElementById('skPaneArchived');
+      if (paneArch) paneArch.style.display = 'none';
+      const tabDriveEl = document.getElementById('skTabDriveLink');
+      if (tabDriveEl) tabDriveEl.classList.add('is-active');
+      const paneDriveEl = document.getElementById('skPaneDrive');
+      if (paneDriveEl) paneDriveEl.style.display = 'block';
+      const metaGrid = document.getElementById('skIntakeMetadataGrid');
+      if (metaGrid) metaGrid.style.display = 'grid';
+      const btnSubmit = document.getElementById('skBtnSubmitOption');
+      if (btnSubmit) btnSubmit.style.display = 'inline-block';
 
       backdrop.classList.add('active');
       backdrop.classList.add('is-active');
@@ -6384,6 +7336,9 @@ body {
           optionsBarHtml += '</div>';
         }
 
+        const optUid = `${plate.id}_opt_${selIdx}`;
+        const commentsCount = (window.SKPrimitives && window.SKPrimitives.getCommentCount) ? window.SKPrimitives.getCommentCount(optUid) : 0;
+
         card.onclick = () => openLightboxToPlate(plate.index, currentGridMode);
         card.innerHTML = `
           <div class="lookbook-img-box">
@@ -6402,6 +7357,9 @@ body {
             <div class="lookbook-card-footer">
               <span>${plate.dimensions}</span>
               <div style="display: flex; align-items: center; gap: 6px;">
+                <button type="button" class="mode-btn" onclick="event.stopPropagation(); openDecorRemarks('${plate.id}', ${selIdx})" style="font-size: 10px; padding: 2px 7px; background: rgba(56, 189, 248, 0.12); color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);" title="Family remarks & opinions">
+                  💬 ${commentsCount > 0 ? commentsCount : 'Remarks'}
+                </button>
                 <button type="button" class="lookbook-share-look-btn" onclick="event.stopPropagation(); shareDecorOption('${plate.id}', ${selIdx})" title="Copy collaborative deep-link for this look">
                   📤 Share
                 </button>

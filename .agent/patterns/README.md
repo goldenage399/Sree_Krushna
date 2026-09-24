@@ -104,6 +104,8 @@ The tier is a **graduation ladder**: a pattern may start at `reference` and grad
 | [dynamic-module-timing-race-and-auth-reconnect.md](dynamic-module-timing-race-and-auth-reconnect.md) | `reference` | VALIDATED | `post-incident-governance.md` | universal |
 | [sdca-container-query-scoping.md](sdca-container-query-scoping.md) | `guarded` | VALIDATED | `shopping_src/build.cjs`, `cockpit_src/build.cjs`, `decision_registry_src/build.cjs`, `verify:modular-architecture` | universal |
 | [collab-visual-intake-and-deep-link-sharing.md](collab-visual-intake-and-deep-link-sharing.md) | `reference` | VALIDATED | `post-incident-governance.md` | universal |
+| [phased-development-ticket-first-gate.md](phased-development-ticket-first-gate.md) | `routed` | VALIDATED | `writing-plans/SKILL.md` (Gate 0), `plan.md` (Step 1), `GEMINI.md` (Invariant 7), `CLAUDE.md`, `skill-router.yaml` | universal |
+| [candidate-looks-ergonomics-and-intake.md](candidate-looks-ergonomics-and-intake.md) | `reference` | VALIDATED | `mobile-ui-engineering.md` (Touch Target Integrity), `AC-DEC-2026-045` | universal |
 > Update this index whenever a pattern is created or its tier changes via `/capture-pattern`.
 
 ---

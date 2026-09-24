@@ -517,6 +517,27 @@
       }
     }
 
+    function openDecorRemarks(plateId, optIndex) {
+      const plate = VISUAL_PLATES.find(p => p.id === plateId);
+      const idx = (typeof optIndex === 'number') ? optIndex : (plate ? (plate.selectedOptionIndex || 0) : 0);
+      const optUid = `${plateId}_opt_${idx}`;
+      const title = plate ? `${plate.title} (${plateId})` : optUid;
+      if (window.SKPrimitives && window.SKPrimitives.openComments) {
+        window.SKPrimitives.openComments(optUid, {
+          title: `${title} (Option ${idx + 1})`,
+          category: 'mandap',
+          vendor: 'Decorator Negotiation Cockpit'
+        });
+      } else if (window.openCommentsDrawer) {
+        window.openCommentsDrawer(optUid, {
+          title: `${title} (Option ${idx + 1})`,
+          category: 'mandap',
+          vendor: 'Decorator Negotiation Cockpit'
+        });
+      }
+    }
+    window.openDecorRemarks = openDecorRemarks;
+
     function validateCandidateImageUrl(url) {
       if (!url || !url.trim()) {
         return { valid: false, type: 'empty', error: 'Please provide a direct image link or upload a showroom photo.' };
@@ -649,6 +670,20 @@
         alertEl.className = 'sk-intake-alert';
         alertEl.textContent = '';
       }
+
+      // Reset tabs and ensure Trash tab is hidden for Cockpit
+      const tabArch = document.getElementById('skTabArchived');
+      if (tabArch) tabArch.style.display = 'none';
+      const paneArch = document.getElementById('skPaneArchived');
+      if (paneArch) paneArch.style.display = 'none';
+      const tabDriveEl = document.getElementById('skTabDriveLink');
+      if (tabDriveEl) tabDriveEl.classList.add('is-active');
+      const paneDriveEl = document.getElementById('skPaneDrive');
+      if (paneDriveEl) paneDriveEl.style.display = 'block';
+      const metaGrid = document.getElementById('skIntakeMetadataGrid');
+      if (metaGrid) metaGrid.style.display = 'grid';
+      const btnSubmit = document.getElementById('skBtnSubmitOption');
+      if (btnSubmit) btnSubmit.style.display = 'inline-block';
 
       backdrop.classList.add('active');
       backdrop.classList.add('is-active');
@@ -1302,6 +1337,9 @@
           optionsBarHtml += '</div>';
         }
 
+        const optUid = `${plate.id}_opt_${selIdx}`;
+        const commentsCount = (window.SKPrimitives && window.SKPrimitives.getCommentCount) ? window.SKPrimitives.getCommentCount(optUid) : 0;
+
         card.onclick = () => openLightboxToPlate(plate.index, currentGridMode);
         card.innerHTML = `
           <div class="lookbook-img-box">
@@ -1320,6 +1358,9 @@
             <div class="lookbook-card-footer">
               <span>${plate.dimensions}</span>
               <div style="display: flex; align-items: center; gap: 6px;">
+                <button type="button" class="mode-btn" onclick="event.stopPropagation(); openDecorRemarks('${plate.id}', ${selIdx})" style="font-size: 10px; padding: 2px 7px; background: rgba(56, 189, 248, 0.12); color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);" title="Family remarks & opinions">
+                  💬 ${commentsCount > 0 ? commentsCount : 'Remarks'}
+                </button>
                 <button type="button" class="lookbook-share-look-btn" onclick="event.stopPropagation(); shareDecorOption('${plate.id}', ${selIdx})" title="Copy collaborative deep-link for this look">
                   📤 Share
                 </button>

@@ -68,9 +68,15 @@ if (fs.existsSync(sharedIntakeModalPath)) {
   combinedModals += '\n\n  ' + fs.readFileSync(sharedIntakeModalPath, 'utf8');
 }
 
+// Inject Shared Universal Comments Drawer (ui_primitives)
+const sharedCommentsDrawerPath = path.join(rootDir, 'ui_primitives', 'components', 'comments_drawer.html');
+if (fs.existsSync(sharedCommentsDrawerPath)) {
+  combinedModals += '\n\n  ' + fs.readFileSync(sharedCommentsDrawerPath, 'utf8');
+}
+
 // 4. Read Styles (Shared UI Primitives + Module Styles)
 const primStylesDir = path.join(rootDir, 'ui_primitives', 'styles');
-const primStyleFiles = ['00_tokens_base.css', '01_primitives.css', '02_zoom_pan.css'];
+const primStyleFiles = ['00_tokens_base.css', '01_primitives.css', '02_zoom_pan.css', '03_comments_drawer.css'];
 const primCss = primStyleFiles
   .filter(f => fs.existsSync(path.join(primStylesDir, f)))
   .map(f => `/* --- Primitive: ${f} --- */\n` + fs.readFileSync(path.join(primStylesDir, f), 'utf8').trim())
@@ -102,7 +108,7 @@ try {
 
 // Read Shared UI Primitives Scripts
 const primScriptsDir = path.join(rootDir, 'ui_primitives', 'scripts');
-const primScriptFiles = ['drive_normalizer.js', 'zoom_pan_engine.js', 'primitives_core.js'];
+const primScriptFiles = ['drive_normalizer.js', 'zoom_pan_engine.js', 'comments_engine.js', 'primitives_core.js'];
 const primJs = primScriptFiles
   .filter(f => fs.existsSync(path.join(primScriptsDir, f)))
   .map(f => fs.readFileSync(path.join(primScriptsDir, f), 'utf8'))

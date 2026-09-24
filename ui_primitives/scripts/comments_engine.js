@@ -300,14 +300,26 @@
       `).join('');
     }
 
+    _sanitizeText(str) {
+      if (!str) return '';
+      return String(str)
+        .slice(0, 500)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
     _handlePostSubmit() {
       const input = document.getElementById('skCommentInput');
       const roleSelect = document.getElementById('skCommentRoleSelect');
       const internalCheck = document.getElementById('skCommentIsInternal');
       if (!input || !this.activeOptionId) return;
 
-      const text = input.value.trim();
-      if (!text) return;
+      const rawText = input.value.trim();
+      if (!rawText) return;
+      const text = this._sanitizeText(rawText);
 
       const role = roleSelect ? roleSelect.value : 'sisters';
       const isInternal = internalCheck ? internalCheck.checked : false;
@@ -338,11 +350,30 @@
       this.comments[this.activeOptionId].push(newComment);
       this._saveData(STORAGE_KEY_COMMENTS, this.comments);
 
+      // Real-time Firestore sync bridge (AC-DEC-2026-041 / SK-007)
+      if (this.activeOptionId && this.activeOptionId.includes('_opt_')) {
+        const itemId = this.activeOptionId.split('_opt_')[0];
+        if (typeof global.fsSetShoppingItemStatus === 'function') {
+          global.fsSetShoppingItemStatus(itemId, {
+            [`comments_${this.activeOptionId}`]: this.comments[this.activeOptionId]
+          }).catch(err => console.warn('Firestore comments sync skipped:', err));
+        }
+      }
+
       input.value = '';
       this.renderCommentsList();
 
       if (global.SKPrimitives && global.SKPrimitives.showToast) {
         global.SKPrimitives.showToast('Opinion posted and saved!', 2000);
+      }
+    }
+
+    syncExternalComments(optionId, commentsList) {
+      if (!optionId || !Array.isArray(commentsList)) return;
+      this.comments[optionId] = commentsList;
+      this._saveData(STORAGE_KEY_COMMENTS, this.comments);
+      if (this.activeOptionId === optionId) {
+        this.renderCommentsList();
       }
     }
 
