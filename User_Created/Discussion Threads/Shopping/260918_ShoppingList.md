@@ -5799,11 +5799,47 @@ To honor `P-TICKET-FIRST-PHASING-001` (`AC-DEC-2026-042`), this initiative has b
 
 Shall I execute the phased git commits now, or proceed directly to implementing Phase 1 of `SK-009`?
 
-# Query 6.4 -
+# Query 6.4 - Phased commit git first and then proceed to sk 009
 
 # Review 6.4 -
 
+Audited execution of SK-009 Phases 1 through 4 under AC-DEC-2026-046 / UI-DEC-2026-042 (P-CONTEXTUAL-COMMENTS-001). Verified polymorphic context resolution in `ui_primitives/scripts/comments_engine.js` (498 lines, <= 500 lines per STD-MOD-COMP-001), horizontal `.sk-drawer-option-nav` scope strip in `ui_primitives/components/comments_drawer.html` and `03_comments_drawer.css` (495 lines), natural-language mention scanner (`@Look N` / `@Option N`), caller integration across Shopping Registry (`shopping_src/scripts/controller.js`) and Decorator Cockpit (`cockpit_src/scripts/controller.js`), SDCA recompilation, 100% binary byte parity, and full automated test execution.
+
 # Response 6.4 -
+
+Successfully implemented and verified **SK-009: Contextual Multi-Option Comments Engine Architecture & Cross-Option Tagging** across all 4 sequential phases:
+
+1. **Phase 1: Polymorphic Context Resolution & Mention Scanner (`ui_primitives/scripts/comments_engine.js`)**:
+   - Implemented `_resolveTargetContext(target, meta)` accepting both legacy string targets (`TRS-BR-01_opt_1`) and modern rich descriptors (`{ entityId, activeOptionIndex, options, title, sub, alignment }`).
+   - Implemented `_extractOptionTags(text)` parsing `@Look N`, `@Option N`, `@Opt N`, and `@All` mentions, automatically indexing multi-look tags into `newComment.targetTags`.
+   - Implemented `_getAllItemComments(entityId)` with deduplication across all candidate look keys (`${entityId}_opt_${idx}` and `${entityId}_all`).
+   - Line count verified: **498 lines** (strictly `<= 500` lines per `STD-MOD-COMP-001`).
+
+2. **Phase 2: In-Drawer Option Scope Navigation & Styling (`ui_primitives/`)**:
+   - Injected `#skCommentsOptionNav` strip in `ui_primitives/components/comments_drawer.html` rendering dynamic scope pills (`[🌐 All Looks (N)]` + numbered candidate look pills `[🖼️ Look 1 (n1)]`, `[🖼️ Look 2 (n2)]`).
+   - Added `#skComposerScopeWrap` target scope selector in composer controls.
+   - Styled navigation strip, pill buttons, look badges, and mention pills in `ui_primitives/styles/03_comments_drawer.css` (**495 lines**, strictly `<= 500` lines).
+
+3. **Phase 3: Module Callers Integration (`shopping_src/` & `cockpit_src/`)**:
+   - Updated `window.openItemRemarks(itemId, optionIndex)` in `shopping_src/scripts/controller.js` to construct and pass full candidate look options and active look index to the comments drawer.
+   - Updated item card remarks count badge to query total comments across all candidate looks (`window.SKPrimitives.getCommentCount(item.id)`).
+   - Updated `openDecorRemarks(plateId, optIndex)` in `cockpit_src/scripts/controller.js` to pass decor plate candidate options and active selection to the comments drawer.
+   - Wired deep link opening (`?comments=true` / `?drawer=true`) to respect multi-option context.
+
+4. **Phase 4: SDCA Compilation & Verification**:
+   - Recompiled all standalone and fragment artifacts via `node shopping_src/build.cjs --all` and `node cockpit_src/build.cjs --all`.
+   - Verified 100% binary byte parity between root (`/`) and `public/` files.
+   - All 6 automated test and verification suites passed 100% green:
+     - `npm run test:shopping` (44/44 items green)
+     - `npm run test:cockpit` (SMOKE GATE PASSED, 100% green)
+     - `npm run verify:modular-architecture` (45/45 modular checks passed)
+     - `npm run verify:ui-lifecycle` (100% dynamic UI lifecycle checks passed)
+     - `npm run verify:deployment` (100% pre-flight deployment checks passed)
+     - `npm run verify:governance-wiring:all` (189/189 governance artifacts verified)
+
+5. **Ticket & Master Registry Updates**:
+   - `enhancement-notes/SK-009/00_ENHANCEMENT_INDEX.md` marked `IMPLEMENTED` with all Phase 1–4 checkboxes checked.
+   - `ENHANCEMENT-MASTER-REGISTRY.md` and `docs/enhancements/UI-QUALITY-ENHANCEMENT-CLUSTER.md` updated to `IMPLEMENTED`.
 
 # Query 6.5 -
 

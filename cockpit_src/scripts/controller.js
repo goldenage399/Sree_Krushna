@@ -519,21 +519,23 @@
 
     function openDecorRemarks(plateId, optIndex) {
       const plate = VISUAL_PLATES.find(p => p.id === plateId);
+      const options = (plate && Array.isArray(plate.options))
+        ? plate.options.map((opt, idx) => ({ index: idx, label: opt.label || `Option ${idx + 1}` }))
+        : [];
       const idx = (typeof optIndex === 'number') ? optIndex : (plate ? (plate.selectedOptionIndex || 0) : 0);
-      const optUid = `${plateId}_opt_${idx}`;
-      const title = plate ? `${plate.title} (${plateId})` : optUid;
+      const context = {
+        entityId: plateId,
+        activeOptionIndex: idx,
+        options: options,
+        title: plate ? plate.title : plateId,
+        badge: `Option ${idx + 1}`,
+        sub: plate ? `${plate.zone || 'Decorator Negotiation Cockpit'} • Option ${idx + 1}` : 'Decorator Cockpit',
+        alignment: '✨ Open for Vendor & Family Remarks'
+      };
       if (window.SKPrimitives && window.SKPrimitives.openComments) {
-        window.SKPrimitives.openComments(optUid, {
-          title: `${title} (Option ${idx + 1})`,
-          category: 'mandap',
-          vendor: 'Decorator Negotiation Cockpit'
-        });
+        window.SKPrimitives.openComments(context);
       } else if (window.openCommentsDrawer) {
-        window.openCommentsDrawer(optUid, {
-          title: `${title} (Option ${idx + 1})`,
-          category: 'mandap',
-          vendor: 'Decorator Negotiation Cockpit'
-        });
+        window.openCommentsDrawer(context);
       }
     }
     window.openDecorRemarks = openDecorRemarks;
@@ -1338,7 +1340,7 @@
         }
 
         const optUid = `${plate.id}_opt_${selIdx}`;
-        const commentsCount = (window.SKPrimitives && window.SKPrimitives.getCommentCount) ? window.SKPrimitives.getCommentCount(optUid) : 0;
+        const commentsCount = (window.SKPrimitives && window.SKPrimitives.getCommentCount) ? window.SKPrimitives.getCommentCount(plate.id) : 0;
 
         card.onclick = () => openLightboxToPlate(plate.index, currentGridMode);
         card.innerHTML = `

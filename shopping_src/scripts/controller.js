@@ -438,12 +438,9 @@
               card.classList.remove('highlight-target-item');
               card.style.outline = '';
             }, 3000);
-            if (window.SKPrimitives && window.SKPrimitives.openComments) {
-              window.SKPrimitives.openComments(item ? item.id : paramItem, {
-                title: item ? item.title : paramItem,
-                badge: item ? item.id : paramItem,
-                sub: item ? `${item.store} • ${item.priceRange}` : ''
-              });
+            if (params.get('comments') === 'true' || params.get('drawer') === 'true') {
+              const optIdx = (paramOption !== null && paramOption !== undefined) ? parseInt(paramOption, 10) : undefined;
+              window.openItemRemarks(item ? item.id : paramItem, isNaN(optIdx) ? undefined : optIdx);
             }
           }
         }, 350);
@@ -784,21 +781,26 @@
     };
 
     window.openItemRemarks = function(itemId, optionIndex) {
-      const optUid = `${itemId}_opt_${optionIndex}`;
       const item = items.find(i => i.id === itemId);
-      const title = item ? `${item.title} (Option ${optionIndex})` : optUid;
+      const allImgs = item ? getItemImages(item) : [];
+      const options = allImgs.map((img, idx) => ({
+        index: img.optionIndex !== undefined ? img.optionIndex : idx,
+        label: img.label || `Look ${(img.optionIndex !== undefined ? img.optionIndex : idx) + 1}`
+      }));
+      const optIdx = (typeof optionIndex === 'number') ? optionIndex : (options.length > 0 ? options[0].index : 0);
+      const context = {
+        entityId: itemId,
+        activeOptionIndex: optIdx,
+        options: options,
+        title: item ? item.title : itemId,
+        badge: `Look ${optIdx + 1}`,
+        sub: item ? `${item.store || 'Shopping Registry'} • ${item.category || ''}` : 'Shopping Registry',
+        alignment: '✨ Open for Family Remarks'
+      };
       if (window.SKPrimitives && window.SKPrimitives.openComments) {
-        window.SKPrimitives.openComments(optUid, {
-          title: title,
-          category: item ? item.category : 'shopping',
-          vendor: item ? item.store : 'Shopping Registry'
-        });
+        window.SKPrimitives.openComments(context);
       } else if (window.openCommentsDrawer) {
-        window.openCommentsDrawer(optUid, {
-          title: title,
-          category: item ? item.category : 'shopping',
-          vendor: item ? item.store : 'Shopping Registry'
-        });
+        window.openCommentsDrawer(context);
       }
     };
 
@@ -842,7 +844,7 @@
         const isHost = isHostUser();
         const curOptIdx = activeImage ? activeImage.optionIndex : 0;
         const remarksUid = `${item.id}_opt_${curOptIdx}`;
-        const remarksCount = (window.SKPrimitives && window.SKPrimitives.getCommentCount) ? window.SKPrimitives.getCommentCount(remarksUid) : 0;
+        const remarksCount = (window.SKPrimitives && window.SKPrimitives.getCommentCount) ? window.SKPrimitives.getCommentCount(item.id) : 0;
         const archivedCount = getArchivedItemOptions(item.id).length;
         const catIcon = catIcons[item.category] || '🛍️';
 
@@ -2862,7 +2864,7 @@
           <button type="button" class="sk-chip-popover-btn" onclick="window.closeOptionChipPopover(); window.openShoppingLightbox('${item.title.replace(/'/g, "\\'")}', '${img ? img.src : ''}', '<strong>${item.id}:</strong> ${(img && img.label ? img.label : '').replace(/'/g, "\\'")} • ${item.store} • ${item.priceRange}', '${item.id}', ${optIdx})">
             🔍 Inspect in Lightbox
           </button>
-          <button type="button" class="sk-chip-popover-btn" onclick="window.closeOptionChipPopover(); if (window.SKPrimitives && window.SKPrimitives.openComments) window.SKPrimitives.openComments('${item.id}_opt_${optIdx}', { title: '${item.title.replace(/'/g, "\\'")}', optionIndex: ${optIdx}, imageUrl: '${img ? img.src : ''}' })">
+          <button type="button" class="sk-chip-popover-btn" onclick="window.closeOptionChipPopover(); window.openItemRemarks('${item.id}', ${optIdx})">
             💬 Remarks & Discussion
           </button>
       `;

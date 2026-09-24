@@ -15,6 +15,11 @@
       <button type="button" class="sk-drawer-close-btn" id="skBtnCloseComments" aria-label="Close discussion drawer" onclick="if(window.closeCommentsDrawer) window.closeCommentsDrawer(); else { const b = document.getElementById('skCommentsDrawerBackdrop'); if(b) b.classList.remove('is-active'); const d = document.getElementById('skCommentsDrawer'); if(d) d.classList.remove('is-active'); }">✕</button>
     </div>
 
+    <!-- Option Scope Navigation Strip (P-CONTEXTUAL-COMMENTS-001) -->
+    <div class="sk-drawer-option-nav" id="skCommentsOptionNav">
+      <!-- Injected dynamically by comments_engine.js: [🌐 All Looks] [🖼️ Look 1] [🖼️ Look 2] -->
+    </div>
+
     <!-- Quick Emoji Reaction Bar (AC-DEC-2026-021) -->
     <div class="sk-reactions-bar">
       <span class="sk-reactions-label">Quick Reactions:</span>
@@ -60,6 +65,13 @@
             <option value="inlaws">🎁 In-Laws (Bride Side)</option>
             <option value="elders">🪔 Elder (Advisory)</option>
             <option value="host">👑 Groom / Executive Host</option>
+          </select>
+        </div>
+        <div class="sk-composer-scope-select" id="skComposerScopeWrap">
+          <label for="skCommentScopeSelect">Target:</label>
+          <select id="skCommentScopeSelect" class="sk-select-sm">
+            <option value="current" selected>Current Look</option>
+            <option value="all">🌐 All Looks</option>
           </select>
         </div>
         <div class="sk-composer-tier-toggle">
