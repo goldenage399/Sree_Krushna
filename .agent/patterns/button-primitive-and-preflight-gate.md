@@ -11,6 +11,8 @@ consumed_by:
     at: "Pattern Activation & PACT-001 Cross-References"
   - file: enhancement-notes/SK-010/00_ENHANCEMENT_INDEX.md
     at: "Phase 2"
+  - file: docs/references/SPEC-ARCH-BUTTON-PRIMITIVES-001.md
+    at: "Section 2.2"
 triggers:
   - "sk-btn"
   - "verify-ui-button-primitives"

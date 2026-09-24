@@ -4,6 +4,7 @@
  * Pre-Flight Verification Gate: Universal UI Button Primitives & Zero Naked Buttons
  *
  * Standard Reference: STD-UI-PRIMITIVE-002 | Ruling: AC-DEC-2026-047 / UI-DEC-2026-043
+ * SSOT: docs/references/SPEC-ARCH-BUTTON-PRIMITIVES-001.md (FKL-AL-008 / FKL-WI-005)
  * Standard Pattern: P-BUTTON-PRIMITIVE-GATE-001 | Ticket: SK-010
  *
  * Invariants Checked:

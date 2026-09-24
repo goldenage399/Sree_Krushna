@@ -24,6 +24,8 @@ dependencies:
     - AC-DEC-2026-035  # Pinterest Intake & Collaborative Visual Sharing
     - AC-DEC-2026-047  # Universal UI Button Primitives & Pre-Flight Gate (STD-UI-PRIMITIVE-002)
     - .agent/patterns/button-primitive-and-preflight-gate.md
+    - docs/references/SPEC-ARCH-BUTTON-PRIMITIVES-001.md
+    - docs/incidents/INC-098-orphan-button-tokens-and-preflight-design-system-blind-spot.md
   blocks:
     - None
 ```

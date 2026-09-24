@@ -6003,9 +6003,7 @@ All automated static, lifecycle, and governance verification gates passed **100%
 | `npm run verify:ui-lifecycle`                      | ✅ PASS | `ALL DYNAMIC UI LIFECYCLE GATES PASSED (100% GREEN)`                       |
 | `node -c ui_primitives/scripts/comments_engine.js` | ✅ PASS | Exited 0, line count 499 lines (`<= 500 lines`)                            |
 
-# Query 6.6 -
-
-`/prompt-clarity why do these unformatted buttons still exists - document.querySelector("#skBtnVerifyDrive") How are we even allowing that? Be it may in any of the module or section throughout the app. Isn't there any pre-flight check for all these things that can be done automatically so that such mishaps never occur and such small details should not be followed up again`
+# Query 6.6 -`/prompt-clarity why do these unformatted buttons still exists - document.querySelector("#skBtnVerifyDrive") How are we even allowing that? Be it may in any of the module or section throughout the app. Isn't there any pre-flight check for all these things that can be done automatically so that such mishaps never occur and such small details should not be followed up again`
 
 # Review 6.6 -
 
@@ -6029,6 +6027,7 @@ All automated static, lifecycle, and governance verification gates passed **100%
 ## 1. Universal UI Button & Modal Close Primitives (`STD-UI-PRIMITIVE-002`)
 
 Implemented comprehensive, luxury design tokens in [`ui_primitives/styles/01_primitives.css`](file:///d:/GitHub_Repo/Sree_Krushna/ui_primitives/styles/01_primitives.css):
+
 - **Base Reset (`.sk-btn`)**: Declarative inline-flex alignment, centered content, gap tokens, `var(--sk-font-sans)`, `var(--sk-radius-md, 8px)`, `min-height: 38px`, `padding: 8px 16px`, `cursor: pointer`, smooth transitions (`transform`, `box-shadow`, `background-color`, `border-color`), and accessible gold `:focus-visible` outline.
 - **Secondary Surface (`.sk-btn-secondary`)**: Surface background (`var(--sk-surface)`), subtle border (`var(--sk-border)`), primary text, elevating on hover with border highlight `var(--sk-gold)`.
 - **Primary Luxury Accent (`.sk-btn-primary`)**: Solid gold accent (`var(--sk-gold)`), dark typography (`#0f1117`), gold glow box-shadow, and subtle `-1px` vertical lift on hover.
@@ -6043,6 +6042,7 @@ Total line count for `01_primitives.css`: **307 lines** (`<= 500` lines per `STD
 ## 2. Automated Static Verification Gate (`P-BUTTON-PRIMITIVE-GATE-001`)
 
 Engineered [`scripts/verify-ui-button-primitives.cjs`](file:///d:/GitHub_Repo/Sree_Krushna/scripts/verify-ui-button-primitives.cjs) (zero external dependencies):
+
 1. **Check 1 (`INV-BTN-01`) — Zero Naked Buttons**: Scans all 29 HTML files (`ui_primitives/components/`, `shopping_src/components/`, `cockpit_src/components/`, and compiled pages). Flags and fails on any `<button>` lacking a recognized design system class.
 2. **Check 2 (`INV-BTN-02`) — Zero Orphan Button Classes**: Collects every `sk-btn*` and `sk-modal-close` class name referenced in HTML and validates that an active CSS rule exists in `01_primitives.css`.
 3. **Check 3 (`INV-BTN-03`) — State Contract Enforcement**: Asserts `cursor: pointer`, `:hover`, and required primitive classes are present.
@@ -6054,6 +6054,7 @@ Engineered [`scripts/verify-ui-button-primitives.cjs`](file:///d:/GitHub_Repo/Sr
 ## 3. Recompilation & Full Verification Gate Sweep
 
 All 12 module distribution surfaces and fragments were recompiled with 100% byte parity to `/public`:
+
 - `shopping-registry.html` ⟷ `public/shopping-registry.html`
 - `shopping-fragment.html` ⟷ `public/shopping-fragment.html`
 - `decorator-cockpit.html` ⟷ `public/decorator-cockpit.html`
@@ -6062,15 +6063,16 @@ All 12 module distribution surfaces and fragments were recompiled with 100% byte
 - `decision-registry-fragment.html` ⟷ `public/decision-registry-fragment.html`
 
 ### Test Suite Execution Summary:
-| Gate / Command | Status | Result Summary |
-| :--- | :--- | :--- |
-| `npm run verify:ui-buttons` | ✅ PASS | 5/5 checks green, 0 naked buttons across 29 HTML files |
-| `npm run verify:modular-architecture` | ✅ PASS | 46/46 checks green, 100% binary byte parity |
-| `npm run verify:ui-lifecycle` | ✅ PASS | 4/4 checks green (dynamic script tag sequencing, DOM ready, 3-trigger dismiss) |
-| `npm run test:shopping` | ✅ PASS | 44/44 items green |
-| `npm run test:cockpit` | ✅ PASS | Smoke test 100% green |
-| `npm run verify:deployment` | ✅ PASS | 10/10 deployment layers green, root & public in exact sync |
-| `npm run verify:governance-wiring:all` | ✅ PASS | 190/190 artifacts fully wired |
+
+| Gate / Command                         | Status  | Result Summary                                                                 |
+| :------------------------------------- | :------ | :----------------------------------------------------------------------------- |
+| `npm run verify:ui-buttons`            | ✅ PASS | 5/5 checks green, 0 naked buttons across 29 HTML files                         |
+| `npm run verify:modular-architecture`  | ✅ PASS | 46/46 checks green, 100% binary byte parity                                    |
+| `npm run verify:ui-lifecycle`          | ✅ PASS | 4/4 checks green (dynamic script tag sequencing, DOM ready, 3-trigger dismiss) |
+| `npm run test:shopping`                | ✅ PASS | 44/44 items green                                                              |
+| `npm run test:cockpit`                 | ✅ PASS | Smoke test 100% green                                                          |
+| `npm run verify:deployment`            | ✅ PASS | 10/10 deployment layers green, root & public in exact sync                     |
+| `npm run verify:governance-wiring:all` | ✅ PASS | 190/190 artifacts fully wired                                                  |
 
 ---
 
@@ -6080,6 +6082,68 @@ All 12 module distribution surfaces and fragments were recompiled with 100% byte
 - **Council Ledger**: Entry 51 stamped in [`Council_Ledger.md`](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/Council_Ledger.md).
 - **Enhancement Note**: [`SK-010/00_ENHANCEMENT_INDEX.md`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-010/00_ENHANCEMENT_INDEX.md) marked `IMPLEMENTED` with all 3 phases checked off.
 - **Registries**: Updated [`ENHANCEMENT-MASTER-REGISTRY.md`](file:///d:/GitHub_Repo/Sree_Krushna/ENHANCEMENT-MASTER-REGISTRY.md) and [`UI-QUALITY-ENHANCEMENT-CLUSTER.md`](file:///d:/GitHub_Repo/Sree_Krushna/docs/enhancements/UI-QUALITY-ENHANCEMENT-CLUSTER.md) to `IMPLEMENTED`.
+
+---
+
+## 5. `/capture-pattern` — PACT-001 Pattern Ratification
+
+Formalized the operational methodology to prevent orphan button classes and unstyled user-agent fallbacks from recurring:
+- **Pattern File**: [`.agent/patterns/button-primitive-and-preflight-gate.md`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/patterns/button-primitive-and-preflight-gate.md)
+- **Activation Tier**: `guarded` (Guarded by `npm run verify:ui-buttons`).
+- **Mandatory Invariants Codified**:
+  - `INV-BTN-01`: Zero Naked / Unstyled `<button>` Tags (HTML templates must declare an approved design-system class).
+  - `INV-BTN-02`: Zero Orphan Button Classes (`sk-btn*` and `sk-modal-close` tokens in HTML must resolve to active CSS rules).
+  - `INV-BTN-03`: Design System Touch & State Contract (`cursor: pointer`, `:hover`, and 38px/44px touch targets).
+- **Wiring & Registration**: Stamped in [`.agent/patterns/README.md`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/patterns/README.md), referenced in `GEMINI.md`, `CLAUDE.md`, `SK-010`, and verified by P82.
+
+---
+
+## 6. `/harvest-frontend-knowledge` — FKL-001 Registration & DISC-001 Stamping
+
+Harvested and classified the frontend architectural learnings into the Frontend Knowledge Ledger (FKL):
+- **Canonical Architecture Spec**: [`docs/references/SPEC-ARCH-BUTTON-PRIMITIVES-001.md`](file:///d:/GitHub_Repo/Sree_Krushna/docs/references/SPEC-ARCH-BUTTON-PRIMITIVES-001.md)
+- **FKL Item Registrations**:
+  1. `FKL-DI-024` (Design Invariant):
+     - **Title**: Universal UI Button Primitives & Token Contract
+     - **Applies to**: `UniversalButtonPrimitives`, `ModalCloseAffordances`, `OptionIntakeModal`, `WhatsAppModal`
+     - **Work Types**: `WT-02`, `WT-06`
+  2. `FKL-AL-008` (Architectural Learning):
+     - **Title**: Static AST/Regex Pre-Flight Verification for Semantic CSS Class Resolution
+     - **Applies to**: `StaticDOMAnalyzer`, `RegexClassTokenResolution`, `PreFlightVerificationPipeline`
+     - **Work Types**: `WT-06`
+  3. `FKL-WI-005` (Workflow Improvement):
+     - **Title**: Zero Naked Buttons CI & Modular Pre-Flight Gate Integration
+     - **Applies to**: `verify-modular-architecture`, `verify-deployment`, `CIBuildPipeline`
+     - **Work Types**: `WT-09`
+- **DISC-001 Back-Link Stamping**:
+  - [`ui_primitives/styles/01_primitives.css`](file:///d:/GitHub_Repo/Sree_Krushna/ui_primitives/styles/01_primitives.css): Stamped header with `/* SSOT: docs/references/SPEC-ARCH-BUTTON-PRIMITIVES-001.md — FKL-DI-024 */` (308 lines, strictly `<= 500` lines per `STD-MOD-COMP-001`).
+  - [`scripts/verify-ui-button-primitives.cjs`](file:///d:/GitHub_Repo/Sree_Krushna/scripts/verify-ui-button-primitives.cjs): Stamped header with `/* SSOT: docs/references/SPEC-ARCH-BUTTON-PRIMITIVES-001.md (FKL-AL-008 / FKL-WI-005) */` (306 lines, strictly `<= 500` lines).
+
+---
+
+## 7. `/ssot-reconciliation` — Authority Resolution & SSOT Hardening
+
+Eliminated documentation drift across all architectural and operational rulebooks:
+- **Authoritative Source**: [`docs/references/SPEC-ARCH-BUTTON-PRIMITIVES-001.md`](file:///d:/GitHub_Repo/Sree_Krushna/docs/references/SPEC-ARCH-BUTTON-PRIMITIVES-001.md) and [`Council_Ledger.md`](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/Council_Ledger.md) Entry 51 (`AC-DEC-2026-047` / `UI-DEC-2026-043`).
+- **SSOT Hardening in [`GEMINI.md`](file:///d:/GitHub_Repo/Sree_Krushna/GEMINI.md) & [`CLAUDE.md`](file:///d:/GitHub_Repo/Sree_Krushna/CLAUDE.md)**:
+  - Linked `STD-UI-PRIMITIVE-002`, `P-BUTTON-PRIMITIVE-GATE-001`, `INC-098`, and `SPEC-ARCH-BUTTON-PRIMITIVES-001.md` under **§ 1. Prime Invariants & Operating Discipline (§ 1.4 Modular Component Architecture Invariant)**.
+  - Added `.agent/patterns/button-primitive-and-preflight-gate.md` to **§ 4. Pattern Activation & PACT-001 Cross-References**.
+
+---
+
+## 8. `/post-incident-governance` — Case Study & 6-Surface Audit
+
+Codified the formal incident post-mortem to institutionalize lessons learned:
+- **Incident Case Study**: [`docs/incidents/INC-098-orphan-button-tokens-and-preflight-design-system-blind-spot.md`](file:///d:/GitHub_Repo/Sree_Krushna/docs/incidents/INC-098-orphan-button-tokens-and-preflight-design-system-blind-spot.md)
+  - **Severity**: Medium (Visual Hierarchy Defect / User-Agent Fallback / Pre-Flight Verification Blind Spot)
+  - **Status**: RESOLVED & INSTITUTIONALIZED
+- **6-Surface Architectural Mapping**:
+  1. **UI Surface**: Resolved raw 3D grey beveled user-agent buttons by codifying `.sk-btn`, `.sk-btn-primary`, `.sk-btn-secondary`, `.sk-btn-danger`, `.sk-btn-whatsapp`, and `.sk-modal-close` in `01_primitives.css` with 44px touch ergonomics and luxury dark gold styling.
+  2. **Data Surface**: Unaffected (Purely presentation and token resolution; zero database schemas altered).
+  3. **Reactive Surface**: Unaffected (Event handlers and modal open/close actions preserved).
+  4. **Service Surface**: Unaffected (No external Cloud Functions or Firebase services involved).
+  5. **Module Surface**: SDCA component templates sanitized across `ui_primitives/components/`, `cockpit_src/template.html`, and `index.html`.
+  6. **Governance Surface**: Ratified `AC-DEC-2026-047` / `UI-DEC-2026-043`, created `scripts/verify-ui-button-primitives.cjs`, wired Step 6 into `verify-modular-architecture.cjs`, and registered `FKL-DI-024`, `FKL-AL-008`, `FKL-WI-005`.
 
 
 # Query 6.7 -
