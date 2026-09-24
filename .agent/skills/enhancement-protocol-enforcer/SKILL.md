@@ -108,8 +108,11 @@ If the correct cluster is ambiguous, ask the user. Do not default silently.
 - [Affected file or doc 1]
 - [Affected file or doc 2]
 
-## 📋 Implementation Plan
-[Steps with VG/DN gates — see Gate 6]
+## 📋 Implementation Plan & Sequential Phases (P-TICKET-FIRST-PHASING-001)
+- **Phase 1: [Phase Name]** — [Scope & target files] (with VG/DN gates — see Gate 6)
+- **Phase 2: [Phase Name]** — [Scope & target files]
+- **Phase 3: [Phase Name]** — [Scope & target files]
+- *Rule*: Multi-phase tasks MUST be decomposed into sequential, independently verifiable phases. No monolithic execution chaining.
 
 ## ✅ Definition of Done (v1.7)
 [DoD table — see Gate 7]
