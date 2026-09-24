@@ -1,6 +1,7 @@
 /**
  * Sree Krushna Marriage OS — Collaborative Comments & Contextual Opinions Engine
- * Standard: STD-MOD-COMP-001 | Ruling: AC-DEC-2026-021 / AC-DEC-2026-046 / UI-DEC-2026-042
+ * Standard: STD-MOD-COMP-001 | SSOT: docs/references/SPEC-ARCH-CONTEXTUAL-COMMENTS-001.md — FKL-DI-023
+ * Ruling: AC-DEC-2026-021 / AC-DEC-2026-046 / UI-DEC-2026-042 (P-CONTEXTUAL-COMMENTS-001)
  * Scope: Multi-tier comments, cross-option tagging (@Look N), in-drawer scope navigation,
  *        item-level aggregation, emoji reactions, stakeholder filtering, and real-time Firestore sync.
  */

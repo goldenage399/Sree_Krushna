@@ -33,6 +33,7 @@ description: Definitive guide for Mobile UI engineering, responsive rules, and m
 - Add `padding: 12px` to buttons inside mobile media queries.
 
 > **Option Chip & Gestures Standard**: See `.agent/patterns/candidate-looks-ergonomics-and-intake.md` for Candidate Option Long-Press gestures (500ms), scroll displacement cancellation (>8px), and Lightbox destructive action gating (`P-LOOK-ERGONOMICS-001` / `P-DESTRUCTIVE-GATING-001`).
+> **Contextual Option Discussion Standard**: See `.agent/patterns/contextual-multi-option-comments-engine.md` for Two-Tier Contextual Comments Engine, horizontal option scope navigation, and cross-option mention tagging (`P-CONTEXTUAL-COMMENTS-001` / `AC-DEC-2026-046`).
 
 ```css
 /* Use our existing design tokens */

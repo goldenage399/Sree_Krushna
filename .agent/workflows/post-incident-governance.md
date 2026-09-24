@@ -143,6 +143,7 @@ Before editing `GEMINI.md` or `.agent/standards-catalog.json`:
     - See `.agent/patterns/proxy-signal-verdicts.md` — never act on a proxy (import counts, filenames, mtimes, header comments) when deleting/merging. Measure the fact, and re-measure immediately before editing.
     - See `.agent/patterns/dynamic-module-timing-race-and-auth-reconnect.md` for the ES module load polling and dynamic auth reconnection contract.
     - See `.agent/patterns/collab-visual-intake-and-deep-link-sharing.md` for the tri-modal visual intake, multi-image container, and collaborative deep-link sharing contract.
+    - See `.agent/patterns/contextual-multi-option-comments-engine.md` for the two-tier contextual comments engine and cross-option tagging contract.
 
    Distinction:
    - Code invariant → `GEMINI.md` + `standards-catalog.json` (steps 1-4 above)
