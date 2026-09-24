@@ -332,3 +332,16 @@ graph TD
 | **18** | BOQ & 4-Tier Budget Settlement | Phase V | `🟢 LOCKED` | Commercial Finance Specification |
 | **19** | Fire & Structural Safety Certification | Phase V | `🔵 VENDOR ACTION` | Decorator Compliance Officer |
 | **20** | Physical Sample Mock-up Gate | Phase V | `🔵 VENDOR ACTION` | Decorator Master Craftsman |
+
+---
+
+## 4. Multi-Option Candidate Look & Deep-Linking Governance (`P-DECOR-MULTI-OPTION-001`)
+
+*Ratified in Architecture & UI Council Decision `AC-DEC-2026-039` / `UI-DEC-2026-035`.*
+
+To resolve design dilemmas across Steps 08, 12, 13, 14, 15, and 16, each visual reference plate in the Decorator Cockpit (`CANONICAL_PLATES` / `VISUAL_PLATES`) supports dynamic candidate looks:
+1. **Option 0 (Sacred Vedic Baseline)**: Canonical baseline (e.g. Lotus Mandap, Sacred Havan Altar) is permanently protected against overwriting.
+2. **Options 1..N (Candidate Directions)**: Sourced from vetted decorator photos, Pinterest CDN (`i.pinimg.com`), Google Drive assets, or camera showroom uploads.
+3. **Validation Hardening**: Rejects Pinterest web pin pages (`pin.it`), store HTML product links, and hotlinks blocked by remote hosts (HTTP 403 / anti-hotlink policies).
+4. **Collaborative Deep Links**: Direct URL sharing (`?plate=PLATE-01&option=1`) enables immediate committee alignment with smooth scrolling and golden beacon pulse (`targetPulse`).
+
