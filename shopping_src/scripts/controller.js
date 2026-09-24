@@ -24,6 +24,59 @@
     let activeStoreCategory = 'all';
     window.catalogSubView = 'items';
 
+    // Automatic Sanitizer & Reset: Clear false/invalidated looks for Sacred Vivaha Pata (TRS-BR-01)
+    function sanitizeCustomOptions() {
+      let dirty = false;
+      if (itemCustomOptions['TRS-BR-01']) {
+        delete itemCustomOptions['TRS-BR-01'];
+        if (itemOptionSelected['TRS-BR-01']) {
+          delete itemOptionSelected['TRS-BR-01'];
+        }
+        dirty = true;
+      }
+      Object.keys(itemCustomOptions).forEach(k => {
+        if (Array.isArray(itemCustomOptions[k])) {
+          const origLen = itemCustomOptions[k].length;
+          itemCustomOptions[k] = itemCustomOptions[k].filter(opt => {
+            if (!opt || !opt.src) return false;
+            if (/pin\.it|pinterest(\.[a-z]{2,3})+\/pin\//i.test(opt.src) && !opt.src.includes('pinimg.com')) {
+              return false;
+            }
+            return true;
+          });
+          if (itemCustomOptions[k].length !== origLen) dirty = true;
+        }
+      });
+      if (dirty) {
+        localStorage.setItem('sk_shopping_custom_options', JSON.stringify(itemCustomOptions));
+        localStorage.setItem('sk_shopping_item_options', JSON.stringify(itemOptionSelected));
+      }
+    }
+    sanitizeCustomOptions();
+
+    window.clearItemCustomOptions = function(itemId) {
+      if (!itemId) return;
+      let changed = false;
+      if (itemCustomOptions[itemId]) {
+        delete itemCustomOptions[itemId];
+        changed = true;
+      }
+      if (itemOptionSelected[itemId]) {
+        delete itemOptionSelected[itemId];
+        changed = true;
+      }
+      if (changed) {
+        localStorage.setItem('sk_shopping_custom_options', JSON.stringify(itemCustomOptions));
+        localStorage.setItem('sk_shopping_item_options', JSON.stringify(itemOptionSelected));
+        if (typeof window.fsSetShoppingItemStatus === 'function') {
+          window.fsSetShoppingItemStatus(itemId, { options: [], selectedOptionIndex: 0 })
+            .catch(err => console.warn('Firestore options clear skipped:', err));
+        }
+        renderItems();
+        showToast(`Candidate looks cleared for ${itemId}.`, '🧹');
+      }
+    };
+
     // DOM Elements
     const shopWelcomeBanner = document.getElementById('shopWelcomeBanner');
     const welcomeBannerTitle = document.getElementById('welcomeBannerTitle');
@@ -659,9 +712,10 @@
         // VIEW MODE 2: COMPACT LIST VIEW
         // ------------------------------------------------------------------
         if (catalogViewMode === 'compact') {
+          const fallbackPath = `./assets/shopping/${item.slug || 'vivaha_pata'}/${item.slug || 'vivaha_pata'}_0.jpg`;
           const avatarHtml = (hasImages && activeImage)
             ? `<div class="shop-compact-avatar" onclick="window.openShoppingLightbox('${item.title.replace(/'/g, "\\'")}', '${activeImage.src}', '<strong>${item.id}:</strong> ${(activeImage.label || '').replace(/'/g, "\\'")} • ${item.store} • ${item.priceRange}')" title="Inspect ${item.title}">
-                <img src="${activeImage.src}" alt="${item.title}" loading="lazy">
+                <img src="${activeImage.src}" alt="${item.title}" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null; this.src='${fallbackPath}';">
                 ${allImages.length > 1 ? `<span class="shop-compact-avatar-badge">${allImages.length}</span>` : ''}
                </div>`
             : `<div class="shop-compact-avatar" title="${item.title}">
@@ -712,10 +766,11 @@
         // VIEW MODE 1: THUMBNAIL CARDS VIEW
         // ------------------------------------------------------------------
         let mediaHtml = '';
+        const fallbackPath = `./assets/shopping/${item.slug || 'vivaha_pata'}/${item.slug || 'vivaha_pata'}_0.jpg`;
         if (hasImages && activeImage) {
           mediaHtml = `
             <div class="shop-card-media-wrapper" onclick="window.openShoppingLightbox('${item.title.replace(/'/g, "\\'")}', '${activeImage.src}', '<strong>${item.id}:</strong> ${(activeImage.label || '').replace(/'/g, "\\'")} • ${item.store} • ${item.priceRange}')" title="Click to inspect in Lightbox">
-              <img src="${activeImage.src}" alt="${item.title}" class="shop-card-media-img" loading="lazy">
+              <img src="${activeImage.src}" alt="${item.title}" class="shop-card-media-img" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null; this.src='${fallbackPath}'; this.classList.add('is-fallback');">
               <div class="shop-media-overlay-top">
                 <span class="shop-media-badge-id">${item.id}</span>
                 <span class="shop-media-badge-price">${item.priceRange}</span>
@@ -737,16 +792,22 @@
           `;
         }
 
+        const customCount = (itemCustomOptions[item.id] || []).length;
         const optionsBarHtml = `
           <div class="shop-card-options-bar">
             ${allImages.map(img => `
               <button type="button" class="shop-option-chip ${img.optionIndex === (activeImage ? activeImage.optionIndex : 0) ? 'active' : ''}" onclick="event.stopPropagation(); window.selectItemOption('${item.id}', ${img.optionIndex})" title="${img.label || `Option ${img.optionIndex}`}">
-                ${img.isDefault ? '🌟 Concept' : (img.type === 'pinterest_direct' || (img.src && img.src.includes('pinimg')) ? '📌 Option ' + img.optionIndex : `Look ${img.optionIndex}`)}
+                ${img.isDefault ? '🌟 Concept' : (img.type === 'pinterest_direct' || (img.src && img.src.includes('pinimg')) ? '📌 Option ' + img.optionIndex : (img.type === 'pinterest_pin' || (img.referenceUrl && /pinterest|pin\.it/i.test(img.referenceUrl)) ? '📌 Pin ' + img.optionIndex : `Look ${img.optionIndex}`))}
               </button>
             `).join('')}
             <button type="button" class="shop-option-chip shop-option-chip-add" onclick="event.stopPropagation(); window.openOptionIntakeModal('${item.id}')" title="Add a candidate look for this item">
               ➕ Add Look
             </button>
+            ${customCount > 0 ? `
+              <button type="button" class="shop-option-chip shop-option-chip-clear" onclick="event.stopPropagation(); window.clearItemCustomOptions('${item.id}')" title="Clear added custom looks and revert to canonical concept">
+                ✕ Clear
+              </button>
+            ` : ''}
           </div>
         `;
 
@@ -2310,6 +2371,12 @@
       if (fileInput) fileInput.value = '';
       if (priceInput) priceInput.value = '';
       localUploadedDataUrl = '';
+      const alertEl = document.getElementById('skIntakeUrlAlert');
+      if (alertEl) {
+        alertEl.style.display = 'none';
+        alertEl.className = 'sk-intake-alert';
+        alertEl.textContent = '';
+      }
 
       intakeBackdrop.classList.add('is-active');
     };
@@ -2369,37 +2436,170 @@
       });
     }
 
+    // Candidate Image Validation Gates (P-COLLAB-VISUAL-INTAKE-001)
+    // Candidate Image Validation Gates (P-COLLAB-VISUAL-INTAKE-001)
+    function validateCandidateImageUrl(url) {
+      if (!url || !url.trim()) {
+        return { valid: false, type: 'empty', error: 'Please provide a direct image link or upload a showroom photo.' };
+      }
+      const cleanUrl = url.trim();
+
+      // 1. Direct Pinterest CDN image (i.pinimg.com)
+      if (cleanUrl.includes('i.pinimg.com')) {
+        return {
+          valid: true,
+          type: 'pinterest_direct',
+          src: cleanUrl,
+          badge: '📌 Pinterest CDN (Direct Render)',
+          isDirectImage: true
+        };
+      }
+
+      // 2. Pinterest Web Pin (pin.it or *.pinterest.*/pin/ or similar)
+      if (/pin\.it|pinterest(\.[a-z]{2,3})+/i.test(cleanUrl)) {
+        const hasDirectExt = /\.(jpe?g|png|webp|avif)($|\?)/i.test(cleanUrl);
+        if (!hasDirectExt && !cleanUrl.includes('pinimg.com')) {
+          return {
+            valid: false,
+            type: 'pinterest_webpage',
+            error: 'Invalidated Pinterest Link: This is a Pinterest webpage link (pin.it / pin/...), not a direct image file. Hotlinking web pages inside cards is blocked by browser security. Please right-click the photo on Pinterest and choose "Copy Image Address" (URL must start with https://i.pinimg.com/... and end with .jpg), or upload the photo using the "Device / Showroom Photo" tab.'
+          };
+        }
+        return {
+          valid: true,
+          type: 'pinterest_direct',
+          src: cleanUrl,
+          badge: '📌 Pinterest Image Asset',
+          isDirectImage: true
+        };
+      }
+
+      // 3. Google Drive Link
+      const driveResolved = (window.SKPrimitives && window.SKPrimitives.resolveDriveAsset)
+        ? window.SKPrimitives.resolveDriveAsset(cleanUrl, { cardWidth: 800 })
+        : null;
+      if (driveResolved && driveResolved.isDrive) {
+        return {
+          valid: true,
+          type: 'drive',
+          src: driveResolved.cardThumbnail,
+          badge: '📁 Drive ID: ' + driveResolved.driveId,
+          isDirectImage: true
+        };
+      }
+
+      // 4. Data URL (Showroom / Camera upload)
+      if (cleanUrl.startsWith('data:image/')) {
+        return {
+          valid: true,
+          type: 'data_url',
+          src: cleanUrl,
+          badge: '📷 Showroom Photo',
+          isDirectImage: true
+        };
+      }
+
+      // 5. Direct Web Image with standard extension
+      if (/^https?:\/\/.*\.(jpe?g|png|webp|avif|gif)($|\?)/i.test(cleanUrl)) {
+        return {
+          valid: true,
+          type: 'web_image',
+          src: cleanUrl,
+          badge: '🌐 Direct Web Image',
+          isDirectImage: true
+        };
+      }
+
+      // 6. Generic HTML Webpage URL (Store product page, shopping cart, etc.)
+      if (/^https?:\/\//i.test(cleanUrl)) {
+        return {
+          valid: false,
+          type: 'webpage_not_image',
+          error: 'Invalidated Link: This is a website page address, not a direct image file (.jpg/.png). Browsers block HTML pages inside photo cards. Please right-click the photo on that page and select "Copy Image Address", or use the "Device / Showroom Photo" tab.'
+        };
+      }
+
+      return {
+        valid: false,
+        type: 'invalid_format',
+        error: 'Invalid link format. Image URLs must begin with http:// or https://'
+      };
+    }
+
     const verifyDriveLink = () => {
       const url = driveInput ? driveInput.value.trim() : '';
+      const alertEl = document.getElementById('skIntakeUrlAlert');
+      if (alertEl) {
+        alertEl.style.display = 'none';
+        alertEl.className = 'sk-intake-alert';
+        alertEl.textContent = '';
+      }
       if (!url) return;
-      if (url.includes('i.pinimg.com')) {
-        if (proofCard) proofCard.style.display = 'flex';
-        if (proofImg) proofImg.src = url;
-        if (proofId) proofId.textContent = 'Pinterest CDN (Direct Render)';
-        showToast('Direct Pinterest image verified!', '📌');
+
+      const v = validateCandidateImageUrl(url);
+      if (!v.valid) {
+        if (proofCard) proofCard.style.display = 'none';
+        if (alertEl) {
+          alertEl.style.display = 'block';
+          alertEl.className = 'sk-intake-alert is-error';
+          alertEl.textContent = v.error || 'Invalidated link.';
+        }
+        showToast(v.error || 'Invalid link', '⚠️');
         return;
       }
-      if (url.includes('pin.it') || url.includes('pinterest.com/pin/')) {
-        if (proofCard) proofCard.style.display = 'flex';
-        if (proofImg) proofImg.src = './assets/shopping/vivaha_pata/vivaha_pata_0.jpg';
-        if (proofId) proofId.textContent = 'Pinterest Web Pin (External Reference)';
-        showToast('Pinterest Web Pin saved as reference chip!', '📌');
-        return;
+
+      // Perform active image decode verification to detect blocked hotlinks (403/CORS/ORB)
+      if (alertEl) {
+        alertEl.style.display = 'block';
+        alertEl.className = 'sk-intake-alert is-warning';
+        alertEl.textContent = 'Testing link connectivity and hotlink permissions...';
       }
-      const resolved = (window.SKPrimitives && window.SKPrimitives.resolveDriveAsset)
-        ? window.SKPrimitives.resolveDriveAsset(url, { cardWidth: 200 })
-        : null;
-      if (resolved && resolved.isDrive) {
+
+      const testImg = new Image();
+      testImg.referrerPolicy = 'no-referrer';
+      let timedOut = false;
+      const timeoutId = setTimeout(() => {
+        timedOut = true;
+        testImg.src = '';
+        if (proofCard) proofCard.style.display = 'none';
+        if (alertEl) {
+          alertEl.style.display = 'block';
+          alertEl.className = 'sk-intake-alert is-error';
+          alertEl.textContent = '❌ Verification timed out. The remote host took too long or blocked hotlinked requests. Please upload the photo directly.';
+        }
+        showToast('Image load timed out', '⚠️');
+      }, 7000);
+
+      testImg.onload = () => {
+        if (timedOut) return;
+        clearTimeout(timeoutId);
         if (proofCard) proofCard.style.display = 'flex';
-        if (proofImg) proofImg.src = resolved.cardThumbnail;
-        if (proofId) proofId.textContent = 'Drive ID: ' + resolved.driveId;
-        showToast('Google Drive asset recognized with zero-CORS preview!', '✓');
-      } else {
-        if (proofCard) proofCard.style.display = 'flex';
-        if (proofImg) proofImg.src = url;
-        if (proofId) proofId.textContent = 'Web Image URL';
-        showToast('Web image link registered.', '✓');
-      }
+        if (proofImg) {
+          proofImg.src = v.src;
+          proofImg.setAttribute('referrerpolicy', 'no-referrer');
+        }
+        if (proofId) proofId.textContent = v.badge;
+        if (alertEl) {
+          alertEl.style.display = 'block';
+          alertEl.className = 'sk-intake-alert is-success';
+          alertEl.textContent = `✓ Valid direct image asset verified (${testImg.naturalWidth}×${testImg.naturalHeight}px)! Ready for card rendering.`;
+        }
+        showToast('Image link verified successfully!', '✓');
+      };
+
+      testImg.onerror = () => {
+        if (timedOut) return;
+        clearTimeout(timeoutId);
+        if (proofCard) proofCard.style.display = 'none';
+        if (alertEl) {
+          alertEl.style.display = 'block';
+          alertEl.className = 'sk-intake-alert is-error';
+          alertEl.textContent = '❌ Invalidated Hotlink: The remote host blocked this image (HTTP 403 / anti-hotlinking / ORB). This link cannot be entertained. Please save/screenshot the image and upload it via "Device / Showroom Photo", or use a direct image CDN address.';
+        }
+        showToast('Invalidated hotlink (host blocked access)', '⚠️');
+      };
+
+      testImg.src = v.src;
     };
 
     if (btnVerifyDrive) btnVerifyDrive.addEventListener('click', verifyDriveLink);
@@ -2413,80 +2613,117 @@
         const category = document.getElementById('skOptionCategory')?.value || 'other';
         const vendor = document.getElementById('skOptionVendor')?.value.trim() || '';
         const urlInput = driveInput ? driveInput.value.trim() : '';
+        const alertEl = document.getElementById('skIntakeUrlAlert');
 
-        let src = '';
-        let referenceUrl = '';
-        let type = 'web_image';
+        const commitLook = (srcUrl, refUrl, optType) => {
+          if (itemId) {
+            const item = items.find(i => i.id === itemId);
+            if (!itemCustomOptions[itemId]) {
+              itemCustomOptions[itemId] = [];
+            }
+            const existingImgs = getItemImages(item);
+            const nextOptIndex = existingImgs.length > 0
+              ? Math.max(...existingImgs.map(img => img.optionIndex)) + 1
+              : 1;
+
+            const newOption = {
+              optionIndex: nextOptIndex,
+              isDefault: false,
+              label: title,
+              src: srcUrl || (item && item.images && item.images[0] ? item.images[0].src : ''),
+              referenceUrl: refUrl || urlInput,
+              type: optType,
+              store: vendor || (item ? item.store : ''),
+              priceTier: price ? `₹${price}` : (item ? item.priceRange : ''),
+              addedAt: new Date().toISOString()
+            };
+
+            itemCustomOptions[itemId].push(newOption);
+            localStorage.setItem('sk_shopping_custom_options', JSON.stringify(itemCustomOptions));
+
+            itemOptionSelected[itemId] = nextOptIndex;
+            localStorage.setItem('sk_shopping_item_options', JSON.stringify(itemOptionSelected));
+
+            if (typeof window.fsSetShoppingItemStatus === 'function') {
+              window.fsSetShoppingItemStatus(itemId, {
+                options: itemCustomOptions[itemId],
+                selectedOptionIndex: nextOptIndex
+              }).catch(err => console.warn('Firestore options sync skipped/offline:', err));
+            }
+
+            renderItems();
+            showToast(`Candidate look "${title}" added for ${itemId}!`, '📸');
+            window.closeOptionIntakeModal();
+          } else {
+            showToast(`Option "${title}" recorded!`, '🎉');
+            window.closeOptionIntakeModal();
+          }
+        };
 
         if (localUploadedDataUrl) {
-          src = localUploadedDataUrl;
-          type = 'showroom_upload';
+          commitLook(localUploadedDataUrl, '', 'showroom_upload');
         } else if (urlInput) {
-          if (urlInput.includes('i.pinimg.com')) {
-            src = urlInput;
-            type = 'pinterest_direct';
-          } else if (urlInput.includes('pin.it') || urlInput.includes('pinterest.com/pin/')) {
-            referenceUrl = urlInput;
-            type = 'pinterest_pin';
-            const matchedItem = items.find(i => i.id === itemId);
-            src = (matchedItem && matchedItem.images && matchedItem.images[0])
-              ? matchedItem.images[0].src
-              : './assets/shopping/vivaha_pata/vivaha_pata_0.jpg';
-          } else {
-            const resolved = (window.SKPrimitives && window.SKPrimitives.resolveDriveAsset)
-              ? window.SKPrimitives.resolveDriveAsset(urlInput, { cardWidth: 800 })
-              : null;
-            if (resolved && resolved.isDrive) {
-              src = resolved.cardThumbnail;
-              type = 'drive';
-            } else {
-              src = urlInput;
-              type = 'web_image';
+          const v = validateCandidateImageUrl(urlInput);
+          if (!v.valid) {
+            if (alertEl) {
+              alertEl.style.display = 'block';
+              alertEl.className = 'sk-intake-alert is-error';
+              alertEl.textContent = v.error;
             }
+            showToast(v.error, '⚠️');
+            return;
           }
-        }
 
-        if (itemId) {
-          const item = items.find(i => i.id === itemId);
-          if (!itemCustomOptions[itemId]) {
-            itemCustomOptions[itemId] = [];
-          }
-          const existingImgs = getItemImages(item);
-          const nextOptIndex = existingImgs.length > 0
-            ? Math.max(...existingImgs.map(img => img.optionIndex)) + 1
-            : 1;
+          // Active pre-flight check before adding to catalog!
+          btnSubmitOption.disabled = true;
+          const origText = btnSubmitOption.textContent;
+          btnSubmitOption.textContent = 'Verifying image...';
+          const testImg = new Image();
+          testImg.referrerPolicy = 'no-referrer';
+          let timedOut = false;
+          const timeoutId = setTimeout(() => {
+            timedOut = true;
+            testImg.src = '';
+            btnSubmitOption.disabled = false;
+            btnSubmitOption.textContent = origText;
+            if (alertEl) {
+              alertEl.style.display = 'block';
+              alertEl.className = 'sk-intake-alert is-error';
+              alertEl.textContent = '❌ Verification timed out. Remote host blocked access. Please upload the photo instead.';
+            }
+            showToast('Verification timed out', '⚠️');
+          }, 6000);
 
-          const newOption = {
-            optionIndex: nextOptIndex,
-            isDefault: false,
-            label: title,
-            src: src || (item && item.images && item.images[0] ? item.images[0].src : ''),
-            referenceUrl: referenceUrl || urlInput,
-            type: type,
-            store: vendor || (item ? item.store : ''),
-            priceTier: price ? `₹${price}` : (item ? item.priceRange : ''),
-            addedAt: new Date().toISOString()
+          testImg.onload = () => {
+            if (timedOut) return;
+            clearTimeout(timeoutId);
+            btnSubmitOption.disabled = false;
+            btnSubmitOption.textContent = origText;
+            commitLook(v.src, v.src, v.type);
           };
 
-          itemCustomOptions[itemId].push(newOption);
-          localStorage.setItem('sk_shopping_custom_options', JSON.stringify(itemCustomOptions));
+          testImg.onerror = () => {
+            if (timedOut) return;
+            clearTimeout(timeoutId);
+            btnSubmitOption.disabled = false;
+            btnSubmitOption.textContent = origText;
+            if (alertEl) {
+              alertEl.style.display = 'block';
+              alertEl.className = 'sk-intake-alert is-error';
+              alertEl.textContent = '❌ Invalidated Hotlink: The remote host rejected image loading (HTTP 403 Forbidden). Hotlinks and broken links cannot be entertained. Please upload via "Device / Showroom Photo".';
+            }
+            showToast('Invalidated hotlink rejected', '⚠️');
+          };
 
-          itemOptionSelected[itemId] = nextOptIndex;
-          localStorage.setItem('sk_shopping_item_options', JSON.stringify(itemOptionSelected));
-
-          if (typeof window.fsSetShoppingItemStatus === 'function') {
-            window.fsSetShoppingItemStatus(itemId, {
-              options: itemCustomOptions[itemId],
-              selectedOptionIndex: nextOptIndex
-            }).catch(err => console.warn('Firestore options sync skipped/offline:', err));
-          }
-
-          renderItems();
-          showToast(`Candidate look "${title}" added for ${itemId}!`, '📸');
-          window.closeOptionIntakeModal();
+          testImg.src = v.src;
         } else {
-          showToast(`Option "${title}" recorded!`, '🎉');
-          window.closeOptionIntakeModal();
+          if (alertEl) {
+            alertEl.style.display = 'block';
+            alertEl.className = 'sk-intake-alert is-error';
+            alertEl.textContent = 'Please provide a valid direct image link or upload a photo.';
+          }
+          showToast('Please provide an image link or photo', '⚠️');
+          return;
         }
       });
     }

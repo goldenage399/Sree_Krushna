@@ -20,16 +20,19 @@
       <div class="sk-tab-pane is-active" id="skPaneDrive">
         <label class="sk-intake-label" for="skDriveUrlInput">Pinterest Image Link, Web Image URL, or Google Drive</label>
         <div class="sk-input-group">
-          <input type="url" class="sk-intake-input" id="skDriveUrlInput" placeholder="https://i.pinimg.com/...jpg, pin.it/..., or Image URL" autocomplete="off">
+          <input type="url" class="sk-intake-input" id="skDriveUrlInput" placeholder="Direct Image URL (e.g. https://i.pinimg.com/...jpg) or Drive Link" autocomplete="off">
           <button type="button" class="sk-btn sk-btn-secondary" id="skBtnVerifyDrive">Verify Link</button>
         </div>
-        <small class="sk-intake-hint">Direct Pinterest images (i.pinimg.com), web image URLs, and Google Drive links render natively.</small>
+        <small class="sk-intake-hint" id="skIntakeUrlHint">
+          💡 <strong>Direct Image Required:</strong> Right-click image &rarr; <em>Copy Image Address</em> (must end in .jpg/.png or from i.pinimg.com). Web pin links (pin.it/...) will be saved as external bookmarks.
+        </small>
+        <div class="sk-intake-alert" id="skIntakeUrlAlert" style="display: none;"></div>
         
         <!-- Live Proof Preview Card (Adapted from PIO ProofPreviewWidget) -->
         <div class="sk-proof-preview-card" id="skDriveProofCard" style="display: none;">
-          <img id="skDriveProofImg" class="sk-proof-thumb" src="" alt="Thumbnail Preview">
+          <img id="skDriveProofImg" class="sk-proof-thumb" src="" alt="Thumbnail Preview" referrerpolicy="no-referrer">
           <div class="sk-proof-info">
-            <span class="sk-proof-badge" id="skDriveProofBadge">✓ Valid Drive Asset</span>
+            <span class="sk-proof-badge" id="skDriveProofBadge">✓ Valid Image Asset</span>
             <span class="sk-proof-id" id="skDriveFileId">ID: —</span>
           </div>
         </div>
