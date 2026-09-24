@@ -7,7 +7,7 @@
     "targetEnvironment": "Multi-Repo SAP Spoke",
     "governanceModel": "AI-Driven Development (Antigravity Agent)",
     "sourceOfTruth": "GEMINI.md",
-    "totalStandards": 6,
+    "totalStandards": 8,
     "lastUpdated": "2026-09-24"
   },
   "categories": {
@@ -109,6 +109,50 @@
       "references": [
         "User_Created/Discussion Threads/Council/260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md",
         ".agent/patterns/collab-visual-intake-and-deep-link-sharing.md",
+        "GEMINI.md",
+        "CLAUDE.md"
+      ]
+    },
+    {
+      "id": "P-TICKET-FIRST-PHASING-001",
+      "category": "governance",
+      "name": "Mandatory Ticket Registration & Phased Planning Gate",
+      "description": "Any multi-directional, multi-phased (≥2 phases), or multi-surface development work must register an enhancement ticket in enhancement-notes/ and define a sequential phased DoD matrix before implementation or plan creation begins.",
+      "severity": "CRITICAL",
+      "enforcement": {
+        "checkpoints": [
+          "planning",
+          "pre-flight"
+        ],
+        "manualOnly": false,
+        "automatedGate": "npm run verify:governance-wiring"
+      },
+      "references": [
+        ".agent/patterns/phased-development-ticket-first-gate.md",
+        ".agent/skills/writing-plans/SKILL.md",
+        ".agent/workflows/plan.md",
+        "GEMINI.md",
+        "CLAUDE.md"
+      ]
+    },
+    {
+      "id": "P-UNIVERSAL-PLANNING-ENGINE-001",
+      "category": "governance",
+      "name": "Universal Canonical Planning Engine & Cross-Repo SAP Synchronization",
+      "description": "All multi-step planning is governed by the single canonical SAP-delimited planning engine in writing-plans/SKILL.md, enforcing 4-PPSD, Gate 0 ticket checks, phased DoD v1.7 matrices, 5-step TDD tasks, binary validation gates, and plan hard-stops.",
+      "severity": "CRITICAL",
+      "enforcement": {
+        "checkpoints": [
+          "planning",
+          "pre-flight"
+        ],
+        "manualOnly": false,
+        "automatedGate": "npm run verify:governance-wiring"
+      },
+      "references": [
+        "User_Created/Discussion Threads/Council/260924_arch_council_universal_planning_engine_and_prompt_boundary.md",
+        ".agent/skills/writing-plans/SKILL.md",
+        ".agent/workflows/plan.md",
         "GEMINI.md",
         "CLAUDE.md"
       ]

@@ -66,6 +66,15 @@ All entities must use standardized 3-digit padded identifiers:
 - **Mandatory Incubation Routing**: All new concepts, exploratory features, and brainstormed additions MUST be routed through `.agent/workflows/idea-incubator.md` (`/idea-incubator`) and logged into `docs/proposals/` as `DRAFT (In Ideation / Incubation — PENDING DECISION)`.
 - **Promotion Gate**: An incubation proposal can only be promoted to active operational specifications, decisions (`DEC-###`), and execution tasks (`TSK-###`) after formal host review, budget clearance, and council certification (`AC-DEC-###`).
 
+### 7. Mandatory Ticket Registration & Phased Planning Invariant (`STD-PHASED-DEV-001` / `P-TICKET-FIRST-PHASING-001` / `AC-DEC-2026-042`)
+- **Pre-Implementation Ticket Gate**: No multi-directional, multi-phase (≥2 phases), or cross-surface development work may proceed to implementation planning or code mutation without a formally registered enhancement ticket (`SK-###`, `TASK-###`, or `PIO-###`) in `enhancement-notes/` and `ENHANCEMENT-MASTER-REGISTRY.md`.
+- **Sequential Phased DoD Matrix**: All multi-phase implementation plans (`writing-plans`, `/plan`) MUST decompose work into strictly sequential, independently verifiable phases. Each phase must define an objective Definition of Done (DoD), binary Validation Gates (VG), and Decision Nodes (DN).
+- **Prohibition of Monolithic Execution Chaining**: Agents MUST NOT chain multi-phase development into continuous uncommitted execution loops. Each phase must be committed, verified, and checked off sequentially.
+
+### 8. Universal Canonical Planning Engine Invariant (`STD-PLANNING-ENGINE-001` / `P-UNIVERSAL-PLANNING-ENGINE-001` / `AC-DEC-2026-044`)
+- **Single Canonical Engine**: All planning workflows (`/plan`, implementation plans, task plans) route exclusively to `.agent/skills/writing-plans/SKILL.md`. Legacy unanchored planners (`planning-with-files`, `implementation-plan-template`) are deprecated.
+- **SAP Dual-Block Isolation**: The planning engine is partitioned into `<!-- shared:std.agent.planning-engine.core -->` (synchronized losslessly across repos via `/sap-sync`) and `<!-- repo-specific:sree-krushna -->` (local taxonomy, SDCA compilers, and verification commands).
+- **Mandatory Plan Hard-Stop**: The planning phase concludes with the plan saved to disk. Detailed 5-step TDD tasks are scoped to Phase 1 first. Chaining planning directly into uncommitted code execution is strictly prohibited.
 
 ---
 
@@ -186,3 +195,4 @@ This repository implements the following universal patterns:
 - `.agent/patterns/collab-visual-intake-and-deep-link-sharing.md`
 - `.agent/patterns/containing-block-viewport-escape-gate.md`
 - `.agent/patterns/two-tier-workspace-subview-decoupling.md`
+- `.agent/patterns/phased-development-ticket-first-gate.md`

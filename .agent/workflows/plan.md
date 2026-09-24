@@ -49,6 +49,7 @@ Review relevant ecosystem patterns:
 - `.agent/patterns/page-anchors-neutrality.md`
 - `.agent/patterns/page-width-ownership.md`
 - `.agent/patterns/performative-council-and-telemetry-gate.md`
+- `.agent/patterns/phased-development-ticket-first-gate.md`
 - `.agent/patterns/plan-to-execution-reconciliation.md`
 - `.agent/patterns/playwright-e2e-testing-protocol.md`
 - `.agent/patterns/playwright-indexeddb-auth-session-capture.md`
@@ -82,8 +83,6 @@ Review relevant ecosystem patterns:
 - `.agent/patterns/web-deployment-gate.md`
 - `.agent/patterns/write-site-contract-verification.md`
 - `.agent/patterns/write-without-reader.md`
-
-
 
 ## When to Use
 
@@ -143,41 +142,50 @@ Review relevant ecosystem patterns:
 
 ---
 
-### Step 1: Check Enhancement Context
+### Step 1: Mandatory Ticket Registration Gate [P-TICKET-FIRST-PHASING-001]
 
-**Ask:** "Is there an active PIO for this work?"
+> **Invariant**: [`.agent/patterns/phased-development-ticket-first-gate.md`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/patterns/phased-development-ticket-first-gate.md)  
+> **Standard**: `STD-PHASED-DEV-001` / `AC-DEC-2026-042`
 
-- **YES**: Use `enhancement-notes/ENHANCEMENT_PIO-XXX_*/` folder
-- **NO**: Ask if user wants to run `enhancement-scaffolder` skill first
+**Multi-phase / Multi-surface Check**:
+Does this initiative require ≥2 phases, span ≥2 files/modules, or exceed 200 lines of changes?
 
-### Step 2: Select Planning Skill
+- **YES (Multi-phase / Complex)**:
+  - An active enhancement ticket (`SK-###`, `TASK-###`, `PIO-###`) is **MANDATORY** before drafting the plan.
+  - If ticket already exists in `enhancement-notes/` and `ENHANCEMENT-MASTER-REGISTRY.md`: use that folder (`enhancement-notes/{ID}-{Title}/implementation_plan.md`).
+  - If NO ticket exists: **HALT**. Run `/enhancement-scaffolder` and `/enhancement-protocol-enforcer` to register the ticket and cluster entry BEFORE creating the plan.
+- **NO (Single-scope simple patch)**:
+  - Standalone plan saved to `docs/plans/YYYY-MM-DD-<feature-name>.md`.
 
-**Complexity Assessment:**
+### Step 2: Invoke Universal Planning Engine [P-UNIVERSAL-PLANNING-ENGINE-001]
 
-- **Standard Feature**: Use `writing-plans` (Creates `implementation_plan.md`)
-- **Complex Execution**: Use `planning-with-files` (Creates `task_plan.md` + `findings.md`)
-  - Use when: Multi-step research, large refactors, or >5 tool calls expected.
+> **Canonical Engine**: [`.agent/skills/writing-plans/SKILL.md`](../skills/writing-plans/SKILL.md)  
+> **Standard**: `STD-PLANNING-ENGINE-001` / `AC-DEC-2026-044`
 
-**Action:** Read the chosen SKILL.md and follow instructions.
+All planning workflows unconditionally invoke **`writing-plans`** as the single canonical planning engine. Legacy planners (`planning-with-files`, `implementation-plan-template`) are deprecated.
 
-### Step 3: Save Plan
+**Engine Capabilities**:
+- Grounded in 4-PPSD and Reality-First Grounding (`RFG-001`).
+- Generates 4-Tier DoD v1.7 sequential phase matrix (T1 Static, T2 Functional, T3 Integrated, T4 Governance).
+- Generates 5-Step TDD task blocks (failing test, run fail, minimal implementation, run pass, commit).
+- Enforces binary Validation Gates (VG) and Decision Nodes (DN).
+- Enforces mandatory plan hard-stop before code execution (`INC-079`).
 
-**Location (conditional):**
+### Step 3: Save Implementation Plan
 
-- `implementation_plan.md`:
-  - If PIO exists → `enhancement-notes/ENHANCEMENT_PIO-XXX_Title/`
-  - If no PIO → `docs/plans/YYYY-MM-DD-<feature-name>.md`
-- `task_plan.md` (planning-with-files):
-  - Always in **Project Root** (required by skill)
+**Plan File Path**:
+- **Active Enhancement Ticket** (`SK-###`, `TASK-###`, `PIO-###`):
+  `enhancement-notes/{ID}/implementation_plan.md`
+- **Single-Scope Patch (Exempt)**:
+  `docs/plans/YYYY-MM-DD-<feature-name>.md`
 
 ### Step 4: Execution Handoff
 
-After plan is complete, offer:
+After saving the plan, present the execution approach:
+1. **Subagent-Driven**: Dispatch fresh subagent per phase/task with checkpoints.
+2. **Sequential Session**: Execute Phase 1 tasks sequentially with atomic commits.
+3. **Governed Execution**: Follow `/governance-workflow` for high-risk work.
 
-1. **Subagent-Driven (this session)** → Use `subagent-driven-development` skill
-2. **Parallel Session (separate)** → Use `executing-plans` skill
-3. **Governed Execution** → Follow `/governance-workflow` for high-risk work
+### Step 5: Mandatory Plan Hard-Stop [INC-079]
 
-### Step 5: Notify User
-
-Request user review of the implementation plan before proceeding to execution.
+Request user review of the implementation plan before proceeding to code execution. The agent MUST NOT write implementation code in the same prompt turn as plan creation.

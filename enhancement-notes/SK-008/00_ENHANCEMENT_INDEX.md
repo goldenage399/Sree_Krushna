@@ -4,7 +4,7 @@
 
 - **Category**: GOVERNANCE / REFACTOR
 - **Priority**: MEDIUM
-- **Status**: IN_PROGRESS (Phase 2 Complete)
+- **Status**: IN_PROGRESS (Phase 3 Complete)
 - **Estimate**: 12 hours
 - **Target Release**: v2.4.0
 - **Risk Level**: LOW
@@ -155,13 +155,13 @@ Running `/sap-sync` synchronizes the `shared:std.agent.planning-engine.core` blo
 
 **Objective**: Align skill routers, slash command workflows, and deprecate redundant planning files with clean pointers.
 
-- [ ] **Task 3.1: Update `.agent/workflows/plan.md`**
+- [x] **Task 3.1: Update `.agent/workflows/plan.md`**
   - Ensure `/plan` delegates directly to `.agent/skills/writing-plans/SKILL.md` without duplicating template logic.
-- [ ] **Task 3.2: Deprecate Redundant Workflows**
+- [x] **Task 3.2: Deprecate Redundant Workflows**
   - Add deprecation headers to `.agent/skills/planning-with-files/SKILL.md` and `.agent/workflows/implementation-plan-template.md` pointing to `writing-plans`.
-- [ ] **Task 3.3: Skill Router Alignment**
+- [x] **Task 3.3: Skill Router Alignment**
   - Verify `.agent/skill-router.yaml` routes `/plan`, `writing-plans`, and planning keywords directly to `writing-plans/SKILL.md`.
-- [ ] **Task 3.4: Invariants & Standards Catalog Synchronization**
+- [x] **Task 3.4: Invariants & Standards Catalog Synchronization**
   - Register `STD-PLANNING-ENGINE-001` / `P-UNIVERSAL-PLANNING-ENGINE-001` in `.agent/standards-catalog.json`.
   - Update `GEMINI.md` and `CLAUDE.md` under Core Operating Protocols.
 

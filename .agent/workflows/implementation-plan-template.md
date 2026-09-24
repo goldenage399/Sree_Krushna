@@ -1,8 +1,13 @@
 ---
-description: Template for creating comprehensive implementation plans that pass external review in 1-2 rounds
+description: "[DEPRECATED — use writing-plans] Template for implementation plans. Consolidated under SK-008 into writing-plans."
 ---
 
 # Implementation Plan Review Template
+
+> [!WARNING]
+> **DEPRECATION NOTICE (SK-008 / AC-DEC-2026-044)**:
+> This template is **deprecated** as of 2026-09-24. Canonical plan generation is governed exclusively by [`.agent/skills/writing-plans/SKILL.md`](../skills/writing-plans/SKILL.md) and `/plan`.
+> Refer to `writing-plans` for the 4-tier DoD v1.7 matrix, 5-step TDD task structure, and binary validation gates.
 
 Use this template when creating implementation plans for new features. Following this checklist should reduce external review rounds from 3 to 1-2.
 

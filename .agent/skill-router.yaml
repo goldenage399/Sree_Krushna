@@ -490,11 +490,11 @@ skills:
     when: "Writing prose humans will read — docs, commit messages, error messages, UI text"
 
   - id: writing-plans
-    repo: [pio, task-dashboard]
-    triggers: ["write plan before coding", "implementation plan", "plan multi-step task"]
+    repo: [pio, task-dashboard, sree-krushna]
+    triggers: ["write plan before coding", "implementation plan", "plan multi-step task", "plan phased work", "universal planning engine", "canonical plan", "create implementation plan"]
     cost: medium
     invoke: /writing-plans
-    when: "Writing a structured plan before implementation when given spec or requirements"
+    when: "Universal Canonical Planning Engine: writing structured, phased TDD implementation plans before coding (AC-DEC-2026-044)"
 
   - id: writing-technical-documentation
     repo: [pio, task-dashboard]
@@ -884,8 +884,8 @@ workflows:
     when: "Comprehensive plan review to compress multi-round feedback into single-pass. Includes the 5 Lenses feasibility gate (UX · Workflow Efficiency · Cognitive Load · Performance · Implementation Practicality) — the execution-stage check, run per plan; its ideation-stage counterpart (run once, earlier) is the Trade-Off & Dependency Checklist in enhancement-scaffolder Step 2.7. Derived from Gear 1 and Gear 2 of the Reusable Prompt Library; gear number denotes analytical depth, not running order."
 
   - id: plan
-    repo: [pio, task-dashboard]
-    triggers: ["/plan", "create plan", "plan task"]
+    repo: [pio, task-dashboard, sree-krushna]
+    triggers: ["/plan", "create plan", "plan task", "phased plan"]
     cost: low
     invoke: workflow:plan
     when: "Creating an implementation plan using the writing-plans skill"
@@ -1272,6 +1272,13 @@ workflows:
     cost: low
     invoke: read .agent/patterns/data-migration-occupancy-safety.md
     when: "Surface the data-migration-occupancy-safety pattern (P28) when running migrations or updating databases to prevent overwriting active schemas"
+
+  - id: pattern-phased-development-ticket-first-gate
+    repo: [task-dashboard, sree-krushna]
+    triggers: ["multi-phase planning", "ticket first gate", "register ticket before plan", "multi-surface development", "phased dod matrix", "STD-PHASED-DEV-001", "P-TICKET-FIRST-PHASING-001"]
+    cost: low
+    invoke: read .agent/patterns/phased-development-ticket-first-gate.md
+    when: "Surface the phased-development-ticket-first-gate pattern (P-TICKET-FIRST-PHASING-001) whenever multi-phase or multi-surface planning triggers are detected"
 
   - id: p100-reusable-ai-search-helper
     repo: [task-dashboard]
