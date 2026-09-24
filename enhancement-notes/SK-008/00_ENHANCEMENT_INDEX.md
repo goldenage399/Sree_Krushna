@@ -4,7 +4,7 @@
 
 - **Category**: GOVERNANCE / REFACTOR
 - **Priority**: MEDIUM
-- **Status**: IN_PROGRESS (Phase 3 Complete)
+- **Status**: COMPLETED
 - **Estimate**: 12 hours
 - **Target Release**: v2.4.0
 - **Risk Level**: LOW
@@ -179,11 +179,11 @@ Running `/sap-sync` synchronizes the `shared:std.agent.planning-engine.core` blo
 
 **Objective**: Validate the engine under live test scenarios and package the SAP sync manifest for cross-repo propagation.
 
-- [ ] **Task 4.1: Live Plan Generation Smoke Test**
+- [x] **Task 4.1: Live Plan Generation Smoke Test**
   - Test the newly unified engine by simulating a planning request: verify it halts at Gate 0 if un-ticketed, verifies active ticket, generates sequential phased DoD matrix, outputs Phase 1 TDD steps, and halts.
-- [ ] **Task 4.2: Prepare Cross-Repo `/sap-sync` Manifest**
+- [x] **Task 4.2: Prepare Cross-Repo `/sap-sync` Manifest**
   - Document the exact `/sap-sync` payload in `enhancement-notes/SK-008/02_SAP_SYNC_MANIFEST.md` for propagation to `Task-Dashboard` and `PIO`.
-- [ ] **Task 4.3: Update Enhancement Status & Cluster Index**
+- [x] **Task 4.3: Update Enhancement Status & Cluster Index**
   - Mark `SK-008` as `COMPLETED` in `enhancement-notes/SK-008/00_ENHANCEMENT_INDEX.md`, `docs/enhancements/GOVERNANCE-ENHANCEMENT-CLUSTER.md`, and `ENHANCEMENT-MASTER-REGISTRY.md`.
 
 **🔍 Validation Gate (VG-4)**:
