@@ -4,7 +4,7 @@
 
 - **Category**: GOVERNANCE / REFACTOR
 - **Priority**: MEDIUM
-- **Status**: IN_PROGRESS (Phase 1 Complete)
+- **Status**: IN_PROGRESS (Phase 2 Complete)
 - **Estimate**: 12 hours
 - **Target Release**: v2.4.0
 - **Risk Level**: LOW
@@ -125,18 +125,18 @@ Running `/sap-sync` synchronizes the `shared:std.agent.planning-engine.core` blo
 
 **Objective**: Author the unified canonical planning skill in `.agent/skills/writing-plans/SKILL.md` embedding both SAP marker blocks.
 
-- [ ] **Task 2.1: Author Repo-Agnostic Core (`shared:std.agent.planning-engine.core`)**
+- [x] **Task 2.1: Author Repo-Agnostic Core (`shared:std.agent.planning-engine.core`)**
   - Embed Gate 0: Mandatory Ticket Registration Gate (`P-TICKET-FIRST-PHASING-001`).
   - Embed 4-Tier DoD v1.7 Generation template (T1 Static, T2 Functional, T3 Integrated, T4 Governance).
   - Embed Bite-Sized TDD Task Structure (Step 1 Failing Test -> Step 2 Run Fail -> Step 3 Minimal Implementation -> Step 4 Run Pass -> Step 5 Atomic Commit).
   - Embed Binary Validation Gates (max 2 checks, exit code + output regex) and Decision Nodes (Pass, Fail 1st retry, Fail 2nd escalate).
   - Embed Mandatory Plan Hard-Stop: halt after Phase 1 planning without writing code.
-- [ ] **Task 2.2: Author Repo-Specific Extension (`repo-specific:sree-krushna`)**
+- [x] **Task 2.2: Author Repo-Specific Extension (`repo-specific:sree-krushna`)**
   - Read `canonical_prefix` (`SK`) and `next_id` dynamically from `enhancement-config.json`.
   - Configure SDCA module compilers: `node shopping_src/build.cjs --all`, `node cockpit_src/build.cjs --all`.
   - Configure shared UI primitives (`ui_primitives/`).
   - Configure verification commands: `npm run verify:modular-architecture`, `npm run verify:ui-lifecycle`, `npm run verify:deployment`, `npm run verify:governance-wiring:all`.
-- [ ] **Task 2.3: Keep Skill File Under 350 Lines**
+- [x] **Task 2.3: Keep Skill File Under 350 Lines**
   - Verify `.agent/skills/writing-plans/SKILL.md` is tight, highly disciplined, and under 350 lines.
 
 **🔍 Validation Gate (VG-2)**:
