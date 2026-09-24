@@ -53,6 +53,8 @@ All entities must use standardized 3-digit padded identifiers:
 - **Shopping Catalog Domain Decoupling & Two-Tier Operating Modes**: See [260923_arch_council_shopping_catalog_information_architecture_and_domain_decoupling.md](./User_Created/Discussion Threads/Council/260923_arch_council_shopping_catalog_information_architecture_and_domain_decoupling.md) (`AC-DEC-2026-037` / `UI-DEC-2026-033` / `P-SHOPPING-JOURNEY-HUBS-001` / `INC-096`).
 - **Pinterest Intake, Multi-Image Containers & Collab Deep-Link Sharing**: See [260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md](./User_Created/Discussion Threads/Council/260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md) (`AC-DEC-2026-038` / `UI-DEC-2026-034` / `P-PINTEREST-INTAKE-001` / `P-MULTI-IMAGE-CONTAINER-001` / `P-COLLAB-OPTION-SHARE-001`).
 - **Decorator Cockpit Multi-Option Visual Intake & Deep-Linking**: See [260924_arch_council_decorator_cockpit_multi_option_visual_intake_and_deep_linking.md](./User_Created/Discussion Threads/Council/260924_arch_council_decorator_cockpit_multi_option_visual_intake_and_deep_linking.md) (`AC-DEC-2026-039` / `UI-DEC-2026-035` / `P-DECOR-MULTI-OPTION-001`).
+- **Two-Tier Contextual Comments Engine & Cross-Option Tagging Architecture**: See [260924_arch_council_contextual_multi_option_comments_architecture.md](./User_Created/Discussion Threads/Council/260924_arch_council_contextual_multi_option_comments_architecture.md) (`AC-DEC-2026-046` / `UI-DEC-2026-042` / `P-CONTEXTUAL-COMMENTS-001` / `INC-097` / `SPEC-ARCH-CONTEXTUAL-COMMENTS-001.md`).
+- **Universal UI Button Primitives & Pre-Flight Design System Verification Gate**: See [260924_arch_council_ui_button_primitives_and_preflight_gate.md](./User_Created/Discussion Threads/Council/260924_arch_council_ui_button_primitives_and_preflight_gate.md) (`AC-DEC-2026-047` / `UI-DEC-2026-043` / `STD-UI-PRIMITIVE-002` / `P-BUTTON-PRIMITIVE-GATE-001`).
 
 
 ### 5. Dynamic UI Lifecycle & Modal Dismissibility Invariant (`STD-UI-LIFECYCLE-001` / `DEC-003`)
@@ -196,3 +198,6 @@ This repository implements the following universal patterns:
 - `.agent/patterns/containing-block-viewport-escape-gate.md`
 - `.agent/patterns/two-tier-workspace-subview-decoupling.md`
 - `.agent/patterns/phased-development-ticket-first-gate.md`
+- `.agent/patterns/candidate-looks-ergonomics-and-intake.md`
+- `.agent/patterns/contextual-multi-option-comments-engine.md`
+- `.agent/patterns/button-primitive-and-preflight-gate.md`

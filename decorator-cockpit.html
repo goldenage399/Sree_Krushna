@@ -241,6 +241,137 @@
   opacity: 1;
 }
 
+/* ==========================================================================
+   5. Universal UI Button Primitives (STD-UI-PRIMITIVE-002 / AC-DEC-2026-047)
+   ========================================================================== */
+
+.sk-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  min-height: 38px;
+  border-radius: var(--sk-radius-md, 8px);
+  font-family: var(--sk-font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--sk-text-primary, #f3f4f6);
+  text-decoration: none;
+  transition: all 0.15s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+.sk-btn:focus-visible {
+  outline: 2px solid var(--sk-gold, #e5a93c);
+  outline-offset: 2px;
+}
+
+.sk-btn:disabled,
+.sk-btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Secondary Button (Default Surface Card) */
+.sk-btn-secondary {
+  background: var(--sk-surface, #181b24);
+  border-color: var(--sk-border, #2d3245);
+  color: var(--sk-text-primary, #f3f4f6);
+}
+
+.sk-btn-secondary:hover {
+  background: var(--sk-surface-elevated, #222634);
+  border-color: var(--sk-gold, #e5a93c);
+  color: #ffffff;
+}
+
+/* Primary Button (Luxury Gold Brand) */
+.sk-btn-primary {
+  background: var(--sk-gold, #e5a93c);
+  border-color: var(--sk-gold, #e5a93c);
+  color: #0f1117;
+  box-shadow: 0 2px 8px rgba(229, 169, 60, 0.25);
+}
+
+.sk-btn-primary:hover {
+  background: #f0b74b;
+  border-color: #f0b74b;
+  color: #080a0f;
+  box-shadow: 0 4px 14px rgba(229, 169, 60, 0.4);
+  transform: translateY(-1px);
+}
+
+.sk-btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Danger Button */
+.sk-btn-danger {
+  background: rgba(244, 63, 94, 0.12);
+  border-color: rgba(244, 63, 94, 0.4);
+  color: #fda4af;
+}
+
+.sk-btn-danger:hover {
+  background: rgba(244, 63, 94, 0.25);
+  border-color: #f43f5e;
+  color: #ffffff;
+}
+
+/* WhatsApp Action Button */
+.sk-btn-whatsapp {
+  background: #25d366;
+  border-color: #25d366;
+  color: #ffffff;
+}
+
+.sk-btn-whatsapp:hover {
+  background: #1ebc59;
+  border-color: #1ebc59;
+  color: #ffffff;
+}
+
+/* Universal Modal Close Button Affordance */
+.sk-modal-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  border-radius: var(--sk-radius-full, 9999px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--sk-border, #2d3245);
+  color: var(--sk-text-muted, #94a3b8);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.sk-modal-close:hover {
+  background: rgba(229, 169, 60, 0.15);
+  border-color: var(--sk-gold, #e5a93c);
+  color: var(--sk-gold, #e5a93c);
+  transform: scale(1.05);
+}
+
+.sk-modal-close:focus-visible {
+  outline: 2px solid var(--sk-gold, #e5a93c);
+  outline-offset: 2px;
+}
+
 /* --- Primitive: 02_zoom_pan.css --- */
 /**
  * Sree Krushna Marriage OS — Zoom/Pan & Option Intake Primitive Styles
@@ -3588,7 +3719,7 @@ body {
       <h1 style="font-family: 'Cinzel', serif; font-size: 1.45rem; font-weight: 800; color: #f59e0b; margin-bottom: 6px; letter-spacing: 0.8px;">Sree Krushna</h1>
       <p style="font-family: 'Outfit', sans-serif; font-size: 0.85rem; color: #94a3b8; margin-bottom: 24px; line-height: 1.4;">Decorator Negotiation Cockpit & Master Decisions<br><span style="color: #cbd5e1; font-weight: 500;">Authorized Planning Committee Only</span></p>
       
-      <button id="cockpitLoginBtn" style="display: inline-flex; align-items: center; justify-content: center; gap: 12px; background: #ffffff; color: #1e293b; font-size: 0.95rem; font-weight: 600; padding: 14px 20px; min-height: 48px; border-radius: 8px; border: 1px solid #e2e8f0; cursor: pointer; width: 100%; transition: all 0.2s ease;">
+      <button id="cockpitLoginBtn" class="sk-btn sk-btn-login" style="display: inline-flex; align-items: center; justify-content: center; gap: 12px; background: #ffffff; color: #1e293b; font-size: 0.95rem; font-weight: 600; padding: 14px 20px; min-height: 48px; border-radius: 8px; border: 1px solid #e2e8f0; cursor: pointer; width: 100%; transition: all 0.2s ease;">
         <svg viewBox="0 0 24 24" style="width: 20px; height: 20px;" aria-hidden="true">
           <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
           <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -5405,7 +5536,8 @@ body {
 
 /**
  * Sree Krushna Marriage OS — Collaborative Comments & Contextual Opinions Engine
- * Standard: STD-MOD-COMP-001 | Ruling: AC-DEC-2026-021 / AC-DEC-2026-046 / UI-DEC-2026-042
+ * Standard: STD-MOD-COMP-001 | SSOT: docs/references/SPEC-ARCH-CONTEXTUAL-COMMENTS-001.md — FKL-DI-023
+ * Ruling: AC-DEC-2026-021 / AC-DEC-2026-046 / UI-DEC-2026-042 (P-CONTEXTUAL-COMMENTS-001)
  * Scope: Multi-tier comments, cross-option tagging (@Look N), in-drawer scope navigation,
  *        item-level aggregation, emoji reactions, stakeholder filtering, and real-time Firestore sync.
  */

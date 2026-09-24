@@ -33,7 +33,7 @@ console.log('╚═════════════════════�
 // ----------------------------------------------------------------------------
 // 1. Audit Script Directory for Monolithic HTML Builders (>500 lines)
 // ----------------------------------------------------------------------------
-console.log('▶ [1/5] Auditing scripts/ for Monolithic UI Builder Script Compliance (Max 500 lines)...');
+console.log('▶ [1/6] Auditing scripts/ for Monolithic UI Builder Script Compliance (Max 500 lines)...');
 const scriptsDir = path.join(rootDir, 'scripts');
 // Per AC-DEC-2026-019: Governs user-facing HTML assemblers; data seeders are exempt
 const builderFiles = fs.readdirSync(scriptsDir).filter(f => f.startsWith('build-') && f.includes('-html') && f.endsWith('.cjs'));
@@ -53,7 +53,7 @@ builderFiles.forEach(file => {
 // ----------------------------------------------------------------------------
 // 2. Validate Mandatory SDCA Source Directory Trees
 // ----------------------------------------------------------------------------
-console.log('\n▶ [2/5] Auditing SDCA Module Source Trees (Template, Components, Styles, Controller)...');
+console.log('\n▶ [2/6] Auditing SDCA Module Source Trees (Template, Components, Styles, Controller)...');
 const sdcaModules = ['cockpit_src', 'decision_registry_src', 'shopping_src'];
 
 sdcaModules.forEach(mod => {
@@ -90,7 +90,7 @@ sdcaModules.forEach(mod => {
 // ----------------------------------------------------------------------------
 // 3. Per-Source JavaScript Syntax Gate (node -c)
 // ----------------------------------------------------------------------------
-console.log('\n▶ [3/5] Executing Per-Source Syntax Gate (node -c) on all Controllers & Primitives...');
+console.log('\n▶ [3/6] Executing Per-Source Syntax Gate (node -c) on all Controllers & Primitives...');
 const controllers = [
   path.join(rootDir, 'cockpit_src', 'scripts', 'controller.js'),
   path.join(rootDir, 'decision_registry_src', 'scripts', 'controller.js'),
@@ -114,7 +114,7 @@ controllers.forEach(ctrl => {
 // ----------------------------------------------------------------------------
 // 4. Validate Universal Shared UI Primitives Engine (ui_primitives/)
 // ----------------------------------------------------------------------------
-console.log('\n▶ [4/5] Verifying Universal Shared UI Primitives Engine (ui_primitives/)...');
+console.log('\n▶ [4/6] Verifying Universal Shared UI Primitives Engine (ui_primitives/)...');
 const primDir = path.join(rootDir, 'ui_primitives');
 const expectedPrimitives = [
   'components/carousel.html',
@@ -147,7 +147,7 @@ expectedPrimitives.forEach(rel => {
 // ----------------------------------------------------------------------------
 // 5. Dual-Release Distribution Byte Parity Audit
 // ----------------------------------------------------------------------------
-console.log('\n▶ [5/5] Auditing Dual-Release Distribution Byte-for-Byte Parity...');
+console.log('\n▶ [5/6] Auditing Dual-Release Distribution Byte-for-Byte Parity...');
 const dualPairs = [
   ['decorator-cockpit.html', 'public/decorator-cockpit.html'],
   ['cockpit-fragment.html', 'public/cockpit-fragment.html'],
@@ -177,6 +177,17 @@ dualPairs.forEach(([rootRel, pubRel]) => {
     fail(`Byte parity drift detected between ${rootRel} (${rootBuf.length} B) and ${pubRel} (${pubBuf.length} B)`);
   }
 });
+
+// ----------------------------------------------------------------------------
+// 6. Universal Button Primitives & Zero Naked Buttons Gate (STD-UI-PRIMITIVE-002)
+// ----------------------------------------------------------------------------
+console.log('\n▶ [6/6] Auditing Universal UI Button Primitives & Zero Naked Buttons (STD-UI-PRIMITIVE-002)...');
+try {
+  execFileSync(process.execPath, [path.join(__dirname, 'verify-ui-button-primitives.cjs')], { stdio: 'inherit' });
+  pass('Universal Button Primitives & Zero Naked Buttons: 100% compliant');
+} catch (err) {
+  fail('Button Primitives Pre-Flight Gate (STD-UI-PRIMITIVE-002) failed.');
+}
 
 // ----------------------------------------------------------------------------
 // Summary & Exit Code

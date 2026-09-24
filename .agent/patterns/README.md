@@ -106,6 +106,8 @@ The tier is a **graduation ladder**: a pattern may start at `reference` and grad
 | [collab-visual-intake-and-deep-link-sharing.md](collab-visual-intake-and-deep-link-sharing.md) | `reference` | VALIDATED | `post-incident-governance.md` | universal |
 | [phased-development-ticket-first-gate.md](phased-development-ticket-first-gate.md) | `routed` | VALIDATED | `writing-plans/SKILL.md` (Gate 0), `plan.md` (Step 1), `GEMINI.md` (Invariant 7), `CLAUDE.md`, `skill-router.yaml` | universal |
 | [candidate-looks-ergonomics-and-intake.md](candidate-looks-ergonomics-and-intake.md) | `reference` | VALIDATED | `mobile-ui-engineering.md` (Touch Target Integrity), `AC-DEC-2026-045` | universal |
+| [contextual-multi-option-comments-engine.md](contextual-multi-option-comments-engine.md) | `reference` | VALIDATED | `mobile-ui-engineering.md`, `post-incident-governance.md`, `AC-DEC-2026-046` | universal |
+| [button-primitive-and-preflight-gate.md](button-primitive-and-preflight-gate.md) | `guarded` | VALIDATED | `GEMINI.md` (Modular Invariant 4), `CLAUDE.md`, `SK-010`, `verify:ui-buttons` | universal |
 > Update this index whenever a pattern is created or its tier changes via `/capture-pattern`.
 
 ---
