@@ -58,18 +58,32 @@ const toastHtml = fs.readFileSync(path.join(compDir, 'toast.html'), 'utf8');
 // 3. Read Modals
 const modalsDir = path.join(compDir, 'modals');
 const modalFiles = fs.readdirSync(modalsDir).filter(f => f.endsWith('.html')).sort();
-const combinedModals = modalFiles.map(f => {
+let combinedModals = modalFiles.map(f => {
   return fs.readFileSync(path.join(modalsDir, f), 'utf8');
 }).join('\n\n  ');
 
-// 4. Read Styles
+// Inject Shared Universal Option Intake Modal (ui_primitives)
+const sharedIntakeModalPath = path.join(rootDir, 'ui_primitives', 'components', 'option_intake_modal.html');
+if (fs.existsSync(sharedIntakeModalPath)) {
+  combinedModals += '\n\n  ' + fs.readFileSync(sharedIntakeModalPath, 'utf8');
+}
+
+// 4. Read Styles (Shared UI Primitives + Module Styles)
+const primStylesDir = path.join(rootDir, 'ui_primitives', 'styles');
+const primStyleFiles = ['00_tokens_base.css', '01_primitives.css', '02_zoom_pan.css'];
+const primCss = primStyleFiles
+  .filter(f => fs.existsSync(path.join(primStylesDir, f)))
+  .map(f => `/* --- Primitive: ${f} --- */\n` + fs.readFileSync(path.join(primStylesDir, f), 'utf8').trim())
+  .join('\n\n');
+
 const stylesDir = path.join(baseDir, 'styles');
 const styleFiles = fs.readdirSync(stylesDir).filter(f => f.endsWith('.css')).sort();
-const combinedCss = styleFiles.map(f => {
+const moduleCss = styleFiles.map(f => {
   let content = fs.readFileSync(path.join(stylesDir, f), 'utf8');
   content = content.replace(/^\/\*\s*---\s*File:.*?\*\/[\r\n]*/, '');
   return `/* --- File: ${f} --- */\n${content.trim()}`;
 }).join('\n\n');
+const combinedCss = primCss ? (primCss + '\n\n' + moduleCss) : moduleCss;
 
 // 5. PER-SOURCE SYNTAX GATE (INV-SDCA-003) on controller.js
 const scriptsDir = path.join(baseDir, 'scripts');
@@ -85,6 +99,15 @@ try {
   console.error(err.stderr ? err.stderr.toString() : err.message);
   process.exit(1);
 }
+
+// Read Shared UI Primitives Scripts
+const primScriptsDir = path.join(rootDir, 'ui_primitives', 'scripts');
+const primScriptFiles = ['drive_normalizer.js', 'zoom_pan_engine.js', 'primitives_core.js'];
+const primJs = primScriptFiles
+  .filter(f => fs.existsSync(path.join(primScriptsDir, f)))
+  .map(f => fs.readFileSync(path.join(primScriptsDir, f), 'utf8'))
+  .join('\n\n');
+const fullControllerJs = primJs ? (primJs + '\n\n' + controllerJs) : controllerJs;
 
 // 6. Zero-Leak Verification Function
 function verifyZeroLeak(content, label) {
@@ -237,7 +260,7 @@ if (buildStandalone) {
 
   verifyZeroLeak(output, 'standalone output');
 
-  output = safeReplace(output, '/* <!-- INJECT:CONTROLLER --> */', controllerJs, 'CONTROLLER');
+  output = safeReplace(output, '/* <!-- INJECT:CONTROLLER --> */', fullControllerJs, 'CONTROLLER');
 
   // Syntax check standalone script block
   const scriptMatch = output.match(/<script>([\s\S]*?)<\/script>/);
@@ -363,7 +386,7 @@ ${scopedCss}
   const SLIDES_MARQUEE = ${slidesMarquee.trim()};
   const SLIDES_RAYAGADA = ${slidesRayagada.trim()};
 
-  ${controllerJs}
+  ${fullControllerJs}
 
   // Sub-Engine Delegation Contract (sub-engine-shadowing-and-tab-reconciliation.md)
   window.renderDecoratorCockpit = function() {

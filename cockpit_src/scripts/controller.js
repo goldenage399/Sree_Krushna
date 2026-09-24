@@ -243,39 +243,154 @@
     }
 
     /* ==========================================================================
-       CUSTOM PHOTO / PINTEREST OVERRIDE ENGINE & ZOOM (AC-DEC-2026-008)
+       MULTI-OPTION DECOR INTAKE, LOOKBOOK OPTIONS & ZOOM ENGINE
+       (AC-DEC-2026-039 / UI-DEC-2026-035 / P-COLLAB-VISUAL-INTAKE-001)
        ========================================================================== */
+    const DECOR_OPTIONS_STORAGE_KEY = 'sk_decor_custom_options';
+    const LEGACY_DECOR_PHOTO_STORAGE_KEY = 'sree_krushna_custom_decor_photos';
     let activeEditingPlateId = null;
+    let activeOptionPlateId = null;
+    let localUploadedDataUrl = '';
     let isLightboxZoomed = false;
 
-    function loadCustomPhotoOverrides() {
+    function getPlateImages(plate) {
+      if (!plate) return [];
+      if (Array.isArray(plate.options) && plate.options.length > 0) {
+        return plate.options;
+      }
+      return [{
+        id: 'opt-0',
+        label: 'Option 1: Vedic Baseline',
+        badge: 'Vedic Baseline',
+        url: plate.photoSrc,
+        thumbnail: plate.photoSrc,
+        source: 'canonical',
+        selected: true
+      }];
+    }
+
+    function getActivePlateOption(plate) {
+      const opts = getPlateImages(plate);
+      const sel = opts.find(o => o.selected) || opts[0];
+      return sel;
+    }
+
+    function loadCustomDecorOptions() {
+      // 1. Backward compatibility migration from legacy single-photo key
       try {
-        const saved = localStorage.getItem('sree_krushna_custom_decor_photos');
-        if (saved) {
-          const overrides = JSON.parse(saved);
-          VISUAL_PLATES.forEach(p => {
-            if (overrides[p.id]) {
-              p.photoSrc = overrides[p.id];
-              p.isCustom = true;
-            } else {
-              p.isCustom = false;
+        const legacy = localStorage.getItem(LEGACY_DECOR_PHOTO_STORAGE_KEY);
+        if (legacy) {
+          const legacyMap = JSON.parse(legacy);
+          let currentOptionsMap = {};
+          try {
+            const savedOpt = localStorage.getItem(DECOR_OPTIONS_STORAGE_KEY);
+            if (savedOpt) currentOptionsMap = JSON.parse(savedOpt);
+          } catch (e) {}
+          let migrated = false;
+          Object.keys(legacyMap).forEach(plateId => {
+            const url = legacyMap[plateId];
+            if (url && (!currentOptionsMap[plateId] || currentOptionsMap[plateId].length === 0)) {
+              currentOptionsMap[plateId] = [{
+                id: 'opt-legacy-1',
+                label: 'Candidate Look 1',
+                badge: 'Custom Look',
+                url: url,
+                thumbnail: url,
+                source: 'custom_import',
+                selected: true
+              }];
+              migrated = true;
             }
           });
+          if (migrated) {
+            localStorage.setItem(DECOR_OPTIONS_STORAGE_KEY, JSON.stringify(currentOptionsMap));
+          }
         }
       } catch (e) {
-        console.warn('Error reading custom decor photo overrides:', e);
+        console.warn('Error migrating legacy decor photos:', e);
+      }
+
+      // 2. Load custom options into VISUAL_PLATES
+      try {
+        const raw = localStorage.getItem(DECOR_OPTIONS_STORAGE_KEY);
+        const optionsMap = raw ? JSON.parse(raw) : {};
+        VISUAL_PLATES.forEach(p => {
+          const canonicalPlate = (typeof CANONICAL_PLATES !== 'undefined') ? CANONICAL_PLATES.find(cp => cp.id === p.id) : null;
+          const canonicalOpts = (canonicalPlate && canonicalPlate.options) ? JSON.parse(JSON.stringify(canonicalPlate.options)) : [{
+            id: 'opt-0',
+            label: 'Option 1: Vedic Baseline',
+            badge: 'Vedic Baseline',
+            url: p.photoSrc,
+            thumbnail: p.photoSrc,
+            source: 'canonical',
+            selected: true
+          }];
+          const customOpts = optionsMap[p.id] || [];
+          p.options = [...canonicalOpts, ...customOpts];
+          
+          let selIndex = p.options.findIndex(o => o.selected);
+          if (selIndex < 0) {
+            selIndex = 0;
+            if (p.options[0]) p.options[0].selected = true;
+          }
+          p.selectedOptionIndex = selIndex;
+          p.isCustom = selIndex > 0;
+          if (p.options[selIndex]) {
+            p.photoSrc = p.options[selIndex].url || p.photoSrc;
+          }
+        });
+      } catch (e) {
+        console.warn('Error reading custom decor options:', e);
+      }
+    }
+
+    function loadCustomPhotoOverrides() {
+      loadCustomDecorOptions();
+    }
+
+    let lightboxZoomPanInstance = null;
+
+    function initLightboxZoomPan() {
+      const img = document.getElementById('lightboxImg');
+      if (!img) return;
+      if (lightboxZoomPanInstance && typeof lightboxZoomPanInstance.destroy === 'function') {
+        lightboxZoomPanInstance.destroy();
+        lightboxZoomPanInstance = null;
+      }
+      if (typeof window.ZoomPanEngine === 'function') {
+        lightboxZoomPanInstance = new window.ZoomPanEngine(img, {
+          minScale: 1,
+          maxScale: 5,
+          step: 0.3
+        });
       }
     }
 
     function toggleLightboxZoom() {
-      isLightboxZoomed = !isLightboxZoomed;
-      const wrapper = document.querySelector('.lightbox-img-wrapper');
+      if (!lightboxZoomPanInstance) {
+        initLightboxZoomPan();
+      }
       const btn = document.getElementById('lbZoomBtn');
-      if (wrapper) wrapper.classList.toggle('is-zoomed', isLightboxZoomed);
-      if (btn) btn.innerHTML = isLightboxZoomed ? '🔍 Fit' : '🔍 Expand';
+      if (lightboxZoomPanInstance) {
+        if (lightboxZoomPanInstance.scale > 1) {
+          lightboxZoomPanInstance.reset();
+          if (btn) btn.innerHTML = '🔍 Expand';
+        } else {
+          lightboxZoomPanInstance.zoomToPoint(2.2, 0, 0);
+          if (btn) btn.innerHTML = '🔍 Fit';
+        }
+      } else {
+        isLightboxZoomed = !isLightboxZoomed;
+        const wrapper = document.querySelector('.lightbox-img-wrapper');
+        if (wrapper) wrapper.classList.toggle('is-zoomed', isLightboxZoomed);
+        if (btn) btn.innerHTML = isLightboxZoomed ? '🔍 Fit' : '🔍 Expand';
+      }
     }
 
     function resetLightboxZoom() {
+      if (lightboxZoomPanInstance && typeof lightboxZoomPanInstance.reset === 'function') {
+        lightboxZoomPanInstance.reset();
+      }
       isLightboxZoomed = false;
       const wrapper = document.querySelector('.lightbox-img-wrapper');
       const btn = document.getElementById('lbZoomBtn');
@@ -315,111 +430,511 @@
       });
     }
 
-    function openCustomPhotoModal(plateId) {
-      activeEditingPlateId = plateId;
-      const plate = VISUAL_PLATES.find(p => p.id === plateId) || VISUAL_PLATES[0];
+    function selectPlateOption(plateId, optIndex) {
+      const plate = VISUAL_PLATES.find(p => p.id === plateId);
+      if (!plate || !plate.options || !plate.options[optIndex]) return;
+
+      plate.options.forEach((opt, idx) => {
+        opt.selected = (idx === optIndex);
+      });
+      plate.selectedOptionIndex = optIndex;
+      plate.isCustom = (optIndex > 0);
+      plate.photoSrc = plate.options[optIndex].url;
+
+      try {
+        const raw = localStorage.getItem(DECOR_OPTIONS_STORAGE_KEY);
+        const optionsMap = raw ? JSON.parse(raw) : {};
+        const customList = plate.options.filter(o => o.source !== 'canonical');
+        optionsMap[plateId] = customList;
+        localStorage.setItem(DECOR_OPTIONS_STORAGE_KEY, JSON.stringify(optionsMap));
+
+        let legacyMap = {};
+        const legacy = localStorage.getItem(LEGACY_DECOR_PHOTO_STORAGE_KEY);
+        if (legacy) legacyMap = JSON.parse(legacy);
+        if (optIndex > 0) {
+          legacyMap[plateId] = plate.photoSrc;
+        } else {
+          delete legacyMap[plateId];
+        }
+        localStorage.setItem(LEGACY_DECOR_PHOTO_STORAGE_KEY, JSON.stringify(legacyMap));
+      } catch (e) {
+        console.warn('Error saving decor option selection:', e);
+      }
+
+      renderLookbookGrid();
+      renderLightboxView();
+      renderTopicDetail(currentTopicIndex);
+      showToast(`✓ Switched to ${plate.options[optIndex].label || 'Option ' + (optIndex + 1)}`);
+    }
+
+    function clearPlateCustomOptions(plateId) {
+      const plate = VISUAL_PLATES.find(p => p.id === plateId);
       if (!plate) return;
+      if (!confirm(`Reset candidate looks for ${plate.id} back to canonical Vedic baseline?`)) return;
 
-      document.getElementById('customPlateSubtitle').textContent = plate.id + ' — ' + plate.title;
-      const input = document.getElementById('customPhotoInput');
-      input.value = plate.isCustom ? plate.photoSrc : '';
-      
-      const previewImg = document.getElementById('customPhotoPreviewImg');
-      const fallback = document.getElementById('customPhotoPreviewFallback');
-      fallback.style.display = 'none';
-      previewImg.style.display = 'block';
-      previewImg.src = plate.photoSrc;
+      try {
+        const raw = localStorage.getItem(DECOR_OPTIONS_STORAGE_KEY);
+        if (raw) {
+          const optionsMap = JSON.parse(raw);
+          delete optionsMap[plateId];
+          localStorage.setItem(DECOR_OPTIONS_STORAGE_KEY, JSON.stringify(optionsMap));
+        }
+        const legacy = localStorage.getItem(LEGACY_DECOR_PHOTO_STORAGE_KEY);
+        if (legacy) {
+          const legacyMap = JSON.parse(legacy);
+          delete legacyMap[plateId];
+          localStorage.setItem(LEGACY_DECOR_PHOTO_STORAGE_KEY, JSON.stringify(legacyMap));
+        }
+      } catch (e) {
+        console.warn('Error clearing custom options:', e);
+      }
 
-      const status = document.getElementById('customPhotoStatus');
-      status.textContent = plate.isCustom ? 'Active Custom Override' : 'Canonical Vedic Default';
-      status.style.color = plate.isCustom ? '#fbbf24' : '#10b981';
+      loadCustomDecorOptions();
+      renderLookbookGrid();
+      renderLightboxView();
+      renderTopicDetail(currentTopicIndex);
+      showToast(`✓ Reset ${plate.id} to Vedic baseline`);
+    }
 
-      const resetBtn = document.getElementById('btnResetToDefaultPhoto');
-      resetBtn.style.display = plate.isCustom ? 'block' : 'none';
+    function shareDecorOption(plateId, optIndex) {
+      const plate = VISUAL_PLATES.find(p => p.id === plateId);
+      if (!plate) return;
+      const idx = (typeof optIndex === 'number') ? optIndex : (plate.selectedOptionIndex || 0);
+      const opt = (plate.options && plate.options[idx]) ? plate.options[idx] : null;
+      const optLabel = opt ? (opt.label || `Option ${idx + 1}`) : 'Vedic Baseline';
 
-      const promptContainer = document.getElementById('customModalPromptText');
-      if (promptContainer) promptContainer.textContent = plate.prompt || 'No prompt available.';
-      document.getElementById('customPhotoModalBackdrop').classList.add('active');
+      const baseUrl = window.location.origin + window.location.pathname;
+      const shareUrl = `${baseUrl}?plate=${encodeURIComponent(plate.id)}&option=${idx}`;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          showToast(`✓ Copied deep-link for ${plate.id} (${optLabel})!`);
+        }).catch(() => {
+          prompt('Copy deep-link manually:', shareUrl);
+        });
+      } else {
+        prompt('Copy deep-link manually:', shareUrl);
+      }
+    }
+
+    function validateCandidateImageUrl(url) {
+      if (!url || !url.trim()) {
+        return { valid: false, type: 'empty', error: 'Please provide a direct image link or upload a showroom photo.' };
+      }
+      const cleanUrl = url.trim();
+
+      // 1. Direct Pinterest CDN image (i.pinimg.com)
+      if (cleanUrl.includes('i.pinimg.com')) {
+        return {
+          valid: true,
+          type: 'pinterest_direct',
+          src: cleanUrl,
+          badge: '📌 Pinterest CDN (Direct Render)',
+          isDirectImage: true
+        };
+      }
+
+      // 2. Pinterest Web Pin (pin.it or *.pinterest.*/pin/ or similar)
+      if (/pin\.it|pinterest(\.[a-z]{2,3})+/i.test(cleanUrl)) {
+        const hasDirectExt = /\.(jpe?g|png|webp|avif)($|\?)/i.test(cleanUrl);
+        if (!hasDirectExt && !cleanUrl.includes('pinimg.com')) {
+          return {
+            valid: false,
+            type: 'pinterest_webpage',
+            error: 'Invalidated Pinterest Link: This is a Pinterest webpage link (pin.it / pin/...), not a direct image file. Hotlinking web pages inside cards is blocked by browser security. Please right-click the photo on Pinterest and choose "Copy Image Address" (URL must start with https://i.pinimg.com/... and end with .jpg), or upload the photo using the "Device / Showroom Photo" tab.'
+          };
+        }
+        return {
+          valid: true,
+          type: 'pinterest_direct',
+          src: cleanUrl,
+          badge: '📌 Pinterest Image Asset',
+          isDirectImage: true
+        };
+      }
+
+      // 3. Google Drive Link
+      const driveResolved = (window.SKPrimitives && window.SKPrimitives.resolveDriveAsset)
+        ? window.SKPrimitives.resolveDriveAsset(cleanUrl, { cardWidth: 800 })
+        : null;
+      if (driveResolved && driveResolved.isDrive) {
+        return {
+          valid: true,
+          type: 'drive',
+          src: driveResolved.cardThumbnail,
+          badge: '📁 Drive ID: ' + driveResolved.driveId,
+          isDirectImage: true
+        };
+      }
+
+      // 4. Data URL (Showroom / Camera upload)
+      if (cleanUrl.startsWith('data:image/')) {
+        return {
+          valid: true,
+          type: 'data_url',
+          src: cleanUrl,
+          badge: '📷 Showroom Photo',
+          isDirectImage: true
+        };
+      }
+
+      // 5. Direct Web Image with standard extension
+      if (/^https?:\/\/.*\.(jpe?g|png|webp|avif|gif)($|\?)/i.test(cleanUrl)) {
+        return {
+          valid: true,
+          type: 'web_image',
+          src: cleanUrl,
+          badge: '🌐 Direct Web Image',
+          isDirectImage: true
+        };
+      }
+
+      // 6. Generic HTML Webpage URL
+      if (/^https?:\/\//i.test(cleanUrl)) {
+        return {
+          valid: false,
+          type: 'webpage_not_image',
+          error: 'Invalidated Link: This is a website page address, not a direct image file (.jpg/.png). Browsers block HTML pages inside photo cards. Please right-click the photo on that page and select "Copy Image Address", or use the "Device / Showroom Photo" tab.'
+        };
+      }
+
+      return {
+        valid: false,
+        type: 'invalid_format',
+        error: 'Invalid link format. Image URLs must begin with http:// or https://'
+      };
+    }
+
+    function openOptionIntakeModal(plateId) {
+      activeOptionPlateId = plateId;
+      const backdrop = document.getElementById('skOptionIntakeBackdrop');
+      if (!backdrop) return;
+
+      const plate = VISUAL_PLATES.find(p => p.id === plateId) || VISUAL_PLATES[0];
+      const itemIdInput = document.getElementById('skOptionItemId');
+      const modalTitle = document.getElementById('skOptionIntakeTitle');
+      const titleInput = document.getElementById('skOptionTitle');
+      const categorySelect = document.getElementById('skOptionCategory');
+      const priceInput = document.getElementById('skOptionPrice');
+      const vendorInput = document.getElementById('skOptionVendor');
+      const driveInput = document.getElementById('skDriveUrlInput');
+      const proofCard = document.getElementById('skDriveProofCard');
+      const fileInput = document.getElementById('skFileInput');
+      const alertEl = document.getElementById('skIntakeUrlAlert');
+
+      if (itemIdInput) itemIdInput.value = plateId || '';
+      if (modalTitle) modalTitle.textContent = plate ? `Add Candidate Look for ${plate.title} (${plate.id})` : 'Add Shopping / Decor Option';
+
+      if (plate) {
+        const options = getPlateImages(plate);
+        const nextLookNum = options.length + 1;
+        if (titleInput) titleInput.value = `${plate.title} (Look ${nextLookNum})`;
+        if (categorySelect) {
+          if (plate.category === 'mandap') categorySelect.value = 'mandap';
+          else if (plate.category === 'stage') categorySelect.value = 'stage';
+          else categorySelect.value = 'other';
+        }
+        if (vendorInput) vendorInput.value = 'Decorator Catalog';
+      } else {
+        if (titleInput) titleInput.value = '';
+      }
+
+      if (driveInput) driveInput.value = '';
+      if (proofCard) proofCard.style.display = 'none';
+      if (fileInput) fileInput.value = '';
+      if (priceInput) priceInput.value = '';
+      localUploadedDataUrl = '';
+      if (alertEl) {
+        alertEl.style.display = 'none';
+        alertEl.className = 'sk-intake-alert';
+        alertEl.textContent = '';
+      }
+
+      backdrop.classList.add('active');
+      backdrop.classList.add('is-active');
+    }
+
+    function closeOptionIntakeModal() {
+      const backdrop = document.getElementById('skOptionIntakeBackdrop');
+      if (backdrop) {
+        backdrop.classList.remove('active');
+        backdrop.classList.remove('is-active');
+      }
+      activeOptionPlateId = null;
+    }
+
+    function openCustomPhotoModal(plateId) {
+      openOptionIntakeModal(plateId);
     }
 
     function closeCustomPhotoModal() {
-      document.getElementById('customPhotoModalBackdrop').classList.remove('active');
-      activeEditingPlateId = null;
+      closeOptionIntakeModal();
     }
 
-    function onCustomPhotoUrlChange() {
-      const url = document.getElementById('customPhotoInput').value.trim();
-      if (url) {
-        testCustomPhotoPreview();
+    function wireOptionIntakeModal() {
+      const intakeBackdrop = document.getElementById('skOptionIntakeBackdrop');
+      if (!intakeBackdrop) return;
+
+      const btnCloseIntake = document.getElementById('skOptionIntakeClose');
+      const btnCancelIntake = document.getElementById('skBtnCancelIntake');
+      const btnSubmitOption = document.getElementById('skBtnSubmitOption');
+      const tabDrive = document.getElementById('skTabDriveLink');
+      const tabDevice = document.getElementById('skTabDeviceUpload');
+      const paneDrive = document.getElementById('skPaneDrive');
+      const paneDevice = document.getElementById('skPaneDevice');
+      const driveInput = document.getElementById('skDriveUrlInput');
+      const btnVerifyDrive = document.getElementById('skBtnVerifyDrive');
+      const proofCard = document.getElementById('skDriveProofCard');
+      const proofImg = document.getElementById('skDriveProofImg');
+      const proofId = document.getElementById('skDriveFileId');
+      const fileInput = document.getElementById('skFileInput');
+      const alertEl = document.getElementById('skIntakeUrlAlert');
+
+      if (btnCloseIntake && typeof btnCloseIntake.addEventListener === 'function') {
+        btnCloseIntake.addEventListener('click', closeOptionIntakeModal);
       }
-    }
-
-    function testCustomPhotoPreview() {
-      const url = document.getElementById('customPhotoInput').value.trim();
-      const previewImg = document.getElementById('customPhotoPreviewImg');
-      const fallback = document.getElementById('customPhotoPreviewFallback');
-      if (url) {
-        fallback.style.display = 'none';
-        previewImg.style.display = 'block';
-        previewImg.src = url;
+      if (btnCancelIntake && typeof btnCancelIntake.addEventListener === 'function') {
+        btnCancelIntake.addEventListener('click', closeOptionIntakeModal);
       }
-    }
 
-    function handlePreviewError() {
-      const previewImg = document.getElementById('customPhotoPreviewImg');
-      const fallback = document.getElementById('customPhotoPreviewFallback');
-      previewImg.style.display = 'none';
-      fallback.style.display = 'block';
-    }
-
-    function onSaveCustomPhoto() {
-      if (!activeEditingPlateId) return;
-      const url = document.getElementById('customPhotoInput').value.trim();
-      
-      try {
-        let overrides = {};
-        const saved = localStorage.getItem('sree_krushna_custom_decor_photos');
-        if (saved) overrides = JSON.parse(saved);
-
-        if (url) {
-          overrides[activeEditingPlateId] = url;
-        } else {
-          delete overrides[activeEditingPlateId];
-        }
-        localStorage.setItem('sree_krushna_custom_decor_photos', JSON.stringify(overrides));
-        loadCustomPhotoOverrides();
-      loadSavedDecisions();
-        renderLookbookGrid();
-        renderLightboxView();
-        renderTopicDetail(currentTopicIndex);
-        closeCustomPhotoModal();
-      } catch (e) {
-        alert('Error saving custom photo: ' + e.message);
+      if (intakeBackdrop && typeof intakeBackdrop.addEventListener === 'function') {
+        intakeBackdrop.addEventListener('click', (e) => {
+          if (e.target === intakeBackdrop) closeOptionIntakeModal();
+        });
       }
-    }
 
-    function onResetToCanonicalPhoto() {
-      if (!activeEditingPlateId) return;
-      try {
-        const saved = localStorage.getItem('sree_krushna_custom_decor_photos');
-        if (saved) {
-          let overrides = JSON.parse(saved);
-          delete overrides[activeEditingPlateId];
-          localStorage.setItem('sree_krushna_custom_decor_photos', JSON.stringify(overrides));
+      if (tabDrive && typeof tabDrive.addEventListener === 'function' && tabDevice && typeof tabDevice.addEventListener === 'function') {
+        tabDrive.addEventListener('click', () => {
+          tabDrive.classList.add('is-active');
+          tabDevice.classList.remove('is-active');
+          if (paneDrive) paneDrive.style.display = 'block';
+          if (paneDevice) paneDevice.style.display = 'none';
+        });
+
+        tabDevice.addEventListener('click', () => {
+          tabDevice.classList.add('is-active');
+          tabDrive.classList.remove('is-active');
+          if (paneDevice) paneDevice.style.display = 'block';
+          if (paneDrive) paneDrive.style.display = 'none';
+        });
+      }
+
+      if (fileInput && typeof fileInput.addEventListener === 'function') {
+        fileInput.addEventListener('change', (e) => {
+          const file = e.target.files && e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+              localUploadedDataUrl = evt.target.result;
+              showToast(`Decor photo loaded (${Math.round(file.size / 1024)} KB)!`);
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+      }
+
+      const verifyDriveLink = () => {
+        const url = driveInput ? driveInput.value.trim() : '';
+        if (alertEl) {
+          alertEl.style.display = 'none';
+          alertEl.className = 'sk-intake-alert';
+          alertEl.textContent = '';
         }
-        const canonical = CANONICAL_PLATES.find(p => p.id === activeEditingPlateId);
-        const current = VISUAL_PLATES.find(p => p.id === activeEditingPlateId);
-        if (canonical && current) {
-          current.photoSrc = canonical.photoSrc;
-          current.isCustom = false;
+        if (!url) return;
+
+        const v = validateCandidateImageUrl(url);
+        if (!v.valid) {
+          if (proofCard) proofCard.style.display = 'none';
+          if (alertEl) {
+            alertEl.style.display = 'block';
+            alertEl.className = 'sk-intake-alert is-error';
+            alertEl.textContent = v.error || 'Invalidated link.';
+          }
+          showToast(v.error || 'Invalid link');
+          return;
         }
-        loadCustomPhotoOverrides();
-        renderLookbookGrid();
-        renderLightboxView();
-        renderTopicDetail(currentTopicIndex);
-        closeCustomPhotoModal();
-      } catch (e) {
-        alert('Error resetting photo: ' + e.message);
+
+        if (alertEl) {
+          alertEl.style.display = 'block';
+          alertEl.className = 'sk-intake-alert is-warning';
+          alertEl.textContent = 'Testing link connectivity and hotlink permissions...';
+        }
+
+        const testImg = new Image();
+        testImg.referrerPolicy = 'no-referrer';
+        let timedOut = false;
+        const timeoutId = setTimeout(() => {
+          timedOut = true;
+          testImg.src = '';
+          if (proofCard) proofCard.style.display = 'none';
+          if (alertEl) {
+            alertEl.style.display = 'block';
+            alertEl.className = 'sk-intake-alert is-error';
+            alertEl.textContent = '❌ Verification timed out. The remote host took too long or blocked hotlinked requests. Please upload the photo directly.';
+          }
+          showToast('Image load timed out');
+        }, 7000);
+
+        testImg.onload = () => {
+          if (timedOut) return;
+          clearTimeout(timeoutId);
+          if (proofCard) proofCard.style.display = 'flex';
+          if (proofImg) {
+            proofImg.src = v.src;
+            proofImg.setAttribute('referrerpolicy', 'no-referrer');
+          }
+          if (proofId) proofId.textContent = v.badge;
+          if (alertEl) {
+            alertEl.style.display = 'block';
+            alertEl.className = 'sk-intake-alert is-success';
+            alertEl.textContent = `✓ Valid direct image asset verified (${testImg.naturalWidth}×${testImg.naturalHeight}px)! Ready for card rendering.`;
+          }
+          showToast('Image link verified successfully!');
+        };
+
+        testImg.onerror = () => {
+          if (timedOut) return;
+          clearTimeout(timeoutId);
+          if (proofCard) proofCard.style.display = 'none';
+          if (alertEl) {
+            alertEl.style.display = 'block';
+            alertEl.className = 'sk-intake-alert is-error';
+            alertEl.textContent = '❌ Invalidated Hotlink: The remote host blocked this image (HTTP 403 / anti-hotlinking / ORB). This link cannot be entertained. Please save/screenshot the image and upload it via "Device / Showroom Photo", or use a direct image CDN address.';
+          }
+          showToast('Invalidated hotlink (host blocked access)');
+        };
+
+        testImg.src = v.src;
+      };
+
+      if (btnVerifyDrive && typeof btnVerifyDrive.addEventListener === 'function') {
+        btnVerifyDrive.addEventListener('click', verifyDriveLink);
+      }
+      if (driveInput && typeof driveInput.addEventListener === 'function') {
+        driveInput.addEventListener('change', verifyDriveLink);
+      }
+
+      if (btnSubmitOption && typeof btnSubmitOption.addEventListener === 'function') {
+        btnSubmitOption.addEventListener('click', () => {
+          const plateId = document.getElementById('skOptionItemId')?.value.trim() || activeOptionPlateId || '';
+          const title = document.getElementById('skOptionTitle')?.value.trim() || 'New Candidate Look';
+          const price = document.getElementById('skOptionPrice')?.value.trim() || '';
+          const vendor = document.getElementById('skOptionVendor')?.value.trim() || '';
+          const urlInput = driveInput ? driveInput.value.trim() : '';
+
+          const commitLook = (srcUrl, refUrl, optType) => {
+            if (!plateId) {
+              showToast('No plate selected for look');
+              closeOptionIntakeModal();
+              return;
+            }
+
+            const plate = VISUAL_PLATES.find(p => p.id === plateId);
+            if (!plate) return;
+
+            let currentOptionsMap = {};
+            try {
+              const raw = localStorage.getItem(DECOR_OPTIONS_STORAGE_KEY);
+              if (raw) currentOptionsMap = JSON.parse(raw);
+            } catch (e) {}
+
+            if (!currentOptionsMap[plateId]) {
+              currentOptionsMap[plateId] = [];
+            }
+
+            const existingOptions = getPlateImages(plate);
+            const nextOptIndex = existingOptions.length;
+            const newOpt = {
+              id: `opt-custom-${Date.now()}`,
+              label: title,
+              badge: `Look ${nextOptIndex + 1}`,
+              url: srcUrl,
+              thumbnail: srcUrl,
+              source: optType || 'custom_import',
+              store: vendor,
+              price: price ? `₹${price}` : '',
+              addedAt: new Date().toISOString(),
+              selected: true
+            };
+
+            currentOptionsMap[plateId].push(newOpt);
+            try {
+              localStorage.setItem(DECOR_OPTIONS_STORAGE_KEY, JSON.stringify(currentOptionsMap));
+            } catch (e) {
+              console.warn('Error saving custom decor options:', e);
+            }
+
+            loadCustomDecorOptions();
+            selectPlateOption(plateId, plate.options.length - 1);
+            showToast(`✓ Added candidate look "${title}" to ${plateId}!`);
+            closeOptionIntakeModal();
+          };
+
+          if (localUploadedDataUrl) {
+            commitLook(localUploadedDataUrl, '', 'showroom_upload');
+          } else if (urlInput) {
+            const v = validateCandidateImageUrl(urlInput);
+            if (!v.valid) {
+              if (alertEl) {
+                alertEl.style.display = 'block';
+                alertEl.className = 'sk-intake-alert is-error';
+                alertEl.textContent = v.error;
+              }
+              showToast(v.error);
+              return;
+            }
+
+            btnSubmitOption.disabled = true;
+            const origText = btnSubmitOption.textContent;
+            btnSubmitOption.textContent = 'Verifying image...';
+            const testImg = new Image();
+            testImg.referrerPolicy = 'no-referrer';
+            let timedOut = false;
+            const timeoutId = setTimeout(() => {
+              timedOut = true;
+              testImg.src = '';
+              btnSubmitOption.disabled = false;
+              btnSubmitOption.textContent = origText;
+              if (alertEl) {
+                alertEl.style.display = 'block';
+                alertEl.className = 'sk-intake-alert is-error';
+                alertEl.textContent = '❌ Verification timed out. Remote host blocked access. Please upload the photo instead.';
+              }
+              showToast('Verification timed out');
+            }, 6000);
+
+            testImg.onload = () => {
+              if (timedOut) return;
+              clearTimeout(timeoutId);
+              btnSubmitOption.disabled = false;
+              btnSubmitOption.textContent = origText;
+              commitLook(v.src, v.src, v.type);
+            };
+
+            testImg.onerror = () => {
+              if (timedOut) return;
+              clearTimeout(timeoutId);
+              btnSubmitOption.disabled = false;
+              btnSubmitOption.textContent = origText;
+              if (alertEl) {
+                alertEl.style.display = 'block';
+                alertEl.className = 'sk-intake-alert is-error';
+                alertEl.textContent = '❌ Invalidated Hotlink: The remote host rejected image loading (HTTP 403 Forbidden). Hotlinks and broken links cannot be entertained. Please upload via "Device / Showroom Photo".';
+              }
+              showToast('Invalidated hotlink rejected');
+            };
+
+            testImg.src = v.src;
+          } else {
+            if (alertEl) {
+              alertEl.style.display = 'block';
+              alertEl.className = 'sk-intake-alert is-error';
+              alertEl.textContent = 'Please provide a valid direct image link or upload a photo.';
+            }
+            showToast('Please provide an image link or photo');
+            return;
+          }
+        });
       }
     }
 
@@ -730,6 +1245,7 @@
 
     function renderLookbookGrid() {
       const container = document.getElementById('lookbookGridContainer');
+      if (!container) return;
       container.innerHTML = '';
 
       const filtered = VISUAL_PLATES.filter(p => {
@@ -740,24 +1256,76 @@
       filtered.forEach(plate => {
         const card = document.createElement('div');
         card.className = 'lookbook-card';
-        const activeSrc = currentGridMode === 'photo' ? (plate.photoSrc || plate.blueprintSrc) : plate.blueprintSrc;
+        card.id = `lookbook-card-${plate.id}`;
+
+        const options = getPlateImages(plate);
+        const selIdx = (typeof plate.selectedOptionIndex === 'number' && plate.selectedOptionIndex < options.length)
+          ? plate.selectedOptionIndex
+          : 0;
+        const activeOpt = options[selIdx] || options[0];
+        const activeSrc = currentGridMode === 'photo' ? (activeOpt.url || plate.photoSrc || plate.blueprintSrc) : plate.blueprintSrc;
+
+        // Render option chips bar if multiple looks exist or to allow adding
+        let optionsBarHtml = '';
+        if (options.length > 1 || currentGridMode === 'photo') {
+          optionsBarHtml = '<div class="lookbook-option-bar" onclick="event.stopPropagation()">';
+          options.forEach((opt, idx) => {
+            const isSel = (idx === selIdx);
+            const chipLabel = opt.badge || opt.label || `Look ${idx + 1}`;
+            optionsBarHtml += `
+              <button type="button" class="lookbook-option-chip ${isSel ? 'is-selected' : ''}" 
+                onclick="selectPlateOption('${plate.id}', ${idx})" 
+                title="${opt.label || 'Look ' + (idx + 1)}">
+                ${isSel ? '● ' : ''}${chipLabel}
+              </button>
+            `;
+          });
+          // Add Look button
+          optionsBarHtml += `
+            <button type="button" class="lookbook-option-chip-add" 
+              onclick="openOptionIntakeModal('${plate.id}')" 
+              title="Add candidate look for ${plate.id}">
+              ➕ Look
+            </button>
+          `;
+          // Clear custom looks button (if custom looks exist)
+          const hasCustom = options.some(o => o.source !== 'canonical');
+          if (hasCustom) {
+            optionsBarHtml += `
+              <button type="button" class="lookbook-option-chip-clear" 
+                onclick="clearPlateCustomOptions('${plate.id}')" 
+                title="Reset ${plate.id} to Vedic baseline">
+                ✕ Clear
+              </button>
+            `;
+          }
+          optionsBarHtml += '</div>';
+        }
+
         card.onclick = () => openLightboxToPlate(plate.index, currentGridMode);
         card.innerHTML = `
           <div class="lookbook-img-box">
-            <img src="${activeSrc}" alt="${plate.title}" onerror="this.src='${plate.blueprintSrc}'" />
+            <img src="${activeSrc}" alt="${plate.title}" onerror="this.src='${plate.blueprintSrc}'" referrerpolicy="no-referrer" />
             <span class="lookbook-badge-plate">${plate.id}</span>
             <span class="lookbook-badge-scope ${plate.mandatory ? 'mandatory' : 'inspiration'}">${plate.mandatory ? 'MANDATORY' : 'INSPIRATION'}</span>
             <span class="lookbook-badge-type">${currentGridMode === 'photo' ? '📸 Real Photo' : '📐 Blueprint'}</span>
-            ${plate.isCustom ? '<span class="lookbook-badge-custom">📌 Custom URL</span>' : ''}
+            ${options.length > 1 ? `<span class="lookbook-badge-looks">📸 ${options.length} Looks</span>` : ''}
+            ${plate.isCustom ? '<span class="lookbook-badge-custom">📌 Custom Look</span>' : ''}
           </div>
+          ${optionsBarHtml}
           <div class="lookbook-card-body">
             <div class="lookbook-card-title">${plate.title}</div>
             <div class="lookbook-card-zone">${plate.zone}</div>
             <div class="lookbook-card-notes">${plate.notes}</div>
             <div class="lookbook-card-footer">
               <span>${plate.dimensions}</span>
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <button class="mode-btn" onclick="event.stopPropagation(); openCustomPhotoModal('${plate.id}')" style="font-size: 10px; padding: 2px 7px; background: rgba(245, 158, 11, 0.12); color: var(--accent-gold); border-color: rgba(245, 158, 11, 0.3);" title="Override with Pinterest or custom image">✏️ Photo</button>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <button type="button" class="lookbook-share-look-btn" onclick="event.stopPropagation(); shareDecorOption('${plate.id}', ${selIdx})" title="Copy collaborative deep-link for this look">
+                  📤 Share
+                </button>
+                <button type="button" class="mode-btn" onclick="event.stopPropagation(); openOptionIntakeModal('${plate.id}')" style="font-size: 10px; padding: 2px 7px; background: rgba(245, 158, 11, 0.12); color: var(--accent-gold); border-color: rgba(245, 158, 11, 0.3);" title="Add or review candidate looks">
+                  ✏️ Looks
+                </button>
                 <span style="color:#38bdf8; font-weight:600; cursor:pointer;">Inspect ➔</span>
               </div>
             </div>
@@ -827,14 +1395,49 @@
       document.getElementById('lbCounter').textContent = (currentLightboxIndex + 1) + ' / ' + VISUAL_PLATES.length;
       
       const img = document.getElementById('lightboxImg');
-      const activeSrc = currentLightboxMode === 'photo' ? (plate.photoSrc || plate.blueprintSrc) : plate.blueprintSrc;
+      const options = getPlateImages(plate);
+      const selIdx = (typeof plate.selectedOptionIndex === 'number' && plate.selectedOptionIndex < options.length)
+        ? plate.selectedOptionIndex
+        : 0;
+      const activeOpt = options[selIdx] || options[0];
+      const activeSrc = currentLightboxMode === 'photo' ? (activeOpt.url || plate.photoSrc || plate.blueprintSrc) : plate.blueprintSrc;
       img.src = activeSrc;
       img.alt = plate.title + ' (' + currentLightboxMode + ')';
+      img.setAttribute('referrerpolicy', 'no-referrer');
 
       document.getElementById('lbZoneText').textContent = plate.zone;
       document.getElementById('lbSpecText').textContent = plate.spec;
       document.getElementById('lbClauseText').textContent = plate.clause;
       document.getElementById('lbNotesText').textContent = plate.notes + ' [' + plate.dimensions + ']';
+
+      // Render option switcher strip in Lightbox topbar
+      const optionStrip = document.getElementById('lbOptionStrip');
+      if (optionStrip) {
+        if (currentLightboxMode === 'photo' && options.length > 0) {
+          optionStrip.style.display = 'flex';
+          optionStrip.innerHTML = options.map((opt, oIdx) => `
+            <button type="button" class="decor-option-chip ${oIdx === selIdx ? 'active' : ''}" onclick="selectPlateOption('${plate.id}', ${oIdx})">
+              ${opt.badge || opt.label || `Look ${oIdx + 1}`}
+            </button>
+          `).join('') + `
+            <button type="button" class="decor-option-chip decor-option-chip-add" onclick="openOptionIntakeModal('${plate.id}')" title="Add candidate look">
+              ➕ Add
+            </button>
+          `;
+        } else {
+          optionStrip.style.display = 'none';
+        }
+      }
+
+      // Initialize ZoomPanEngine for micro-inspection
+      initLightboxZoomPan();
+    }
+
+    function shareCurrentLightboxOption() {
+      const plate = VISUAL_PLATES[currentLightboxIndex] || VISUAL_PLATES[0];
+      if (plate) {
+        shareDecorOption(plate.id, plate.selectedOptionIndex || 0);
+      }
     }
 
     /* TENDER EXPORT MODAL */
@@ -1097,6 +1700,7 @@
         closeLookbookModal();
         closeTenderModal();
         closePinModal();
+        closeOptionIntakeModal();
         return;
       }
 
@@ -1137,12 +1741,79 @@
       if (e.key === '3') switchTone('firm');
     });
 
-    /* INITIALIZATION */
-    window.addEventListener('DOMContentLoaded', () => {
+    /* BIDIRECTIONAL DEEP-LINKING PARSER (P-QUICK-SHARE-001 / AC-DEC-2026-039) */
+    function parseCockpitUrlParams() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const plateParam = params.get('plate');
+        const optionParam = params.get('option');
+        const modeParam = params.get('mode');
+
+        if (modeParam === 'decisions') {
+          switchView('decisions');
+        } else if (modeParam === 'audience') {
+          switchView('audience');
+        }
+
+        if (plateParam) {
+          const plate = VISUAL_PLATES.find(p => p.id.toUpperCase() === plateParam.toUpperCase());
+          if (plate) {
+            if (optionParam !== null && !isNaN(parseInt(optionParam, 10))) {
+              const optIdx = parseInt(optionParam, 10);
+              if (plate.options && plate.options[optIdx]) {
+                selectPlateOption(plate.id, optIdx);
+              }
+            }
+            openLookbookModal();
+            setTimeout(() => {
+              const cardEl = document.getElementById(`lookbook-card-${plate.id}`);
+              if (cardEl) {
+                cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                cardEl.classList.remove('highlight-target-item');
+                void cardEl.offsetWidth; // trigger reflow
+                cardEl.classList.add('highlight-target-item');
+                showToast(`🎯 Showing ${plate.id}: ${plate.title}`);
+              }
+            }, 300);
+          }
+        }
+      } catch (e) {
+        console.warn('Error parsing cockpit URL parameters:', e);
+      }
+    }
+
+    /* GLOBAL WINDOW EXPORTS */
+    window.openOptionIntakeModal = openOptionIntakeModal;
+    window.closeOptionIntakeModal = closeOptionIntakeModal;
+    window.openCustomPhotoModal = openCustomPhotoModal;
+    window.closeCustomPhotoModal = closeCustomPhotoModal;
+    window.selectPlateOption = selectPlateOption;
+    window.clearPlateCustomOptions = clearPlateCustomOptions;
+    window.shareDecorOption = shareDecorOption;
+    window.shareCurrentLightboxOption = shareCurrentLightboxOption;
+    window.toggleLightboxZoom = toggleLightboxZoom;
+    window.resetLightboxZoom = resetLightboxZoom;
+    window.openLightboxToPlate = openLightboxToPlate;
+    window.closeLightboxModal = closeLightboxModal;
+    window.openLookbookModal = openLookbookModal;
+    window.closeLookbookModal = closeLookbookModal;
+
+    /* INITIALIZATION & LIFECYCLE GATE (INV-LIFECYCLE-02) */
+    function initCockpit() {
+      loadCustomDecorOptions();
+      loadSavedDecisions();
       renderAgendaList();
       renderTopicDetail();
       renderSlideIndicators();
       renderCurrentSlide();
       recalculate4TierQuote();
       restoreCockpitState();
-    });
+      wireOptionIntakeModal();
+      parseCockpitUrlParams();
+    }
+
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', initCockpit);
+    } else {
+      initCockpit();
+    }

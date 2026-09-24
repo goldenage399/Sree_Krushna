@@ -107,6 +107,11 @@ const requiredElements = [
   'id="cockpitAuthOverlay"',
   'id="cockpitLoginBtn"',
   'initAuthGate',
+  'id="skOptionIntakeBackdrop"',
+  'id="lbOptionStrip"',
+  'ZoomPanEngine',
+  'selectPlateOption',
+  'shareDecorOption',
   // SEC-1 remediation (AC-DEC-2026-012): the Firestore content-fetch contract must be wired.
   'let MASTER_DECISIONS = [];',
   'let TOPICS_MARQUEE = [];',
@@ -127,6 +132,7 @@ assert(scriptMatch !== null, 'CANONICAL_PLATES array is present in assembled scr
 if (scriptMatch) {
   const plates = JSON.parse(scriptMatch[1]);
   assert(plates.length >= 8, `CANONICAL_PLATES has ${plates.length} registered plates`);
+  assert(plates.every(p => Array.isArray(p.options) && p.options.length > 0), 'All CANONICAL_PLATES define multi-option container arrays');
   plates.forEach(p => {
     if (p.photoSrc) {
       const relPhoto = p.photoSrc.replace('./', '');
@@ -220,7 +226,9 @@ if (rawScriptMatch) {
         querySelectorAll: () => [],
         querySelector: () => null,
         setAttribute: () => {},
-        getAttribute: () => ''
+        getAttribute: () => '',
+        addEventListener: () => {},
+        removeEventListener: () => {}
       };
     }
     return mockElements[id];
@@ -302,6 +310,12 @@ if (rawScriptMatch) {
       sandbox.switchTone('warm');
       assert(mockElements['btnToneWarm'] && mockElements['btnToneWarm'].classList.contains('active'), 'switchTone("warm") sets Warm tone button active');
     }
+
+    // Test Multi-Option & Zoom-Pan function exports (SK-006)
+    assert(typeof sandbox.selectPlateOption === 'function', 'selectPlateOption() function is present in compiled script');
+    assert(typeof sandbox.shareDecorOption === 'function', 'shareDecorOption() function is present in compiled script');
+    assert(typeof sandbox.openOptionIntakeModal === 'function', 'openOptionIntakeModal() function is present in compiled script');
+    assert(typeof sandbox.toggleLightboxZoom === 'function', 'toggleLightboxZoom() function is present in compiled script');
 
   } catch (err) {
     assert(false, `Sandbox execution error: ${err.message}`);

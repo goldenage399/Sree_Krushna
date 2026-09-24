@@ -47,6 +47,549 @@
 }
 
 
+/* --- Primitive: 00_tokens_base.css --- */
+/**
+ * Sree Krushna Marriage OS — Universal Design Tokens Base
+ * Standard: STD-MOD-COMP-001 | Ruling: AC-DEC-2026-019
+ * Scope: Baseline design system variables for luxury dark mode interfaces
+ */
+
+#tab-cockpit #cockpitFrame {
+  /* Surface & Background */
+  --sk-bg: #0f1117;
+  --sk-surface: #181b24;
+  --sk-surface-elevated: #222634;
+  --sk-surface-card: rgba(24, 27, 36, 0.85);
+  
+  /* Borders */
+  --sk-border: #2d3245;
+  --sk-border-subtle: rgba(255, 255, 255, 0.08);
+  --sk-border-focus: #e5a93c;
+  
+  /* Typography */
+  --sk-text-primary: #f3f4f6;
+  --sk-text-secondary: #9ca3af;
+  --sk-text-muted: #6b7280;
+  
+  /* Accent Colors */
+  --sk-gold: #e5a93c;
+  --sk-gold-glow: rgba(229, 169, 60, 0.15);
+  --sk-gold-subtle: rgba(229, 169, 60, 0.08);
+  
+  --sk-emerald: #10b981;
+  --sk-emerald-glow: rgba(16, 185, 129, 0.15);
+  --sk-emerald-subtle: rgba(16, 185, 129, 0.08);
+  
+  --sk-amber: #f59e0b;
+  --sk-amber-glow: rgba(245, 158, 11, 0.15);
+  
+  --sk-rose: #f43f5e;
+  --sk-rose-glow: rgba(244, 63, 94, 0.15);
+  
+  --sk-purple: #a855f7;
+  --sk-purple-glow: rgba(168, 85, 247, 0.15);
+  
+  --sk-blue: #3b82f6;
+  --sk-blue-glow: rgba(59, 130, 246, 0.15);
+
+  /* Geometry & Shadows */
+  --sk-radius-sm: 6px;
+  --sk-radius-md: 10px;
+  --sk-radius-lg: 16px;
+  --sk-radius-full: 9999px;
+  --sk-shadow-card: 0 4px 20px rgba(0, 0, 0, 0.35);
+  --sk-shadow-popover: 0 10px 35px rgba(0, 0, 0, 0.65);
+  --sk-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  
+  /* Touch & Fluid Tokens (AC-DEC-2026-034 / UI-DEC-2026-030 / Protocol 19) */
+  --sk-touch-target: 44px;
+  --sk-space-fluid-page: clamp(10px, 1.5vw, 24px);
+  --sk-space-fluid-card: clamp(12px, 1.5vw, 20px);
+}
+
+/* --- Primitive: 01_primitives.css --- */
+/**
+ * Sree Krushna Marriage OS — Universal UI Primitives Styles
+ * Standard: STD-MOD-COMP-001 | Ruling: AC-DEC-2026-019
+ * Scope: Base layout, scroll-snap carousels, full-screen lightbox, steppers, and modals
+ */
+
+/* Responsive Base Container */
+#tab-cockpit #cockpitFrame .sk-primitive-container {
+  box-sizing: border-box;
+  font-family: var(--sk-font-sans);
+}
+
+/* 1. Universal Visual Carousel */
+#tab-cockpit #cockpitFrame .sk-carousel-shell {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--sk-radius-lg);
+  background: var(--sk-surface);
+  border: 1px solid var(--sk-border);
+}
+
+#tab-cockpit #cockpitFrame .sk-carousel-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+#tab-cockpit #cockpitFrame .sk-carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+#tab-cockpit #cockpitFrame .sk-carousel-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  position: relative;
+  min-height: 240px;
+}
+
+#tab-cockpit #cockpitFrame .sk-carousel-controls {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 12px;
+  pointer-events: none;
+}
+
+#tab-cockpit #cockpitFrame .sk-carousel-btn {
+  pointer-events: auto;
+  background: rgba(15, 17, 23, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--sk-border);
+  color: var(--sk-text-primary);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#tab-cockpit #cockpitFrame .sk-carousel-btn:hover {
+  background: var(--sk-gold);
+  color: #000;
+  border-color: var(--sk-gold);
+}
+
+/* 2. Universal Lightbox Modal */
+#tab-cockpit #cockpitFrame .sk-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 12, 16, 0.88);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+#tab-cockpit #cockpitFrame .sk-modal-backdrop.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+#tab-cockpit #cockpitFrame .sk-modal-card {
+  background: var(--sk-surface-elevated);
+  border: 1px solid var(--sk-border);
+  border-radius: var(--sk-radius-lg);
+  box-shadow: var(--sk-shadow-popover);
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: auto;
+  position: relative;
+  padding: 24px;
+}
+
+/* 3. Universal Stepper Track */
+#tab-cockpit #cockpitFrame .sk-stepper-track {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 12px 0;
+  scrollbar-width: none;
+}
+
+#tab-cockpit #cockpitFrame .sk-stepper-track::-webkit-scrollbar {
+  display: none;
+}
+
+#tab-cockpit #cockpitFrame .sk-step-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--sk-surface);
+  border: 1px solid var(--sk-border);
+  border-radius: var(--sk-radius-full);
+  color: var(--sk-text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#tab-cockpit #cockpitFrame .sk-step-pill.is-active {
+  background: var(--sk-gold-glow);
+  border-color: var(--sk-gold);
+  color: var(--sk-gold);
+}
+
+#tab-cockpit #cockpitFrame .sk-step-pill.is-locked {
+  border-color: var(--sk-emerald);
+  color: var(--sk-emerald);
+}
+
+/* 4. Tactile Feedback Toast */
+#tab-cockpit #cockpitFrame .sk-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(30px);
+  background: var(--sk-surface-elevated);
+  border: 1px solid var(--sk-gold);
+  color: var(--sk-text-primary);
+  padding: 10px 20px;
+  border-radius: var(--sk-radius-full);
+  box-shadow: var(--sk-shadow-popover);
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 100000;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#tab-cockpit #cockpitFrame .sk-toast.is-visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* --- Primitive: 02_zoom_pan.css --- */
+/**
+ * Sree Krushna Marriage OS — Zoom/Pan & Option Intake Primitive Styles
+ * Standard: STD-MOD-COMP-001 | Ruling: AC-DEC-2026-022
+ * Scope: Floating zoom toolbar, micro-inspection badge, proof card, and intake modal
+ */
+
+/* Lightbox Micro-Inspection Stage */
+#tab-cockpit #cockpitFrame .sk-lightbox-card {
+  width: 95vw;
+  max-width: 1100px;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px;
+  box-sizing: border-box;
+}
+
+#tab-cockpit #cockpitFrame .sk-lightbox-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--sk-border);
+}
+
+#tab-cockpit #cockpitFrame .sk-lightbox-header-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#tab-cockpit #cockpitFrame .sk-lightbox-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--sk-text-primary);
+}
+
+#tab-cockpit #cockpitFrame .sk-lightbox-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--sk-radius-full);
+  background: rgba(212, 175, 55, 0.12);
+  color: var(--sk-gold);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+#tab-cockpit #cockpitFrame .sk-lightbox-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  margin-top: 12px;
+}
+
+#tab-cockpit #cockpitFrame .sk-lightbox-media-container {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  min-height: 300px;
+  background: #07090e;
+  border-radius: var(--sk-radius-md);
+  border: 1px solid var(--sk-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  touch-action: none;
+}
+
+#tab-cockpit #cockpitFrame .sk-lightbox-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  pointer-events: auto;
+  user-select: none;
+}
+
+/* Floating Zoom/Pan Toolbar (Adapted from PIO UniversalViewer) */
+#tab-cockpit #cockpitFrame .sk-zoom-toolbar {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(15, 17, 23, 0.88);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--sk-border);
+  border-radius: var(--sk-radius-full);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 60;
+}
+
+#tab-cockpit #cockpitFrame .sk-zoom-btn {
+  background: transparent;
+  border: none;
+  color: var(--sk-text-primary);
+  font-size: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#tab-cockpit #cockpitFrame .sk-zoom-btn:hover {
+  background: var(--sk-surface);
+  color: var(--sk-gold);
+}
+
+#tab-cockpit #cockpitFrame .sk-zoom-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--sk-gold);
+  min-width: 44px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  padding: 2px 6px;
+}
+
+#tab-cockpit #cockpitFrame .sk-lightbox-caption {
+  padding-top: 10px;
+  font-size: 13px;
+  color: var(--sk-text-secondary);
+}
+
+/* Option Intake Modal Styles */
+#tab-cockpit #cockpitFrame .sk-intake-card {
+  width: 95vw;
+  max-width: 580px;
+  padding: 20px;
+}
+
+#tab-cockpit #cockpitFrame .sk-intake-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+#tab-cockpit #cockpitFrame .sk-intake-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--sk-text-primary);
+}
+
+#tab-cockpit #cockpitFrame .sk-intake-tabs {
+  display: flex;
+  gap: 12px;
+  border-bottom: 1px solid var(--sk-border);
+  margin-bottom: 16px;
+}
+
+#tab-cockpit #cockpitFrame .sk-intake-tab {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--sk-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#tab-cockpit #cockpitFrame .sk-intake-tab.is-active {
+  color: var(--sk-gold);
+  border-bottom-color: var(--sk-gold);
+}
+
+#tab-cockpit #cockpitFrame .sk-intake-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--sk-text-secondary);
+  margin-bottom: 6px;
+}
+
+#tab-cockpit #cockpitFrame .sk-input-group {
+  display: flex;
+  gap: 8px;
+}
+
+#tab-cockpit #cockpitFrame .sk-intake-input,
+#tab-cockpit #cockpitFrame .sk-intake-select {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--sk-surface);
+  border: 1px solid var(--sk-border);
+  border-radius: var(--sk-radius-md);
+  color: var(--sk-text-primary);
+  font-size: 13px;
+  box-sizing: border-box;
+}
+
+#tab-cockpit #cockpitFrame .sk-intake-input:focus,
+#tab-cockpit #cockpitFrame .sk-intake-select:focus {
+  outline: none;
+  border-color: var(--sk-gold);
+}
+
+#tab-cockpit #cockpitFrame .sk-intake-hint {
+  display: block;
+  font-size: 11px;
+  color: var(--sk-text-tertiary, #94a3b8);
+  margin-top: 6px;
+}
+
+#tab-cockpit #cockpitFrame .sk-proof-preview-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: var(--sk-radius-md);
+  margin-top: 12px;
+}
+
+#tab-cockpit #cockpitFrame .sk-proof-thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--sk-radius-sm);
+  object-fit: cover;
+  border: 1px solid var(--sk-border);
+}
+
+#tab-cockpit #cockpitFrame .sk-proof-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+#tab-cockpit #cockpitFrame .sk-proof-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--sk-emerald);
+}
+
+#tab-cockpit #cockpitFrame .sk-proof-id {
+  font-size: 11px;
+  color: var(--sk-text-secondary);
+}
+
+#tab-cockpit #cockpitFrame .sk-dropzone {
+  border: 2px dashed var(--sk-border);
+  border-radius: var(--sk-radius-md);
+  padding: 24px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  background: var(--sk-surface);
+}
+
+#tab-cockpit #cockpitFrame .sk-dropzone-icon {
+  font-size: 28px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+#tab-cockpit #cockpitFrame .sk-dropzone-text {
+  margin: 0;
+  font-size: 12px;
+  color: var(--sk-text-secondary);
+}
+
+#tab-cockpit #cockpitFrame .sk-file-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+#tab-cockpit #cockpitFrame .sk-intake-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+@media (max-width: 480px) {
+
+  #tab-cockpit #cockpitFrame .sk-intake-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+#tab-cockpit #cockpitFrame .sk-intake-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  border-top: 1px solid var(--sk-border);
+  padding-top: 14px;
+}
+
 /* --- File: 00_embedded_fonts.css --- */
 /* Locally embedded fonts (Inter, JetBrains Mono, Outfit) — latin + latin-ext subsets, deduplicated (each family is served as one variable-font file per subset regardless of weight). Self-hosted as base64 data URIs so the Cockpit has zero network dependency. */
 @font-face {
@@ -2402,6 +2945,150 @@
 }
 
 
+/* ==========================================================================
+   MULTI-OPTION PODS, CANDIDATE LOOKS & QUICK-SHARE DEEP-LINKING (AC-DEC-2026-039)
+   ========================================================================== */
+
+/* 1. Target Pulse for Deep-Link Navigation */
+@keyframes targetPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+    border-color: #f59e0b;
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(245, 158, 11, 0);
+    border-color: #fbbf24;
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+    border-color: rgba(245, 158, 11, 0.3);
+  }
+}
+
+#tab-cockpit #cockpitFrame .highlight-target-item {
+  animation: targetPulse 1.2s ease-out 2;
+  border-color: #f59e0b !important;
+}
+
+/* 2. Lookbook Options Bar & Chips */
+#tab-cockpit #cockpitFrame .lookbook-option-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 8px 12px;
+  background: rgba(10, 14, 23, 0.6);
+  border-top: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  scrollbar-width: none;
+}
+
+#tab-cockpit #cockpitFrame .lookbook-option-bar::-webkit-scrollbar {
+  display: none;
+}
+
+#tab-cockpit #cockpitFrame .lookbook-option-chip {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid var(--border-medium, rgba(255, 255, 255, 0.15));
+  color: var(--text-secondary, #94a3b8);
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+#tab-cockpit #cockpitFrame .lookbook-option-chip:hover {
+  color: #fff;
+  border-color: rgba(245, 158, 11, 0.4);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+#tab-cockpit #cockpitFrame .lookbook-option-chip.active {
+  background: rgba(245, 158, 11, 0.18);
+  border-color: var(--accent-gold, #f59e0b);
+  color: #fbbf24;
+  font-weight: 700;
+  box-shadow: 0 1px 4px rgba(245, 158, 11, 0.25);
+}
+
+#tab-cockpit #cockpitFrame .lookbook-option-chip-add {
+  border: 1px dashed rgba(245, 158, 11, 0.5) !important;
+  background: rgba(245, 158, 11, 0.08) !important;
+  color: var(--accent-gold, #f59e0b) !important;
+}
+
+#tab-cockpit #cockpitFrame .lookbook-option-chip-add:hover {
+  border-style: solid !important;
+  background: rgba(245, 158, 11, 0.22) !important;
+  color: #ffffff !important;
+}
+
+#tab-cockpit #cockpitFrame .lookbook-option-chip-clear {
+  border: 1px solid rgba(239, 68, 68, 0.4) !important;
+  color: #fca5a5 !important;
+  background: rgba(239, 68, 68, 0.08) !important;
+}
+
+#tab-cockpit #cockpitFrame .lookbook-option-chip-clear:hover {
+  background: rgba(239, 68, 68, 0.25) !important;
+  color: #ffffff !important;
+  border-color: #ef4444 !important;
+}
+
+/* 3. Dedicated Share Decor Button */
+#tab-cockpit #cockpitFrame .lookbook-share-look-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(245, 158, 11, 0.12);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 10.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#tab-cockpit #cockpitFrame .lookbook-share-look-btn:hover {
+  background: var(--accent-gold, #f59e0b);
+  color: #0b1120;
+  border-color: var(--accent-gold, #f59e0b);
+}
+
+/* 4. Intake Alert Banners */
+#tab-cockpit #cockpitFrame .sk-intake-alert {
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  line-height: 1.45;
+  margin-top: 8px;
+  transition: all 0.2s ease;
+}
+
+#tab-cockpit #cockpitFrame .sk-intake-alert.is-error {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  color: #fca5a5;
+}
+
+#tab-cockpit #cockpitFrame .sk-intake-alert.is-warning {
+  background: rgba(234, 179, 8, 0.15);
+  border: 1px solid rgba(234, 179, 8, 0.5);
+  color: #fef08a;
+}
+
+#tab-cockpit #cockpitFrame .sk-intake-alert.is-success {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.5);
+  color: #86efac;
+}
+
 /* --- File: 06_founder_deck.css --- */
 /* AUDIENCE PRESENTATION MODE */
 #tab-cockpit #cockpitFrame .founder-layout {
@@ -2869,13 +3556,15 @@
         <span class="lightbox-scope-badge" id="lbScopeBadge">MANDATORY CONTRACTUAL SCOPE</span>
       </div>
 
-      <!-- Mode Switcher in Lightbox -->
-      <div style="display: flex; align-items: center; gap: 14px;">
+      <!-- Mode & Option Switcher in Lightbox -->
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div class="lb-option-strip" id="lbOptionStrip"></div>
         <div class="lightbox-view-toggle">
-          <button class="lb-toggle-btn active" id="lbTogglePhoto" onclick="switchLightboxMode('photo')">📸 Photo Inspiration</button>
-          <button class="lb-toggle-btn" id="lbToggleBlueprint" onclick="switchLightboxMode('blueprint')">📐 Blueprint Schematic</button>
+          <button class="lb-toggle-btn active" id="lbTogglePhoto" onclick="switchLightboxMode('photo')">📸 Photos</button>
+          <button class="lb-toggle-btn" id="lbToggleBlueprint" onclick="switchLightboxMode('blueprint')">📐 CAD</button>
         </div>
-        <button class="mode-btn" id="lbZoomBtn" onclick="toggleLightboxZoom()" style="font-size: 11px; padding: 4px 10px;" title="Toggle Fullscreen Fit / Expanded Zoom (Z)">🔍 Expand</button>
+        <button class="lb-share-btn" id="lbShareLookBtn" onclick="shareCurrentLightboxOption()" title="Share look via WhatsApp & deep-link">📤 Share</button>
+        <button class="mode-btn" id="lbZoomBtn" onclick="toggleLightboxZoom()" style="font-size: 11px; padding: 4px 10px;" title="Toggle Fullscreen Fit / Expanded Zoom (Z)">🔍 Zoom</button>
         <span style="font-size: 11px; color: #94a3b8; font-family: var(--font-mono);" id="lbCounter">1 / 8</span>
         <button class="lb-close-btn" onclick="closeLightboxModal()" title="Close Lightbox (Esc)">✕</button>
       </div>
@@ -2885,7 +3574,7 @@
     <div class="lightbox-stage">
       <button class="lb-nav-btn prev" onclick="prevLightboxPlate()" title="Previous (Left Arrow)">◀</button>
       <div class="lightbox-img-wrapper">
-        <img id="lightboxImg" src="" alt="Architectural Reference Plate" onclick="toggleLightboxZoom()" title="Click to Toggle Fit / Expanded Zoom" />
+        <img id="lightboxImg" src="" alt="Architectural Reference Plate" referrerpolicy="no-referrer" onclick="toggleLightboxZoom()" title="Click to Toggle Fit / Expanded Zoom" />
       </div>
       <button class="lb-nav-btn next" onclick="nextLightboxPlate()" title="Next (Right Arrow)">▶</button>
     </div>
@@ -2898,7 +3587,7 @@
         <div id="lbContractRiderWrap"><strong>Binding Rider:</strong> <span id="lbClauseText" style="color:#fbbf24;">CTR-DECOR-RIDER-001 Cl 5</span></div>
         <div style="margin-left:auto; display:flex; align-items:center; gap:10px;">
           <button class="mode-btn" id="lbCopyPromptBtn" onclick="copyPlatePrompt(currentLightboxIndex)" style="font-size:11px; padding:3px 9px; background:rgba(59,130,246,0.15); border-color:rgba(59,130,246,0.35); color:#60a5fa;" title="Copy Generative AI Prompt to Clipboard">📋 Copy Prompt</button>
-          <button class="mode-btn" id="lbEditPhotoBtn" onclick="openCustomPhotoModal(VISUAL_PLATES[currentLightboxIndex].id)" style="font-size:11px; padding:3px 9px; background:rgba(245,158,11,0.15); border-color:rgba(245,158,11,0.35); color:var(--accent-gold);">✏️ Custom / Pinterest URL</button>
+          <button class="mode-btn" id="lbEditPhotoBtn" onclick="openOptionIntakeModal(VISUAL_PLATES[currentLightboxIndex].id)" style="font-size:11px; padding:3px 9px; background:rgba(245,158,11,0.15); border-color:rgba(245,158,11,0.35); color:var(--accent-gold);">➕ Add / Review Looks</button>
           <div style="font-size:10px; color:#94a3b8; font-family:var(--font-mono);">
             Press <kbd style="background:rgba(255,255,255,0.1); padding:1px 4px; border-radius:3px;">T</kbd> (Mode) | <kbd style="background:rgba(255,255,255,0.1); padding:1px 4px; border-radius:3px;">Z</kbd> (Zoom)
           </div>
@@ -3205,6 +3894,93 @@
     </div>
   </div>
 
+
+  <!-- Universal Option Intake Modal Primitive (Adapted from PIO ImageUploadWidget) -->
+<!-- SSOT: User_Created/Discussion Threads/Council/260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md § "Tri-Modal Visual Ingestion" — P-COLLAB-VISUAL-INTAKE-001 -->
+<div class="sk-modal-backdrop" id="skOptionIntakeBackdrop" role="dialog" aria-modal="true" aria-labelledby="skOptionIntakeTitle" onclick="if(event.target===this && window.closeOptionIntakeModal) window.closeOptionIntakeModal()">
+  <div class="sk-modal-card sk-intake-card">
+    <div class="sk-intake-header">
+      <h3 id="skOptionIntakeTitle" class="sk-intake-title">Add Shopping / Decor Option</h3>
+      <button type="button" class="sk-modal-close" id="skOptionIntakeClose" aria-label="Close modal">✕</button>
+    </div>
+
+    <input type="hidden" id="skOptionItemId" value="">
+
+    <!-- Tabbed Intake Selector -->
+    <div class="sk-intake-tabs" role="tablist">
+      <button type="button" class="sk-intake-tab is-active" id="skTabDriveLink" role="tab" aria-selected="true" data-tab="drive">📌 Pinterest / Web Link</button>
+      <button type="button" class="sk-intake-tab" id="skTabDeviceUpload" role="tab" aria-selected="false" data-tab="device">📷 Device / Showroom Photo</button>
+    </div>
+
+    <div class="sk-intake-body">
+      <!-- Tab Pane 1: Image / Pinterest Link -->
+      <div class="sk-tab-pane is-active" id="skPaneDrive">
+        <label class="sk-intake-label" for="skDriveUrlInput">Pinterest Image Link, Web Image URL, or Google Drive</label>
+        <div class="sk-input-group">
+          <input type="url" class="sk-intake-input" id="skDriveUrlInput" placeholder="Direct Image URL (e.g. https://i.pinimg.com/...jpg) or Drive Link" autocomplete="off">
+          <button type="button" class="sk-btn sk-btn-secondary" id="skBtnVerifyDrive">Verify Link</button>
+        </div>
+        <small class="sk-intake-hint" id="skIntakeUrlHint">
+          💡 <strong>Direct Image Required:</strong> Right-click image &rarr; <em>Copy Image Address</em> (must end in .jpg/.png or from i.pinimg.com). Web pin links (pin.it/...) will be saved as external bookmarks.
+        </small>
+        <div class="sk-intake-alert" id="skIntakeUrlAlert" style="display: none;"></div>
+        
+        <!-- Live Proof Preview Card (Adapted from PIO ProofPreviewWidget) -->
+        <div class="sk-proof-preview-card" id="skDriveProofCard" style="display: none;">
+          <img id="skDriveProofImg" class="sk-proof-thumb" src="" alt="Thumbnail Preview" referrerpolicy="no-referrer">
+          <div class="sk-proof-info">
+            <span class="sk-proof-badge" id="skDriveProofBadge">✓ Valid Image Asset</span>
+            <span class="sk-proof-id" id="skDriveFileId">ID: —</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Pane 2: Local Device / Camera -->
+      <div class="sk-tab-pane" id="skPaneDevice" style="display: none;">
+        <label class="sk-intake-label" for="skFileInput">Upload Photo or Open Camera</label>
+        <div class="sk-dropzone" id="skDropzone">
+          <span class="sk-dropzone-icon">📷</span>
+          <p class="sk-dropzone-text">Tap to take photo or drag & drop image here</p>
+          <input type="file" id="skFileInput" accept="image/*" class="sk-file-input">
+        </div>
+      </div>
+
+      <!-- Option Metadata Fields -->
+      <div class="sk-intake-grid">
+        <div class="sk-form-group">
+          <label class="sk-intake-label" for="skOptionTitle">Option Name / Description</label>
+          <input type="text" class="sk-intake-input" id="skOptionTitle" placeholder="e.g. Royal Maroon Silk Saree">
+        </div>
+        <div class="sk-form-group">
+          <label class="sk-intake-label" for="skOptionCategory">Category</label>
+          <select class="sk-intake-select" id="skOptionCategory">
+            <option value="saree">Saree & Attire</option>
+            <option value="kurta">Kurta & Pajama</option>
+            <option value="lehenga">Lehenga & Choli</option>
+            <option value="jewelry">Jewelry & Ornaments</option>
+            <option value="mandap">Mandap Decor</option>
+            <option value="stage">Stage Decor</option>
+            <option value="other">General / Other</option>
+          </select>
+        </div>
+        <div class="sk-form-group">
+          <label class="sk-intake-label" for="skOptionPrice">Estimated Price (₹)</label>
+          <input type="number" class="sk-intake-input" id="skOptionPrice" placeholder="e.g. 18500">
+        </div>
+        <div class="sk-form-group">
+          <label class="sk-intake-label" for="skOptionVendor">Vendor / Boutique</label>
+          <input type="text" class="sk-intake-input" id="skOptionVendor" placeholder="e.g. Utkalika, Bhubaneswar">
+        </div>
+      </div>
+    </div>
+
+    <div class="sk-intake-footer">
+      <button type="button" class="sk-btn sk-btn-secondary" id="skBtnCancelIntake">Cancel</button>
+      <button type="button" class="sk-btn sk-btn-primary" id="skBtnSubmitOption">Add Option to Review</button>
+    </div>
+  </div>
+</div>
+
     <!-- TOAST NOTIFICATION (AC-DEC-2026-009) -->
   <div class="cockpit-toast" id="cockpitToast">
     <span style="color: var(--accent-gold); font-weight: 700;">✓</span>
@@ -3229,7 +4005,28 @@
     "mandatory": true,
     "dimensions": "24'-0\" (7.32m) Clear Width • 18\" Riser",
     "notes": "Treated timber stage, carved wooden/brass pillars, 2mm galvanized zinc subfloor barrier under havan altar, brass samai lamps, cascading marigold & jasmine garlands.",
-    "prompt": "A breathtaking luxury Indian Vedic wedding mandap setup inside a grand hall or marquee. An elevated 18-inch wooden platform featuring a sacred lotus-shaped floral canopy dome decorated with thousands of cascading marigold and fragrant white jasmine garlands. Four intricately hand-carved traditional wooden and brass pillars frame the altar. Polished brass samai oil lamps and brass urlis filled with floating red rose petals and floating candles surround the perimeter. In the center is a sacred square havan fire altar with a polished copper kund. Atmospheric warm golden amber lighting, photorealistic, 8k resolution, elegant Indian royal aesthetic."
+    "prompt": "A breathtaking luxury Indian Vedic wedding mandap setup inside a grand hall or marquee. An elevated 18-inch wooden platform featuring a sacred lotus-shaped floral canopy dome decorated with thousands of cascading marigold and fragrant white jasmine garlands. Four intricately hand-carved traditional wooden and brass pillars frame the altar. Polished brass samai oil lamps and brass urlis filled with floating red rose petals and floating candles surround the perimeter. In the center is a sacred square havan fire altar with a polished copper kund. Atmospheric warm golden amber lighting, photorealistic, 8k resolution, elegant Indian royal aesthetic.",
+    "options": [
+      {
+        "label": "Option A (Vedic Lotus Canopy)",
+        "url": "./assets/decor/mandap/photo-mandap-inspiration.jpg",
+        "source": "canonical",
+        "tally": 4
+      },
+      {
+        "label": "Option B (Telugu Carved Temple)",
+        "url": "./assets/decor/mandap/photo-royal-telugu-vedic-mandap-carved.jpg",
+        "source": "canonical",
+        "tally": 2
+      },
+      {
+        "label": "Option C (Suspended Lotus Dome)",
+        "url": "./assets/decor/mandap/photo-suspended-lotus-mandap-dome.jpg",
+        "source": "canonical",
+        "tally": 1
+      }
+    ],
+    "selectedOptionIndex": 0
   },
   {
     "id": "PLATE-02",
@@ -3245,7 +4042,17 @@
     "mandatory": true,
     "dimensions": "1200 CFM • 150mm Flexible Duct • 6'6\" Elevation",
     "notes": "Transparent flame-retardant polycarbonate / spun brass cowl, negative-pressure inline centrifugal exhaust blower, sealed outdoor discharge sleeve through gable wall. Zero smoke dispersion into 40T AC sanctuary.",
-    "prompt": "A close-up architectural and liturgical interior photo of a sacred Hindu Vedic Havan ritual inside an upscale wedding mandap. A polished stepped copper Havan Kund with sacred Vedic fire burning cleanly. Directly suspended above the fire altar at 6.5 feet elevation is an elegant, polished brass and clear heat-resistant glass smoke extraction hood and ducting system designed seamlessly to evacuate smoke without dispersing into the air-conditioned hall. Surrounding the altar are brass puja thalis with ghee, coconuts, flowers, and mango leaves, set upon an ornate ceremonial carpet. Photorealistic, warm golden fire glow, architectural photography, 8k resolution."
+    "prompt": "A close-up architectural and liturgical interior photo of a sacred Hindu Vedic Havan ritual inside an upscale wedding mandap. A polished stepped copper Havan Kund with sacred Vedic fire burning cleanly. Directly suspended above the fire altar at 6.5 feet elevation is an elegant, polished brass and clear heat-resistant glass smoke extraction hood and ducting system designed seamlessly to evacuate smoke without dispersing into the air-conditioned hall. Surrounding the altar are brass puja thalis with ghee, coconuts, flowers, and mango leaves, set upon an ornate ceremonial carpet. Photorealistic, warm golden fire glow, architectural photography, 8k resolution.",
+    "options": [
+      {
+        "optionIndex": 0,
+        "isDefault": true,
+        "label": "Option A (Centrifugal Cowl Canonical)",
+        "src": "./assets/decor/mandap/photo-havan-fire-ritual.jpg",
+        "type": "canonical"
+      }
+    ],
+    "selectedOptionIndex": 0
   },
   {
     "id": "PLATE-03",
@@ -3261,7 +4068,22 @@
     "mandatory": true,
     "dimensions": "36'-0\" × 16'-0\" Stage (3ft Riser) • 24ft × 12ft P3 LED Wall",
     "notes": "Aluminum box truss rigging, CRI > 95 calibrated 3200K cinema fixtures, zero 120fps video banding on Sony FX3 cameras, blackout acoustic velour masking drapes, sub-stage dual 18\" bass enclosures.",
-    "prompt": "A magnificent Indian wedding Sangeet concert production stage inside a luxury marquee event venue. A wide 36-foot wide elevated performance stage with glossy dark reflective dance floor. Backdrop features a massive ultra-high-definition LED video wall showcasing vibrant golden royal motifs. Overhead aluminum box truss rigging with concert-grade moving head spotlights, warm 3200K cinema profile keylights, and subtle haze beams in violet, magenta, and warm gold. Front stage dressed with floral hedges and soft uplighting. Luxurious Bollywood wedding concert aesthetic, photorealistic, 8k."
+    "prompt": "A magnificent Indian wedding Sangeet concert production stage inside a luxury marquee event venue. A wide 36-foot wide elevated performance stage with glossy dark reflective dance floor. Backdrop features a massive ultra-high-definition LED video wall showcasing vibrant golden royal motifs. Overhead aluminum box truss rigging with concert-grade moving head spotlights, warm 3200K cinema profile keylights, and subtle haze beams in violet, magenta, and warm gold. Front stage dressed with floral hedges and soft uplighting. Luxurious Bollywood wedding concert aesthetic, photorealistic, 8k.",
+    "options": [
+      {
+        "label": "Option A (P3 LED Wall & Box Truss)",
+        "url": "./assets/decor/sangeet/photo-sangeet-stage-lighting.jpg",
+        "source": "canonical",
+        "tally": 5
+      },
+      {
+        "label": "Option B (Midnight Blooms Mirror Runway)",
+        "url": "./assets/decor/sangeet/photo-midnight-blooms-mirror-stage.jpg",
+        "source": "canonical",
+        "tally": 2
+      }
+    ],
+    "selectedOptionIndex": 0
   },
   {
     "id": "PLATE-04",
@@ -3277,7 +4099,17 @@
     "mandatory": true,
     "dimensions": "120ft × 80ft (9,600 sq. ft.) • 14ft Eaves / 24ft Apex",
     "notes": "German clear-span hangar profile, 850 g/m² blockout PVC, pleated ivory satin ceiling drapes, acoustic partition dividing 40T AC sanctuary (24°C) from desert-cooled dining zone C.",
-    "prompt": "Interior wide-angle architectural photograph of a grand, luxury German aluminum clear-span marquee wedding hall (120ft by 80ft). The ceiling is completely draped in elegant pleated ivory and champagne satin drapes with multiple grand crystal chandeliers suspended from the ridge line. Along the sides, subtle concealed air conditioning ducts deliver climate control. The floor is lined with plush carpeting and round guest banquet tables with floral centerpieces and Chiavari chairs. Ambient warm architectural up-lighting washing the fabric sidewalls. Ultra-luxury wedding pavilion interior, photorealistic, 8k."
+    "prompt": "Interior wide-angle architectural photograph of a grand, luxury German aluminum clear-span marquee wedding hall (120ft by 80ft). The ceiling is completely draped in elegant pleated ivory and champagne satin drapes with multiple grand crystal chandeliers suspended from the ridge line. Along the sides, subtle concealed air conditioning ducts deliver climate control. The floor is lined with plush carpeting and round guest banquet tables with floral centerpieces and Chiavari chairs. Ambient warm architectural up-lighting washing the fabric sidewalls. Ultra-luxury wedding pavilion interior, photorealistic, 8k.",
+    "options": [
+      {
+        "optionIndex": 0,
+        "isDefault": true,
+        "label": "Option A (Ivory Pleated German Hangar)",
+        "src": "./assets/decor/marquee/photo-luxury-marquee-chandeliers.jpg",
+        "type": "canonical"
+      }
+    ],
+    "selectedOptionIndex": 0
   },
   {
     "id": "PLATE-05",
@@ -3293,7 +4125,22 @@
     "mandatory": true,
     "dimensions": "50m Length • 10ft Clear Width • 10ft Arched Clearance",
     "notes": "Direct covered tunnel bridging hotel side porch to marquee foyer, rainproof high-density tarpaulin, 8ft wide needle-felt crimson runner carpet, fairy-light curtain draping, dedicated electric golf-cart shuttle for elders (PER-012).",
-    "prompt": "Architectural evening photograph of a grand 50-meter covered wedding arrival walkway and tunnel. The arched pathway has a rich crimson red carpet runner, arched metal framework covered with warm golden fairy light tunnels, cascading jasmine floral strings, and weather-proof waterproof canopy lining above. Polished brass lanterns on wooden pedestals line both sides of the corridor. In the distance, the entrance to an illuminated luxury wedding pavilion glows. Cinematic perspective down the center of the illuminated tunnel, photorealistic, 8k."
+    "prompt": "Architectural evening photograph of a grand 50-meter covered wedding arrival walkway and tunnel. The arched pathway has a rich crimson red carpet runner, arched metal framework covered with warm golden fairy light tunnels, cascading jasmine floral strings, and weather-proof waterproof canopy lining above. Polished brass lanterns on wooden pedestals line both sides of the corridor. In the distance, the entrance to an illuminated luxury wedding pavilion glows. Cinematic perspective down the center of the illuminated tunnel, photorealistic, 8k.",
+    "options": [
+      {
+        "label": "Option A (Crimson Runner & Arched Fairy Lights)",
+        "url": "./assets/decor/tunnel/photo-fairy-light-tunnel-walkway.jpg",
+        "source": "canonical",
+        "tally": 4
+      },
+      {
+        "label": "Option B (Starlit Aisle & Pastel Floral Hedges)",
+        "url": "./assets/decor/tunnel/photo-wedding-trail-fairylight-canopy.jpg",
+        "source": "canonical",
+        "tally": 3
+      }
+    ],
+    "selectedOptionIndex": 0
   },
   {
     "id": "PLATE-06",
@@ -3309,7 +4156,17 @@
     "mandatory": false,
     "dimensions": "Open-Air Lawn Promenade • 8 Parasol Nodes",
     "notes": "Phase 2 festive garden promenade (14:30–17:00), Rajasthani embroidered parasols, low charpai diwan seating with silk bolsters, center brass urli with floating marigolds, freeing Zone A for 7.5h uninterrupted Sangeet tech rigging.",
-    "prompt": "An outdoor afternoon Indian wedding Mehendi ceremony setup on an emerald green lawn garden. Vibrant colorful decor featuring handcrafted Rajasthani embroidered parasols with mirror-work in yellow, hot pink, and teal. Low wooden charpai diwan seating with plush silk bolsters and vibrant printed cushions. In the center is a large antique brass urli vessel filled with water and floating yellow marigolds and orange rose petals. Elegant garden party atmosphere with fairy lights in the surrounding trees and floral hangings. Photorealistic, bright natural daylight, 8k."
+    "prompt": "An outdoor afternoon Indian wedding Mehendi ceremony setup on an emerald green lawn garden. Vibrant colorful decor featuring handcrafted Rajasthani embroidered parasols with mirror-work in yellow, hot pink, and teal. Low wooden charpai diwan seating with plush silk bolsters and vibrant printed cushions. In the center is a large antique brass urli vessel filled with water and floating yellow marigolds and orange rose petals. Elegant garden party atmosphere with fairy lights in the surrounding trees and floral hangings. Photorealistic, bright natural daylight, 8k.",
+    "options": [
+      {
+        "optionIndex": 0,
+        "isDefault": true,
+        "label": "Option A (Embroidered Parasols & Charpai)",
+        "src": "./assets/decor/mehendi/photo-mehendi-garden-lounge.jpg",
+        "type": "canonical"
+      }
+    ],
+    "selectedOptionIndex": 0
   },
   {
     "id": "PLATE-07",
@@ -3325,7 +4182,17 @@
     "mandatory": true,
     "dimensions": "Dual 24ft Linear Buffet Runs • 640 sq. ft. BOH Pass",
     "notes": "Fire-retardant printed camouflage screening wall, gas tandoor and deep-fryer fire safety perimeter with CO2/DCP extinguishers, electric hot box warming cabinets, 2,000L utility water bowser, dual high-throughput buffet lines.",
-    "prompt": "A grand, opulent royal Indian wedding dining buffet spread inside a decorated marquee dining pavilion. Long linear buffet counters draped in midnight navy and gold brocade linens, presenting an array of polished brass and copper chafing dishes with live flame burners below. Fresh aromatic floral runners of tuberoses and baby's breath along the center of the buffet. Elegant menu signage stands with gold calligraphy. Behind the service counter, impeccably uniformed banquet staff in turbans. Warm ambient lighting creating an inviting royal feast ambiance. Photorealistic, 8k."
+    "prompt": "A grand, opulent royal Indian wedding dining buffet spread inside a decorated marquee dining pavilion. Long linear buffet counters draped in midnight navy and gold brocade linens, presenting an array of polished brass and copper chafing dishes with live flame burners below. Fresh aromatic floral runners of tuberoses and baby's breath along the center of the buffet. Elegant menu signage stands with gold calligraphy. Behind the service counter, impeccably uniformed banquet staff in turbans. Warm ambient lighting creating an inviting royal feast ambiance. Photorealistic, 8k.",
+    "options": [
+      {
+        "optionIndex": 0,
+        "isDefault": true,
+        "label": "Option A (Brocade Linear Buffets & Fire Screen)",
+        "src": "./assets/decor/stalls_catering/photo-wedding-buffet-setup.jpg",
+        "type": "canonical"
+      }
+    ],
+    "selectedOptionIndex": 0
   },
   {
     "id": "PLATE-08",
@@ -3341,7 +4208,17 @@
     "mandatory": false,
     "dimensions": "3 Modular Wooden Pergolas (8ft × 8ft each)",
     "notes": "Lac bangle maker artisan with custom sizing, instant polaroid photo booth with floral arch and event hashtag, welcome concierge desk with brass ceremonial gong and laminated run-sheet scrolls.",
-    "prompt": "An authentic traditional Indian wedding live interactive guest activity stall. A charming rustic wooden canopy pergola booth decorated with hanging marigold flowers, clay bells, and brass lanterns. In the stall, a skilled traditional Indian lac artisan craftsman is shaping handcrafted colorful lac and glass bangles over a small gentle coal burner for female wedding guests. Rows of gleaming glittering traditional bangles in red, green, and gold are neatly displayed on wooden dowels and velvet trays. Beside the stall is a vintage instant polaroid guestbook station with wooden easel. Warm evening fairy-lit ambiance, photorealistic, 8k."
+    "prompt": "An authentic traditional Indian wedding live interactive guest activity stall. A charming rustic wooden canopy pergola booth decorated with hanging marigold flowers, clay bells, and brass lanterns. In the stall, a skilled traditional Indian lac artisan craftsman is shaping handcrafted colorful lac and glass bangles over a small gentle coal burner for female wedding guests. Rows of gleaming glittering traditional bangles in red, green, and gold are neatly displayed on wooden dowels and velvet trays. Beside the stall is a vintage instant polaroid guestbook station with wooden easel. Warm evening fairy-lit ambiance, photorealistic, 8k.",
+    "options": [
+      {
+        "optionIndex": 0,
+        "isDefault": true,
+        "label": "Option A (Lac Bangle Artisan Pergola)",
+        "src": "./assets/decor/stalls_catering/photo-bangle-craft-stall.jpg",
+        "type": "canonical"
+      }
+    ],
+    "selectedOptionIndex": 0
   },
   {
     "id": "PLATE-09",
@@ -3356,7 +4233,17 @@
     "mandatory": true,
     "dimensions": "60'-0\" Length × 10'-0\" Clear Walkway",
     "notes": "Undulating warm off-white (2800K) fairy-light canopy draped across marquee trusses, plush ivory runner carpet, perimeter pastel floral hedges with integrated warm pillar candles, floral arch reveal.",
-    "prompt": "An enchanting luxury wedding entry walkway under a grand marquee ceiling. Overhead dense undulating canopy of thousands of warm golden fairy rice lights creating a starry tunnel. Down the center is a pristine ivory carpet runner bordered by lush floral hedges of pale blush roses and hydrangeas. Glass hurricane lanterns with warm flickering candles line the path leading to a magnificent floral arch. Photorealistic, 8k."
+    "prompt": "An enchanting luxury wedding entry walkway under a grand marquee ceiling. Overhead dense undulating canopy of thousands of warm golden fairy rice lights creating a starry tunnel. Down the center is a pristine ivory carpet runner bordered by lush floral hedges of pale blush roses and hydrangeas. Glass hurricane lanterns with warm flickering candles line the path leading to a magnificent floral arch. Photorealistic, 8k.",
+    "options": [
+      {
+        "optionIndex": 0,
+        "isDefault": true,
+        "label": "Option A (Undulating Starlit Floral Trail)",
+        "src": "./assets/decor/tunnel/photo-wedding-trail-fairylight-canopy.jpg",
+        "type": "canonical"
+      }
+    ],
+    "selectedOptionIndex": 0
   },
   {
     "id": "PLATE-10",
@@ -3371,7 +4258,17 @@
     "mandatory": true,
     "dimensions": "28'-0\" × 20'-0\" Stage (18\" Riser) • 4 Carved Temple Pillars",
     "notes": "Traditional hand-carved pillars, peach silk drapery, carved gold jali backdrop with warm backlighting, stepped brass samai lamps, brass urlis, authentic South Indian Telugu Vedic ritual setup.",
-    "prompt": "A majestic royal Telugu wedding mandap setup. Four intricately carved ivory and gold stone-style pillars support an ornate floral canopy with hanging pearl and flower tassels. Elegant peach silk drapery frames the altar. In the backdrop, a luminous gold filigree carved jali panel glows with amber light. On the stage are stepped brass samai oil lamps, puja offerings, and two ornate royal chairs. Photorealistic, 8k."
+    "prompt": "A majestic royal Telugu wedding mandap setup. Four intricately carved ivory and gold stone-style pillars support an ornate floral canopy with hanging pearl and flower tassels. Elegant peach silk drapery frames the altar. In the backdrop, a luminous gold filigree carved jali panel glows with amber light. On the stage are stepped brass samai oil lamps, puja offerings, and two ornate royal chairs. Photorealistic, 8k.",
+    "options": [
+      {
+        "optionIndex": 0,
+        "isDefault": true,
+        "label": "Option A (Telugu Carved Temple Sanctum)",
+        "src": "./assets/decor/mandap/photo-royal-telugu-vedic-mandap-carved.jpg",
+        "type": "canonical"
+      }
+    ],
+    "selectedOptionIndex": 0
   },
   {
     "id": "PLATE-11",
@@ -3386,7 +4283,17 @@
     "mandatory": false,
     "dimensions": "12'-0\" Diameter Suspended Lotus Dome • Circular Mandala Backdrop",
     "notes": "Ceiling-hung three-dimensional inverted lotus flower crafted from dense carnations and baby's breath, dual floral circular mandalas, dual royal ivory throne chairs.",
-    "prompt": "A dramatic luxury Indian wedding mandap with a giant suspended blooming lotus flower ceiling installation made of pink and white fresh floral petals. Beneath the lotus dome is a grand floral arch and layered concentric circular flower wall mandala backdrop. Two royal white throne chairs sit on an elevated stage. Photorealistic, 8k."
+    "prompt": "A dramatic luxury Indian wedding mandap with a giant suspended blooming lotus flower ceiling installation made of pink and white fresh floral petals. Beneath the lotus dome is a grand floral arch and layered concentric circular flower wall mandala backdrop. Two royal white throne chairs sit on an elevated stage. Photorealistic, 8k.",
+    "options": [
+      {
+        "optionIndex": 0,
+        "isDefault": true,
+        "label": "Option A (Suspended Fresh Lotus Dome)",
+        "src": "./assets/decor/mandap/photo-suspended-lotus-mandap-dome.jpg",
+        "type": "canonical"
+      }
+    ],
+    "selectedOptionIndex": 0
   },
   {
     "id": "PLATE-12",
@@ -3401,7 +4308,17 @@
     "mandatory": false,
     "dimensions": "32'-0\" Stage • 40ft Reflective Black Acrylic Walkway",
     "notes": "High-gloss black reflective mirror runway, overhead fairy light canopy with crystal chandeliers, cascading white wisteria floral arch, tufted French royal lounge seating.",
-    "prompt": "An opulent night-time garden wedding stage. A glossy black mirror aisle runway reflecting sparkling overhead fairy lights. Suspended luxury crystal chandeliers glitter under the dark sky. A massive white wisteria floral arch frames the center stage, flanked by elegant white tufted chesterfield couches and tall urn floral arrangements. Photorealistic, 8k."
+    "prompt": "An opulent night-time garden wedding stage. A glossy black mirror aisle runway reflecting sparkling overhead fairy lights. Suspended luxury crystal chandeliers glitter under the dark sky. A massive white wisteria floral arch frames the center stage, flanked by elegant white tufted chesterfield couches and tall urn floral arrangements. Photorealistic, 8k.",
+    "options": [
+      {
+        "optionIndex": 0,
+        "isDefault": true,
+        "label": "Option A (High-Gloss Mirror Runway & Chandeliers)",
+        "src": "./assets/decor/sangeet/photo-midnight-blooms-mirror-stage.jpg",
+        "type": "canonical"
+      }
+    ],
+    "selectedOptionIndex": 0
   }
 ];
   let VISUAL_PLATES = JSON.parse(JSON.stringify(CANONICAL_PLATES));
@@ -3502,7 +4419,706 @@
   }
 ];
 
-      let currentMode = 'hud';
+  /**
+ * Sree Krushna Marriage OS — Drive Normalizer & Zero-CORS CDN Engine
+ * Standard: STD-MOD-COMP-001 | Ruling: AC-DEC-2026-022
+ * Adapted from: PIOperationsMgmt_Firebase UniversalViewer & ImageUploadWidget
+ * Scope: Extract Google Drive IDs, build high-speed zero-CORS CDN URLs, and manage LRU cache.
+ */
+
+(function(global) {
+  'use strict';
+
+  // Static LRU Cache for resolved Drive image metadata
+  class DriveLRUCache {
+    constructor(maxSize = 20) {
+      this.maxSize = maxSize;
+      this.cache = new Map();
+    }
+
+    get(key) {
+      if (!this.cache.has(key)) return null;
+      const val = this.cache.get(key);
+      this.cache.delete(key);
+      this.cache.set(key, val);
+      return val;
+    }
+
+    set(key, value) {
+      if (this.cache.has(key)) {
+        this.cache.delete(key);
+      } else if (this.cache.size >= this.maxSize) {
+        const oldestKey = this.cache.keys().next().value;
+        this.cache.delete(oldestKey);
+      }
+      this.cache.set(key, value);
+    }
+
+    has(key) {
+      return this.cache.has(key);
+    }
+
+    clear() {
+      this.cache.clear();
+    }
+
+    get size() {
+      return this.cache.size;
+    }
+  }
+
+  const driveCache = new DriveLRUCache(20);
+
+  const DriveNormalizer = {
+    cache: driveCache,
+
+    /**
+     * Regex patterns for Google Drive IDs (sourced from PIO UniversalViewer)
+     */
+    PATTERNS: [
+      /\/file\/d\/([a-zA-Z0-9_-]{25,})/,
+      /id=([a-zA-Z0-9_-]{25,})/,
+      /\/open\?id=([a-zA-Z0-9_-]{25,})/,
+      /drive\.google\.com.*\/([a-zA-Z0-9_-]{25,})/
+    ],
+
+    /**
+     * Extract Drive File ID from any Google Drive link or return raw ID
+     * @param {string} url 
+     * @returns {string|null}
+     */
+    extractDriveId: function(url) {
+      if (!url || typeof url !== 'string') return null;
+      const trimmed = url.trim();
+      if (/^[-\w]{25,}$/.test(trimmed)) return trimmed;
+
+      for (const pattern of this.PATTERNS) {
+        const match = trimmed.match(pattern);
+        if (match && match[1]) return match[1];
+      }
+      return null;
+    },
+
+    /**
+     * Test if a given string or URL is a Google Drive reference
+     * @param {string} url 
+     * @returns {boolean}
+     */
+    isDriveUrl: function(url) {
+      if (!url || typeof url !== 'string') return false;
+      return url.includes('drive.google.com') ||
+             url.includes('docs.google.com') ||
+             /^[-\w]{25,}$/.test(url.trim());
+    },
+
+    /**
+     * Tier 1: Official Zero-CORS Google Thumbnail CDN endpoint with arbitrary width
+     * @param {string} driveId 
+     * @param {number} [width=1200] 
+     * @returns {string}
+     */
+    getThumbnailUrl: function(driveId, width = 1200) {
+      return `https://drive.google.com/thumbnail?id=${encodeURIComponent(driveId)}&sz=w${width}`;
+    },
+
+    /**
+     * Tier 2: Direct High-Speed Usercontent CDN failover
+     * @param {string} driveId 
+     * @returns {string}
+     */
+    getDirectCdnUrl: function(driveId) {
+      return `https://lh3.googleusercontent.com/d/${encodeURIComponent(driveId)}`;
+    },
+
+    /**
+     * Tier 3: Standard Iframe Preview URL for PDFs or documents
+     * @param {string} driveId 
+     * @returns {string}
+     */
+    getPreviewUrl: function(driveId) {
+      return `https://drive.google.com/file/d/${encodeURIComponent(driveId)}/preview`;
+    },
+
+    /**
+     * Direct browser viewing URL (external fallback)
+     * @param {string} driveId 
+     * @returns {string}
+     */
+    getViewUrl: function(driveId) {
+      return `https://drive.google.com/file/d/${encodeURIComponent(driveId)}/view`;
+    },
+
+    /**
+     * Resolve any URL into normalized asset descriptor with zero-CORS CDN URLs
+     * @param {string} url 
+     * @param {Object} [options]
+     * @param {number} [options.cardWidth=600]
+     * @param {number} [options.zoomWidth=1600]
+     * @returns {Object}
+     */
+    resolveAsset: function(url, options = {}) {
+      if (!url) return { isDrive: false, url: '' };
+
+      const cardWidth = options.cardWidth || 600;
+      const zoomWidth = options.zoomWidth || 1600;
+
+      const driveId = this.extractDriveId(url);
+      if (!driveId) {
+        return {
+          isDrive: false,
+          driveId: null,
+          url: url,
+          cardThumbnail: url,
+          zoomUrl: url
+        };
+      }
+
+      // Check LRU cache
+      const cached = this.cache.get(driveId);
+      if (cached) return cached;
+
+      const result = {
+        isDrive: true,
+        driveId: driveId,
+        url: url,
+        cardThumbnail: this.getThumbnailUrl(driveId, cardWidth),
+        zoomUrl: this.getThumbnailUrl(driveId, zoomWidth),
+        cdnUrl: this.getDirectCdnUrl(driveId),
+        previewUrl: this.getPreviewUrl(driveId),
+        viewUrl: this.getViewUrl(driveId)
+      };
+
+      this.cache.set(driveId, result);
+      return result;
+    }
+  };
+
+  global.SKDriveNormalizer = DriveNormalizer;
+})(typeof window !== 'undefined' ? window : this);
+
+
+/**
+ * Sree Krushna Marriage OS — Modular Zoom & Pan Engine
+ * Standard: STD-MOD-COMP-001 | Ruling: AC-DEC-2026-022
+ * Adapted from: PIOperationsMgmt_Firebase UniversalViewer v2.0
+ * Scope: High-res fabric & jewelry micro-inspection with mousewheel, drag-to-pan, and mobile pinch-to-zoom.
+ */
+
+(function(global) {
+  'use strict';
+
+  class ZoomPanEngine {
+    constructor(targetElement, options = {}) {
+      this.target = typeof targetElement === 'string' ? document.querySelector(targetElement) : targetElement;
+      this.container = this.target ? this.target.parentElement : null;
+      
+      this.options = Object.assign({
+        minScale: 1,
+        maxScale: 5,
+        step: 0.3,
+        onTransformChange: null
+      }, options);
+
+      this.scale = 1;
+      this.pointX = 0;
+      this.pointY = 0;
+      this.panning = false;
+      this.startX = 0;
+      this.startY = 0;
+
+      // Touch pinch state
+      this.initialPinchDistance = 0;
+      this.initialScaleOnPinch = 1;
+
+      // Bound handlers for cleanup
+      this._onMouseDown = this._handleMouseDown.bind(this);
+      this._onMouseMove = this._handleMouseMove.bind(this);
+      this._onMouseUp = this._handleMouseUp.bind(this);
+      this._onWheel = this._handleWheel.bind(this);
+      this._onTouchStart = this._handleTouchStart.bind(this);
+      this._onTouchMove = this._handleTouchMove.bind(this);
+      this._onTouchEnd = this._handleTouchEnd.bind(this);
+      this._onKeyDown = this._handleKeyDown.bind(this);
+
+      if (this.target && this.container) {
+        this.init();
+      }
+    }
+
+    init() {
+      this.container.style.overflow = 'hidden';
+      this.container.style.position = 'relative';
+      this.container.style.cursor = 'grab';
+      this.target.style.transformOrigin = 'center center';
+      this.target.style.transition = 'transform 0.05s ease-out';
+      this.target.style.userSelect = 'none';
+
+      // Mouse & Wheel Listeners
+      this.container.addEventListener('mousedown', this._onMouseDown);
+      window.addEventListener('mousemove', this._onMouseMove);
+      window.addEventListener('mouseup', this._onMouseUp);
+      this.container.addEventListener('wheel', this._onWheel, { passive: false });
+
+      // Mobile Touch Listeners
+      this.container.addEventListener('touchstart', this._onTouchStart, { passive: false });
+      this.container.addEventListener('touchmove', this._onTouchMove, { passive: false });
+      this.container.addEventListener('touchend', this._onTouchEnd);
+
+      // Keyboard shortcuts
+      window.addEventListener('keydown', this._onKeyDown);
+      this.updateTransform();
+    }
+
+    updateTransform() {
+      if (!this.target) return;
+      this.target.style.transform = `translate(${this.pointX}px, ${this.pointY}px) scale(${this.scale})`;
+      if (this.container) {
+        this.container.style.cursor = this.panning ? 'grabbing' : (this.scale > 1 ? 'grab' : 'default');
+      }
+      if (typeof this.options.onTransformChange === 'function') {
+        this.options.onTransformChange({
+          scale: this.scale,
+          pointX: this.pointX,
+          pointY: this.pointY,
+          zoomPercent: Math.round(this.scale * 100)
+        });
+      }
+    }
+
+    zoomIn() {
+      this.scale = Math.min(this.options.maxScale, +(this.scale + this.options.step).toFixed(2));
+      this.updateTransform();
+    }
+
+    zoomOut() {
+      this.scale = Math.max(this.options.minScale, +(this.scale - this.options.step).toFixed(2));
+      if (this.scale <= 1) {
+        this.pointX = 0;
+        this.pointY = 0;
+      }
+      this.updateTransform();
+    }
+
+    fit() {
+      this.scale = 1;
+      this.pointX = 0;
+      this.pointY = 0;
+      this.updateTransform();
+    }
+
+    reset() {
+      this.fit();
+    }
+
+    _handleMouseDown(e) {
+      if (e.button !== 0) return; // Only primary mouse button
+      e.preventDefault();
+      this.panning = true;
+      this.startX = e.clientX - this.pointX;
+      this.startY = e.clientY - this.pointY;
+      if (this.container) this.container.style.cursor = 'grabbing';
+    }
+
+    _handleMouseMove(e) {
+      if (!this.panning) return;
+      e.preventDefault();
+      this.pointX = e.clientX - this.startX;
+      this.pointY = e.clientY - this.startY;
+      this.updateTransform();
+    }
+
+    _handleMouseUp() {
+      if (this.panning) {
+        this.panning = false;
+        if (this.container) this.container.style.cursor = this.scale > 1 ? 'grab' : 'default';
+      }
+    }
+
+    _handleWheel(e) {
+      e.preventDefault();
+      const delta = e.deltaY < 0 ? this.options.step : -this.options.step;
+      const newScale = Math.min(this.options.maxScale, Math.max(this.options.minScale, +(this.scale + delta).toFixed(2)));
+      
+      if (newScale <= 1) {
+        this.pointX = 0;
+        this.pointY = 0;
+      }
+      this.scale = newScale;
+      this.updateTransform();
+    }
+
+    _getTouchDistance(touch1, touch2) {
+      const dx = touch1.clientX - touch2.clientX;
+      const dy = touch1.clientY - touch2.clientY;
+      return Math.hypot(dx, dy);
+    }
+
+    _handleTouchStart(e) {
+      if (e.touches.length === 1) {
+        this.panning = true;
+        this.startX = e.touches[0].clientX - this.pointX;
+        this.startY = e.touches[0].clientY - this.pointY;
+      } else if (e.touches.length === 2) {
+        this.panning = false;
+        this.initialPinchDistance = this._getTouchDistance(e.touches[0], e.touches[1]);
+        this.initialScaleOnPinch = this.scale;
+      }
+    }
+
+    _handleTouchMove(e) {
+      if (e.touches.length === 1 && this.panning && this.scale > 1) {
+        e.preventDefault();
+        this.pointX = e.touches[0].clientX - this.startX;
+        this.pointY = e.touches[0].clientY - this.startY;
+        this.updateTransform();
+      } else if (e.touches.length === 2 && this.initialPinchDistance > 0) {
+        e.preventDefault();
+        const currentDist = this._getTouchDistance(e.touches[0], e.touches[1]);
+        const factor = currentDist / this.initialPinchDistance;
+        const newScale = Math.min(this.options.maxScale, Math.max(this.options.minScale, +(this.initialScaleOnPinch * factor).toFixed(2)));
+        this.scale = newScale;
+        if (this.scale <= 1) {
+          this.pointX = 0;
+          this.pointY = 0;
+        }
+        this.updateTransform();
+      }
+    }
+
+    _handleTouchEnd(e) {
+      if (e.touches.length === 0) {
+        this.panning = false;
+        this.initialPinchDistance = 0;
+      }
+    }
+
+    _handleKeyDown(e) {
+      if (e.ctrlKey || e.metaKey) {
+        if (e.key === '=' || e.key === '+') {
+          e.preventDefault();
+          this.zoomIn();
+        } else if (e.key === '-') {
+          e.preventDefault();
+          this.zoomOut();
+        } else if (e.key === '0') {
+          e.preventDefault();
+          this.fit();
+        }
+      } else if ((e.key === 'r' || e.key === 'R') && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+        this.reset();
+      }
+    }
+
+    destroy() {
+      if (this.container) {
+        this.container.removeEventListener('mousedown', this._onMouseDown);
+        this.container.removeEventListener('wheel', this._onWheel);
+        this.container.removeEventListener('touchstart', this._onTouchStart);
+        this.container.removeEventListener('touchmove', this._onTouchMove);
+        this.container.removeEventListener('touchend', this._onTouchEnd);
+      }
+      window.removeEventListener('mousemove', this._onMouseMove);
+      window.removeEventListener('mouseup', this._onMouseUp);
+      window.removeEventListener('keydown', this._onKeyDown);
+    }
+  }
+
+  global.SKZoomPanEngine = ZoomPanEngine;
+})(typeof window !== 'undefined' ? window : this);
+
+
+/**
+ * Sree Krushna Marriage OS — Universal UI Primitives Core Helper Library
+ * Standard: STD-MOD-COMP-001 | Ruling: AC-DEC-2026-019 / AC-DEC-2026-022
+ * Scope: Zero-dependency DOM helpers for carousels, modals, toasts, Drive CDN normalization, and zoom/pan.
+ */
+
+(function(global) {
+  'use strict';
+
+  const SKPrimitives = {
+    /**
+     * Display a transient tactile toast message
+     * @param {string} msg - The message to display
+     * @param {number} duration - Milliseconds to stay visible (default: 2500)
+     */
+    showToast: function(msg, duration = 2500) {
+      const toastEl = document.getElementById('skGlobalToast') || document.querySelector('.sk-toast');
+      const textEl = document.getElementById('skToastMessage') || (toastEl ? toastEl.querySelector('.sk-toast-text') : null);
+      if (!toastEl) return;
+      
+      if (textEl) textEl.textContent = msg;
+      else toastEl.textContent = msg;
+      
+      toastEl.classList.add('is-visible');
+      if (toastEl._timer) clearTimeout(toastEl._timer);
+      toastEl._timer = setTimeout(function() {
+        toastEl.classList.remove('is-visible');
+      }, duration);
+    },
+
+    /**
+     * Safely copy text to clipboard with modern fallback and optional toast notification
+     * @param {string} text - Text to copy
+     * @param {string} [feedbackMsg] - Optional message to show in toast
+     * @returns {Promise<boolean>}
+     */
+    copyToClipboard: async function(text, feedbackMsg) {
+      let ok = false;
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          ok = true;
+        } else {
+          const textArea = document.createElement('textarea');
+          textArea.value = text;
+          textArea.style.position = 'fixed';
+          textArea.style.left = '-999999px';
+          document.body.appendChild(textArea);
+          textArea.focus();
+          textArea.select();
+          ok = document.execCommand('copy');
+          document.body.removeChild(textArea);
+        }
+      } catch (err) {
+        console.error('Failed to copy to clipboard:', err);
+        ok = false;
+      }
+      if (ok && feedbackMsg) {
+        SKPrimitives.showToast(feedbackMsg);
+      }
+      return ok;
+    },
+
+    /**
+     * Generate canonical, origin-aware URL for stakeholder standalone portals
+     * Resolves BUG-SHARE-BASEURL-001 by guaranteeing target portal filename
+     * @param {string} portalFile - e.g. 'shopping-registry.html', 'decision-registry.html'
+     * @param {Object|string} [params] - Query parameter object or query string
+     * @returns {string} Fully qualified canonical URL
+     */
+    getStakeholderUrl: function(portalFile, params) {
+      const origin = (typeof window !== 'undefined' && window.location && window.location.origin) 
+        ? window.location.origin 
+        : 'https://sree-krushna-forever.web.app';
+      let qs = '';
+      if (typeof params === 'string') {
+        qs = params.startsWith('?') ? params.substring(1) : params;
+      } else if (params && typeof params === 'object') {
+        const searchParams = new URLSearchParams();
+        Object.keys(params).forEach(key => {
+          if (params[key] !== undefined && params[key] !== null) {
+            searchParams.set(key, params[key]);
+          }
+        });
+        qs = searchParams.toString();
+      }
+      return `${origin}/${portalFile}${qs ? '?' + qs : ''}`;
+    },
+
+    /**
+     * Universal Stakeholder Share Catalog (P-QUICK-SHARE-001)
+     * @param {string} key
+     * @returns {{ key: string, title: string, url: string, text: string, whatsappUrl: string }}
+     */
+    getStakeholderShare: function(key) {
+      let url = '';
+      let text = '';
+      let title = '';
+
+      switch (key) {
+        case 'shopping-family':
+          title = 'Family Shopping Review';
+          url = SKPrimitives.getStakeholderUrl('shopping-registry.html', { mode: 'family' });
+          text = `🌺 *Sree Krushna Marriage OS — Wedding Shopping Review*\nHelp us review and vote on the wedding trousseau, sarees, and 'Sara' gifting items for Bhubaneswar!\n👉 Tap to review: ${url}`;
+          break;
+        case 'shopping-sisters':
+          title = "Sisters' Styling & Wardrobe Hub";
+          url = SKPrimitives.getStakeholderUrl('shopping-registry.html', { mode: 'sisters' });
+          text = `👭 *Sree Krushna Wedding — Sisters' Wardrobe & Styling Hub*\nHey! Here is the Bhubaneswar shopping checklist for our sarees, lehengas, and groom styling. Tap to vote on your favorites:\n👉 ${url}`;
+          break;
+        case 'shopping-vivaha-pata':
+          title = 'Vivaha Pata & Khandua Attire';
+          url = SKPrimitives.getStakeholderUrl('shopping-registry.html', { cluster: 'vivaha_pata', mode: 'family' });
+          text = `👑 *Sree Krushna Wedding — Vivaha Pata & Khandua Review*\nHelp us choose the sacred wedding silks & Khandua Pata for the Lagna rituals:\n👉 Review & Vote: ${url}`;
+          break;
+        case 'shopping-groom-mandap':
+          title = 'Groom Mandap Liturgical Attire';
+          url = SKPrimitives.getStakeholderUrl('shopping-registry.html', { cluster: 'groom_mandap', mode: 'family' });
+          text = `✨ *Sree Krushna Wedding — Groom Mandap Liturgical Attire*\nReview the authentic Odia Dhoti, Khandua Joda, and Mandap wear options:\n👉 Review & Vote: ${url}`;
+          break;
+        case 'decisions-family':
+          title = 'Family Decor Consensus';
+          url = SKPrimitives.getStakeholderUrl('decision-registry.html', { event: 'EVT-004', mode: 'family' });
+          text = `🌺 *Sree Krushna Marriage OS — Family Decor Review*\nHelp us review and vote on our wedding decor concepts!\n👉 Tap to review: ${url}`;
+          break;
+        case 'decisions-mandap':
+          title = 'Vivaha Mandap Decor Cluster';
+          url = SKPrimitives.getStakeholderUrl('decision-registry.html', { event: 'EVT-004', cluster: 'mandap_structure', mode: 'family' });
+          text = `🏛️ *Sree Krushna Wedding — Vivaha Mandap Design Consensus*\nReview and vote on the sacred Mandap floral & architectural themes:\n👉 Tap to vote: ${url}`;
+          break;
+        case 'decisions-sangeet':
+          title = 'Sangeet Stage & Lighting Cluster';
+          url = SKPrimitives.getStakeholderUrl('decision-registry.html', { event: 'EVT-003', cluster: 'sangeet_stage', mode: 'family' });
+          text = `🪩 *Sree Krushna Wedding — Sangeet Stage & Lighting Consensus*\nVote on the Sangeet stage backdrop, trussing, and ambient lighting:\n👉 Tap to vote: ${url}`;
+          break;
+        case 'cockpit-hub':
+          title = 'Decorator Negotiation Cockpit';
+          url = SKPrimitives.getStakeholderUrl('decorator-cockpit.html');
+          text = `🎪 *Sree Krushna Marriage OS — Decorator Cockpit*\nExecutive presentation and vendor quotation workspace:\n👉 View Cockpit: ${url}`;
+          break;
+        case 'intake-public':
+          title = 'Proposal & Intake Studio';
+          url = SKPrimitives.getStakeholderUrl('shopping-registry.html') + '#intake';
+          text = `💡 *Sree Krushna Wedding — Idea & Shopping Drop*\nHave a saree recommendation or vendor quote? Drop it directly into our registry:\n👉 Submit Option: ${url}`;
+          break;
+        default:
+          title = 'Sree Krushna Marriage OS';
+          url = SKPrimitives.getStakeholderUrl('index.html');
+          text = `👑 *Sree Krushna Marriage OS*\nSingle Source of Truth & Executive Control Tower:\n👉 Open OS: ${url}`;
+      }
+
+      const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+      return { key, title, url, text, whatsappUrl };
+    },
+
+    /**
+     * Copy stakeholder share bundle to clipboard and notify
+     * @param {string} key
+     */
+    copyStakeholderShare: function(key) {
+      const share = SKPrimitives.getStakeholderShare(key);
+      SKPrimitives.copyToClipboard(share.text, `Copied ${share.title} WhatsApp message to clipboard!`);
+    },
+
+    /**
+     * Copy raw URL to clipboard
+     * @param {string} keyOrUrl
+     * @param {string} [label]
+     */
+    copyUrlToClipboard: function(keyOrUrl, label) {
+      const url = (typeof keyOrUrl === 'string' && keyOrUrl.startsWith('http')) 
+        ? keyOrUrl 
+        : (SKPrimitives.getStakeholderShare(keyOrUrl).url);
+      SKPrimitives.copyToClipboard(url, `Copied ${label || 'link'} to clipboard!`);
+    },
+
+    /**
+     * Bind basic modal open/close accessibility triggers
+     * @param {HTMLElement|string} modalElement - Backdrop element or selector
+     * @param {Function} [onCloseCallback]
+     */
+    initModal: function(modalElement, onCloseCallback) {
+      const el = typeof modalElement === 'string' ? document.querySelector(modalElement) : modalElement;
+      if (!el) return;
+      
+      el.addEventListener('click', function(e) {
+        if (e.target === el || e.target.classList.contains('sk-modal-close') || e.target.closest('.sk-modal-close')) {
+          el.classList.remove('is-active');
+          if (typeof onCloseCallback === 'function') onCloseCallback();
+        }
+      });
+      
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && el.classList.contains('is-active')) {
+          el.classList.remove('is-active');
+          if (typeof onCloseCallback === 'function') onCloseCallback();
+        }
+      });
+    },
+
+    /**
+     * Bind Zoom/Pan Engine to a Lightbox Image and Toolbar
+     * @param {HTMLElement|string} imgElement 
+     * @param {Object} [toolbarSelectors]
+     * @returns {Object|null}
+     */
+    initLightboxZoom: function(imgElement, toolbarSelectors = {}) {
+      const img = typeof imgElement === 'string' ? document.querySelector(imgElement) : imgElement;
+      if (!img || !global.SKZoomPanEngine) return null;
+
+      const badge = document.querySelector(toolbarSelectors.badge || '#skZoomBadge');
+      
+      const engine = new global.SKZoomPanEngine(img, {
+        onTransformChange: function(state) {
+          if (badge) badge.textContent = state.zoomPercent + '%';
+        }
+      });
+
+      const btnZoomIn = document.querySelector(toolbarSelectors.zoomIn || '#skBtnZoomIn');
+      const btnZoomOut = document.querySelector(toolbarSelectors.zoomOut || '#skBtnZoomOut');
+      const btnFit = document.querySelector(toolbarSelectors.fit || '#skBtnFit');
+      const btnReset = document.querySelector(toolbarSelectors.reset || '#skBtnReset');
+
+      if (btnZoomIn) btnZoomIn.onclick = () => engine.zoomIn();
+      if (btnZoomOut) btnZoomOut.onclick = () => engine.zoomOut();
+      if (btnFit) btnFit.onclick = () => engine.fit();
+      if (btnReset) btnReset.onclick = () => engine.reset();
+
+      return engine;
+    },
+
+    /**
+     * Resolve Google Drive link to high-speed CDN assets
+     * @param {string} url 
+     * @param {Object} [options]
+     * @returns {Object}
+     */
+    resolveDriveAsset: function(url, options) {
+      if (global.SKDriveNormalizer) {
+        return global.SKDriveNormalizer.resolveAsset(url, options);
+      }
+      return { isDrive: false, url: url, cardThumbnail: url, zoomUrl: url };
+    },
+
+    /**
+     * Open Collaborative Comments Drawer
+     * @param {string} optionId 
+     * @param {Object} [meta]
+     */
+    openComments: function(optionId, meta) {
+      if (global.SKCommentsEngine) {
+        global.SKCommentsEngine.openDrawer(optionId, meta);
+      }
+    },
+
+    /**
+     * Close Collaborative Comments Drawer
+     */
+    closeComments: function() {
+      if (global.SKCommentsEngine) {
+        global.SKCommentsEngine.closeDrawer();
+      } else if (global.closeCommentsDrawer) {
+        global.closeCommentsDrawer();
+      } else {
+        const backdrop = document.getElementById('skCommentsDrawerBackdrop');
+        if (backdrop) backdrop.classList.remove('is-active');
+        const drawer = document.getElementById('skCommentsDrawer');
+        if (drawer) drawer.classList.remove('is-active');
+      }
+    },
+
+    /**
+     * Get comment count for an option
+     * @param {string} optionId 
+     * @returns {number}
+     */
+    getCommentCount: function(optionId) {
+      if (global.SKCommentsEngine) {
+        return global.SKCommentsEngine.getCommentCount(optionId);
+      }
+      return 0;
+    }
+  };
+
+  global.SKPrimitives = SKPrimitives;
+})(typeof window !== 'undefined' ? window : this);
+
+/* SSOT: docs/incidents/INC-090-spa-pathname-drift-in-stakeholder-share-links.md — INC-090 */
+
+
+
+    let currentMode = 'hud';
     let currentEvent = 'marquee';
     let currentTopicIndex = 0;
     let activeStageView = 'script';
@@ -3747,39 +5363,154 @@
     }
 
     /* ==========================================================================
-       CUSTOM PHOTO / PINTEREST OVERRIDE ENGINE & ZOOM (AC-DEC-2026-008)
+       MULTI-OPTION DECOR INTAKE, LOOKBOOK OPTIONS & ZOOM ENGINE
+       (AC-DEC-2026-039 / UI-DEC-2026-035 / P-COLLAB-VISUAL-INTAKE-001)
        ========================================================================== */
+    const DECOR_OPTIONS_STORAGE_KEY = 'sk_decor_custom_options';
+    const LEGACY_DECOR_PHOTO_STORAGE_KEY = 'sree_krushna_custom_decor_photos';
     let activeEditingPlateId = null;
+    let activeOptionPlateId = null;
+    let localUploadedDataUrl = '';
     let isLightboxZoomed = false;
 
-    function loadCustomPhotoOverrides() {
+    function getPlateImages(plate) {
+      if (!plate) return [];
+      if (Array.isArray(plate.options) && plate.options.length > 0) {
+        return plate.options;
+      }
+      return [{
+        id: 'opt-0',
+        label: 'Option 1: Vedic Baseline',
+        badge: 'Vedic Baseline',
+        url: plate.photoSrc,
+        thumbnail: plate.photoSrc,
+        source: 'canonical',
+        selected: true
+      }];
+    }
+
+    function getActivePlateOption(plate) {
+      const opts = getPlateImages(plate);
+      const sel = opts.find(o => o.selected) || opts[0];
+      return sel;
+    }
+
+    function loadCustomDecorOptions() {
+      // 1. Backward compatibility migration from legacy single-photo key
       try {
-        const saved = localStorage.getItem('sree_krushna_custom_decor_photos');
-        if (saved) {
-          const overrides = JSON.parse(saved);
-          VISUAL_PLATES.forEach(p => {
-            if (overrides[p.id]) {
-              p.photoSrc = overrides[p.id];
-              p.isCustom = true;
-            } else {
-              p.isCustom = false;
+        const legacy = localStorage.getItem(LEGACY_DECOR_PHOTO_STORAGE_KEY);
+        if (legacy) {
+          const legacyMap = JSON.parse(legacy);
+          let currentOptionsMap = {};
+          try {
+            const savedOpt = localStorage.getItem(DECOR_OPTIONS_STORAGE_KEY);
+            if (savedOpt) currentOptionsMap = JSON.parse(savedOpt);
+          } catch (e) {}
+          let migrated = false;
+          Object.keys(legacyMap).forEach(plateId => {
+            const url = legacyMap[plateId];
+            if (url && (!currentOptionsMap[plateId] || currentOptionsMap[plateId].length === 0)) {
+              currentOptionsMap[plateId] = [{
+                id: 'opt-legacy-1',
+                label: 'Candidate Look 1',
+                badge: 'Custom Look',
+                url: url,
+                thumbnail: url,
+                source: 'custom_import',
+                selected: true
+              }];
+              migrated = true;
             }
           });
+          if (migrated) {
+            localStorage.setItem(DECOR_OPTIONS_STORAGE_KEY, JSON.stringify(currentOptionsMap));
+          }
         }
       } catch (e) {
-        console.warn('Error reading custom decor photo overrides:', e);
+        console.warn('Error migrating legacy decor photos:', e);
+      }
+
+      // 2. Load custom options into VISUAL_PLATES
+      try {
+        const raw = localStorage.getItem(DECOR_OPTIONS_STORAGE_KEY);
+        const optionsMap = raw ? JSON.parse(raw) : {};
+        VISUAL_PLATES.forEach(p => {
+          const canonicalPlate = (typeof CANONICAL_PLATES !== 'undefined') ? CANONICAL_PLATES.find(cp => cp.id === p.id) : null;
+          const canonicalOpts = (canonicalPlate && canonicalPlate.options) ? JSON.parse(JSON.stringify(canonicalPlate.options)) : [{
+            id: 'opt-0',
+            label: 'Option 1: Vedic Baseline',
+            badge: 'Vedic Baseline',
+            url: p.photoSrc,
+            thumbnail: p.photoSrc,
+            source: 'canonical',
+            selected: true
+          }];
+          const customOpts = optionsMap[p.id] || [];
+          p.options = [...canonicalOpts, ...customOpts];
+          
+          let selIndex = p.options.findIndex(o => o.selected);
+          if (selIndex < 0) {
+            selIndex = 0;
+            if (p.options[0]) p.options[0].selected = true;
+          }
+          p.selectedOptionIndex = selIndex;
+          p.isCustom = selIndex > 0;
+          if (p.options[selIndex]) {
+            p.photoSrc = p.options[selIndex].url || p.photoSrc;
+          }
+        });
+      } catch (e) {
+        console.warn('Error reading custom decor options:', e);
+      }
+    }
+
+    function loadCustomPhotoOverrides() {
+      loadCustomDecorOptions();
+    }
+
+    let lightboxZoomPanInstance = null;
+
+    function initLightboxZoomPan() {
+      const img = document.getElementById('lightboxImg');
+      if (!img) return;
+      if (lightboxZoomPanInstance && typeof lightboxZoomPanInstance.destroy === 'function') {
+        lightboxZoomPanInstance.destroy();
+        lightboxZoomPanInstance = null;
+      }
+      if (typeof window.ZoomPanEngine === 'function') {
+        lightboxZoomPanInstance = new window.ZoomPanEngine(img, {
+          minScale: 1,
+          maxScale: 5,
+          step: 0.3
+        });
       }
     }
 
     function toggleLightboxZoom() {
-      isLightboxZoomed = !isLightboxZoomed;
-      const wrapper = document.querySelector('.lightbox-img-wrapper');
+      if (!lightboxZoomPanInstance) {
+        initLightboxZoomPan();
+      }
       const btn = document.getElementById('lbZoomBtn');
-      if (wrapper) wrapper.classList.toggle('is-zoomed', isLightboxZoomed);
-      if (btn) btn.innerHTML = isLightboxZoomed ? '🔍 Fit' : '🔍 Expand';
+      if (lightboxZoomPanInstance) {
+        if (lightboxZoomPanInstance.scale > 1) {
+          lightboxZoomPanInstance.reset();
+          if (btn) btn.innerHTML = '🔍 Expand';
+        } else {
+          lightboxZoomPanInstance.zoomToPoint(2.2, 0, 0);
+          if (btn) btn.innerHTML = '🔍 Fit';
+        }
+      } else {
+        isLightboxZoomed = !isLightboxZoomed;
+        const wrapper = document.querySelector('.lightbox-img-wrapper');
+        if (wrapper) wrapper.classList.toggle('is-zoomed', isLightboxZoomed);
+        if (btn) btn.innerHTML = isLightboxZoomed ? '🔍 Fit' : '🔍 Expand';
+      }
     }
 
     function resetLightboxZoom() {
+      if (lightboxZoomPanInstance && typeof lightboxZoomPanInstance.reset === 'function') {
+        lightboxZoomPanInstance.reset();
+      }
       isLightboxZoomed = false;
       const wrapper = document.querySelector('.lightbox-img-wrapper');
       const btn = document.getElementById('lbZoomBtn');
@@ -3819,111 +5550,511 @@
       });
     }
 
-    function openCustomPhotoModal(plateId) {
-      activeEditingPlateId = plateId;
-      const plate = VISUAL_PLATES.find(p => p.id === plateId) || VISUAL_PLATES[0];
+    function selectPlateOption(plateId, optIndex) {
+      const plate = VISUAL_PLATES.find(p => p.id === plateId);
+      if (!plate || !plate.options || !plate.options[optIndex]) return;
+
+      plate.options.forEach((opt, idx) => {
+        opt.selected = (idx === optIndex);
+      });
+      plate.selectedOptionIndex = optIndex;
+      plate.isCustom = (optIndex > 0);
+      plate.photoSrc = plate.options[optIndex].url;
+
+      try {
+        const raw = localStorage.getItem(DECOR_OPTIONS_STORAGE_KEY);
+        const optionsMap = raw ? JSON.parse(raw) : {};
+        const customList = plate.options.filter(o => o.source !== 'canonical');
+        optionsMap[plateId] = customList;
+        localStorage.setItem(DECOR_OPTIONS_STORAGE_KEY, JSON.stringify(optionsMap));
+
+        let legacyMap = {};
+        const legacy = localStorage.getItem(LEGACY_DECOR_PHOTO_STORAGE_KEY);
+        if (legacy) legacyMap = JSON.parse(legacy);
+        if (optIndex > 0) {
+          legacyMap[plateId] = plate.photoSrc;
+        } else {
+          delete legacyMap[plateId];
+        }
+        localStorage.setItem(LEGACY_DECOR_PHOTO_STORAGE_KEY, JSON.stringify(legacyMap));
+      } catch (e) {
+        console.warn('Error saving decor option selection:', e);
+      }
+
+      renderLookbookGrid();
+      renderLightboxView();
+      renderTopicDetail(currentTopicIndex);
+      showToast(`✓ Switched to ${plate.options[optIndex].label || 'Option ' + (optIndex + 1)}`);
+    }
+
+    function clearPlateCustomOptions(plateId) {
+      const plate = VISUAL_PLATES.find(p => p.id === plateId);
       if (!plate) return;
+      if (!confirm(`Reset candidate looks for ${plate.id} back to canonical Vedic baseline?`)) return;
 
-      document.getElementById('customPlateSubtitle').textContent = plate.id + ' — ' + plate.title;
-      const input = document.getElementById('customPhotoInput');
-      input.value = plate.isCustom ? plate.photoSrc : '';
-      
-      const previewImg = document.getElementById('customPhotoPreviewImg');
-      const fallback = document.getElementById('customPhotoPreviewFallback');
-      fallback.style.display = 'none';
-      previewImg.style.display = 'block';
-      previewImg.src = plate.photoSrc;
+      try {
+        const raw = localStorage.getItem(DECOR_OPTIONS_STORAGE_KEY);
+        if (raw) {
+          const optionsMap = JSON.parse(raw);
+          delete optionsMap[plateId];
+          localStorage.setItem(DECOR_OPTIONS_STORAGE_KEY, JSON.stringify(optionsMap));
+        }
+        const legacy = localStorage.getItem(LEGACY_DECOR_PHOTO_STORAGE_KEY);
+        if (legacy) {
+          const legacyMap = JSON.parse(legacy);
+          delete legacyMap[plateId];
+          localStorage.setItem(LEGACY_DECOR_PHOTO_STORAGE_KEY, JSON.stringify(legacyMap));
+        }
+      } catch (e) {
+        console.warn('Error clearing custom options:', e);
+      }
 
-      const status = document.getElementById('customPhotoStatus');
-      status.textContent = plate.isCustom ? 'Active Custom Override' : 'Canonical Vedic Default';
-      status.style.color = plate.isCustom ? '#fbbf24' : '#10b981';
+      loadCustomDecorOptions();
+      renderLookbookGrid();
+      renderLightboxView();
+      renderTopicDetail(currentTopicIndex);
+      showToast(`✓ Reset ${plate.id} to Vedic baseline`);
+    }
 
-      const resetBtn = document.getElementById('btnResetToDefaultPhoto');
-      resetBtn.style.display = plate.isCustom ? 'block' : 'none';
+    function shareDecorOption(plateId, optIndex) {
+      const plate = VISUAL_PLATES.find(p => p.id === plateId);
+      if (!plate) return;
+      const idx = (typeof optIndex === 'number') ? optIndex : (plate.selectedOptionIndex || 0);
+      const opt = (plate.options && plate.options[idx]) ? plate.options[idx] : null;
+      const optLabel = opt ? (opt.label || `Option ${idx + 1}`) : 'Vedic Baseline';
 
-      const promptContainer = document.getElementById('customModalPromptText');
-      if (promptContainer) promptContainer.textContent = plate.prompt || 'No prompt available.';
-      document.getElementById('customPhotoModalBackdrop').classList.add('active');
+      const baseUrl = window.location.origin + window.location.pathname;
+      const shareUrl = `${baseUrl}?plate=${encodeURIComponent(plate.id)}&option=${idx}`;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          showToast(`✓ Copied deep-link for ${plate.id} (${optLabel})!`);
+        }).catch(() => {
+          prompt('Copy deep-link manually:', shareUrl);
+        });
+      } else {
+        prompt('Copy deep-link manually:', shareUrl);
+      }
+    }
+
+    function validateCandidateImageUrl(url) {
+      if (!url || !url.trim()) {
+        return { valid: false, type: 'empty', error: 'Please provide a direct image link or upload a showroom photo.' };
+      }
+      const cleanUrl = url.trim();
+
+      // 1. Direct Pinterest CDN image (i.pinimg.com)
+      if (cleanUrl.includes('i.pinimg.com')) {
+        return {
+          valid: true,
+          type: 'pinterest_direct',
+          src: cleanUrl,
+          badge: '📌 Pinterest CDN (Direct Render)',
+          isDirectImage: true
+        };
+      }
+
+      // 2. Pinterest Web Pin (pin.it or *.pinterest.*/pin/ or similar)
+      if (/pin\.it|pinterest(\.[a-z]{2,3})+/i.test(cleanUrl)) {
+        const hasDirectExt = /\.(jpe?g|png|webp|avif)($|\?)/i.test(cleanUrl);
+        if (!hasDirectExt && !cleanUrl.includes('pinimg.com')) {
+          return {
+            valid: false,
+            type: 'pinterest_webpage',
+            error: 'Invalidated Pinterest Link: This is a Pinterest webpage link (pin.it / pin/...), not a direct image file. Hotlinking web pages inside cards is blocked by browser security. Please right-click the photo on Pinterest and choose "Copy Image Address" (URL must start with https://i.pinimg.com/... and end with .jpg), or upload the photo using the "Device / Showroom Photo" tab.'
+          };
+        }
+        return {
+          valid: true,
+          type: 'pinterest_direct',
+          src: cleanUrl,
+          badge: '📌 Pinterest Image Asset',
+          isDirectImage: true
+        };
+      }
+
+      // 3. Google Drive Link
+      const driveResolved = (window.SKPrimitives && window.SKPrimitives.resolveDriveAsset)
+        ? window.SKPrimitives.resolveDriveAsset(cleanUrl, { cardWidth: 800 })
+        : null;
+      if (driveResolved && driveResolved.isDrive) {
+        return {
+          valid: true,
+          type: 'drive',
+          src: driveResolved.cardThumbnail,
+          badge: '📁 Drive ID: ' + driveResolved.driveId,
+          isDirectImage: true
+        };
+      }
+
+      // 4. Data URL (Showroom / Camera upload)
+      if (cleanUrl.startsWith('data:image/')) {
+        return {
+          valid: true,
+          type: 'data_url',
+          src: cleanUrl,
+          badge: '📷 Showroom Photo',
+          isDirectImage: true
+        };
+      }
+
+      // 5. Direct Web Image with standard extension
+      if (/^https?:\/\/.*\.(jpe?g|png|webp|avif|gif)($|\?)/i.test(cleanUrl)) {
+        return {
+          valid: true,
+          type: 'web_image',
+          src: cleanUrl,
+          badge: '🌐 Direct Web Image',
+          isDirectImage: true
+        };
+      }
+
+      // 6. Generic HTML Webpage URL
+      if (/^https?:\/\//i.test(cleanUrl)) {
+        return {
+          valid: false,
+          type: 'webpage_not_image',
+          error: 'Invalidated Link: This is a website page address, not a direct image file (.jpg/.png). Browsers block HTML pages inside photo cards. Please right-click the photo on that page and select "Copy Image Address", or use the "Device / Showroom Photo" tab.'
+        };
+      }
+
+      return {
+        valid: false,
+        type: 'invalid_format',
+        error: 'Invalid link format. Image URLs must begin with http:// or https://'
+      };
+    }
+
+    function openOptionIntakeModal(plateId) {
+      activeOptionPlateId = plateId;
+      const backdrop = document.getElementById('skOptionIntakeBackdrop');
+      if (!backdrop) return;
+
+      const plate = VISUAL_PLATES.find(p => p.id === plateId) || VISUAL_PLATES[0];
+      const itemIdInput = document.getElementById('skOptionItemId');
+      const modalTitle = document.getElementById('skOptionIntakeTitle');
+      const titleInput = document.getElementById('skOptionTitle');
+      const categorySelect = document.getElementById('skOptionCategory');
+      const priceInput = document.getElementById('skOptionPrice');
+      const vendorInput = document.getElementById('skOptionVendor');
+      const driveInput = document.getElementById('skDriveUrlInput');
+      const proofCard = document.getElementById('skDriveProofCard');
+      const fileInput = document.getElementById('skFileInput');
+      const alertEl = document.getElementById('skIntakeUrlAlert');
+
+      if (itemIdInput) itemIdInput.value = plateId || '';
+      if (modalTitle) modalTitle.textContent = plate ? `Add Candidate Look for ${plate.title} (${plate.id})` : 'Add Shopping / Decor Option';
+
+      if (plate) {
+        const options = getPlateImages(plate);
+        const nextLookNum = options.length + 1;
+        if (titleInput) titleInput.value = `${plate.title} (Look ${nextLookNum})`;
+        if (categorySelect) {
+          if (plate.category === 'mandap') categorySelect.value = 'mandap';
+          else if (plate.category === 'stage') categorySelect.value = 'stage';
+          else categorySelect.value = 'other';
+        }
+        if (vendorInput) vendorInput.value = 'Decorator Catalog';
+      } else {
+        if (titleInput) titleInput.value = '';
+      }
+
+      if (driveInput) driveInput.value = '';
+      if (proofCard) proofCard.style.display = 'none';
+      if (fileInput) fileInput.value = '';
+      if (priceInput) priceInput.value = '';
+      localUploadedDataUrl = '';
+      if (alertEl) {
+        alertEl.style.display = 'none';
+        alertEl.className = 'sk-intake-alert';
+        alertEl.textContent = '';
+      }
+
+      backdrop.classList.add('active');
+      backdrop.classList.add('is-active');
+    }
+
+    function closeOptionIntakeModal() {
+      const backdrop = document.getElementById('skOptionIntakeBackdrop');
+      if (backdrop) {
+        backdrop.classList.remove('active');
+        backdrop.classList.remove('is-active');
+      }
+      activeOptionPlateId = null;
+    }
+
+    function openCustomPhotoModal(plateId) {
+      openOptionIntakeModal(plateId);
     }
 
     function closeCustomPhotoModal() {
-      document.getElementById('customPhotoModalBackdrop').classList.remove('active');
-      activeEditingPlateId = null;
+      closeOptionIntakeModal();
     }
 
-    function onCustomPhotoUrlChange() {
-      const url = document.getElementById('customPhotoInput').value.trim();
-      if (url) {
-        testCustomPhotoPreview();
+    function wireOptionIntakeModal() {
+      const intakeBackdrop = document.getElementById('skOptionIntakeBackdrop');
+      if (!intakeBackdrop) return;
+
+      const btnCloseIntake = document.getElementById('skOptionIntakeClose');
+      const btnCancelIntake = document.getElementById('skBtnCancelIntake');
+      const btnSubmitOption = document.getElementById('skBtnSubmitOption');
+      const tabDrive = document.getElementById('skTabDriveLink');
+      const tabDevice = document.getElementById('skTabDeviceUpload');
+      const paneDrive = document.getElementById('skPaneDrive');
+      const paneDevice = document.getElementById('skPaneDevice');
+      const driveInput = document.getElementById('skDriveUrlInput');
+      const btnVerifyDrive = document.getElementById('skBtnVerifyDrive');
+      const proofCard = document.getElementById('skDriveProofCard');
+      const proofImg = document.getElementById('skDriveProofImg');
+      const proofId = document.getElementById('skDriveFileId');
+      const fileInput = document.getElementById('skFileInput');
+      const alertEl = document.getElementById('skIntakeUrlAlert');
+
+      if (btnCloseIntake && typeof btnCloseIntake.addEventListener === 'function') {
+        btnCloseIntake.addEventListener('click', closeOptionIntakeModal);
       }
-    }
-
-    function testCustomPhotoPreview() {
-      const url = document.getElementById('customPhotoInput').value.trim();
-      const previewImg = document.getElementById('customPhotoPreviewImg');
-      const fallback = document.getElementById('customPhotoPreviewFallback');
-      if (url) {
-        fallback.style.display = 'none';
-        previewImg.style.display = 'block';
-        previewImg.src = url;
+      if (btnCancelIntake && typeof btnCancelIntake.addEventListener === 'function') {
+        btnCancelIntake.addEventListener('click', closeOptionIntakeModal);
       }
-    }
 
-    function handlePreviewError() {
-      const previewImg = document.getElementById('customPhotoPreviewImg');
-      const fallback = document.getElementById('customPhotoPreviewFallback');
-      previewImg.style.display = 'none';
-      fallback.style.display = 'block';
-    }
-
-    function onSaveCustomPhoto() {
-      if (!activeEditingPlateId) return;
-      const url = document.getElementById('customPhotoInput').value.trim();
-      
-      try {
-        let overrides = {};
-        const saved = localStorage.getItem('sree_krushna_custom_decor_photos');
-        if (saved) overrides = JSON.parse(saved);
-
-        if (url) {
-          overrides[activeEditingPlateId] = url;
-        } else {
-          delete overrides[activeEditingPlateId];
-        }
-        localStorage.setItem('sree_krushna_custom_decor_photos', JSON.stringify(overrides));
-        loadCustomPhotoOverrides();
-      loadSavedDecisions();
-        renderLookbookGrid();
-        renderLightboxView();
-        renderTopicDetail(currentTopicIndex);
-        closeCustomPhotoModal();
-      } catch (e) {
-        alert('Error saving custom photo: ' + e.message);
+      if (intakeBackdrop && typeof intakeBackdrop.addEventListener === 'function') {
+        intakeBackdrop.addEventListener('click', (e) => {
+          if (e.target === intakeBackdrop) closeOptionIntakeModal();
+        });
       }
-    }
 
-    function onResetToCanonicalPhoto() {
-      if (!activeEditingPlateId) return;
-      try {
-        const saved = localStorage.getItem('sree_krushna_custom_decor_photos');
-        if (saved) {
-          let overrides = JSON.parse(saved);
-          delete overrides[activeEditingPlateId];
-          localStorage.setItem('sree_krushna_custom_decor_photos', JSON.stringify(overrides));
+      if (tabDrive && typeof tabDrive.addEventListener === 'function' && tabDevice && typeof tabDevice.addEventListener === 'function') {
+        tabDrive.addEventListener('click', () => {
+          tabDrive.classList.add('is-active');
+          tabDevice.classList.remove('is-active');
+          if (paneDrive) paneDrive.style.display = 'block';
+          if (paneDevice) paneDevice.style.display = 'none';
+        });
+
+        tabDevice.addEventListener('click', () => {
+          tabDevice.classList.add('is-active');
+          tabDrive.classList.remove('is-active');
+          if (paneDevice) paneDevice.style.display = 'block';
+          if (paneDrive) paneDrive.style.display = 'none';
+        });
+      }
+
+      if (fileInput && typeof fileInput.addEventListener === 'function') {
+        fileInput.addEventListener('change', (e) => {
+          const file = e.target.files && e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+              localUploadedDataUrl = evt.target.result;
+              showToast(`Decor photo loaded (${Math.round(file.size / 1024)} KB)!`);
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+      }
+
+      const verifyDriveLink = () => {
+        const url = driveInput ? driveInput.value.trim() : '';
+        if (alertEl) {
+          alertEl.style.display = 'none';
+          alertEl.className = 'sk-intake-alert';
+          alertEl.textContent = '';
         }
-        const canonical = CANONICAL_PLATES.find(p => p.id === activeEditingPlateId);
-        const current = VISUAL_PLATES.find(p => p.id === activeEditingPlateId);
-        if (canonical && current) {
-          current.photoSrc = canonical.photoSrc;
-          current.isCustom = false;
+        if (!url) return;
+
+        const v = validateCandidateImageUrl(url);
+        if (!v.valid) {
+          if (proofCard) proofCard.style.display = 'none';
+          if (alertEl) {
+            alertEl.style.display = 'block';
+            alertEl.className = 'sk-intake-alert is-error';
+            alertEl.textContent = v.error || 'Invalidated link.';
+          }
+          showToast(v.error || 'Invalid link');
+          return;
         }
-        loadCustomPhotoOverrides();
-        renderLookbookGrid();
-        renderLightboxView();
-        renderTopicDetail(currentTopicIndex);
-        closeCustomPhotoModal();
-      } catch (e) {
-        alert('Error resetting photo: ' + e.message);
+
+        if (alertEl) {
+          alertEl.style.display = 'block';
+          alertEl.className = 'sk-intake-alert is-warning';
+          alertEl.textContent = 'Testing link connectivity and hotlink permissions...';
+        }
+
+        const testImg = new Image();
+        testImg.referrerPolicy = 'no-referrer';
+        let timedOut = false;
+        const timeoutId = setTimeout(() => {
+          timedOut = true;
+          testImg.src = '';
+          if (proofCard) proofCard.style.display = 'none';
+          if (alertEl) {
+            alertEl.style.display = 'block';
+            alertEl.className = 'sk-intake-alert is-error';
+            alertEl.textContent = '❌ Verification timed out. The remote host took too long or blocked hotlinked requests. Please upload the photo directly.';
+          }
+          showToast('Image load timed out');
+        }, 7000);
+
+        testImg.onload = () => {
+          if (timedOut) return;
+          clearTimeout(timeoutId);
+          if (proofCard) proofCard.style.display = 'flex';
+          if (proofImg) {
+            proofImg.src = v.src;
+            proofImg.setAttribute('referrerpolicy', 'no-referrer');
+          }
+          if (proofId) proofId.textContent = v.badge;
+          if (alertEl) {
+            alertEl.style.display = 'block';
+            alertEl.className = 'sk-intake-alert is-success';
+            alertEl.textContent = `✓ Valid direct image asset verified (${testImg.naturalWidth}×${testImg.naturalHeight}px)! Ready for card rendering.`;
+          }
+          showToast('Image link verified successfully!');
+        };
+
+        testImg.onerror = () => {
+          if (timedOut) return;
+          clearTimeout(timeoutId);
+          if (proofCard) proofCard.style.display = 'none';
+          if (alertEl) {
+            alertEl.style.display = 'block';
+            alertEl.className = 'sk-intake-alert is-error';
+            alertEl.textContent = '❌ Invalidated Hotlink: The remote host blocked this image (HTTP 403 / anti-hotlinking / ORB). This link cannot be entertained. Please save/screenshot the image and upload it via "Device / Showroom Photo", or use a direct image CDN address.';
+          }
+          showToast('Invalidated hotlink (host blocked access)');
+        };
+
+        testImg.src = v.src;
+      };
+
+      if (btnVerifyDrive && typeof btnVerifyDrive.addEventListener === 'function') {
+        btnVerifyDrive.addEventListener('click', verifyDriveLink);
+      }
+      if (driveInput && typeof driveInput.addEventListener === 'function') {
+        driveInput.addEventListener('change', verifyDriveLink);
+      }
+
+      if (btnSubmitOption && typeof btnSubmitOption.addEventListener === 'function') {
+        btnSubmitOption.addEventListener('click', () => {
+          const plateId = document.getElementById('skOptionItemId')?.value.trim() || activeOptionPlateId || '';
+          const title = document.getElementById('skOptionTitle')?.value.trim() || 'New Candidate Look';
+          const price = document.getElementById('skOptionPrice')?.value.trim() || '';
+          const vendor = document.getElementById('skOptionVendor')?.value.trim() || '';
+          const urlInput = driveInput ? driveInput.value.trim() : '';
+
+          const commitLook = (srcUrl, refUrl, optType) => {
+            if (!plateId) {
+              showToast('No plate selected for look');
+              closeOptionIntakeModal();
+              return;
+            }
+
+            const plate = VISUAL_PLATES.find(p => p.id === plateId);
+            if (!plate) return;
+
+            let currentOptionsMap = {};
+            try {
+              const raw = localStorage.getItem(DECOR_OPTIONS_STORAGE_KEY);
+              if (raw) currentOptionsMap = JSON.parse(raw);
+            } catch (e) {}
+
+            if (!currentOptionsMap[plateId]) {
+              currentOptionsMap[plateId] = [];
+            }
+
+            const existingOptions = getPlateImages(plate);
+            const nextOptIndex = existingOptions.length;
+            const newOpt = {
+              id: `opt-custom-${Date.now()}`,
+              label: title,
+              badge: `Look ${nextOptIndex + 1}`,
+              url: srcUrl,
+              thumbnail: srcUrl,
+              source: optType || 'custom_import',
+              store: vendor,
+              price: price ? `₹${price}` : '',
+              addedAt: new Date().toISOString(),
+              selected: true
+            };
+
+            currentOptionsMap[plateId].push(newOpt);
+            try {
+              localStorage.setItem(DECOR_OPTIONS_STORAGE_KEY, JSON.stringify(currentOptionsMap));
+            } catch (e) {
+              console.warn('Error saving custom decor options:', e);
+            }
+
+            loadCustomDecorOptions();
+            selectPlateOption(plateId, plate.options.length - 1);
+            showToast(`✓ Added candidate look "${title}" to ${plateId}!`);
+            closeOptionIntakeModal();
+          };
+
+          if (localUploadedDataUrl) {
+            commitLook(localUploadedDataUrl, '', 'showroom_upload');
+          } else if (urlInput) {
+            const v = validateCandidateImageUrl(urlInput);
+            if (!v.valid) {
+              if (alertEl) {
+                alertEl.style.display = 'block';
+                alertEl.className = 'sk-intake-alert is-error';
+                alertEl.textContent = v.error;
+              }
+              showToast(v.error);
+              return;
+            }
+
+            btnSubmitOption.disabled = true;
+            const origText = btnSubmitOption.textContent;
+            btnSubmitOption.textContent = 'Verifying image...';
+            const testImg = new Image();
+            testImg.referrerPolicy = 'no-referrer';
+            let timedOut = false;
+            const timeoutId = setTimeout(() => {
+              timedOut = true;
+              testImg.src = '';
+              btnSubmitOption.disabled = false;
+              btnSubmitOption.textContent = origText;
+              if (alertEl) {
+                alertEl.style.display = 'block';
+                alertEl.className = 'sk-intake-alert is-error';
+                alertEl.textContent = '❌ Verification timed out. Remote host blocked access. Please upload the photo instead.';
+              }
+              showToast('Verification timed out');
+            }, 6000);
+
+            testImg.onload = () => {
+              if (timedOut) return;
+              clearTimeout(timeoutId);
+              btnSubmitOption.disabled = false;
+              btnSubmitOption.textContent = origText;
+              commitLook(v.src, v.src, v.type);
+            };
+
+            testImg.onerror = () => {
+              if (timedOut) return;
+              clearTimeout(timeoutId);
+              btnSubmitOption.disabled = false;
+              btnSubmitOption.textContent = origText;
+              if (alertEl) {
+                alertEl.style.display = 'block';
+                alertEl.className = 'sk-intake-alert is-error';
+                alertEl.textContent = '❌ Invalidated Hotlink: The remote host rejected image loading (HTTP 403 Forbidden). Hotlinks and broken links cannot be entertained. Please upload via "Device / Showroom Photo".';
+              }
+              showToast('Invalidated hotlink rejected');
+            };
+
+            testImg.src = v.src;
+          } else {
+            if (alertEl) {
+              alertEl.style.display = 'block';
+              alertEl.className = 'sk-intake-alert is-error';
+              alertEl.textContent = 'Please provide a valid direct image link or upload a photo.';
+            }
+            showToast('Please provide an image link or photo');
+            return;
+          }
+        });
       }
     }
 
@@ -4234,6 +6365,7 @@
 
     function renderLookbookGrid() {
       const container = document.getElementById('lookbookGridContainer');
+      if (!container) return;
       container.innerHTML = '';
 
       const filtered = VISUAL_PLATES.filter(p => {
@@ -4244,24 +6376,76 @@
       filtered.forEach(plate => {
         const card = document.createElement('div');
         card.className = 'lookbook-card';
-        const activeSrc = currentGridMode === 'photo' ? (plate.photoSrc || plate.blueprintSrc) : plate.blueprintSrc;
+        card.id = `lookbook-card-${plate.id}`;
+
+        const options = getPlateImages(plate);
+        const selIdx = (typeof plate.selectedOptionIndex === 'number' && plate.selectedOptionIndex < options.length)
+          ? plate.selectedOptionIndex
+          : 0;
+        const activeOpt = options[selIdx] || options[0];
+        const activeSrc = currentGridMode === 'photo' ? (activeOpt.url || plate.photoSrc || plate.blueprintSrc) : plate.blueprintSrc;
+
+        // Render option chips bar if multiple looks exist or to allow adding
+        let optionsBarHtml = '';
+        if (options.length > 1 || currentGridMode === 'photo') {
+          optionsBarHtml = '<div class="lookbook-option-bar" onclick="event.stopPropagation()">';
+          options.forEach((opt, idx) => {
+            const isSel = (idx === selIdx);
+            const chipLabel = opt.badge || opt.label || `Look ${idx + 1}`;
+            optionsBarHtml += `
+              <button type="button" class="lookbook-option-chip ${isSel ? 'is-selected' : ''}" 
+                onclick="selectPlateOption('${plate.id}', ${idx})" 
+                title="${opt.label || 'Look ' + (idx + 1)}">
+                ${isSel ? '● ' : ''}${chipLabel}
+              </button>
+            `;
+          });
+          // Add Look button
+          optionsBarHtml += `
+            <button type="button" class="lookbook-option-chip-add" 
+              onclick="openOptionIntakeModal('${plate.id}')" 
+              title="Add candidate look for ${plate.id}">
+              ➕ Look
+            </button>
+          `;
+          // Clear custom looks button (if custom looks exist)
+          const hasCustom = options.some(o => o.source !== 'canonical');
+          if (hasCustom) {
+            optionsBarHtml += `
+              <button type="button" class="lookbook-option-chip-clear" 
+                onclick="clearPlateCustomOptions('${plate.id}')" 
+                title="Reset ${plate.id} to Vedic baseline">
+                ✕ Clear
+              </button>
+            `;
+          }
+          optionsBarHtml += '</div>';
+        }
+
         card.onclick = () => openLightboxToPlate(plate.index, currentGridMode);
         card.innerHTML = `
           <div class="lookbook-img-box">
-            <img src="${activeSrc}" alt="${plate.title}" onerror="this.src='${plate.blueprintSrc}'" />
+            <img src="${activeSrc}" alt="${plate.title}" onerror="this.src='${plate.blueprintSrc}'" referrerpolicy="no-referrer" />
             <span class="lookbook-badge-plate">${plate.id}</span>
             <span class="lookbook-badge-scope ${plate.mandatory ? 'mandatory' : 'inspiration'}">${plate.mandatory ? 'MANDATORY' : 'INSPIRATION'}</span>
             <span class="lookbook-badge-type">${currentGridMode === 'photo' ? '📸 Real Photo' : '📐 Blueprint'}</span>
-            ${plate.isCustom ? '<span class="lookbook-badge-custom">📌 Custom URL</span>' : ''}
+            ${options.length > 1 ? `<span class="lookbook-badge-looks">📸 ${options.length} Looks</span>` : ''}
+            ${plate.isCustom ? '<span class="lookbook-badge-custom">📌 Custom Look</span>' : ''}
           </div>
+          ${optionsBarHtml}
           <div class="lookbook-card-body">
             <div class="lookbook-card-title">${plate.title}</div>
             <div class="lookbook-card-zone">${plate.zone}</div>
             <div class="lookbook-card-notes">${plate.notes}</div>
             <div class="lookbook-card-footer">
               <span>${plate.dimensions}</span>
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <button class="mode-btn" onclick="event.stopPropagation(); openCustomPhotoModal('${plate.id}')" style="font-size: 10px; padding: 2px 7px; background: rgba(245, 158, 11, 0.12); color: var(--accent-gold); border-color: rgba(245, 158, 11, 0.3);" title="Override with Pinterest or custom image">✏️ Photo</button>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <button type="button" class="lookbook-share-look-btn" onclick="event.stopPropagation(); shareDecorOption('${plate.id}', ${selIdx})" title="Copy collaborative deep-link for this look">
+                  📤 Share
+                </button>
+                <button type="button" class="mode-btn" onclick="event.stopPropagation(); openOptionIntakeModal('${plate.id}')" style="font-size: 10px; padding: 2px 7px; background: rgba(245, 158, 11, 0.12); color: var(--accent-gold); border-color: rgba(245, 158, 11, 0.3);" title="Add or review candidate looks">
+                  ✏️ Looks
+                </button>
                 <span style="color:#38bdf8; font-weight:600; cursor:pointer;">Inspect ➔</span>
               </div>
             </div>
@@ -4331,14 +6515,49 @@
       document.getElementById('lbCounter').textContent = (currentLightboxIndex + 1) + ' / ' + VISUAL_PLATES.length;
       
       const img = document.getElementById('lightboxImg');
-      const activeSrc = currentLightboxMode === 'photo' ? (plate.photoSrc || plate.blueprintSrc) : plate.blueprintSrc;
+      const options = getPlateImages(plate);
+      const selIdx = (typeof plate.selectedOptionIndex === 'number' && plate.selectedOptionIndex < options.length)
+        ? plate.selectedOptionIndex
+        : 0;
+      const activeOpt = options[selIdx] || options[0];
+      const activeSrc = currentLightboxMode === 'photo' ? (activeOpt.url || plate.photoSrc || plate.blueprintSrc) : plate.blueprintSrc;
       img.src = activeSrc;
       img.alt = plate.title + ' (' + currentLightboxMode + ')';
+      img.setAttribute('referrerpolicy', 'no-referrer');
 
       document.getElementById('lbZoneText').textContent = plate.zone;
       document.getElementById('lbSpecText').textContent = plate.spec;
       document.getElementById('lbClauseText').textContent = plate.clause;
       document.getElementById('lbNotesText').textContent = plate.notes + ' [' + plate.dimensions + ']';
+
+      // Render option switcher strip in Lightbox topbar
+      const optionStrip = document.getElementById('lbOptionStrip');
+      if (optionStrip) {
+        if (currentLightboxMode === 'photo' && options.length > 0) {
+          optionStrip.style.display = 'flex';
+          optionStrip.innerHTML = options.map((opt, oIdx) => `
+            <button type="button" class="decor-option-chip ${oIdx === selIdx ? 'active' : ''}" onclick="selectPlateOption('${plate.id}', ${oIdx})">
+              ${opt.badge || opt.label || `Look ${oIdx + 1}`}
+            </button>
+          `).join('') + `
+            <button type="button" class="decor-option-chip decor-option-chip-add" onclick="openOptionIntakeModal('${plate.id}')" title="Add candidate look">
+              ➕ Add
+            </button>
+          `;
+        } else {
+          optionStrip.style.display = 'none';
+        }
+      }
+
+      // Initialize ZoomPanEngine for micro-inspection
+      initLightboxZoomPan();
+    }
+
+    function shareCurrentLightboxOption() {
+      const plate = VISUAL_PLATES[currentLightboxIndex] || VISUAL_PLATES[0];
+      if (plate) {
+        shareDecorOption(plate.id, plate.selectedOptionIndex || 0);
+      }
     }
 
     /* TENDER EXPORT MODAL */
@@ -4601,6 +6820,7 @@
         closeLookbookModal();
         closeTenderModal();
         closePinModal();
+        closeOptionIntakeModal();
         return;
       }
 
@@ -4641,15 +6861,82 @@
       if (e.key === '3') switchTone('firm');
     });
 
-    /* INITIALIZATION */
-    window.addEventListener('DOMContentLoaded', () => {
+    /* BIDIRECTIONAL DEEP-LINKING PARSER (P-QUICK-SHARE-001 / AC-DEC-2026-039) */
+    function parseCockpitUrlParams() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const plateParam = params.get('plate');
+        const optionParam = params.get('option');
+        const modeParam = params.get('mode');
+
+        if (modeParam === 'decisions') {
+          switchView('decisions');
+        } else if (modeParam === 'audience') {
+          switchView('audience');
+        }
+
+        if (plateParam) {
+          const plate = VISUAL_PLATES.find(p => p.id.toUpperCase() === plateParam.toUpperCase());
+          if (plate) {
+            if (optionParam !== null && !isNaN(parseInt(optionParam, 10))) {
+              const optIdx = parseInt(optionParam, 10);
+              if (plate.options && plate.options[optIdx]) {
+                selectPlateOption(plate.id, optIdx);
+              }
+            }
+            openLookbookModal();
+            setTimeout(() => {
+              const cardEl = document.getElementById(`lookbook-card-${plate.id}`);
+              if (cardEl) {
+                cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                cardEl.classList.remove('highlight-target-item');
+                void cardEl.offsetWidth; // trigger reflow
+                cardEl.classList.add('highlight-target-item');
+                showToast(`🎯 Showing ${plate.id}: ${plate.title}`);
+              }
+            }, 300);
+          }
+        }
+      } catch (e) {
+        console.warn('Error parsing cockpit URL parameters:', e);
+      }
+    }
+
+    /* GLOBAL WINDOW EXPORTS */
+    window.openOptionIntakeModal = openOptionIntakeModal;
+    window.closeOptionIntakeModal = closeOptionIntakeModal;
+    window.openCustomPhotoModal = openCustomPhotoModal;
+    window.closeCustomPhotoModal = closeCustomPhotoModal;
+    window.selectPlateOption = selectPlateOption;
+    window.clearPlateCustomOptions = clearPlateCustomOptions;
+    window.shareDecorOption = shareDecorOption;
+    window.shareCurrentLightboxOption = shareCurrentLightboxOption;
+    window.toggleLightboxZoom = toggleLightboxZoom;
+    window.resetLightboxZoom = resetLightboxZoom;
+    window.openLightboxToPlate = openLightboxToPlate;
+    window.closeLightboxModal = closeLightboxModal;
+    window.openLookbookModal = openLookbookModal;
+    window.closeLookbookModal = closeLookbookModal;
+
+    /* INITIALIZATION & LIFECYCLE GATE (INV-LIFECYCLE-02) */
+    function initCockpit() {
+      loadCustomDecorOptions();
+      loadSavedDecisions();
       renderAgendaList();
       renderTopicDetail();
       renderSlideIndicators();
       renderCurrentSlide();
       recalculate4TierQuote();
       restoreCockpitState();
-    });
+      wireOptionIntakeModal();
+      parseCockpitUrlParams();
+    }
+
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', initCockpit);
+    } else {
+      initCockpit();
+    }
 
 
   // Sub-Engine Delegation Contract (sub-engine-shadowing-and-tab-reconciliation.md)

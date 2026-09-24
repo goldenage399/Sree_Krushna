@@ -302,3 +302,147 @@
     font-size: 10.5px;
   }
 }
+
+/* ==========================================================================
+   MULTI-OPTION PODS, CANDIDATE LOOKS & QUICK-SHARE DEEP-LINKING (AC-DEC-2026-039)
+   ========================================================================== */
+
+/* 1. Target Pulse for Deep-Link Navigation */
+@keyframes targetPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+    border-color: #f59e0b;
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(245, 158, 11, 0);
+    border-color: #fbbf24;
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+    border-color: rgba(245, 158, 11, 0.3);
+  }
+}
+
+.highlight-target-item {
+  animation: targetPulse 1.2s ease-out 2;
+  border-color: #f59e0b !important;
+}
+
+/* 2. Lookbook Options Bar & Chips */
+.lookbook-option-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 8px 12px;
+  background: rgba(10, 14, 23, 0.6);
+  border-top: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  scrollbar-width: none;
+}
+
+.lookbook-option-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.lookbook-option-chip {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid var(--border-medium, rgba(255, 255, 255, 0.15));
+  color: var(--text-secondary, #94a3b8);
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.lookbook-option-chip:hover {
+  color: #fff;
+  border-color: rgba(245, 158, 11, 0.4);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.lookbook-option-chip.active {
+  background: rgba(245, 158, 11, 0.18);
+  border-color: var(--accent-gold, #f59e0b);
+  color: #fbbf24;
+  font-weight: 700;
+  box-shadow: 0 1px 4px rgba(245, 158, 11, 0.25);
+}
+
+.lookbook-option-chip-add {
+  border: 1px dashed rgba(245, 158, 11, 0.5) !important;
+  background: rgba(245, 158, 11, 0.08) !important;
+  color: var(--accent-gold, #f59e0b) !important;
+}
+
+.lookbook-option-chip-add:hover {
+  border-style: solid !important;
+  background: rgba(245, 158, 11, 0.22) !important;
+  color: #ffffff !important;
+}
+
+.lookbook-option-chip-clear {
+  border: 1px solid rgba(239, 68, 68, 0.4) !important;
+  color: #fca5a5 !important;
+  background: rgba(239, 68, 68, 0.08) !important;
+}
+
+.lookbook-option-chip-clear:hover {
+  background: rgba(239, 68, 68, 0.25) !important;
+  color: #ffffff !important;
+  border-color: #ef4444 !important;
+}
+
+/* 3. Dedicated Share Decor Button */
+.lookbook-share-look-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(245, 158, 11, 0.12);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 10.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.lookbook-share-look-btn:hover {
+  background: var(--accent-gold, #f59e0b);
+  color: #0b1120;
+  border-color: var(--accent-gold, #f59e0b);
+}
+
+/* 4. Intake Alert Banners */
+.sk-intake-alert {
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  line-height: 1.45;
+  margin-top: 8px;
+  transition: all 0.2s ease;
+}
+
+.sk-intake-alert.is-error {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  color: #fca5a5;
+}
+
+.sk-intake-alert.is-warning {
+  background: rgba(234, 179, 8, 0.15);
+  border: 1px solid rgba(234, 179, 8, 0.5);
+  color: #fef08a;
+}
+
+.sk-intake-alert.is-success {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.5);
+  color: #86efac;
+}
