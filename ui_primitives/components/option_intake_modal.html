@@ -37,15 +37,6 @@
         </div>
 
         <div class="sk-intake-alert" id="skIntakeUrlAlert" style="display: none;"></div>
-        
-        <!-- Live Proof Preview Card (Adapted from PIO ProofPreviewWidget) -->
-        <div class="sk-proof-preview-card" id="skDriveProofCard" style="display: none;">
-          <img id="skDriveProofImg" class="sk-proof-thumb" src="" alt="Thumbnail Preview" referrerpolicy="no-referrer">
-          <div class="sk-proof-info">
-            <span class="sk-proof-badge" id="skDriveProofBadge">✓ Valid Image Asset</span>
-            <span class="sk-proof-id" id="skDriveFileId">ID: —</span>
-          </div>
-        </div>
       </div>
 
       <!-- Tab Pane 2: Local Device / Camera -->
@@ -69,6 +60,19 @@
         <div class="sk-archived-looks-list" id="skArchivedLooksList">
           <!-- Dynamically populated -->
         </div>
+      </div>
+
+      <!-- Universal Live Proof Preview Card (Visible across both Pinterest/Web & Device tabs) -->
+      <div class="sk-proof-preview-card" id="skDriveProofCard" style="display: none; margin: 12px 0;">
+        <img id="skDriveProofImg" class="sk-proof-thumb" src="" alt="Thumbnail Preview" referrerpolicy="no-referrer">
+        <div class="sk-proof-info" style="flex: 1;">
+          <span class="sk-proof-badge" id="skDriveProofBadge">✓ Valid Image Asset</span>
+          <span class="sk-proof-id" id="skDriveFileId">ID: —</span>
+          <div id="skUploadProgressBarWrap" style="display: none; margin-top: 6px; width: 100%; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; height: 6px;">
+            <div id="skUploadProgressBar" style="width: 0%; height: 100%; background: var(--sk-gold, #d4af37); transition: width 0.3s ease;"></div>
+          </div>
+        </div>
+        <button type="button" class="sk-btn sk-btn-secondary" id="skBtnClearProof" style="font-size: 11px; padding: 4px 8px; margin-left: 8px;" title="Clear selected image">✕ Clear</button>
       </div>
 
       <!-- Option Metadata Fields -->

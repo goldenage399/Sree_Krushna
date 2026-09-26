@@ -11,11 +11,20 @@ import {
   initializeFirestore, persistentLocalCache,
   collection, doc, setDoc, updateDoc, runTransaction, onSnapshot, serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+import {
+  getStorage, ref as storageRef, uploadBytes, getDownloadURL
+} from "https://www.gstatic.com/firebasejs/11.0.0/firebase-storage.js";
 
 const app = getApps().length ? getApps()[0] : initializeApp(window.firebaseConfig);
 // persistentLocalCache = Firestore's built-in IndexedDB offline cache — replaces
 // hand-rolled localStorage sync entirely, no custom offline code needed.
 const db = initializeFirestore(app, { localCache: persistentLocalCache() });
+let storage = null;
+try {
+  storage = getStorage(app);
+} catch (e) {
+  console.warn("Firebase Storage initialization deferred/offline:", e);
+}
 
 // Atomically mints the next "<PREFIX>-###" id from counters/{counterName} —
 // avoids the classic bug where two devices each compute id from a local
@@ -163,10 +172,242 @@ function fsListenShoppingItems(callback, onError) {
   });
 }
 
+function dataUrlToBlob(dataUrl) {
+  const parts = dataUrl.split(',');
+  const mimeMatch = parts[0].match(/:(.*?);/);
+  const mime = mimeMatch ? mimeMatch[1] : 'image/jpeg';
+  const bstr = atob(parts[1]);
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new Blob([u8arr], { type: mime });
+}
+
+/**
+ * Offscreen Canvas Image Compressor (2K High-Fidelity)
+ * Downscales images to max dimension 2048px (aspect-ratio preserved)
+ * and compresses to quality 0.88 JPEG/WebP.
+ * Keeps payloads under 1.2MB for lightning-fast uploads without GAS timeouts.
+ * 
+ * @param {File|Blob|string} imageSource - File, Blob, or Data URL
+ * @param {number} maxDim - Max width or height (default 2048px)
+ * @param {number} quality - Compression quality (default 0.88)
+ * @returns {Promise<{ dataUrl: string, width: number, height: number, sizeBytes: number }>}
+ */
+async function compressImage(imageSource, maxDim = 2048, quality = 0.88) {
+  return new Promise((resolve, reject) => {
+    let srcUrl = '';
+    let isRevocable = false;
+
+    if (typeof imageSource === 'string') {
+      srcUrl = imageSource;
+    } else if (imageSource instanceof Blob || imageSource instanceof File) {
+      srcUrl = URL.createObjectURL(imageSource);
+      isRevocable = true;
+    } else {
+      return reject(new Error('Invalid imageSource provided to compressImage'));
+    }
+
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+
+    img.onload = () => {
+      if (isRevocable) URL.revokeObjectURL(srcUrl);
+
+      let width = img.naturalWidth || img.width;
+      let height = img.naturalHeight || img.height;
+
+      // Downscale proportionally if exceeds maxDim
+      if (width > maxDim || height > maxDim) {
+        if (width > height) {
+          height = Math.round((height * maxDim) / width);
+          width = maxDim;
+        } else {
+          width = Math.round((width * maxDim) / height);
+          height = maxDim;
+        }
+      }
+
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+
+      const ctx = canvas.getContext('2d');
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(img, 0, 0, width, height);
+
+      const dataUrl = canvas.toDataURL('image/jpeg', quality);
+      const approxBytes = Math.round((dataUrl.length * 3) / 4);
+
+      resolve({
+        dataUrl,
+        width,
+        height,
+        sizeBytes: approxBytes
+      });
+    };
+
+    img.onerror = (err) => {
+      if (isRevocable) URL.revokeObjectURL(srcUrl);
+      reject(new Error('Failed to load image for compression: ' + (err?.message || 'Unknown error')));
+    };
+
+    img.src = srcUrl;
+  });
+}
+
+/**
+ * Direct Google Drive Upload via Apps Script Webhook (Zero Blaze / 0 Billing)
+ * Ratified under AC-DEC-2026-051 / AC-DEC-2026-052
+ * 
+ * Uses Content-Type: text/plain simple POST per PIOps api.js protocol
+ * to eliminate browser CORS preflight (OPTIONS) failures.
+ */
+async function _uploadToDriveWebhook(base64Data, metadata = {}) {
+  const webhookUrl = window.firebaseConfig?.driveUploadWebhookUrl;
+  if (!webhookUrl) {
+    throw new Error(
+      "Google Drive Webhook URL is not configured. Please paste your deployed Apps Script URL into window.firebaseConfig.driveUploadWebhookUrl (see backend_gas/README.md)."
+    );
+  }
+
+  const payload = {
+    base64Data: base64Data,
+    fileName: metadata.fileName || `look_${metadata.itemId || 'item'}_${Date.now()}.jpg`,
+    mimeType: metadata.mimeType || 'image/jpeg',
+    uploaderEmail: window.currentUser?.email || 'localhost_dev',
+    itemId: metadata.itemId || '',
+    lookIndex: metadata.lookIndex
+  };
+
+  const response = await fetch(webhookUrl, {
+    method: 'POST',
+    redirect: 'follow',
+    headers: {
+      'Content-Type': 'text/plain'
+    },
+    body: JSON.stringify(payload)
+  });
+
+  if (!response.ok) {
+    throw new Error(`Media Relay Webhook network error: HTTP ${response.status} ${response.statusText}`);
+  }
+
+  const result = await response.json();
+  if (!result.success) {
+    throw new Error(result.message || `Media Relay upload failed with code: ${result.code || 'ERR_UNKNOWN'}`);
+  }
+
+  return result;
+}
+
+async function fsUploadLookPhoto(itemId, imageSource, metadata = {}) {
+  if (!window.currentUser || !window.currentUser.email) {
+    throw new Error("Unauthenticated: Google Sign-In with an authorized family account is required to upload candidate looks.");
+  }
+  if (!itemId) throw new Error("Missing itemId for candidate look upload.");
+  if (!imageSource) throw new Error("No image data provided for upload.");
+
+  // 1. High-Fidelity 2K Compression (2048px / 0.88 Quality)
+  // Preserves zari weaves & jewelry detail while ensuring payload stays under 1.2MB
+  let compressedDataUrl = '';
+  if (typeof imageSource === 'string' && imageSource.startsWith('data:')) {
+    const comp = await compressImage(imageSource, 2048, 0.88);
+    compressedDataUrl = comp.dataUrl;
+  } else if (imageSource instanceof Blob || imageSource instanceof File) {
+    const comp = await compressImage(imageSource, 2048, 0.88);
+    compressedDataUrl = comp.dataUrl;
+  } else if (typeof imageSource === 'string' && (imageSource.startsWith('http://') || imageSource.startsWith('https://'))) {
+    compressedDataUrl = imageSource;
+  } else {
+    throw new Error("Unsupported image source format.");
+  }
+
+  const provider = window.firebaseConfig?.storageProvider || 'drive_webhook';
+  let photoUrl = '';
+  let driveFileId = null;
+  let storagePath = null;
+  const timestamp = Date.now();
+  const safeItemId = itemId.replace(/[^a-zA-Z0-9_-]/g, '_');
+
+  // 2. Provider Strategy Dispatch (AC-DEC-2026-051 / AC-DEC-2026-052)
+  if (compressedDataUrl.startsWith('http://') || compressedDataUrl.startsWith('https://')) {
+    photoUrl = compressedDataUrl;
+    if (window.DriveNormalizer && window.DriveNormalizer.isDriveUrl(photoUrl)) {
+      driveFileId = window.DriveNormalizer.extractDriveId(photoUrl);
+      photoUrl = window.DriveNormalizer.toThumbnailUrl(driveFileId, 2048);
+    }
+  } else if (provider === 'drive_webhook') {
+    const relayResult = await _uploadToDriveWebhook(compressedDataUrl, {
+      itemId: safeItemId,
+      fileName: metadata.fileName || `${safeItemId}_${timestamp}.jpg`,
+      mimeType: 'image/jpeg',
+      lookIndex: metadata.lookIndex
+    });
+    driveFileId = relayResult.fileId;
+    // Request 2048px resolution from Google UserContent CDN
+    photoUrl = relayResult.cdnUrl || `https://lh3.googleusercontent.com/d/${driveFileId}=w2048`;
+  } else if (provider === 'firebase_storage') {
+    if (!storage) {
+      throw new Error("Firebase Cloud Storage is not initialized on this client.");
+    }
+    const blob = dataUrlToBlob(compressedDataUrl);
+    const rand = Math.random().toString(36).substring(2, 7);
+    storagePath = `looks/${safeItemId}/${timestamp}_${rand}.jpg`;
+    const fileRef = storageRef(storage, storagePath);
+
+    const uploadResult = await uploadBytes(fileRef, blob, {
+      contentType: 'image/jpeg',
+      customMetadata: {
+        itemId: safeItemId,
+        uploadedBy: window.currentUser.email,
+        uploadedAt: new Date().toISOString()
+      }
+    });
+    photoUrl = await getDownloadURL(uploadResult.ref);
+  } else {
+    throw new Error(`Unknown storage provider: ${provider}`);
+  }
+
+  // 3. Compute next option index & build new option record
+  const existingOptions = Array.isArray(metadata.existingOptions) ? [...metadata.existingOptions] : [];
+  const maxIdx = Math.max(0, ...existingOptions.map(o => (o && typeof o.optionIndex === 'number') ? o.optionIndex : 0));
+  const nextOptIndex = maxIdx + 1;
+
+  const newOption = {
+    optionIndex: nextOptIndex,
+    isDefault: false,
+    label: metadata.label || `Look ${nextOptIndex}`,
+    src: photoUrl,
+    referenceUrl: metadata.referenceUrl || (driveFileId ? `https://drive.google.com/file/d/${driveFileId}/view` : photoUrl),
+    type: provider === 'drive_webhook' ? 'google_drive_upload' : (storagePath ? 'showroom_cloud_upload' : 'web_reference'),
+    storageProvider: provider,
+    driveFileId: driveFileId || null,
+    storagePath: storagePath || null,
+    store: metadata.store || '',
+    priceTier: metadata.priceTier || '',
+    addedAt: new Date().toISOString(),
+    addedBy: window.currentUser.displayName || window.currentUser.email
+  };
+
+  // 4. Atomically persist to Firestore shopping_items/{itemId}
+  const updatedOptions = [...existingOptions, newOption];
+  await fsSetShoppingItemStatus(itemId, {
+    options: updatedOptions,
+    selectedOptionIndex: nextOptIndex
+  });
+
+  return newOption;
+}
+
 Object.assign(window, {
   fsDispatchChangeRequest, fsUpdateChangeRequestStatus, fsListenChangeRequests,
   fsSetTaskStatus, fsCreateAdhocTask, fsListenTaskStatus,
   fsSetShoppingItemStatus, fsCreateShoppingItem, fsListenShoppingItems,
+  fsUploadLookPhoto, compressImage,
 });
 /* SSOT: docs/incidents/INC-092-dynamic-module-timing-race-and-unauthenticated-local-fallback.md — INC-092 */
 
