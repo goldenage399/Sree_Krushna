@@ -11,37 +11,3255 @@ window.FAMILY_OBLIGATIONS_DATA = {
     "version": "1.0.0",
     "standard": "STD-FAMILY-OBLIGATION-001",
     "governance_ref": "AC-DEC-2026-061 & AC-DEC-2026-062",
-    "updated_at": "2026-09-26T19:09:44.938Z"
+    "updated_at": "2026-09-26T19:12:58.849Z"
   },
   "stats": {
-    "total": 0,
+    "total": 49,
     "by_direction": {
-      "groom_to_bride": 0,
-      "bride_to_groom": 0,
-      "joint": 0,
-      "external": 0
+      "groom_to_bride": 21,
+      "bride_to_groom": 23,
+      "joint": 3,
+      "external": 1
     },
     "by_lifecycle": {
-      "Identified": 0,
-      "Agreed": 0,
+      "Identified": 2,
+      "Agreed": 47,
       "Procuring": 0,
       "Staged": 0,
       "Handed_Over": 0,
       "Waived": 0
     },
     "by_spec_status": {
-      "Fully_Specified": 0,
-      "TBD_Family_Choice": 0,
-      "Source_Unclear": 0,
-      "Source_Redacted": 0,
-      "Pending_Family_Confirmation": 0
+      "Fully_Specified": 41,
+      "TBD_Family_Choice": 4,
+      "Source_Unclear": 2,
+      "Source_Redacted": 1,
+      "Pending_Family_Confirmation": 1
     },
     "by_epistemic_tier": {
-      "SACRED_CORE": 0,
-      "PROTOCOL_SPECIFIED": 0,
-      "UNCERTAIN_EXPLORATORY": 0
+      "SACRED_CORE": 31,
+      "PROTOCOL_SPECIFIED": 16,
+      "UNCERTAIN_EXPLORATORY": 2
     },
-    "unresolved_count": 0
+    "unresolved_count": 8
   },
-  "obligations": []
+  "obligations": [
+    {
+      "id": "OBL-001",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Nirbandha Mudi (Bride ⟶ Groom)",
+      "english_descriptor": "Ceremonial Engagement Ring presented by Bride to Groom",
+      "category": "gold_silver",
+      "event_ref": "EVT-001",
+      "ritual_ref": "RIT-001",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Father (Daddy)"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-002",
+        "role_title": "Groom (Krushna)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "1. Mudi",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 1 — ENGAGEMENT | Bride's Family -> Groom / Groom's Family"
+      },
+      "items": [
+        {
+          "item_id": "OBL-001-ITM-01",
+          "description": "Gold Engagement Ring for Groom",
+          "nature": "physical_asset",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-EG-01",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": "AST-001",
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-007",
+        "staging_location": "VEN-001",
+        "handover_moment": "Nirbandha Ring Exchange Muhurat"
+      },
+      "derived_direction": "bride_to_groom",
+      "file_basename": "OBL-001.md"
+    },
+    {
+      "id": "OBL-002",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Groom's Engagement Shirt + Pant",
+      "english_descriptor": "Formal / Festive attire for Groom presented by Bride's Family",
+      "category": "attire",
+      "event_ref": "EVT-001",
+      "ritual_ref": "RIT-001",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Parents"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-002",
+        "role_title": "Groom (Krushna)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "PROTOCOL_SPECIFIED",
+      "verbatim_provenance": {
+        "raw_source_text": "2. Groom's shirt + pant",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 1 — ENGAGEMENT | Bride's Family -> Groom / Groom's Family"
+      },
+      "items": [
+        {
+          "item_id": "OBL-002-ITM-01",
+          "description": "Festive Trouser + Shirt Set",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "set",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-EG-03",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-007",
+        "staging_location": "VEN-001",
+        "handover_moment": "Pre-Ceremony Groom Green Room Dressing"
+      },
+      "derived_direction": "bride_to_groom",
+      "file_basename": "OBL-002.md"
+    },
+    {
+      "id": "OBL-003",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Nirbandha Saree for Groom's Mom",
+      "english_descriptor": "Respect Silk Saree presented by Bride's Family to Groom's Mother",
+      "category": "attire",
+      "event_ref": "EVT-001",
+      "ritual_ref": "RIT-001",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-006",
+        "role_title": "Bride's Mother (Mummy)"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-004",
+        "role_title": "Groom's Mother (Bou)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "3. Mom & Dad: Saree for Mom",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 1 — ENGAGEMENT | Bride's Family -> Groom / Groom's Family"
+      },
+      "items": [
+        {
+          "item_id": "OBL-003-ITM-01",
+          "description": "Handloom Pure Silk Saree (Sambalpuri/Bomkai)",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-SA-01",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-006",
+        "staging_location": "VEN-001",
+        "handover_moment": "Nirbandha Stage Felicitation"
+      },
+      "derived_direction": "bride_to_groom",
+      "file_basename": "OBL-003.md"
+    },
+    {
+      "id": "OBL-004",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Nirbandha Kurta/Shirt + Pant for Groom's Dad",
+      "english_descriptor": "Formal respect outfit presented by Bride's Family to Groom's Father",
+      "category": "attire",
+      "event_ref": "EVT-001",
+      "ritual_ref": "RIT-001",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Father (Daddy)"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-003",
+        "role_title": "Groom's Father (Baba)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "3. Mom & Dad: Shirt/Kurta + Pant for Dad",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 1 — ENGAGEMENT | Bride's Family -> Groom / Groom's Family"
+      },
+      "items": [
+        {
+          "item_id": "OBL-004-ITM-01",
+          "description": "Silk Kurta-Pajama / Raymond Suiting Length",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "set",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-SA-02",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-007",
+        "staging_location": "VEN-001",
+        "handover_moment": "Nirbandha Stage Felicitation"
+      },
+      "derived_direction": "bride_to_groom",
+      "file_basename": "OBL-004.md"
+    },
+    {
+      "id": "OBL-005",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Dress/Saree for Groom's Didi & Tiju",
+      "english_descriptor": "Festive outfits presented by Bride's Family to Groom's Sister and Brother-in-Law",
+      "category": "composite_bundle",
+      "event_ref": "EVT-001",
+      "ritual_ref": "RIT-001",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-006",
+        "role_title": "Bride's Family"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-010",
+        "role_title": "Groom's Sister & Brother-in-Law"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "PROTOCOL_SPECIFIED",
+      "verbatim_provenance": {
+        "raw_source_text": "4. Dress/Saree for Didi & Tiju",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 1 — ENGAGEMENT | Bride's Family -> Groom / Groom's Family"
+      },
+      "items": [
+        {
+          "item_id": "OBL-005-ITM-01",
+          "description": "Festive Saree for Didi",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        },
+        {
+          "item_id": "OBL-005-ITM-02",
+          "description": "Kurta / Shirt Set for Tiju",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "set",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-SA-04",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-006",
+        "staging_location": "VEN-001",
+        "handover_moment": "Nirbandha Family Reception"
+      },
+      "derived_direction": "bride_to_groom",
+      "file_basename": "OBL-005.md"
+    },
+    {
+      "id": "OBL-006",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Dress for Bacha Party",
+      "english_descriptor": "Festive clothing for nieces/nephews attending from Groom's extended family",
+      "category": "attire",
+      "event_ref": "EVT-001",
+      "ritual_ref": "RIT-001",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-006",
+        "role_title": "Bride's Family"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-010",
+        "role_title": "Groom's Extended Children Cohort"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Pending_Family_Confirmation",
+      "epistemic_tier": "PROTOCOL_SPECIFIED",
+      "verbatim_provenance": {
+        "raw_source_text": "5. Dress for Bacha Party",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 1 — ENGAGEMENT | Bride's Family -> Groom / Groom's Family"
+      },
+      "items": [
+        {
+          "item_id": "OBL-006-ITM-01",
+          "description": "Kids Festive Wear Sets",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "sets",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": null,
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-006",
+        "staging_location": "VEN-001",
+        "handover_moment": "Nirbandha Family Welcome"
+      },
+      "derived_direction": "bride_to_groom",
+      "file_basename": "OBL-006.md"
+    },
+    {
+      "id": "OBL-007",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "5 Varieties of Sweets (Bride ⟶ Groom)",
+      "english_descriptor": "Traditional Odia sweet hampers presented by Bride's Family",
+      "category": "edible_hospitality",
+      "event_ref": "EVT-001",
+      "ritual_ref": "RIT-001",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Family"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-003",
+        "role_title": "Groom's Family"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "6. 5 varieties of sweets",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 1 — ENGAGEMENT | Bride's Family -> Groom / Groom's Family"
+      },
+      "items": [
+        {
+          "item_id": "OBL-007-ITM-01",
+          "description": "5 Distinct Odia Sweet Trays (Chhena Poda, Rasagola, etc.)",
+          "nature": "consumable",
+          "quantity": 5,
+          "unit": "boxes",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-SA-06",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-007",
+        "staging_location": "VEN-001",
+        "handover_moment": "Post-Nirbandha Departure Hamper Exchange"
+      },
+      "derived_direction": "bride_to_groom",
+      "file_basename": "OBL-007.md"
+    },
+    {
+      "id": "OBL-008",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Nirbandha Mudi (Groom ⟶ Bride)",
+      "english_descriptor": "Ceremonial Engagement Ring presented by Groom to Bride",
+      "category": "gold_silver",
+      "event_ref": "EVT-001",
+      "ritual_ref": "RIT-001",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-003",
+        "role_title": "Groom's Father (Baba)"
+      },
+      "recipient": {
+        "family": "bride",
+        "primary_contact": "PER-001",
+        "role_title": "Bride (Sree)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "1. Mudi",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 1 — ENGAGEMENT | Groom's Family -> Bride / Bride's Family"
+      },
+      "items": [
+        {
+          "item_id": "OBL-008-ITM-01",
+          "description": "Hallmarked Gold/Diamond Engagement Ring for Bride",
+          "nature": "physical_asset",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-EG-01",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": "AST-002",
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-003",
+        "staging_location": "VEN-001",
+        "handover_moment": "Nirbandha Ring Exchange Muhurat"
+      },
+      "derived_direction": "groom_to_bride",
+      "file_basename": "OBL-008.md"
+    },
+    {
+      "id": "OBL-009",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Bridal Engagement Lehenga + Blouse",
+      "english_descriptor": "Ceremonial Engagement Outfit presented by Groom's Family to Bride",
+      "category": "attire",
+      "event_ref": "EVT-001",
+      "ritual_ref": "RIT-001",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-004",
+        "role_title": "Groom's Parents"
+      },
+      "recipient": {
+        "family": "bride",
+        "primary_contact": "PER-001",
+        "role_title": "Bride (Sree)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "2. Lehenga + blouse",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 1 — ENGAGEMENT | Groom's Family -> Bride / Bride's Family"
+      },
+      "items": [
+        {
+          "item_id": "OBL-009-ITM-01",
+          "description": "Designer Bridal Engagement Lehenga & Blouse",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "set",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-EG-02",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-004",
+        "staging_location": "VEN-001",
+        "handover_moment": "Pre-Nirbandha Bridal Dressing"
+      },
+      "derived_direction": "groom_to_bride",
+      "file_basename": "OBL-009.md"
+    },
+    {
+      "id": "OBL-010",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Engagement Trolley Presentation",
+      "english_descriptor": "Formal presentation luggage trolley containing bride's trousseau items",
+      "category": "logistics",
+      "event_ref": "EVT-001",
+      "ritual_ref": "RIT-001",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-003",
+        "role_title": "Groom's Family"
+      },
+      "recipient": {
+        "family": "bride",
+        "primary_contact": "PER-001",
+        "role_title": "Bride (Sree)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "TBD_Family_Choice",
+      "epistemic_tier": "PROTOCOL_SPECIFIED",
+      "verbatim_provenance": {
+        "raw_source_text": "3. Engagement trolley",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 1 — ENGAGEMENT | Groom's Family -> Bride / Bride's Family"
+      },
+      "items": [
+        {
+          "item_id": "OBL-010-ITM-01",
+          "description": "Premium Hard-case Presentation Trolley",
+          "nature": "physical_asset",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": null,
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-003",
+        "staging_location": "VEN-001",
+        "handover_moment": "Nirbandha Shagun Arrival"
+      },
+      "derived_direction": "groom_to_bride",
+      "file_basename": "OBL-010.md"
+    },
+    {
+      "id": "OBL-011",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Sweets, Coconut & Banana Kandhi Hamper",
+      "english_descriptor": "Auspicious food basket containing 5 varieties of sweets, whole coconuts, and banana cluster",
+      "category": "composite_bundle",
+      "event_ref": "EVT-001",
+      "ritual_ref": "RIT-001",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-003",
+        "role_title": "Groom's Family"
+      },
+      "recipient": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Family"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "4. 5 varieties of sweets, including: Coconut, Banana Kandhi",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 1 — ENGAGEMENT | Groom's Family -> Bride / Bride's Family"
+      },
+      "items": [
+        {
+          "item_id": "OBL-011-ITM-01",
+          "description": "5 Varieties Sweets",
+          "nature": "consumable",
+          "quantity": 5,
+          "unit": "boxes",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        },
+        {
+          "item_id": "OBL-011-ITM-02",
+          "description": "Sacred Coconuts",
+          "nature": "perishable",
+          "quantity": 5,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        },
+        {
+          "item_id": "OBL-011-ITM-03",
+          "description": "Auspicious Banana Kandhi (Whole Stem)",
+          "nature": "perishable",
+          "quantity": 1,
+          "unit": "stem",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-SA-06",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-003",
+        "staging_location": "VEN-001",
+        "handover_moment": "Nirbandha Entrance Shagun"
+      },
+      "derived_direction": "groom_to_bride",
+      "file_basename": "OBL-011.md"
+    },
+    {
+      "id": "OBL-012",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Nirbandha Phula (Floral Garlands)",
+      "english_descriptor": "Ceremonial floral garlands for Engagement",
+      "category": "ceremonial_token",
+      "event_ref": "EVT-001",
+      "ritual_ref": "RIT-001",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-003",
+        "role_title": "Groom's Family"
+      },
+      "recipient": {
+        "family": "bride",
+        "primary_contact": "PER-001",
+        "role_title": "Bride & Groom"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "5. Phula",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 1 — ENGAGEMENT | Groom's Family -> Bride / Bride's Family"
+      },
+      "items": [
+        {
+          "item_id": "OBL-012-ITM-01",
+          "description": "Fresh Jasmine/Rose Garlands",
+          "nature": "perishable",
+          "quantity": 2,
+          "unit": "pairs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": null,
+        "samagri_checklist_ref": "SAM-001",
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-003",
+        "staging_location": "VEN-001",
+        "handover_moment": "Nirbandha Stage Exchange"
+      },
+      "derived_direction": "groom_to_bride",
+      "file_basename": "OBL-012.md"
+    },
+    {
+      "id": "OBL-013",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Nirbandha Desi Pana",
+      "english_descriptor": "Traditional sweet betel preparation for welcoming guest party",
+      "category": "edible_hospitality",
+      "event_ref": "EVT-001",
+      "ritual_ref": "RIT-001",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-003",
+        "role_title": "Groom's Family"
+      },
+      "recipient": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Family & Guests"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "6. Desi Pana",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 1 — ENGAGEMENT | Groom's Family -> Bride / Bride's Family"
+      },
+      "items": [
+        {
+          "item_id": "OBL-013-ITM-01",
+          "description": "Ceremonial Odia Desi Sweet Pana Hamper",
+          "nature": "consumable",
+          "quantity": 1,
+          "unit": "set",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": null,
+        "samagri_checklist_ref": "SAM-001",
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-003",
+        "staging_location": "VEN-001",
+        "handover_moment": "Nirbandha Welcome Desk"
+      },
+      "derived_direction": "groom_to_bride",
+      "file_basename": "OBL-013.md"
+    },
+    {
+      "id": "OBL-014",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Puri Jagannath Maha-Prasad",
+      "english_descriptor": "Consecrated Nirmalya and Mahaprasad from Sri Jagannath Temple",
+      "category": "ceremonial_token",
+      "event_ref": "EVT-001",
+      "ritual_ref": "RIT-001",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-003",
+        "role_title": "Groom's Family"
+      },
+      "recipient": {
+        "family": "joint",
+        "primary_contact": "PER-007",
+        "role_title": "All Attendees"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "7. Maha-prasad",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 1 — ENGAGEMENT | Groom's Family -> Bride / Bride's Family"
+      },
+      "items": [
+        {
+          "item_id": "OBL-014-ITM-01",
+          "description": "Puri Jagannath Temple Mahaprasad & Nirmalya Packets",
+          "nature": "consumable",
+          "quantity": 1,
+          "unit": "hamper",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": null,
+        "samagri_checklist_ref": "SAM-001",
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-003",
+        "staging_location": "VEN-001",
+        "handover_moment": "Nirbandha Astrological Sankalpa"
+      },
+      "derived_direction": "groom_to_joint",
+      "file_basename": "OBL-014.md"
+    },
+    {
+      "id": "OBL-015",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Nirbandha Non-Family Guest Honorarium (₹5,000/head)",
+      "english_descriptor": "Customary cash honorarium per non-family guest attending the engagement",
+      "category": "honorarium_cash",
+      "event_ref": "EVT-001",
+      "ritual_ref": "RIT-001",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-003",
+        "role_title": "Groom's Family"
+      },
+      "recipient": {
+        "family": "external",
+        "primary_contact": "PER-014",
+        "role_title": "Confirmed Non-Family Engagement Attendees"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "PROTOCOL_SPECIFIED",
+      "verbatim_provenance": {
+        "raw_source_text": "8. ₹5,000 per head for those attending the engagement, excluding family members",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 1 — ENGAGEMENT | Groom's Family -> Bride / Bride's Family"
+      },
+      "items": [
+        {
+          "item_id": "OBL-015-ITM-01",
+          "description": "Cash Shagun Envelopes (₹5,000 / recipient)",
+          "nature": "consumable",
+          "quantity": 1,
+          "unit": "envelopes",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": true,
+        "unit_amount_inr": 5000,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": null,
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": "PAY-001"
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-003",
+        "staging_location": "VEN-001",
+        "handover_moment": "Nirbandha Guest Departure Gate"
+      },
+      "derived_direction": "groom_to_external",
+      "file_basename": "OBL-015.md"
+    },
+    {
+      "id": "OBL-016",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Gua/Haldi Basa Saree",
+      "english_descriptor": "Auspicious yellow handloom silk saree presented by Groom's family for Bride's Haldi bath",
+      "category": "attire",
+      "event_ref": "EVT-002",
+      "ritual_ref": "RIT-003",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-004",
+        "role_title": "Groom's Parents"
+      },
+      "recipient": {
+        "family": "bride",
+        "primary_contact": "PER-001",
+        "role_title": "Bride (Sree)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Gua / Haldi Basa: Saree",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 2 — BEFORE MARRIAGE | Gua / Haldi Basa"
+      },
+      "items": [
+        {
+          "item_id": "OBL-016-ITM-01",
+          "description": "Yellow Cotton-Silk Haldi Saree",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-BR-03",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-004",
+        "staging_location": "VEN-002",
+        "handover_moment": "Haldi Morning Trousseau Delivery"
+      },
+      "derived_direction": "groom_to_bride",
+      "file_basename": "OBL-016.md"
+    },
+    {
+      "id": "OBL-017",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Gua/Haldi Basa Makeup & Shringar",
+      "english_descriptor": "Bridal cosmetics and beauty styling support provided by Groom's family",
+      "category": "service",
+      "event_ref": "EVT-002",
+      "ritual_ref": "RIT-003",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-004",
+        "role_title": "Groom's Family"
+      },
+      "recipient": {
+        "family": "bride",
+        "primary_contact": "PER-001",
+        "role_title": "Bride (Sree)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "TBD_Family_Choice",
+      "epistemic_tier": "PROTOCOL_SPECIFIED",
+      "verbatim_provenance": {
+        "raw_source_text": "Makeup, Other associated things",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 2 — BEFORE MARRIAGE | Gua / Haldi Basa"
+      },
+      "items": [
+        {
+          "item_id": "OBL-017-ITM-01",
+          "description": "Shringar Cosmetics Kit & Mehendi/Makeup Artist Support",
+          "nature": "consumable",
+          "quantity": 1,
+          "unit": "kit",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-SA-05",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-004",
+        "staging_location": "VEN-002",
+        "handover_moment": "Haldi Preparation Morning"
+      },
+      "derived_direction": "groom_to_bride",
+      "file_basename": "OBL-017.md"
+    },
+    {
+      "id": "OBL-018",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Haldi Basa Sacred Samagri (Coconut, Pana, Gua, Haldi)",
+      "english_descriptor": "Ritual offerings presented by Groom's family for the Bride's auspicious sanctification",
+      "category": "composite_bundle",
+      "event_ref": "EVT-002",
+      "ritual_ref": "RIT-003",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-003",
+        "role_title": "Groom's Family"
+      },
+      "recipient": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Family"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Coconut, Desi Pana, Gua, Haldi",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 2 — BEFORE MARRIAGE | Gua / Haldi Basa"
+      },
+      "items": [
+        {
+          "item_id": "OBL-018-ITM-01",
+          "description": "Sacred Coconuts (5 pcs)",
+          "nature": "perishable",
+          "quantity": 5,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        },
+        {
+          "item_id": "OBL-018-ITM-02",
+          "description": "Desi Sweet Pana Hamper",
+          "nature": "consumable",
+          "quantity": 1,
+          "unit": "set",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        },
+        {
+          "item_id": "OBL-018-ITM-03",
+          "description": "Raw Betel Nuts (Gua)",
+          "nature": "perishable",
+          "quantity": 1,
+          "unit": "kg",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        },
+        {
+          "item_id": "OBL-018-ITM-04",
+          "description": "Pure Consecrated Turmeric Roots (Haldi)",
+          "nature": "perishable",
+          "quantity": 1,
+          "unit": "kg",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": null,
+        "samagri_checklist_ref": "SAM-003",
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-003",
+        "staging_location": "VEN-002",
+        "handover_moment": "Pre-Haldi Ritual Convoy"
+      },
+      "derived_direction": "groom_to_bride",
+      "file_basename": "OBL-018.md"
+    },
+    {
+      "id": "OBL-019",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Bandhu Daksa (Pana, Gua)",
+      "english_descriptor": "Formal respect offerings presented by Bride's Family to Groom's Father",
+      "category": "composite_bundle",
+      "event_ref": "EVT-002",
+      "ritual_ref": "RIT-003",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Father (Daddy)"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-003",
+        "role_title": "Groom's Father (Baba)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Bandhu Daksa: Pana, Gua",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 2 — BEFORE MARRIAGE | Bandhu Daksa"
+      },
+      "items": [
+        {
+          "item_id": "OBL-019-ITM-01",
+          "description": "Ceremonial Silver/Brass Pana Batta",
+          "nature": "physical_asset",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        },
+        {
+          "item_id": "OBL-019-ITM-02",
+          "description": "Select Betel Nuts (Gua)",
+          "nature": "consumable",
+          "quantity": 1,
+          "unit": "pack",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": null,
+        "samagri_checklist_ref": "SAM-003",
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-007",
+        "staging_location": "VEN-002",
+        "handover_moment": "Bandhu Daksa Greeting Milestone"
+      },
+      "derived_direction": "bride_to_groom",
+      "file_basename": "OBL-019.md"
+    },
+    {
+      "id": "OBL-020",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Bandhu Daksa (Dress for Daddy)",
+      "english_descriptor": "Festive respect attire presented by Bride's Family to Groom's Father",
+      "category": "attire",
+      "event_ref": "EVT-002",
+      "ritual_ref": "RIT-003",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Father (Daddy)"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-003",
+        "role_title": "Groom's Father (Baba)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Bandhu Daksa: Dress for Daddy",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 2 — BEFORE MARRIAGE | Bandhu Daksa"
+      },
+      "items": [
+        {
+          "item_id": "OBL-020-ITM-01",
+          "description": "Premium Silk Kurta-Dhoti Set or Formal Suiting Length",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "set",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-SA-02",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-007",
+        "staging_location": "VEN-002",
+        "handover_moment": "Bandhu Daksa Welcoming Milestone"
+      },
+      "derived_direction": "bride_to_groom",
+      "file_basename": "OBL-020.md"
+    },
+    {
+      "id": "OBL-021",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Batabasana Groom Suit",
+      "english_descriptor": "Tailored 3-piece executive suit presented by Bride's Family to Groom for entrance reception",
+      "category": "attire",
+      "event_ref": "EVT-004",
+      "ritual_ref": "RIT-004",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Father (Daddy)"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-002",
+        "role_title": "Groom (Krushna)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Batabasana: Suit",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 2 — BEFORE MARRIAGE | Batabasana"
+      },
+      "items": [
+        {
+          "item_id": "OBL-021-ITM-01",
+          "description": "Raymond Made-to-Measure 3-Piece Suit & Shirt",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "set",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-GR-06",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-007",
+        "staging_location": "VEN-003",
+        "handover_moment": "Batabarana Doorstep Welcome"
+      },
+      "derived_direction": "bride_to_groom",
+      "file_basename": "OBL-021.md"
+    },
+    {
+      "id": "OBL-022",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Batabasana Gold Chain",
+      "english_descriptor": "22K Hallmarked Gold Chain presented by Bride's Family to Groom",
+      "category": "gold_silver",
+      "event_ref": "EVT-004",
+      "ritual_ref": "RIT-004",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Father (Daddy)"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-002",
+        "role_title": "Groom (Krushna)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Batabasana: Chain",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 2 — BEFORE MARRIAGE | Batabasana"
+      },
+      "items": [
+        {
+          "item_id": "OBL-022-ITM-01",
+          "description": "22K Solid Gold Chain (~20-30g)",
+          "nature": "physical_asset",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": null,
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": "AST-003",
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-007",
+        "staging_location": "VEN-003",
+        "handover_moment": "Batabarana Doorstep Welcome"
+      },
+      "derived_direction": "bride_to_groom",
+      "file_basename": "OBL-022.md"
+    },
+    {
+      "id": "OBL-023",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Batabasana Gold Mudi (Ring)",
+      "english_descriptor": "22K Gold Ring presented by Bride's Family to Groom",
+      "category": "gold_silver",
+      "event_ref": "EVT-004",
+      "ritual_ref": "RIT-004",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Father (Daddy)"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-002",
+        "role_title": "Groom (Krushna)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Batabasana: Mudi",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 2 — BEFORE MARRIAGE | Batabasana"
+      },
+      "items": [
+        {
+          "item_id": "OBL-023-ITM-01",
+          "description": "22K Gold Signet / Ceremonial Ring",
+          "nature": "physical_asset",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": null,
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": "AST-004",
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-007",
+        "staging_location": "VEN-003",
+        "handover_moment": "Batabarana Doorstep Welcome"
+      },
+      "derived_direction": "bride_to_groom",
+      "file_basename": "OBL-023.md"
+    },
+    {
+      "id": "OBL-024",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Batabasana Gold Bracelet",
+      "english_descriptor": "22K Gold Bracelet presented by Bride's Family to Groom",
+      "category": "gold_silver",
+      "event_ref": "EVT-004",
+      "ritual_ref": "RIT-004",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Father (Daddy)"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-002",
+        "role_title": "Groom (Krushna)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Batabasana: Bracelet",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 2 — BEFORE MARRIAGE | Batabasana"
+      },
+      "items": [
+        {
+          "item_id": "OBL-024-ITM-01",
+          "description": "22K Gold Kada / Bracelet (~25-40g)",
+          "nature": "physical_asset",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": null,
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": "AST-005",
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-007",
+        "staging_location": "VEN-003",
+        "handover_moment": "Batabarana Doorstep Welcome"
+      },
+      "derived_direction": "bride_to_groom",
+      "file_basename": "OBL-024.md"
+    },
+    {
+      "id": "OBL-025",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Ahiya Manduli (Saree for Mummy)",
+      "english_descriptor": "Groom Family's Auspicious Saree Presentation to Bride's Mother immediately after Batabarana",
+      "category": "attire",
+      "event_ref": "EVT-004",
+      "ritual_ref": "RIT-004",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-003",
+        "role_title": "Groom's Parents (Baba & Bou)"
+      },
+      "recipient": {
+        "family": "bride",
+        "primary_contact": "PER-006",
+        "role_title": "Bride's Mother ('Mummy' — Smt. Tapaswini)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Ahiya manduli (Saree for mummy) : from groom's family",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 2 — BEFORE MARRIAGE / WEDDING DAY | Ahiya Manduli"
+      },
+      "items": [
+        {
+          "item_id": "OBL-025-ITM-01",
+          "description": "Pure Bomkai / Berhampuri Pata Silk Saree with Zari Pallu",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-SA-01",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-003",
+        "staging_location": "VEN-003",
+        "handover_moment": "Entrance Welcoming Gate (Post-Batabarana Aarti)"
+      },
+      "derived_direction": "groom_to_bride",
+      "file_basename": "OBL-025.md"
+    },
+    {
+      "id": "OBL-026",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Alta & Sindoor in Mandap",
+      "english_descriptor": "Sacred Alta and Sindoor presented by Groom's family for the Bride's Vedic Mandap rites",
+      "category": "ceremonial_token",
+      "event_ref": "EVT-004",
+      "ritual_ref": "RIT-005",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-004",
+        "role_title": "Groom's Family"
+      },
+      "recipient": {
+        "family": "bride",
+        "primary_contact": "PER-001",
+        "role_title": "Bride (Sree)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Groom's Alta & Sindoor in Mandap: Alta, Sindoor",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 2 — BEFORE MARRIAGE | Groom's Alta & Sindoor in Mandap"
+      },
+      "items": [
+        {
+          "item_id": "OBL-026-ITM-01",
+          "description": "Pure Odia Ceremonial Alta Bottle",
+          "nature": "consumable",
+          "quantity": 1,
+          "unit": "bottle",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        },
+        {
+          "item_id": "OBL-026-ITM-02",
+          "description": "Consecrated Vermilion (Sindoor Farua)",
+          "nature": "consumable",
+          "quantity": 1,
+          "unit": "pack",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-JW-09",
+        "samagri_checklist_ref": "SAM-005",
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-004",
+        "staging_location": "VEN-003",
+        "handover_moment": "Vedic Mandap Sindoor Daan Muhurat"
+      },
+      "derived_direction": "groom_to_bride",
+      "file_basename": "OBL-026.md"
+    },
+    {
+      "id": "OBL-027",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Sala Bidha Gift",
+      "english_descriptor": "Customary respect gift from Groom to Bride's Brother (Sala)",
+      "category": "attire",
+      "event_ref": "EVT-004",
+      "ritual_ref": "RIT-005",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-002",
+        "role_title": "Groom (Krushna)"
+      },
+      "recipient": {
+        "family": "bride",
+        "primary_contact": "PER-011",
+        "role_title": "Bride's Brother (Sala)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "TBD_Family_Choice",
+      "epistemic_tier": "PROTOCOL_SPECIFIED",
+      "verbatim_provenance": {
+        "raw_source_text": "Sala Bidha: Gift / item — exact choice TBD",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 2 — BEFORE MARRIAGE | Sala Bidha"
+      },
+      "items": [
+        {
+          "item_id": "OBL-027-ITM-01",
+          "description": "Watch / Luxury Pen / Kurta Set",
+          "nature": "physical_asset",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-SA-03",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-002",
+        "staging_location": "VEN-003",
+        "handover_moment": "Post-Mandap Family Interaction"
+      },
+      "derived_direction": "groom_to_bride",
+      "file_basename": "OBL-027.md"
+    },
+    {
+      "id": "OBL-028",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Sali Hasta Ganthi Gift",
+      "english_descriptor": "Customary teasing/honorarium gift from Groom to Bride's Sisters (Sali)",
+      "category": "attire",
+      "event_ref": "EVT-004",
+      "ritual_ref": "RIT-005",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-002",
+        "role_title": "Groom (Krushna)"
+      },
+      "recipient": {
+        "family": "bride",
+        "primary_contact": "PER-012",
+        "role_title": "Bride's Sisters (Sali)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "TBD_Family_Choice",
+      "epistemic_tier": "PROTOCOL_SPECIFIED",
+      "verbatim_provenance": {
+        "raw_source_text": "Sali Hasta Ganthi: Gift / item — exact choice TBD",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 2 — BEFORE MARRIAGE | Sali Hasta Ganthi"
+      },
+      "items": [
+        {
+          "item_id": "OBL-028-ITM-01",
+          "description": "Festive Sarees or Cash Envelopes for Sisters",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "set",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-SA-04",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-002",
+        "staging_location": "VEN-003",
+        "handover_moment": "Mandap Hastaganthi Knot Tying"
+      },
+      "derived_direction": "groom_to_bride",
+      "file_basename": "OBL-028.md"
+    },
+    {
+      "id": "OBL-029",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Samdhi Milan (Baba ⟶ Daddy)",
+      "english_descriptor": "Reciprocal ceremonial dress exchange from Groom's Father (Baba) to Bride's Father (Daddy)",
+      "category": "attire",
+      "event_ref": "EVT-004",
+      "ritual_ref": "RIT-004",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-003",
+        "role_title": "Groom's Father (Baba)"
+      },
+      "recipient": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Father (Daddy)"
+      },
+      "exchange_cluster": {
+        "is_exchange": true,
+        "cluster_id": "EXC-001",
+        "peer_obligation_id": "OBL-030",
+        "synchronous_handover": true
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Samdhi Milan: Baba <-> Daddy, Dress exchange",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 2 — BEFORE MARRIAGE | Samdhi Milan"
+      },
+      "items": [
+        {
+          "item_id": "OBL-029-ITM-01",
+          "description": "Raymond Super-120s Suiting Fabric / Tussar Dhoti-Kurta",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "set",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-SA-02",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-003",
+        "staging_location": "VEN-003",
+        "handover_moment": "Samdhi Milan Entrance Handshake"
+      },
+      "derived_direction": "groom_to_bride",
+      "file_basename": "OBL-029.md"
+    },
+    {
+      "id": "OBL-030",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Samdhi Milan (Daddy ⟶ Baba)",
+      "english_descriptor": "Reciprocal ceremonial dress exchange from Bride's Father (Daddy) to Groom's Father (Baba)",
+      "category": "attire",
+      "event_ref": "EVT-004",
+      "ritual_ref": "RIT-004",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Father (Daddy)"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-003",
+        "role_title": "Groom's Father (Baba)"
+      },
+      "exchange_cluster": {
+        "is_exchange": true,
+        "cluster_id": "EXC-001",
+        "peer_obligation_id": "OBL-029",
+        "synchronous_handover": true
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Samdhi Milan: Daddy <-> Baba, Dress exchange",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 2 — BEFORE MARRIAGE | Samdhi Milan"
+      },
+      "items": [
+        {
+          "item_id": "OBL-030-ITM-01",
+          "description": "Pure Tussar Silk Dhoti-Kurta Set with Zari Border",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "set",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-SA-02",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-007",
+        "staging_location": "VEN-003",
+        "handover_moment": "Samdhi Milan Entrance Handshake"
+      },
+      "derived_direction": "bride_to_groom",
+      "file_basename": "OBL-030.md"
+    },
+    {
+      "id": "OBL-031",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Sadu Basana (Laddoo, Dress)",
+      "english_descriptor": "Sweet hampers and respect dress presented by Groom's family to Bride's co-brothers/in-laws",
+      "category": "composite_bundle",
+      "event_ref": "EVT-004",
+      "ritual_ref": "RIT-004",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-003",
+        "role_title": "Groom's Family"
+      },
+      "recipient": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Extended Family (Sadu Cohort)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "PROTOCOL_SPECIFIED",
+      "verbatim_provenance": {
+        "raw_source_text": "Sadu Basana: Laddoo, Dress",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 2 — BEFORE MARRIAGE | Sadu Basana"
+      },
+      "items": [
+        {
+          "item_id": "OBL-031-ITM-01",
+          "description": "Special Motichoor / Besan Laddoo Hamper",
+          "nature": "consumable",
+          "quantity": 1,
+          "unit": "box",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        },
+        {
+          "item_id": "OBL-031-ITM-02",
+          "description": "Formal Shirt / Kurta Set for Sadu",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "set",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-SA-03",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-003",
+        "staging_location": "VEN-003",
+        "handover_moment": "Post-Varamala Stage Welcome"
+      },
+      "derived_direction": "groom_to_bride",
+      "file_basename": "OBL-031.md"
+    },
+    {
+      "id": "OBL-032",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Bridal Alankar (Groom ⟶ Bride)",
+      "english_descriptor": "Precious gold jewellery gifted by Groom's family for the Mandap ornamentation",
+      "category": "gold_silver",
+      "event_ref": "EVT-004",
+      "ritual_ref": "RIT-005",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-004",
+        "role_title": "Groom's Parents"
+      },
+      "recipient": {
+        "family": "bride",
+        "primary_contact": "PER-001",
+        "role_title": "Bride (Sree)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Alankar: Groom -> Bride",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 2 — BEFORE MARRIAGE | Alankar"
+      },
+      "items": [
+        {
+          "item_id": "OBL-032-ITM-01",
+          "description": "22K Gold Temple Necklace / Sita Haar / Kadas",
+          "nature": "physical_asset",
+          "quantity": 1,
+          "unit": "set",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-JW-01",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": "AST-006",
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-004",
+        "staging_location": "VEN-003",
+        "handover_moment": "Mandap Preliminary Alankar Rites"
+      },
+      "derived_direction": "groom_to_bride",
+      "file_basename": "OBL-032.md"
+    },
+    {
+      "id": "OBL-033",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Unidentified TDK Customary Item",
+      "english_descriptor": "Item with blurred handwritten abbreviation 'TDK' flagged for verbal confirmation",
+      "category": "attire",
+      "event_ref": "EVT-004",
+      "ritual_ref": "RIT-005",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-003",
+        "role_title": "Groom's Family"
+      },
+      "recipient": {
+        "family": "bride",
+        "primary_contact": "PER-001",
+        "role_title": "Bride (Sree)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Identified",
+      "spec_status": "Source_Unclear",
+      "epistemic_tier": "UNCERTAIN_EXPLORATORY",
+      "verbatim_provenance": {
+        "raw_source_text": "TDK",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 2 — BEFORE MARRIAGE | Alankar subsection"
+      },
+      "items": [
+        {
+          "item_id": "OBL-033-ITM-01",
+          "description": "Handwritten abbreviation 'TDK' (Pending Oral Confirmation)",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": null,
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-003",
+        "staging_location": "VEN-003",
+        "handover_moment": "Pending Family Confirmation"
+      },
+      "derived_direction": "groom_to_bride",
+      "file_basename": "OBL-033.md"
+    },
+    {
+      "id": "OBL-034",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "5 Sets Dresses (Bride ⟶ Groom)",
+      "english_descriptor": "Wardrobe suite of 5 festive attire sets gifted by Bride's family to the Groom",
+      "category": "composite_bundle",
+      "event_ref": "EVT-004",
+      "ritual_ref": "RIT-005",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Family"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-002",
+        "role_title": "Groom (Krushna)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "PROTOCOL_SPECIFIED",
+      "verbatim_provenance": {
+        "raw_source_text": "5 sets dresses: Bride -> Groom",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 2 — BEFORE MARRIAGE"
+      },
+      "items": [
+        {
+          "item_id": "OBL-034-ITM-01",
+          "description": "5 Sets Festive Kurtas, Shirts, and Trousers",
+          "nature": "fabric",
+          "quantity": 5,
+          "unit": "sets",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-GR-07",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-007",
+        "staging_location": "VEN-003",
+        "handover_moment": "Post-Wedding Luggage Transfer"
+      },
+      "derived_direction": "bride_to_groom",
+      "file_basename": "OBL-034.md"
+    },
+    {
+      "id": "OBL-035",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Guin Chada Trolley",
+      "english_descriptor": "Presentation trolley packed with bride's personal trousseau for welcoming at in-laws' home",
+      "category": "logistics",
+      "event_ref": "EVT-006",
+      "ritual_ref": "RIT-011",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-006",
+        "role_title": "Bride's Mother (Mummy)"
+      },
+      "recipient": {
+        "family": "joint",
+        "primary_contact": "PER-001",
+        "role_title": "Newlywed Couple (Sree & Krushna)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "PROTOCOL_SPECIFIED",
+      "verbatim_provenance": {
+        "raw_source_text": "Guin Chada Trolley",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 3 — AFTER MARRIAGE"
+      },
+      "items": [
+        {
+          "item_id": "OBL-035-ITM-01",
+          "description": "Hard-case Travel Trolley with Linens and Toiletries",
+          "nature": "physical_asset",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": null,
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-006",
+        "staging_location": "VEN-004",
+        "handover_moment": "Grihapravesh Luggage Unloading"
+      },
+      "derived_direction": "bride_to_joint",
+      "file_basename": "OBL-035.md"
+    },
+    {
+      "id": "OBL-036",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Bahu Daksa (Dress for Devas)",
+      "english_descriptor": "Respect shirts and trousers presented by Bride's family to the Groom's younger brothers/cousins",
+      "category": "composite_bundle",
+      "event_ref": "EVT-006",
+      "ritual_ref": "RIT-011",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Family"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-003",
+        "role_title": "Groom's Brothers & Male Cousins (Devas)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "PROTOCOL_SPECIFIED",
+      "verbatim_provenance": {
+        "raw_source_text": "Bahu Daksa: Dress for Devas",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 3 — AFTER MARRIAGE | Bahu Daksa"
+      },
+      "items": [
+        {
+          "item_id": "OBL-036-ITM-01",
+          "description": "Festive Shirts and Kurtas for Devas",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "sets",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-SA-03",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-007",
+        "staging_location": "VEN-004",
+        "handover_moment": "Grihapravesh Welcoming Ceremony"
+      },
+      "derived_direction": "bride_to_groom",
+      "file_basename": "OBL-036.md"
+    },
+    {
+      "id": "OBL-037",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Bahu Bandhapana (2 Sarees)",
+      "english_descriptor": "Two auspicious handloom sarees for the new bride's formal welcome and ceremonial blessing",
+      "category": "attire",
+      "event_ref": "EVT-006",
+      "ritual_ref": "RIT-011",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-006",
+        "role_title": "Bride's Family"
+      },
+      "recipient": {
+        "family": "bride",
+        "primary_contact": "PER-001",
+        "role_title": "Bride (Sree)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Bahu Bandhapana: 2 sarees",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 3 — AFTER MARRIAGE | Bahu Bandhapana"
+      },
+      "items": [
+        {
+          "item_id": "OBL-037-ITM-01",
+          "description": "2 Traditional Odisha Silk Sarees (Sambalpuri / Khandua)",
+          "nature": "fabric",
+          "quantity": 2,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-BR-07",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-006",
+        "staging_location": "VEN-004",
+        "handover_moment": "Bahu Bandhapana Welcoming Aarti"
+      },
+      "derived_direction": "bride_to_bride",
+      "file_basename": "OBL-037.md"
+    },
+    {
+      "id": "OBL-038",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Nananda Putuli (Gold Component)",
+      "english_descriptor": "Traditional gift package from Bride to Groom's Sisters — Gold Component",
+      "category": "gold_silver",
+      "event_ref": "EVT-006",
+      "ritual_ref": "RIT-011",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Family"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-010",
+        "role_title": "Groom's Sisters (2 Didis)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Source_Unclear",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Nananda Putuli: Gold",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 3 — AFTER MARRIAGE | Nananda Putuli"
+      },
+      "items": [
+        {
+          "item_id": "OBL-038-ITM-01",
+          "description": "Gold Rings / Pendants for 2 Sisters (Weight TBD)",
+          "nature": "physical_asset",
+          "quantity": 2,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": null,
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": "AST-007",
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-007",
+        "staging_location": "VEN-004",
+        "handover_moment": "Nananda Putuli Presentation Ceremony"
+      },
+      "derived_direction": "bride_to_groom",
+      "file_basename": "OBL-038.md"
+    },
+    {
+      "id": "OBL-039",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Nananda Putuli (Saree/Dress Sets × 2)",
+      "english_descriptor": "Traditional gift package from Bride to Groom's Sisters — Attire Component",
+      "category": "attire",
+      "event_ref": "EVT-006",
+      "ritual_ref": "RIT-011",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-006",
+        "role_title": "Bride's Family"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-010",
+        "role_title": "Groom's Sisters (2 Didis)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "PROTOCOL_SPECIFIED",
+      "verbatim_provenance": {
+        "raw_source_text": "Nananda Putuli: Saree/Dress x 2",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 3 — AFTER MARRIAGE | Nananda Putuli"
+      },
+      "items": [
+        {
+          "item_id": "OBL-039-ITM-01",
+          "description": "2 Festive Silk Sarees / Designer Suits",
+          "nature": "fabric",
+          "quantity": 2,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-SA-04",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-006",
+        "staging_location": "VEN-004",
+        "handover_moment": "Nananda Putuli Presentation Ceremony"
+      },
+      "derived_direction": "bride_to_groom",
+      "file_basename": "OBL-039.md"
+    },
+    {
+      "id": "OBL-040",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Nananda Putuli (Luggage Trolleys × 2)",
+      "english_descriptor": "Traditional gift package from Bride to Groom's Sisters — Trolley Component",
+      "category": "logistics",
+      "event_ref": "EVT-006",
+      "ritual_ref": "RIT-011",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Family"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-010",
+        "role_title": "Groom's Sisters (2 Didis)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "PROTOCOL_SPECIFIED",
+      "verbatim_provenance": {
+        "raw_source_text": "Nananda Putuli: Trolley x 2",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 3 — AFTER MARRIAGE | Nananda Putuli"
+      },
+      "items": [
+        {
+          "item_id": "OBL-040-ITM-01",
+          "description": "2 Brand Hard-Case Luggage Trolleys",
+          "nature": "physical_asset",
+          "quantity": 2,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": null,
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-007",
+        "staging_location": "VEN-004",
+        "handover_moment": "Nananda Putuli Presentation Ceremony"
+      },
+      "derived_direction": "bride_to_groom",
+      "file_basename": "OBL-040.md"
+    },
+    {
+      "id": "OBL-041",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Chaturthi Huma Saree Set",
+      "english_descriptor": "Sacred fire-ritual handloom saree gifted by Groom's family for Chauthi Puja havan",
+      "category": "attire",
+      "event_ref": "EVT-006",
+      "ritual_ref": "RIT-011",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-004",
+        "role_title": "Groom's Parents"
+      },
+      "recipient": {
+        "family": "bride",
+        "primary_contact": "PER-001",
+        "role_title": "Bride (Sree)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Chaturthi Huma Saree Set",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 3 — AFTER MARRIAGE | Chauthi Huma"
+      },
+      "items": [
+        {
+          "item_id": "OBL-041-ITM-01",
+          "description": "Nuapatna Khandua Pata / Cotton-Silk Saree",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-OD-01",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-004",
+        "staging_location": "VEN-004",
+        "handover_moment": "Chauthi Morning Havan Setup"
+      },
+      "derived_direction": "groom_to_bride",
+      "file_basename": "OBL-041.md"
+    },
+    {
+      "id": "OBL-042",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Chaturthi Huma Dhoti + Kurta",
+      "english_descriptor": "Sacred unstitched Tussar silk Dhoti-Kurta presented by Bride's family for Groom's Chauthi Havan",
+      "category": "attire",
+      "event_ref": "EVT-006",
+      "ritual_ref": "RIT-011",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Family"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-002",
+        "role_title": "Groom (Krushna)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Chaturthi Huma Dhoti + Kurta",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 3 — AFTER MARRIAGE | Chauthi Huma"
+      },
+      "items": [
+        {
+          "item_id": "OBL-042-ITM-01",
+          "description": "Pure Tussar Silk Dhoti & Kurta Set",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "set",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-OD-04",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-007",
+        "staging_location": "VEN-004",
+        "handover_moment": "Chauthi Morning Havan Setup"
+      },
+      "derived_direction": "bride_to_groom",
+      "file_basename": "OBL-042.md"
+    },
+    {
+      "id": "OBL-043",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Huma Bali Utheibaku (Dress for Brother-in-Law)",
+      "english_descriptor": "Customary honorarium attire from Groom to Bride's brother for dismantling sacred fire altar",
+      "category": "attire",
+      "event_ref": "EVT-006",
+      "ritual_ref": "RIT-011",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-002",
+        "role_title": "Groom (Krushna)"
+      },
+      "recipient": {
+        "family": "bride",
+        "primary_contact": "PER-011",
+        "role_title": "Bride's Brother (Brother-in-Law)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Huma Bali Utheibaku: Dress for BIL",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 3 — AFTER MARRIAGE | Huma Bali Utheibaku"
+      },
+      "items": [
+        {
+          "item_id": "OBL-043-ITM-01",
+          "description": "Festive Kurta-Pajama or Casual Shirt/Trouser Set",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "set",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-SA-03",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-002",
+        "staging_location": "VEN-004",
+        "handover_moment": "Post-Chauthi Havan Altar Disassembly"
+      },
+      "derived_direction": "groom_to_bride",
+      "file_basename": "OBL-043.md"
+    },
+    {
+      "id": "OBL-044",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Uluguna Customary Items",
+      "english_descriptor": "Items physically struck out in source sheets preserved with redacted status",
+      "category": "composite_bundle",
+      "event_ref": "EVT-006",
+      "ritual_ref": "RIT-011",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Family"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-003",
+        "role_title": "Groom's Family"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Identified",
+      "spec_status": "Source_Redacted",
+      "epistemic_tier": "UNCERTAIN_EXPLORATORY",
+      "verbatim_provenance": {
+        "raw_source_text": "Uluguna Items [struck out in ink]",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 3 — AFTER MARRIAGE | Struck-out block"
+      },
+      "items": [
+        {
+          "item_id": "OBL-044-ITM-01",
+          "description": "Preserved struck-out line item (Cancelled/Redacted)",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "set",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": null,
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-007",
+        "staging_location": "VEN-004",
+        "handover_moment": "Pending Family Confirmation"
+      },
+      "derived_direction": "bride_to_groom",
+      "file_basename": "OBL-044.md"
+    },
+    {
+      "id": "OBL-045",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Family Pack Bundles (6 Recipient Units)",
+      "english_descriptor": "Comprehensive family pack gifting from Bride's family to 6 recipient units of Groom's family",
+      "category": "composite_bundle",
+      "event_ref": "EVT-006",
+      "ritual_ref": "RIT-011",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-006",
+        "role_title": "Bride's Family"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-003",
+        "role_title": "Groom's Family Extended Units (6 Bundles)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "PROTOCOL_SPECIFIED",
+      "verbatim_provenance": {
+        "raw_source_text": "Family Pack: 6 Recipients",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 3 — AFTER MARRIAGE | Family Pack"
+      },
+      "items": [
+        {
+          "item_id": "OBL-045-ITM-01",
+          "description": "6 Saree & Suiting Gift Hampers",
+          "nature": "fabric",
+          "quantity": 6,
+          "unit": "hampers",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-SA-04",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-006",
+        "staging_location": "VEN-004",
+        "handover_moment": "Chauthi Family Gifting Assembly"
+      },
+      "derived_direction": "bride_to_groom",
+      "file_basename": "OBL-045.md"
+    },
+    {
+      "id": "OBL-046",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Kutha Madani Trolley Presentation",
+      "english_descriptor": "Second trousseau presentation trolley from Bride's family for the new home setup",
+      "category": "logistics",
+      "event_ref": "EVT-006",
+      "ritual_ref": "RIT-011",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Family"
+      },
+      "recipient": {
+        "family": "joint",
+        "primary_contact": "PER-001",
+        "role_title": "Newlywed Couple (Sree & Krushna)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "PROTOCOL_SPECIFIED",
+      "verbatim_provenance": {
+        "raw_source_text": "Kutha Madani Trolley",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 3 — AFTER MARRIAGE"
+      },
+      "items": [
+        {
+          "item_id": "OBL-046-ITM-01",
+          "description": "Hard-case Travel Luggage Trolley",
+          "nature": "physical_asset",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": null,
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-007",
+        "staging_location": "VEN-004",
+        "handover_moment": "Chauthi Gifting Session"
+      },
+      "derived_direction": "bride_to_joint",
+      "file_basename": "OBL-046.md"
+    },
+    {
+      "id": "OBL-047",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Grand Evening Reception Saree / Lehenga",
+      "english_descriptor": "Opulent evening attire presented by Groom's family for Bride's reception party",
+      "category": "attire",
+      "event_ref": "EVT-005",
+      "ritual_ref": "RIT-011",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-004",
+        "role_title": "Groom's Parents"
+      },
+      "recipient": {
+        "family": "bride",
+        "primary_contact": "PER-001",
+        "role_title": "Bride (Sree)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Reception Saree / Lehenga",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 3 — AFTER MARRIAGE | Reception"
+      },
+      "items": [
+        {
+          "item_id": "OBL-047-ITM-01",
+          "description": "Grand Kanjeevaram Silk / Royal Brocade Saree",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-BR-05",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-004",
+        "staging_location": "VEN-004",
+        "handover_moment": "Reception Evening Dressing"
+      },
+      "derived_direction": "groom_to_bride",
+      "file_basename": "OBL-047.md"
+    },
+    {
+      "id": "OBL-048",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Saga Macha Feast Hamper (Groom ⟶ Bride)",
+      "english_descriptor": "Customary fresh fish and greens feast hamper gifted by Groom's family for Astamangala",
+      "category": "edible_hospitality",
+      "event_ref": "EVT-007",
+      "ritual_ref": "RIT-012",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-003",
+        "role_title": "Groom's Family"
+      },
+      "recipient": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Family"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Saga Macha: Groom -> Bride",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 3 — AFTER MARRIAGE | Astamangala"
+      },
+      "items": [
+        {
+          "item_id": "OBL-048-ITM-01",
+          "description": "Fresh River Fish (Rohu/Bhakura) & Auspicious Greens Hamper",
+          "nature": "perishable",
+          "quantity": 1,
+          "unit": "hamper",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": null,
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-003",
+        "staging_location": "VEN-002",
+        "handover_moment": "Astamangala Morning Arrival"
+      },
+      "derived_direction": "groom_to_bride",
+      "file_basename": "OBL-048.md"
+    },
+    {
+      "id": "OBL-049",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Saga & Macha Return Feast (Bride ⟶ Groom)",
+      "english_descriptor": "Reciprocal auspicious greens and fish feast presented by Bride's family for Astamangala",
+      "category": "edible_hospitality",
+      "event_ref": "EVT-007",
+      "ritual_ref": "RIT-012",
+      "obligor": {
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Family"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-003",
+        "role_title": "Groom's Family"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Saga & Macha: Bride -> Groom",
+        "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
+        "context_snippet": "EVENT 3 — AFTER MARRIAGE | Astamangala"
+      },
+      "items": [
+        {
+          "item_id": "OBL-049-ITM-01",
+          "description": "Reciprocal Fresh Fish & Auspicious Greens Feast Hamper",
+          "nature": "perishable",
+          "quantity": 1,
+          "unit": "hamper",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": null,
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-007",
+        "staging_location": "VEN-004",
+        "handover_moment": "Astamangala Return Feast"
+      },
+      "derived_direction": "bride_to_groom",
+      "file_basename": "OBL-049.md"
+    }
+  ]
 };

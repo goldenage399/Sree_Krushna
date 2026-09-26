@@ -69,9 +69,9 @@ Codify, validate, and operationalize the handwritten family-to-family ritual, gi
 - [x] **Validation Gate (VG-3)**: Verify deterministic compiler output and zero byte drift on rerun.
 
 ### Phase 4: Full 49-Obligation Dataset Ingestion & Anti-Duplication Audit
-- [ ] **Dataset Import**: Ingest all 49 obligations into `02_RITUALS_CULTURE/obligations/OBL-001.md` through `OBL-049.md` preserving verbatim provenance.
-- [ ] **Anti-Duplication Audit**: Verify that no duplicate records exist across TRS/SAM/AST/PAY.
-- [ ] **Validation Gate (VG-4)**: Execute `node scripts/test-obligation-contract.cjs` (100% green across all 49 records).
+- [x] **Dataset Import**: Ingest all 49 obligations into `02_RITUALS_CULTURE/obligations/OBL-001.md` through `OBL-049.md` preserving verbatim provenance.
+- [x] **Anti-Duplication Audit**: Verify that no duplicate records exist across TRS/SAM/AST/PAY.
+- [x] **Validation Gate (VG-4)**: Execute `node scripts/test-obligation-contract.cjs` (100% green across all 49 records).
 
 ### Phase 5: Shopping Tab SDCA Component Architecture
 - [ ] **Markup Component**: Create `shopping_src/components/obligations_view.html` with segmented filter bar, milestone accordions, and card layouts.
