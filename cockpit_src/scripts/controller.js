@@ -725,7 +725,19 @@
       const proofImg = document.getElementById('skDriveProofImg');
       const proofId = document.getElementById('skDriveFileId');
       const fileInput = document.getElementById('skFileInput');
+      const btnClearProof = document.getElementById('skBtnClearProof');
       const alertEl = document.getElementById('skIntakeUrlAlert');
+
+      if (btnClearProof && typeof btnClearProof.addEventListener === 'function') {
+        btnClearProof.addEventListener('click', () => {
+          localUploadedDataUrl = '';
+          if (fileInput) fileInput.value = '';
+          if (driveInput) driveInput.value = '';
+          if (proofCard) proofCard.style.display = 'none';
+          if (proofImg) proofImg.src = '';
+          showToast('Selected image cleared.');
+        });
+      }
 
       if (btnCloseIntake && typeof btnCloseIntake.addEventListener === 'function') {
         btnCloseIntake.addEventListener('click', closeOptionIntakeModal);

@@ -917,6 +917,15 @@
     const proofCard = document.getElementById('skDriveProofCard');
     const proofImg = document.getElementById('skDriveProofImg');
     const proofId = document.getElementById('skDriveFileId');
+    const btnClearProof = document.getElementById('skBtnClearProof');
+
+    if (btnClearProof) {
+      btnClearProof.addEventListener('click', () => {
+        if (driveInput) driveInput.value = '';
+        if (proofCard) proofCard.style.display = 'none';
+        if (proofImg) proofImg.src = '';
+      });
+    }
 
     if (btnOpenOptionIntake && intakeBackdrop) {
       btnOpenOptionIntake.addEventListener('click', () => {
