@@ -19,6 +19,22 @@
 
 ---
 
+## 🌐 Architectural Knowledge Graph & Entity Index
+
+- **Canonical Entity Graph Report**: [`graphify-out/GRAPH_REPORT.md`](./graphify-out/GRAPH_REPORT.md) (`STD-UNIVERSAL-TAXONOMY-001` / `STD-PCL-001`)
+- **JSON Adjacency Graph**: [`graphify-out/graph.json`](./graphify-out/graph.json)
+- **Graph Generator Tooling**: `npm run build:graph` (`scripts/generate-domain-graph.cjs`)
+
+---
+
+## ⚡ Session Acceleration & Taxonomy Governance
+
+- **System Clarity Snapshot**: [`docs/SYSTEM_CLARITY_SNAPSHOT.md`](./docs/SYSTEM_CLARITY_SNAPSHOT.md) (`STD-UNIVERSAL-TAXONOMY-001` / `AC-DEC-2026-059`)
+- **Dual-Block Taxonomy Dictionary**: [`.agent/taxonomy_dictionary.cjs`](./.agent/taxonomy_dictionary.cjs) (`INV-SAP-DUAL-BLOCK-001` / `AC-DEC-2026-063`)
+- **Vocabulary Verification Tooling**: `npm run verify:taxonomy` (`scripts/verify-taxonomy-vocabulary.cjs`)
+
+---
+
 **Governance Rules**:
 - Hub files are indexes and status snapshots strictly capped at 150 lines.
 - Spoke files declare parent hub in frontmatter (`hub: "<domain>/HUB.md"`).

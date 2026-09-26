@@ -6,7 +6,7 @@
 > **Certifying Decision**: `AC-DEC-2026-060` (`GOV-DEC-2026-002`)  
 > **Cluster**: Governance / Cross-Repo Agent Infrastructure  
 > **Tier**: Complex  
-> **Status**: `IN_PLANNING`  
+> **Status**: `IN_PROGRESS (Phase 2 Verified)`  
 > **Target Release**: `v2.9.0`  
 > **Branch**: `main`  
 > **Registered**: 2026-09-26  
@@ -18,7 +18,7 @@
 During the Response 1.0 session (family obligation data-contract exercise), discovering repository architecture required **18 sequential tool calls** because acceleration resources (`DOCS_HUB.md`, `graphify-out/`, `docs/SYSTEM_CLARITY_SNAPSHOT.md`) were either bypassed, missing, or reliant on broken external Python dependencies (`scratch/finalize_graph.py`).
 
 Furthermore, across the 9 SAP repositories (`Task-Dashboard`, `Sree_Krushna`, `BMS`, `Capsicum`, `PIO`, `UG-Farmhouse`, `QSR`, etc.), **taxonomy and vocabulary drift** creates compounding friction:
-- Concepts are phrased inconsistently (e.g., "Definition of Done" vs. "Signoff Checklist"; "Validation Gate" vs. "Assert Step"; "Spoke & Wheel" vs. "Parent/Child").
+- Concepts are phrased inconsistently (e.g., `"Definition of Done"` vs. `"Signoff Checklist"`; `"Validation Gate"` vs. `"Assert Step"`; `"Spoke & Wheel"` vs. `"Parent/Child"`).
 - Entity identifiers and domain hubs are discovered via repetitive multi-turn directory crawling.
 - Graphing tools are fragmented: `repo-task-dependency-grapher` graphs backlog tasks, `validate-task-graph.cjs` validates task DAGs, while domain entity graphs (`EVT`, `RIT`, `TRS`, `PAY`, `GFT`) had zero automated discovery tooling.
 
@@ -51,13 +51,13 @@ Build the **Universal Cross-Repository Graph, Taxonomy & Session Acceleration En
 
 ---
 
-### Phase 2: Canonical Cross-Repo Taxonomy Matrix & Vocabulary Linter
-- **T1 (Static)**: Author `backend_gas/taxonomy_dictionary.json` (or `.agent/taxonomy_dictionary.json`) declaring canonical domain vocabulary, standardized prefixes, and prohibited synonym tables.
-- **T2 (Functional)**: Author `scripts/verify-taxonomy-vocabulary.cjs` scanning documentation and governance notes for prohibited synonym violations.
-- **T3 (Integrated)**: Author `docs/SYSTEM_CLARITY_SNAPSHOT.md` capturing active incidents, releases, and the 8 unresolved items from Response 1.0 using 100% canonical taxonomy.
-- **T4 (Governance)**: Wire `verify:taxonomy` into `package.json` and `.agent/PREFLIGHT.md`.
+### Phase 2: Canonical Cross-Repo Taxonomy Matrix & Vocabulary Linter (COMPLETE)
+- [x] **T1 (Static)**: Author `.agent/taxonomy_dictionary.cjs` with SAP dual-block markers declaring canonical domain vocabulary, standardized prefixes, and prohibited synonym tables.
+- [x] **T2 (Functional)**: Author `scripts/test-taxonomy-linter.cjs` and `scripts/verify-taxonomy-vocabulary.cjs` scanning documentation and governance notes for prohibited synonym violations.
+- [x] **T3 (Integrated)**: Author `docs/SYSTEM_CLARITY_SNAPSHOT.md` capturing active incidents, releases, and the 8 unresolved items from Response 1.0 using 100% canonical taxonomy.
+- [x] **T4 (Governance)**: Wire `verify:taxonomy` and `test:taxonomy` into `package.json` and index snapshot in `DOCS_HUB.md`.
 
-**Validation Gate (VG)**: `node scripts/verify-taxonomy-vocabulary.cjs` runs across all `.md` files and exits 0 with zero prohibited synonyms.
+**Validation Gate (VG)**: `node scripts/verify-taxonomy-vocabulary.cjs` runs across all `.md` files and exits 0 with zero prohibited synonyms. (PASSED - 236 files clean)
 
 ---
 

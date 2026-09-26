@@ -320,7 +320,7 @@ Evaluate candidate photography and cinematography studios using the comprehensiv
 * **Linked Entities:** `VEN-001`, `EVT-001`, `CTR-008`
 
 #### Deliverable Description:
-Execute booking agreement for Rayagada Convention Center / Kalyan Mandap (`VEN-001`) for the 11th Feb 2027 Engagement ceremony, verifying hall capacity (300+ guests), dining pavilion, VIP green rooms, and parking.
+Execute booking agreement for Rayagada Convention Center / Kalyan Mandap (`VEN-001`) for the 11th Feb 2027 Nirbandha & Ashirbad ceremony, verifying hall capacity (300+ guests), dining pavilion, VIP green rooms, and parking.
 
 #### Verification Checklist:
 - [ ] Site visit inspection completed for Rayagada venue hall and dining capacity.
@@ -339,7 +339,7 @@ Execute booking agreement for Rayagada Convention Center / Kalyan Mandap (`VEN-0
 * **Linked Entities:** `SPEC-PROC-DECOR-ENG-001`, `SPEC-PROC-DECOR-EVAL-001`, `VDR-008`
 
 #### Deliverable Description:
-Contract the event decorator for the 11th Feb 2027 Engagement ceremony in Rayagada based on `SPEC-PROC-DECOR-ENG-001`, locking in the fresh marigold & jasmine entrance torana, elevated ring exchange stage, floral backdrop, and lighting setup.
+Contract the event decorator for the 11th Feb 2027 Nirbandha & Ashirbad ceremony in Rayagada based on `SPEC-PROC-DECOR-ENG-001`, locking in the fresh marigold & jasmine entrance torana, elevated ring exchange stage, floral backdrop, and lighting setup.
 
 #### Verification Checklist:
 - [ ] Decorator questionnaire and quote comparison completed.

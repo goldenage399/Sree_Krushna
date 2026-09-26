@@ -101,7 +101,7 @@ flowchart TD
 | WBS Code | Work Package Title | Key Deliverable / Scope | Lead Owner | Temporal Phase | Related Entities |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **2.1** | **Deva Nimantrana Protocol** | Consecrated card offering at Lord Jagannath Temple (Puri), Lingaraj Temple, and Grama Devati. | PER-005 / PER-007 | Phase 2 (T-60) | `RIT-002`, `SAM-002` |
-| **2.2** | **Nirbandha & Ashirbad Liturgy** | Engagement ceremony, sankalpa vows, horoscope exchange, and blessing ring ritual. | PER-005 | Phase 2 (T-45) | `EVT-001`, `RIT-001`, `SAM-001` |
+| **2.2** | **Nirbandha & Ashirbad Liturgy** | Nirbandha & Ashirbad Vedic ceremony, sankalpa vows, horoscope exchange, and blessing ring ritual. | PER-005 | Phase 2 (T-45) | `EVT-001`, `RIT-001`, `SAM-001` |
 | **2.3** | **Mangan & Mangalakrutya Operations** | 7 married women (*Sadhaba*) turmeric grinding, dawn bath, and auspicious brass lamp setup. | PER-006 (Bride Mother) | Phase 4 (T-2) | `EVT-003`, `RIT-003`, `SAM-003` |
 | **2.4** | **Baranugam & Barat Welcoming** | Traditional reception of Groom party, floral garland exchange, and arati by bride's mother. | PER-006 / PER-014 | Phase 5 (Day 0) | `EVT-004`, `RIT-004`, `SAM-004` |
 | **2.5** | **Kanyadaan & Hastaganthi Sanctum** | Sacred water pouring, sacred grass knotting (*Hastaganthi*), and parental handover rite. | Kanyadata (Father/PER-005) | Phase 5 (Day 0) | `EVT-004`, `RIT-005`, `SAM-005` |

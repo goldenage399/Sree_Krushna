@@ -1,0 +1,1415 @@
+{
+  "nodes": {
+    "DEC-002": {
+      "id": "DEC-002",
+      "type": "DEC",
+      "title": "Ratification of On-Site Hotel Inspection Checklist & Printable 4-Page Field Audit Dossier",
+      "file": "00_GOVERNANCE/decisions/DEC-002_hotel_baseline_inspection_and_printable_checklist.md",
+      "status": "Approved",
+      "category": "Venue & Accommodation Logistics",
+      "outbound": [
+        "VEN-001",
+        "DEC-001",
+        "TSK-042",
+        "VEN-001_HOTEL_INSPECTION_CHECKLIST",
+        "EVT-001"
+      ],
+      "inbound": []
+    },
+    "DEC-003": {
+      "id": "DEC-003",
+      "type": "DEC",
+      "title": "Ratification of Dynamic UI Lifecycle, Script Sequencing, and 3-Trigger Modal Dismissibility Standard (STD-UI-LIFECYCLE-001)",
+      "file": "00_GOVERNANCE/decisions/DEC-003_dynamic_ui_lifecycle_and_modal_dismissibility_contract.md",
+      "status": "Approved",
+      "category": "Frontend Architecture & Lifecycle Governance",
+      "outbound": [
+        "GATE-002",
+        "GATE-001"
+      ],
+      "inbound": []
+    },
+    "EVT-###": {
+      "id": "EVT-###",
+      "type": "EVT",
+      "title": "Event Name",
+      "file": "01_TIMELINE_EVENTS/event_template.md",
+      "status": "Draft | Planned | Confirmed | In-Progress | Completed",
+      "category": "pre_wedding | wedding_day | reception | post_wedding",
+      "outbound": [],
+      "inbound": []
+    },
+    "EVT-006": {
+      "id": "EVT-006",
+      "type": "EVT",
+      "title": "Grihapravesh & Chauthi Ceremony",
+      "file": "01_TIMELINE_EVENTS/post_wedding/EVT-006_chauthi_grihapravesh.md",
+      "status": "Planned",
+      "category": "post_wedding",
+      "outbound": [
+        "VEN-001",
+        "PER-005",
+        "RIT-010",
+        "RIT-011",
+        "VDR-002",
+        "VDR-003",
+        "RIT-010_grihapravesh",
+        "RIT-011_chauthi_puja"
+      ],
+      "inbound": [
+        "RIT-010",
+        "RIT-011",
+        "VDR-002"
+      ]
+    },
+    "EVT-007": {
+      "id": "EVT-007",
+      "type": "EVT",
+      "title": "Astamangala (Eighth-Day Return Feast)",
+      "file": "01_TIMELINE_EVENTS/post_wedding/EVT-007_astamangala.md",
+      "status": "Planned",
+      "category": "post_wedding",
+      "outbound": [
+        "VEN-001",
+        "PER-005",
+        "RIT-012",
+        "VDR-003",
+        "RIT-012_astamangala"
+      ],
+      "inbound": [
+        "RIT-012"
+      ]
+    },
+    "EVT-001": {
+      "id": "EVT-001",
+      "type": "EVT",
+      "title": "Nirbandha & Ashirbad",
+      "file": "01_TIMELINE_EVENTS/pre_wedding/EVT-001_nirbandha_ashirbad.md",
+      "status": "Planned",
+      "category": "pre_wedding",
+      "outbound": [
+        "VEN-001",
+        "PER-005",
+        "RIT-001",
+        "RIT-002",
+        "VDR-001",
+        "VDR-002",
+        "VDR-003",
+        "RIT-001_nirbandha",
+        "PER-080",
+        "PER-007"
+      ],
+      "inbound": [
+        "DEC-002",
+        "RIT-001",
+        "RIT-002",
+        "PER-###",
+        "VDR-002",
+        "VEN-001"
+      ]
+    },
+    "EVT-002": {
+      "id": "EVT-002",
+      "type": "EVT",
+      "title": "Mehendi & Sangeet Celebration",
+      "file": "01_TIMELINE_EVENTS/pre_wedding/EVT-002_mehendi_sangeet.md",
+      "status": "Planned",
+      "category": "pre_wedding",
+      "outbound": [
+        "VEN-002",
+        "PER-008",
+        "VDR-005",
+        "VDR-006",
+        "VDR-003",
+        "DEC-2026-007",
+        "VEN-001",
+        "VEN-001_rayagada_engagement_venue"
+      ],
+      "inbound": [
+        "VDR-002"
+      ]
+    },
+    "EVT-003": {
+      "id": "EVT-003",
+      "type": "EVT",
+      "title": "Mangan & Haldi Ceremony",
+      "file": "01_TIMELINE_EVENTS/pre_wedding/EVT-003_haldi_mangan.md",
+      "status": "Planned",
+      "category": "pre_wedding",
+      "outbound": [
+        "VEN-001",
+        "PER-006",
+        "RIT-003",
+        "VDR-002",
+        "VDR-003",
+        "RIT-003_mangan_haldi"
+      ],
+      "inbound": [
+        "RIT-003",
+        "VDR-002"
+      ]
+    },
+    "EVT-005": {
+      "id": "EVT-005",
+      "type": "EVT",
+      "title": "Grand Wedding Reception Banquet",
+      "file": "01_TIMELINE_EVENTS/reception/EVT-005_grand_reception.md",
+      "status": "Planned",
+      "category": "reception",
+      "outbound": [
+        "VEN-003",
+        "PER-014",
+        "VDR-001",
+        "VDR-002",
+        "VDR-003",
+        "VDR-004",
+        "PER-008"
+      ],
+      "inbound": [
+        "PER-###",
+        "VDR-002"
+      ]
+    },
+    "EVT-004": {
+      "id": "EVT-004",
+      "type": "EVT",
+      "title": "Barat, Kanyadaan & Main Vedic Wedding",
+      "file": "01_TIMELINE_EVENTS/wedding_day/EVT-004_barat_and_wedding.md",
+      "status": "Planned",
+      "category": "wedding_day",
+      "outbound": [
+        "VEN-003",
+        "PER-014",
+        "RIT-004",
+        "RIT-005",
+        "RIT-006",
+        "RIT-007",
+        "RIT-008",
+        "RIT-009",
+        "VDR-001",
+        "VDR-002",
+        "VDR-003",
+        "VDR-004",
+        "RIT-004_baranugam",
+        "RIT-005_kanyadaan",
+        "RIT-006_lajahoma_agni_pradakshina",
+        "RIT-007_saptapadi",
+        "RIT-008_sindoor_daan",
+        "RIT-009_kanyavida"
+      ],
+      "inbound": [
+        "RIT-004",
+        "RIT-005",
+        "RIT-006",
+        "RIT-007",
+        "RIT-008",
+        "RIT-009",
+        "PER-###",
+        "VDR-002"
+      ]
+    },
+    "OBL-###": {
+      "id": "OBL-###",
+      "type": "OBL",
+      "title": "`OBL-###` — Customary Title",
+      "file": "02_RITUALS_CULTURE/obligation_template.md",
+      "status": "pending_selection | shortlisted | procured",
+      "category": "attire | composite_bundle | gold_silver | edible_hospitality | ceremonial_token | honorarium_cash",
+      "outbound": [],
+      "inbound": []
+    },
+    "RIT-###": {
+      "id": "RIT-###",
+      "type": "RIT",
+      "title": "Ritual Name",
+      "file": "02_RITUALS_CULTURE/ritual_template.md",
+      "status": "Draft | Confirmed | Executed",
+      "category": "",
+      "outbound": [],
+      "inbound": []
+    },
+    "SAM-001": {
+      "id": "SAM-001",
+      "type": "SAM",
+      "title": "Nirbandha Sacred Materials & Samagri Checklist",
+      "file": "02_RITUALS_CULTURE/samagri_checklists/SAM-001_nirbandha_samagri.md",
+      "status": "Documented",
+      "category": "",
+      "outbound": [
+        "RIT-001",
+        "RIT-001_nirbandha",
+        "PER-005",
+        "PER-007"
+      ],
+      "inbound": [
+        "RIT-001"
+      ]
+    },
+    "SAM-002": {
+      "id": "SAM-002",
+      "type": "SAM",
+      "title": "Deva Nimantrana Sacred Materials Checklist",
+      "file": "02_RITUALS_CULTURE/samagri_checklists/SAM-002_deva_nimantrana_samagri.md",
+      "status": "Documented",
+      "category": "",
+      "outbound": [
+        "RIT-002",
+        "RIT-002_deva_nimantrana",
+        "PER-005"
+      ],
+      "inbound": [
+        "RIT-002"
+      ]
+    },
+    "SAM-003": {
+      "id": "SAM-003",
+      "type": "SAM",
+      "title": "Mangan, Mangalakrutya & Haldi Sacred Materials",
+      "file": "02_RITUALS_CULTURE/samagri_checklists/SAM-003_mangan_haldi_samagri.md",
+      "status": "Documented",
+      "category": "",
+      "outbound": [
+        "RIT-003",
+        "RIT-003_mangan_haldi",
+        "PER-006"
+      ],
+      "inbound": [
+        "RIT-003"
+      ]
+    },
+    "SAM-004": {
+      "id": "SAM-004",
+      "type": "SAM",
+      "title": "Baranugam & Barat Welcoming Materials",
+      "file": "02_RITUALS_CULTURE/samagri_checklists/SAM-004_baranugam_samagri.md",
+      "status": "Documented",
+      "category": "",
+      "outbound": [
+        "RIT-004",
+        "RIT-004_baranugam",
+        "PER-006"
+      ],
+      "inbound": [
+        "RIT-004"
+      ]
+    },
+    "SAM-005": {
+      "id": "SAM-005",
+      "type": "SAM",
+      "title": "Main Mandap, Kanyadaan, Homa & Saptapadi Samagri",
+      "file": "02_RITUALS_CULTURE/samagri_checklists/SAM-005_kanyadaan_mandap_homa_samagri.md",
+      "status": "Documented",
+      "category": "",
+      "outbound": [
+        "RIT-005",
+        "RIT-005_kanyadaan",
+        "RIT-006",
+        "RIT-006_lajahoma_agni_pradakshina",
+        "RIT-007",
+        "RIT-007_saptapadi",
+        "RIT-008",
+        "RIT-008_sindoor_daan",
+        "PER-080",
+        "PER-007"
+      ],
+      "inbound": [
+        "RIT-005",
+        "RIT-006",
+        "RIT-007",
+        "RIT-008",
+        "RIT-009"
+      ]
+    },
+    "SAM-006": {
+      "id": "SAM-006",
+      "type": "SAM",
+      "title": "Chauthi Puja & Bedchamber Samagri Checklist",
+      "file": "02_RITUALS_CULTURE/samagri_checklists/SAM-006_chauthi_puja_samagri.md",
+      "status": "Documented",
+      "category": "",
+      "outbound": [
+        "RIT-011",
+        "RIT-011_chauthi_puja",
+        "PER-005"
+      ],
+      "inbound": [
+        "RIT-010",
+        "RIT-011"
+      ]
+    },
+    "RIT-001": {
+      "id": "RIT-001",
+      "type": "RIT",
+      "title": "Nirbandha & Ashirbad",
+      "file": "02_RITUALS_CULTURE/specs/RIT-001_nirbandha.md",
+      "status": "Planned",
+      "category": "",
+      "outbound": [
+        "EVT-001",
+        "PER-080",
+        "PER-001",
+        "PER-002",
+        "PER-005",
+        "PER-003",
+        "SAM-001",
+        "VEN-001",
+        "SAM-001_nirbandha_samagri"
+      ],
+      "inbound": [
+        "EVT-001",
+        "SAM-001"
+      ]
+    },
+    "RIT-002": {
+      "id": "RIT-002",
+      "type": "RIT",
+      "title": "Deva Nimantrana (Puri Lord Jagannath & Kuladevata Card Offering)",
+      "file": "02_RITUALS_CULTURE/specs/RIT-002_deva_nimantrana.md",
+      "status": "Planned",
+      "category": "",
+      "outbound": [
+        "EVT-001",
+        "PER-080",
+        "PER-005",
+        "SAM-002",
+        "SAM-002_deva_nimantrana_samagri"
+      ],
+      "inbound": [
+        "EVT-001",
+        "SAM-002"
+      ]
+    },
+    "RIT-003": {
+      "id": "RIT-003",
+      "type": "RIT",
+      "title": "Mangan, Mangalakrutya & Haldi Snana",
+      "file": "02_RITUALS_CULTURE/specs/RIT-003_mangan_haldi.md",
+      "status": "Planned",
+      "category": "",
+      "outbound": [
+        "EVT-003",
+        "PER-080",
+        "PER-001",
+        "PER-006",
+        "PER-009",
+        "SAM-003",
+        "SAM-003_mangan_haldi_samagri"
+      ],
+      "inbound": [
+        "EVT-003",
+        "SAM-003"
+      ]
+    },
+    "RIT-004": {
+      "id": "RIT-004",
+      "type": "RIT",
+      "title": "Baranugam & Barat Reception",
+      "file": "02_RITUALS_CULTURE/specs/RIT-004_baranugam.md",
+      "status": "Planned",
+      "category": "",
+      "outbound": [
+        "EVT-004",
+        "PER-080",
+        "PER-002",
+        "PER-006",
+        "PER-008",
+        "SAM-004",
+        "SAM-004_baranugam_samagri"
+      ],
+      "inbound": [
+        "EVT-004",
+        "SAM-004"
+      ]
+    },
+    "RIT-005": {
+      "id": "RIT-005",
+      "type": "RIT",
+      "title": "Kanyadaan & Hastaganthi",
+      "file": "02_RITUALS_CULTURE/specs/RIT-005_kanyadaan.md",
+      "status": "Planned",
+      "category": "",
+      "outbound": [
+        "EVT-004",
+        "PER-080",
+        "PER-001",
+        "PER-002",
+        "PER-005",
+        "SAM-005"
+      ],
+      "inbound": [
+        "EVT-004",
+        "SAM-005"
+      ]
+    },
+    "RIT-006": {
+      "id": "RIT-006",
+      "type": "RIT",
+      "title": "Lajahoma & Agni Pradakshina",
+      "file": "02_RITUALS_CULTURE/specs/RIT-006_lajahoma_agni_pradakshina.md",
+      "status": "Planned",
+      "category": "",
+      "outbound": [
+        "EVT-004",
+        "PER-080",
+        "PER-001",
+        "PER-002",
+        "PER-009",
+        "SAM-005"
+      ],
+      "inbound": [
+        "EVT-004",
+        "SAM-005"
+      ]
+    },
+    "RIT-007": {
+      "id": "RIT-007",
+      "type": "RIT",
+      "title": "Saptapadi (Seven Sacred Steps & Vows)",
+      "file": "02_RITUALS_CULTURE/specs/RIT-007_saptapadi.md",
+      "status": "Planned",
+      "category": "",
+      "outbound": [
+        "EVT-004",
+        "PER-080",
+        "PER-002",
+        "PER-001",
+        "SAM-005"
+      ],
+      "inbound": [
+        "EVT-004",
+        "SAM-005"
+      ]
+    },
+    "RIT-008": {
+      "id": "RIT-008",
+      "type": "RIT",
+      "title": "Sindoor Daan & Mangalsutra Dharan",
+      "file": "02_RITUALS_CULTURE/specs/RIT-008_sindoor_daan.md",
+      "status": "Planned",
+      "category": "",
+      "outbound": [
+        "EVT-004",
+        "PER-080",
+        "PER-002",
+        "PER-001",
+        "SAM-005"
+      ],
+      "inbound": [
+        "EVT-004",
+        "SAM-005"
+      ]
+    },
+    "RIT-009": {
+      "id": "RIT-009",
+      "type": "RIT",
+      "title": "Kanyavida (Bahaghara Vida / Bride Farewell)",
+      "file": "02_RITUALS_CULTURE/specs/RIT-009_kanyavida.md",
+      "status": "Planned",
+      "category": "",
+      "outbound": [
+        "EVT-004",
+        "PER-001",
+        "PER-002",
+        "PER-005",
+        "SAM-005"
+      ],
+      "inbound": [
+        "EVT-004"
+      ]
+    },
+    "RIT-010": {
+      "id": "RIT-010",
+      "type": "RIT",
+      "title": "Grihapravesh (Welcoming the Bride as Goddess Lakshmi)",
+      "file": "02_RITUALS_CULTURE/specs/RIT-010_grihapravesh.md",
+      "status": "Planned",
+      "category": "",
+      "outbound": [
+        "EVT-006",
+        "PER-080",
+        "PER-001",
+        "PER-002",
+        "PER-004",
+        "SAM-006"
+      ],
+      "inbound": [
+        "EVT-006"
+      ]
+    },
+    "RIT-011": {
+      "id": "RIT-011",
+      "type": "RIT",
+      "title": "Chauthi Puja & Sacred Marital Union Rites",
+      "file": "02_RITUALS_CULTURE/specs/RIT-011_chauthi_puja.md",
+      "status": "Planned",
+      "category": "",
+      "outbound": [
+        "EVT-006",
+        "PER-080",
+        "PER-002",
+        "PER-001",
+        "SAM-006"
+      ],
+      "inbound": [
+        "EVT-006",
+        "SAM-006"
+      ]
+    },
+    "RIT-012": {
+      "id": "RIT-012",
+      "type": "RIT",
+      "title": "Astamangala (Eighth-Day Return & Maternal Feast)",
+      "file": "02_RITUALS_CULTURE/specs/RIT-012_astamangala.md",
+      "status": "Planned",
+      "category": "",
+      "outbound": [
+        "EVT-007",
+        "PER-001",
+        "PER-002",
+        "PER-005",
+        "SAM-007"
+      ],
+      "inbound": [
+        "EVT-007"
+      ]
+    },
+    "FAM-###": {
+      "id": "FAM-###",
+      "type": "FAM",
+      "title": "Family Household Unit: FAM-###",
+      "file": "03_PEOPLE_GUESTS/family_template.md",
+      "status": "Documented",
+      "category": "",
+      "outbound": [],
+      "inbound": []
+    },
+    "PER-###": {
+      "id": "PER-###",
+      "type": "PER",
+      "title": "Firstname Lastname",
+      "file": "03_PEOPLE_GUESTS/person_template.md",
+      "status": "Documented",
+      "category": "Core_Couple | Immediate_Family | Extended_Family | VIP | Friend | Coordinator | Vendor_Rep",
+      "outbound": [
+        "VEN-002-Room-301",
+        "EVT-001",
+        "EVT-004",
+        "EVT-005"
+      ],
+      "inbound": []
+    },
+    "TRS-BR-01": {
+      "id": "TRS-BR-01",
+      "type": "TRS",
+      "title": "Sacred Vivaha Pata (Hastaganthi Saree)",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Shortlisted",
+      "category": "bridal",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-BR-02": {
+      "id": "TRS-BR-02",
+      "type": "TRS",
+      "title": "Bridal Sangeet Lehenga & Choli",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Shortlisted",
+      "category": "bridal",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-BR-03": {
+      "id": "TRS-BR-03",
+      "type": "TRS",
+      "title": "Haldi Mangala Snana Saree",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "bridal",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-BR-04": {
+      "id": "TRS-BR-04",
+      "type": "TRS",
+      "title": "Mehendi Garden Promenade Outfit",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "bridal",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-BR-05": {
+      "id": "TRS-BR-05",
+      "type": "TRS",
+      "title": "Reception Grand Silk Saree",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "bridal",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-BR-06": {
+      "id": "TRS-BR-06",
+      "type": "TRS",
+      "title": "Bridal Odhani / Mandap Veil",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "bridal",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-BR-07": {
+      "id": "TRS-BR-07",
+      "type": "TRS",
+      "title": "Post-Wedding Daily Handloom Silks (Set of 5)",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "bridal",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-GR-01": {
+      "id": "TRS-GR-01",
+      "type": "TRS",
+      "title": "Mandap Pure Silk Dhoti & Kurta",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Shortlisted",
+      "category": "groom",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-GR-02": {
+      "id": "TRS-GR-02",
+      "type": "TRS",
+      "title": "Ceremonial Silk Patta (Angavastra)",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "groom",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-GR-03": {
+      "id": "TRS-GR-03",
+      "type": "TRS",
+      "title": "Barat Royal Sherwani",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Shortlisted",
+      "category": "groom",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-GR-04": {
+      "id": "TRS-GR-04",
+      "type": "TRS",
+      "title": "Groom Safa (Turban) & Feather Kalgi",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "groom",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-GR-05": {
+      "id": "TRS-GR-05",
+      "type": "TRS",
+      "title": "Barat Stole & Multi-Layer Pearl Mala",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "groom",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-GR-06": {
+      "id": "TRS-GR-06",
+      "type": "TRS",
+      "title": "Sangeet Tuxedo / Royal Bandhgala",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "groom",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-GR-07": {
+      "id": "TRS-GR-07",
+      "type": "TRS",
+      "title": "Haldi Cotton-Silk Kurta-Pajama",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "groom",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-GR-08": {
+      "id": "TRS-GR-08",
+      "type": "TRS",
+      "title": "Traditional Mojaris & Juttis (2 Pairs)",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "groom",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-JW-01": {
+      "id": "TRS-JW-01",
+      "type": "TRS",
+      "title": "Chandra Haar / Temple Gold Choker",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "jewellery",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-JW-02": {
+      "id": "TRS-JW-02",
+      "type": "TRS",
+      "title": "Long Sita Haar (Layered Necklace)",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "jewellery",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-JW-03": {
+      "id": "TRS-JW-03",
+      "type": "TRS",
+      "title": "Matha Patti & Maang Tikka",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "jewellery",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-JW-04": {
+      "id": "TRS-JW-04",
+      "type": "TRS",
+      "title": "Traditional Tiered Jhumkas & Kaanbali",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "jewellery",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-JW-05": {
+      "id": "TRS-JW-05",
+      "type": "TRS",
+      "title": "Gold Kadas / Bangles (Set of 4)",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "jewellery",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-JW-06": {
+      "id": "TRS-JW-06",
+      "type": "TRS",
+      "title": "Kamarbandh (Gold Waist Chain)",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "jewellery",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-JW-07": {
+      "id": "TRS-JW-07",
+      "type": "TRS",
+      "title": "Silver Bridal Payal (Cuttack Tarakasi Nupur)",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "jewellery",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-JW-08": {
+      "id": "TRS-JW-08",
+      "type": "TRS",
+      "title": "Silver Bichhiya (Toe Rings - 2 Sets)",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "jewellery",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-JW-09": {
+      "id": "TRS-JW-09",
+      "type": "TRS",
+      "title": "Silver Sindoor Farua & Ceremonial Kajal Lata",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "jewellery",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-SA-01": {
+      "id": "TRS-SA-01",
+      "type": "TRS",
+      "title": "Samandhi Vastra (Mother-in-Law Silk Saree)",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Shortlisted",
+      "category": "sara",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-SA-02": {
+      "id": "TRS-SA-02",
+      "type": "TRS",
+      "title": "Samandhi Vastra (Father-in-Law Suiting / Dhoti)",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Shortlisted",
+      "category": "sara",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-SA-03": {
+      "id": "TRS-SA-03",
+      "type": "TRS",
+      "title": "Bride's Immediate Siblings Hampers",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "sara",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-SA-04": {
+      "id": "TRS-SA-04",
+      "type": "TRS",
+      "title": "Groom's Sisters Wardrobe (2 Sets each)",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "sara",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-SA-05": {
+      "id": "TRS-SA-05",
+      "type": "TRS",
+      "title": "Ceremonial Shringar & Kula Trunk Kit",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "sara",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-SA-06": {
+      "id": "TRS-SA-06",
+      "type": "TRS",
+      "title": "Auspicious Dry Fruit & Odia Pitha Hampers (5 Baskets)",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "sara",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-OD-01": {
+      "id": "TRS-OD-01",
+      "type": "TRS",
+      "title": "Nuapatna Khandua Pata Silk (Diya Mangula & Puja)",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "bridal",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-OD-02": {
+      "id": "TRS-OD-02",
+      "type": "TRS",
+      "title": "Balakati Hand-Cast Bell-Metal (Kansa) 7-Piece Dining Service",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "sara",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-OD-03": {
+      "id": "TRS-OD-03",
+      "type": "TRS",
+      "title": "Cuttack Tarakasi Silver Filigree Sindura Phuda & Pana Batta",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "jewellery",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-OD-04": {
+      "id": "TRS-OD-04",
+      "type": "TRS",
+      "title": "Sambalpuri Handloom Groom Joda & Silk Dhoti Set",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "groom",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-EG-01": {
+      "id": "TRS-EG-01",
+      "type": "TRS",
+      "title": "Diamond & Gold Engagement Rings (Bride & Groom)",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "engagement",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-EG-02": {
+      "id": "TRS-EG-02",
+      "type": "TRS",
+      "title": "Bride Engagement Saree / Pastel Silk / Lehenga",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "engagement",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-EG-03": {
+      "id": "TRS-EG-03",
+      "type": "TRS",
+      "title": "Groom Engagement Kurta Ensemble / Indo-Western Suit",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "engagement",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-EG-04": {
+      "id": "TRS-EG-04",
+      "type": "TRS",
+      "title": "Decorative Ring Platter & Nirbandha Sagan Thali Hampers",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "engagement",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-EG-05": {
+      "id": "TRS-EG-05",
+      "type": "TRS",
+      "title": "In-Laws Elder Return Vastra & Odia Sweets Hampers",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "engagement",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-OD-05": {
+      "id": "TRS-OD-05",
+      "type": "TRS",
+      "title": "Odia Sacred Bridal & Groom Mukuta Set (Shola & Silver Filigree)",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "jewellery",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-OD-06": {
+      "id": "TRS-OD-06",
+      "type": "TRS",
+      "title": "Baula Patta Saree & Hastaganthi Bandhana Vastra Set",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "bridal",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-BR-08": {
+      "id": "TRS-BR-08",
+      "type": "TRS",
+      "title": "Bride Haldi Handloom Yellow Saree & Fresh Floral Jewellery Suite",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "bridal",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-GR-10": {
+      "id": "TRS-GR-10",
+      "type": "TRS",
+      "title": "Groom Mangala Snana / Haldi Tussar Silk Kurta & Dhoti Ensemble",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "groom",
+      "outbound": [],
+      "inbound": []
+    },
+    "TRS-OD-07": {
+      "id": "TRS-OD-07",
+      "type": "TRS",
+      "title": "Sacred Bamboo Kula & Odia Alaktaka (Alta) Ritual Set",
+      "file": "04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl",
+      "status": "Planned",
+      "category": "sara",
+      "outbound": [],
+      "inbound": []
+    },
+    "VDR-002": {
+      "id": "VDR-002",
+      "type": "VDR",
+      "title": "Vendor Profile: VDR-002 — Mandap & Luxury Tentage Decorators",
+      "file": "04_PROCUREMENT_VENDORS/vendors/VDR-002_decorator_tentage.md",
+      "status": "Quote_Received",
+      "category": "Decor",
+      "outbound": [
+        "CTR-DECOR-RIDER-001",
+        "EVT-001",
+        "EVT-002",
+        "EVT-003",
+        "EVT-004",
+        "EVT-005",
+        "EVT-006",
+        "TSK-603",
+        "TSK-203",
+        "TSK-703",
+        "PER-001",
+        "PER-002",
+        "PER-006",
+        "PER-008"
+      ],
+      "inbound": [
+        "EVT-006",
+        "EVT-001",
+        "EVT-003",
+        "EVT-005",
+        "EVT-004"
+      ]
+    },
+    "VDR-###": {
+      "id": "VDR-###",
+      "type": "VDR",
+      "title": "Vendor Profile: VDR-###",
+      "file": "04_PROCUREMENT_VENDORS/vendor_template.md",
+      "status": "Shortlisted | Quote_Received | Selected | Contracted | Executed | Settled",
+      "category": "Venue | Catering | Decor | Photography | Priest | Makeup | Music | Attire | Jewellery | Transport",
+      "outbound": [],
+      "inbound": []
+    },
+    "VEN-001": {
+      "id": "VEN-001",
+      "type": "VEN",
+      "title": "Venue Specification: Rayagada Engagement Venue (`VEN-001`)",
+      "file": "05_OPERATIONS_LOGISTICS/venues/VEN-001_rayagada_engagement_venue.md",
+      "status": "Documented",
+      "category": "",
+      "outbound": [
+        "EVT-001",
+        "PER-012",
+        "PER-006",
+        "PER-008"
+      ],
+      "inbound": [
+        "DEC-002",
+        "EVT-006",
+        "EVT-007",
+        "EVT-001",
+        "EVT-002",
+        "EVT-003",
+        "RIT-001"
+      ]
+    },
+    "VEN-###": {
+      "id": "VEN-###",
+      "type": "VEN",
+      "title": "Venue / Property Name",
+      "file": "05_OPERATIONS_LOGISTICS/venue_template.md",
+      "status": "Documented",
+      "category": "",
+      "outbound": [],
+      "inbound": []
+    },
+    "PAY-###": {
+      "id": "PAY-###",
+      "type": "PAY",
+      "title": "Payment Record: PAY-###",
+      "file": "06_FINANCE_COMMERCIALS/payment_template.md",
+      "status": "Pending | Paid | Reconciled",
+      "category": "Venue | Catering | Decor | Photo | Attire | Priest | Transport",
+      "outbound": [],
+      "inbound": []
+    },
+    "SPEC-PROC-MEDIA-HIERARCHY-001": {
+      "id": "SPEC-PROC-MEDIA-HIERARCHY-001",
+      "type": "SPEC",
+      "title": "Multi-Module Google Drive Hierarchy & Mandatory Module Onboarding Specification",
+      "file": "docs/references/SPEC-PROC-MEDIA-HIERARCHY-001.md",
+      "status": "RATIFIED",
+      "category": "",
+      "outbound": [
+        "DEC-2026-057"
+      ],
+      "inbound": []
+    }
+  },
+  "dangling": [
+    "AST-001",
+    "AST-002",
+    "AST-003",
+    "AST-004",
+    "AST-005",
+    "AST-006",
+    "AST-Based",
+    "AST-Grep",
+    "AST-based",
+    "AST-detectable",
+    "AST-grep",
+    "AST-level",
+    "CHG-001",
+    "CP-001",
+    "CP-002",
+    "CP-003",
+    "CP-004",
+    "CP-005",
+    "CP-006",
+    "CP-007",
+    "CP-008",
+    "CP-009",
+    "CP-010",
+    "CP-011",
+    "CP-012",
+    "CP-013",
+    "CP-xxx",
+    "CTR-000",
+    "CTR-001",
+    "CTR-002",
+    "CTR-003",
+    "CTR-004",
+    "CTR-005",
+    "CTR-006",
+    "CTR-007",
+    "CTR-008",
+    "CTR-DECOR-RIDER-001",
+    "CTR-xxx",
+    "DEC-001",
+    "DEC-002_hotel_baseline_inspection_and_printable_checklist",
+    "DEC-003_dynamic_ui_lifecycle_and_modal_dismissibility_contract",
+    "DEC-008",
+    "DEC-01",
+    "DEC-12",
+    "DEC-14",
+    "DEC-2026-004",
+    "DEC-2026-005",
+    "DEC-2026-006",
+    "DEC-2026-007",
+    "DEC-2026-009",
+    "DEC-2026-010",
+    "DEC-2026-012",
+    "DEC-2026-013",
+    "DEC-2026-015",
+    "DEC-2026-016",
+    "DEC-2026-017",
+    "DEC-2026-018",
+    "DEC-2026-021",
+    "DEC-2026-022",
+    "DEC-2026-023",
+    "DEC-2026-024",
+    "DEC-2026-025",
+    "DEC-2026-026",
+    "DEC-2026-027",
+    "DEC-2026-028",
+    "DEC-2026-029",
+    "DEC-2026-030",
+    "DEC-2026-032",
+    "DEC-2026-033",
+    "DEC-2026-034",
+    "DEC-2026-035",
+    "DEC-2026-036",
+    "DEC-2026-037",
+    "DEC-2026-039",
+    "DEC-2026-042",
+    "DEC-2026-043",
+    "DEC-2026-046",
+    "DEC-2026-047",
+    "DEC-2026-056",
+    "DEC-2026-057",
+    "DEC-2026-061",
+    "DEC-2026-062",
+    "DEC-POD-001",
+    "DEC-xxx",
+    "EVT-001_nirbandha_ashirbad",
+    "EVT-002_mehendi_sangeet",
+    "EVT-003_haldi_mangan",
+    "EVT-004_baranugam_vivaha",
+    "EVT-004_barat_and_wedding",
+    "EVT-005_grand_reception",
+    "EVT-006_chauthi_grihapravesh",
+    "EVT-007_astamangala",
+    "EVT-xxx",
+    "FAM-001",
+    "FAM-002",
+    "FAM-003",
+    "FAM-004",
+    "FAM-005",
+    "FAM-006",
+    "FAM-007",
+    "FAM-008",
+    "FAM-009",
+    "FAM-015",
+    "FAM-023",
+    "FAM-085",
+    "FAM-xxx",
+    "GATE-001",
+    "GATE-002",
+    "GATE-01",
+    "GATE-02",
+    "GATE-03",
+    "GATE-04",
+    "GATE-xxx",
+    "PAY-001",
+    "PAY-003",
+    "PAY-015",
+    "PAY-xxx",
+    "PER-000_sample_person",
+    "PER-001",
+    "PER-002",
+    "PER-003",
+    "PER-004",
+    "PER-005",
+    "PER-006",
+    "PER-007",
+    "PER-008",
+    "PER-009",
+    "PER-010",
+    "PER-011",
+    "PER-012",
+    "PER-013",
+    "PER-014",
+    "PER-020",
+    "PER-021",
+    "PER-080",
+    "PER-xxx",
+    "RIT-001_nirbandha",
+    "RIT-002_deva_nimantrana",
+    "RIT-003_mangan_haldi",
+    "RIT-004_baranugam",
+    "RIT-005_kanyadaan",
+    "RIT-006_lajahoma_agni_pradakshina",
+    "RIT-007_saptapadi",
+    "RIT-008_sindoor_daan",
+    "RIT-009_kanyavida",
+    "RIT-010_grihapravesh",
+    "RIT-011_chauthi_puja",
+    "RIT-012_astamangala",
+    "RIT-xxx",
+    "RSK-001",
+    "RSK-002",
+    "RSK-003",
+    "RSK-004",
+    "SAM-001_nirbandha_samagri",
+    "SAM-002_deva_nimantrana_samagri",
+    "SAM-003_mangan_haldi_samagri",
+    "SAM-004_baranugam_samagri",
+    "SAM-005_kanyadaan_mandap_homa_samagri",
+    "SAM-006_chauthi_puja_samagri",
+    "SAM-007",
+    "SAM-010",
+    "SAM-xxx",
+    "SHP-B01",
+    "SHP-B02",
+    "SHP-B03",
+    "SHP-B04",
+    "SHP-B05",
+    "SHP-B06",
+    "SHP-B07",
+    "SHP-B08",
+    "SHP-BRD",
+    "SHP-F01",
+    "SHP-F02",
+    "SHP-F03",
+    "SHP-F04",
+    "SHP-F05",
+    "SHP-F06",
+    "SHP-FAM",
+    "SHP-G01",
+    "SHP-G02",
+    "SHP-G03",
+    "SHP-G04",
+    "SHP-G05",
+    "SHP-G06",
+    "SHP-G07",
+    "SHP-GRM",
+    "SHP-SAM",
+    "TRS-BR-01_opt_0",
+    "TRS-BR-01_opt_1",
+    "TSK-008",
+    "TSK-042",
+    "TSK-1001",
+    "TSK-1002",
+    "TSK-1003",
+    "TSK-1004",
+    "TSK-1005",
+    "TSK-101",
+    "TSK-102",
+    "TSK-103",
+    "TSK-104",
+    "TSK-105",
+    "TSK-106",
+    "TSK-107",
+    "TSK-108",
+    "TSK-1101",
+    "TSK-1102",
+    "TSK-1103",
+    "TSK-1104",
+    "TSK-1105",
+    "TSK-201",
+    "TSK-202",
+    "TSK-203",
+    "TSK-204",
+    "TSK-205",
+    "TSK-206",
+    "TSK-207",
+    "TSK-208",
+    "TSK-209",
+    "TSK-210",
+    "TSK-301",
+    "TSK-302",
+    "TSK-303",
+    "TSK-304",
+    "TSK-305",
+    "TSK-401",
+    "TSK-402",
+    "TSK-403",
+    "TSK-404",
+    "TSK-405",
+    "TSK-501",
+    "TSK-502",
+    "TSK-503",
+    "TSK-504",
+    "TSK-505",
+    "TSK-506",
+    "TSK-507",
+    "TSK-601",
+    "TSK-602",
+    "TSK-603",
+    "TSK-604",
+    "TSK-605",
+    "TSK-701",
+    "TSK-702",
+    "TSK-703",
+    "TSK-704",
+    "TSK-705",
+    "TSK-801",
+    "TSK-802",
+    "TSK-803",
+    "TSK-804",
+    "TSK-805",
+    "TSK-901",
+    "TSK-902",
+    "TSK-903",
+    "TSK-904",
+    "TSK-905",
+    "TSK-MASTER-001",
+    "TSK-xxx",
+    "VDR-001",
+    "VDR-003",
+    "VDR-004",
+    "VDR-005",
+    "VDR-006",
+    "VDR-007",
+    "VDR-008",
+    "VDR-010",
+    "VDR-011",
+    "VDR-012",
+    "VDR-xxx",
+    "VEN-001_HOTEL_INSPECTION_CHECKLIST",
+    "VEN-001_rayagada_engagement_venue",
+    "VEN-002",
+    "VEN-002-Room-301",
+    "VEN-003",
+    "VEN-xxx"
+  ]
+}

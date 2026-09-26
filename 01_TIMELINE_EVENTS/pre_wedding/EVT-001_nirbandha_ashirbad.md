@@ -24,7 +24,7 @@ status: "Planned"
 # 💍 EVT-001: Nirbandha & Ashirbad Ceremony
 
 ## 1. Event Overview
-The formal Vedic engagement ceremony, horoscope affirmation (*Lagna Patrika*), ring exchange, and mutual blessing by elders of both the bride and groom families.
+The formal Vedic Nirbandha & Ashirbad ceremony, horoscope affirmation (*Lagna Patrika*), ring exchange, and mutual blessing by elders of both the bride and groom families.
 
 ## 2. Spatial Setup & Venue
 - **Venue:** [`VEN-001`](file:///d:/GitHub_Repo/Sree_Krushna/05_OPERATIONS_LOGISTICS/venues/)
