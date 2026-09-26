@@ -335,4 +335,13 @@ function run() {
   }
 }
 
-process.exit(run());
+// SK-012 Phase 4c reuses findLocalStorageBase64Violations() from a PostToolUse
+// hook (scripts/hook-pipeline-contracts-check.cjs) to check a single
+// just-written file, rather than re-scanning the whole repo. Guard the CLI
+// exit so `require()`-ing this file for that function doesn't also run the
+// full multi-file audit.
+if (require.main === module) {
+  process.exit(run());
+} else {
+  module.exports = { findLocalStorageBase64Violations };
+}
