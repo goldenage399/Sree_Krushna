@@ -217,6 +217,57 @@ Confirmed via targeted greps before writing code: `shopping_src/controller.js` c
 - [x] `enhancement-notes/SK-012/00_ENHANCEMENT_INDEX.md` Phase 3 checkboxes updated to `[x]`, ticket status → `COMPLETED`
 - [x] `ENHANCEMENT-MASTER-REGISTRY.md` SK-012 row → `COMPLETED`
 
+---
+
+## Phase 4: Re-Scoped Interception Layer
+
+Re-opened after checking this repo's own `.claude/settings.local.json` and finding a real, already-proven `PostToolUse` hook mechanism (`impeccable`) — the exact condition `AC-DEC-2026-056` named as the re-open trigger. Scope corrected: only the two artifact-checkable pieces were built; `INV-SYSTEMIC-ABSTRACTION-001` (reasoning verification) has no observable artifact and was explicitly not attempted.
+
+### Task 4.1: Structural checks (`checkPlanHeaderContracts`, `checkCouncilDecisionGate`)
+
+**Files:** Modify `scripts/verify-pipeline-contracts.cjs`.
+
+**Design corrections made before writing code** (not after): scoping the plan-header check to the plan's HEADER section only (not whole-body — avoids flagging SK-012's own plan, which discusses photo/upload context without being an intake plan); scoping both checks to new/changed files by default via `git status`, not the full historical corpus (avoids retroactively flagging `SK-011`'s pre-existing plan and `AC-DEC-2026-035` itself, which predate the rule).
+
+**Step 4 (real verification)**:
+- Ran `--all` mode first: correctly found `SK-011`'s real historical gap plus a not-yet-seen `SK-018` (a concurrent session's ticket) — confirms the heuristic works on genuine data, not just synthetic fixtures.
+- **Bug caught by testing**: a synthetic new ticket folder (`enhancement-notes/SK-999-synthtest/`) was invisible to default (new-file) mode — git collapses a wholly-new untracked directory to one `?? path/` entry with no filename, so a plain filename regex against git-status lines never matches. Fixed by expanding collapsed directory entries against the known filename on disk (not `git status -uall`, which this environment's guidance says to avoid on large repos).
+- Re-tested after the fix: synthetic missing-fields plan → caught in default mode; synthetic fields-present plan → not flagged; real `SK-018` → caught in default mode too (not just `--all`).
+
+**Step 5 (commit)**: `7e8cca5`
+
+### Task 4.2: Export `findLocalStorageBase64Violations` for hook reuse
+
+**Files:** Modify `scripts/verify-pipeline-contracts.cjs` — guard `process.exit(run())` behind `require.main === module`, add `module.exports`.
+
+**Step 4**: confirmed both paths work — `node scripts/verify-pipeline-contracts.cjs` (CLI) unchanged; `require('./scripts/verify-pipeline-contracts.cjs').findLocalStorageBase64Violations` returns a function.
+
+**Step 5 (commit)**: `ce99184`
+
+### Task 4.3: `PostToolUse` hook (`scripts/hook-pipeline-contracts-check.cjs`)
+
+Built via the `update-config` skill's verification procedure, not freehand `settings.local.json` edits. Key facts learned before writing anything: hook stdin is `{tool_name, tool_input: {file_path}, ...}`; `decision:"block"` + `reason` in the hook's JSON stdout is the documented way to surface a finding back into the same turn for `PostToolUse`; permission-rule path syntax `Edit(**/*.js)` in the hook's own `if` field scopes it past markdown/other edits (covers Write/Edit/NotebookEdit per the schema, not just the literal "Edit" tool).
+
+**Step 3 (pipe-test)**:
+- First attempt used a `/tmp/...` path in the synthesized stdin JSON — silently produced no output. Root cause: this machine's `node` is native Windows node.exe, and a path embedded inside a JSON string (not a bash argument) never gets MSYS-translated, so `fs.readFileSync('/tmp/...')` failed and the hook's fail-open `catch` swallowed it silently. Re-tested with a repo-relative path → worked correctly, confirming the hook logic itself was fine and the first failure was a test-environment artifact, not a hook bug.
+- Positive case (real `data:image/...;base64,` literal) → `decision:"block"` JSON with correct file/line/snippet.
+- Negative case (a `localStorage.setItem` call identical in shape to the ~30 legitimate ones already in both controllers) → silent exit 0.
+
+**Step 4 (JSON validation)**: no `jq` on this machine — validated with `node -e` instead (parses the file, locates the new hook block, confirms structure). Functionally equivalent for this environment.
+
+**Step 5 (merge)**: added as a second matcher block in `.claude/settings.local.json`'s `PostToolUse` array, alongside (not replacing) the existing `impeccable` block.
+
+**Step 6 (prove it fires — honest result, not a passed claim)**: prefixed the command with a sentinel `echo ... >> /tmp/claude-hook-check.txt`, triggered a real `Write` on a scratch `.js` file, checked the sentinel — **not found**. Per the `update-config` skill's own documented explanation for exactly this outcome: pipe-test passed and structure validated, so the settings watcher for `.claude/` likely isn't watching this file for changes made mid-session (it watches directories that had a settings file present when the session started) — reload requires the user to open `/hooks` once, or restart, neither of which this session can trigger itself. Cleaned up the sentinel prefix and scratch file regardless of the outcome, per the skill's mandatory cleanup step.
+
+**Step 7 (commit)**: `2567259` (hook script + ticket only — `.claude/settings.local.json` is gitignored via a personal global excludesfile, matching how the pre-existing `impeccable` hook in that same file already works).
+
+## Phase 4 Completion Gate
+
+- [x] Task 4.1 VG passed (real positive/negative tests, one real bug caught and fixed)
+- [x] Task 4.2 VG passed (both CLI and require() paths confirmed)
+- [x] Task 4.3 pipe-tested and JSON-validated; live end-to-end firing **not yet confirmed** — needs a `/hooks` reload or restart from the user, explicitly flagged rather than assumed
+- [x] `enhancement-notes/SK-012/00_ENHANCEMENT_INDEX.md` Phase 4 checkboxes updated, ticket status → COMPLETED (code)
+
 ## Ticket Status
 
-**SK-012 is now COMPLETE** for all Required-Now scope (Phases 1–3). Phase 4 (full behavioral automation of the prose invariants) remains **Recommended Soon** per `AC-DEC-2026-056`, with its re-open trigger unchanged: a concrete agent-response-interception mechanism becoming available, or a second real symptom-shaped incident recurring despite Phases 1–3 being live.
+**SK-012 is code-complete for all four phases.** `INV-SYSTEMIC-ABSTRACTION-001` (reasoning verification, not just artifact verification) remains explicitly out of scope — no known mechanism exists for it in this repo or the surveyed 2026 literature, and it is not silently dropped: it stays open with no forced trigger, revisited only if an actual reasoning-observation mechanism appears. One manual step (a `/hooks` reload) is needed to activate Phase 4c's hook in a running session.
