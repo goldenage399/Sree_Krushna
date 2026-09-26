@@ -14,6 +14,7 @@
     "verify:governance-wiring": "node scripts/verify-governance-wiring.cjs",
     "verify:governance-wiring:all": "node scripts/verify-governance-wiring.cjs --all",
     "verify:governance-schema": "node scripts/verify-governance-schema.cjs",
+    "verify:pipeline-contracts": "node scripts/verify-pipeline-contracts.cjs",
     "verify:modular-architecture": "node scripts/verify-modular-architecture.cjs",
     "verify:ui-lifecycle": "node scripts/verify-ui-lifecycle.cjs",
     "verify:ui-buttons": "node scripts/verify-ui-button-primitives.cjs",
