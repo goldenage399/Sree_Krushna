@@ -55,9 +55,9 @@ Upgrade the standalone Google Apps Script Media Relay into an enterprise-grade, 
 - [x] **Validation Gate (VG-2)**: Unit test `scripts/test-sheet-routing-engine.cjs` verifying hierarchical path traversal, cache TTL simulation, and fallback default routing (3/3 checks passing).
 
 ### Phase 3: Real-Time Audit Ledger & Client Metadata Enrichment
-- [ ] **Upload Ledger Logger**: Implement `_logUploadToSheet(entry)` appending 12 metadata dimensions to `Upload_Ledger` tab.
-- [ ] **Client Payload Enrichment**: Update `public/js/modules/firestore-client.js` and `js/modules/firestore-client.js` `fsUploadLookPhoto()` to accept and forward `module`, `event`, and `category` in the webhook payload.
-- [ ] **Validation Gate (VG-3)**: Contract test `scripts/test-upload-ledger-contract.cjs` verifying 12-column ledger row formatting, client payload propagation, and zero CORS regression.
+- [x] **Upload Ledger Logger**: Implement `_logUploadToSheet(entry)` appending 12 metadata dimensions to `Upload_Ledger` tab.
+- [x] **Client Payload Enrichment**: Update `public/js/modules/firestore-client.js` and `js/modules/firestore-client.js` `fsUploadLookPhoto()` to accept and forward `module`, `event`, and `category` in the webhook payload.
+- [x] **Validation Gate (VG-3)**: Contract test `scripts/test-upload-ledger-contract.cjs` verifying 12-column ledger row formatting, client payload propagation, and zero CORS regression (3/3 checks passing).
 
 ### Phase 4: Production Deployment & Verification Sweep
 - [ ] **Push to Live GAS Webhook**: Execute deployment script to push updated code to Script ID `1vwRBuQZ-Yuom8ckWNt8LPMK1nVMFzdkInaIivPbdR-V00CqJ8vtMrpJN`.

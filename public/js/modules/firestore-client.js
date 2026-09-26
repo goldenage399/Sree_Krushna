@@ -275,12 +275,16 @@ async function _uploadToDriveWebhook(base64Data, metadata = {}) {
   }
 
   const payload = {
+    image: base64Data,
     base64Data: base64Data,
     fileName: metadata.fileName || `look_${metadata.itemId || 'item'}_${Date.now()}.jpg`,
     mimeType: metadata.mimeType || 'image/jpeg',
     uploaderEmail: window.currentUser?.email || 'localhost_dev',
     itemId: metadata.itemId || '',
-    lookIndex: metadata.lookIndex
+    lookIndex: metadata.lookIndex,
+    module: metadata.module || 'Shopping',
+    event: metadata.event || 'Vivaha',
+    category: metadata.category || 'General'
   };
 
   const response = await fetch(webhookUrl, {
@@ -330,6 +334,7 @@ async function fsUploadLookPhoto(itemId, imageSource, metadata = {}) {
   let photoUrl = '';
   let driveFileId = null;
   let storagePath = null;
+  let subfolderPath = null;
   const timestamp = Date.now();
   const safeItemId = itemId.replace(/[^a-zA-Z0-9_-]/g, '_');
 
@@ -345,9 +350,13 @@ async function fsUploadLookPhoto(itemId, imageSource, metadata = {}) {
       itemId: safeItemId,
       fileName: metadata.fileName || `${safeItemId}_${timestamp}.jpg`,
       mimeType: 'image/jpeg',
-      lookIndex: metadata.lookIndex
+      lookIndex: metadata.lookIndex,
+      module: metadata.module || 'Shopping',
+      event: metadata.event || 'Vivaha',
+      category: metadata.category || 'General'
     });
     driveFileId = relayResult.fileId;
+    subfolderPath = relayResult.subfolderPath || null;
     // Request 2048px resolution from Google UserContent CDN
     photoUrl = relayResult.cdnUrl || `https://lh3.googleusercontent.com/d/${driveFileId}=w2048`;
   } else if (provider === 'firebase_storage') {
@@ -387,6 +396,7 @@ async function fsUploadLookPhoto(itemId, imageSource, metadata = {}) {
     storageProvider: provider,
     driveFileId: driveFileId || null,
     storagePath: storagePath || null,
+    subfolderPath: subfolderPath || null,
     store: metadata.store || '',
     priceTier: metadata.priceTier || '',
     addedAt: new Date().toISOString(),
