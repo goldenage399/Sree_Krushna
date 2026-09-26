@@ -17,6 +17,8 @@
     "verify:pipeline-contracts": "node scripts/verify-pipeline-contracts.cjs",
     "test:sheet-drive-relay": "node scripts/test-sheet-drive-relay-contract.cjs",
     "test:media-hierarchy": "node scripts/test-media-hierarchy-contract.cjs",
+    "test:obligations": "node scripts/test-obligation-contract.cjs",
+    "build:obligations": "node scripts/compile-obligations.cjs",
     "verify:modular-architecture": "node scripts/verify-modular-architecture.cjs",
     "verify:ui-lifecycle": "node scripts/verify-ui-lifecycle.cjs",
     "verify:ui-buttons": "node scripts/verify-ui-button-primitives.cjs",
