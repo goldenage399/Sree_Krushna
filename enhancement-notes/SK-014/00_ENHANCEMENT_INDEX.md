@@ -49,10 +49,10 @@ Upgrade the standalone Google Apps Script Media Relay into an enterprise-grade, 
 - [x] **Validation Gate (VG-1)**: Automated test `scripts/test-gas-deployment-wiring.cjs` verifying `.clasp.json`, manifest validity, syntax pass, and schema conformance (4/4 checks passing).
 
 ### Phase 2: Sheet-Driven Dynamic Folder Routing & Cache Engine
-- [ ] **Root Folder & Sheet ID Binding**: Update `backend_gas/MediaRelay.js` to anchor `ROOT_FOLDER_ID = '1pnSsJGadKXCoo9opQa-ghbNlCN5N7OAJ'` and `SPREADSHEET_ID = '1m5kA8kvicAuCNPxbXPsRG2jWZayJODBQ5MquhhLX7nc'`.
-- [ ] **Routing Engine with CacheService**: Implement `getRoutingTable()` with 10-minute in-memory cache TTL. Read `Config_Routing` tab to resolve `[Module, Event, Category]` to subfolder paths.
-- [ ] **Dynamic Subfolder Provisioning**: Implement `resolveOrCreateFolder(subfolderPath)` creating missing subfolders hierarchically under root folder `1pnSsJGadKXCoo9opQa-ghbNlCN5N7OAJ`.
-- [ ] **Validation Gate (VG-2)**: Unit test `scripts/test-sheet-routing-engine.cjs` verifying hierarchical path traversal, cache TTL simulation, and fallback default routing.
+- [x] **Root Folder & Sheet ID Binding**: Update `backend_gas/MediaRelay.js` to anchor `ROOT_FOLDER_ID = '1pnSsJGadKXCoo9opQa-ghbNlCN5N7OAJ'` and `SPREADSHEET_ID = '1m5kA8kvicAuCNPxbXPsRG2jWZayJODBQ5MquhhLX7nc'`.
+- [x] **Routing Engine with CacheService**: Implement `getRoutingTable()` with 10-minute in-memory cache TTL. Read `Config_Routing` tab to resolve `[Module, Event, Category]` to subfolder paths.
+- [x] **Dynamic Subfolder Provisioning**: Implement `resolveOrCreateFolder(subfolderPath)` creating missing subfolders hierarchically under root folder `1pnSsJGadKXCoo9opQa-ghbNlCN5N7OAJ`.
+- [x] **Validation Gate (VG-2)**: Unit test `scripts/test-sheet-routing-engine.cjs` verifying hierarchical path traversal, cache TTL simulation, and fallback default routing (3/3 checks passing).
 
 ### Phase 3: Real-Time Audit Ledger & Client Metadata Enrichment
 - [ ] **Upload Ledger Logger**: Implement `_logUploadToSheet(entry)` appending 12 metadata dimensions to `Upload_Ledger` tab.
