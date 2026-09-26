@@ -8,6 +8,7 @@ Tracks protocols, workflows, SSOT reconciliation mechanisms, and 4-PPSD rules.
 | :--- | :--- | :--- | :--- | :--- |
 | **SK-001** | Domain Workflow & SSOT Reconciliation Adaptation | P1 | `IN_PROGRESS` | [00_ENHANCEMENT_INDEX.md](../../enhancement-notes/SK-001/00_ENHANCEMENT_INDEX.md) |
 | **SK-008** | Universal Canonical Planning Engine & Cross-Repo SAP Synchronization | P2 | `COMPLETED` | [00_ENHANCEMENT_INDEX.md](../../enhancement-notes/SK-008/00_ENHANCEMENT_INDEX.md) |
+| **SK-012** | Institutional Governance Safeguards & Anti-Performative Pipeline Verification Gate | P1 | `PLANNING` | [00_ENHANCEMENT_INDEX.md](../../enhancement-notes/SK-012/00_ENHANCEMENT_INDEX.md) |
 
 ## 🗃️ Backlog
 

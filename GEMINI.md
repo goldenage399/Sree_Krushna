@@ -52,6 +52,8 @@ All entities must use standardized 3-digit padded identifiers:
 - **Decorator Cockpit Multi-Option Visual Intake & Deep-Linking**: See [260924_arch_council_decorator_cockpit_multi_option_visual_intake_and_deep_linking.md](./User_Created/Discussion Threads/Council/260924_arch_council_decorator_cockpit_multi_option_visual_intake_and_deep_linking.md) (`AC-DEC-2026-039` / `UI-DEC-2026-035` / `P-DECOR-MULTI-OPTION-001`).
 - **Two-Tier Contextual Comments Engine & Cross-Option Tagging Architecture**: See [260924_arch_council_contextual_multi_option_comments_architecture.md](./User_Created/Discussion Threads/Council/260924_arch_council_contextual_multi_option_comments_architecture.md) (`AC-DEC-2026-046` / `UI-DEC-2026-042` / `P-CONTEXTUAL-COMMENTS-001` / `INC-097` / `SPEC-ARCH-CONTEXTUAL-COMMENTS-001.md`).
 - **Universal UI Button Primitives & Pre-Flight Design System Verification Gate**: See [260924_arch_council_ui_button_primitives_and_preflight_gate.md](./User_Created/Discussion Threads/Council/260924_arch_council_ui_button_primitives_and_preflight_gate.md) (`AC-DEC-2026-047` / `UI-DEC-2026-043` / `STD-UI-PRIMITIVE-002` / `P-BUTTON-PRIMITIVE-GATE-001` / `INC-098` / `SPEC-ARCH-BUTTON-PRIMITIVES-001.md`).
+- **Interactive Multi-Look Lightbox Carousel Architecture**: See [260924_arch_council_interactive_multi_look_lightbox_carousel.md](./User_Created/Discussion Threads/Council/260924_arch_council_interactive_multi_look_lightbox_carousel.md) (`AC-DEC-2026-050` / `UI-DEC-2026-045` / `STD-UI-PRIMITIVE-003` / `P-LIGHTBOX-CAROUSEL-001` / `INV-ZOOM-SWIPE-001`).
+
 
 
 ### 5. Dynamic UI Lifecycle & Modal Dismissibility Invariant (`STD-UI-LIFECYCLE-001` / `DEC-003`)
@@ -200,3 +202,4 @@ This repository implements the following universal patterns:
 - `.agent/patterns/contextual-multi-option-comments-engine.md`
 - `.agent/patterns/button-primitive-and-preflight-gate.md`
 - `.agent/patterns/in-context-balance-refresh-cache-busting.md`
+- `.agent/patterns/interactive-multi-look-lightbox-carousel.md`
