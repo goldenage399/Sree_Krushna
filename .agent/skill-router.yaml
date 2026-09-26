@@ -23,6 +23,14 @@ skills:
     when: "Pre-flight deployment verification, auditing web SPAs for session persistence, 404, security headers, PWA cache invalidation, and scaffolding new web repos"
     related_skills: [mobile-ui-validator, gas-deploy-guard, protocol-enforcer-pre-code]
 
+  - id: sheet-drive-relay
+    repo: [sree-krushna, task-dashboard, bms, capsicum, pio, ug-farmhouse, qsr]
+    triggers: ["setup drive upload", "sheet drive relay", "drive media relay", "configure drive storage", "deploy media relay", "/sheet-drive-relay", "STD-DRIVE-MEDIA-RELAY-001", "P-DRIVE-MEDIA-RELAY-001"]
+    cost: medium
+    invoke: /sheet-drive-relay
+    when: "Use whenever an application or workflow requires an image, photo, or document upload pipeline without incurring Firebase Blaze / Cloud Storage billing hurdles. Provides a zero-CORS GAS relay backed by Google Drive storage, dynamic Google Sheet routing, and an immutable 12-dimension transaction audit ledger."
+    related_skills: [gas-deploy-guard, protocol-enforcer-pre-code, web-deployment-gate]
+
   - id: cockpit-intake
     repo: [task-dashboard]
     triggers: ["cockpit intake", "decorator intake", "ingest cockpit", "update cockpit layout"]

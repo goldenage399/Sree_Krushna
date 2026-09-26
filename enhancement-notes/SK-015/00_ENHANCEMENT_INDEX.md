@@ -4,7 +4,7 @@
 
 - **Category**: ARCHITECTURE / GOOGLE_DRIVE_RELAY / SAP_PORTABLE_SKILL
 - **Priority**: HIGH
-- **Status**: PLANNING
+- **Status**: COMPLETED
 - **Estimate**: 4 hours
 - **Target Release**: v2.7.0
 - **Risk Level**: LOW (Strictly additive governance capability, zero breaking changes to client runtime)
@@ -70,6 +70,6 @@ Elevate the Google Drive Media Relay, dynamic Google Sheet routing engine, 12-di
 - [x] **Validation Gate (VG-2)**: Automated parity check verifying exact sync between `.agent` and `.claude` skill definitions (100% byte parity verified).
 
 ### Phase 3: Portable Workflow, SAP Sync Registration & Governance Verification Gate
-- [ ] **Portable Workflow Authoring**: Author `.agent/workflows/portable/sheet-drive-media-relay.md` with interactive step-by-step guidance.
-- [ ] **Skill Router & Manuals Wiring**: Register `sheet-drive-relay` in `.agent/skill-router.yaml` and reference in `CLAUDE.md`, `GEMINI.md`, and `.agent/workflows/sap-sync.md`.
-- [ ] **Validation Gate (VG-3)**: Execute `npm run verify:governance-wiring:all` with 100% green pass and zero unreferenced artifacts.
+- [x] **Portable Workflow Authoring**: Author `.agent/workflows/portable/sheet-drive-media-relay.md` with interactive step-by-step guidance.
+- [x] **Skill Router & Manuals Wiring**: Register `sheet-drive-relay` in `.agent/skill-router.yaml` and reference in `CLAUDE.md`, `GEMINI.md`, and `.agent/workflows/sap-sync.md`.
+- [x] **Validation Gate (VG-3)**: Execute `npm run verify:governance-wiring:all` with 100% green pass and zero unreferenced artifacts (195/195 artifacts green).

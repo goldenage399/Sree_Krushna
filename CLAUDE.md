@@ -117,6 +117,7 @@ Before any task work, review:
 | SSOT Conflict & Drift Reconciliation | `.agent/workflows/ssot-reconciliation.md` & `.agent/skills/ssot-domain-mapper/SKILL.md` |
 | Task dependency graph edits (depends_on/unlocks rewiring) | `.agent/workflows/task-graph-reconciliation.md` |
 | Site Architecture & Navigation | `.claude/skills/site-architecture/SKILL.md` |
+| Cloud Media Relay & Drive Storage | `.agent/workflows/portable/sheet-drive-media-relay.md` & `.agent/skills/sheet-drive-relay/SKILL.md` |
 | Governance verification | `npm run verify:governance-wiring:all` |
 
 ---
@@ -205,3 +206,4 @@ This repository implements the following universal patterns:
 - `.agent/patterns/button-primitive-and-preflight-gate.md`
 - `.agent/patterns/in-context-balance-refresh-cache-busting.md`
 - `.agent/patterns/interactive-multi-look-lightbox-carousel.md`
+- `.agent/patterns/sheet-drive-media-relay.md`

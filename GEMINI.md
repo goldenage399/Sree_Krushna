@@ -115,6 +115,7 @@ Before any task work, review:
 | Task dependency graph edits (depends_on/unlocks rewiring) | `.agent/workflows/task-graph-reconciliation.md` |
 | Site Architecture & Navigation | `.claude/skills/site-architecture/SKILL.md` |
 | Multi-sheet Excel extraction & processing | `.agent/skills/excel-multisheet-processor/SKILL.md` |
+| Cloud Media Relay & Drive Storage | `.agent/workflows/portable/sheet-drive-media-relay.md` & `.agent/skills/sheet-drive-relay/SKILL.md` |
 | Governance verification | `npm run verify:governance-wiring:all` |
 
 ---
@@ -203,3 +204,4 @@ This repository implements the following universal patterns:
 - `.agent/patterns/button-primitive-and-preflight-gate.md`
 - `.agent/patterns/in-context-balance-refresh-cache-busting.md`
 - `.agent/patterns/interactive-multi-look-lightbox-carousel.md`
+- `.agent/patterns/sheet-drive-media-relay.md`

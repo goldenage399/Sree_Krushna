@@ -43,6 +43,10 @@ Every repository in the ecosystem (new or existing) receives and enforces the **
 │ PKG-003 │ Universal Write-Intent & Triage Engine   │ • scripts/triage-requests.cjs     │
 │         │ (SPEC-ARCH-INTENT-DISPATCH-001 / SK-004) │ • /change_requests cloud queue    │
 │         │                                          │ • CQRS Intent Dispatcher & Triage │
+├─────────┼──────────────────────────────────────────┼───────────────────────────────────┤
+│ PKG-004 │ Universal Sheet-Drive Media Relay        │ • .agent/skills/sheet-drive-relay │
+│         │ (STD-DRIVE-MEDIA-RELAY-001 / SK-015)     │ • .agent/patterns/sheet-drive-... │
+│         │                                          │ • Zero-CORS Simple POST Relay     │
 └─────────┴──────────────────────────────────────────┴───────────────────────────────────┘
 ```
 
@@ -68,7 +72,7 @@ node scripts/bootstrap-spoke-governance.cjs --target="d:/GitHub_Repo/<NewRepoNam
 5. **Governance Verifiers**: Deploys `verify-governance-wiring.cjs` (P82 verifier) and `verify-governance-schema.cjs`.
 6. **Protocols & Patterns**: Deploys `PATTERN-ACTIVATION-CONTRACT-MANUAL.md`, `web-deployment-gate.md` (13 Invariants), and adapts all universal patterns.
 7. **Workflows**: Deploys `plan.md`, `plan-review.md`, `sap-sync.md`, `web-deployment-gate.md`, `architecture-council.md`, `ui-council.md`, etc.
-8. **Universal Skills**: Copies `web-deployment-gate`, `writing-plans`, `systematic-debugger`, `prompt-clarity`, `pin-branch`, `mermaid-skill`, `ssot-domain-mapper`, `ui-ux-pro-max`, `frontend-design`, `impeccable`, etc.
+8. **Universal Skills**: Copies `web-deployment-gate`, `writing-plans`, `sheet-drive-relay`, `systematic-debugger`, `prompt-clarity`, `pin-branch`, `mermaid-skill`, `ssot-domain-mapper`, `ui-ux-pro-max`, `frontend-design`, `impeccable`, etc.
 9. **Package Hooks**: Registers `verify:deployment`, `verify:react-deployment`, `audit:decomposition`, `bootstrap:web-app`, `triage:requests`, and `verify:governance-wiring:all` in `package.json`.
 10. **Operating Manuals**: Generates tailored `CLAUDE.md`, `GEMINI.md`, `skill-router.yaml`, and `PREFLIGHT.md`.
 11. **Automated Verification**: Executes `node scripts/verify-governance-wiring.cjs --all` inside the target repo, guaranteeing 100% green verification upon exit.
