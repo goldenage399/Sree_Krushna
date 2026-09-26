@@ -4,7 +4,7 @@
 
 - **Category**: GOVERNANCE / QUALITY_GATE / ARCHITECTURE_INTEGRITY
 - **Priority**: HIGH
-- **Status**: IN PROGRESS — Phase 1/3 complete (2026-09-26), Phase 2 (Council Protocol Hardening) next
+- **Status**: IN PROGRESS — Phases 1–2/3 complete (2026-09-26), Phase 3 (Automated Pipeline Contract Gate) next
 - **Estimate**: 4 hours (Phase 1, ~15% buffer per `/plan-review` Decision Gate)
 - **Target Release**: v2.6.0
 - **Risk Level**: LOW
@@ -61,10 +61,10 @@ Eliminate the "Process-Result Divergence" (Performative Governance) instance doc
 - [x] **Planning Engine Codification (`INV-DATA-TRANSIT-001`)**: Inserted as item 2 in `.agent/skills/writing-plans/SKILL.md`'s repo-specific "Repository Extensions" block (subsequent items renumbered 2–3 → 4–5) — commit `9cf1a3a`. (No `.claude/` mirror exists for `writing-plans`; single canonical file confirmed via glob.)
 - [x] **Validation Gate (VG-1)**: `diff -rq .claude/skills/prompt-clarity .agent/skills/prompt-clarity` → empty (exit 0). `npm run verify:governance-wiring` → exit 0. Both invariant strings confirmed present via `grep`.
 
-### Phase 2: Architecture Council Protocol Hardening
-- [ ] **Council Protocol Update (`INV-COUNCIL-GROUND-TRUTH-001`)**: Insert a blocking Phase 2 Synthesis rule into `.agent/workflows/architecture-council.md`'s repo-specific block (below L224, "Task-Dashboard-specific elaboration") requiring wire-level physical proof before certifying cross-device or intake capabilities.
+### Phase 2: Architecture Council Protocol Hardening ✅ COMPLETE (2026-09-26)
+- [x] **Council Protocol Update (`INV-COUNCIL-GROUND-TRUTH-001`)**: Inserted as a new "Sree-Krushna-specific elaboration of Phase 2" subsection in `.agent/workflows/architecture-council.md` (L221–230, immediately after the shared Phase 0–4 skeleton closes) — commit `7eb3968`. Placed in its own correctly-attributed subsection rather than the pre-existing "Task-Dashboard-specific" one, which was flagged (not fixed) as un-localized carried-over content.
 - [x] **Incident Documentation**: `docs/incidents/INC-099-mock-persistence-and-intake-preview-hierarchy-blind-spot.md` — authored 2026-09-26 during the `AC-DEC-2026-056` council session.
-- [ ] **Validation Gate (VG-2)**: Grep confirms the new blocking-rule text is present in `architecture-council.md`; manual review confirms it sits in the repo-specific (not shared-sync) block.
+- [x] **Validation Gate (VG-2)**: `grep -n "INV-COUNCIL-GROUND-TRUTH-001"` → 1 match (exit 0). `npm run verify:governance-wiring` → exit 0. Manual review confirms the new text sits in its own Sree-Krushna-labeled subsection, not the shared-sync block and not the Task-Dashboard one.
 
 ### Phase 3: Automated Pipeline Contract Gate (`scripts/verify-pipeline-contracts.cjs`)
 - [ ] **Static Gate Development**: Create `scripts/verify-pipeline-contracts.cjs` verifying:
