@@ -4,50 +4,36 @@ This directory contains the standalone Google Apps Script (GAS) Webhook that han
 
 ---
 
-## 🚀 One-Time 60-Second Deployment Guide
+## 🚀 Deployment Guide
 
-Follow these steps to deploy your private wedding photo relay into your Google account:
+### Option A: Automated 1-Command Deployment via CLI (Recommended)
 
-### Step 1: Open Google Apps Script
+Once logged into clasp (`npx @google/clasp login`):
+
+```powershell
+node scripts/deploy-gas-relay.cjs --push
+```
+
+This single command:
+1. Performs pre-flight JS syntax checks (`node -c`).
+2. Pushes source files (`MediaRelay.js`, `appsscript.json`) to Google Apps Script (`clasp push --force`).
+3. Automatically bumps the versioned production deployment in-place (`clasp deploy --deploymentId <id> --description "..."`), matching the PIOps deployment architecture (`D:\GitHub_Repo\PIOperationsMgmt_Firebase\backend\scripts\deploy.ps1`).
+4. Keeps the existing Web App URL live and unchanged with the new version active immediately—**requiring zero clicks in the Apps Script UI**.
+
+---
+
+### Option B: Manual UI Deployment (Fallback / First-Time Setup)
+
+If clasp CLI is not configured, you can deploy manually:
+
 1. Navigate to [https://script.google.com](https://script.google.com).
-2. Log in with the Google Account that will store the wedding photos (e.g. `goldenage399@gmail.com` or `krushna.s.panda@gmail.com`).
-3. Click **+ New Project** (top-left).
-4. Rename the project from *Untitled project* to **`SreeKrushna_MediaRelay`**.
-
-### Step 2: Paste the Code
-1. Erase the default `function myFunction() {}` in `Code.gs`.
-2. Copy the entire contents of [`backend_gas/MediaRelay.js`](./MediaRelay.js) and paste it into the editor.
-3. Press **Ctrl + S** (or click the Save floppy disk icon).
-
-### Step 3: Deploy as Web App
-1. Click the blue **Deploy** button (top-right) and select **New deployment**.
-2. Click the gear icon next to "Select type" and choose **Web app**.
-3. Fill in the deployment form:
-   - **Description**: `Sree Krushna Media Relay v1.0`
-   - **Execute as**: `Me (<your-email>)` *(Ensures uploaded photos are owned by your Google Drive)*
-   - **Who has access**: `Anyone` *(Allows the client web application to POST compressed photos)*
-4. Click **Deploy**.
-
-### Step 4: Authorize Google Drive Access
-1. When prompted with *"Authorization required"*, click **Authorize access**.
-2. Select your Google account.
-3. If Google displays *"Google hasn't verified this app"*, click **Advanced** (bottom left), then click **Go to SreeKrushna_MediaRelay (unsafe)**.
-4. Click **Allow**.
-
-### Step 5: Copy Web App URL to Config
-1. Google Apps Script will display your live **Web app URL**:
-   ```
-   https://script.google.com/macros/s/AKfycb.../exec
-   ```
-2. Copy this URL.
-3. Open [`public/js/config.js`](../public/js/config.js) in this repository and update:
-   ```javascript
-   window.firebaseConfig = {
-     // ...
-     driveUploadWebhookUrl: "https://script.google.com/macros/s/AKfycb.../exec",
-     storageProvider: "drive_webhook"
-   };
-   ```
+2. Open or create project `SreeKrushna_MediaRelay`.
+3. Copy contents of `MediaRelay.js` into the editor.
+4. Click **Deploy** &rarr; **New deployment** (or **Manage deployments** &rarr; **Edit** &rarr; **New version**).
+5. Ensure:
+   - **Execute as**: `Me (<your-email>)`
+   - **Who has access**: `Anyone`
+6. Copy the published Web App URL into `public/js/config.js` and `js/config.js`.
 
 ---
 

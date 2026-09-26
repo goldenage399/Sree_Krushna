@@ -80,10 +80,11 @@ The skill includes pre-tested templates located in `templates/` and `resources/`
    var AUTHORIZED_EMAILS = ['admin@example.com', 'team@example.com'];
    ```
 3. Copy `appsscript.json` into the same backend directory.
-4. Create `.clasp.json` referencing your GAS Project ID:
+4. Create `.clasp.json` referencing your GAS Project ID (and once deployed, your `deploymentId`):
    ```json
    {
      "scriptId": "YOUR_APPS_SCRIPT_PROJECT_ID",
+     "deploymentId": "YOUR_DEPLOYMENT_ID",
      "rootDir": "."
    }
    ```
@@ -91,11 +92,9 @@ The skill includes pre-tested templates located in `templates/` and `resources/`
    ```bash
    node scripts/deploy-gas-relay.cjs --target-dir=backend_gas --push
    ```
-6. In Google Apps Script UI:
-   - Deploy as **Web App**.
-   - Execute as: **Me (your email)**.
-   - Who has access: **Anyone** (or Anonymous).
-   - Copy the published Web App URL (`https://script.google.com/macros/s/.../exec`).
+6. Initial Deployment vs. Subsequent Updates:
+   - **Initial Deployment**: If no deployment exists yet, open Apps Script UI &rarr; Deploy as **Web App** (Execute as: **Me**, Who has access: **Anyone**) &rarr; copy Deployment ID into `.clasp.json`.
+   - **Subsequent Updates (100% Automated)**: When `deploymentId` is present in `.clasp.json`, running `node scripts/deploy-gas-relay.cjs --push` pushes the code AND automatically bumps the live versioned deployment in-place (`clasp deploy --deploymentId <id>`). Zero manual clicks required in the Apps Script UI!
 
 ### Step 4: Wire Web Client (Zero-CORS Simple POST)
 

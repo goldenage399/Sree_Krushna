@@ -82,6 +82,7 @@ flowchart TD
    ```json
    {
      "scriptId": "YOUR_APPS_SCRIPT_PROJECT_ID",
+     "deploymentId": "YOUR_DEPLOYMENT_ID",
      "rootDir": "."
    }
    ```
@@ -89,12 +90,10 @@ flowchart TD
    ```powershell
    node scripts/deploy-gas-relay.cjs --target-dir=backend_gas --push
    ```
-3. **Publish in Google Apps Script Console**:
-   - Open Apps Script: `Deploy` &rarr; `New deployment`.
-   - Select type: `Web app`.
-   - Execute as: `Me`.
-   - Who has access: `Anyone`.
-   - Copy the deployed Web App URL: `https://script.google.com/macros/s/.../exec`.
+   *(When `deploymentId` is present in `.clasp.json`, this command automatically pushes the code AND updates the live versioned deployment in-place, eliminating manual UI deployment steps).*
+3. **Publish in Google Apps Script Console (First-Time Only)**:
+   - If setting up the very first deployment: Open Apps Script &rarr; `Deploy` &rarr; `New deployment` &rarr; Select `Web app` &rarr; Execute as: `Me` &rarr; Who has access: `Anyone`.
+   - Copy the deployed Web App URL and Deployment ID into `.clasp.json` and client config. All future updates use Step 2 automatically.
 
 ---
 
