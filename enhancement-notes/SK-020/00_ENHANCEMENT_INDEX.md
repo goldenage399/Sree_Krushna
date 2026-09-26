@@ -56,11 +56,11 @@ Codify, validate, and operationalize the handwritten family-to-family ritual, gi
 - [x] **Validation Gate (VG-1)**: Execute `npm run test:obligations` verifying valid YAML schema syntax and frontmatter contracts (100% green).
 
 ### Phase 2: Schema Validation Suite & State Machine Invariants
-- [ ] **Schema Validator**: Implement `scripts/test-obligation-contract.cjs` verifying:
+- [x] **Schema Validator**: Implement `scripts/test-obligation-contract.cjs` verifying:
   - Required fields, actor model (derived direction), line-item schemas, and exchange cluster pairings.
   - Invalid state combination guards (e.g. rejecting `Handed_Over + Source_Unclear`).
   - Cash formula honesty invariant (no hardcoded totals when headcount is null).
-- [ ] **Validation Gate (VG-2)**: Run automated test suite against synthetic valid and invalid fixture records with 100% assertion coverage.
+- [x] **Validation Gate (VG-2)**: Run automated test suite against synthetic valid and invalid fixture records with 100% assertion coverage.
 
 ### Phase 3: Downstream Compilation Engine & Master Views
 - [ ] **Master Aggregator**: Create `scripts/compile-obligations.cjs` generating derived views:
