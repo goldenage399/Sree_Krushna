@@ -163,8 +163,60 @@ npm run verify:governance-wiring                                                
 - [x] No Phase 3 file touched (`scripts/verify-pipeline-contracts.cjs`, `.agent/PREFLIGHT.md`, `package.json` all untouched)
 - [ ] Follow-up ticket for `architecture-council.md` roster/high-risk-surfaces localization — still not opened, still deferred
 
-## Execution Handoff
+---
 
-Per `writing-plans/SKILL.md` §7: recommend **Sequential Session** execution continues into Phase 3 (`scripts/verify-pipeline-contracts.cjs`, `.agent/PREFLIGHT.md` R6, `verify-governance-wiring.cjs` extension) — 3 small, independently-testable tasks, same atomic-commit-per-task pattern as Phases 1–2.
+## Task 3.1: `scripts/verify-pipeline-contracts.cjs` — Design Review Before Build
 
-**This plan is saved to disk. Per the Mandatory Plan Hard-Stop, Phase 3 code is not written until you give the go-ahead.**
+Per the user's explicit request ("check the design first"), the ticket's one-line Phase 3 description was checked against real code before writing anything, and corrected twice:
+
+1. **Base64/localStorage check**: grepped both controllers — found ~30 legitimate `localStorage.setItem` calls (selections, approvals, view mode, survey answers). A naive "any localStorage write" check would have flagged all of them. Narrowed to the actual INC-099 mechanism: a literal `data:image/...;base64,` prefix, or a variable assigned from `.toDataURL(` reaching `localStorage.setItem`.
+2. **Shell/fragment "dependency parity"**: read `index.html`, `shopping-fragment.html`, `cockpit-fragment.html` — confirmed fragments intentionally omit `firestore-client.js`/`auth.js` because `index.html` (the SPA parent) already loads them globally. The ticket's literal wording ("fragments must load the same modules as shells") would have failed on correct, working code. Redefined: check whether a **standalone shell** loads `firestore-client.js` when its controller calls a `window`-attached function from it (extracted via the `Object.assign(window, {...})` block in `firestore-client.js`).
+
+Confirmed via targeted greps before writing code: `shopping_src/controller.js` calls `window.fsSetShoppingItemStatus` etc. and `shopping-registry.html` already includes `firestore-client.js` (passes); `cockpit_src/controller.js` calls no `window.fsX` function at all, so `decorator-cockpit.html` correctly has no dependency to check.
+
+**Files:**
+- Create: `scripts/verify-pipeline-contracts.cjs`
+- Test: manual positive/negative injection (no existing test harness for this script class; matches the pattern used by sibling `verify:*` scripts, none of which have dedicated unit test files)
+
+**Step 1–2 (failing check)**: `scripts/verify-pipeline-contracts.cjs` did not exist — trivially "failing" (nothing to run).
+
+**Step 3 (implementation)**: see `scripts/verify-pipeline-contracts.cjs` for full source. Two independent checks, both narrowly scoped per the design correction above.
+
+**Step 4 (passing check + real verification, not self-certification)**:
+- Clean pass on current codebase: `node scripts/verify-pipeline-contracts.cjs` → exit 0.
+- **Positive test**: appended a synthetic `localStorage.setItem('sk_synth_test', 'data:image/png;base64,...')` to `shopping_src/scripts/controller.js` (backed up first) → initial run did **not** catch it (bug: `[^;]*?` excluded the semicolon inside `data:image/png;base64,` itself, truncating the capture before the closing `)`) → fixed to `[\s\S]*?` → re-ran → caught at the correct line, exit 1 → restored from backup, re-confirmed clean.
+- **Positive test 2**: stripped the `firestore-client.js` `<script>` tag from `shopping-registry.html` (backed up first) → initial run did **not** catch it (bug: bare-substring test matched an unrelated code comment mentioning "firestore-client.js") → fixed to require an actual `<script ... src="...firestore-client.js">` tag → re-ran → caught, exit 1 → restored from backup, re-confirmed clean.
+
+**🔍 Validation Gate (VG)**:
+1. (Binary) `node scripts/verify-pipeline-contracts.cjs` on unmodified codebase → exit 0.
+2. (Binary) Both synthetic-violation tests → exit 1, each isolating exactly the injected defect, and file state restored byte-identical afterward (`git diff --stat` empty).
+
+**🚦 Decision Node (DN)**: Pass — both gates hold. (No Fail path exercised; both bugs found during testing were fixed within this task before the gate was called done, not deferred.)
+
+**Step 5 (commit)**: `af0e5f7`
+
+## Task 3.2: Wire `package.json`, `.agent/PREFLIGHT.md`, `verify-governance-wiring.cjs`
+
+**Files:**
+- Modify: `package.json` (add `"verify:pipeline-contracts"` script entry)
+- Modify: `.agent/PREFLIGHT.md` (add row R6)
+- Modify: `scripts/verify-governance-wiring.cjs` (add `checkProseInvariants()`, folded into existing report/exit-code plumbing — no parallel checker)
+
+**Step 3–4**: implemented, then verified with the same positive/negative discipline as Task 3.1 — initial run of the new prose-invariant check reported all 3 invariants missing even though Phases 1–2 had already inserted them (bug: `isReferenced()` expects pre-lowercased content per the existing `loadConsumptionFiles()` convention, but `readFile()` returns raw case, so `.includes(id.toLowerCase())` never matched an uppercase ID) → fixed with `.toLowerCase()` on the read content → re-ran → all 3 wired, exit 0. Negative test: redacted `INV-COUNCIL-GROUND-TRUTH-001` from `architecture-council.md` via `sed`, ran the check (caught it, exit 1, isolated exactly that ID), restored via `git checkout --` (file was already committed, so exact restore).
+
+**🔍 Validation Gate (VG)**:
+1. (Binary) `npm run verify:governance-wiring:all` → 198/198 artifacts wired, exit 0.
+2. (Binary) Negative test on one invariant → exit 1, isolated correctly; restored cleanly (`git status --porcelain` empty for that file after restore).
+
+**Step 5 (commit)**: `d029fb8`
+
+## Phase 3 Completion Gate
+
+- [x] Task 3.1 VG passed (clean pass + 2 positive tests, 2 bugs found and fixed during verification, not after)
+- [x] Task 3.2 VG passed (clean pass + negative test, 1 bug found and fixed during verification)
+- [x] `enhancement-notes/SK-012/00_ENHANCEMENT_INDEX.md` Phase 3 checkboxes updated to `[x]`, ticket status → `COMPLETED`
+- [x] `ENHANCEMENT-MASTER-REGISTRY.md` SK-012 row → `COMPLETED`
+
+## Ticket Status
+
+**SK-012 is now COMPLETE** for all Required-Now scope (Phases 1–3). Phase 4 (full behavioral automation of the prose invariants) remains **Recommended Soon** per `AC-DEC-2026-056`, with its re-open trigger unchanged: a concrete agent-response-interception mechanism becoming available, or a second real symptom-shaped incident recurring despite Phases 1–3 being live.

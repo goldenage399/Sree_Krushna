@@ -4,7 +4,7 @@
 
 - **Category**: GOVERNANCE / QUALITY_GATE / ARCHITECTURE_INTEGRITY
 - **Priority**: HIGH
-- **Status**: IN PROGRESS — Phases 1–2/3 complete (2026-09-26), Phase 3 (Automated Pipeline Contract Gate) next
+- **Status**: COMPLETED — all 3 Required-Now phases done (2026-09-26). Phase 4 (behavioral automation) remains Recommended Soon, deferred per `AC-DEC-2026-056`.
 - **Estimate**: 4 hours (Phase 1, ~15% buffer per `/plan-review` Decision Gate)
 - **Target Release**: v2.6.0
 - **Risk Level**: LOW
@@ -66,14 +66,19 @@ Eliminate the "Process-Result Divergence" (Performative Governance) instance doc
 - [x] **Incident Documentation**: `docs/incidents/INC-099-mock-persistence-and-intake-preview-hierarchy-blind-spot.md` — authored 2026-09-26 during the `AC-DEC-2026-056` council session.
 - [x] **Validation Gate (VG-2)**: `grep -n "INV-COUNCIL-GROUND-TRUTH-001"` → 1 match (exit 0). `npm run verify:governance-wiring` → exit 0. Manual review confirms the new text sits in its own Sree-Krushna-labeled subsection, not the shared-sync block and not the Task-Dashboard one.
 
-### Phase 3: Automated Pipeline Contract Gate (`scripts/verify-pipeline-contracts.cjs`)
-- [ ] **Static Gate Development**: Create `scripts/verify-pipeline-contracts.cjs` verifying:
-  - No client controller stores Base64 images directly into `localStorage`.
-  - Standalone shells (`shopping-registry.html`, `decorator-cockpit.html`) load the same Firestore/Auth modules as the SPA fragments.
-- [ ] **Package.json Integration**: Add `"verify:pipeline-contracts": "node scripts/verify-pipeline-contracts.cjs"` and wire into `verify:governance-wiring:all`.
-- [ ] **PREFLIGHT Routing**: Add row `R6` to `.agent/PREFLIGHT.md` routing "modifying client-side media intake code" to this gate (matches the existing R1–R5 pattern).
-- [ ] **Governance-Wiring Extension**: Extend `scripts/verify-governance-wiring.cjs` with a presence-check for the Phase 1/2 prose invariants (no new script file).
-- [ ] **Validation Gate (VG-3)**: Synthetic test with a simulated Base64 `localStorage` write triggers build failure; current codebase passes cleanly; `.agent/PREFLIGHT.md` R6 row present; `verify:governance-wiring` reports both prose invariants found.
+### Phase 3: Automated Pipeline Contract Gate (`scripts/verify-pipeline-contracts.cjs`) ✅ COMPLETE (2026-09-26)
+- [x] **Static Gate Development**: `scripts/verify-pipeline-contracts.cjs` — commit `af0e5f7`. Design corrected twice from the ticket's original one-line description after checking real code (see `implementation_plan.md` Task 3.1 for the full trail):
+  - Base64-into-`localStorage` check narrowed to the actual INC-099 mechanism (literal `data:image/...;base64,` or a `.toDataURL()`-derived variable reaching `localStorage.setItem`), not "any `localStorage` write" — the latter would have flagged ~30 legitimate JSON-state calls in both controllers.
+  - "Shell/fragment dependency parity" redefined: fragments correctly omit `firestore-client.js` (composed into `index.html`, which loads it globally) — the real check is whether a **standalone shell** loads `firestore-client.js` when its own controller calls a window-attached function from it.
+- [x] **Package.json Integration**: `"verify:pipeline-contracts"` script added — commit `d029fb8`.
+- [x] **PREFLIGHT Routing**: `.agent/PREFLIGHT.md` row `R6` added — commit `d029fb8`.
+- [x] **Governance-Wiring Extension**: `checkProseInvariants()` added to `verify-governance-wiring.cjs` — commit `d029fb8`.
+- [x] **Validation Gate (VG-3)**: All sub-checks verified with real positive AND negative tests (temporary injection + git-restore), not just clean-pass claims:
+  - Synthetic Base64 injected into `controller.js` → gate caught it (exit 1); caught + fixed a regex bug in the process (a data URI's own `;` truncated the naive `[^;]*?` capture before reaching the call's closing paren).
+  - `firestore-client.js` `<script>` tag stripped from `shopping-registry.html` → gate caught it (exit 1); caught + fixed a second bug (bare-substring match hit a code comment instead of requiring an actual `<script src>` tag).
+  - Current codebase passes cleanly: `npm run verify:pipeline-contracts` → exit 0.
+  - One invariant ID redacted from `architecture-council.md` → `verify:governance-wiring` caught it (exit 1, isolated exactly that ID); caught + fixed a case-sensitivity bug (`isReferenced()` expects pre-lowercased content).
+  - `npm run verify:governance-wiring:all` → 198/198 artifacts wired, exit 0.
 
 ### Phase 4 (Recommended Soon, not scheduled): Behavioral Automation
 - [ ] Deferred per `AC-DEC-2026-056` — re-opens when a concrete agent-response-interception mechanism becomes available, OR a second real symptom-shaped incident recurs despite Phases 1–3 being live. Do not begin without a fresh Burden-of-Proof pass.
