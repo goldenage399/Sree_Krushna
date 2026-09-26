@@ -1,0 +1,36 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAllowedUser() {
+      return isAuthenticated() && request.auth.token.email != null &&
+        request.auth.token.email.lower() in [
+          'goldenage399@gmail.com',
+          'sreesubha18@gmail.com',
+          'krushna.s.panda@gmail.com'
+        ];
+    }
+
+    function isValidImage() {
+      return request.resource.size < 5 * 1024 * 1024
+        && request.resource.contentType.matches('image/(jpeg|png|webp|gif)');
+    }
+
+    // Candidate looks and showroom sourcing photos for shopping and decor
+    match /looks/{itemId}/{fileName} {
+      // Public read allows standard <img src> rendering and WhatsApp link previews
+      allow read: if true;
+      // Only authenticated family members can upload candidate photos (size <= 5MB, image only)
+      allow write: if isAllowedUser() && isValidImage();
+    }
+
+    // Default deny for all other paths
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
