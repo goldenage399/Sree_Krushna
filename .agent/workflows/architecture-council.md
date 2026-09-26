@@ -219,6 +219,16 @@ Only after the synthesis is accepted:
 * Do not proceed to commit if any unanimous or high-confidence concern from Phase 2 was left unaddressed.
 <!-- shared:std.governance.council-deliberation-protocol:end -->
 
+### Sree-Krushna-specific elaboration of Phase 2 (`INV-COUNCIL-GROUND-TRUTH-001`)
+
+This repo's own instance of Phase 2 Synthesis carries one additional blocking rule on top of the shared skeleton above — added 2026-09-26 (`AC-DEC-2026-056`, `SK-012` Phase 2) after `AC-DEC-2026-035` ("Tri-Modal Visual Intake") recorded an unbacked data-transit gap directly in its own evidence table and approved the release anyway (see `INC-099`).
+
+**Blocking condition**: if Phase 1 evidence, or the synthesis itself, records that a proposal's data-transit path (cross-device persistence, cloud storage target, or multi-user sync) is unbacked, mocked, or an open gap, the synthesis MUST NOT produce an unconditional "Recommended course of action." It may only output one of:
+- **BLOCKED (PENDING_PIPELINE)** — approved in principle, release blocked until the physical transit path is verified live, not merely planned or coded against a mock.
+- **APPROVED WITH SCOPE CUT** — the gap-carrying capability is explicitly removed from this release's scope and tracked as its own ticket.
+
+Recording the gap in the evidence table and approving the release anyway — the `AC-DEC-2026-035` failure mode — is exactly the outcome this rule exists to block.
+
 ### Task-Dashboard-specific elaboration of Phase 0 and Phase 3
 
 The shared skeleton above stays generic on purpose (it's synced verbatim to every SAP-linked repo). This is how Task-Dashboard instantiates it concretely — restored 2026-08-15 after a cross-repo promotion pass overwrote it with the generic wording; kept local instead of re-merging into the shared block so it can't be clobbered by a future sync from another repo.
