@@ -13,6 +13,7 @@ Tracks visual hierarchy, component modularization, design tokens, responsive lay
 | **SK-009** | Contextual Multi-Option Comments Engine Architecture & Cross-Option Tagging | P1 | `IMPLEMENTED` | [00_ENHANCEMENT_INDEX.md](../../enhancement-notes/SK-009/00_ENHANCEMENT_INDEX.md) |
 | **SK-010** | Universal UI Button Primitives & Pre-Flight Design System Verification Gate | P1 | `IMPLEMENTED` | [00_ENHANCEMENT_INDEX.md](../../enhancement-notes/SK-010/00_ENHANCEMENT_INDEX.md) |
 | **SK-013** | Interactive Multi-Look Lightbox Carousel & Shared Primitive Navigation Architecture | P1 | `COMPLETED` | [00_ENHANCEMENT_INDEX.md](../../enhancement-notes/SK-013/00_ENHANCEMENT_INDEX.md) |
+| **SK-018** | Decorator Cockpit Cloud Media Intake & Protocol Onboarding | P1 | `IN_PLANNING` | [00_ENHANCEMENT_INDEX.md](../../enhancement-notes/SK-018/00_ENHANCEMENT_INDEX.md) |
 
 
 ## 🗃️ Backlog
