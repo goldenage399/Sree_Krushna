@@ -201,8 +201,28 @@ if (oblFiles.length === 0) {
   console.log(`  ✓ [PASS] Scanned and validated ${oblFiles.length} physical obligation records.`);
 }
 
+console.log('▶ [7/7] Auditing Obligation Compilation Engine & Dual-Release Byte Parity...');
+const compilerPath = path.join(rootDir, 'scripts', 'compile-obligations.cjs');
+assert(fs.existsSync(compilerPath), 'scripts/compile-obligations.cjs must exist');
+
+const { execFileSync } = require('child_process');
+execFileSync(process.execPath, [compilerPath], { stdio: 'pipe' });
+
+const masterDocPath = path.join(obligationsDir, 'family_obligations_master.md');
+assert(fs.existsSync(masterDocPath), 'family_obligations_master.md must be emitted');
+
+const rootDataPath = path.join(rootDir, 'js', 'obligations-data.js');
+const pubDataPath = path.join(rootDir, 'public', 'js', 'obligations-data.js');
+assert(fs.existsSync(rootDataPath), 'js/obligations-data.js must exist');
+assert(fs.existsSync(pubDataPath), 'public/js/obligations-data.js must exist');
+
+const rootData = fs.readFileSync(rootDataPath, 'utf8');
+const pubData = fs.readFileSync(pubDataPath, 'utf8');
+assert.strictEqual(rootData, pubData, '100% byte parity between root and public obligations-data.js failed');
+console.log('  ✓ [PASS] compile-obligations.cjs verified with 100% dual-release byte parity');
+
 console.log('\n════════════════════════════════════════════════════════════════════════════════');
-console.log('🎉 OBLIGATION CONTRACT VERIFICATION: 100% GREEN (PHASE 2 VALIDATION SUITE)');
+console.log('🎉 OBLIGATION CONTRACT VERIFICATION: 100% GREEN (PHASE 3 COMPILATION ENGINE)');
 console.log('════════════════════════════════════════════════════════════════════════════════\n');
 
 module.exports = { validateObligationObject };

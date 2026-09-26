@@ -63,10 +63,10 @@ Codify, validate, and operationalize the handwritten family-to-family ritual, gi
 - [x] **Validation Gate (VG-2)**: Run automated test suite against synthetic valid and invalid fixture records with 100% assertion coverage.
 
 ### Phase 3: Downstream Compilation Engine & Master Views
-- [ ] **Master Aggregator**: Create `scripts/compile-obligations.cjs` generating derived views:
+- [x] **Master Aggregator**: Create `scripts/compile-obligations.cjs` generating derived views:
   - `02_RITUALS_CULTURE/obligations/family_obligations_master.md`
   - Cross-domain projections (shopping queue in `04_PROCUREMENT_VENDORS/`, samagri needs in `02_RITUALS_CULTURE/`, cash desk requirements in `06_FINANCE_COMMERCIALS/`).
-- [ ] **Validation Gate (VG-3)**: Verify deterministic compiler output and zero byte drift on rerun.
+- [x] **Validation Gate (VG-3)**: Verify deterministic compiler output and zero byte drift on rerun.
 
 ### Phase 4: Full 49-Obligation Dataset Ingestion & Anti-Duplication Audit
 - [ ] **Dataset Import**: Ingest all 49 obligations into `02_RITUALS_CULTURE/obligations/OBL-001.md` through `OBL-049.md` preserving verbatim provenance.
