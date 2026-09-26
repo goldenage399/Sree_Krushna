@@ -55,6 +55,7 @@ console.log('╚═════════════════════�
 
 // Approved button class patterns / prefixes
 const APPROVED_BUTTON_PATTERNS = [
+  /^sk-btn-nav$/,
   /^sk-/,
   /^shop-/,
   /^dr-/,
@@ -258,6 +259,7 @@ check('Check 3: Design System State & Contract Enforcement (INV-BTN-03)', () => 
     '.sk-btn-primary',
     '.sk-btn-primary:hover',
     '.sk-btn-danger',
+    '.sk-btn-nav',
     '.sk-modal-close',
     '.sk-modal-close:hover'
   ];

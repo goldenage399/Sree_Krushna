@@ -272,6 +272,49 @@
   color: #ffffff;
 }
 
+/* Navigation Icon Button (Prev / Next) (STD-UI-PRIMITIVE-003) */
+.sk-btn-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: var(--sk-radius-full, 9999px);
+  background: rgba(15, 17, 23, 0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--sk-border, #2d3245);
+  color: var(--sk-text-primary, #ffffff);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.sk-btn-nav:hover {
+  background: rgba(229, 169, 60, 0.25);
+  border-color: var(--sk-gold, #e5a93c);
+  color: var(--sk-gold, #e5a93c);
+  transform: scale(1.08);
+}
+
+.sk-btn-nav:active {
+  transform: scale(0.96);
+}
+
+.sk-btn-nav:disabled,
+.sk-btn-nav.is-disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 /* Universal Modal Close Button Affordance */
 .sk-modal-close {
   display: inline-flex;

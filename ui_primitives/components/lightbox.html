@@ -1,16 +1,20 @@
-<!-- Universal Lightbox Modal Primitive with Micro-Inspection Zoom/Pan (STD-MOD-COMP-001) -->
+<!-- Universal Lightbox Modal Primitive with Micro-Inspection Zoom/Pan & Multi-Look Carousel (STD-MOD-COMP-001 / STD-UI-PRIMITIVE-003) -->
 <div class="sk-modal-backdrop" id="skLightboxBackdrop" role="dialog" aria-modal="true" aria-labelledby="skLightboxTitle">
   <div class="sk-modal-card sk-lightbox-card">
     <div class="sk-lightbox-header">
       <div class="sk-lightbox-header-info">
         <h3 id="skLightboxTitle" class="sk-lightbox-title">Media Preview</h3>
         <span class="sk-lightbox-badge" id="skLightboxSourceBadge">Drive (High-Res CDN)</span>
+        <span class="sk-lightbox-counter" id="skLightboxCounter" aria-live="polite">Look 1 of 1</span>
       </div>
       <button type="button" class="sk-modal-close" id="skLightboxClose" aria-label="Close modal">✕</button>
     </div>
     <div class="sk-lightbox-body">
       <div class="sk-lightbox-media-container" id="skLightboxMedia">
+        <!-- Sequential Navigation Controls (Single-image fallback defaults to hidden) -->
+        <button type="button" class="sk-btn sk-btn-nav sk-lightbox-nav-prev" id="skBtnLightboxPrev" aria-label="Previous look" title="Previous Look (←)">◀</button>
         <img id="skLightboxImg" class="sk-lightbox-img" src="" alt="High-Resolution Preview" draggable="false" referrerpolicy="no-referrer">
+        <button type="button" class="sk-btn sk-btn-nav sk-lightbox-nav-next" id="skBtnLightboxNext" aria-label="Next look" title="Next Look (→)">▶</button>
         
         <!-- Floating Micro-Inspection Toolbar (Adapted from PIO UniversalViewer) -->
         <div class="sk-zoom-toolbar" id="skLightboxToolbar" role="toolbar" aria-label="Image zoom and pan controls">
@@ -20,6 +24,10 @@
           <button type="button" class="sk-zoom-btn" id="skBtnFit" title="Fit to Screen (0)" aria-label="Fit image to screen">⤢</button>
           <button type="button" class="sk-zoom-btn" id="skBtnReset" title="Reset (R)" aria-label="Reset zoom and position">↺</button>
         </div>
+      </div>
+      <!-- Multi-Look Thumbnail Strip (STD-UI-PRIMITIVE-003) -->
+      <div class="sk-lightbox-thumbs" id="skLightboxThumbs" role="tablist" aria-label="Candidate look thumbnails">
+        <!-- Dynamic candidate look thumbnail items rendered by controller -->
       </div>
       <div class="sk-lightbox-caption" id="skLightboxCaption">
         <!-- Caption, specs, and status -->
