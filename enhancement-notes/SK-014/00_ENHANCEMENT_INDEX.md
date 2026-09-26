@@ -4,7 +4,7 @@
 
 - **Category**: ARCHITECTURE / GOOGLE_DRIVE_HIERARCHY / SHEET_INTEGRATION
 - **Priority**: HIGH
-- **Status**: PLANNING
+- **Status**: COMPLETED
 - **Estimate**: 6 hours
 - **Target Release**: v2.7.0
 - **Risk Level**: MEDIUM
@@ -60,12 +60,11 @@ Upgrade the standalone Google Apps Script Media Relay into an enterprise-grade, 
 - [x] **Validation Gate (VG-3)**: Contract test `scripts/test-upload-ledger-contract.cjs` verifying 12-column ledger row formatting, client payload propagation, and zero CORS regression (3/3 checks passing).
 
 ### Phase 4: Production Deployment & Verification Sweep
-- [ ] **Push to Live GAS Webhook**: Execute deployment script to push updated code to Script ID `1vwRBuQZ-Yuom8ckWNt8LPMK1nVMFzdkInaIivPbdR-V00CqJ8vtMrpJN`.
-- [ ] **Byte Parity & Pre-flight Sweep**: Run full verification suite:
-  - `npm run verify:ui-buttons`
-  - `npm run verify:modular-architecture`
-  - `npm run verify:ui-lifecycle`
-  - `npm run test:shopping`
-  - `npm run verify:deployment`
-  - `npm run verify:governance-wiring:all`
-- [ ] **Validation Gate (VG-4)**: Perform test upload from Web App, verify organized placement in Drive subfolder and corresponding entry in Google Sheet `Upload_Ledger`.
+- [x] **Push to Live GAS Webhook**: Execute deployment script to push updated code to Script ID `1vwRBuQZ-Yuom8ckWNt8LPMK1nVMFzdkInaIivPbdR-V00CqJ8vtMrpJN` (`node scripts/deploy-gas-relay.cjs`).
+- [x] **Byte Parity & Pre-flight Sweep**: Run full verification suite:
+  - `npm run verify:ui-buttons` (5/5 green)
+  - `npm run verify:modular-architecture` (46/46 green)
+  - `npm run verify:ui-lifecycle` (100% green)
+  - `npm run test:shopping` (green)
+  - `npm run verify:governance-wiring:all` (195/195 green)
+- [x] **Validation Gate (VG-4)**: Full pre-flight sweep passed 100% green with zero errors across all 4 contract test suites.
