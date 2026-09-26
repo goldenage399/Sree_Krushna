@@ -192,6 +192,38 @@ const firestoreRules = fs.readFileSync('firestore.rules', 'utf8');
 assert(firestoreRules.includes('options') && firestoreRules.includes('selectedOptionIndex'), 'firestore.rules must allow options and selectedOptionIndex');
 console.log('  ✓ [PASS] firestore.rules validates options and selectedOptionIndex on shopping_items');
 
+console.log('▶ [7/7] Auditing Interactive Multi-Look Lightbox Carousel (STD-UI-PRIMITIVE-003 / P-LIGHTBOX-CAROUSEL-001 / SK-013)...');
+const lightboxDomContracts = [
+  'id="skLightboxCounter"',
+  'id="skBtnLightboxPrev"',
+  'id="skBtnLightboxNext"',
+  'id="skLightboxThumbs"',
+  'window.switchLightboxLook',
+  'window.nextLightboxLook',
+  'window.prevLightboxLook',
+  'lightboxZoomEngine.scale > 1.05'
+];
+
+lightboxDomContracts.forEach(check => {
+  assert(rootHtml.includes(check), `Lightbox Carousel contract missing in HTML: ${check}`);
+  console.log(`  ✓ [PASS] HTML contains Lightbox Carousel contract: ${check}`);
+});
+
+const lightboxCssContracts = [
+  '.sk-lightbox-counter',
+  '.sk-lightbox-nav-prev',
+  '.sk-lightbox-nav-next',
+  '.sk-lightbox-thumbs',
+  '.sk-lightbox-thumb',
+  '.sk-btn-nav'
+];
+
+lightboxCssContracts.forEach(check => {
+  assert(rootHtml.includes(check), `Lightbox Carousel CSS missing in HTML: ${check}`);
+  console.log(`  ✓ [PASS] HTML contains Lightbox Carousel CSS: ${check}`);
+});
+
 console.log('\n════════════════════════════════════════════════════════════════════════════════');
 console.log('🎉 SHOPPING REGISTRY & LITURGICAL RECONCILIATION GATE: 100% GREEN (44/44 ITEMS)');
 console.log('════════════════════════════════════════════════════════════════════════════════\n');
+
