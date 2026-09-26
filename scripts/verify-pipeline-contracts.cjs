@@ -42,13 +42,71 @@
 
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
+const ALL_MODE = process.argv.includes('--all');
 
 function readFile(relPath) {
   const abs = path.join(ROOT, relPath);
   if (!fs.existsSync(abs)) return null;
   return fs.readFileSync(abs, 'utf8');
+}
+
+// New (untracked or added) files only, by default — matches the convention
+// verify-governance-wiring.cjs already uses: checking the FULL history
+// against a rule added today would retroactively flag pre-existing debt
+// (e.g. SK-011's own implementation_plan.md predates INV-DATA-TRANSIT-001,
+// and AC-DEC-2026-035 predates INV-COUNCIL-GROUND-TRUTH-001 — it IS the
+// incident that motivated the rule). --all scans everything, for audits.
+function getNewOrChangedFiles(predicate) {
+  if (ALL_MODE) return null; // caller does its own full-tree walk in --all mode
+  try {
+    const status = execSync('git status --porcelain', { cwd: ROOT, encoding: 'utf8' });
+    return status.split('\n')
+      .filter(Boolean)
+      .filter(l => /^(\?\?|A\s|AM|\s?A|\s?M|MM)/.test(l))
+      .map(l => l.slice(3).trim().replace(/^"|"$/g, '').replace(/\\/g, '/'))
+      .filter(predicate);
+  } catch {
+    return [];
+  }
+}
+
+// Flat directory of .md files (e.g. Council discussion threads).
+function getFilesInDir(underDir, predicate) {
+  const changed = getNewOrChangedFiles(f => f.startsWith(underDir.replace(/\\/g, '/')) && predicate(f));
+  if (changed !== null) return changed;
+  const abs = path.join(ROOT, underDir);
+  if (!fs.existsSync(abs)) return [];
+  return fs.readdirSync(abs).filter(predicate).map(f => path.join(underDir, f).replace(/\\/g, '/'));
+}
+
+// One level of ticket subdirectories (enhancement-notes/SK-###/implementation_plan.md).
+//
+// NOTE: git collapses a wholly-NEW untracked directory to a single
+// "?? enhancement-notes/SK-999/" entry (no filename) rather than listing the
+// file inside it — the most common case in practice, since a new ticket's
+// plan usually arrives together with its brand-new folder. A plain filename
+// regex against git-status lines misses this entirely (verified: caught by
+// a synthetic new-ticket test that silently passed until this fix). Expand
+// any matching collapsed directory entry by checking the known filename on
+// disk, without resorting to `git status -uall` (expensive on large repos).
+function getAllPlanFiles() {
+  const changed = getNewOrChangedFiles(f =>
+    /^enhancement-notes\/[^/]+\/(implementation_plan\.md)?$/.test(f)
+  );
+  if (changed !== null) {
+    return changed
+      .map(f => f.endsWith('/') ? `${f}implementation_plan.md` : f)
+      .filter(rel => fs.existsSync(path.join(ROOT, rel)));
+  }
+  const notesDir = path.join(ROOT, 'enhancement-notes');
+  if (!fs.existsSync(notesDir)) return [];
+  return fs.readdirSync(notesDir, { withFileTypes: true })
+    .filter(d => d.isDirectory())
+    .map(d => `enhancement-notes/${d.name}/implementation_plan.md`)
+    .filter(rel => fs.existsSync(path.join(ROOT, rel)));
 }
 
 // ─── Check 1: Base64 image data reaching localStorage ──────────────────────
@@ -150,6 +208,76 @@ function checkShellDependencyParity() {
   return findings;
 }
 
+// ─── Check 3: Plan header contract (`INV-DATA-TRANSIT-001`, SK-012 Phase 4a) ──
+//
+// Scoped to the plan's HEADER section only (up to the first "---"), not the
+// whole document body — a plan can legitimately *discuss* INC-099/photo/
+// upload context in its Task descriptions without itself being an intake
+// feature plan (SK-012's own implementation_plan.md does exactly this).
+// Checking the whole body would false-positive on every plan that so much
+// as mentions the incident this rule is named after.
+
+const PLAN_HEADER_INTAKE_KEYWORDS = /\b(upload|photo|image|intake|media attachment|camera capture)\b/i;
+const PLAN_HEADER_REQUIRED_FIELDS = ['Storage Target', 'Multi-Device Transit', 'Client-Storage Prohibition'];
+
+function extractPlanHeader(content) {
+  const idx = content.indexOf('\n---');
+  return idx === -1 ? content : content.slice(0, idx);
+}
+
+function checkPlanHeaderContracts() {
+  const findings = [];
+  for (const relPath of getAllPlanFiles()) {
+    const content = readFile(relPath);
+    if (!content) continue;
+    const header = extractPlanHeader(content);
+    if (!PLAN_HEADER_INTAKE_KEYWORDS.test(header)) continue; // not an intake-touching plan — out of scope
+
+    const missing = PLAN_HEADER_REQUIRED_FIELDS.filter(f => !header.includes(f));
+    if (missing.length > 0) {
+      findings.push({
+        file: relPath,
+        message: `Plan header matches the intake/media keyword heuristic but is missing required field(s): ${missing.join(', ')}.`,
+      });
+    }
+  }
+  return findings;
+}
+
+// ─── Check 4: Council decision gate (`INV-COUNCIL-GROUND-TRUTH-001`, Phase 4b) ─
+//
+// Heuristic, not precise — runs as a WARNING (never fails the build) since a
+// false positive here would block a legitimate council ratification. Only
+// scans new/changed council artifacts (see getFilesInDir), never the full
+// historical corpus by default: AC-DEC-2026-035 itself (the incident that
+// motivated this rule) is full of gap language with no "BLOCKED"/"SCOPE CUT"
+// decision, because it predates the rule — retroactively flagging history
+// would just be noise, not a real finding.
+
+const COUNCIL_GAP_PHRASES = /\b(unbacked|does not (currently )?sync|not yet implemented|open gap|not physically (backed|persisted)|no physical (store|persistence)|not persisted|mocked?)\b/i;
+const COUNCIL_BLOCKING_DECISION = /(BLOCKED\s*\(PENDING_PIPELINE\)|APPROVED WITH SCOPE CUT)/;
+
+function checkCouncilDecisionGate() {
+  const findings = [];
+  const councilDir = 'User_Created/Discussion Threads/Council';
+  const files = getFilesInDir(councilDir, f => f.endsWith('.md') && !f.endsWith('Council_Ledger.md'));
+
+  for (const relPath of files) {
+    const content = readFile(relPath);
+    if (!content) continue;
+    if (!COUNCIL_GAP_PHRASES.test(content)) continue;
+    if (!COUNCIL_BLOCKING_DECISION.test(content)) {
+      findings.push({
+        file: relPath,
+        message:
+          `Mentions a possible unbacked/mocked data-transit gap but its Decision section does not contain ` +
+          `"BLOCKED (PENDING_PIPELINE)" or "APPROVED WITH SCOPE CUT" — verify manually (INV-COUNCIL-GROUND-TRUTH-001, heuristic).`,
+      });
+    }
+  }
+  return findings;
+}
+
 // ─── Main ───────────────────────────────────────────────────────────────────
 
 function run() {
@@ -159,14 +287,18 @@ function run() {
       violations = violations.concat(findLocalStorageBase64Violations(relPath, readFile(relPath)));
     }
     const parityFindings = checkShellDependencyParity();
-    const total = violations.length + parityFindings.length;
+    const planHeaderFindings = checkPlanHeaderContracts();
+    const councilWarnings = checkCouncilDecisionGate(); // never blocks — heuristic, warning-only
+
+    const blockingTotal = violations.length + parityFindings.length + planHeaderFindings.length;
+    const total = blockingTotal + councilWarnings.length;
 
     if (total === 0) {
-      console.log('\n🟢 verify-pipeline-contracts: no Base64/localStorage or shell-dependency violations found.\n');
+      console.log('\n🟢 verify-pipeline-contracts: no violations found.\n');
       return 0;
     }
 
-    console.log(`\n🔍 Pipeline Contract Audit — ${total} violation(s)\n`);
+    console.log(`\n🔍 Pipeline Contract Audit — ${blockingTotal} violation(s), ${councilWarnings.length} warning(s)\n`);
 
     for (const v of violations) {
       console.log(`🔴 BASE64-IN-LOCALSTORAGE — ${v.file}:${v.line} (${v.kind})`);
@@ -180,9 +312,23 @@ function run() {
       console.log(`   💡 Fix: add <script type="module" src=".../firestore-client.js"></script> to ${f.shell}.\n`);
     }
 
-    console.log(`🛑 ${total} violation(s). See docs/incidents/INC-099-*.md for the failure mode this gate exists to catch.`);
-    console.log(`   Routing: .agent/PREFLIGHT.md row R6\n`);
-    return 1;
+    for (const p of planHeaderFindings) {
+      console.log(`🔴 PLAN-HEADER-GAP — ${p.file}`);
+      console.log(`   ${p.message}`);
+      console.log(`   💡 Fix: add the missing field(s) to the plan's header block (see writing-plans/SKILL.md §2).\n`);
+    }
+
+    for (const c of councilWarnings) {
+      console.log(`🟡 COUNCIL-DECISION-GAP (warning) — ${c.file}`);
+      console.log(`   ${c.message}\n`);
+    }
+
+    if (blockingTotal > 0) {
+      console.log(`🛑 ${blockingTotal} violation(s). See docs/incidents/INC-099-*.md for the failure mode this gate exists to catch.`);
+      console.log(`   Routing: .agent/PREFLIGHT.md row R6\n`);
+      return 1;
+    }
+    return 0; // only warnings — do not block
   } catch (err) {
     console.error(`\n❌ verify-pipeline-contracts error: ${err.message}\n`);
     return 2;
