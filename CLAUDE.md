@@ -80,6 +80,11 @@ All entities must use standardized 3-digit padded identifiers:
 - **SAP Dual-Block Isolation**: The planning engine is partitioned into `<!-- shared:std.agent.planning-engine.core -->` (synchronized losslessly across repos via `/sap-sync`) and `<!-- repo-specific:sree-krushna -->` (local taxonomy, SDCA compilers, and verification commands).
 - **Mandatory Plan Hard-Stop**: The planning phase concludes with the plan saved to disk. Detailed 5-step TDD tasks are scoped to Phase 1 first. Chaining planning directly into uncommitted code execution is strictly prohibited.
 
+### 9. Multi-Module Media Hierarchy & Mandatory Module Onboarding Protocol (`STD-MEDIA-HIERARCHY-001` / `INV-MODULE-UPLOAD-INTAKE-001` / `AC-DEC-2026-057`)
+- **Multi-Module Domain Partitioning**: All image and document uploads across functional domains (`Shopping`, `Decorator_Cockpit`, `Decision_Registry`, `Liturgy`, `Finance`, `Operations_Logistics`) must route into dedicated Google Drive subfolders per `SPEC-PROC-MEDIA-HIERARCHY-001.md` and `backend_gas/media-routing-taxonomy.json`.
+- **Mandatory Module Onboarding Gate**: Whenever any module introduces photo intake or media uploading, it MUST (1) declare its routing taxonomy in `backend_gas/media-routing-taxonomy.json`, (2) forward explicit `module`, `event`, and `category` parameters from its frontend controller, (3) register seed routing rows in `Config_Routing`, and (4) pass automated contract verification (`node scripts/test-media-hierarchy-contract.cjs`). Implicit or ambiguous folder dumping is strictly prohibited.
+- **Control Plane Auto-Healing Invariant (`INV-RELAY-AUTO-HEAL-006`)**: The media relay backend MUST implement automated bootstrap initialization (`setupMediaRelaySheets()`) and runtime fallback auto-healing (`_getOrHealSheet()`) to guarantee zero dropped audit records in `Upload_Ledger`.
+
 ---
 
 ## 2. Session Startup Gate (MANDATORY)

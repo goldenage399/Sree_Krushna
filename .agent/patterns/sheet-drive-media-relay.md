@@ -24,6 +24,9 @@ triggers:
   - "INV-RELAY-SHEET-003"
   - "INV-RELAY-CACHE-004"
   - "INV-RELAY-CDN-005"
+  - "INV-RELAY-AUTO-HEAL-006"
+  - "INV-RELAY-VERSION-BUMP-007"
+  - "INV-MODULE-UPLOAD-INTAKE-008"
 portability: universal
 porting_effort: low
 ---
@@ -32,7 +35,7 @@ porting_effort: low
 
 **Standard ID**: `STD-DRIVE-MEDIA-RELAY-001` / `P-DRIVE-MEDIA-RELAY-001`  
 **Category**: Architecture / Infrastructure / Cloud Storage Relay  
-**Origin**: Sree Krushna Marriage OS & PIOperationsMgmt_Firebase (`AC-DEC-2026-055` / `SK-015`)  
+**Origin**: Sree Krushna Marriage OS & PIOperationsMgmt_Firebase (`AC-DEC-2026-055` / `SK-015` / `AC-DEC-2026-057`)  
 **Status**: VALIDATED  
 
 ---
@@ -47,6 +50,7 @@ Traditional cloud storage setups (e.g. Firebase Cloud Storage, AWS S3, Google Cl
 3. **Execution Timeouts**: Direct uploading of raw multi-megabyte camera photos (10MB+) causes Google Apps Script 30-second execution timeouts.
 4. **Disorganized Storage Drift**: Uploading all assets into a single flat bucket creates chaos and manual sorting debt.
 5. **No Visual Audit Trail**: Lack of an immutable transaction ledger recording who uploaded what, when, where, and the exact CDN access URLs.
+6. **Uninitialized Spreadsheet Fragility**: Relying on manual spreadsheet setup causes dropped audit rows if tabs or headers are missing.
 
 ---
 
@@ -83,18 +87,7 @@ Transmitting payloads under 1.2 MB guarantees completion in under 3.5 seconds on
 Storage organization and governance are driven by a connected Google Spreadsheet acting as the system control plane:
 1. **`Config_Routing` Tab**: Maps combinations of `[Module, Event, Category]` to designated Google Drive subfolder paths.
 2. **`Upload_Ledger` Tab**: Appends an immutable, 12-column audit log for every transaction:
-   - `Timestamp`
-   - `UploaderEmail`
-   - `ItemId`
-   - `Module`
-   - `Event`
-   - `Category`
-   - `FileName`
-   - `FileSizeKB`
-   - `FileId`
-   - `DriveUrl`
-   - `ThumbnailCdnUrl`
-   - `SubfolderPath`
+   - `Timestamp`, `UploaderEmail`, `ItemId`, `Module`, `Event`, `Category`, `FileName`, `FileSizeKB`, `FileId`, `DriveUrl`, `ThumbnailCdnUrl`, `SubfolderPath`.
 
 ---
 
@@ -114,6 +107,30 @@ Files must have permission set to `DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Pe
 
 ---
 
+### INV-RELAY-AUTO-HEAL-006: Self-Provisioning & Auto-Healing Control Plane
+The relay webhook MUST NOT depend on manual spreadsheet initialization:
+1. **`setupMediaRelaySheets()` Routine**: An automated initialization function creating `Config_Settings`, `Config_Routing`, and `Upload_Ledger` with styled headers (`#1a1a2e`, white bold text, frozen row 1) and pre-seeded multi-module routing rows.
+2. **Runtime Auto-Healing**: If `_logUploadToSheet()` or routing lookups run against an unseeded spreadsheet, the engine automatically creates the missing tab and appends its canonical header row dynamically, eliminating silent dropped audit records.
+
+---
+
+### INV-RELAY-VERSION-BUMP-007: In-Place Clasp Version Bumping
+Deployments MUST update the pinned deployment version in-place without spawning orphan URLs:
+```powershell
+clasp deploy --deploymentId <id> --description "deploy YYYY-MM-DD HH:mm:ss"
+```
+Bare `clasp deploy` (without `--deploymentId`) is strictly forbidden in automated deployments to prevent breaking client configuration URLs.
+
+---
+
+### INV-MODULE-UPLOAD-INTAKE-008: Multi-Module Domain Intake Protocol
+Any module in a consuming repository implementing media upload intake MUST:
+1. Declare its allowed `Event` and `Category` values in its domain contract.
+2. Explicitly forward `{ module, event, category }` in the client upload payload.
+3. Pre-register corresponding rows in `Config_Routing` for structured subfolder placement.
+
+---
+
 ## 3. Webhook Contract Specifications
 
 ### Inbound Payload Schema (`text/plain` JSON string)
@@ -126,7 +143,7 @@ Files must have permission set to `DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Pe
   "itemId": "LOOK-001",
   "module": "Shopping",
   "event": "Vivaha",
-  "category": "Bridal_Lehenga"
+  "category": "Bridal_Silks"
 }
 ```
 
@@ -137,7 +154,7 @@ Files must have permission set to `DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Pe
   "fileId": "1a2b3c4d5e...",
   "fileUrl": "https://drive.google.com/file/d/1a2b3c4d5e.../view",
   "cdnUrl": "https://lh3.googleusercontent.com/d/1a2b3c4d5e...=w2048",
-  "subfolderPath": "Shopping/Vivaha/Bridal_Lehenga"
+  "subfolderPath": "Shopping/Vivaha/Bridal_Silks"
 }
 ```
 

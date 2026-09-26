@@ -3450,11 +3450,43 @@
             }, 300);
 
             const targetItem = items.find(i => i.id === itemId);
+
+            // Derive Event from item.event or chapterId per STD-MEDIA-HIERARCHY-001
+            let resolvedEvent = 'Vivaha';
+            if (targetItem) {
+              if (targetItem.event) {
+                resolvedEvent = targetItem.event;
+              } else if (targetItem.chapterId) {
+                const ch = targetItem.chapterId.toLowerCase();
+                if (ch.includes('engagement')) resolvedEvent = 'Engagement';
+                else if (ch.includes('reception')) resolvedEvent = 'Reception';
+                else if (ch.includes('sangeet')) resolvedEvent = 'Sangeet';
+                else if (ch.includes('haldi')) resolvedEvent = 'Haldi';
+                else resolvedEvent = 'Vivaha';
+              }
+            }
+
+            // Derive Category
+            let resolvedCategory = category;
+            if (!resolvedCategory && targetItem) {
+              resolvedCategory = targetItem.category || targetItem.subCategory;
+            }
+            if (!resolvedCategory && targetItem && targetItem.chapterId) {
+              const ch = targetItem.chapterId.toLowerCase();
+              if (ch.includes('bridal')) resolvedCategory = 'Bridal_Silks';
+              else if (ch.includes('groom')) resolvedCategory = 'Groom_Wear';
+              else if (ch.includes('jewel')) resolvedCategory = 'Jewellery';
+              else if (ch.includes('silver')) resolvedCategory = 'Tarakasi_Silver';
+            }
+            if (!resolvedCategory) resolvedCategory = 'General';
+
             window.fsUploadLookPhoto(itemId, localUploadedDataUrl, {
               label: title,
               priceTier: price ? `₹${price}` : (targetItem ? targetItem.priceRange : ''),
               store: vendor || (targetItem ? targetItem.store : ''),
-              category: category,
+              module: 'Shopping',
+              event: resolvedEvent,
+              category: resolvedCategory,
               existingOptions: itemCustomOptions[itemId] || []
             }).then((newOpt) => {
               clearInterval(progressInterval);

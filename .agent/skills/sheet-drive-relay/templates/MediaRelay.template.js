@@ -53,6 +53,13 @@ function doPost(e) {
       return _createErrorResponse('AUTH_FORBIDDEN', 'Unauthorized uploader: ' + (uploaderEmail || 'anonymous'));
     }
 
+    // Administrative Action: SETUP_SHEETS (Self-Provisioning Bootstrap)
+    if (payload.action === 'SETUP_SHEETS') {
+      var setupResult = setupMediaRelaySheets();
+      return ContentService.createTextOutput(JSON.stringify(setupResult))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
     // 2. Validate Image Data
     var imageRaw = payload.image || '';
     if (!imageRaw) {
@@ -281,12 +288,16 @@ function _resolveOrCreateFolder(relativePath) {
   return currentFolder;
 }
 
-// ─── 12-DIMENSION UPLOAD LEDGER LOGGING ───────────────────────────────────────
+// ─── 12-DIMENSION UPLOAD LEDGER LOGGING (AUTO-HEALING) ────────────────────────
 function _logUploadToSheet(entry) {
   try {
-    var sheet = _getSheet(TAB_UPLOAD_LEDGER);
+    var ledgerHeaders = [
+      'Timestamp', 'UploaderEmail', 'ItemId', 'Module', 'Event', 'Category',
+      'FileName', 'FileSizeKB', 'FileId', 'DriveUrl', 'ThumbnailCdnUrl', 'SubfolderPath'
+    ];
+    var sheet = _getOrHealSheet(TAB_UPLOAD_LEDGER, ledgerHeaders);
     if (!sheet) {
-      console.warn('Upload_Ledger tab not found in spreadsheet:', SPREADSHEET_ID);
+      console.warn('Upload_Ledger tab could not be accessed or healed in spreadsheet:', SPREADSHEET_ID);
       return;
     }
 
@@ -310,11 +321,131 @@ function _logUploadToSheet(entry) {
   }
 }
 
+// ─── SPREADSHEET AUTO-PROVISIONING & AUTO-HEALING ENGINE (INV-RELAY-AUTO-HEAL-006) ───
+/**
+ * Run this function once from the Apps Script editor (or trigger via POST { action: 'SETUP_SHEETS' })
+ * to automatically create and format all 3 control tabs with styled headers and default seed rows.
+ */
+function setupMediaRelaySheets() {
+  if (!SPREADSHEET_ID || SPREADSHEET_ID.indexOf('{{') === 0) {
+    throw new Error('SPREADSHEET_ID is not configured.');
+  }
+
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+
+  // 1. Setup Config_Settings
+  var sSettings = _getSheetOrCreate(ss, TAB_CONFIG_SETTINGS, ['SettingKey', 'SettingValue', 'Notes']);
+  if (sSettings.getLastRow() <= 1) {
+    var defaultEmail = (AUTHORIZED_EMAILS && AUTHORIZED_EMAILS[0]) ? AUTHORIZED_EMAILS[0] : 'admin@example.com';
+    var settingsRows = [
+      ['ALLOWLIST_EMAIL', defaultEmail, 'Primary authorized host'],
+      ['CACHE_TTL_SEC', '600', 'In-memory CacheService TTL in seconds'],
+      ['MAX_FILE_SIZE_KB', '2048', 'Maximum allowed upload payload size in KB']
+    ];
+    sSettings.getRange(2, 1, settingsRows.length, 3).setValues(settingsRows);
+  }
+
+  // 2. Setup Config_Routing (Multi-Module Taxonomy)
+  var sRouting = _getSheetOrCreate(ss, TAB_CONFIG_ROUTING, ['Module', 'Event', 'Category', 'SubfolderPath', 'Status']);
+  if (sRouting.getLastRow() <= 1) {
+    var routingRows = [
+      ['Shopping', 'Vivaha', 'Bridal_Silks', 'Shopping/Vivaha/Bridal_Silks', 'ACTIVE'],
+      ['Shopping', 'Vivaha', 'Groom_Wear', 'Shopping/Vivaha/Groom_Wear', 'ACTIVE'],
+      ['Shopping', 'Vivaha', 'Jewellery', 'Shopping/Vivaha/Jewellery', 'ACTIVE'],
+      ['Shopping', 'Vivaha', 'Tarakasi_Silver', 'Shopping/Vivaha/Tarakasi_Silver', 'ACTIVE'],
+      ['Shopping', 'Reception', 'Bridal_Lehenga', 'Shopping/Reception/Bridal_Lehenga', 'ACTIVE'],
+      ['Shopping', 'Reception', 'Groom_Sherwani', 'Shopping/Reception/Groom_Sherwani', 'ACTIVE'],
+      ['Shopping', 'Sangeet', '*', 'Shopping/Sangeet/Outfits', 'ACTIVE'],
+      ['Shopping', 'Engagement', '*', 'Shopping/Engagement/Rings_Attire', 'ACTIVE'],
+      ['Shopping', 'Haldi', '*', 'Shopping/Haldi/Yellow_Silks', 'ACTIVE'],
+      ['Shopping', '*', 'Sara_Gifting', 'Shopping/Gifting/Sara_Relatives', 'ACTIVE'],
+      ['Decorator_Cockpit', 'Vivaha', 'Mandap', 'Decor/Vivaha/Mandap', 'ACTIVE'],
+      ['Decorator_Cockpit', 'Vivaha', 'Stage_Backdrop', 'Decor/Vivaha/Stage_Backdrop', 'ACTIVE'],
+      ['Decorator_Cockpit', 'Vivaha', 'Entry_Arch', 'Decor/Vivaha/Entry_Arch', 'ACTIVE'],
+      ['Decorator_Cockpit', 'Vivaha', 'Dining_Pandal', 'Decor/Vivaha/Dining_Pandal', 'ACTIVE'],
+      ['Decorator_Cockpit', '*', 'Lighting', 'Decor/Lighting_Atmosphere', 'ACTIVE'],
+      ['Decorator_Cockpit', '*', 'Florals', 'Decor/Floral_Installations', 'ACTIVE'],
+      ['Decorator_Cockpit', '*', 'Lounge', 'Decor/Photo_Lounges', 'ACTIVE'],
+      ['Liturgy', 'Vivaha', 'Sacred_Pata', 'Liturgy/Vivaha/Sacred_Pata', 'ACTIVE'],
+      ['Liturgy', 'Vivaha', 'Samagri', 'Liturgy/Vivaha/Samagri', 'ACTIVE'],
+      ['Finance', '*', 'Invoices', 'Finance/Vendor_Invoices', 'ACTIVE'],
+      ['Finance', '*', 'Receipts', 'Finance/Payment_Receipts', 'ACTIVE'],
+      ['Operations', '*', 'Floorplans', 'Operations/Venue_Layouts', 'ACTIVE']
+    ];
+    sRouting.getRange(2, 1, routingRows.length, 5).setValues(routingRows);
+  }
+
+  // 3. Setup Upload_Ledger
+  var sLedger = _getSheetOrCreate(ss, TAB_UPLOAD_LEDGER, [
+    'Timestamp', 'UploaderEmail', 'ItemId', 'Module', 'Event', 'Category',
+    'FileName', 'FileSizeKB', 'FileId', 'DriveUrl', 'ThumbnailCdnUrl', 'SubfolderPath'
+  ]);
+
+  // Delete empty default 'Sheet1' if it exists and other sheets are present
+  try {
+    var defaultSheet = ss.getSheetByName('Sheet1');
+    if (defaultSheet && ss.getSheets().length > 1 && defaultSheet.getLastRow() === 0) {
+      ss.deleteSheet(defaultSheet);
+    }
+  } catch (e) {}
+
+  console.log('✅ Sheet-Drive Media Relay tabs successfully provisioned and formatted!');
+  return { success: true, message: 'All control sheets provisioned successfully.' };
+}
+
+/**
+ * Retrieves existing sheet or automatically provisions it with styled headers
+ */
+function _getSheetOrCreate(ss, sheetName, headers) {
+  var sheet = ss.getSheetByName(sheetName);
+  if (!sheet) {
+    sheet = ss.insertSheet(sheetName);
+  }
+
+  if (sheet.getLastRow() === 0 && headers && headers.length > 0) {
+    var headerRange = sheet.getRange(1, 1, 1, headers.length);
+    headerRange.setValues([headers]);
+    headerRange.setFontWeight('bold');
+    headerRange.setFontColor('#ffffff');
+    headerRange.setBackground('#1a1a2e'); // Deep Navy Theme
+    headerRange.setHorizontalAlignment('center');
+    sheet.setFrozenRows(1);
+
+    for (var c = 1; c <= headers.length; c++) {
+      sheet.autoResizeColumn(c);
+      if (sheet.getColumnWidth(c) < 130) {
+        sheet.setColumnWidth(c, 130);
+      }
+    }
+  }
+
+  return sheet;
+}
+
+/**
+ * Runtime auto-healing helper
+ */
+function _getOrHealSheet(sheetName, fallbackHeaders) {
+  if (!SPREADSHEET_ID || SPREADSHEET_ID.indexOf('{{') === 0) return null;
+  try {
+    var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    return _getSheetOrCreate(ss, sheetName, fallbackHeaders);
+  } catch (e) {
+    console.warn('Could not access or heal sheet ' + sheetName + ':', e.message);
+    return null;
+  }
+}
+
 // ─── SPREADSHEET HELPER ──────────────────────────────────────────────────────
 function _getSheet(sheetName) {
   if (!SPREADSHEET_ID || SPREADSHEET_ID.indexOf('{{') === 0) return null;
-  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-  return ss.getSheetByName(sheetName);
+  try {
+    var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    return ss.getSheetByName(sheetName);
+  } catch (e) {
+    console.warn('Error accessing spreadsheet:', e.message);
+    return null;
+  }
 }
 
 // ─── ERROR RESPONSE HELPER ───────────────────────────────────────────────────

@@ -15,6 +15,8 @@
     "verify:governance-wiring:all": "node scripts/verify-governance-wiring.cjs --all",
     "verify:governance-schema": "node scripts/verify-governance-schema.cjs",
     "verify:pipeline-contracts": "node scripts/verify-pipeline-contracts.cjs",
+    "test:sheet-drive-relay": "node scripts/test-sheet-drive-relay-contract.cjs",
+    "test:media-hierarchy": "node scripts/test-media-hierarchy-contract.cjs",
     "verify:modular-architecture": "node scripts/verify-modular-architecture.cjs",
     "verify:ui-lifecycle": "node scripts/verify-ui-lifecycle.cjs",
     "verify:ui-buttons": "node scripts/verify-ui-button-primitives.cjs",

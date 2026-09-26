@@ -116,4 +116,34 @@ check('SHEET_SCHEMA_SPEC.md specifies all 3 control sheets and 12 ledger dimensi
   assert(content.includes('ThumbnailCdnUrl'), 'Schema spec missing ThumbnailCdnUrl dimension');
 });
 
+// 7. Auto-healing & Self-Provisioning Engine (INV-RELAY-AUTO-HEAL-006)
+check('MediaRelay templates and instance implement setupMediaRelaySheets and auto-healing', () => {
+  const templatePath = path.join(ROOT, '.agent/skills/sheet-drive-relay/templates/MediaRelay.template.js');
+  const instancePath = path.join(ROOT, 'backend_gas/MediaRelay.js');
+  
+  [templatePath, instancePath].forEach(filePath => {
+    assert(fs.existsSync(filePath), `File does not exist: ${filePath}`);
+    const content = fs.readFileSync(filePath, 'utf8');
+    assert(content.includes('setupMediaRelaySheets'), `${filePath} missing setupMediaRelaySheets`);
+    assert(content.includes('_getOrHealSheet'), `${filePath} missing _getOrHealSheet`);
+    assert(content.includes('_getSheetOrCreate'), `${filePath} missing _getSheetOrCreate`);
+    assert(content.includes("'SETUP_SHEETS'"), `${filePath} missing SETUP_SHEETS action`);
+  });
+
+  // Verify backend_gas/MediaRelay.js compiles with node -c
+  execSync(`node -c "${instancePath}"`);
+});
+
+// 8. Skill Mirror Parity Gate (P-SSOT-DOCS)
+check('.agent and .claude sheet-drive-relay SKILL.md maintain 100% byte parity', () => {
+  const agentSkill = path.join(ROOT, '.agent/skills/sheet-drive-relay/SKILL.md');
+  const claudeSkill = path.join(ROOT, '.claude/skills/sheet-drive-relay/SKILL.md');
+  assert(fs.existsSync(agentSkill), `Agent skill missing: ${agentSkill}`);
+  assert(fs.existsSync(claudeSkill), `Claude skill missing: ${claudeSkill}`);
+  const agentBuf = fs.readFileSync(agentSkill);
+  const claudeBuf = fs.readFileSync(claudeSkill);
+  assert(agentBuf.equals(claudeBuf), 'Skill files have diverged in byte content!');
+});
+
 console.log(`\n🎉 All ${passCount}/${totalChecks} Sheet-Drive Relay template and contract checks passed!\n`);
+

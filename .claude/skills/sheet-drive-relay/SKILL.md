@@ -1,24 +1,24 @@
 ---
 name: sheet-drive-relay
-description: Universal Sheet-Configured Google Drive Media Relay & Real-Time Audit Ledger (STD-DRIVE-MEDIA-RELAY-001). Zero-billing, zero-CORS media storage pipeline with dynamic subfolder auto-provisioning and 12-dimension audit ledger.
+description: Universal Sheet-Configured Google Drive Media Relay & Real-Time Audit Ledger (STD-DRIVE-MEDIA-RELAY-001). Zero-billing, zero-CORS media storage pipeline with dynamic subfolder auto-provisioning, control plane auto-healing, and 12-dimension audit ledger.
 ---
 
 # Universal Sheet-Drive Media Relay Skill
 
 ## Overview
 
-Use this skill whenever an application or workflow requires an image, photo, or document upload pipeline without incurring Firebase Blaze / Cloud Storage billing hurdles. This skill provides a battle-hardened, zero-CORS Google Apps Script relay backed by Google Drive storage, dynamic Google Sheet routing, and an immutable 12-dimension transaction audit ledger.
+Use this skill whenever an application or workflow requires an image, photo, or document upload pipeline without incurring Firebase Blaze / Cloud Storage billing hurdles. This skill provides a battle-hardened, zero-CORS Google Apps Script relay backed by Google Drive storage, dynamic Google Sheet routing, automated control plane provisioning, and an immutable 12-dimension transaction audit ledger.
 
-**Origin Standards**: `STD-DRIVE-MEDIA-RELAY-001` / `P-DRIVE-MEDIA-RELAY-001` (`AC-DEC-2026-055` / `SK-015`)  
+**Origin Standards**: `STD-DRIVE-MEDIA-RELAY-001` / `STD-MEDIA-HIERARCHY-001` (`AC-DEC-2026-055` / `AC-DEC-2026-057` / `SK-015` / `SK-017`)  
 **Applicability**: Any web SPA, mobile app, or automation tool in the SAP ecosystem (e.g. `Task-Dashboard`, `Capsicum`, `BMS`, `UG-Farmhouse`, `QSR`, `Sree_Krushna`).
 
 ---
 
 <!-- shared:std.agent.sheet-drive-relay.core:start -->
 
-## The 5 Prime Architectural Invariants
+## The 8 Prime Architectural Invariants
 
-Every deployment of this skill MUST conform to the 5 Prime Invariants:
+Every deployment of this skill MUST conform to the 8 Prime Invariants:
 
 1. **`INV-RELAY-CORS-001` (Zero-CORS Simple POST)**:
    - Web clients MUST send HTTP `POST` requests with header `'Content-Type': 'text/plain'` and `'redirect': 'follow'`.
@@ -45,15 +45,26 @@ Every deployment of this skill MUST conform to the 5 Prime Invariants:
      `https://lh3.googleusercontent.com/d/{fileId}=w2048`
    - Zero authentication cookies or authorization headers are required for frontend rendering.
 
+6. **`INV-RELAY-AUTO-HEAL-006` (Control Plane Auto-Healing & Self-Provisioning)**:
+   - The relay MUST provide idempotent bootstrap initialization (`setupMediaRelaySheets()`) and runtime fallback auto-healing (`_getOrHealSheet()`).
+   - If `Upload_Ledger` or any control tab is missing or corrupted, the engine automatically recreates the sheet and styled header row, dropping zero audit records.
+
+7. **`INV-RELAY-VERSION-BUMP-007` (Versioned Deployment Bump In-Place)**:
+   - Deployment automation MUST bump the live versioned deployment in-place (`clasp deploy --deploymentId <id>`).
+   - Standalone script project pushes without updating the versioned deployment leave the live webhook URL running stale code.
+
+8. **`INV-MODULE-UPLOAD-INTAKE-008` (Mandatory Module Onboarding Standard)**:
+   - Whenever any client module introduces photo uploads, it MUST declare its `[Module, Event, Category]` taxonomy in `Config_Routing` and pass explicit context parameters (`module`, `event`, `category`) from its frontend controller.
+
 ---
 
 ## Bundled Turnkey Templates
 
 The skill includes pre-tested templates located in `templates/` and `resources/`:
-- [`MediaRelay.template.js`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/skills/sheet-drive-relay/templates/MediaRelay.template.js): Standalone GAS script with dynamic routing, folder auto-provisioning, and ledger appending.
+- [`MediaRelay.template.js`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/skills/sheet-drive-relay/templates/MediaRelay.template.js): Standalone GAS script with dynamic routing, folder auto-provisioning, auto-healing, and ledger appending.
 - [`appsscript.json`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/skills/sheet-drive-relay/templates/appsscript.json): V8 runtime configuration manifest.
 - [`deploy-gas-relay.cjs`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/skills/sheet-drive-relay/templates/deploy-gas-relay.cjs): Cross-platform Node.js deployer with `node -c` syntax verification.
-- [`SHEET_SCHEMA_SPEC.md`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/skills/sheet-drive-relay/resources/SHEET_SCHEMA_SPEC.md): Declarative spreadsheet schema specification.
+- [`SHEET_SCHEMA_SPEC.md`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/skills/sheet-drive-relay/resources/SHEET_SCHEMA_SPEC.md): Declarative spreadsheet schema specification with multi-module taxonomy seed table.
 
 ---
 
@@ -61,11 +72,12 @@ The skill includes pre-tested templates located in `templates/` and `resources/`
 
 ### Step 1: Initialize Google Sheet Control Plane
 1. Create a Google Spreadsheet (e.g. `<ProjectName>_Media_Relay`).
-2. Add the 3 canonical tabs defined in [`SHEET_SCHEMA_SPEC.md`](file:///d:/GitHub_Repo/Sree_Krushna/.agent/skills/sheet-drive-relay/resources/SHEET_SCHEMA_SPEC.md):
-   - **`Config_Settings`**: Headers: `SettingKey`, `SettingValue`, `Notes`
-   - **`Config_Routing`**: Headers: `Module`, `Event`, `Category`, `SubfolderPath`, `Status`
-   - **`Upload_Ledger`**: Headers: `Timestamp`, `UploaderEmail`, `ItemId`, `Module`, `Event`, `Category`, `FileName`, `FileSizeKB`, `FileId`, `DriveUrl`, `ThumbnailCdnUrl`, `SubfolderPath`
-3. Note the `SPREADSHEET_ID` from the browser URL (`/spreadsheets/d/{ID}/edit`).
+2. Note the `SPREADSHEET_ID` from the browser URL (`/spreadsheets/d/{ID}/edit`).
+3. **Automated Provisioning**: You do NOT need to manually add headers or format tabs. Once the GAS script is deployed in Step 3, simply run `setupMediaRelaySheets()` from the Apps Script editor (or trigger via POST `{ action: 'SETUP_SHEETS', uploaderEmail: '...' }`). This will:
+   - Auto-create `Config_Settings`, `Config_Routing`, and `Upload_Ledger`.
+   - Style headers with `#1a1a2e` Navy theme, white text, frozen row 1, and auto-sized columns.
+   - Seed default settings and the multi-module routing taxonomy.
+   - Delete empty default `Sheet1`.
 
 ### Step 2: Initialize Google Drive Root Folder
 1. Create a Google Drive folder (e.g. `<ProjectName>_Media`).
@@ -108,16 +120,16 @@ async function uploadToDriveRelay(webhookUrl, imageFile, metadata) {
   // 1. Offscreen Canvas Downscaling (INV-RELAY-CANVAS-002)
   const base64Data = await compressTo2K(imageFile, 2048, 0.88);
 
-  // 2. Build Payload
+  // 2. Build Payload with Explicit Module Context (INV-MODULE-UPLOAD-INTAKE-008)
   const payload = {
     image: base64Data,
     fileName: imageFile.name || 'upload.jpg',
     mimeType: imageFile.type || 'image/jpeg',
     uploaderEmail: metadata.uploaderEmail,
     itemId: metadata.itemId,
-    module: metadata.module || 'General',
-    event: metadata.event || 'General',
-    category: metadata.category || 'General'
+    module: metadata.module || 'Shopping',
+    event: metadata.event || 'Vivaha',
+    category: metadata.category || 'Bridal_Silks'
   };
 
   // 3. Simple POST Request (INV-RELAY-CORS-001)
@@ -157,7 +169,6 @@ function compressTo2K(file, maxDimension = 2048, quality = 0.88) {
       img.onload = () => {
         let width = img.width;
         let height = img.height;
-
         if (width > maxDimension || height > maxDimension) {
           if (width > height) {
             height = Math.round((height * maxDimension) / width);
@@ -167,13 +178,11 @@ function compressTo2K(file, maxDimension = 2048, quality = 0.88) {
             height = maxDimension;
           }
         }
-
         const canvas = document.createElement('canvas');
         canvas.width = width;
         canvas.height = height;
         const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, width, height);
-
         const mime = file.type === 'image/webp' ? 'image/webp' : 'image/jpeg';
         resolve(canvas.toDataURL(mime, quality));
       };
@@ -195,5 +204,7 @@ function compressTo2K(file, maxDimension = 2048, quality = 0.88) {
 | **`AUTH_FORBIDDEN: Unauthorized uploader`** | Uploader email is not in `AUTHORIZED_EMAILS` or `Config_Settings` allowlist. | Add the user's email to `AUTHORIZED_EMAILS` array or `Config_Settings` tab in the spreadsheet. |
 | **`Exceeded maximum execution time` (GAS 30s timeout)** | Client sent uncompressed raw multi-megabyte photo (>5MB). | Enforce browser Canvas downscaling to max 2048px at 0.88 quality (<1.2MB) (`INV-RELAY-CANVAS-002`). |
 | **Routing does not reflect recent changes to `Config_Routing` sheet** | Routing table is cached in `CacheService` with 10-minute TTL. | Wait 10 minutes or trigger a manual cache clear in GAS (`CacheService.getScriptCache().remove('MEDIA_ROUTING_TABLE')`). |
+| **Upload succeeds in Drive but no row in `Upload_Ledger`** | Prior script lacked auto-healing and sheet was unprovisioned. | Deploy updated `MediaRelay.js` with `INV-RELAY-AUTO-HEAL-006` (`_getOrHealSheet()`) or trigger `setupMediaRelaySheets()`. |
+| **Uploaded files routed to fallback `Uploads/` root** | Client module passed unregistered `[Module, Event, Category]` combination. | Register routing pattern in `Config_Routing` tab (`INV-MODULE-UPLOAD-INTAKE-008`). |
 
 <!-- shared:std.agent.sheet-drive-relay.core:end -->

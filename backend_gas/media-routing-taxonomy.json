@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "standard": "STD-MEDIA-HIERARCHY-001",
+  "governance_ref": "AC-DEC-2026-057",
+  "root_folder_id": "1pnSsJGadKXCoo9opQa-ghbNlCN5N7OAJ",
+  "spreadsheet_id": "1m5kA8kvicAuCNPxbXPsRG2jWZayJODBQ5MquhhLX7nc",
+  "taxonomies": [
+    {
+      "module": "Shopping",
+      "event": "Vivaha",
+      "category": "Bridal_Silks",
+      "subfolder_path": "Shopping/Vivaha/Bridal_Silks",
+      "description": "Canonical bridal wedding silks and Hastaganthi pata"
+    },
+    {
+      "module": "Shopping",
+      "event": "Vivaha",
+      "category": "Groom_Wear",
+      "subfolder_path": "Shopping/Vivaha/Groom_Wear",
+      "description": "Groom ceremonial silk joda and dhoti"
+    },
+    {
+      "module": "Shopping",
+      "event": "Vivaha",
+      "category": "Jewellery",
+      "subfolder_path": "Shopping/Vivaha/Jewellery",
+      "description": "Sacred gold, Sita Haar, and temple bridal ornaments"
+    },
+    {
+      "module": "Shopping",
+      "event": "Vivaha",
+      "category": "Tarakasi_Silver",
+      "subfolder_path": "Shopping/Vivaha/Tarakasi_Silver",
+      "description": "Cuttack filigree silver pieces, payal, and ritual thalis"
+    },
+    {
+      "module": "Shopping",
+      "event": "Reception",
+      "category": "Bridal_Lehenga",
+      "subfolder_path": "Shopping/Reception/Bridal_Lehenga",
+      "description": "Evening reception bridal lehengas"
+    },
+    {
+      "module": "Shopping",
+      "event": "Reception",
+      "category": "Groom_Sherwani",
+      "subfolder_path": "Shopping/Reception/Groom_Sherwani",
+      "description": "Reception formal sherwani and bandhgala"
+    },
+    {
+      "module": "Shopping",
+      "event": "Sangeet",
+      "category": "*",
+      "subfolder_path": "Shopping/Sangeet/Outfits",
+      "description": "Festive sangeet dance ensembles"
+    },
+    {
+      "module": "Shopping",
+      "event": "Engagement",
+      "category": "*",
+      "subfolder_path": "Shopping/Engagement/Rings_Attire",
+      "description": "Engagement rings, formal attire, and sagan hampers"
+    },
+    {
+      "module": "Shopping",
+      "event": "Haldi",
+      "category": "*",
+      "subfolder_path": "Shopping/Haldi/Yellow_Silks",
+      "description": "Ceremonial yellow silks and floral jewelry"
+    },
+    {
+      "module": "Shopping",
+      "event": "*",
+      "category": "Sara_Gifting",
+      "subfolder_path": "Shopping/Gifting/Sara_Relatives",
+      "description": "Extended family trousseau and relative gifting"
+    },
+    {
+      "module": "Decorator_Cockpit",
+      "event": "Vivaha",
+      "category": "Mandap",
+      "subfolder_path": "Decor/Vivaha/Mandap",
+      "description": "Sacred Vedic vivaha mandap structure and canopy"
+    },
+    {
+      "module": "Decorator_Cockpit",
+      "event": "Vivaha",
+      "category": "Stage_Backdrop",
+      "subfolder_path": "Decor/Vivaha/Stage_Backdrop",
+      "description": "Stage visual backdrops and photogenic staging"
+    },
+    {
+      "module": "Decorator_Cockpit",
+      "event": "Vivaha",
+      "category": "Entry_Arch",
+      "subfolder_path": "Decor/Vivaha/Entry_Arch",
+      "description": "Grand ceremonial entrance gate and welcoming walkway"
+    },
+    {
+      "module": "Decorator_Cockpit",
+      "event": "Vivaha",
+      "category": "Dining_Pandal",
+      "subfolder_path": "Decor/Vivaha/Dining_Pandal",
+      "description": "Traditional banquet and dining canopy setup"
+    },
+    {
+      "module": "Decorator_Cockpit",
+      "event": "*",
+      "category": "Lighting",
+      "subfolder_path": "Decor/Lighting_Atmosphere",
+      "description": "Atmospheric, warm, and architectural lighting"
+    },
+    {
+      "module": "Decorator_Cockpit",
+      "event": "*",
+      "category": "Florals",
+      "subfolder_path": "Decor/Floral_Installations",
+      "description": "Fresh floral styling, marigolds, tuberoses, and orchids"
+    },
+    {
+      "module": "Decorator_Cockpit",
+      "event": "*",
+      "category": "Lounge",
+      "subfolder_path": "Decor/Photo_Lounges",
+      "description": "Guest photo booths and interactive seating corners"
+    },
+    {
+      "module": "Liturgy",
+      "event": "Vivaha",
+      "category": "Sacred_Pata",
+      "subfolder_path": "Liturgy/Vivaha/Sacred_Pata",
+      "description": "Ritual consecrated cloths and altar drapery"
+    },
+    {
+      "module": "Liturgy",
+      "event": "Vivaha",
+      "category": "Samagri",
+      "subfolder_path": "Liturgy/Vivaha/Samagri",
+      "description": "Sacred ritual samagri, homa woods, and utensils"
+    },
+    {
+      "module": "Finance",
+      "event": "*",
+      "category": "Invoices",
+      "subfolder_path": "Finance/Vendor_Invoices",
+      "description": "Official vendor bills, quotations, and contract riders"
+    },
+    {
+      "module": "Finance",
+      "event": "*",
+      "category": "Receipts",
+      "subfolder_path": "Finance/Payment_Receipts",
+      "description": "Host payment receipts and proof-of-transaction slips"
+    },
+    {
+      "module": "Operations",
+      "event": "*",
+      "category": "Floorplans",
+      "subfolder_path": "Operations/Venue_Layouts",
+      "description": "Venue architectural layout maps and parking plans"
+    }
+  ]
+}

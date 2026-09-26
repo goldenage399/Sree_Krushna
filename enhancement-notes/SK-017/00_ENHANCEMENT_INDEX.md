@@ -4,7 +4,7 @@
 
 - **Category**: ARCHITECTURE / STORAGE_ROUTING / GOVERNANCE_GATE
 - **Priority**: CRITICAL
-- **Status**: IN_PLANNING
+- **Status**: COMPLETED
 - **Estimate**: 6 hours
 - **Target Release**: v2.8.0
 - **Risk Level**: MEDIUM (Directly touches live Google Sheet control plane, Drive folder creation, and client upload parameters)
@@ -55,23 +55,23 @@ Resolve the physical initialization gap on Google Spreadsheet [`Sree_Krushna_Med
 ## 📋 Definition of Done (DoD v1.7 Matrix) & Sequential Phasing
 
 ### Phase 1: GAS Self-Provisioning Engine & Auto-Healing Runtime
-- [ ] **Provisioning Engine Implementation**: Implement `setupMediaRelaySheets()` in `backend_gas/MediaRelay.js` creating `Config_Settings`, `Config_Routing`, and `Upload_Ledger` with styling and full multi-module seed rows.
-- [ ] **Auto-Healing Runtime**: Update `_getSheet()` and `_logUploadToSheet()` with dynamic tab self-healing if sheets are unexpectedly missing.
-- [ ] **GAS Deployment**: Deploy updated script to Google Apps Script via `node scripts/deploy-gas-relay.cjs --push` (bumping deployment version).
-- [ ] **Validation Gate (VG-1)**: Execute automated unit test `scripts/test-gas-self-provisioning.cjs` verifying that `setupMediaRelaySheets()` syntax compiles cleanly and generates expected schema objects (100% green).
+- [x] **Provisioning Engine Implementation**: Implement `setupMediaRelaySheets()` in `backend_gas/MediaRelay.js` creating `Config_Settings`, `Config_Routing`, and `Upload_Ledger` with styling and full multi-module seed rows.
+- [x] **Auto-Healing Runtime**: Update `_getSheet()` and `_logUploadToSheet()` with dynamic tab self-healing if sheets are unexpectedly missing.
+- [x] **GAS Deployment**: Deploy updated script to Google Apps Script via `node scripts/deploy-gas-relay.cjs --push` (bumping deployment version to `@4`).
+- [x] **Validation Gate (VG-1)**: Execute automated unit test `scripts/test-sheet-drive-relay-contract.cjs` verifying that `setupMediaRelaySheets()` syntax compiles cleanly and generates expected schema objects (100% green).
 
 ### Phase 2: Canonical Hierarchy Specification & Local Declarative Manifest
-- [ ] **SSOT Specification**: Author `docs/references/SPEC-PROC-MEDIA-HIERARCHY-001.md` documenting complete folder taxonomy across all 5 modules.
-- [ ] **Declarative Manifest**: Create `backend_gas/media-routing-taxonomy.json` containing the authoritative machine-readable routing rules.
-- [ ] **Validation Gate (VG-2)**: Run automated contract test `scripts/test-media-hierarchy-contract.cjs` asserting all 5 modules are mapped to unique Google Drive subfolders with zero collisions.
+- [x] **SSOT Specification**: Author `docs/references/SPEC-PROC-MEDIA-HIERARCHY-001.md` documenting complete folder taxonomy across all 5 modules.
+- [x] **Declarative Manifest**: Create `backend_gas/media-routing-taxonomy.json` containing the authoritative machine-readable routing rules.
+- [x] **Validation Gate (VG-2)**: Run automated contract test `scripts/test-media-hierarchy-contract.cjs` asserting all 5 modules are mapped to unique Google Drive subfolders with zero collisions.
 
 ### Phase 3: Client Controller Explicit Parameterization & Byte Parity
-- [ ] **Shopping Controller Enrichment**: Update `shopping_src/scripts/controller.js` to forward explicit `module: 'Shopping'` and dynamic `event` based on item chapter.
-- [ ] **SDCA Recompilation**: Recompile shopping artifacts via `node shopping_src/build.cjs` and verify 100% byte parity between root and `/public`.
-- [ ] **Validation Gate (VG-3)**: Run `npm run verify:modular-architecture` and `npm run test:shopping` (100% green).
+- [x] **Shopping Controller Enrichment**: Update `shopping_src/scripts/controller.js` to forward explicit `module: 'Shopping'` and dynamic `event` based on item chapter.
+- [x] **SDCA Recompilation**: Recompile shopping artifacts via `node shopping_src/build.cjs` and verify 100% byte parity between root and `/public`.
+- [x] **Validation Gate (VG-3)**: Run `npm run verify:modular-architecture` and `npm run test:shopping` (100% green).
 
 ### Phase 4: Module Onboarding Standard, Manuals Wiring & Governance Verification
-- [ ] **Standard Codification**: Add Prime Invariant #9 (`INV-MODULE-UPLOAD-INTAKE-001`) to `GEMINI.md` and `CLAUDE.md`.
-- [ ] **Standards Catalog Update**: Register `STD-MEDIA-HIERARCHY-001` in `.agent/standards-catalog.json`.
-- [ ] **Registry Synchronization**: Register `SK-017` in `ENHANCEMENT-MASTER-REGISTRY.md` and update `enhancement-config.json` (`next_id: 18`).
-- [ ] **Validation Gate (VG-4)**: Execute `npm run verify:governance-wiring:all` (100% green across all artifacts).
+- [x] **Standard Codification**: Add Prime Invariant #9 (`INV-MODULE-UPLOAD-INTAKE-001`) to `GEMINI.md` and `CLAUDE.md`.
+- [x] **Standards Catalog Update**: Register `STD-MEDIA-HIERARCHY-001` in `.agent/standards-catalog.json`.
+- [x] **Registry Synchronization**: Register `SK-017` in `ENHANCEMENT-MASTER-REGISTRY.md` and update `enhancement-config.json` (`next_id: 18`).
+- [x] **Validation Gate (VG-4)**: Execute `npm run verify:governance-wiring:all` (100% green across all artifacts).

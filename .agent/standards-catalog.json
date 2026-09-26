@@ -7,7 +7,7 @@
     "targetEnvironment": "Multi-Repo SAP Spoke",
     "governanceModel": "AI-Driven Development (Antigravity Agent)",
     "sourceOfTruth": "GEMINI.md",
-    "totalStandards": 9,
+    "totalStandards": 10,
     "lastUpdated": "2026-09-26"
   },
   "categories": {
@@ -176,6 +176,28 @@
         "User_Created/Discussion Threads/Council/260926_arch_council_reusable_sheet_drive_media_relay_skill_and_sap_sync.md",
         ".agent/patterns/sheet-drive-media-relay.md",
         ".agent/skills/sheet-drive-relay/SKILL.md",
+        "GEMINI.md",
+        "CLAUDE.md"
+      ]
+    },
+    {
+      "id": "STD-MEDIA-HIERARCHY-001",
+      "category": "infrastructure",
+      "name": "Multi-Module Google Drive Hierarchy & Mandatory Module Onboarding Standard",
+      "description": "Cross-module storage hierarchy partitioning media into distinct subfolders per operational module (Shopping, Decor, Liturgy, Finance, Operations) and enforcing the Module Onboarding Standard (INV-MODULE-UPLOAD-INTAKE-001) with automated sheet self-provisioning (INV-RELAY-AUTO-HEAL-006).",
+      "severity": "CRITICAL",
+      "enforcement": {
+        "checkpoints": [
+          "pre-commit",
+          "CI"
+        ],
+        "manualOnly": false,
+        "automatedGate": "node scripts/test-media-hierarchy-contract.cjs"
+      },
+      "references": [
+        "User_Created/Discussion Threads/Council/260926_arch_council_sheet_media_hierarchy_and_module_onboarding.md",
+        "docs/references/SPEC-PROC-MEDIA-HIERARCHY-001.md",
+        "backend_gas/media-routing-taxonomy.json",
         "GEMINI.md",
         "CLAUDE.md"
       ]
