@@ -65,9 +65,9 @@ Elevate the Google Drive Media Relay, dynamic Google Sheet routing engine, 12-di
 - [x] **Validation Gate (VG-1)**: Author automated contract test `scripts/test-sheet-drive-relay-contract.cjs` verifying template placeholders, parameter replacement, syntax validation, and schema conformance (6/6 tests passing).
 
 ### Phase 2: Universal Skill Scaffolding & Dual Mirror
-- [ ] **Universal Operational Skill**: Author `.agent/skills/sheet-drive-relay/SKILL.md` structured with SAP core boundaries `<!-- shared:std.agent.sheet-drive-relay.core:start/end -->`, documenting setup, templating, deployment, client integration, and troubleshooting.
-- [ ] **Dual Mirror Scaffolding**: Mirror `.agent/skills/sheet-drive-relay/SKILL.md` to `.claude/skills/sheet-drive-relay/SKILL.md` with 100% byte parity.
-- [ ] **Validation Gate (VG-2)**: Automated parity check verifying exact sync between `.agent` and `.claude` skill definitions.
+- [x] **Universal Operational Skill**: Author `.agent/skills/sheet-drive-relay/SKILL.md` structured with SAP core boundaries `<!-- shared:std.agent.sheet-drive-relay.core:start/end -->`, documenting setup, templating, deployment, client integration, and troubleshooting.
+- [x] **Dual Mirror Scaffolding**: Mirror `.agent/skills/sheet-drive-relay/SKILL.md` to `.claude/skills/sheet-drive-relay/SKILL.md` with 100% byte parity.
+- [x] **Validation Gate (VG-2)**: Automated parity check verifying exact sync between `.agent` and `.claude` skill definitions (100% byte parity verified).
 
 ### Phase 3: Portable Workflow, SAP Sync Registration & Governance Verification Gate
 - [ ] **Portable Workflow Authoring**: Author `.agent/workflows/portable/sheet-drive-media-relay.md` with interactive step-by-step guidance.
