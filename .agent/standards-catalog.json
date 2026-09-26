@@ -7,12 +7,13 @@
     "targetEnvironment": "Multi-Repo SAP Spoke",
     "governanceModel": "AI-Driven Development (Antigravity Agent)",
     "sourceOfTruth": "GEMINI.md",
-    "totalStandards": 8,
-    "lastUpdated": "2026-09-24"
+    "totalStandards": 9,
+    "lastUpdated": "2026-09-26"
   },
   "categories": {
     "governance": "Process and workflow controls",
     "data-integrity": "Schema validity and entity relations",
+    "infrastructure": "Cloud storage, media relay, hosting, and deploy pipelines",
     "documentation": "SSOT, hubs, and schema specifications",
     "memory": "Persistent context and session telemetry",
     "ui-quality": "Frontend visual hierarchy, responsive layout, and collaborative interaction standards"
@@ -153,6 +154,28 @@
         "User_Created/Discussion Threads/Council/260924_arch_council_universal_planning_engine_and_prompt_boundary.md",
         ".agent/skills/writing-plans/SKILL.md",
         ".agent/workflows/plan.md",
+        "GEMINI.md",
+        "CLAUDE.md"
+      ]
+    },
+    {
+      "id": "STD-DRIVE-MEDIA-RELAY-001",
+      "category": "infrastructure",
+      "name": "Universal Sheet-Drive Media Relay & Real-Time Audit Ledger Standard",
+      "description": "Cross-repo zero-billing media storage standard leveraging Google Apps Script text/plain Simple POST relay, client-side 2K offscreen Canvas budgeting, two-tier Google Sheet routing and 12-dimension audit ledger, dynamic subfolder auto-provisioning with 10-minute CacheService TTL, and universal 2K UserContent CDN resolution.",
+      "severity": "CRITICAL",
+      "enforcement": {
+        "checkpoints": [
+          "pre-commit",
+          "CI"
+        ],
+        "manualOnly": false,
+        "automatedGate": "node scripts/test-sheet-drive-relay-contract.cjs"
+      },
+      "references": [
+        "User_Created/Discussion Threads/Council/260926_arch_council_reusable_sheet_drive_media_relay_skill_and_sap_sync.md",
+        ".agent/patterns/sheet-drive-media-relay.md",
+        ".agent/skills/sheet-drive-relay/SKILL.md",
         "GEMINI.md",
         "CLAUDE.md"
       ]
