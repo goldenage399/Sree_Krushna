@@ -335,6 +335,49 @@
   color: #ffffff;
 }
 
+/* Navigation Icon Button (Prev / Next) (STD-UI-PRIMITIVE-003) */
+#tab-decision-registry #decisionRegistryFrame .sk-btn-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: var(--sk-radius-full, 9999px);
+  background: rgba(15, 17, 23, 0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--sk-border, #2d3245);
+  color: var(--sk-text-primary, #ffffff);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+#tab-decision-registry #decisionRegistryFrame .sk-btn-nav:hover {
+  background: rgba(229, 169, 60, 0.25);
+  border-color: var(--sk-gold, #e5a93c);
+  color: var(--sk-gold, #e5a93c);
+  transform: scale(1.08);
+}
+
+#tab-decision-registry #decisionRegistryFrame .sk-btn-nav:active {
+  transform: scale(0.96);
+}
+
+#tab-decision-registry #decisionRegistryFrame .sk-btn-nav:disabled,
+#tab-decision-registry #decisionRegistryFrame .sk-btn-nav.is-disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 /* Universal Modal Close Button Affordance */
 #tab-decision-registry #decisionRegistryFrame .sk-modal-close {
   display: inline-flex;
@@ -502,6 +545,157 @@
   font-size: 13px;
   color: var(--sk-text-secondary);
 }
+
+/* Lightbox Counter Badge (STD-UI-PRIMITIVE-003) */
+#tab-decision-registry #decisionRegistryFrame .sk-lightbox-counter {
+  display: none;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--sk-radius-full);
+  background: rgba(212, 175, 55, 0.15);
+  color: var(--sk-gold);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  letter-spacing: 0.02em;
+}
+
+#tab-decision-registry #decisionRegistryFrame .sk-lightbox-counter.is-visible,
+#tab-decision-registry #decisionRegistryFrame .sk-lightbox-card.has-multi-look .sk-lightbox-counter {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Lightbox Carousel Navigation Controls (STD-UI-PRIMITIVE-003) */
+#tab-decision-registry #decisionRegistryFrame .sk-lightbox-nav-prev,
+#tab-decision-registry #decisionRegistryFrame .sk-lightbox-nav-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 55;
+  display: none; /* Single-image fallback default */
+}
+
+#tab-decision-registry #decisionRegistryFrame .sk-lightbox-nav-prev {
+  left: 14px;
+}
+
+#tab-decision-registry #decisionRegistryFrame .sk-lightbox-nav-next {
+  right: 14px;
+}
+
+#tab-decision-registry #decisionRegistryFrame .sk-lightbox-nav-prev.is-visible,
+#tab-decision-registry #decisionRegistryFrame .sk-lightbox-nav-next.is-visible,
+#tab-decision-registry #decisionRegistryFrame .sk-lightbox-card.has-multi-look .sk-lightbox-nav-prev,
+#tab-decision-registry #decisionRegistryFrame .sk-lightbox-card.has-multi-look .sk-lightbox-nav-next {
+  display: inline-flex;
+}
+
+#tab-decision-registry #decisionRegistryFrame .sk-lightbox-nav-prev:hover {
+  transform: translateY(-50%) scale(1.08);
+}
+
+#tab-decision-registry #decisionRegistryFrame .sk-lightbox-nav-next:hover {
+  transform: translateY(-50%) scale(1.08);
+}
+
+#tab-decision-registry #decisionRegistryFrame .sk-lightbox-nav-prev:active,
+#tab-decision-registry #decisionRegistryFrame .sk-lightbox-nav-next:active {
+  transform: translateY(-50%) scale(0.96);
+}
+
+/* Lightbox Candidate Looks Bottom Thumbnail Ribbon */
+#tab-decision-registry #decisionRegistryFrame .sk-lightbox-thumbs {
+  display: none; /* Single-image fallback default */
+  align-items: center;
+  gap: 8px;
+  padding: 8px 4px 2px;
+  margin-top: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212, 175, 55, 0.3) transparent;
+  -webkit-overflow-scrolling: touch;
+  max-height: 60px;
+  box-sizing: border-box;
+}
+
+#tab-decision-registry #decisionRegistryFrame .sk-lightbox-thumbs.is-visible,
+#tab-decision-registry #decisionRegistryFrame .sk-lightbox-card.has-multi-look .sk-lightbox-thumbs {
+  display: flex;
+}
+
+#tab-decision-registry #decisionRegistryFrame .sk-lightbox-thumb {
+  position: relative;
+  flex: 0 0 46px;
+  width: 46px;
+  height: 46px;
+  border-radius: var(--sk-radius-sm, 6px);
+  overflow: hidden;
+  border: 2px solid var(--sk-border, rgba(255, 255, 255, 0.15));
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #07090e;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#tab-decision-registry #decisionRegistryFrame .sk-lightbox-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+
+#tab-decision-registry #decisionRegistryFrame .sk-lightbox-thumb:hover {
+  border-color: rgba(212, 175, 55, 0.6);
+  transform: scale(1.05);
+}
+
+#tab-decision-registry #decisionRegistryFrame .sk-lightbox-thumb.is-active {
+  border-color: var(--sk-gold, #d4af37);
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.35);
+  transform: scale(1.06);
+}
+
+#tab-decision-registry #decisionRegistryFrame .sk-lightbox-thumb-badge {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 3px;
+  border-radius: 3px;
+  line-height: 1;
+}
+
+@media (max-width: 600px) {
+
+  #tab-decision-registry #decisionRegistryFrame .sk-btn-nav {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    min-height: 38px;
+    font-size: 13px;
+  }
+  #tab-decision-registry #decisionRegistryFrame .sk-lightbox-nav-prev {
+    left: 8px;
+  }
+  #tab-decision-registry #decisionRegistryFrame .sk-lightbox-nav-next {
+    right: 8px;
+  }
+  #tab-decision-registry #decisionRegistryFrame .sk-lightbox-thumb {
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
+  }
+
+}
+
 
 /* Option Intake Modal Styles */
 #tab-decision-registry #decisionRegistryFrame .sk-intake-card {
@@ -3336,15 +3530,6 @@
         </div>
 
         <div class="sk-intake-alert" id="skIntakeUrlAlert" style="display: none;"></div>
-        
-        <!-- Live Proof Preview Card (Adapted from PIO ProofPreviewWidget) -->
-        <div class="sk-proof-preview-card" id="skDriveProofCard" style="display: none;">
-          <img id="skDriveProofImg" class="sk-proof-thumb" src="" alt="Thumbnail Preview" referrerpolicy="no-referrer">
-          <div class="sk-proof-info">
-            <span class="sk-proof-badge" id="skDriveProofBadge">✓ Valid Image Asset</span>
-            <span class="sk-proof-id" id="skDriveFileId">ID: —</span>
-          </div>
-        </div>
       </div>
 
       <!-- Tab Pane 2: Local Device / Camera -->
@@ -3368,6 +3553,19 @@
         <div class="sk-archived-looks-list" id="skArchivedLooksList">
           <!-- Dynamically populated -->
         </div>
+      </div>
+
+      <!-- Universal Live Proof Preview Card (Visible across both Pinterest/Web & Device tabs) -->
+      <div class="sk-proof-preview-card" id="skDriveProofCard" style="display: none; margin: 12px 0;">
+        <img id="skDriveProofImg" class="sk-proof-thumb" src="" alt="Thumbnail Preview" referrerpolicy="no-referrer">
+        <div class="sk-proof-info" style="flex: 1;">
+          <span class="sk-proof-badge" id="skDriveProofBadge">✓ Valid Image Asset</span>
+          <span class="sk-proof-id" id="skDriveFileId">ID: —</span>
+          <div id="skUploadProgressBarWrap" style="display: none; margin-top: 6px; width: 100%; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; height: 6px;">
+            <div id="skUploadProgressBar" style="width: 0%; height: 100%; background: var(--sk-gold, #d4af37); transition: width 0.3s ease;"></div>
+          </div>
+        </div>
+        <button type="button" class="sk-btn sk-btn-secondary" id="skBtnClearProof" style="font-size: 11px; padding: 4px 8px; margin-left: 8px;" title="Clear selected image">✕ Clear</button>
       </div>
 
       <!-- Option Metadata Fields -->
@@ -5623,6 +5821,15 @@
     const proofCard = document.getElementById('skDriveProofCard');
     const proofImg = document.getElementById('skDriveProofImg');
     const proofId = document.getElementById('skDriveFileId');
+    const btnClearProof = document.getElementById('skBtnClearProof');
+
+    if (btnClearProof) {
+      btnClearProof.addEventListener('click', () => {
+        if (driveInput) driveInput.value = '';
+        if (proofCard) proofCard.style.display = 'none';
+        if (proofImg) proofImg.src = '';
+      });
+    }
 
     if (btnOpenOptionIntake && intakeBackdrop) {
       btnOpenOptionIntake.addEventListener('click', () => {
