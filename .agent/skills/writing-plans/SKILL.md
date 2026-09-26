@@ -159,7 +159,13 @@ After saving the plan, present the execution approach to the user:
   - Active ticket: `enhancement-notes/SK-###/implementation_plan.md`
   - Single-scope patch (exempt): `docs/plans/YYYY-MM-DD-<feature-name>.md`
 
-### 2. Static Decoupled Component Assembler (SDCA) Toolchain
+### 2. Physical Storage & Transit Contract (`INV-DATA-TRANSIT-001`)
+Every plan touching multi-device user intake (photo upload, file attach, any client-submitted media) MUST declare, in its plan header:
+- **Storage Target**: the physical, durable store (Cloud Storage bucket, Firestore document field, Google Drive folder) — never "TBD".
+- **Multi-Device Transit**: how a second device/session retrieves the same data.
+- **Client-Storage Prohibition**: any plan storing raw binary or Base64 media in `localStorage` as its terminal (non-cache) store is disqualified and must be revised before proceeding to Phase 1 tasks. (Origin: `INC-099`.)
+
+### 3. Static Decoupled Component Assembler (SDCA) Toolchain
 - **Zero Monolithic UI Scripts (`STD-MOD-COMP-001`)**: No web module script or assembler may exceed 500 lines or embed raw monolithic HTML/CSS inline.
 - **Modular Directory Structure**: All UI engines reside in `<module>_src/` (`components/`, `styles/`, `scripts/`, `template.html`, `build.cjs`).
 - **Compiler Commands**:
@@ -171,14 +177,14 @@ After saving the plan, present the execution approach to the user:
   - `decorator-cockpit.html` == `public/decorator-cockpit.html`
   - `cockpit-fragment.html` == `public/cockpit-fragment.html`
 
-### 3. Shared UI Primitives (`ui_primitives/`)
+### 4. Shared UI Primitives (`ui_primitives/`)
 Cross-cutting UI features must be imported from `ui_primitives/` rather than re-invented:
 - Carousel & Lightbox: `ui_primitives/components/`, `ui_primitives/scripts/`
 - Option Intake Modal: `ui_primitives/components/option_intake_modal.html`
 - Collaborative Comments Engine: `ui_primitives/scripts/comments_engine.js`, `ui_primitives/styles/03_comments_drawer.css`
 - WhatsApp Share & Toast: `ui_primitives/scripts/`
 
-### 4. Pre-Flight Governance Verification Suites
+### 5. Pre-Flight Governance Verification Suites
 Plans modifying UI, governance, or schemas must pass these checks prior to phase completion:
 - **Governance Wiring Parity (P82)**:
   ```bash
