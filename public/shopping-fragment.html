@@ -4907,6 +4907,473 @@
   font-size: 12.5px;
 }
 
+
+    /**
+ * Sree Krushna Marriage OS — Customary Family Obligations Subview Styles
+ * Standard: STD-MOD-COMP-001 / STD-FAMILY-OBLIGATION-001 | AC-DEC-2026-061 / AC-DEC-2026-062
+ * Ticket: SK-020 (Phase 5 SDCA Styles)
+ * Line Count Guard: Must remain strictly under 500 lines.
+ */
+
+/* 1. Subview Visibility & Layout Orchestration */
+#tab-shopping #shoppingRegistryFrame #catalogViewSection.mode-obligations #shoppingStepper,
+#tab-shopping #shoppingRegistryFrame #catalogViewSection.mode-obligations #shoppingClusterPods,
+#tab-shopping #shoppingRegistryFrame #catalogViewSection.mode-obligations #shoppingStoreNavigator,
+#tab-shopping #shoppingRegistryFrame #catalogViewSection.mode-obligations .shop-toolbar,
+#tab-shopping #shoppingRegistryFrame #catalogViewSection.mode-obligations #itemsGrid {
+  display: none !important;
+}
+
+#tab-shopping #shoppingRegistryFrame #catalogViewSection:not(.mode-obligations):not(.mode-all) #shoppingObligationsView {
+  display: none !important;
+}
+
+#tab-shopping #shoppingRegistryFrame #catalogViewSection.mode-obligations #shoppingObligationsView,
+#tab-shopping #shoppingRegistryFrame #catalogViewSection.mode-all #shoppingObligationsView {
+  display: block;
+}
+
+/* 2. Obligations Subview Container & Header Banner */
+#tab-shopping #shoppingRegistryFrame .shop-obligations-view {
+  width: 100%;
+  margin: 16px 0 32px 0;
+  color: var(--shop-text-primary, #f3f4f6);
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-obl-header-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  background: linear-gradient(135deg, rgba(24, 27, 36, 0.95), rgba(34, 38, 52, 0.95));
+  border: 1px solid rgba(229, 169, 60, 0.3);
+  border-radius: var(--shop-radius-lg, 16px);
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  flex-wrap: wrap;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-obl-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-obl-sacred-seal {
+  background: rgba(229, 169, 60, 0.15);
+  border: 1px solid rgba(229, 169, 60, 0.5);
+  color: var(--shop-gold, #e5a93c);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-obl-version-tag {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--shop-text-muted, #9ca3af);
+  font-size: 10px;
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-obl-title {
+  margin: 0 0 6px 0;
+  font-size: 19px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-obl-subtitle {
+  margin: 0;
+  font-size: 13px;
+  color: var(--shop-text-secondary, #9ca3af);
+  line-height: 1.5;
+  max-width: 820px;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-obl-header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* 3. KPI Stats Grid */
+#tab-shopping #shoppingRegistryFrame .shop-obl-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-obl-kpi-card {
+  background: var(--shop-surface, #181b24);
+  border: 1px solid var(--shop-border, #2d3245);
+  border-radius: var(--shop-radius-md, 10px);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+#tab-shopping #shoppingRegistryFrame .shop-obl-kpi-card:hover {
+  border-color: rgba(229, 169, 60, 0.4);
+  transform: translateY(-1px);
+}
+#tab-shopping #shoppingRegistryFrame .shop-obl-kpi-num {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--shop-gold, #e5a93c);
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+#tab-shopping #shoppingRegistryFrame .shop-obl-kpi-lbl {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--shop-text-primary, #f3f4f6);
+  margin-bottom: 2px;
+}
+#tab-shopping #shoppingRegistryFrame .shop-obl-kpi-sub {
+  font-size: 11px;
+  color: var(--shop-text-muted, #6b7280);
+}
+
+/* 4. Obligations Toolbar & Filter Pills */
+#tab-shopping #shoppingRegistryFrame .shop-obl-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--shop-surface, #181b24);
+  border: 1px solid var(--shop-border, #2d3245);
+  border-radius: var(--shop-radius-md, 10px);
+  padding: 12px 16px;
+  margin-bottom: 20px;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-obl-filters {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-obl-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--shop-border, #2d3245);
+  color: var(--shop-text-secondary, #9ca3af);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+#tab-shopping #shoppingRegistryFrame .shop-obl-pill:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+#tab-shopping #shoppingRegistryFrame .shop-obl-pill.active {
+  background: var(--shop-gold, #e5a93c);
+  color: #0f1117;
+  border-color: var(--shop-gold, #e5a93c);
+  font-weight: 700;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-obl-controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+#tab-shopping #shoppingRegistryFrame .shop-obl-search {
+  flex: 1;
+  min-width: 220px;
+}
+#tab-shopping #shoppingRegistryFrame .shop-obl-event-select-wrap {
+  min-width: 200px;
+}
+#tab-shopping #shoppingRegistryFrame .shop-obl-select {
+  width: 100%;
+  background: var(--shop-bg, #0f1117);
+  border: 1px solid var(--shop-border, #2d3245);
+  color: var(--shop-text-primary, #f3f4f6);
+  padding: 8px 12px;
+  border-radius: var(--shop-radius-sm, 6px);
+  font-size: 13px;
+  outline: none;
+  cursor: pointer;
+}
+#tab-shopping #shoppingRegistryFrame .shop-obl-select:focus {
+  border-color: var(--shop-gold, #e5a93c);
+}
+
+/* 5. Event Milestone Groups */
+#tab-shopping #shoppingRegistryFrame .shop-obl-milestone-group {
+  margin-bottom: 28px;
+}
+#tab-shopping #shoppingRegistryFrame .shop-obl-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(34, 38, 52, 0.6);
+  border-left: 4px solid var(--shop-gold, #e5a93c);
+  border-radius: 0 var(--shop-radius-sm, 6px) var(--shop-radius-sm, 6px) 0;
+  margin-bottom: 14px;
+}
+#tab-shopping #shoppingRegistryFrame .shop-obl-group-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#tab-shopping #shoppingRegistryFrame .shop-obl-group-count {
+  background: rgba(229, 169, 60, 0.15);
+  color: var(--shop-gold, #e5a93c);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+/* 6. Obligations Card Grid */
+#tab-shopping #shoppingRegistryFrame .shop-obl-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-obl-card {
+  background: var(--shop-surface, #181b24);
+  border: 1px solid var(--shop-border, #2d3245);
+  border-radius: var(--shop-radius-md, 10px);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+#tab-shopping #shoppingRegistryFrame .shop-obl-card:hover {
+  border-color: rgba(229, 169, 60, 0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-obl-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+#tab-shopping #shoppingRegistryFrame .shop-obl-id-badge {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--shop-gold, #e5a93c);
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+#tab-shopping #shoppingRegistryFrame .shop-obl-dir-pill {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+#tab-shopping #shoppingRegistryFrame .dir-bride-to-groom { background: rgba(96, 165, 250, 0.15); color: #60a5fa; border: 1px solid rgba(96, 165, 250, 0.3); }
+#tab-shopping #shoppingRegistryFrame .dir-groom-to-bride { background: rgba(244, 114, 182, 0.15); color: #f472b6; border: 1px solid rgba(244, 114, 182, 0.3); }
+#tab-shopping #shoppingRegistryFrame .dir-joint { background: rgba(52, 211, 153, 0.15); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); }
+#tab-shopping #shoppingRegistryFrame .dir-external { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+
+#tab-shopping #shoppingRegistryFrame .shop-obl-card-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.35;
+}
+#tab-shopping #shoppingRegistryFrame .shop-obl-card-desc {
+  margin: 0;
+  font-size: 12px;
+  color: var(--shop-text-secondary, #9ca3af);
+  line-height: 1.45;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-obl-badges-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 4px 0;
+}
+#tab-shopping #shoppingRegistryFrame .shop-obl-spec-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+#tab-shopping #shoppingRegistryFrame .spec-fully-specified { background: rgba(16, 185, 129, 0.12); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.25); }
+#tab-shopping #shoppingRegistryFrame .spec-tbd { background: rgba(245, 158, 11, 0.12); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+#tab-shopping #shoppingRegistryFrame .spec-unclear { background: rgba(239, 68, 68, 0.12); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+
+#tab-shopping #shoppingRegistryFrame .shop-obl-meta-box {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--shop-radius-sm, 6px);
+  padding: 8px 10px;
+  font-size: 11px;
+  color: var(--shop-text-secondary, #9ca3af);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+#tab-shopping #shoppingRegistryFrame .shop-obl-meta-line strong { color: #e2e8f0; }
+
+#tab-shopping #shoppingRegistryFrame .shop-obl-items-box {
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 2px solid var(--shop-gold, #e5a93c);
+  padding: 6px 8px;
+  font-size: 11px;
+  color: #cbd5e1;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-obl-finance-tag {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #10b981;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+/* 7. Action Bar & Bi-directional Sourcing Badges */
+#tab-shopping #shoppingRegistryFrame .shop-obl-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-btn-sourced {
+  background: rgba(229, 169, 60, 0.15);
+  border: 1px solid var(--shop-gold, #e5a93c);
+  color: var(--shop-gold, #e5a93c);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s ease;
+}
+#tab-shopping #shoppingRegistryFrame .shop-btn-sourced:hover {
+  background: var(--shop-gold, #e5a93c);
+  color: #0f1117;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-obl-footer-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+#tab-shopping #shoppingRegistryFrame .shop-btn-obl-share {
+  background: rgba(37, 211, 102, 0.12);
+  border: 1px solid rgba(37, 211, 102, 0.3);
+  color: #25d366;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+#tab-shopping #shoppingRegistryFrame .shop-btn-obl-share:hover { background: rgba(37, 211, 102, 0.22); }
+
+#tab-shopping #shoppingRegistryFrame .shop-btn-obl-link {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--shop-text-secondary, #9ca3af);
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+#tab-shopping #shoppingRegistryFrame .shop-btn-obl-link:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+/* 8. Bi-directional Badges on Trousseau Catalog Cards */
+#tab-shopping #shoppingRegistryFrame .shop-badge-obligation {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(229, 169, 60, 0.15);
+  border: 1px solid rgba(229, 169, 60, 0.4);
+  color: var(--shop-gold, #e5a93c);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  margin-top: 4px;
+  margin-right: 4px;
+}
+#tab-shopping #shoppingRegistryFrame .shop-badge-obligation:hover {
+  background: var(--shop-gold, #e5a93c);
+  color: #0f1117;
+  border-color: var(--shop-gold, #e5a93c);
+}
+
+/* 9. Responsive Breakpoints & Mobile 300px Guard */
+@container (max-width: 600px) {
+
+  #tab-shopping #shoppingRegistryFrame .shop-obl-cards-grid { grid-template-columns: 1fr; }
+  #tab-shopping #shoppingRegistryFrame .shop-obl-header-banner { flex-direction: column; padding: 16px; }
+
+}
+
+
+@media (max-width: 480px) {
+
+  #tab-shopping #shoppingRegistryFrame .shop-obl-title { font-size: 16px; }
+  #tab-shopping #shoppingRegistryFrame .shop-obl-cards-grid { grid-template-columns: 1fr; }
+  #tab-shopping #shoppingRegistryFrame .shop-obl-kpis { grid-template-columns: 1fr 1fr; }
+  #tab-shopping #shoppingRegistryFrame .shop-obl-card { padding: 12px; }
+
+}
+
+
 </style>
 
 <div id="shoppingRegistryFrame">
@@ -4919,10 +5386,14 @@
         <h2 class="shop-welcome-title" id="welcomeBannerTitle">Welcome to Sree & Krushna Wedding Shopping Review!</h2>
         <p class="shop-welcome-sub" id="welcomeBannerSub">Review the shortlisted sarees, lehengas, groomswear, and gifting bundles for our Bhubaneswar shopping trip.</p>
       </div>
+    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+      <button class="shop-btn" onclick="window.setCatalogSubView('obligations')" title="Explore 49 Customary Family Lineage Obligations">
+        <span>📜</span> Family Obligations (49)
+      </button>
+      <button class="shop-btn shop-btn-primary" onclick="window.switchShoppingMode('executive')">
+        <span>👑</span> Executive Host View
+      </button>
     </div>
-    <button class="shop-btn shop-btn-primary" onclick="window.switchShoppingMode('executive')">
-      <span>👑</span> Executive Host View
-    </button>
   </div>
 
   <!-- Header -->
@@ -5050,6 +5521,10 @@
       <span class="subnav-btn-icon">📍</span>
       <span class="subnav-btn-label">Retail Stores (8)</span>
     </button>
+    <button type="button" class="catalog-subnav-btn" data-subview="obligations" role="tab" aria-selected="false" aria-controls="shoppingObligationsView" onclick="window.setCatalogSubView('obligations')" title="Customary Family Obligations &amp; Handover Protocols (49)">
+      <span class="subnav-btn-icon">📜</span>
+      <span class="subnav-btn-label">Family Obligations (49)</span>
+    </button>
     <button type="button" class="catalog-subnav-btn subnav-view-all" data-subview="all" role="tab" aria-selected="false" onclick="window.setCatalogSubView('all')" title="Full Unrolled Operational Run Sheet">
       <span class="subnav-btn-icon">👁️</span>
       <span class="subnav-btn-label">Full Run Sheet</span>
@@ -5131,6 +5606,114 @@
   <main class="shop-items-grid" id="itemsGrid">
     <!-- Rendered dynamically by JS -->
   </main>
+
+  <!-- Customary Family Obligations Subview (SK-020 / STD-FAMILY-OBLIGATION-001) -->
+  <!-- Sree Krushna Marriage OS — Customary Family Obligations Subview -->
+<!-- Standard: STD-FAMILY-OBLIGATION-001 | AC-DEC-2026-061 / AC-DEC-2026-062 -->
+<!-- Ticket: SK-020 (Phase 5 SDCA Component) -->
+
+<section class="shop-obligations-view" id="shoppingObligationsView" aria-label="Customary Family Obligations Register">
+  <!-- Obligations Banner / Header Strip -->
+  <div class="shop-obl-header-banner">
+    <div class="shop-obl-header-info">
+      <div class="shop-obl-badge-row">
+        <span class="shop-obl-sacred-seal">📜 SACRED LINEAGE PROTOCOLS</span>
+        <span class="shop-obl-version-tag">STD-FAMILY-OBLIGATION-001</span>
+      </div>
+      <h2 class="shop-obl-title">Customary Family Obligations Register (Vidhi Dayitva / Bhara / Sara)</h2>
+      <p class="shop-obl-subtitle">
+        49 customary lineage handovers, ceremonial attire endowments, and sacred Dakshina protocols governing Odia Hindu marriage rituals between Bride's and Groom's families.
+      </p>
+    </div>
+    <div class="shop-obl-header-actions">
+      <button type="button" class="shop-btn shop-btn-secondary shop-btn-sm" onclick="window.shareAllObligationsWhatsApp()" title="Share complete obligations summary on WhatsApp">
+        <span>📱</span> Share with Elders
+      </button>
+      <button type="button" class="shop-btn shop-btn-primary shop-btn-sm" onclick="window.printObligationsSheet()" title="Print Ink-Friendly A4 Handover Run Sheet">
+        <span>🖨️</span> Print Obligation Sheet
+      </button>
+    </div>
+  </div>
+
+  <!-- Obligations KPI Summary Grid -->
+  <div class="shop-obl-kpis" id="oblKpisGrid">
+    <div class="shop-obl-kpi-card">
+      <span class="shop-obl-kpi-num" id="oblKpiTotal">49</span>
+      <span class="shop-obl-kpi-lbl">Total Customary Obligations</span>
+      <span class="shop-obl-kpi-sub">Across 6 Canonical Milestones</span>
+    </div>
+    <div class="shop-obl-kpi-card">
+      <span class="shop-obl-kpi-num" style="color: #60a5fa;" id="oblKpiBride">27</span>
+      <span class="shop-obl-kpi-lbl">Bride Side Obligations</span>
+      <span class="shop-obl-kpi-sub">23 to Groom Side + 4 Joint/Ext</span>
+    </div>
+    <div class="shop-obl-kpi-card">
+      <span class="shop-obl-kpi-num" style="color: #f472b6;" id="oblKpiGroom">21</span>
+      <span class="shop-obl-kpi-lbl">Groom Side Obligations</span>
+      <span class="shop-obl-kpi-sub">Groom Family to Bride / In-Laws</span>
+    </div>
+    <div class="shop-obl-kpi-card">
+      <span class="shop-obl-kpi-num" style="color: #fbbf24;" id="oblKpiUnresolved">8</span>
+      <span class="shop-obl-kpi-lbl">Pending Family Confirmation</span>
+      <span class="shop-obl-kpi-sub">TBD Choice / Headcount Pending</span>
+    </div>
+  </div>
+
+  <!-- Obligations Segmented Filter & Search Toolbar -->
+  <div class="shop-obl-toolbar">
+    <div class="shop-obl-filters" id="oblFilterPills" role="tablist" aria-label="Obligation Filters">
+      <button type="button" class="shop-obl-pill active" data-obl-filter="all" onclick="window.setObligationFilter('all')">
+        All Obligations (49)
+      </button>
+      <button type="button" class="shop-obl-pill" data-obl-filter="bride" onclick="window.setObligationFilter('bride')">
+        👰 Bride Side (27)
+      </button>
+      <button type="button" class="shop-obl-pill" data-obl-filter="groom" onclick="window.setObligationFilter('groom')">
+        🤵 Groom Side (21)
+      </button>
+      <button type="button" class="shop-obl-pill" data-obl-filter="joint" onclick="window.setObligationFilter('joint')">
+        🤝 Joint Handlers (3)
+      </button>
+      <button type="button" class="shop-obl-pill" data-obl-filter="unresolved" onclick="window.setObligationFilter('unresolved')">
+        ⚠️ Unresolved (8)
+      </button>
+      <button type="button" class="shop-obl-pill" data-obl-filter="attire" onclick="window.setObligationFilter('attire')">
+        🧵 Attire &amp; Silks (22)
+      </button>
+      <button type="button" class="shop-obl-pill" data-obl-filter="gold_silver" onclick="window.setObligationFilter('gold_silver')">
+        💎 Gold &amp; Silver (4)
+      </button>
+      <button type="button" class="shop-obl-pill" data-obl-filter="cash" onclick="window.setObligationFilter('cash')">
+        💰 Cash Dakshina (9)
+      </button>
+    </div>
+
+    <div class="shop-obl-controls">
+      <div class="shop-search-box shop-obl-search">
+        <span class="shop-search-icon">🔍</span>
+        <input type="text" id="oblSearchInput" class="shop-search-input" placeholder="Search obligations, relatives, rituals, or OBL-###..." oninput="window.onObligationSearch(this.value)">
+      </div>
+      <div class="shop-obl-event-select-wrap">
+        <select id="oblEventFilter" class="shop-obl-select" onchange="window.setObligationEventFilter(this.value)" aria-label="Filter by Event Milestone">
+          <option value="all">All Event Milestones</option>
+          <option value="EVT-001">EVT-001: Nirbandha (Engagement)</option>
+          <option value="EVT-002">EVT-002: Pua-Bhauni &amp; Mangan (Day 1)</option>
+          <option value="EVT-003">EVT-003: Snana &amp; Haldi (Day 2 Morning)</option>
+          <option value="EVT-004">EVT-004: Barat &amp; Mandap Vivaha (Day 2 Wedding)</option>
+          <option value="EVT-005">EVT-005: Bandapana &amp; Gruha Prabesha (Day 3)</option>
+          <option value="EVT-006">EVT-006: Samandhi Bhoji &amp; Reception (Day 4/8)</option>
+          <option value="POST_WEDDING">POST_WEDDING: Post-Wedding Reciprocals</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dynamic Obligations Container (Milestones & Cards Rendered Here) -->
+  <div class="shop-obl-container" id="obligationsCardsContainer">
+    <!-- Populated dynamically by window.renderObligations() in controller.js -->
+  </div>
+</section>
+
   </div>
   <!-- End Catalog View Container -->
 
@@ -6238,6 +6821,7 @@
 </div>
 
 <script src="/js/shopping-data.js"></script>
+<script src="/js/obligations-data.js"></script>
 <script>
 /**
  * Sree Krushna Marriage OS — Drive Normalizer & Zero-CORS CDN Engine
@@ -7464,6 +8048,31 @@
     let activeStoreCategory = 'all';
     window.catalogSubView = 'items';
 
+    // Customary Family Obligations State & Index (SK-020 / STD-FAMILY-OBLIGATION-001)
+    let activeObligationFilter = 'all';
+    let activeObligationEvent = 'all';
+    let obligationSearchQuery = '';
+
+    function getObligationsList() {
+      if (window.FAMILY_OBLIGATIONS_DATA && Array.isArray(window.FAMILY_OBLIGATIONS_DATA.obligations)) {
+        return window.FAMILY_OBLIGATIONS_DATA.obligations;
+      }
+      return [];
+    }
+
+    function buildTrsToObligationsIndex() {
+      const obls = getObligationsList();
+      const map = {};
+      obls.forEach(o => {
+        const trsRef = o.downstream_projections && o.downstream_projections.commercial_shopping_ref;
+        if (trsRef) {
+          if (!map[trsRef]) map[trsRef] = [];
+          map[trsRef].push(o.id);
+        }
+      });
+      return map;
+    }
+
     // Candidate Look 30-Day Archival Retention Constant (AC-DEC-2026-040)
     const ARCHIVE_RETENTION_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
 
@@ -7639,7 +8248,7 @@
     // Standards: P-SHOPPING-JOURNEY-HUBS-001 / STD-MOD-COMP-001
     // ========================================================================
     function setCatalogSubView(subview, targetId) {
-      const allowedViews = ['items', 'itinerary', 'clusters', 'stores', 'all'];
+      const allowedViews = ['items', 'itinerary', 'clusters', 'stores', 'obligations', 'all'];
       const targetView = allowedViews.includes(subview) ? subview : 'items';
       window.catalogSubView = targetView;
 
@@ -7659,6 +8268,10 @@
         btn.classList.toggle('active', isCurrent);
         btn.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
       });
+
+      if (targetView === 'obligations') {
+        renderObligations();
+      }
 
       // Synchronize URL query state if on catalog view
       try {
@@ -7680,9 +8293,11 @@
             el.scrollIntoView({ behavior: 'smooth', block: 'center' });
             el.style.outline = '2px solid var(--shop-gold, #d4af37)';
             el.style.boxShadow = '0 0 16px rgba(212, 175, 55, 0.4)';
+            el.classList.add('highlight-target-item');
             setTimeout(() => {
               el.style.outline = '';
               el.style.boxShadow = '';
+              el.classList.remove('highlight-target-item');
             }, 3000);
           }
         }, 120);
@@ -7884,11 +8499,18 @@
             }
           }
         }, 350);
+      } else if (params.get('obl')) {
+        // Priority 5: Family Obligation Deep Link
+        const oblId = params.get('obl');
+        setCatalogSubView('obligations', 'card-' + oblId);
       } else if (paramSubView) {
-        // Priority 5: Explicit subview parameter
+        // Priority 6: Explicit subview parameter
         setCatalogSubView(paramSubView);
+        if (params.get('obl')) {
+          navigateToObligation(params.get('obl'));
+        }
       } else {
-        // Priority 6: Default fallback
+        // Priority 7: Default fallback
         setCatalogSubView('items');
       }
     }
@@ -8248,6 +8870,7 @@
     function renderItems() {
       syncCatalogViewUI();
       const q = searchQuery.toLowerCase().trim();
+      const trsToObligationsMap = buildTrsToObligationsIndex();
 
       const filtered = items.filter(item => {
         if (activeChapter !== 'all' && item.chapterId !== activeChapter) return false;
@@ -8324,6 +8947,9 @@
                   <span class="shop-mini-vote ${approvals.sisters ? 'approved' : ''}" onclick="window.toggleApproval('${item.id}', 'sisters')" title="Toggle Sisters Approval">👭 ${approvals.sisters ? '✓' : '○'}</span>
                   <span class="shop-mini-vote ${approvals.inlaws ? 'approved' : ''}" onclick="window.toggleApproval('${item.id}', 'inlaws')" title="Toggle In-Laws Approval">🤝 ${approvals.inlaws ? '✓' : '○'}</span>
                   ${item.clusterId ? `<span class="shop-mini-vote" onclick="window.focusCluster('${item.clusterId}')" title="Compare Alternatives" style="cursor: pointer;">⚖️ Compare</span>` : ''}
+                  ${(trsToObligationsMap[item.id] || []).map(oblId => `
+                    <button type="button" class="shop-badge-obligation" onclick="event.stopPropagation(); window.navigateToObligation('${oblId}')" title="Customary Family Obligation: ${oblId}">📜 ${oblId}</button>
+                  `).join('')}
                 </div>
               </div>
 
@@ -8428,6 +9054,16 @@
                 </div>
               ` : ''}
               
+              ${(trsToObligationsMap[item.id] || []).length > 0 ? `
+                <div style="margin: 6px 0 8px 0; display: flex; flex-wrap: wrap; gap: 4px;">
+                  ${(trsToObligationsMap[item.id] || []).map(oblId => `
+                    <button type="button" class="shop-badge-obligation" onclick="event.stopPropagation(); window.navigateToObligation('${oblId}')" title="Fulfills Customary Family Obligation: ${oblId}">
+                      <span>📜 Fulfills ${oblId}</span>
+                    </button>
+                  `).join('')}
+                </div>
+              ` : ''}
+
               <!-- Multi-Stakeholder Consensus Bar -->
               <div class="shop-stakeholder-bar">
                 <span style="font-size: 11px; font-weight: 700; color: var(--shop-text-muted); margin-right: 4px;">CONSENSUS:</span>
@@ -11024,6 +11660,356 @@
       });
     }
 
+    // ========================================================================
+    // CUSTOMARY FAMILY OBLIGATIONS (OBL-001 to OBL-049) CONTROLLER ENGINE
+    // Standard: STD-FAMILY-OBLIGATION-001 | AC-DEC-2026-061 / AC-DEC-2026-062
+    // ========================================================================
+    function renderObligations() {
+      const container = document.getElementById('obligationsCardsContainer');
+      if (!container) return;
+
+      const obls = getObligationsList();
+      if (!obls || obls.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 40px; color: var(--shop-text-muted); background: var(--shop-surface); border-radius: var(--shop-radius-md);">
+            No obligation records found in data layer (js/obligations-data.js).
+          </div>
+        `;
+        return;
+      }
+
+      // Update KPIs if elements exist
+      const stats = (window.FAMILY_OBLIGATIONS_DATA && window.FAMILY_OBLIGATIONS_DATA.stats) || {};
+      const elTotal = document.getElementById('oblKpiTotal');
+      const elBride = document.getElementById('oblKpiBride');
+      const elGroom = document.getElementById('oblKpiGroom');
+      const elUnresolved = document.getElementById('oblKpiUnresolved');
+      if (elTotal) elTotal.textContent = stats.total || obls.length;
+      if (elBride) elBride.textContent = (stats.by_direction && (stats.by_direction.bride_to_groom + (stats.by_direction.joint || 0) + (stats.by_direction.external || 0))) || 27;
+      if (elGroom) elGroom.textContent = (stats.by_direction && stats.by_direction.groom_to_bride) || 21;
+      if (elUnresolved) elUnresolved.textContent = stats.unresolved_count || 8;
+
+      const q = (obligationSearchQuery || '').toLowerCase().trim();
+
+      const filtered = obls.filter(o => {
+        // Filter by Event Milestone
+        if (activeObligationEvent !== 'all' && o.event_ref !== activeObligationEvent) {
+          return false;
+        }
+
+        // Filter by Category / Direction / Status Pill
+        if (activeObligationFilter === 'bride') {
+          if (o.obligor.family !== 'bride' && o.obligor.family !== 'joint') return false;
+        } else if (activeObligationFilter === 'groom') {
+          if (o.obligor.family !== 'groom') return false;
+        } else if (activeObligationFilter === 'joint') {
+          if (o.obligor.family !== 'joint' && !o.exchange_cluster.is_exchange) return false;
+        } else if (activeObligationFilter === 'unresolved') {
+          const isUnresolved = ['TBD_Family_Choice', 'Source_Unclear', 'Source_Redacted', 'Pending_Family_Confirmation'].includes(o.spec_status) || o.lifecycle_status === 'Identified';
+          if (!isUnresolved) return false;
+        } else if (activeObligationFilter === 'attire') {
+          if (o.category !== 'attire') return false;
+        } else if (activeObligationFilter === 'gold_silver') {
+          if (o.category !== 'gold_silver') return false;
+        } else if (activeObligationFilter === 'cash') {
+          const isCash = o.category === 'cash_envelope' || (o.financial_obligation && o.financial_obligation.is_monetary);
+          if (!isCash) return false;
+        }
+
+        // Search Query Match
+        if (!q) return true;
+        const itemsText = (o.items || []).map(i => i.description).join(' ');
+        const text = [
+          o.id,
+          o.customary_title,
+          o.english_descriptor,
+          o.obligor ? o.obligor.role_title : '',
+          o.obligor ? o.obligor.primary_contact : '',
+          o.recipient ? o.recipient.role_title : '',
+          o.recipient ? o.recipient.primary_contact : '',
+          o.event_ref,
+          o.ritual_ref,
+          itemsText,
+          o.verbatim_provenance ? o.verbatim_provenance.raw_source_text : ''
+        ].join(' ').toLowerCase();
+
+        return text.includes(q);
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 40px; color: var(--shop-text-muted); background: var(--shop-surface); border-radius: var(--shop-radius-md);">
+            No customary obligations match the active filter or search query.
+          </div>
+        `;
+        return;
+      }
+
+      const milestoneMap = {
+        'EVT-001': 'EVT-001: Nirbandha (Engagement Ceremony)',
+        'EVT-002': 'EVT-002: Pua-Bhauni, Mangan & Diyas (Day 1)',
+        'EVT-003': 'EVT-003: Snana & Haldi (Day 2 Morning)',
+        'EVT-004': 'EVT-004: Barat, Baranugam & Mandap Vivaha (Day 2 Wedding)',
+        'EVT-005': 'EVT-005: Bandapana, Gruha Prabesha & Kaudi Khela (Day 3)',
+        'EVT-006': 'EVT-006: Samandhi Bhoji & Astamangala (Day 4/8 Culmination)',
+        'POST_WEDDING': 'POST_WEDDING: Post-Wedding Reciprocals'
+      };
+
+      const catIcons = {
+        'attire': '🧵',
+        'gold_silver': '💎',
+        'cash_envelope': '💰',
+        'composite_bundle': '🎁',
+        'food_delicacy': '🍲',
+        'sundry_ritual': '🪔'
+      };
+
+      // Group by event_ref
+      const grouped = {};
+      filtered.forEach(o => {
+        const ev = o.event_ref || 'OTHER';
+        if (!grouped[ev]) grouped[ev] = [];
+        grouped[ev].push(o);
+      });
+
+      const eventOrder = ['EVT-001', 'EVT-002', 'EVT-003', 'EVT-004', 'EVT-005', 'EVT-006', 'POST_WEDDING', 'OTHER'];
+      const activeEvents = eventOrder.filter(ev => grouped[ev] && grouped[ev].length > 0);
+
+      container.innerHTML = activeEvents.map(ev => {
+        const groupTitle = milestoneMap[ev] || ev;
+        const groupObls = grouped[ev];
+
+        return `
+          <div class="shop-obl-milestone-group" id="obl-group-${ev}">
+            <div class="shop-obl-group-header">
+              <h3 class="shop-obl-group-title">
+                <span>🗓️</span> ${groupTitle}
+              </h3>
+              <span class="shop-obl-group-count">${groupObls.length} ${groupObls.length === 1 ? 'Obligation' : 'Obligations'}</span>
+            </div>
+
+            <div class="shop-obl-cards-grid">
+              ${groupObls.map(obl => {
+                const catIcon = catIcons[obl.category] || '📜';
+                const dirClass = `dir-${(obl.direction || 'joint').replace(/_/g, '-')}`;
+                const dirLabel = obl.direction === 'bride_to_groom'
+                  ? `👰 ${obl.obligor.role_title} ⟶ 🤵 ${obl.recipient.role_title}`
+                  : (obl.direction === 'groom_to_bride'
+                    ? `🤵 ${obl.obligor.role_title} ⟶ 👰 ${obl.recipient.role_title}`
+                    : `🤝 ${obl.obligor.role_title} ⟷ ${obl.recipient.role_title}`);
+
+                const specClass = (obl.spec_status === 'Fully_Specified')
+                  ? 'spec-fully-specified'
+                  : (['TBD_Family_Choice', 'Pending_Family_Confirmation'].includes(obl.spec_status) ? 'spec-tbd' : 'spec-unclear');
+
+                const trsRef = obl.downstream_projections && obl.downstream_projections.commercial_shopping_ref;
+                const isMonetary = obl.financial_obligation && obl.financial_obligation.is_monetary;
+
+                return `
+                  <article class="shop-obl-card" id="card-${obl.id}">
+                    <div>
+                      <div class="shop-obl-card-top">
+                        <span class="shop-obl-id-badge">${obl.id}</span>
+                        <span class="shop-obl-dir-pill ${dirClass}" title="${obl.direction}">${dirLabel}</span>
+                      </div>
+
+                      <h4 class="shop-obl-card-title">${catIcon} ${obl.customary_title}</h4>
+                      <p class="shop-obl-card-desc">${obl.english_descriptor}</p>
+
+                      <div class="shop-obl-badges-row">
+                        <span class="shop-obl-spec-badge ${specClass}">${(obl.spec_status || '').replace(/_/g, ' ')}</span>
+                        <span class="shop-obl-spec-badge" style="background: rgba(255,255,255,0.06); color: var(--shop-text-secondary); border: 1px solid rgba(255,255,255,0.1);">${obl.lifecycle_status}</span>
+                        <span class="shop-obl-spec-badge" style="background: rgba(229,169,60,0.08); color: var(--shop-gold); border: 1px solid rgba(229,169,60,0.2);">${obl.ritual_ref}</span>
+                      </div>
+
+                      <div class="shop-obl-meta-box">
+                        <div class="shop-obl-meta-line"><strong>⏰ Handover Moment:</strong> ${(obl.logistical_custody && obl.logistical_custody.handover_moment) || 'Customary Ritual Window'}</div>
+                        <div class="shop-obl-meta-line"><strong>📍 Location:</strong> ${(obl.logistical_custody && obl.logistical_custody.staging_location) || 'Ceremony Venue'}</div>
+                        <div class="shop-obl-meta-line"><strong>👤 Custodian:</strong> ${(obl.logistical_custody && obl.logistical_custody.custodian_role) || (obl.obligor && obl.obligor.role_title)}</div>
+                      </div>
+
+                      ${(obl.items && obl.items.length > 0) ? `
+                        <div style="margin-top: 8px;">
+                          <div class="shop-obl-items-box">
+                            <strong>📦 Specifications:</strong>
+                            ${obl.items.map(it => `<div>• ${it.description} (${it.quantity} ${it.unit})</div>`).join('')}
+                          </div>
+                        </div>
+                      ` : ''}
+
+                      ${isMonetary ? `
+                        <div style="margin-top: 8px;">
+                          <span class="shop-obl-finance-tag">
+                            💰 Cash Dakshina: ₹${obl.financial_obligation.unit_amount_inr ? obl.financial_obligation.unit_amount_inr.toLocaleString('en-IN') : 'TBD'}${obl.financial_obligation.headcount ? ` × ${obl.financial_obligation.headcount} = ₹${obl.financial_obligation.estimated_total_inr ? obl.financial_obligation.estimated_total_inr.toLocaleString('en-IN') : 'TBD'}` : ' (Per Headcount)'}
+                          </span>
+                        </div>
+                      ` : ''}
+
+                      ${(obl.verbatim_provenance && obl.verbatim_provenance.raw_source_text) ? `
+                        <div style="margin-top: 6px; font-size: 11px; color: var(--shop-text-muted); font-style: italic;">
+                          Source Text: "${obl.verbatim_provenance.raw_source_text}"
+                        </div>
+                      ` : ''}
+                    </div>
+
+                    <div class="shop-obl-card-footer">
+                      ${trsRef ? `
+                        <button type="button" class="shop-btn-sourced" onclick="window.navigateToShoppingItem('${trsRef}')" title="View Sourced SKU in Trousseau Catalog">
+                          <span>🛍️ Sourced via ${trsRef}</span>
+                        </button>
+                      ` : `
+                        <span style="font-size: 11px; color: var(--shop-text-muted);">Customary Handover</span>
+                      `}
+                      <div class="shop-obl-footer-actions">
+                        <button type="button" class="shop-btn-obl-share" onclick="window.shareObligationWhatsApp('${obl.id}')" title="Share obligation on WhatsApp">
+                          <span>📱 WhatsApp</span>
+                        </button>
+                        <button type="button" class="shop-btn-obl-link" onclick="window.copyObligationLink('${obl.id}')" title="Copy Deep Link">
+                          <span>🔗 Link</span>
+                        </button>
+                      </div>
+                    </div>
+                  </article>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+    window.renderObligations = renderObligations;
+
+    function navigateToObligation(oblId) {
+      if (!oblId) return;
+      setCatalogSubView('obligations');
+      activeObligationFilter = 'all';
+      activeObligationEvent = 'all';
+      obligationSearchQuery = '';
+      const searchInput = document.getElementById('oblSearchInput');
+      if (searchInput) searchInput.value = '';
+      const eventSelect = document.getElementById('oblEventFilter');
+      if (eventSelect) eventSelect.value = 'all';
+      document.querySelectorAll('.shop-obl-pill').forEach(p => {
+        p.classList.toggle('active', p.getAttribute('data-obl-filter') === 'all');
+      });
+      renderObligations();
+      setTimeout(() => {
+        const card = document.getElementById('card-' + oblId);
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card.classList.add('highlight-target-item');
+          setTimeout(() => card.classList.remove('highlight-target-item'), 3000);
+        }
+      }, 150);
+    }
+    window.navigateToObligation = navigateToObligation;
+
+    function navigateToShoppingItem(itemId) {
+      if (!itemId) return;
+      setCatalogSubView('items');
+      activeChapter = 'all';
+      activeFilter = 'all';
+      searchQuery = '';
+      const searchInput = document.getElementById('shopSearchInput');
+      if (searchInput) searchInput.value = '';
+      document.querySelectorAll('.shop-pill').forEach(p => {
+        p.classList.toggle('active', p.getAttribute('data-filter') === 'all');
+      });
+      renderItems();
+      setTimeout(() => {
+        const card = document.getElementById('card-' + itemId);
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card.classList.add('highlight-target-item');
+          setTimeout(() => card.classList.remove('highlight-target-item'), 3000);
+        }
+      }, 150);
+    }
+    window.navigateToShoppingItem = navigateToShoppingItem;
+
+    function shareObligationWhatsApp(oblId) {
+      const obls = getObligationsList();
+      const obl = obls.find(o => o.id === oblId);
+      if (!obl) return;
+
+      const itemsDesc = (obl.items || []).map(i => `• ${i.description} (${i.quantity} ${i.unit})`).join('\n');
+      const trsRef = obl.downstream_projections && obl.downstream_projections.commercial_shopping_ref;
+      const shareUrl = `${window.location.origin}${window.location.pathname}?subview=obligations&obl=${obl.id}`;
+
+      let msg = `🌺 *Sree Krushna Marriage OS — Customary Obligation Review* 🌺\n\n`;
+      msg += `📜 *${obl.id}: ${obl.customary_title}*\n`;
+      msg += `📝 *Description:* ${obl.english_descriptor}\n`;
+      msg += `🗓️ *Event & Ritual:* ${obl.event_ref} (${obl.ritual_ref})\n`;
+      msg += `👰 *From:* ${obl.obligor.role_title} (${obl.obligor.family.toUpperCase()})\n`;
+      msg += `🤵 *To:* ${obl.recipient.role_title} (${obl.recipient.family.toUpperCase()})\n`;
+      msg += `⏰ *Handover Moment:* ${(obl.logistical_custody && obl.logistical_custody.handover_moment) || 'Customary'}\n`;
+      msg += `📍 *Staging Location:* ${(obl.logistical_custody && obl.logistical_custody.staging_location) || 'Venue'}\n`;
+      if (itemsDesc) msg += `📦 *Items:*\n${itemsDesc}\n`;
+      if (obl.financial_obligation && obl.financial_obligation.is_monetary) {
+        msg += `💰 *Dakshina Rate:* ₹${obl.financial_obligation.unit_amount_inr} per attendee\n`;
+      }
+      if (trsRef) {
+        msg += `🛍️ *Sourced in Trousseau Catalog:* ${trsRef}\n`;
+      }
+      msg += `\n🔗 *Review in Marriage OS:* ${shareUrl}`;
+
+      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
+      window.open(waUrl, '_blank');
+    }
+    window.shareObligationWhatsApp = shareObligationWhatsApp;
+
+    function copyObligationLink(oblId) {
+      const shareUrl = `${window.location.origin}${window.location.pathname}?subview=obligations&obl=${oblId}`;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          showToast(`Copied link for ${oblId} to clipboard!`, '📋');
+        }).catch(() => {
+          prompt('Copy obligation link:', shareUrl);
+        });
+      } else {
+        prompt('Copy obligation link:', shareUrl);
+      }
+    }
+    window.copyObligationLink = copyObligationLink;
+
+    function shareAllObligationsWhatsApp() {
+      const shareUrl = `${window.location.origin}${window.location.pathname}?subview=obligations`;
+      const msg = `🌺 *Sree Krushna Marriage OS — Customary Family Obligations Register* 🌺\n\n` +
+        `Review the 49 customary lineage handovers, ceremonial attire endowments, and sacred Dakshina protocols governing our wedding rituals:\n` +
+        `• 27 Bride Side Obligations (Nirbandha, Batabarana, Sara gifting)\n` +
+        `• 21 Groom Side Obligations (Ahiya Manduli, Alata Sindoor, Samdhi Milan)\n` +
+        `• 8 Items pending family confirmation\n\n` +
+        `🔗 *Full Interactive Register:* ${shareUrl}`;
+
+      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
+      window.open(waUrl, '_blank');
+    }
+    window.shareAllObligationsWhatsApp = shareAllObligationsWhatsApp;
+
+    function printObligationsSheet() {
+      setCatalogSubView('obligations');
+      window.print();
+    }
+    window.printObligationsSheet = printObligationsSheet;
+
+    window.setObligationFilter = function(filter) {
+      activeObligationFilter = filter;
+      document.querySelectorAll('.shop-obl-pill').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-obl-filter') === filter);
+      });
+      renderObligations();
+    };
+
+    window.setObligationEventFilter = function(evt) {
+      activeObligationEvent = evt;
+      renderObligations();
+    };
+
+    window.onObligationSearch = function(query) {
+      obligationSearchQuery = query;
+      renderObligations();
+    };
+
     // Initialize & Re-render API
     function renderShoppingRegistry() {
       updateKpis();
@@ -11031,6 +12017,7 @@
       renderClusters();
       renderStores();
       renderItems();
+      renderObligations();
       if (typeof window.updateSurveyUI === 'function') {
         window.updateSurveyUI();
       }

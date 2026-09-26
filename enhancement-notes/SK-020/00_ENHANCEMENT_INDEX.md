@@ -4,7 +4,7 @@
 
 - **Category**: DOMAIN_MODEL / RITUAL_OBLIGATIONS / DATA_PIPELINE
 - **Priority**: HIGH
-- **Status**: PLANNING
+- **Status**: COMPLETED
 - **Estimate**: 12 hours
 - **Target Release**: v2.9.0
 - **Risk Level**: MEDIUM (Touches cross-cutting domains: Rituals, Shopping, Samagri, Asset Custody, Finance)
@@ -74,20 +74,20 @@ Codify, validate, and operationalize the handwritten family-to-family ritual, gi
 - [x] **Validation Gate (VG-4)**: Execute `node scripts/test-obligation-contract.cjs` (100% green across all 49 records).
 
 ### Phase 5: Shopping Tab SDCA Component Architecture
-- [ ] **Markup Component**: Create `shopping_src/components/obligations_view.html` with segmented filter bar, milestone accordions, and card layouts.
-- [ ] **Modular Styles**: Create `shopping_src/styles/10_obligations.css` (<500 lines, container queries, mobile 300px responsive).
-- [ ] **Subnav Button**: Add `[📜 Family Obligations (49)]` mode to `#catalogSubnavStrip` in `shopping_src/components/body.html`.
-- [ ] **Validation Gate (VG-5)**: Execute `npm run verify:modular-architecture` (passes 500-line modular limit).
+- [x] **Markup Component**: Create `shopping_src/components/obligations_view.html` with segmented filter bar, milestone accordions, and card layouts.
+- [x] **Modular Styles**: Create `shopping_src/styles/10_obligations.css` (<500 lines, container queries, mobile 300px responsive).
+- [x] **Subnav Button**: Add `[📜 Family Obligations (49)]` mode to `#catalogSubnavStrip` in `shopping_src/components/body.html`.
+- [x] **Validation Gate (VG-5)**: Execute `npm run verify:modular-architecture` (passes 500-line modular limit).
 
 ### Phase 6: Controller Wiring, Deep-Link State & WhatsApp Sharing
-- [ ] **Controller Integration**: Wire `window.setCatalogSubView('obligations')`, subview filters, and deep-linking into `shopping_src/scripts/controller.js`.
-- [ ] **Bi-Directional Badges**: Implement click handlers linking catalog items (`[📜 Fulfills OBL-###]`) and obligation cards (`[🛍️ Sourced via TRS-###]`).
-- [ ] **WhatsApp Sharing**: Add WhatsApp sharing template for family consultation.
-- [ ] **Validation Gate (VG-6)**: Verify URL state updating (`?subview=obligations&obl=OBL-001`) and interactive filtering.
+- [x] **Controller Integration**: Wire `window.setCatalogSubView('obligations')`, subview filters, and deep-linking into `shopping_src/scripts/controller.js`.
+- [x] **Bi-Directional Badges**: Implement click handlers linking catalog items (`[📜 Fulfills OBL-###]`) and obligation cards (`[🛍️ Sourced via TRS-###]`).
+- [x] **WhatsApp Sharing**: Add WhatsApp sharing template for family consultation.
+- [x] **Validation Gate (VG-6)**: Verify URL state updating (`?subview=obligations&obl=OBL-001`) and interactive filtering.
 
 ### Phase 7: Automated Byte Parity & Governance Verification
-- [ ] **Compilation**: Run `node shopping_src/build.cjs --all` emitting root and public HTML distributions.
-- [ ] **Byte Parity**: Verify 100% byte parity between `/` and `/public/`.
-- [ ] **Pre-Flight Gates**: Execute `npm run test:shopping`, `npm run test:obligations`, `npm run verify:modular-architecture`, and `npm run verify:governance-wiring:all` (100% green).
-- [ ] **Validation Gate (VG-7)**: All pre-flight suites pass without errors or regressions.
+- [x] **Compilation**: Run `node shopping_src/build.cjs --all` emitting root and public HTML distributions.
+- [x] **Byte Parity**: Verify 100% byte parity between `/` and `/public/`.
+- [x] **Pre-Flight Gates**: Execute `npm run test:shopping`, `npm run test:obligations`, `npm run verify:modular-architecture`, and `npm run verify:governance-wiring:all` (100% green).
+- [x] **Validation Gate (VG-7)**: All pre-flight suites pass without errors or regressions.
 

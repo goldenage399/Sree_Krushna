@@ -2,7 +2,7 @@
 
 > **Parent Hub**: [`02_RITUALS_CULTURE/HUB.md`](../HUB.md)  
 > **Standard**: `STD-FAMILY-OBLIGATION-001` | **Rulings**: `AC-DEC-2026-061` & `AC-DEC-2026-062`  
-> **Total Obligations**: 49 | **Unresolved**: 8 | **Last Compiled**: 2026-09-26T19:12:58.847Z  
+> **Total Obligations**: 49 | **Unresolved**: 8 | **Last Compiled**: 2026-09-26T19:24:39.700Z  
 
 ---
 

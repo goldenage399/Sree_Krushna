@@ -1,0 +1,105 @@
+<!-- Sree Krushna Marriage OS — Customary Family Obligations Subview -->
+<!-- Standard: STD-FAMILY-OBLIGATION-001 | AC-DEC-2026-061 / AC-DEC-2026-062 -->
+<!-- Ticket: SK-020 (Phase 5 SDCA Component) -->
+
+<section class="shop-obligations-view" id="shoppingObligationsView" aria-label="Customary Family Obligations Register">
+  <!-- Obligations Banner / Header Strip -->
+  <div class="shop-obl-header-banner">
+    <div class="shop-obl-header-info">
+      <div class="shop-obl-badge-row">
+        <span class="shop-obl-sacred-seal">📜 SACRED LINEAGE PROTOCOLS</span>
+        <span class="shop-obl-version-tag">STD-FAMILY-OBLIGATION-001</span>
+      </div>
+      <h2 class="shop-obl-title">Customary Family Obligations Register (Vidhi Dayitva / Bhara / Sara)</h2>
+      <p class="shop-obl-subtitle">
+        49 customary lineage handovers, ceremonial attire endowments, and sacred Dakshina protocols governing Odia Hindu marriage rituals between Bride's and Groom's families.
+      </p>
+    </div>
+    <div class="shop-obl-header-actions">
+      <button type="button" class="shop-btn shop-btn-secondary shop-btn-sm" onclick="window.shareAllObligationsWhatsApp()" title="Share complete obligations summary on WhatsApp">
+        <span>📱</span> Share with Elders
+      </button>
+      <button type="button" class="shop-btn shop-btn-primary shop-btn-sm" onclick="window.printObligationsSheet()" title="Print Ink-Friendly A4 Handover Run Sheet">
+        <span>🖨️</span> Print Obligation Sheet
+      </button>
+    </div>
+  </div>
+
+  <!-- Obligations KPI Summary Grid -->
+  <div class="shop-obl-kpis" id="oblKpisGrid">
+    <div class="shop-obl-kpi-card">
+      <span class="shop-obl-kpi-num" id="oblKpiTotal">49</span>
+      <span class="shop-obl-kpi-lbl">Total Customary Obligations</span>
+      <span class="shop-obl-kpi-sub">Across 6 Canonical Milestones</span>
+    </div>
+    <div class="shop-obl-kpi-card">
+      <span class="shop-obl-kpi-num" style="color: #60a5fa;" id="oblKpiBride">27</span>
+      <span class="shop-obl-kpi-lbl">Bride Side Obligations</span>
+      <span class="shop-obl-kpi-sub">23 to Groom Side + 4 Joint/Ext</span>
+    </div>
+    <div class="shop-obl-kpi-card">
+      <span class="shop-obl-kpi-num" style="color: #f472b6;" id="oblKpiGroom">21</span>
+      <span class="shop-obl-kpi-lbl">Groom Side Obligations</span>
+      <span class="shop-obl-kpi-sub">Groom Family to Bride / In-Laws</span>
+    </div>
+    <div class="shop-obl-kpi-card">
+      <span class="shop-obl-kpi-num" style="color: #fbbf24;" id="oblKpiUnresolved">8</span>
+      <span class="shop-obl-kpi-lbl">Pending Family Confirmation</span>
+      <span class="shop-obl-kpi-sub">TBD Choice / Headcount Pending</span>
+    </div>
+  </div>
+
+  <!-- Obligations Segmented Filter & Search Toolbar -->
+  <div class="shop-obl-toolbar">
+    <div class="shop-obl-filters" id="oblFilterPills" role="tablist" aria-label="Obligation Filters">
+      <button type="button" class="shop-obl-pill active" data-obl-filter="all" onclick="window.setObligationFilter('all')">
+        All Obligations (49)
+      </button>
+      <button type="button" class="shop-obl-pill" data-obl-filter="bride" onclick="window.setObligationFilter('bride')">
+        👰 Bride Side (27)
+      </button>
+      <button type="button" class="shop-obl-pill" data-obl-filter="groom" onclick="window.setObligationFilter('groom')">
+        🤵 Groom Side (21)
+      </button>
+      <button type="button" class="shop-obl-pill" data-obl-filter="joint" onclick="window.setObligationFilter('joint')">
+        🤝 Joint Handlers (3)
+      </button>
+      <button type="button" class="shop-obl-pill" data-obl-filter="unresolved" onclick="window.setObligationFilter('unresolved')">
+        ⚠️ Unresolved (8)
+      </button>
+      <button type="button" class="shop-obl-pill" data-obl-filter="attire" onclick="window.setObligationFilter('attire')">
+        🧵 Attire &amp; Silks (22)
+      </button>
+      <button type="button" class="shop-obl-pill" data-obl-filter="gold_silver" onclick="window.setObligationFilter('gold_silver')">
+        💎 Gold &amp; Silver (4)
+      </button>
+      <button type="button" class="shop-obl-pill" data-obl-filter="cash" onclick="window.setObligationFilter('cash')">
+        💰 Cash Dakshina (9)
+      </button>
+    </div>
+
+    <div class="shop-obl-controls">
+      <div class="shop-search-box shop-obl-search">
+        <span class="shop-search-icon">🔍</span>
+        <input type="text" id="oblSearchInput" class="shop-search-input" placeholder="Search obligations, relatives, rituals, or OBL-###..." oninput="window.onObligationSearch(this.value)">
+      </div>
+      <div class="shop-obl-event-select-wrap">
+        <select id="oblEventFilter" class="shop-obl-select" onchange="window.setObligationEventFilter(this.value)" aria-label="Filter by Event Milestone">
+          <option value="all">All Event Milestones</option>
+          <option value="EVT-001">EVT-001: Nirbandha (Engagement)</option>
+          <option value="EVT-002">EVT-002: Pua-Bhauni &amp; Mangan (Day 1)</option>
+          <option value="EVT-003">EVT-003: Snana &amp; Haldi (Day 2 Morning)</option>
+          <option value="EVT-004">EVT-004: Barat &amp; Mandap Vivaha (Day 2 Wedding)</option>
+          <option value="EVT-005">EVT-005: Bandapana &amp; Gruha Prabesha (Day 3)</option>
+          <option value="EVT-006">EVT-006: Samandhi Bhoji &amp; Reception (Day 4/8)</option>
+          <option value="POST_WEDDING">POST_WEDDING: Post-Wedding Reciprocals</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dynamic Obligations Container (Milestones & Cards Rendered Here) -->
+  <div class="shop-obl-container" id="obligationsCardsContainer">
+    <!-- Populated dynamically by window.renderObligations() in controller.js -->
+  </div>
+</section>

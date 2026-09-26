@@ -24,6 +24,31 @@
     let activeStoreCategory = 'all';
     window.catalogSubView = 'items';
 
+    // Customary Family Obligations State & Index (SK-020 / STD-FAMILY-OBLIGATION-001)
+    let activeObligationFilter = 'all';
+    let activeObligationEvent = 'all';
+    let obligationSearchQuery = '';
+
+    function getObligationsList() {
+      if (window.FAMILY_OBLIGATIONS_DATA && Array.isArray(window.FAMILY_OBLIGATIONS_DATA.obligations)) {
+        return window.FAMILY_OBLIGATIONS_DATA.obligations;
+      }
+      return [];
+    }
+
+    function buildTrsToObligationsIndex() {
+      const obls = getObligationsList();
+      const map = {};
+      obls.forEach(o => {
+        const trsRef = o.downstream_projections && o.downstream_projections.commercial_shopping_ref;
+        if (trsRef) {
+          if (!map[trsRef]) map[trsRef] = [];
+          map[trsRef].push(o.id);
+        }
+      });
+      return map;
+    }
+
     // Candidate Look 30-Day Archival Retention Constant (AC-DEC-2026-040)
     const ARCHIVE_RETENTION_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
 
@@ -199,7 +224,7 @@
     // Standards: P-SHOPPING-JOURNEY-HUBS-001 / STD-MOD-COMP-001
     // ========================================================================
     function setCatalogSubView(subview, targetId) {
-      const allowedViews = ['items', 'itinerary', 'clusters', 'stores', 'all'];
+      const allowedViews = ['items', 'itinerary', 'clusters', 'stores', 'obligations', 'all'];
       const targetView = allowedViews.includes(subview) ? subview : 'items';
       window.catalogSubView = targetView;
 
@@ -219,6 +244,10 @@
         btn.classList.toggle('active', isCurrent);
         btn.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
       });
+
+      if (targetView === 'obligations') {
+        renderObligations();
+      }
 
       // Synchronize URL query state if on catalog view
       try {
@@ -240,9 +269,11 @@
             el.scrollIntoView({ behavior: 'smooth', block: 'center' });
             el.style.outline = '2px solid var(--shop-gold, #d4af37)';
             el.style.boxShadow = '0 0 16px rgba(212, 175, 55, 0.4)';
+            el.classList.add('highlight-target-item');
             setTimeout(() => {
               el.style.outline = '';
               el.style.boxShadow = '';
+              el.classList.remove('highlight-target-item');
             }, 3000);
           }
         }, 120);
@@ -444,11 +475,18 @@
             }
           }
         }, 350);
+      } else if (params.get('obl')) {
+        // Priority 5: Family Obligation Deep Link
+        const oblId = params.get('obl');
+        setCatalogSubView('obligations', 'card-' + oblId);
       } else if (paramSubView) {
-        // Priority 5: Explicit subview parameter
+        // Priority 6: Explicit subview parameter
         setCatalogSubView(paramSubView);
+        if (params.get('obl')) {
+          navigateToObligation(params.get('obl'));
+        }
       } else {
-        // Priority 6: Default fallback
+        // Priority 7: Default fallback
         setCatalogSubView('items');
       }
     }
@@ -808,6 +846,7 @@
     function renderItems() {
       syncCatalogViewUI();
       const q = searchQuery.toLowerCase().trim();
+      const trsToObligationsMap = buildTrsToObligationsIndex();
 
       const filtered = items.filter(item => {
         if (activeChapter !== 'all' && item.chapterId !== activeChapter) return false;
@@ -884,6 +923,9 @@
                   <span class="shop-mini-vote ${approvals.sisters ? 'approved' : ''}" onclick="window.toggleApproval('${item.id}', 'sisters')" title="Toggle Sisters Approval">👭 ${approvals.sisters ? '✓' : '○'}</span>
                   <span class="shop-mini-vote ${approvals.inlaws ? 'approved' : ''}" onclick="window.toggleApproval('${item.id}', 'inlaws')" title="Toggle In-Laws Approval">🤝 ${approvals.inlaws ? '✓' : '○'}</span>
                   ${item.clusterId ? `<span class="shop-mini-vote" onclick="window.focusCluster('${item.clusterId}')" title="Compare Alternatives" style="cursor: pointer;">⚖️ Compare</span>` : ''}
+                  ${(trsToObligationsMap[item.id] || []).map(oblId => `
+                    <button type="button" class="shop-badge-obligation" onclick="event.stopPropagation(); window.navigateToObligation('${oblId}')" title="Customary Family Obligation: ${oblId}">📜 ${oblId}</button>
+                  `).join('')}
                 </div>
               </div>
 
@@ -988,6 +1030,16 @@
                 </div>
               ` : ''}
               
+              ${(trsToObligationsMap[item.id] || []).length > 0 ? `
+                <div style="margin: 6px 0 8px 0; display: flex; flex-wrap: wrap; gap: 4px;">
+                  ${(trsToObligationsMap[item.id] || []).map(oblId => `
+                    <button type="button" class="shop-badge-obligation" onclick="event.stopPropagation(); window.navigateToObligation('${oblId}')" title="Fulfills Customary Family Obligation: ${oblId}">
+                      <span>📜 Fulfills ${oblId}</span>
+                    </button>
+                  `).join('')}
+                </div>
+              ` : ''}
+
               <!-- Multi-Stakeholder Consensus Bar -->
               <div class="shop-stakeholder-bar">
                 <span style="font-size: 11px; font-weight: 700; color: var(--shop-text-muted); margin-right: 4px;">CONSENSUS:</span>
@@ -3584,6 +3636,356 @@
       });
     }
 
+    // ========================================================================
+    // CUSTOMARY FAMILY OBLIGATIONS (OBL-001 to OBL-049) CONTROLLER ENGINE
+    // Standard: STD-FAMILY-OBLIGATION-001 | AC-DEC-2026-061 / AC-DEC-2026-062
+    // ========================================================================
+    function renderObligations() {
+      const container = document.getElementById('obligationsCardsContainer');
+      if (!container) return;
+
+      const obls = getObligationsList();
+      if (!obls || obls.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 40px; color: var(--shop-text-muted); background: var(--shop-surface); border-radius: var(--shop-radius-md);">
+            No obligation records found in data layer (js/obligations-data.js).
+          </div>
+        `;
+        return;
+      }
+
+      // Update KPIs if elements exist
+      const stats = (window.FAMILY_OBLIGATIONS_DATA && window.FAMILY_OBLIGATIONS_DATA.stats) || {};
+      const elTotal = document.getElementById('oblKpiTotal');
+      const elBride = document.getElementById('oblKpiBride');
+      const elGroom = document.getElementById('oblKpiGroom');
+      const elUnresolved = document.getElementById('oblKpiUnresolved');
+      if (elTotal) elTotal.textContent = stats.total || obls.length;
+      if (elBride) elBride.textContent = (stats.by_direction && (stats.by_direction.bride_to_groom + (stats.by_direction.joint || 0) + (stats.by_direction.external || 0))) || 27;
+      if (elGroom) elGroom.textContent = (stats.by_direction && stats.by_direction.groom_to_bride) || 21;
+      if (elUnresolved) elUnresolved.textContent = stats.unresolved_count || 8;
+
+      const q = (obligationSearchQuery || '').toLowerCase().trim();
+
+      const filtered = obls.filter(o => {
+        // Filter by Event Milestone
+        if (activeObligationEvent !== 'all' && o.event_ref !== activeObligationEvent) {
+          return false;
+        }
+
+        // Filter by Category / Direction / Status Pill
+        if (activeObligationFilter === 'bride') {
+          if (o.obligor.family !== 'bride' && o.obligor.family !== 'joint') return false;
+        } else if (activeObligationFilter === 'groom') {
+          if (o.obligor.family !== 'groom') return false;
+        } else if (activeObligationFilter === 'joint') {
+          if (o.obligor.family !== 'joint' && !o.exchange_cluster.is_exchange) return false;
+        } else if (activeObligationFilter === 'unresolved') {
+          const isUnresolved = ['TBD_Family_Choice', 'Source_Unclear', 'Source_Redacted', 'Pending_Family_Confirmation'].includes(o.spec_status) || o.lifecycle_status === 'Identified';
+          if (!isUnresolved) return false;
+        } else if (activeObligationFilter === 'attire') {
+          if (o.category !== 'attire') return false;
+        } else if (activeObligationFilter === 'gold_silver') {
+          if (o.category !== 'gold_silver') return false;
+        } else if (activeObligationFilter === 'cash') {
+          const isCash = o.category === 'cash_envelope' || (o.financial_obligation && o.financial_obligation.is_monetary);
+          if (!isCash) return false;
+        }
+
+        // Search Query Match
+        if (!q) return true;
+        const itemsText = (o.items || []).map(i => i.description).join(' ');
+        const text = [
+          o.id,
+          o.customary_title,
+          o.english_descriptor,
+          o.obligor ? o.obligor.role_title : '',
+          o.obligor ? o.obligor.primary_contact : '',
+          o.recipient ? o.recipient.role_title : '',
+          o.recipient ? o.recipient.primary_contact : '',
+          o.event_ref,
+          o.ritual_ref,
+          itemsText,
+          o.verbatim_provenance ? o.verbatim_provenance.raw_source_text : ''
+        ].join(' ').toLowerCase();
+
+        return text.includes(q);
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 40px; color: var(--shop-text-muted); background: var(--shop-surface); border-radius: var(--shop-radius-md);">
+            No customary obligations match the active filter or search query.
+          </div>
+        `;
+        return;
+      }
+
+      const milestoneMap = {
+        'EVT-001': 'EVT-001: Nirbandha (Engagement Ceremony)',
+        'EVT-002': 'EVT-002: Pua-Bhauni, Mangan & Diyas (Day 1)',
+        'EVT-003': 'EVT-003: Snana & Haldi (Day 2 Morning)',
+        'EVT-004': 'EVT-004: Barat, Baranugam & Mandap Vivaha (Day 2 Wedding)',
+        'EVT-005': 'EVT-005: Bandapana, Gruha Prabesha & Kaudi Khela (Day 3)',
+        'EVT-006': 'EVT-006: Samandhi Bhoji & Astamangala (Day 4/8 Culmination)',
+        'POST_WEDDING': 'POST_WEDDING: Post-Wedding Reciprocals'
+      };
+
+      const catIcons = {
+        'attire': '🧵',
+        'gold_silver': '💎',
+        'cash_envelope': '💰',
+        'composite_bundle': '🎁',
+        'food_delicacy': '🍲',
+        'sundry_ritual': '🪔'
+      };
+
+      // Group by event_ref
+      const grouped = {};
+      filtered.forEach(o => {
+        const ev = o.event_ref || 'OTHER';
+        if (!grouped[ev]) grouped[ev] = [];
+        grouped[ev].push(o);
+      });
+
+      const eventOrder = ['EVT-001', 'EVT-002', 'EVT-003', 'EVT-004', 'EVT-005', 'EVT-006', 'POST_WEDDING', 'OTHER'];
+      const activeEvents = eventOrder.filter(ev => grouped[ev] && grouped[ev].length > 0);
+
+      container.innerHTML = activeEvents.map(ev => {
+        const groupTitle = milestoneMap[ev] || ev;
+        const groupObls = grouped[ev];
+
+        return `
+          <div class="shop-obl-milestone-group" id="obl-group-${ev}">
+            <div class="shop-obl-group-header">
+              <h3 class="shop-obl-group-title">
+                <span>🗓️</span> ${groupTitle}
+              </h3>
+              <span class="shop-obl-group-count">${groupObls.length} ${groupObls.length === 1 ? 'Obligation' : 'Obligations'}</span>
+            </div>
+
+            <div class="shop-obl-cards-grid">
+              ${groupObls.map(obl => {
+                const catIcon = catIcons[obl.category] || '📜';
+                const dirClass = `dir-${(obl.direction || 'joint').replace(/_/g, '-')}`;
+                const dirLabel = obl.direction === 'bride_to_groom'
+                  ? `👰 ${obl.obligor.role_title} ⟶ 🤵 ${obl.recipient.role_title}`
+                  : (obl.direction === 'groom_to_bride'
+                    ? `🤵 ${obl.obligor.role_title} ⟶ 👰 ${obl.recipient.role_title}`
+                    : `🤝 ${obl.obligor.role_title} ⟷ ${obl.recipient.role_title}`);
+
+                const specClass = (obl.spec_status === 'Fully_Specified')
+                  ? 'spec-fully-specified'
+                  : (['TBD_Family_Choice', 'Pending_Family_Confirmation'].includes(obl.spec_status) ? 'spec-tbd' : 'spec-unclear');
+
+                const trsRef = obl.downstream_projections && obl.downstream_projections.commercial_shopping_ref;
+                const isMonetary = obl.financial_obligation && obl.financial_obligation.is_monetary;
+
+                return `
+                  <article class="shop-obl-card" id="card-${obl.id}">
+                    <div>
+                      <div class="shop-obl-card-top">
+                        <span class="shop-obl-id-badge">${obl.id}</span>
+                        <span class="shop-obl-dir-pill ${dirClass}" title="${obl.direction}">${dirLabel}</span>
+                      </div>
+
+                      <h4 class="shop-obl-card-title">${catIcon} ${obl.customary_title}</h4>
+                      <p class="shop-obl-card-desc">${obl.english_descriptor}</p>
+
+                      <div class="shop-obl-badges-row">
+                        <span class="shop-obl-spec-badge ${specClass}">${(obl.spec_status || '').replace(/_/g, ' ')}</span>
+                        <span class="shop-obl-spec-badge" style="background: rgba(255,255,255,0.06); color: var(--shop-text-secondary); border: 1px solid rgba(255,255,255,0.1);">${obl.lifecycle_status}</span>
+                        <span class="shop-obl-spec-badge" style="background: rgba(229,169,60,0.08); color: var(--shop-gold); border: 1px solid rgba(229,169,60,0.2);">${obl.ritual_ref}</span>
+                      </div>
+
+                      <div class="shop-obl-meta-box">
+                        <div class="shop-obl-meta-line"><strong>⏰ Handover Moment:</strong> ${(obl.logistical_custody && obl.logistical_custody.handover_moment) || 'Customary Ritual Window'}</div>
+                        <div class="shop-obl-meta-line"><strong>📍 Location:</strong> ${(obl.logistical_custody && obl.logistical_custody.staging_location) || 'Ceremony Venue'}</div>
+                        <div class="shop-obl-meta-line"><strong>👤 Custodian:</strong> ${(obl.logistical_custody && obl.logistical_custody.custodian_role) || (obl.obligor && obl.obligor.role_title)}</div>
+                      </div>
+
+                      ${(obl.items && obl.items.length > 0) ? `
+                        <div style="margin-top: 8px;">
+                          <div class="shop-obl-items-box">
+                            <strong>📦 Specifications:</strong>
+                            ${obl.items.map(it => `<div>• ${it.description} (${it.quantity} ${it.unit})</div>`).join('')}
+                          </div>
+                        </div>
+                      ` : ''}
+
+                      ${isMonetary ? `
+                        <div style="margin-top: 8px;">
+                          <span class="shop-obl-finance-tag">
+                            💰 Cash Dakshina: ₹${obl.financial_obligation.unit_amount_inr ? obl.financial_obligation.unit_amount_inr.toLocaleString('en-IN') : 'TBD'}${obl.financial_obligation.headcount ? ` × ${obl.financial_obligation.headcount} = ₹${obl.financial_obligation.estimated_total_inr ? obl.financial_obligation.estimated_total_inr.toLocaleString('en-IN') : 'TBD'}` : ' (Per Headcount)'}
+                          </span>
+                        </div>
+                      ` : ''}
+
+                      ${(obl.verbatim_provenance && obl.verbatim_provenance.raw_source_text) ? `
+                        <div style="margin-top: 6px; font-size: 11px; color: var(--shop-text-muted); font-style: italic;">
+                          Source Text: "${obl.verbatim_provenance.raw_source_text}"
+                        </div>
+                      ` : ''}
+                    </div>
+
+                    <div class="shop-obl-card-footer">
+                      ${trsRef ? `
+                        <button type="button" class="shop-btn-sourced" onclick="window.navigateToShoppingItem('${trsRef}')" title="View Sourced SKU in Trousseau Catalog">
+                          <span>🛍️ Sourced via ${trsRef}</span>
+                        </button>
+                      ` : `
+                        <span style="font-size: 11px; color: var(--shop-text-muted);">Customary Handover</span>
+                      `}
+                      <div class="shop-obl-footer-actions">
+                        <button type="button" class="shop-btn-obl-share" onclick="window.shareObligationWhatsApp('${obl.id}')" title="Share obligation on WhatsApp">
+                          <span>📱 WhatsApp</span>
+                        </button>
+                        <button type="button" class="shop-btn-obl-link" onclick="window.copyObligationLink('${obl.id}')" title="Copy Deep Link">
+                          <span>🔗 Link</span>
+                        </button>
+                      </div>
+                    </div>
+                  </article>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+    window.renderObligations = renderObligations;
+
+    function navigateToObligation(oblId) {
+      if (!oblId) return;
+      setCatalogSubView('obligations');
+      activeObligationFilter = 'all';
+      activeObligationEvent = 'all';
+      obligationSearchQuery = '';
+      const searchInput = document.getElementById('oblSearchInput');
+      if (searchInput) searchInput.value = '';
+      const eventSelect = document.getElementById('oblEventFilter');
+      if (eventSelect) eventSelect.value = 'all';
+      document.querySelectorAll('.shop-obl-pill').forEach(p => {
+        p.classList.toggle('active', p.getAttribute('data-obl-filter') === 'all');
+      });
+      renderObligations();
+      setTimeout(() => {
+        const card = document.getElementById('card-' + oblId);
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card.classList.add('highlight-target-item');
+          setTimeout(() => card.classList.remove('highlight-target-item'), 3000);
+        }
+      }, 150);
+    }
+    window.navigateToObligation = navigateToObligation;
+
+    function navigateToShoppingItem(itemId) {
+      if (!itemId) return;
+      setCatalogSubView('items');
+      activeChapter = 'all';
+      activeFilter = 'all';
+      searchQuery = '';
+      const searchInput = document.getElementById('shopSearchInput');
+      if (searchInput) searchInput.value = '';
+      document.querySelectorAll('.shop-pill').forEach(p => {
+        p.classList.toggle('active', p.getAttribute('data-filter') === 'all');
+      });
+      renderItems();
+      setTimeout(() => {
+        const card = document.getElementById('card-' + itemId);
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card.classList.add('highlight-target-item');
+          setTimeout(() => card.classList.remove('highlight-target-item'), 3000);
+        }
+      }, 150);
+    }
+    window.navigateToShoppingItem = navigateToShoppingItem;
+
+    function shareObligationWhatsApp(oblId) {
+      const obls = getObligationsList();
+      const obl = obls.find(o => o.id === oblId);
+      if (!obl) return;
+
+      const itemsDesc = (obl.items || []).map(i => `• ${i.description} (${i.quantity} ${i.unit})`).join('\n');
+      const trsRef = obl.downstream_projections && obl.downstream_projections.commercial_shopping_ref;
+      const shareUrl = `${window.location.origin}${window.location.pathname}?subview=obligations&obl=${obl.id}`;
+
+      let msg = `🌺 *Sree Krushna Marriage OS — Customary Obligation Review* 🌺\n\n`;
+      msg += `📜 *${obl.id}: ${obl.customary_title}*\n`;
+      msg += `📝 *Description:* ${obl.english_descriptor}\n`;
+      msg += `🗓️ *Event & Ritual:* ${obl.event_ref} (${obl.ritual_ref})\n`;
+      msg += `👰 *From:* ${obl.obligor.role_title} (${obl.obligor.family.toUpperCase()})\n`;
+      msg += `🤵 *To:* ${obl.recipient.role_title} (${obl.recipient.family.toUpperCase()})\n`;
+      msg += `⏰ *Handover Moment:* ${(obl.logistical_custody && obl.logistical_custody.handover_moment) || 'Customary'}\n`;
+      msg += `📍 *Staging Location:* ${(obl.logistical_custody && obl.logistical_custody.staging_location) || 'Venue'}\n`;
+      if (itemsDesc) msg += `📦 *Items:*\n${itemsDesc}\n`;
+      if (obl.financial_obligation && obl.financial_obligation.is_monetary) {
+        msg += `💰 *Dakshina Rate:* ₹${obl.financial_obligation.unit_amount_inr} per attendee\n`;
+      }
+      if (trsRef) {
+        msg += `🛍️ *Sourced in Trousseau Catalog:* ${trsRef}\n`;
+      }
+      msg += `\n🔗 *Review in Marriage OS:* ${shareUrl}`;
+
+      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
+      window.open(waUrl, '_blank');
+    }
+    window.shareObligationWhatsApp = shareObligationWhatsApp;
+
+    function copyObligationLink(oblId) {
+      const shareUrl = `${window.location.origin}${window.location.pathname}?subview=obligations&obl=${oblId}`;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          showToast(`Copied link for ${oblId} to clipboard!`, '📋');
+        }).catch(() => {
+          prompt('Copy obligation link:', shareUrl);
+        });
+      } else {
+        prompt('Copy obligation link:', shareUrl);
+      }
+    }
+    window.copyObligationLink = copyObligationLink;
+
+    function shareAllObligationsWhatsApp() {
+      const shareUrl = `${window.location.origin}${window.location.pathname}?subview=obligations`;
+      const msg = `🌺 *Sree Krushna Marriage OS — Customary Family Obligations Register* 🌺\n\n` +
+        `Review the 49 customary lineage handovers, ceremonial attire endowments, and sacred Dakshina protocols governing our wedding rituals:\n` +
+        `• 27 Bride Side Obligations (Nirbandha, Batabarana, Sara gifting)\n` +
+        `• 21 Groom Side Obligations (Ahiya Manduli, Alata Sindoor, Samdhi Milan)\n` +
+        `• 8 Items pending family confirmation\n\n` +
+        `🔗 *Full Interactive Register:* ${shareUrl}`;
+
+      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
+      window.open(waUrl, '_blank');
+    }
+    window.shareAllObligationsWhatsApp = shareAllObligationsWhatsApp;
+
+    function printObligationsSheet() {
+      setCatalogSubView('obligations');
+      window.print();
+    }
+    window.printObligationsSheet = printObligationsSheet;
+
+    window.setObligationFilter = function(filter) {
+      activeObligationFilter = filter;
+      document.querySelectorAll('.shop-obl-pill').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-obl-filter') === filter);
+      });
+      renderObligations();
+    };
+
+    window.setObligationEventFilter = function(evt) {
+      activeObligationEvent = evt;
+      renderObligations();
+    };
+
+    window.onObligationSearch = function(query) {
+      obligationSearchQuery = query;
+      renderObligations();
+    };
+
     // Initialize & Re-render API
     function renderShoppingRegistry() {
       updateKpis();
@@ -3591,6 +3993,7 @@
       renderClusters();
       renderStores();
       renderItems();
+      renderObligations();
       if (typeof window.updateSurveyUI === 'function') {
         window.updateSurveyUI();
       }

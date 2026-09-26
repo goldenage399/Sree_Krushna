@@ -46,6 +46,12 @@ const combinedCss = primCss + '\n\n    ' + moduleCss;
 // Read Body Component and Shared Modals (Lightbox + Intake Modal + Survey Studio)
 let bodyHtml = fs.readFileSync(path.join(baseDir, 'components', 'body.html'), 'utf8');
 
+const oblViewPath = path.join(baseDir, 'components', 'obligations_view.html');
+if (fs.existsSync(oblViewPath)) {
+  const oblHtml = fs.readFileSync(oblViewPath, 'utf8');
+  bodyHtml = bodyHtml.replace('<!-- INJECT:OBLIGATIONS_VIEW -->', oblHtml);
+}
+
 const tableViewPath = path.join(baseDir, 'components', 'table_view.html');
 if (fs.existsSync(tableViewPath)) {
   bodyHtml += '\n\n' + fs.readFileSync(tableViewPath, 'utf8');
@@ -221,6 +227,7 @@ ${bodyHtml}
 </div>
 
 <script src="/js/shopping-data.js"></script>
+<script src="/js/obligations-data.js"></script>
 <script>
 ${fullControllerJs}
 </script>
