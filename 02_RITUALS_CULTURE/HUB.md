@@ -30,3 +30,8 @@
 - [`SAM-004` Baranugam Samagri](./samagri_checklists/SAM-004_baranugam_samagri.md)
 - [`SAM-005` Kanyadaan & Mandap Homa Samagri](./samagri_checklists/SAM-005_kanyadaan_mandap_homa_samagri.md)
 - [`SAM-006` Chauthi Puja Samagri](./samagri_checklists/SAM-006_chauthi_puja_samagri.md)
+
+### Customary Family Obligations (`OBL-###`)
+- [Obligation Template](./obligation_template.md)
+- [Family Obligations Master Register](./obligations/family_obligations_master.md)
+- [Obligations Directory](./obligations/)
