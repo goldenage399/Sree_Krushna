@@ -27,9 +27,10 @@ When the Barat procession arrives at the wedding venue, the groom is received as
 
 ## 2. Sequence of Ritual Steps
 1. **Barat Arrival & Gate Welcome:** Barat procession reaches venue entrance with music/shehnai.
-2. **Baranugam Aarti:** Bride's mother conducts auspicious aarti, washes the groom's feet with sacred water, and applies tilak.
-3. **Jay Mala / Varamala (Garland Exchange):** Exchange of floral garlands between bride and groom on the stage.
-4. **Mandap Entry:** Groom is escorted by the priest and elders to the Vedic Mandap.
+2. **Baranugam Aarti (Batabarana):** Bride's mother conducts auspicious aarti, washes the groom's feet with sacred water, and applies tilak.
+3. **Ahiya Manduli Presentation:** Groom's family presents the sacred *Ahiya Manduli* (consecrated silk saree and auspicious shringar presentation) to the bride's mother (*Mummy*) in honor of her matriarchal welcome.
+4. **Jay Mala / Varamala (Garland Exchange):** Exchange of floral garlands between bride and groom on the stage.
+5. **Mandap Entry:** Groom is escorted by the priest and elders to the Vedic Mandap.
 
 ## 3. Required Materials & Samagri
 *Authoritative Checklist: [`SAM-004`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/samagri_checklists/SAM-004_baranugam_samagri.md)*

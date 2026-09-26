@@ -33,7 +33,7 @@ The central milestone of the marriage lifecycle configured for a **Daytime Vedic
 
 ## 2. Sequence of Vedic Milestones (Daytime Schedule)
 1. `09:30 AM` — Barat Procession Assembles & Proceeds to Venue
-2. `10:30 AM` — [`RIT-004: Baranugam & Entrance Welcome`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/specs/RIT-004_baranugam.md) (Aarti, Floral Shower, Morning Refreshment Coolers)
+2. `10:30 AM` — [`RIT-004: Baranugam, Entrance Welcome & Ahiya Manduli`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/specs/RIT-004_baranugam.md) (Batabarana Aarti, Groom Family's Ahiya Manduli Saree presentation to Bride's Mother, Floral Shower, Refreshment Coolers)
 3. `11:00 AM` — Jay Mala / Varamala Stage Ceremony (Daylight Ambiance)
 4. `11:30 AM` — Mandap Entry & Preliminary Kanyadaan Rites ([`RIT-005: Kanyadaan`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/specs/RIT-005_kanyadaan.md))
 5. `12:00 PM` — 🪔 **THE SACRED ASTROLOGICAL MUHURAT: HASTAGANTHI** (Holy Knot & Hand-Joining)
