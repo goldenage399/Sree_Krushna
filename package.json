@@ -24,7 +24,10 @@
     "test:obligations": "node scripts/test-obligation-contract.cjs",
     "build:obligations": "node scripts/compile-obligations.cjs",
     "verify:modular-architecture": "node scripts/verify-modular-architecture.cjs",
+    "verify:structural-contracts": "node scripts/verify-structural-contracts.cjs",
+    "verify:all": "npm run verify:modular-architecture && npm run verify:structural-contracts && npm run test:shopping && npm run test:obligations && npm run verify:governance-wiring:all",
     "verify:ui-lifecycle": "node scripts/verify-ui-lifecycle.cjs",
+
     "verify:ui-buttons": "node scripts/verify-ui-button-primitives.cjs",
     "verify:deployment": "node scripts/verify-deployment.cjs",
     "verify:react-deployment": "node scripts/verify-react-deployment.cjs",

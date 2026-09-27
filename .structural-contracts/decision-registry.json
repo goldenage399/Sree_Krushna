@@ -1,0 +1,44 @@
+{
+  "module": "decision_registry",
+  "source_components": ["decision_registry_src/components/*.html"],
+  "artifacts": {
+    "standalone": "decision-registry.html",
+    "fragment": "decision-registry-fragment.html"
+  },
+  "required_ids": [
+    {
+      "id": "decisionRegistryFrame",
+      "artifact": "fragment",
+      "must_be_at_root": true,
+      "comment": "Frame wrapper only exists in fragment. app.js L:1184 getElementById('decisionRegistryFrame') is the mount target."
+    },
+    {
+      "id": "decisionRegistryRoot",
+      "artifact": "fragment",
+      "must_be_descendant_of": "decisionRegistryFrame",
+      "comment": "app.js L:1216 querySelector('#decisionRegistryFrame') extracts Root's innerHTML into the SPA tab. PoC-confirmed (2026-09-28)."
+    },
+    {
+      "id": "decisionRegistryRoot",
+      "artifact": "standalone",
+      "must_be_at_root": true,
+      "comment": "In standalone, decisionRegistryRoot is the outermost container. PoC-confirmed."
+    },
+    {
+      "id": "familyWelcomeBanner",
+      "artifact": "both",
+      "must_be_descendant_of": "decisionRegistryRoot",
+      "comment": "PoC confirmed chain: [decisionRegistryRoot]. Welcome banner must always be inside Root."
+    },
+    {
+      "id": "decisionsGrid",
+      "artifact": "both",
+      "must_be_descendant_of": "decisionRegistryRoot",
+      "comment": "PoC confirmed chain: [decisionRegistryRoot]. Main grid must always be inside Root."
+    }
+  ],
+  "runtime_selectors": [
+    { "selector": "#decisionRegistryFrame", "mounted_by": "mountDecisionRegistryTab()", "app_js_line": 1184 },
+    { "selector": "#decisionRegistryRoot", "mounted_by": "mountDecisionRegistryTab()", "app_js_line": 1216 }
+  ]
+}

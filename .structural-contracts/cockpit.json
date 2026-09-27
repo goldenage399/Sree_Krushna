@@ -1,0 +1,32 @@
+{
+  "module": "cockpit",
+  "source_components": ["cockpit_src/components/*.html", "cockpit_src/components/modals/*.html"],
+  "artifacts": {
+    "standalone": "decorator-cockpit.html",
+    "fragment": "cockpit-fragment.html"
+  },
+  "required_ids": [
+    {
+      "id": "cockpitFrame",
+      "artifact": "fragment",
+      "must_be_at_root": true,
+      "comment": "Frame wrapper only exists in fragment. app.js L:1092 getElementById('cockpitFrame') is the mount target."
+    },
+    {
+      "id": "hudWorkspace",
+      "artifact": "fragment",
+      "must_be_descendant_of": "cockpitFrame",
+      "comment": "app.js L:1124 querySelector('#cockpitFrame') extracts inner content. PoC-confirmed: hudWorkspace chain = [cockpitFrame]."
+    },
+    {
+      "id": "cockpitAuthOverlay",
+      "artifact": "standalone",
+      "must_be_at_root": true,
+      "comment": "In standalone, auth overlay is the top-level gating element. PoC-confirmed."
+    }
+  ],
+  "runtime_selectors": [
+    { "selector": "#cockpitFrame", "mounted_by": "mountCockpitTab()", "app_js_line": 1092 },
+    { "selector": "#cockpitFrame", "mounted_by": "mountCockpitTab() fragment extraction", "app_js_line": 1124 }
+  ]
+}

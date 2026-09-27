@@ -1,0 +1,44 @@
+{
+  "module": "shopping",
+  "source_components": ["shopping_src/components/*.html"],
+  "artifacts": {
+    "standalone": "shopping-registry.html",
+    "fragment": "shopping-fragment.html"
+  },
+  "required_ids": [
+    {
+      "id": "shoppingRegistryFrame",
+      "artifact": "fragment",
+      "must_be_at_root": true,
+      "comment": "Frame wrapper only exists in fragment. app.js L:1276 getElementById('shoppingRegistryFrame') is the mount target."
+    },
+    {
+      "id": "shoppingRegistryRoot",
+      "artifact": "fragment",
+      "must_be_descendant_of": "shoppingRegistryFrame",
+      "comment": "app.js L:1308 querySelector('#shoppingRegistryFrame') extracts Root's innerHTML into the SPA tab. PoC-proven (2026-09-28)."
+    },
+    {
+      "id": "shoppingRegistryRoot",
+      "artifact": "standalone",
+      "must_be_at_root": true,
+      "comment": "In standalone, shoppingRegistryRoot is the outermost container. No Frame wrapper. PoC-confirmed."
+    },
+    {
+      "id": "shopWelcomeBanner",
+      "artifact": "both",
+      "must_be_descendant_of": "shoppingRegistryRoot",
+      "comment": "PoC confirmed chain: [shoppingRegistryRoot]. This is the fd47c6f regression-class contract — the banner must always be inside Root."
+    },
+    {
+      "id": "catalogViewSection",
+      "artifact": "both",
+      "must_be_descendant_of": "shoppingRegistryRoot",
+      "comment": "PoC confirmed real ID name (plan previously cited non-existent shoppingCatalogContainer). Catalog section must remain inside Root."
+    }
+  ],
+  "runtime_selectors": [
+    { "selector": "#shoppingRegistryFrame", "mounted_by": "mountShoppingRegistryTab()", "app_js_line": 1276 },
+    { "selector": "#shoppingRegistryRoot", "mounted_by": "mountShoppingRegistryTab()", "app_js_line": 1308 }
+  ]
+}
