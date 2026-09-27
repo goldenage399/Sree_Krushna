@@ -9,6 +9,7 @@
     "test:smoke": "node scripts/local-smoke-test.cjs",
     "test:e2e": "npx playwright test",
     "test:e2e:ui": "npx playwright test --ui",
+    "test:sdca-structural": "npx playwright test tests/sdca-structural.spec.mjs --project=chromium",
     "test:graph-sync": "node scripts/test-graph-sync.cjs",
     "verify:task-graph": "node scripts/validate-task-graph.cjs",
     "verify:governance-wiring": "node scripts/verify-governance-wiring.cjs",
