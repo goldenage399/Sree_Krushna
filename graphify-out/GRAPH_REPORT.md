@@ -1,7 +1,7 @@
 # 🌐 Canonical Domain Entity Graph Report — Sree_Krushna
 
 > **Standard**: `STD-UNIVERSAL-TAXONOMY-001` / `STD-PCL-001`  
-> **Generated At**: 2026-09-27T07:05:18.819Z  
+> **Generated At**: 2026-09-27T07:22:32.006Z  
 > **Entities Indexed**: 131 | **Cross-Reference Edges**: 540 | **Dangling Targets**: 343  
 
 ---

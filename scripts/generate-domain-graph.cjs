@@ -3,6 +3,7 @@
  * scripts/generate-domain-graph.cjs — Universal Domain Entity Knowledge Graph Generator
  *
  * Part of SK-019 (STD-UNIVERSAL-TAXONOMY-001 / PKG-006 / AC-DEC-2026-060)
+ * SSOT: DOCS_HUB.md & .agent/patterns/universal-repository-taxonomy-and-discovery-graph.md
  *
  * Scans markdown frontmatter, JSONL records, and intra-document cross-reference links
  * across domain directories to build a deterministic entity knowledge graph.

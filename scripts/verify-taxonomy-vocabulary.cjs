@@ -3,6 +3,7 @@
  * scripts/verify-taxonomy-vocabulary.cjs — Scoped Taxonomy & Canonical Vocabulary Linter
  *
  * Part of SK-019 (STD-UNIVERSAL-TAXONOMY-001 / INV-SAP-DUAL-BLOCK-001 / PKG-006 / AC-DEC-2026-063)
+ * SSOT: DOCS_HUB.md & .agent/patterns/universal-repository-taxonomy-and-discovery-graph.md
  *
  * Enforces canonical cross-repo and repo-specific terminology on SSOTs, PRDs, and architecture notes.
  * Strictly excludes raw user discussion threads (User_Created/) per Council Dissenter ruling.

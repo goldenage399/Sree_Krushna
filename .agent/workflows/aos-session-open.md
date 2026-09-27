@@ -19,14 +19,15 @@ description: Unified session start workflow - Risk-Driven Conditional Model (Mem
 
 ## Conditional Routing Model
 
-Two steps are **always required**. All others are gated on explicit triggers to minimize unnecessary overhead for simple tasks.
+Three steps are **always required**. All others are gated on explicit triggers to minimize unnecessary overhead for simple tasks.
 
 | Step | Status | Trigger Condition |
 |------|--------|-------------------|
+| **Step 0.5: Documentation Hub & System Clarity Load** | 🟢 **UNCONDITIONAL** | Always run — inspect `DOCS_HUB.md` and `docs/SYSTEM_CLARITY_SNAPSHOT.md` before exploratory searches (`INV-SESSION-ACCEL-003`) |
 | **Step 1: Memory Load** | 🟢 **UNCONDITIONAL** | Always run — restores decisions, plans, and verification debt |
 | **Step 0.2: INC-XXX Incident Scan** | 🟢 **UNCONDITIONAL** | Always run — targeted keyword scan only, not a full file dump |
 | **Step 0: Skill Router** | 🟡 **CONDITIONAL** | Task requires cross-repository dispatch or involves unfamiliar tools |
-| **Step 0.1: Graphify** | 🟡 **CONDITIONAL** | Task touches P11 files (>600 lines, god-nodes) or files in `src/contexts/` |
+| **Step 0.1: Domain Entity Graph Load** | 🟡 **CONDITIONAL** | Exploring cross-cutting architecture, verifying entity relations, or inspecting blast radius (`graphify-out/`) |
 | **Step 0.3: Standards Catalog** | 🟡 **CONDITIONAL** | Domain keywords detected in task description |
 | **Step 2: Handoff Read** | 🟡 **CONDITIONAL** | Prior unfinished tasks exist OR `SESSION_BRANCH_STATE.md` has pinned branches |
 
@@ -64,26 +65,44 @@ Load the Unified Skill Router to establish cross-repository tool discovery.
 
 ---
 
-<!-- shared:std.knowledge-graph.session-protocol:start -->
-### Step 0.1: Graphify Knowledge Load (CONDITIONAL — Graphify Governance)
+<!-- shared:std.agent.session-acceleration.core:start -->
+### Step 0.5: Documentation Hub & System Clarity Load (UNCONDITIONAL — INV-SESSION-ACCEL-003)
 
-> **🟡 Trigger**: Only when: (a) task touches P11 files (>600 lines, god-nodes), (b) files in `src/contexts/`, or (c) bug description includes CSS layout investigation keywords: `grid`, `columns`, `responsive`, `multi-column`, `flex`, `viewport`, `max-width`, `layout constraint`. For doc-only, styling token changes, or single-file non-layout fixes, skip.
-> **Duration**: ~1 min | **Skill**: `graphify`
+> **🟢 Always run.** Consult documentation hub and living operational snapshot before executing wide searches.
+> **Standard**: `STD-UNIVERSAL-TAXONOMY-001` / `PKG-006` (`AC-DEC-2026-059` / `AC-DEC-2026-063`)
+> **Pattern**: `.agent/patterns/universal-repository-taxonomy-and-discovery-graph.md`
+> **Duration**: ~1 min | **Skill**: `repo-taxonomy-graph`
 
-Ground reasoning in the master architectural knowledge graph:
+Before running exploratory directory searches, multi-file greps, or deep file reading, ground reasoning in the top-level navigation hubs:
 
-> **Not tracked in git** (2026-08-08 — was 6,452 files, 97% perpetually dirty; the `.gitignore` rule for it had silently never worked due to a UTF-16 encoding defect, now fixed). Missing on a fresh clone → regenerate: `python scratch/finalize_graph.py`.
+1. **Read `DOCS_HUB.md`** — Single Source of Truth (SSOT) navigation directory. Identify the governing domain hub (`00_GOVERNANCE` through `06_FINANCE_COMMERCIALS`).
+2. **Read `docs/SYSTEM_CLARITY_SNAPSHOT.md`** — Living operational status ledger tracking active enhancements, recent council decisions, and open domain investigations.
+3. **Verify Vocabulary Invariants** — Use canonical terminology per `.agent/taxonomy_dictionary.cjs` (`Definition of Done (DoD v1.7)`, `Validation Gate (VG)`, `Decision Node (DN)`, `Spoke & Wheel SSOT`).
 
-1. **Read `graphify-out/GRAPH_REPORT.md`** — for god nodes and community structure.
-2. **Read `graphify-out/graph.json`** — for precise node/edge relationships.
-3. **Analyze Knowledge Gaps** — check for isolated nodes or "Thin Communities" before assuming documentation completeness.
-4. **Layout Catalog Check** — If layout/CSS has changed, consult `dist/layout-catalog.json` (layout-catalog) to verify constraint mapping.
+> [!IMPORTANT]
+> **Prohibition of Blind Crawling**: Agents are strictly forbidden from executing sequential ad-hoc directory listings or multi-turn exploratory grep hunts prior to reading `DOCS_HUB.md`.
 
-**Goal**: Eliminate "cold-start architectural blindness" by synchronizing with the repository's semantic graph.
+---
+
+### Step 0.1: Domain Entity Knowledge Graph Load (CONDITIONAL — STD-UNIVERSAL-TAXONOMY-001)
+
+> **🟡 Trigger**: Required when: (a) exploring cross-cutting architecture or unfamiliar domain models, (b) verifying entity relationships (`EVT`, `RIT`, `TRS`, `OBL`, `PAY`, etc.), or (c) checking blast radius of structural changes.
+> **Duration**: ~1 min | **Tool**: `npm run build:graph` (`scripts/generate-domain-graph.cjs`)
+
+Ground reasoning in the deterministic entity knowledge graph:
+
+1. **Read `graphify-out/GRAPH_REPORT.md`** — for domain entity breakdown, hub topology, and outbound/inbound connection counts.
+2. **Read `graphify-out/graph.json`** — for precise machine-readable entity adjacency data.
+3. **Analyze Dangling References** — inspect Section 3 of `GRAPH_REPORT.md` to identify referenced entity stubs that lack formal specs before assuming completeness.
+4. **Regeneration on Fresh Clone or Changes**:
+   ```powershell
+   npm run build:graph
+   ```
+   *Uses native zero-dependency Node.js scanner configured via `.agent/domain-graph-config.json`.*
 
 > [!CAUTION]
-> **NEVER** fall back to blind `grep` searches if the graph exists. Use the community hubs in `graphify-out/GRAPH_REPORT.md` to identify the correct starting points.
-<!-- shared:std.knowledge-graph.session-protocol:end -->
+> **NEVER** fall back to blind `grep` searches if the graph exists. Use the entity hubs in `graphify-out/GRAPH_REPORT.md` to identify the exact spec files in ≤2 clicks.
+<!-- shared:std.agent.session-acceleration.core:end -->
 
 ---
 

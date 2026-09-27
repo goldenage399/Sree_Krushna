@@ -2,6 +2,7 @@
  * .agent/taxonomy_dictionary.cjs — Universal Cross-Repository Taxonomy & Vocabulary Dictionary
  *
  * Standard: STD-UNIVERSAL-TAXONOMY-001 / INV-SAP-DUAL-BLOCK-001 / PKG-006 / AC-DEC-2026-063
+ * SSOT: DOCS_HUB.md & .agent/patterns/universal-repository-taxonomy-and-discovery-graph.md
  *
  * Defines the canonical vocabulary and prohibited synonym aliases across all 9 SAP repositories.
  * Partitioned into:

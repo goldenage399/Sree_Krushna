@@ -1,7 +1,7 @@
 # SK-019: Universal Cross-Repository Graph, Taxonomy & Session Acceleration Engine
 
 > **Ticket ID**: `SK-019`  
-> **Standard References**: `STD-UNIVERSAL-TAXONOMY-001` / `STD-PCL-001` / `P-SESSION-ACCELERATION-001`  
+> **Standard References**: `STD-UNIVERSAL-TAXONOMY-001` / `STD-PCL-001` / `P-SESSION-ACCELERATION-001` / [`.agent/patterns/universal-repository-taxonomy-and-discovery-graph.md`](../../.agent/patterns/universal-repository-taxonomy-and-discovery-graph.md)  
 > **Package Identifier**: `PKG-006`  
 > **Certifying Decision**: `AC-DEC-2026-060` (`GOV-DEC-2026-002`)  
 > **Cluster**: Governance / Cross-Repo Agent Infrastructure  

@@ -109,6 +109,8 @@ The tier is a **graduation ladder**: a pattern may start at `reference` and grad
 | [contextual-multi-option-comments-engine.md](contextual-multi-option-comments-engine.md) | `reference` | VALIDATED | `mobile-ui-engineering.md`, `post-incident-governance.md`, `AC-DEC-2026-046` | universal |
 | [button-primitive-and-preflight-gate.md](button-primitive-and-preflight-gate.md) | `guarded` | VALIDATED | `GEMINI.md` (Modular Invariant 4), `CLAUDE.md`, `SK-010`, `verify:ui-buttons` | universal |
 | [in-context-balance-refresh-cache-busting.md](in-context-balance-refresh-cache-busting.md) | `reference` | VALIDATED | `GEMINI.md` (Pattern Activation), `CLAUDE.md` | universal |
+| [sheet-drive-media-relay.md](sheet-drive-media-relay.md) | `guarded` | VALIDATED | `GEMINI.md` (Prime Invariant 9), `CLAUDE.md`, `SK-015`, `test:sheet-drive-relay` | universal |
+| [universal-repository-taxonomy-and-discovery-graph.md](universal-repository-taxonomy-and-discovery-graph.md) | `guarded` | VALIDATED | `GEMINI.md` (Prime Invariant 10), `CLAUDE.md`, `SK-019`, `test:graph`, `verify:taxonomy` | universal |
 > Update this index whenever a pattern is created or its tier changes via `/capture-pattern`.
 
 ---

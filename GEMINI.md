@@ -217,3 +217,4 @@ This repository implements the following universal patterns:
 - `.agent/patterns/in-context-balance-refresh-cache-busting.md`
 - `.agent/patterns/interactive-multi-look-lightbox-carousel.md`
 - `.agent/patterns/sheet-drive-media-relay.md`
+- `.agent/patterns/universal-repository-taxonomy-and-discovery-graph.md`
