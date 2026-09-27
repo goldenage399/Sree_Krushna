@@ -5307,6 +5307,38 @@ tr.row-pulse td {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s ease;
+}
+
+.obl-table-milestone-header:hover {
+  background: rgba(51, 65, 85, 0.95);
+}
+
+.obl-milestone-chevron {
+  display: inline-block;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-right: 8px;
+  font-size: 11px;
+}
+
+.obl-table-milestone-block.is-collapsed .obl-milestone-chevron {
+  transform: rotate(-90deg);
+}
+
+.obl-table-milestone-block.is-collapsed .obl-data-table {
+  display: none;
+}
+
+.obl-table-milestone-block.is-collapsed .obl-table-milestone-header {
+  border-radius: 6px;
+}
+
+.obl-accordion-controls {
+  display: inline-flex;
+  gap: 6px;
+  margin-left: 8px;
 }
 
 .obl-table-milestone-count {
@@ -5314,6 +5346,7 @@ tr.row-pulse td {
   color: var(--shop-text-muted, #94a3b8);
   font-weight: 500;
 }
+
 
 /* 2. Spreadsheet Table Styling */
 .obl-data-table {
@@ -5383,8 +5416,16 @@ tr.row-pulse td {
 }
 
 .obl-td-specs {
+  width: 220px;
+  max-width: 260px;
   font-size: 11px;
   color: #e2e8f0;
+  line-height: 1.4;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .obl-td-cash {
@@ -5412,6 +5453,118 @@ tr.row-pulse td {
   border-radius: 2px;
 }
 
+/* 2.1 Sortable Table Headers (SK-024 Phase 2) */
+.obl-data-table th.sortable-th {
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.obl-data-table th.sortable-th:hover {
+  background: rgba(30, 41, 59, 0.95);
+  color: var(--shop-gold, #e5a93c);
+}
+
+.obl-data-table th.sortable-th.is-sorted {
+  color: var(--shop-gold, #e5a93c);
+  background: rgba(30, 41, 59, 0.95);
+  border-bottom: 2px solid var(--shop-gold, #e5a93c);
+}
+
+.obl-sort-icon {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 10px;
+  opacity: 0.6;
+}
+
+.obl-data-table th.sortable-th.is-sorted .obl-sort-icon {
+  opacity: 1;
+  color: var(--shop-gold, #e5a93c);
+}
+
+/* 2.2 Inner Table Filter Toolbar (SK-024 Phase 2) */
+.obl-table-inner-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 6px 10px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: 6px;
+}
+
+.obl-table-cat-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.obl-inner-filter-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--shop-text-muted, #94a3b8);
+  margin-right: 2px;
+}
+
+.obl-inner-pill {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.obl-inner-pill:hover {
+  background: rgba(51, 65, 85, 0.9);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.obl-inner-pill.active {
+  background: var(--shop-gold, #e5a93c);
+  border-color: var(--shop-gold, #e5a93c);
+  color: #000000;
+  font-weight: 700;
+}
+
+.obl-table-active-sort {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+}
+
+.obl-sort-status-tag {
+  color: var(--shop-gold, #e5a93c);
+  font-weight: 600;
+  font-size: 10.5px;
+}
+
+.obl-reset-sort-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #94a3b8;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.obl-reset-sort-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
 /* 3. Dedicated Ink-Saving Print Rules (Phase 3) */
 @media print {
   /* Suppress all interactive UI elements */
@@ -5433,6 +5586,7 @@ tr.row-pulse td {
   #shoppingTableViewSection,
   #obligationsCardsContainer,
   #oblLayoutSwitcher,
+  .obl-table-inner-toolbar,
   #toastContainer,
   button,
   .shop-btn {
@@ -5514,8 +5668,26 @@ tr.row-pulse td {
     color: #000000 !important;
   }
 
+  .obl-td-specs {
+    color: #000000 !important;
+    display: table-cell !important;
+    -webkit-line-clamp: unset !important;
+    overflow: visible !important;
+    max-width: none !important;
+  }
+
   .obl-verif-box {
     border: 1.5px solid #000000 !important;
+  }
+
+  /* Zero-Truncation Print Preservation Contract (INV-COLLAPSIBLE-PRINT-001) */
+  .obl-table-milestone-block.is-collapsed .obl-data-table {
+    display: table !important;
+  }
+
+  .obl-milestone-chevron,
+  .obl-accordion-controls {
+    display: none !important;
   }
 
   @page {
@@ -5523,6 +5695,7 @@ tr.row-pulse td {
     margin: 8mm 10mm;
   }
 }
+
 
   </style>
 </head>
@@ -5539,8 +5712,8 @@ tr.row-pulse td {
       </div>
     </div>
     <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-      <button class="shop-btn" onclick="window.setCatalogSubView('obligations')" title="Explore 49 Customary Family Lineage Obligations">
-        <span>📜</span> Family Obligations (49)
+      <button class="shop-btn" onclick="window.setCatalogSubView('obligations')" title="Explore Customary Family Lineage Obligations (53)">
+        <span>📜</span> Family Obligations (<span class="obl-count-badge">53</span>)
       </button>
       <button class="shop-btn shop-btn-primary" onclick="window.switchShoppingMode('executive')">
         <span>👑</span> Executive Host View
@@ -5673,9 +5846,9 @@ tr.row-pulse td {
       <span class="subnav-btn-icon">📍</span>
       <span class="subnav-btn-label">Retail Stores (8)</span>
     </button>
-    <button type="button" class="catalog-subnav-btn" data-subview="obligations" role="tab" aria-selected="false" aria-controls="shoppingObligationsView" onclick="window.setCatalogSubView('obligations')" title="Customary Family Obligations &amp; Handover Protocols (49)">
+    <button type="button" class="catalog-subnav-btn" data-subview="obligations" role="tab" aria-selected="false" aria-controls="shoppingObligationsView" onclick="window.setCatalogSubView('obligations')" title="Customary Family Lineage Obligations &amp; Handover Protocols (53)">
       <span class="subnav-btn-icon">📜</span>
-      <span class="subnav-btn-label">Family Obligations (49)</span>
+      <span class="subnav-btn-label">Family Obligations (<span class="obl-count-badge">53</span>)</span>
     </button>
     <button type="button" class="catalog-subnav-btn subnav-view-all" data-subview="all" role="tab" aria-selected="false" onclick="window.setCatalogSubView('all')" title="Full Unrolled Operational Run Sheet">
       <span class="subnav-btn-icon">👁️</span>
@@ -5774,7 +5947,7 @@ tr.row-pulse td {
       </div>
       <h2 class="shop-obl-title">Customary Family Obligations Register (Vidhi Dayitva / Bhara / Sara)</h2>
       <p class="shop-obl-subtitle">
-        49 customary lineage handovers, ceremonial attire endowments, and sacred Dakshina protocols governing Odia Hindu marriage rituals between Bride's and Groom's families.
+        53 customary lineage handovers, ceremonial attire endowments, and sacred Dakshina protocols governing Odia Hindu marriage rituals between Bride's and Groom's families.
       </p>
     </div>
     <div class="shop-obl-header-actions">
@@ -5790,17 +5963,17 @@ tr.row-pulse td {
   <!-- Obligations KPI Summary Grid -->
   <div class="shop-obl-kpis" id="oblKpisGrid">
     <div class="shop-obl-kpi-card">
-      <span class="shop-obl-kpi-num" id="oblKpiTotal">49</span>
+      <span class="shop-obl-kpi-num" id="oblKpiTotal">53</span>
       <span class="shop-obl-kpi-lbl">Total Customary Obligations</span>
       <span class="shop-obl-kpi-sub">Across 6 Canonical Milestones</span>
     </div>
     <div class="shop-obl-kpi-card">
       <span class="shop-obl-kpi-num" style="color: #60a5fa;" id="oblKpiBride">27</span>
       <span class="shop-obl-kpi-lbl">Bride Side Obligations</span>
-      <span class="shop-obl-kpi-sub">23 to Groom Side + 4 Joint/Ext</span>
+      <span class="shop-obl-kpi-sub">25 to Groom Side + 2 Joint</span>
     </div>
     <div class="shop-obl-kpi-card">
-      <span class="shop-obl-kpi-num" style="color: #f472b6;" id="oblKpiGroom">21</span>
+      <span class="shop-obl-kpi-num" style="color: #f472b6;" id="oblKpiGroom">26</span>
       <span class="shop-obl-kpi-lbl">Groom Side Obligations</span>
       <span class="shop-obl-kpi-sub">Groom Family to Bride / In-Laws</span>
     </div>
@@ -5815,13 +5988,13 @@ tr.row-pulse td {
   <div class="shop-obl-toolbar">
     <div class="shop-obl-filters" id="oblFilterPills" role="tablist" aria-label="Obligation Filters">
       <button type="button" class="shop-obl-pill active" data-obl-filter="all" onclick="window.setObligationFilter('all')">
-        All Obligations (49)
+        All Obligations (53)
       </button>
       <button type="button" class="shop-obl-pill" data-obl-filter="bride" onclick="window.setObligationFilter('bride')">
         👰 Bride Side (27)
       </button>
       <button type="button" class="shop-obl-pill" data-obl-filter="groom" onclick="window.setObligationFilter('groom')">
-        🤵 Groom Side (21)
+        🤵 Groom Side (26)
       </button>
       <button type="button" class="shop-obl-pill" data-obl-filter="joint" onclick="window.setObligationFilter('joint')">
         🤝 Joint Handlers (3)
@@ -5872,6 +6045,29 @@ tr.row-pulse td {
 
   <!-- High-Density Spreadsheet Table Container (Table Mode Rendered Here) -->
   <div class="shop-obl-table-container" id="obligationsTableContainer" style="display: none;">
+    <!-- Inner Table Category & Quick-Filter Toolbar -->
+    <div class="obl-table-inner-toolbar" id="oblTableInnerToolbar">
+      <div class="obl-table-cat-filters" id="oblTableCatFilters">
+        <span class="obl-inner-filter-label">🏷️ Category:</span>
+        <button type="button" class="table-filter-btn obl-inner-pill active" data-inner-filter="all" onclick="window.setObligationFilter('all')">All (53)</button>
+        <button type="button" class="table-filter-btn obl-inner-pill" data-inner-filter="attire" onclick="window.setObligationFilter('attire')">🧵 Attire (23)</button>
+        <button type="button" class="table-filter-btn obl-inner-pill" data-inner-filter="gold_silver" onclick="window.setObligationFilter('gold_silver')">💎 Gold/Silver (7)</button>
+        <button type="button" class="table-filter-btn obl-inner-pill" data-inner-filter="composite_bundle" onclick="window.setObligationFilter('composite_bundle')">📦 Bundles (9)</button>
+        <button type="button" class="table-filter-btn obl-inner-pill" data-inner-filter="edible_hospitality" onclick="window.setObligationFilter('edible_hospitality')">🐟 Food &amp; Bhara (4)</button>
+        <button type="button" class="table-filter-btn obl-inner-pill" data-inner-filter="cash" onclick="window.setObligationFilter('cash')">💰 Cash (1)</button>
+        <button type="button" class="table-filter-btn obl-inner-pill" data-inner-filter="logistics" onclick="window.setObligationFilter('logistics')">🚚 Logistics (5)</button>
+      </div>
+      <div class="obl-table-active-sort" id="oblTableActiveSort">
+        <span class="obl-sort-status-tag" id="oblSortStatusTag">Sorted by: Code (▲ Asc)</span>
+        <button type="button" class="table-reset-btn obl-reset-sort-btn" id="btnResetOblSort" onclick="window.resetObligationSort()" title="Reset to default milestone code order">↺ Reset</button>
+      </div>
+      <div class="obl-accordion-controls" id="oblAccordionControls" style="display: inline-flex; gap: 6px; margin-left: auto;">
+        <button type="button" class="table-filter-btn obl-inner-pill" onclick="window.expandAllMilestones()" title="Expand All Milestone Tables">▼ Expand All</button>
+        <button type="button" class="table-filter-btn obl-inner-pill" onclick="window.collapseAllMilestones()" title="Collapse All Milestone Tables">▶ Collapse All</button>
+      </div>
+    </div>
+
+
     <div id="obligationsTableContent">
       <!-- Populated dynamically by window.renderObligationsTable() in controller.js -->
     </div>
@@ -6113,6 +6309,9 @@ tr.row-pulse td {
         </button>
         <button type="button" class="shop-btn" onclick="window.exportShoppingTable('csv')" title="Download CSV for Google Sheets">
           <span>📊</span> CSV
+        </button>
+        <button type="button" class="shop-btn" id="btnPrintShoppingTable" onclick="window.printShoppingTable()" title="Print Scoped Catalog Table Run Sheet (A4 Landscape)">
+          <span>🖨️</span> Print Table
         </button>
         <button type="button" class="shop-btn shop-btn-whatsapp" onclick="window.copyStakeholderShare('shopping-table')" title="Copy Table View Link for WhatsApp">
           <span>🔗</span> Share Table
@@ -8185,6 +8384,244 @@ tr.row-pulse td {
 
 /* SSOT: docs/incidents/INC-090-spa-pathname-drift-in-stakeholder-share-links.md — INC-090 */
 
+
+
+/**
+ * Sree Krushna Marriage OS — UI Primitives: Print Engine
+ * File: ui_primitives/scripts/print_engine.js
+ *
+ * Standard: STD-UI-PRINT-CONTAINER-001 (Universal Scoped Container Print Engine)
+ * Invariants:
+ *  - INV-PRINT-ZERO-DUMP-001: Zero full-SPA multi-tab print dumps
+ *  - INV-PRINT-IFRAME-SANDBOX-001: Sandboxed headless iframe isolation contract
+ *  - INV-LIFECYCLE-02: Zero naked DOMContentLoaded listeners
+ *
+ * Provides a zero-bleed container printing utility that isolates target HTML
+ * into a temporary hidden <iframe> with dedicated ink-saving A4 styles.
+ */
+
+(function (window, document) {
+  'use strict';
+
+  /**
+   * Universal Scoped Container Print Function
+   * @param {string|HTMLElement} target - CSS selector or DOM element to print
+   * @param {Object} [options] - Configuration options
+   * @param {string} [options.title] - Document header title
+   * @param {string} [options.subtitle] - Header subtitle / timestamp
+   * @param {'landscape'|'portrait'} [options.orientation='landscape'] - Page orientation
+   * @param {string} [options.pageSize='A4'] - Paper size (e.g. 'A4')
+   * @param {string} [options.margin='8mm 10mm'] - Print margins
+   * @param {string} [options.customCss=''] - Additional CSS rules
+   * @param {boolean} [options.includeSignoff=false] - Appends coordinator sign-off block
+   * @returns {boolean} Whether print initiation succeeded
+   */
+  function skPrintContainer(target, options) {
+    options = options || {};
+    var title = options.title || document.title || 'Print Run Sheet';
+    var subtitle = options.subtitle || ('Generated: ' + new Date().toLocaleString());
+    var orientation = options.orientation === 'portrait' ? 'portrait' : 'landscape';
+    var pageSize = options.pageSize || 'A4';
+    var margin = options.margin || '8mm 10mm';
+    var customCss = options.customCss || '';
+    var includeSignoff = Boolean(options.includeSignoff);
+
+    // 1. Resolve Target Element
+    var el = typeof target === 'string' ? document.querySelector(target) : target;
+    if (!el || !(el instanceof HTMLElement)) {
+      console.warn('[skPrintContainer] Target element not found or invalid:', target);
+      return false;
+    }
+
+    // 2. Remove any lingering print sandbox
+    var existingSandbox = document.getElementById('__sk_print_sandbox__');
+    if (existingSandbox && existingSandbox.parentNode) {
+      existingSandbox.parentNode.removeChild(existingSandbox);
+    }
+
+    // 3. Clone and Clean Target Content
+    var clone = el.cloneNode(true);
+    // Suppress screen-only buttons and tools inside the clone
+    var noPrintEls = clone.querySelectorAll('.no-print, button, .sk-btn, .shop-btn, input, select');
+    for (var i = 0; i < noPrintEls.length; i++) {
+      noPrintEls[i].parentNode.removeChild(noPrintEls[i]);
+    }
+
+    // 4. Construct Headless Sandbox Iframe
+    var iframe = document.createElement('iframe');
+    iframe.id = '__sk_print_sandbox__';
+    iframe.setAttribute('aria-hidden', 'true');
+    iframe.style.position = 'fixed';
+    iframe.style.right = '0';
+    iframe.style.bottom = '0';
+    iframe.style.width = '0';
+    iframe.style.height = '0';
+    iframe.style.border = '0';
+    iframe.style.visibility = 'hidden';
+    document.body.appendChild(iframe);
+
+    // 5. Assemble Dedicated Ink-Saving Print Stylesheet
+    var defaultStyles = [
+      '@page {',
+      '  size: ' + pageSize + ' ' + orientation + ';',
+      '  margin: ' + margin + ';',
+      '}',
+      '* {',
+      '  box-sizing: border-box;',
+      '  -webkit-print-color-adjust: exact !important;',
+      '  print-color-adjust: exact !important;',
+      '}',
+      'body {',
+      '  margin: 0;',
+      '  padding: 0;',
+      '  background: #ffffff !important;',
+      '  color: #000000 !important;',
+      '  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;',
+      '  font-size: 9.5px;',
+      '  line-height: 1.35;',
+      '}',
+      '.sk-print-header {',
+      '  border-bottom: 2px solid #000000;',
+      '  padding-bottom: 6px;',
+      '  margin-bottom: 10px;',
+      '  display: flex;',
+      '  justify-content: space-between;',
+      '  align-items: flex-end;',
+      '}',
+      '.sk-print-title {',
+      '  font-size: 14px;',
+      '  font-weight: 800;',
+      '  letter-spacing: 0.02em;',
+      '  margin: 0;',
+      '  color: #000000;',
+      '}',
+      '.sk-print-sub {',
+      '  font-size: 8.5px;',
+      '  color: #333333;',
+      '  margin-top: 2px;',
+      '}',
+      '.sk-print-badge {',
+      '  font-size: 8px;',
+      '  font-weight: 700;',
+      '  border: 1px solid #000000;',
+      '  padding: 2px 6px;',
+      '  border-radius: 3px;',
+      '  text-transform: uppercase;',
+      '}',
+      'table {',
+      '  width: 100%;',
+      '  border-collapse: collapse;',
+      '  margin-bottom: 12px;',
+      '  page-break-inside: auto;',
+      '}',
+      'thead {',
+      '  display: table-header-group;',
+      '}',
+      'tr {',
+      '  page-break-inside: avoid;',
+      '  page-break-after: auto;',
+      '}',
+      'th {',
+      '  background: #000000 !important;',
+      '  color: #ffffff !important;',
+      '  padding: 4px 6px;',
+      '  border: 1px solid #000000;',
+      '  font-size: 8.5px;',
+      '  font-weight: 700;',
+      '  text-align: left;',
+      '  text-transform: uppercase;',
+      '}',
+      'td {',
+      '  padding: 4px 6px;',
+      '  border: 1px solid #cccccc;',
+      '  vertical-align: top;',
+      '  font-size: 9px;',
+      '  color: #000000 !important;',
+      '  background: #ffffff !important;',
+      '}',
+      'tr:nth-child(even) td {',
+      '  background: #fafafa !important;',
+      '}',
+      '.obl-table-milestone-header {',
+      '  background: #222222 !important;',
+      '  color: #ffffff !important;',
+      '  padding: 4px 8px;',
+      '  font-weight: 700;',
+      '  font-size: 9.5px;',
+      '  margin-top: 8px;',
+      '  margin-bottom: 4px;',
+      '}',
+      '.obl-verif-box, .verif-box {',
+      '  display: inline-block;',
+      '  width: 13px;',
+      '  height: 13px;',
+      '  border: 1.5px solid #000000;',
+      '  border-radius: 2px;',
+      '}',
+      '.sk-print-signoff {',
+      '  margin-top: 16px;',
+      '  padding-top: 8px;',
+      '  border-top: 1px dashed #666666;',
+      '  display: flex;',
+      '  justify-content: space-between;',
+      '  font-size: 9px;',
+      '  page-break-inside: avoid;',
+      '}',
+      '.no-print {',
+      '  display: none !important;',
+      '}',
+      customCss
+    ].join('\n');
+
+    // 6. Write Content to Iframe Document
+    var doc = iframe.contentWindow.document;
+    doc.open();
+    doc.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>' + title + '</title>');
+    doc.write('<style>' + defaultStyles + '</style></head><body>');
+    doc.write('<header class="sk-print-header">');
+    doc.write('<div><h1 class="sk-print-title">' + title + '</h1><div class="sk-print-sub">' + subtitle + '</div></div>');
+    doc.write('<div><span class="sk-print-badge">' + orientation.toUpperCase() + ' RUN SHEET</span></div>');
+    doc.write('</header>');
+    doc.write('<main id="skPrintMain">' + clone.innerHTML + '</main>');
+
+    if (includeSignoff) {
+      doc.write('<footer class="sk-print-signoff">');
+      doc.write('<div><strong>Physical Handover Verified by:</strong> ___________________________</div>');
+      doc.write('<div><strong>Family Elder Sign-off:</strong> ___________________________</div>');
+      doc.write('<div><strong>Date / Time:</strong> ____ / ____ / 2026</div>');
+      doc.write('</footer>');
+    }
+
+    doc.write('</body></html>');
+    doc.close();
+
+    // 7. Trigger Execution & Cleanup
+    setTimeout(function () {
+      try {
+        iframe.contentWindow.focus();
+        iframe.contentWindow.print();
+      } catch (err) {
+        console.error('[skPrintContainer] Execution failed:', err);
+      }
+
+      // Safe asynchronous garbage collection
+      setTimeout(function () {
+        if (iframe && iframe.parentNode) {
+          iframe.parentNode.removeChild(iframe);
+        }
+      }, 2500);
+    }, 250);
+
+    return true;
+  }
+
+  // Lifecycle-safe registration (INV-LIFECYCLE-02)
+  window.skPrintContainer = skPrintContainer;
+
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { skPrintContainer: skPrintContainer };
+  }
+})(typeof window !== 'undefined' ? window : this, typeof document !== 'undefined' ? document : {});
 
 
 /**
@@ -10374,6 +10811,22 @@ tr.row-pulse td {
       }
     };
 
+    window.printShoppingTable = function() {
+      const tableContainer = document.querySelector('#shoppingTableViewSection .shop-table-container') || document.getElementById('shoppingDataTable');
+      if (typeof window.skPrintContainer === 'function' && tableContainer) {
+        window.skPrintContainer(tableContainer, {
+          title: 'Sree Krushna Marriage OS — Commercial Trousseau Sourcing Catalog',
+          subtitle: '44 Canonical Items, Bespoke Attire & Odia Heirlooms (Bhubaneswar Market Run Sheet)',
+          orientation: 'landscape',
+          pageSize: 'A4',
+          margin: '8mm 10mm',
+          includeSignoff: true
+        });
+      } else {
+        window.print();
+      }
+    };
+
     let firestoreUnsubscribe = null;
     let syncRetryTimer = null;
 
@@ -11883,9 +12336,91 @@ tr.row-pulse td {
     }
 
     // ========================================================================
-    // CUSTOMARY FAMILY OBLIGATIONS (OBL-001 to OBL-049) CONTROLLER ENGINE
-    // Standard: STD-FAMILY-OBLIGATION-001 | AC-DEC-2026-061 / AC-DEC-2026-062
+    // CUSTOMARY FAMILY OBLIGATIONS (OBL-001 to OBL-053) CONTROLLER ENGINE
+    // Standard: STD-FAMILY-OBLIGATION-001 | AC-DEC-2026-061 / AC-DEC-2026-066
     // ========================================================================
+    // State variables activeObligationFilter, activeObligationEvent, obligationSearchQuery, activeObligationLayout declared at module top
+    let activeOblTableSort = { key: 'code', dir: 'asc' };
+
+    function getObligationCost(o) {
+      if (o.financial_obligation && o.financial_obligation.is_monetary) {
+        return Number(o.financial_obligation.unit_amount_inr || o.financial_obligation.estimated_total_inr) || 0;
+      }
+      return 0;
+    }
+
+    function sortObligationsList(list, key, dir) {
+      const modifier = dir === 'desc' ? -1 : 1;
+      return [...list].sort((a, b) => {
+        if (key === 'code') {
+          return a.id.localeCompare(b.id) * modifier;
+        }
+        if (key === 'direction') {
+          const dirA = a.derived_direction || '';
+          const dirB = b.derived_direction || '';
+          return dirA.localeCompare(dirB) * modifier;
+        }
+        if (key === 'title') {
+          const titleA = a.customary_title || '';
+          const titleB = b.customary_title || '';
+          return titleA.localeCompare(titleB) * modifier;
+        }
+        if (key === 'category') {
+          const catA = a.category || '';
+          const catB = b.category || '';
+          return catA.localeCompare(catB) * modifier;
+        }
+        if (key === 'cost') {
+          const costA = getObligationCost(a);
+          const costB = getObligationCost(b);
+          if (costA !== costB) {
+            return (costA - costB) * modifier;
+          }
+          return a.id.localeCompare(b.id);
+        }
+        if (key === 'trs') {
+          const trsA = (a.downstream_projections && a.downstream_projections.commercial_shopping_ref) || '';
+          const trsB = (b.downstream_projections && b.downstream_projections.commercial_shopping_ref) || '';
+          return trsA.localeCompare(trsB) * modifier;
+        }
+        return a.id.localeCompare(b.id) * modifier;
+      });
+    }
+
+    function updateOblSortStatusTag() {
+      const tag = document.getElementById('oblSortStatusTag');
+      if (!tag) return;
+      const names = {
+        code: 'Code',
+        direction: 'Direction',
+        title: 'Title',
+        category: 'Category',
+        cost: 'Cash / Cost',
+        trs: 'Sourced Via'
+      };
+      const arrow = activeOblTableSort.dir === 'asc' ? '▲ Asc' : '▼ Desc';
+      tag.textContent = `Sorted by: ${names[activeOblTableSort.key] || activeOblTableSort.key} (${arrow})`;
+    }
+
+    function sortObligationsTable(key) {
+      if (activeOblTableSort.key === key) {
+        activeOblTableSort.dir = activeOblTableSort.dir === 'asc' ? 'desc' : 'asc';
+      } else {
+        activeOblTableSort.key = key;
+        activeOblTableSort.dir = 'asc';
+      }
+      updateOblSortStatusTag();
+      renderObligationsTable();
+    }
+    window.sortObligationsTable = sortObligationsTable;
+
+    function resetObligationSort() {
+      activeOblTableSort = { key: 'code', dir: 'asc' };
+      updateOblSortStatusTag();
+      renderObligationsTable();
+    }
+    window.resetObligationSort = resetObligationSort;
+
     function escapeHtml(str) {
       if (!str) return '';
       return String(str)
@@ -11902,10 +12437,22 @@ tr.row-pulse td {
       const elBride = document.getElementById('oblKpiBride');
       const elGroom = document.getElementById('oblKpiGroom');
       const elUnresolved = document.getElementById('oblKpiUnresolved');
-      if (elTotal) elTotal.textContent = stats.total || obls.length;
-      if (elBride) elBride.textContent = (stats.by_direction && (stats.by_direction.bride_to_groom + (stats.by_direction.joint || 0) + (stats.by_direction.external || 0))) || 27;
-      if (elGroom) elGroom.textContent = (stats.by_direction && stats.by_direction.groom_to_bride) || 21;
+      const totalCount = stats.total || obls.length || 53;
+      if (elTotal) elTotal.textContent = totalCount;
+      if (elBride) {
+        const brideCount = obls.filter(o => o.obligor && (o.obligor.family === 'bride' || o.obligor.family === 'joint')).length;
+        elBride.textContent = brideCount || 27;
+      }
+      if (elGroom) {
+        const groomCount = obls.filter(o => o.obligor && o.obligor.family === 'groom').length;
+        elGroom.textContent = groomCount || 26;
+      }
       if (elUnresolved) elUnresolved.textContent = stats.unresolved_count || 8;
+
+      // Dynamically update all obligation count badges across subnav & banners
+      document.querySelectorAll('.obl-count-badge').forEach(badge => {
+        badge.textContent = totalCount;
+      });
     }
 
     function getFilteredObligations() {
@@ -11935,8 +12482,14 @@ tr.row-pulse td {
         } else if (activeObligationFilter === 'gold_silver') {
           if (o.category !== 'gold_silver') return false;
         } else if (activeObligationFilter === 'cash') {
-          const isCash = o.category === 'cash_envelope' || (o.financial_obligation && o.financial_obligation.is_monetary);
+          const isCash = o.category === 'cash_envelope' || o.category === 'honorarium_cash' || (o.financial_obligation && o.financial_obligation.is_monetary);
           if (!isCash) return false;
+        } else if (activeObligationFilter === 'composite_bundle') {
+          if (o.category !== 'composite_bundle') return false;
+        } else if (activeObligationFilter === 'edible_hospitality') {
+          if (o.category !== 'edible_hospitality') return false;
+        } else if (activeObligationFilter === 'logistics') {
+          if (o.category !== 'logistics' && o.category !== 'service') return false;
         }
 
         // Search Query Match
@@ -11987,13 +12540,13 @@ tr.row-pulse td {
       }
 
       const milestoneMap = {
-        'EVT-001': 'EVT-001: Nirbandha (Engagement Ceremony)',
-        'EVT-002': 'EVT-002: Pua-Bhauni, Mangan & Diyas (Day 1)',
-        'EVT-003': 'EVT-003: Snana & Haldi (Day 2 Morning)',
-        'EVT-004': 'EVT-004: Barat, Baranugam & Mandap Vivaha (Day 2 Wedding)',
-        'EVT-005': 'EVT-005: Bandapana, Gruha Prabesha & Kaudi Khela (Day 3)',
-        'EVT-006': 'EVT-006: Samandhi Bhoji & Astamangala (Day 4/8 Culmination)',
-        'POST_WEDDING': 'POST_WEDDING: Post-Wedding Reciprocals'
+        'EVT-001': 'EVT-001: Nirbandha & Ashirbad (ନିର୍ବନ୍ଧ ଓ ଆଶୀର୍ବାଦ)',
+        'EVT-002': 'EVT-002: Pua-Bhauni & Mangan (ପୁଅ-ଭଉଣୀ ଓ ମଙ୍ଗନ)',
+        'EVT-003': 'EVT-003: Snana & Haladi (ସ୍ନାନ ଓ ହଳଦୀ ଖେଳ)',
+        'EVT-004': 'EVT-004: Barayatri, Batabarana & Mandap Baha (ବରଯାତ୍ରୀ, ବାଟବରଣ ଓ ବିବାହ)',
+        'EVT-005': 'EVT-005: Bandapana & Gruha Prabesha (ବନ୍ଦାପନା ଓ ଗୃହ ପ୍ରବେଶ)',
+        'EVT-006': 'EVT-006: Samandhi Bhoji, Chauthi & Basara (ସମନ୍ଧୀ ଭୋଜି, ଚଉଠି ଓ ବାସର)',
+        'POST_WEDDING': 'POST_WEDDING: Astamangala & Phiranti Bhoji (ଅଷ୍ଟମଙ୍ଗଳା ଓ ଫେରନ୍ତା ଭୋଜି)'
       };
 
       const catIcons = {
@@ -12215,11 +12768,17 @@ tr.row-pulse td {
 
     function shareAllObligationsWhatsApp() {
       const shareUrl = `${window.location.origin}${window.location.pathname}?subview=obligations`;
+      const obls = getObligationsList();
+      const totalCount = obls.length || 53;
+      const brideCount = obls.filter(o => o.obligor && (o.obligor.family === 'bride' || o.obligor.family === 'joint')).length || 27;
+      const groomCount = obls.filter(o => o.obligor && o.obligor.family === 'groom').length || 26;
+      const unresCount = obls.filter(o => ['TBD_Family_Choice', 'Source_Unclear', 'Source_Redacted', 'Pending_Family_Confirmation'].includes(o.spec_status) || o.lifecycle_status === 'Identified').length || 8;
+
       const msg = `🌺 *Sree Krushna Marriage OS — Customary Family Obligations Register* 🌺\n\n` +
-        `Review the 49 customary lineage handovers, ceremonial attire endowments, and sacred Dakshina protocols governing our wedding rituals:\n` +
-        `• 27 Bride Side Obligations (Nirbandha, Batabarana, Sara gifting)\n` +
-        `• 21 Groom Side Obligations (Ahiya Manduli, Alata Sindoor, Samdhi Milan)\n` +
-        `• 8 Items pending family confirmation\n\n` +
+        `Review the ${totalCount} customary lineage handovers, ceremonial attire endowments, and sacred Dakshina protocols governing our wedding rituals:\n` +
+        `• ${brideCount} Bride Side Obligations (Nirbandha, Batabarana, Sara gifting)\n` +
+        `• ${groomCount} Groom Side Obligations (Ahiya Manduli, Alata Sindoor, Samdhi Milan)\n` +
+        `• ${unresCount} Items pending family confirmation\n\n` +
         `🔗 *Full Interactive Register:* ${shareUrl}`;
 
       const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
@@ -12227,11 +12786,73 @@ tr.row-pulse td {
     }
     window.shareAllObligationsWhatsApp = shareAllObligationsWhatsApp;
 
+    const OBL_ACCORDION_STORAGE_KEY = 'sk_obl_accordion_state';
+
+    function getOblAccordionState() {
+      try {
+        const raw = localStorage.getItem(OBL_ACCORDION_STORAGE_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveOblAccordionState(state) {
+      try {
+        localStorage.setItem(OBL_ACCORDION_STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {
+        // Ignore localStorage quota errors
+      }
+    }
+
+    function toggleMilestoneAccordion(milestoneId) {
+      if (!milestoneId) return;
+      const block = document.querySelector(`.obl-table-milestone-block[data-milestone-id="${milestoneId}"]`);
+      if (!block) return;
+      const isNowCollapsed = !block.classList.contains('is-collapsed');
+      block.classList.toggle('is-collapsed', isNowCollapsed);
+      const header = block.querySelector('.obl-table-milestone-header');
+      if (header) {
+        header.setAttribute('aria-expanded', isNowCollapsed ? 'false' : 'true');
+      }
+      const state = getOblAccordionState();
+      state[milestoneId] = isNowCollapsed;
+      saveOblAccordionState(state);
+    }
+    window.toggleMilestoneAccordion = toggleMilestoneAccordion;
+
+    function expandAllMilestones() {
+      const state = getOblAccordionState();
+      document.querySelectorAll('.obl-table-milestone-block').forEach(block => {
+        block.classList.remove('is-collapsed');
+        const ev = block.getAttribute('data-milestone-id');
+        if (ev) state[ev] = false;
+        const header = block.querySelector('.obl-table-milestone-header');
+        if (header) header.setAttribute('aria-expanded', 'true');
+      });
+      saveOblAccordionState(state);
+    }
+    window.expandAllMilestones = expandAllMilestones;
+
+    function collapseAllMilestones() {
+      const state = getOblAccordionState();
+      document.querySelectorAll('.obl-table-milestone-block').forEach(block => {
+        block.classList.add('is-collapsed');
+        const ev = block.getAttribute('data-milestone-id');
+        if (ev) state[ev] = true;
+        const header = block.querySelector('.obl-table-milestone-header');
+        if (header) header.setAttribute('aria-expanded', 'false');
+      });
+      saveOblAccordionState(state);
+    }
+    window.collapseAllMilestones = collapseAllMilestones;
+
     function renderObligationsTable() {
       const tableContent = document.getElementById('obligationsTableContent');
       if (!tableContent) return;
 
       updateObligationKpis();
+      updateOblSortStatusTag();
       const filtered = getFilteredObligations();
       if (filtered.length === 0) {
         tableContent.innerHTML = `
@@ -12243,13 +12864,13 @@ tr.row-pulse td {
       }
 
       const milestoneMap = {
-        'EVT-001': 'EVT-001: Nirbandha (Engagement Ceremony)',
-        'EVT-002': 'EVT-002: Pua-Bhauni, Mangan & Diyas (Day 1)',
-        'EVT-003': 'EVT-003: Snana & Haldi (Day 2 Morning)',
-        'EVT-004': 'EVT-004: Barat, Baranugam & Mandap Vivaha (Day 2 Wedding)',
-        'EVT-005': 'EVT-005: Bandapana, Gruha Prabesha & Kaudi Khela (Day 3)',
-        'EVT-006': 'EVT-006: Samandhi Bhoji & Astamangala (Day 4/8 Culmination)',
-        'POST_WEDDING': 'POST_WEDDING: Post-Wedding Reciprocals'
+        'EVT-001': 'EVT-001: Nirbandha & Ashirbad (ନିର୍ବନ୍ଧ ଓ ଆଶୀର୍ବାଦ)',
+        'EVT-002': 'EVT-002: Pua-Bhauni & Mangan (ପୁଅ-ଭଉଣୀ ଓ ମଙ୍ଗନ)',
+        'EVT-003': 'EVT-003: Snana & Haladi (ସ୍ନାନ ଓ ହଳଦୀ ଖେଳ)',
+        'EVT-004': 'EVT-004: Barayatri, Batabarana & Mandap Baha (ବରଯାତ୍ରୀ, ବାଟବରଣ ଓ ବିବାହ)',
+        'EVT-005': 'EVT-005: Bandapana & Gruha Prabesha (ବନ୍ଦାପନା ଓ ଗୃହ ପ୍ରବେଶ)',
+        'EVT-006': 'EVT-006: Samandhi Bhoji, Chauthi & Basara (ସମନ୍ଧୀ ଭୋଜି, ଚଉଠି ଓ ବାସର)',
+        'POST_WEDDING': 'POST_WEDDING: Astamangala & Phiranti Bhoji (ଅଷ୍ଟମଙ୍ଗଳା ଓ ଫେରନ୍ତା ଭୋଜି)'
       };
 
       const grouped = {};
@@ -12262,27 +12883,40 @@ tr.row-pulse td {
       const eventOrder = ['EVT-001', 'EVT-002', 'EVT-003', 'EVT-004', 'EVT-005', 'EVT-006', 'POST_WEDDING', 'OTHER'];
       const activeEvents = eventOrder.filter(ev => grouped[ev] && grouped[ev].length > 0);
 
+      const getSortTh = (key, label, widthStyle) => {
+        const isSorted = activeOblTableSort.key === key;
+        const sortClass = isSorted ? 'sortable-th is-sorted' : 'sortable-th';
+        const icon = isSorted ? (activeOblTableSort.dir === 'asc' ? '▲' : '▼') : '⇅';
+        return `<th style="${widthStyle}" class="${sortClass}" onclick="window.sortObligationsTable('${key}')" title="Sort by ${label}">${label} <span class="obl-sort-icon">${icon}</span></th>`;
+      };
+
+      const accordionState = getOblAccordionState();
+
       let html = '';
       activeEvents.forEach(ev => {
         const groupTitle = milestoneMap[ev] || ev;
-        const groupObls = grouped[ev];
+        const groupObls = sortObligationsList(grouped[ev], activeOblTableSort.key, activeOblTableSort.dir);
+        const isCollapsed = !!accordionState[ev];
+        const collapseClass = isCollapsed ? 'obl-table-milestone-block is-collapsed' : 'obl-table-milestone-block';
+        const ariaExpanded = isCollapsed ? 'false' : 'true';
 
         html += `
-          <div class="obl-table-milestone-block">
-            <div class="obl-table-milestone-header">
-              <span>🗓️ ${escapeHtml(groupTitle)}</span>
+          <div class="${collapseClass}" data-milestone-id="${ev}">
+            <div class="obl-table-milestone-header" onclick="window.toggleMilestoneAccordion('${ev}')" role="button" tabindex="0" aria-expanded="${ariaExpanded}" title="Click to expand/collapse ${escapeHtml(groupTitle)}">
+              <span><span class="obl-milestone-chevron">▼</span>🗓️ ${escapeHtml(groupTitle)}</span>
               <span class="obl-table-milestone-count">${groupObls.length} ${groupObls.length === 1 ? 'Obligation' : 'Obligations'}</span>
             </div>
             <table class="obl-data-table">
+
               <thead>
                 <tr>
-                  <th style="width: 75px;">Code</th>
-                  <th style="width: 115px;">Direction</th>
-                  <th style="width: 220px;">Customary Title &amp; Description</th>
-                  <th style="width: 85px;">Category</th>
-                  <th>Items / Specifications</th>
-                  <th style="width: 85px; text-align: right;">Cash / Cost</th>
-                  <th style="width: 90px; text-align: center;">Sourced Via</th>
+                  ${getSortTh('code', 'Code', 'width: 75px;')}
+                  ${getSortTh('direction', 'Direction', 'width: 115px;')}
+                  ${getSortTh('title', 'Customary Title & Description', 'width: 220px; max-width: 260px;')}
+                  ${getSortTh('category', 'Category', 'width: 85px;')}
+                  <th style="width: 220px; max-width: 260px;" class="col-specs">Items / Specifications</th>
+                  ${getSortTh('cost', 'Cash / Cost', 'width: 85px; text-align: right;')}
+                  ${getSortTh('trs', 'Sourced Via', 'width: 90px; text-align: center;')}
                   <th style="width: 50px; text-align: center;">Verif</th>
                 </tr>
               </thead>
@@ -12292,7 +12926,9 @@ tr.row-pulse td {
         groupObls.forEach(o => {
           const dirClass = o.derived_direction === 'bride_to_groom' ? 'dir-bride' : (o.derived_direction === 'groom_to_bride' ? 'dir-groom' : 'dir-joint');
           const dirLabel = o.derived_direction === 'bride_to_groom' ? 'Bride ⟶ Groom' : (o.derived_direction === 'groom_to_bride' ? 'Groom ⟶ Bride' : 'Joint / In-Laws');
-          const itemsText = (o.items || []).map(i => (i.quantity ? `${i.quantity} ${i.unit || ''} ` : '') + i.description).join('<br/>• ');
+          const itemsArray = (o.items || []).map(i => (i.quantity ? `${i.quantity} ${i.unit || ''} ` : '') + i.description);
+          const itemsText = itemsArray.join('<br/>• ');
+          const itemsTooltip = itemsArray.join('; ');
           const cashText = o.financial_obligation && o.financial_obligation.is_monetary
             ? `₹${o.financial_obligation.unit_amount_inr || o.financial_obligation.estimated_total_inr || 'TBD'}${o.financial_obligation.headcount ? '/head' : ''}`
             : '—';
@@ -12310,7 +12946,7 @@ tr.row-pulse td {
                 <div class="obl-subdesc">${escapeHtml(o.english_descriptor)}</div>
               </td>
               <td class="obl-td-cat"><code>${escapeHtml(o.category)}</code></td>
-              <td class="obl-td-specs">• ${itemsText}</td>
+              <td class="obl-td-specs" title="${escapeHtml(itemsTooltip)}">• ${itemsText}</td>
               <td class="obl-td-cash">${cashText}</td>
               <td class="obl-td-trs">${trsHtml}</td>
               <td class="obl-td-verif"><span class="obl-verif-box"></span></td>
@@ -12359,8 +12995,22 @@ tr.row-pulse td {
       setCatalogSubView('obligations');
       setObligationLayoutMode('table');
       setTimeout(() => {
-        window.print();
-      }, 100);
+        const tableContainer = document.getElementById('obligationsTableContainer') || document.querySelector('.shop-obl-table-container');
+        const obls = getObligationsList();
+        const totalCount = obls.length || 53;
+        if (typeof window.skPrintContainer === 'function' && tableContainer) {
+          window.skPrintContainer(tableContainer, {
+            title: 'Sree Krushna Marriage OS — Customary Family Obligations Run Sheet',
+            subtitle: `${totalCount} Codified Ritual Dayitva & Handover Covenants (Vidhi Dayitva / Bhara / Sara)`,
+            orientation: 'landscape',
+            pageSize: 'A4',
+            margin: '8mm 10mm',
+            includeSignoff: true
+          });
+        } else {
+          window.print();
+        }
+      }, 150);
     }
     window.printObligationsSheet = printObligationsSheet;
 
@@ -12368,6 +13018,9 @@ tr.row-pulse td {
       activeObligationFilter = filter;
       document.querySelectorAll('.shop-obl-pill').forEach(btn => {
         btn.classList.toggle('active', btn.getAttribute('data-obl-filter') === filter);
+      });
+      document.querySelectorAll('.obl-inner-pill').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-inner-filter') === filter);
       });
       if (activeObligationLayout === 'table') {
         renderObligationsTable();

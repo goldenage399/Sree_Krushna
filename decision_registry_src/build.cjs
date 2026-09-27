@@ -45,7 +45,7 @@ if (fs.existsSync(commentsDrawerPath)) {
 
 // Read Primitives & Controller Scripts
 const primScriptsDir = path.join(rootDir, 'ui_primitives', 'scripts');
-const primScriptFiles = ['drive_normalizer.js', 'zoom_pan_engine.js', 'comments_engine.js', 'primitives_core.js'];
+const primScriptFiles = ['drive_normalizer.js', 'zoom_pan_engine.js', 'comments_engine.js', 'primitives_core.js', 'print_engine.js'];
 const primJs = primScriptFiles.map(f => fs.readFileSync(path.join(primScriptsDir, f), 'utf8')).join('\n\n');
 const controllerJs = fs.readFileSync(controllerPath, 'utf8');
 const fullControllerJs = primJs + '\n\n' + controllerJs;

@@ -2185,6 +2185,22 @@
       }
     };
 
+    window.printShoppingTable = function() {
+      const tableContainer = document.querySelector('#shoppingTableViewSection .shop-table-container') || document.getElementById('shoppingDataTable');
+      if (typeof window.skPrintContainer === 'function' && tableContainer) {
+        window.skPrintContainer(tableContainer, {
+          title: 'Sree Krushna Marriage OS — Commercial Trousseau Sourcing Catalog',
+          subtitle: '44 Canonical Items, Bespoke Attire & Odia Heirlooms (Bhubaneswar Market Run Sheet)',
+          orientation: 'landscape',
+          pageSize: 'A4',
+          margin: '8mm 10mm',
+          includeSignoff: true
+        });
+      } else {
+        window.print();
+      }
+    };
+
     let firestoreUnsubscribe = null;
     let syncRetryTimer = null;
 
@@ -3694,9 +3710,91 @@
     }
 
     // ========================================================================
-    // CUSTOMARY FAMILY OBLIGATIONS (OBL-001 to OBL-049) CONTROLLER ENGINE
-    // Standard: STD-FAMILY-OBLIGATION-001 | AC-DEC-2026-061 / AC-DEC-2026-062
+    // CUSTOMARY FAMILY OBLIGATIONS (OBL-001 to OBL-053) CONTROLLER ENGINE
+    // Standard: STD-FAMILY-OBLIGATION-001 | AC-DEC-2026-061 / AC-DEC-2026-066
     // ========================================================================
+    // State variables activeObligationFilter, activeObligationEvent, obligationSearchQuery, activeObligationLayout declared at module top
+    let activeOblTableSort = { key: 'code', dir: 'asc' };
+
+    function getObligationCost(o) {
+      if (o.financial_obligation && o.financial_obligation.is_monetary) {
+        return Number(o.financial_obligation.unit_amount_inr || o.financial_obligation.estimated_total_inr) || 0;
+      }
+      return 0;
+    }
+
+    function sortObligationsList(list, key, dir) {
+      const modifier = dir === 'desc' ? -1 : 1;
+      return [...list].sort((a, b) => {
+        if (key === 'code') {
+          return a.id.localeCompare(b.id) * modifier;
+        }
+        if (key === 'direction') {
+          const dirA = a.derived_direction || '';
+          const dirB = b.derived_direction || '';
+          return dirA.localeCompare(dirB) * modifier;
+        }
+        if (key === 'title') {
+          const titleA = a.customary_title || '';
+          const titleB = b.customary_title || '';
+          return titleA.localeCompare(titleB) * modifier;
+        }
+        if (key === 'category') {
+          const catA = a.category || '';
+          const catB = b.category || '';
+          return catA.localeCompare(catB) * modifier;
+        }
+        if (key === 'cost') {
+          const costA = getObligationCost(a);
+          const costB = getObligationCost(b);
+          if (costA !== costB) {
+            return (costA - costB) * modifier;
+          }
+          return a.id.localeCompare(b.id);
+        }
+        if (key === 'trs') {
+          const trsA = (a.downstream_projections && a.downstream_projections.commercial_shopping_ref) || '';
+          const trsB = (b.downstream_projections && b.downstream_projections.commercial_shopping_ref) || '';
+          return trsA.localeCompare(trsB) * modifier;
+        }
+        return a.id.localeCompare(b.id) * modifier;
+      });
+    }
+
+    function updateOblSortStatusTag() {
+      const tag = document.getElementById('oblSortStatusTag');
+      if (!tag) return;
+      const names = {
+        code: 'Code',
+        direction: 'Direction',
+        title: 'Title',
+        category: 'Category',
+        cost: 'Cash / Cost',
+        trs: 'Sourced Via'
+      };
+      const arrow = activeOblTableSort.dir === 'asc' ? '▲ Asc' : '▼ Desc';
+      tag.textContent = `Sorted by: ${names[activeOblTableSort.key] || activeOblTableSort.key} (${arrow})`;
+    }
+
+    function sortObligationsTable(key) {
+      if (activeOblTableSort.key === key) {
+        activeOblTableSort.dir = activeOblTableSort.dir === 'asc' ? 'desc' : 'asc';
+      } else {
+        activeOblTableSort.key = key;
+        activeOblTableSort.dir = 'asc';
+      }
+      updateOblSortStatusTag();
+      renderObligationsTable();
+    }
+    window.sortObligationsTable = sortObligationsTable;
+
+    function resetObligationSort() {
+      activeOblTableSort = { key: 'code', dir: 'asc' };
+      updateOblSortStatusTag();
+      renderObligationsTable();
+    }
+    window.resetObligationSort = resetObligationSort;
+
     function escapeHtml(str) {
       if (!str) return '';
       return String(str)
@@ -3713,10 +3811,22 @@
       const elBride = document.getElementById('oblKpiBride');
       const elGroom = document.getElementById('oblKpiGroom');
       const elUnresolved = document.getElementById('oblKpiUnresolved');
-      if (elTotal) elTotal.textContent = stats.total || obls.length;
-      if (elBride) elBride.textContent = (stats.by_direction && (stats.by_direction.bride_to_groom + (stats.by_direction.joint || 0) + (stats.by_direction.external || 0))) || 27;
-      if (elGroom) elGroom.textContent = (stats.by_direction && stats.by_direction.groom_to_bride) || 21;
+      const totalCount = stats.total || obls.length || 53;
+      if (elTotal) elTotal.textContent = totalCount;
+      if (elBride) {
+        const brideCount = obls.filter(o => o.obligor && (o.obligor.family === 'bride' || o.obligor.family === 'joint')).length;
+        elBride.textContent = brideCount || 27;
+      }
+      if (elGroom) {
+        const groomCount = obls.filter(o => o.obligor && o.obligor.family === 'groom').length;
+        elGroom.textContent = groomCount || 26;
+      }
       if (elUnresolved) elUnresolved.textContent = stats.unresolved_count || 8;
+
+      // Dynamically update all obligation count badges across subnav & banners
+      document.querySelectorAll('.obl-count-badge').forEach(badge => {
+        badge.textContent = totalCount;
+      });
     }
 
     function getFilteredObligations() {
@@ -3746,8 +3856,14 @@
         } else if (activeObligationFilter === 'gold_silver') {
           if (o.category !== 'gold_silver') return false;
         } else if (activeObligationFilter === 'cash') {
-          const isCash = o.category === 'cash_envelope' || (o.financial_obligation && o.financial_obligation.is_monetary);
+          const isCash = o.category === 'cash_envelope' || o.category === 'honorarium_cash' || (o.financial_obligation && o.financial_obligation.is_monetary);
           if (!isCash) return false;
+        } else if (activeObligationFilter === 'composite_bundle') {
+          if (o.category !== 'composite_bundle') return false;
+        } else if (activeObligationFilter === 'edible_hospitality') {
+          if (o.category !== 'edible_hospitality') return false;
+        } else if (activeObligationFilter === 'logistics') {
+          if (o.category !== 'logistics' && o.category !== 'service') return false;
         }
 
         // Search Query Match
@@ -3798,13 +3914,13 @@
       }
 
       const milestoneMap = {
-        'EVT-001': 'EVT-001: Nirbandha (Engagement Ceremony)',
-        'EVT-002': 'EVT-002: Pua-Bhauni, Mangan & Diyas (Day 1)',
-        'EVT-003': 'EVT-003: Snana & Haldi (Day 2 Morning)',
-        'EVT-004': 'EVT-004: Barat, Baranugam & Mandap Vivaha (Day 2 Wedding)',
-        'EVT-005': 'EVT-005: Bandapana, Gruha Prabesha & Kaudi Khela (Day 3)',
-        'EVT-006': 'EVT-006: Samandhi Bhoji & Astamangala (Day 4/8 Culmination)',
-        'POST_WEDDING': 'POST_WEDDING: Post-Wedding Reciprocals'
+        'EVT-001': 'EVT-001: Nirbandha & Ashirbad (ନିର୍ବନ୍ଧ ଓ ଆଶୀର୍ବାଦ)',
+        'EVT-002': 'EVT-002: Pua-Bhauni & Mangan (ପୁଅ-ଭଉଣୀ ଓ ମଙ୍ଗନ)',
+        'EVT-003': 'EVT-003: Snana & Haladi (ସ୍ନାନ ଓ ହଳଦୀ ଖେଳ)',
+        'EVT-004': 'EVT-004: Barayatri, Batabarana & Mandap Baha (ବରଯାତ୍ରୀ, ବାଟବରଣ ଓ ବିବାହ)',
+        'EVT-005': 'EVT-005: Bandapana & Gruha Prabesha (ବନ୍ଦାପନା ଓ ଗୃହ ପ୍ରବେଶ)',
+        'EVT-006': 'EVT-006: Samandhi Bhoji, Chauthi & Basara (ସମନ୍ଧୀ ଭୋଜି, ଚଉଠି ଓ ବାସର)',
+        'POST_WEDDING': 'POST_WEDDING: Astamangala & Phiranti Bhoji (ଅଷ୍ଟମଙ୍ଗଳା ଓ ଫେରନ୍ତା ଭୋଜି)'
       };
 
       const catIcons = {
@@ -4026,11 +4142,17 @@
 
     function shareAllObligationsWhatsApp() {
       const shareUrl = `${window.location.origin}${window.location.pathname}?subview=obligations`;
+      const obls = getObligationsList();
+      const totalCount = obls.length || 53;
+      const brideCount = obls.filter(o => o.obligor && (o.obligor.family === 'bride' || o.obligor.family === 'joint')).length || 27;
+      const groomCount = obls.filter(o => o.obligor && o.obligor.family === 'groom').length || 26;
+      const unresCount = obls.filter(o => ['TBD_Family_Choice', 'Source_Unclear', 'Source_Redacted', 'Pending_Family_Confirmation'].includes(o.spec_status) || o.lifecycle_status === 'Identified').length || 8;
+
       const msg = `🌺 *Sree Krushna Marriage OS — Customary Family Obligations Register* 🌺\n\n` +
-        `Review the 49 customary lineage handovers, ceremonial attire endowments, and sacred Dakshina protocols governing our wedding rituals:\n` +
-        `• 27 Bride Side Obligations (Nirbandha, Batabarana, Sara gifting)\n` +
-        `• 21 Groom Side Obligations (Ahiya Manduli, Alata Sindoor, Samdhi Milan)\n` +
-        `• 8 Items pending family confirmation\n\n` +
+        `Review the ${totalCount} customary lineage handovers, ceremonial attire endowments, and sacred Dakshina protocols governing our wedding rituals:\n` +
+        `• ${brideCount} Bride Side Obligations (Nirbandha, Batabarana, Sara gifting)\n` +
+        `• ${groomCount} Groom Side Obligations (Ahiya Manduli, Alata Sindoor, Samdhi Milan)\n` +
+        `• ${unresCount} Items pending family confirmation\n\n` +
         `🔗 *Full Interactive Register:* ${shareUrl}`;
 
       const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
@@ -4038,11 +4160,73 @@
     }
     window.shareAllObligationsWhatsApp = shareAllObligationsWhatsApp;
 
+    const OBL_ACCORDION_STORAGE_KEY = 'sk_obl_accordion_state';
+
+    function getOblAccordionState() {
+      try {
+        const raw = localStorage.getItem(OBL_ACCORDION_STORAGE_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveOblAccordionState(state) {
+      try {
+        localStorage.setItem(OBL_ACCORDION_STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {
+        // Ignore localStorage quota errors
+      }
+    }
+
+    function toggleMilestoneAccordion(milestoneId) {
+      if (!milestoneId) return;
+      const block = document.querySelector(`.obl-table-milestone-block[data-milestone-id="${milestoneId}"]`);
+      if (!block) return;
+      const isNowCollapsed = !block.classList.contains('is-collapsed');
+      block.classList.toggle('is-collapsed', isNowCollapsed);
+      const header = block.querySelector('.obl-table-milestone-header');
+      if (header) {
+        header.setAttribute('aria-expanded', isNowCollapsed ? 'false' : 'true');
+      }
+      const state = getOblAccordionState();
+      state[milestoneId] = isNowCollapsed;
+      saveOblAccordionState(state);
+    }
+    window.toggleMilestoneAccordion = toggleMilestoneAccordion;
+
+    function expandAllMilestones() {
+      const state = getOblAccordionState();
+      document.querySelectorAll('.obl-table-milestone-block').forEach(block => {
+        block.classList.remove('is-collapsed');
+        const ev = block.getAttribute('data-milestone-id');
+        if (ev) state[ev] = false;
+        const header = block.querySelector('.obl-table-milestone-header');
+        if (header) header.setAttribute('aria-expanded', 'true');
+      });
+      saveOblAccordionState(state);
+    }
+    window.expandAllMilestones = expandAllMilestones;
+
+    function collapseAllMilestones() {
+      const state = getOblAccordionState();
+      document.querySelectorAll('.obl-table-milestone-block').forEach(block => {
+        block.classList.add('is-collapsed');
+        const ev = block.getAttribute('data-milestone-id');
+        if (ev) state[ev] = true;
+        const header = block.querySelector('.obl-table-milestone-header');
+        if (header) header.setAttribute('aria-expanded', 'false');
+      });
+      saveOblAccordionState(state);
+    }
+    window.collapseAllMilestones = collapseAllMilestones;
+
     function renderObligationsTable() {
       const tableContent = document.getElementById('obligationsTableContent');
       if (!tableContent) return;
 
       updateObligationKpis();
+      updateOblSortStatusTag();
       const filtered = getFilteredObligations();
       if (filtered.length === 0) {
         tableContent.innerHTML = `
@@ -4054,13 +4238,13 @@
       }
 
       const milestoneMap = {
-        'EVT-001': 'EVT-001: Nirbandha (Engagement Ceremony)',
-        'EVT-002': 'EVT-002: Pua-Bhauni, Mangan & Diyas (Day 1)',
-        'EVT-003': 'EVT-003: Snana & Haldi (Day 2 Morning)',
-        'EVT-004': 'EVT-004: Barat, Baranugam & Mandap Vivaha (Day 2 Wedding)',
-        'EVT-005': 'EVT-005: Bandapana, Gruha Prabesha & Kaudi Khela (Day 3)',
-        'EVT-006': 'EVT-006: Samandhi Bhoji & Astamangala (Day 4/8 Culmination)',
-        'POST_WEDDING': 'POST_WEDDING: Post-Wedding Reciprocals'
+        'EVT-001': 'EVT-001: Nirbandha & Ashirbad (ନିର୍ବନ୍ଧ ଓ ଆଶୀର୍ବାଦ)',
+        'EVT-002': 'EVT-002: Pua-Bhauni & Mangan (ପୁଅ-ଭଉଣୀ ଓ ମଙ୍ଗନ)',
+        'EVT-003': 'EVT-003: Snana & Haladi (ସ୍ନାନ ଓ ହଳଦୀ ଖେଳ)',
+        'EVT-004': 'EVT-004: Barayatri, Batabarana & Mandap Baha (ବରଯାତ୍ରୀ, ବାଟବରଣ ଓ ବିବାହ)',
+        'EVT-005': 'EVT-005: Bandapana & Gruha Prabesha (ବନ୍ଦାପନା ଓ ଗୃହ ପ୍ରବେଶ)',
+        'EVT-006': 'EVT-006: Samandhi Bhoji, Chauthi & Basara (ସମନ୍ଧୀ ଭୋଜି, ଚଉଠି ଓ ବାସର)',
+        'POST_WEDDING': 'POST_WEDDING: Astamangala & Phiranti Bhoji (ଅଷ୍ଟମଙ୍ଗଳା ଓ ଫେରନ୍ତା ଭୋଜି)'
       };
 
       const grouped = {};
@@ -4073,27 +4257,40 @@
       const eventOrder = ['EVT-001', 'EVT-002', 'EVT-003', 'EVT-004', 'EVT-005', 'EVT-006', 'POST_WEDDING', 'OTHER'];
       const activeEvents = eventOrder.filter(ev => grouped[ev] && grouped[ev].length > 0);
 
+      const getSortTh = (key, label, widthStyle) => {
+        const isSorted = activeOblTableSort.key === key;
+        const sortClass = isSorted ? 'sortable-th is-sorted' : 'sortable-th';
+        const icon = isSorted ? (activeOblTableSort.dir === 'asc' ? '▲' : '▼') : '⇅';
+        return `<th style="${widthStyle}" class="${sortClass}" onclick="window.sortObligationsTable('${key}')" title="Sort by ${label}">${label} <span class="obl-sort-icon">${icon}</span></th>`;
+      };
+
+      const accordionState = getOblAccordionState();
+
       let html = '';
       activeEvents.forEach(ev => {
         const groupTitle = milestoneMap[ev] || ev;
-        const groupObls = grouped[ev];
+        const groupObls = sortObligationsList(grouped[ev], activeOblTableSort.key, activeOblTableSort.dir);
+        const isCollapsed = !!accordionState[ev];
+        const collapseClass = isCollapsed ? 'obl-table-milestone-block is-collapsed' : 'obl-table-milestone-block';
+        const ariaExpanded = isCollapsed ? 'false' : 'true';
 
         html += `
-          <div class="obl-table-milestone-block">
-            <div class="obl-table-milestone-header">
-              <span>🗓️ ${escapeHtml(groupTitle)}</span>
+          <div class="${collapseClass}" data-milestone-id="${ev}">
+            <div class="obl-table-milestone-header" onclick="window.toggleMilestoneAccordion('${ev}')" role="button" tabindex="0" aria-expanded="${ariaExpanded}" title="Click to expand/collapse ${escapeHtml(groupTitle)}">
+              <span><span class="obl-milestone-chevron">▼</span>🗓️ ${escapeHtml(groupTitle)}</span>
               <span class="obl-table-milestone-count">${groupObls.length} ${groupObls.length === 1 ? 'Obligation' : 'Obligations'}</span>
             </div>
             <table class="obl-data-table">
+
               <thead>
                 <tr>
-                  <th style="width: 75px;">Code</th>
-                  <th style="width: 115px;">Direction</th>
-                  <th style="width: 220px;">Customary Title &amp; Description</th>
-                  <th style="width: 85px;">Category</th>
-                  <th>Items / Specifications</th>
-                  <th style="width: 85px; text-align: right;">Cash / Cost</th>
-                  <th style="width: 90px; text-align: center;">Sourced Via</th>
+                  ${getSortTh('code', 'Code', 'width: 75px;')}
+                  ${getSortTh('direction', 'Direction', 'width: 115px;')}
+                  ${getSortTh('title', 'Customary Title & Description', 'width: 220px; max-width: 260px;')}
+                  ${getSortTh('category', 'Category', 'width: 85px;')}
+                  <th style="width: 220px; max-width: 260px;" class="col-specs">Items / Specifications</th>
+                  ${getSortTh('cost', 'Cash / Cost', 'width: 85px; text-align: right;')}
+                  ${getSortTh('trs', 'Sourced Via', 'width: 90px; text-align: center;')}
                   <th style="width: 50px; text-align: center;">Verif</th>
                 </tr>
               </thead>
@@ -4103,7 +4300,9 @@
         groupObls.forEach(o => {
           const dirClass = o.derived_direction === 'bride_to_groom' ? 'dir-bride' : (o.derived_direction === 'groom_to_bride' ? 'dir-groom' : 'dir-joint');
           const dirLabel = o.derived_direction === 'bride_to_groom' ? 'Bride ⟶ Groom' : (o.derived_direction === 'groom_to_bride' ? 'Groom ⟶ Bride' : 'Joint / In-Laws');
-          const itemsText = (o.items || []).map(i => (i.quantity ? `${i.quantity} ${i.unit || ''} ` : '') + i.description).join('<br/>• ');
+          const itemsArray = (o.items || []).map(i => (i.quantity ? `${i.quantity} ${i.unit || ''} ` : '') + i.description);
+          const itemsText = itemsArray.join('<br/>• ');
+          const itemsTooltip = itemsArray.join('; ');
           const cashText = o.financial_obligation && o.financial_obligation.is_monetary
             ? `₹${o.financial_obligation.unit_amount_inr || o.financial_obligation.estimated_total_inr || 'TBD'}${o.financial_obligation.headcount ? '/head' : ''}`
             : '—';
@@ -4121,7 +4320,7 @@
                 <div class="obl-subdesc">${escapeHtml(o.english_descriptor)}</div>
               </td>
               <td class="obl-td-cat"><code>${escapeHtml(o.category)}</code></td>
-              <td class="obl-td-specs">• ${itemsText}</td>
+              <td class="obl-td-specs" title="${escapeHtml(itemsTooltip)}">• ${itemsText}</td>
               <td class="obl-td-cash">${cashText}</td>
               <td class="obl-td-trs">${trsHtml}</td>
               <td class="obl-td-verif"><span class="obl-verif-box"></span></td>
@@ -4170,8 +4369,22 @@
       setCatalogSubView('obligations');
       setObligationLayoutMode('table');
       setTimeout(() => {
-        window.print();
-      }, 100);
+        const tableContainer = document.getElementById('obligationsTableContainer') || document.querySelector('.shop-obl-table-container');
+        const obls = getObligationsList();
+        const totalCount = obls.length || 53;
+        if (typeof window.skPrintContainer === 'function' && tableContainer) {
+          window.skPrintContainer(tableContainer, {
+            title: 'Sree Krushna Marriage OS — Customary Family Obligations Run Sheet',
+            subtitle: `${totalCount} Codified Ritual Dayitva & Handover Covenants (Vidhi Dayitva / Bhara / Sara)`,
+            orientation: 'landscape',
+            pageSize: 'A4',
+            margin: '8mm 10mm',
+            includeSignoff: true
+          });
+        } else {
+          window.print();
+        }
+      }, 150);
     }
     window.printObligationsSheet = printObligationsSheet;
 
@@ -4179,6 +4392,9 @@
       activeObligationFilter = filter;
       document.querySelectorAll('.shop-obl-pill').forEach(btn => {
         btn.classList.toggle('active', btn.getAttribute('data-obl-filter') === filter);
+      });
+      document.querySelectorAll('.obl-inner-pill').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-inner-filter') === filter);
       });
       if (activeObligationLayout === 'table') {
         renderObligationsTable();

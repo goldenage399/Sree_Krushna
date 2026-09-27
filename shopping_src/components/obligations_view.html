@@ -12,7 +12,7 @@
       </div>
       <h2 class="shop-obl-title">Customary Family Obligations Register (Vidhi Dayitva / Bhara / Sara)</h2>
       <p class="shop-obl-subtitle">
-        49 customary lineage handovers, ceremonial attire endowments, and sacred Dakshina protocols governing Odia Hindu marriage rituals between Bride's and Groom's families.
+        53 customary lineage handovers, ceremonial attire endowments, and sacred Dakshina protocols governing Odia Hindu marriage rituals between Bride's and Groom's families.
       </p>
     </div>
     <div class="shop-obl-header-actions">
@@ -28,17 +28,17 @@
   <!-- Obligations KPI Summary Grid -->
   <div class="shop-obl-kpis" id="oblKpisGrid">
     <div class="shop-obl-kpi-card">
-      <span class="shop-obl-kpi-num" id="oblKpiTotal">49</span>
+      <span class="shop-obl-kpi-num" id="oblKpiTotal">53</span>
       <span class="shop-obl-kpi-lbl">Total Customary Obligations</span>
       <span class="shop-obl-kpi-sub">Across 6 Canonical Milestones</span>
     </div>
     <div class="shop-obl-kpi-card">
       <span class="shop-obl-kpi-num" style="color: #60a5fa;" id="oblKpiBride">27</span>
       <span class="shop-obl-kpi-lbl">Bride Side Obligations</span>
-      <span class="shop-obl-kpi-sub">23 to Groom Side + 4 Joint/Ext</span>
+      <span class="shop-obl-kpi-sub">25 to Groom Side + 2 Joint</span>
     </div>
     <div class="shop-obl-kpi-card">
-      <span class="shop-obl-kpi-num" style="color: #f472b6;" id="oblKpiGroom">21</span>
+      <span class="shop-obl-kpi-num" style="color: #f472b6;" id="oblKpiGroom">26</span>
       <span class="shop-obl-kpi-lbl">Groom Side Obligations</span>
       <span class="shop-obl-kpi-sub">Groom Family to Bride / In-Laws</span>
     </div>
@@ -53,13 +53,13 @@
   <div class="shop-obl-toolbar">
     <div class="shop-obl-filters" id="oblFilterPills" role="tablist" aria-label="Obligation Filters">
       <button type="button" class="shop-obl-pill active" data-obl-filter="all" onclick="window.setObligationFilter('all')">
-        All Obligations (49)
+        All Obligations (53)
       </button>
       <button type="button" class="shop-obl-pill" data-obl-filter="bride" onclick="window.setObligationFilter('bride')">
         👰 Bride Side (27)
       </button>
       <button type="button" class="shop-obl-pill" data-obl-filter="groom" onclick="window.setObligationFilter('groom')">
-        🤵 Groom Side (21)
+        🤵 Groom Side (26)
       </button>
       <button type="button" class="shop-obl-pill" data-obl-filter="joint" onclick="window.setObligationFilter('joint')">
         🤝 Joint Handlers (3)
@@ -110,6 +110,29 @@
 
   <!-- High-Density Spreadsheet Table Container (Table Mode Rendered Here) -->
   <div class="shop-obl-table-container" id="obligationsTableContainer" style="display: none;">
+    <!-- Inner Table Category & Quick-Filter Toolbar -->
+    <div class="obl-table-inner-toolbar" id="oblTableInnerToolbar">
+      <div class="obl-table-cat-filters" id="oblTableCatFilters">
+        <span class="obl-inner-filter-label">🏷️ Category:</span>
+        <button type="button" class="table-filter-btn obl-inner-pill active" data-inner-filter="all" onclick="window.setObligationFilter('all')">All (53)</button>
+        <button type="button" class="table-filter-btn obl-inner-pill" data-inner-filter="attire" onclick="window.setObligationFilter('attire')">🧵 Attire (23)</button>
+        <button type="button" class="table-filter-btn obl-inner-pill" data-inner-filter="gold_silver" onclick="window.setObligationFilter('gold_silver')">💎 Gold/Silver (7)</button>
+        <button type="button" class="table-filter-btn obl-inner-pill" data-inner-filter="composite_bundle" onclick="window.setObligationFilter('composite_bundle')">📦 Bundles (9)</button>
+        <button type="button" class="table-filter-btn obl-inner-pill" data-inner-filter="edible_hospitality" onclick="window.setObligationFilter('edible_hospitality')">🐟 Food &amp; Bhara (4)</button>
+        <button type="button" class="table-filter-btn obl-inner-pill" data-inner-filter="cash" onclick="window.setObligationFilter('cash')">💰 Cash (1)</button>
+        <button type="button" class="table-filter-btn obl-inner-pill" data-inner-filter="logistics" onclick="window.setObligationFilter('logistics')">🚚 Logistics (5)</button>
+      </div>
+      <div class="obl-table-active-sort" id="oblTableActiveSort">
+        <span class="obl-sort-status-tag" id="oblSortStatusTag">Sorted by: Code (▲ Asc)</span>
+        <button type="button" class="table-reset-btn obl-reset-sort-btn" id="btnResetOblSort" onclick="window.resetObligationSort()" title="Reset to default milestone code order">↺ Reset</button>
+      </div>
+      <div class="obl-accordion-controls" id="oblAccordionControls" style="display: inline-flex; gap: 6px; margin-left: auto;">
+        <button type="button" class="table-filter-btn obl-inner-pill" onclick="window.expandAllMilestones()" title="Expand All Milestone Tables">▼ Expand All</button>
+        <button type="button" class="table-filter-btn obl-inner-pill" onclick="window.collapseAllMilestones()" title="Collapse All Milestone Tables">▶ Collapse All</button>
+      </div>
+    </div>
+
+
     <div id="obligationsTableContent">
       <!-- Populated dynamically by window.renderObligationsTable() in controller.js -->
     </div>

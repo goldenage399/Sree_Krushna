@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Commercial Trousseau Sourcing Catalog — Printable Run Sheet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @page {
+      size: A4 landscape;
+      margin: 8mm 10mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      margin: 0;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #f8f9fa;
+      color: #111111;
+      font-size: 9.5px;
+      line-height: 1.35;
+    }
+
+    .no-print-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #1e293b;
+      color: #ffffff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .no-print-btn {
+      background: #d4a843;
+      color: #000000;
+      border: none;
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 11px;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 16px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .sheet-header {
+      border-bottom: 2px solid #000000;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .sheet-seal {
+      font-size: 8.5px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: #555555;
+    }
+
+    .sheet-title {
+      font-size: 15px;
+      font-weight: 800;
+      margin: 2px 0;
+      color: #000000;
+    }
+
+    .sheet-subtitle {
+      font-size: 9px;
+      color: #444444;
+      margin: 0;
+    }
+
+    .sheet-badge {
+      border: 1.5px solid #000000;
+      padding: 3px 8px;
+      font-size: 8.5px;
+      font-weight: 800;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .run-sheet-group {
+      page-break-inside: avoid;
+      margin-bottom: 14px;
+    }
+
+    .group-header {
+      background: #000000;
+      color: #ffffff;
+      padding: 5px 10px;
+      font-size: 10px;
+      font-weight: 800;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .group-count {
+      color: #cccccc;
+      font-weight: normal;
+    }
+
+    table.run-sheet-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9px;
+      page-break-inside: auto;
+    }
+
+    table.run-sheet-table thead {
+      display: table-header-group;
+    }
+
+    table.run-sheet-table tr {
+      page-break-inside: avoid;
+    }
+
+    table.run-sheet-table th {
+      background: #222222;
+      color: #ffffff;
+      border: 1px solid #000000;
+      padding: 4px 6px;
+      font-size: 8.5px;
+      text-align: left;
+    }
+
+    table.run-sheet-table td {
+      border: 1px solid #cccccc;
+      padding: 4px 6px;
+      vertical-align: top;
+      background: #ffffff;
+    }
+
+    table.run-sheet-table tr:nth-child(even) td {
+      background: #fbfbfb;
+    }
+
+    .verif-box {
+      display: inline-block;
+      width: 13px;
+      height: 13px;
+      border: 1.5px solid #000000;
+      border-radius: 2px;
+    }
+
+    .signoff-footer {
+      margin-top: 18px;
+      padding-top: 10px;
+      border-top: 1px dashed #666666;
+      display: flex;
+      justify-content: space-between;
+      font-size: 9px;
+      page-break-inside: avoid;
+    }
+
+    @media print {
+      body {
+        background: #ffffff !important;
+        padding: 0 !important;
+      }
+      .no-print, .no-print-bar {
+        display: none !important;
+      }
+      .container {
+        border: none !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="no-print-bar">
+    <div>
+      <strong>📄 Commercial Trousseau Sourcing Catalog (A4 LANDSCAPE)</strong>
+      <span style="font-size: 10px; color: #cbd5e1; margin-left: 10px;">44 total records</span>
+    </div>
+    <div>
+      <button type="button" class="no-print-btn" onclick="window.print()">🖨️ Print Run Sheet (Ctrl+P)</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <header class="sheet-header">
+      <div>
+        <div class="sheet-seal">👑 SREE KRUSHNA MARRIAGE OS</div>
+        <h1 class="sheet-title">Commercial Trousseau Sourcing Catalog</h1>
+        <p class="sheet-subtitle">44 Canonical Items, Bespoke Attire & Odia Heirlooms (Bhubaneswar Market)</p>
+      </div>
+      <div>
+        <span class="sheet-badge">LANDSCAPE RUN SHEET</span>
+      </div>
+    </header>
+
+    
+    <div class="run-sheet-group">
+      <div class="group-header">
+        <span>Unassigned</span>
+        <span class="group-count">(44 records)</span>
+      </div>
+      <table class="run-sheet-table">
+        <thead>
+          <tr><th style="width: 65px;">Code</th><th style="width: 85px;">Chapter</th><th style="width: auto;">Item / Ensemble</th><th style="width: 75px;">Category</th><th style="width: 60px;">Role</th><th style="width: 110px;">Primary Store</th><th style="width: 85px;">Est. Price</th><th style="width: 45px; text-align: center;">Done</th></tr>
+        </thead>
+        <tbody>
+          <tr><td style="">BR-01</td><td style="">—</td><td style="">Sacred Vivaha Pata (Hastaganthi Saree)</td><td style="">bridal</td><td style="">Mandap Vivaha Ritual (12:00 PM Hastaganthi)</td><td style="">Boyanika / Sambalpuri Bastralaya</td><td style="">₹25,000 - ₹38,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">BR-02</td><td style="">—</td><td style="">Bridal Sangeet Lehenga & Choli</td><td style="">bridal</td><td style="">Day 1 Sangeet & Performance Night</td><td style="">Kalamandir / Manyavar Mohey</td><td style="">₹45,000 - ₹75,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">BR-03</td><td style="">—</td><td style="">Haldi Mangala Snana Saree</td><td style="">bridal</td><td style="">Day 1 Haldi Ceremony</td><td style="">Boyanika / Utkalika</td><td style="">₹4,500 - ₹8,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">BR-04</td><td style="">—</td><td style="">Mehendi Garden Promenade Outfit</td><td style="">bridal</td><td style="">Day 1 Mehendi Event</td><td style="">Amber / Kalamandir</td><td style="">₹12,000 - ₹22,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">BR-05</td><td style="">—</td><td style="">Reception Grand Silk Saree</td><td style="">bridal</td><td style="">Day 2 Evening Reception / Bhoji</td><td style="">Kalamandir / Saheed Nagar</td><td style="">₹35,000 - ₹55,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">BR-06</td><td style="">—</td><td style="">Bridal Odhani / Mandap Veil</td><td style="">bridal</td><td style="">Hastaganthi Mandap Veil</td><td style="">Market Building Unit-2</td><td style="">₹3,500 - ₹6,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">BR-07</td><td style="">—</td><td style="">Post-Wedding Daily Handloom Silks (Set of 5)</td><td style="">bridal</td><td style="">Temple Visits & Family Hospitality</td><td style="">Boyanika (Master Canteen)</td><td style="">₹40,000 - ₹60,000 (Total Set)</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">GR-01</td><td style="">—</td><td style="">Mandap Pure Silk Dhoti & Kurta</td><td style="">groom</td><td style="">Vedic Mandap Rituals & Hastaganthi</td><td style="">Boyanika (Master Canteen)</td><td style="">₹18,000 - ₹26,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">GR-02</td><td style="">—</td><td style="">Ceremonial Silk Patta (Angavastra)</td><td style="">groom</td><td style="">Hastaganthi Sacred Knot Tying</td><td style="">Boyanika / Sambalpuri Bastralaya</td><td style="">₹4,000 - ₹7,500</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">GR-03</td><td style="">—</td><td style="">Barat Royal Sherwani</td><td style="">groom</td><td style="">Day 2 Morning Barat Procession</td><td style="">Manyavar (Janpath) / Sherwani House</td><td style="">₹35,000 - ₹55,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">GR-04</td><td style="">—</td><td style="">Groom Safa (Turban) & Feather Kalgi</td><td style="">groom</td><td style="">Barat Royal Regalia</td><td style="">Market Building / Manyavar</td><td style="">₹4,500 - ₹8,500</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">GR-05</td><td style="">—</td><td style="">Barat Stole & Multi-Layer Pearl Mala</td><td style="">groom</td><td style="">Barat Accoutrements</td><td style="">Manyavar / Saheed Nagar Boutiques</td><td style="">₹5,000 - ₹9,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">GR-06</td><td style="">—</td><td style="">Sangeet Tuxedo / Royal Bandhgala</td><td style="">groom</td><td style="">Day 1 Sangeet Concert & Celebration</td><td style="">Raymond Custom Tailoring (Janpath)</td><td style="">₹25,000 - ₹42,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">GR-07</td><td style="">—</td><td style="">Haldi Cotton-Silk Kurta-Pajama</td><td style="">groom</td><td style="">Day 1 Haldi Ceremony</td><td style="">Fabindia / Manyavar (Janpath)</td><td style="">₹4,000 - ₹7,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">GR-08</td><td style="">—</td><td style="">Traditional Mojaris & Juttis (2 Pairs)</td><td style="">groom</td><td style="">Ceremonial & Mandap Footwear</td><td style="">Market Building Unit-2</td><td style="">₹4,000 - ₹7,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">JW-01</td><td style="">—</td><td style="">Chandra Haar / Temple Gold Choker</td><td style="">jewellery</td><td style="">Mandap Hastaganthi Central Neckpiece</td><td style="">Khimji Jewellers / Lalchnd Jewellers</td><td style="">Gold Weight Based (~40-60g)</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">JW-02</td><td style="">—</td><td style="">Long Sita Haar (Layered Necklace)</td><td style="">jewellery</td><td style="">Bridal Regal Layering</td><td style="">Khimji / Epari Govindam</td><td style="">Gold Weight Based (~50-80g)</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">JW-03</td><td style="">—</td><td style="">Matha Patti & Maang Tikka</td><td style="">jewellery</td><td style="">Forehead Adornment</td><td style="">Lalchnd Jewellers / Tanishq</td><td style="">Gold Weight Based (~20-30g)</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">JW-04</td><td style="">—</td><td style="">Traditional Tiered Jhumkas & Kaanbali</td><td style="">jewellery</td><td style="">Ear Adornment with Hair Support</td><td style="">Khimji Jewellers / Kalyan</td><td style="">Gold Weight Based (~25-35g)</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">JW-05</td><td style="">—</td><td style="">Gold Kadas / Bangles (Set of 4)</td><td style="">jewellery</td><td style="">Bridal Arm Adornment</td><td style="">Khimji / Epari Govindam</td><td style="">Gold Weight Based (~40-60g)</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">JW-06</td><td style="">—</td><td style="">Kamarbandh (Gold Waist Chain)</td><td style="">jewellery</td><td style="">Saree Drape Anchor</td><td style="">Lalchnd / Saheed Nagar</td><td style="">Gold Weight Based (~30-50g)</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">JW-07</td><td style="">—</td><td style="">Silver Bridal Payal (Cuttack Tarakasi Nupur)</td><td style="">jewellery</td><td style="">Sacred Ankle Bells (Gold forbidden on feet)</td><td style="">Tarakasi Artisans / Khimji</td><td style="">₹8,000 - ₹16,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">JW-08</td><td style="">—</td><td style="">Silver Bichhiya (Toe Rings - 2 Sets)</td><td style="">jewellery</td><td style="">Auspicious Symbol of Married Woman</td><td style="">Khimji / Market Building</td><td style="">₹1,500 - ₹3,500</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">JW-09</td><td style="">—</td><td style="">Silver Sindoor Farua & Ceremonial Kajal Lata</td><td style="">jewellery</td><td style="">Mandap Liturgical Accessories</td><td style="">Epari Govindam / Lalchnd</td><td style="">₹4,500 - ₹8,500</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">SA-01</td><td style="">—</td><td style="">Samandhi Vastra (Mother-in-Law Silk Saree)</td><td style="">sara</td><td style="">Formal In-Laws Respect Gifting</td><td style="">Boyanika (Janpath)</td><td style="">₹18,000 - ₹28,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">SA-02</td><td style="">—</td><td style="">Samandhi Vastra (Father-in-Law Suiting / Dhoti)</td><td style="">sara</td><td style="">Formal In-Laws Respect Gifting</td><td style="">Boyanika / Raymond Shop (Janpath)</td><td style="">₹12,000 - ₹20,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">SA-03</td><td style="">—</td><td style="">Bride's Immediate Siblings Hampers</td><td style="">sara</td><td style="">Family Welcoming Gift</td><td style="">Manyavar / Amber (Janpath)</td><td style="">₹12,000 - ₹20,000 (Total)</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">SA-04</td><td style="">—</td><td style="">Groom's Sisters Wardrobe (2 Sets each)</td><td style="">sara</td><td style="">Sangeet & Mandap Outfits for Groom's Sisters</td><td style="">Kalamandir / Saheed Nagar Boutiques</td><td style="">₹45,000 - ₹70,000 (Total)</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">SA-05</td><td style="">—</td><td style="">Ceremonial Shringar & Kula Trunk Kit</td><td style="">sara</td><td style="">Traditional Trousseau Trunk Presentation</td><td style="">Market Building Unit-2</td><td style="">₹5,000 - ₹9,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">SA-06</td><td style="">—</td><td style="">Auspicious Dry Fruit & Odia Pitha Hampers (5 Baskets)</td><td style="">sara</td><td style="">Traditional Hospitality Gifting</td><td style="">Saheed Nagar / Nimapada Sweets / Janpath</td><td style="">₹15,000 - ₹25,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">OD-01</td><td style="">—</td><td style="">Nuapatna Khandua Pata Silk (Diya Mangula & Puja)</td><td style="">bridal</td><td style="">Sacred Jagannath Blessing & Temple Mangula Ritual</td><td style="">Boyanika (Master Canteen) / Utkalika</td><td style="">₹12,000 - ₹22,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">OD-02</td><td style="">—</td><td style="">Balakati Hand-Cast Bell-Metal (Kansa) 7-Piece Dining Service</td><td style="">sara</td><td style="">Newlywed Couple's First Ritual Feast & Ayurvedic Longevity Gift</td><td style="">Balakati Bell Metal Co-op / Utkalika (Janpath)</td><td style="">₹8,500 - ₹15,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">OD-03</td><td style="">—</td><td style="">Cuttack Tarakasi Silver Filigree Sindura Phuda & Pana Batta</td><td style="">jewellery</td><td style="">Auspicious Mandap Vermilion & Respected Guest Welcome Regalia</td><td style="">Khimji Jewellers / Cuttack Tarakasi Artisans</td><td style="">₹12,000 - ₹24,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">OD-04</td><td style="">—</td><td style="">Sambalpuri Handloom Groom Joda & Silk Dhoti Set</td><td style="">groom</td><td style="">Traditional Odia Sacred Mandap Ceremony & Satyanarayana Puja</td><td style="">Sambalpuri Bastralaya (Janpath) / Boyanika</td><td style="">₹6,500 - ₹12,500</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">EG-01</td><td style="">—</td><td style="">Diamond & Gold Engagement Rings (Bride & Groom)</td><td style="">engagement</td><td style="">Sacred Ring Exchange (Nirbandha / Nischitartham Ceremony)</td><td style="">Khimji Jewellers / Lalchnd Jewellers</td><td style="">₹45,000 - ₹95,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">EG-02</td><td style="">—</td><td style="">Bride Engagement Saree / Pastel Silk / Lehenga</td><td style="">engagement</td><td style="">Ring Exchange Ceremony Attire for Bride</td><td style="">Kalamandir (Janpath) / Boyanika</td><td style="">₹25,000 - ₹45,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">EG-03</td><td style="">—</td><td style="">Groom Engagement Kurta Ensemble / Indo-Western Suit</td><td style="">engagement</td><td style="">Ring Exchange Ceremony Attire for Groom</td><td style="">Manyavar (Janpath) / Raymond / Ashok Nagar Tailors</td><td style="">₹12,000 - ₹22,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">EG-04</td><td style="">—</td><td style="">Decorative Ring Platter & Nirbandha Sagan Thali Hampers</td><td style="">engagement</td><td style="">Ceremonial Presentation of Sacred Rings & Auspicious Sagan Articles</td><td style="">Market Building (Unit-2) / Saheed Nagar Hub</td><td style="">₹4,500 - ₹9,500</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">EG-05</td><td style="">—</td><td style="">In-Laws Elder Return Vastra & Odia Sweets Hampers</td><td style="">engagement</td><td style="">Formal Exchange of Auspicious Welcome Garments & Sweets during Nirbandha</td><td style="">Boyanika (Janpath) / Nimapada Sweets / Saheed Nagar</td><td style="">₹18,000 - ₹32,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">OD-05</td><td style="">—</td><td style="">Odia Sacred Bridal & Groom Mukuta Set (Shola & Silver Filigree)</td><td style="">jewellery</td><td style="">Ceremonial Royal Crowns for Muhurtham Hastaganthi Ritual</td><td style="">Market Building (Unit-2) / Cuttack Tarakasi Artisans</td><td style="">₹3,500 - ₹7,500</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">OD-06</td><td style="">—</td><td style="">Baula Patta Saree & Hastaganthi Bandhana Vastra Set</td><td style="">bridal</td><td style="">Sacred Ritual Drape & Physical Knotting Cloth for Hastaganthi & Saptapadi</td><td style="">Boyanika (Master Canteen) / Utkalika</td><td style="">₹4,500 - ₹8,500</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">BR-08</td><td style="">—</td><td style="">Bride Haldi Handloom Yellow Saree & Fresh Floral Jewellery Suite</td><td style="">bridal</td><td style="">Mangala Krutya, Diya Mangula & Haldi Turmeric Blessing Ceremony</td><td style="">Kalamandir (Janpath) / Saheed Nagar Floral Decorators</td><td style="">₹8,000 - ₹15,000</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">GR-10</td><td style="">—</td><td style="">Groom Mangala Snana / Haldi Tussar Silk Kurta & Dhoti Ensemble</td><td style="">groom</td><td style="">Pre-Wedding Turmeric Anointing, Snana & Satyanarayana Puja</td><td style="">Boyanika (Janpath) / Sambalpuri Bastralaya</td><td style="">₹4,500 - ₹8,500</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+<tr><td style="">OD-07</td><td style="">—</td><td style="">Sacred Bamboo Kula & Odia Alaktaka (Alta) Ritual Set</td><td style="">sara</td><td style="">Laja Homa (Puffed Rice Fire Offering) & Auspicious Bridal Foot/Hand Blessing</td><td style="">Market Building (Unit-2 Plaza) / Saheed Nagar Hub</td><td style="">₹1,500 - ₹3,500</td><td style="text-align: center;"><span class="verif-box"></span></td></tr>
+
+        </tbody>
+      </table>
+    </div>
+    
+
+    
+    <footer class="signoff-footer">
+      <div><strong>Ritual / Procurement Coordinator:</strong> ___________________________</div>
+      <div><strong>Family Elder Sign-Off:</strong> ___________________________</div>
+      <div><strong>Date / Time:</strong> ____ / ____ / 2026</div>
+    </footer>
+    
+  </div>
+
+</body>
+</html>

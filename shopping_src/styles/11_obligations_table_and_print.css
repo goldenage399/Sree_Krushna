@@ -30,6 +30,38 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s ease;
+}
+
+.obl-table-milestone-header:hover {
+  background: rgba(51, 65, 85, 0.95);
+}
+
+.obl-milestone-chevron {
+  display: inline-block;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-right: 8px;
+  font-size: 11px;
+}
+
+.obl-table-milestone-block.is-collapsed .obl-milestone-chevron {
+  transform: rotate(-90deg);
+}
+
+.obl-table-milestone-block.is-collapsed .obl-data-table {
+  display: none;
+}
+
+.obl-table-milestone-block.is-collapsed .obl-table-milestone-header {
+  border-radius: 6px;
+}
+
+.obl-accordion-controls {
+  display: inline-flex;
+  gap: 6px;
+  margin-left: 8px;
 }
 
 .obl-table-milestone-count {
@@ -37,6 +69,7 @@
   color: var(--shop-text-muted, #94a3b8);
   font-weight: 500;
 }
+
 
 /* 2. Spreadsheet Table Styling */
 .obl-data-table {
@@ -106,8 +139,16 @@
 }
 
 .obl-td-specs {
+  width: 220px;
+  max-width: 260px;
   font-size: 11px;
   color: #e2e8f0;
+  line-height: 1.4;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .obl-td-cash {
@@ -135,6 +176,118 @@
   border-radius: 2px;
 }
 
+/* 2.1 Sortable Table Headers (SK-024 Phase 2) */
+.obl-data-table th.sortable-th {
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.obl-data-table th.sortable-th:hover {
+  background: rgba(30, 41, 59, 0.95);
+  color: var(--shop-gold, #e5a93c);
+}
+
+.obl-data-table th.sortable-th.is-sorted {
+  color: var(--shop-gold, #e5a93c);
+  background: rgba(30, 41, 59, 0.95);
+  border-bottom: 2px solid var(--shop-gold, #e5a93c);
+}
+
+.obl-sort-icon {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 10px;
+  opacity: 0.6;
+}
+
+.obl-data-table th.sortable-th.is-sorted .obl-sort-icon {
+  opacity: 1;
+  color: var(--shop-gold, #e5a93c);
+}
+
+/* 2.2 Inner Table Filter Toolbar (SK-024 Phase 2) */
+.obl-table-inner-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 6px 10px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: 6px;
+}
+
+.obl-table-cat-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.obl-inner-filter-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--shop-text-muted, #94a3b8);
+  margin-right: 2px;
+}
+
+.obl-inner-pill {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.obl-inner-pill:hover {
+  background: rgba(51, 65, 85, 0.9);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.obl-inner-pill.active {
+  background: var(--shop-gold, #e5a93c);
+  border-color: var(--shop-gold, #e5a93c);
+  color: #000000;
+  font-weight: 700;
+}
+
+.obl-table-active-sort {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+}
+
+.obl-sort-status-tag {
+  color: var(--shop-gold, #e5a93c);
+  font-weight: 600;
+  font-size: 10.5px;
+}
+
+.obl-reset-sort-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #94a3b8;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.obl-reset-sort-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
 /* 3. Dedicated Ink-Saving Print Rules (Phase 3) */
 @media print {
   /* Suppress all interactive UI elements */
@@ -156,6 +309,7 @@
   #shoppingTableViewSection,
   #obligationsCardsContainer,
   #oblLayoutSwitcher,
+  .obl-table-inner-toolbar,
   #toastContainer,
   button,
   .shop-btn {
@@ -237,8 +391,26 @@
     color: #000000 !important;
   }
 
+  .obl-td-specs {
+    color: #000000 !important;
+    display: table-cell !important;
+    -webkit-line-clamp: unset !important;
+    overflow: visible !important;
+    max-width: none !important;
+  }
+
   .obl-verif-box {
     border: 1.5px solid #000000 !important;
+  }
+
+  /* Zero-Truncation Print Preservation Contract (INV-COLLAPSIBLE-PRINT-001) */
+  .obl-table-milestone-block.is-collapsed .obl-data-table {
+    display: table !important;
+  }
+
+  .obl-milestone-chevron,
+  .obl-accordion-controls {
+    display: none !important;
   }
 
   @page {
@@ -246,3 +418,4 @@
     margin: 8mm 10mm;
   }
 }
+

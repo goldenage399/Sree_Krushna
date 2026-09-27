@@ -108,7 +108,7 @@ try {
 
 // Read Shared UI Primitives Scripts
 const primScriptsDir = path.join(rootDir, 'ui_primitives', 'scripts');
-const primScriptFiles = ['drive_normalizer.js', 'zoom_pan_engine.js', 'comments_engine.js', 'primitives_core.js'];
+const primScriptFiles = ['drive_normalizer.js', 'zoom_pan_engine.js', 'comments_engine.js', 'primitives_core.js', 'print_engine.js'];
 const primJs = primScriptFiles
   .filter(f => fs.existsSync(path.join(primScriptsDir, f)))
   .map(f => fs.readFileSync(path.join(primScriptsDir, f), 'utf8'))
