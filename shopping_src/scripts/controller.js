@@ -330,6 +330,65 @@
     }
     window.focusCluster = focusCluster;
 
+    function jumpToCatalogItem(itemId) {
+      if (!itemId) return;
+      if (typeof window.switchShoppingView === 'function') {
+        window.switchShoppingView('catalog');
+      }
+      if (typeof setCatalogSubView === 'function') {
+        setCatalogSubView('items');
+      }
+      activeChapter = 'all';
+      activeFilter = 'all';
+      searchQuery = '';
+      if (shopSearchInput) shopSearchInput.value = '';
+      if (shopFilterPills) {
+        shopFilterPills.forEach(p => p.classList.toggle('active', p.getAttribute('data-filter') === 'all'));
+      }
+      const chapterPills = document.querySelectorAll('.shop-chapter-pill');
+      if (chapterPills) {
+        chapterPills.forEach(p => p.classList.toggle('active', p.getAttribute('data-chapter') === 'all'));
+      }
+      if (typeof renderChapters === 'function') renderChapters();
+      if (typeof renderItems === 'function') renderItems();
+
+      setTimeout(() => {
+        const card = document.getElementById('card-' + itemId);
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card.classList.add('highlight-target-item');
+          setTimeout(() => card.classList.remove('highlight-target-item'), 3000);
+          showToast(`Viewing ${itemId} in Catalog Showroom`, '👁️');
+        } else {
+          showToast(`Item ${itemId} not found in catalog`, '⚠️');
+        }
+      }, 150);
+    }
+    window.jumpToCatalogItem = jumpToCatalogItem;
+
+    function jumpToLedgerItem(itemId) {
+      if (!itemId) return;
+      if (typeof window.switchShoppingView === 'function') {
+        window.switchShoppingView('table');
+      }
+      if (typeof window.resetTableFilters === 'function') {
+        window.resetTableFilters();
+      }
+
+      setTimeout(() => {
+        const row = document.querySelector(`tr[data-item-id="${itemId}"]`);
+        if (row) {
+          row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          row.classList.add('row-pulse');
+          setTimeout(() => row.classList.remove('row-pulse'), 3000);
+          showToast(`Viewing ${itemId} in Execution Ledger`, '📊');
+        } else {
+          showToast(`Item ${itemId} not found in ledger`, '⚠️');
+        }
+      }, 150);
+    }
+    window.jumpToLedgerItem = jumpToLedgerItem;
+
     // URL Query Param Parser & Deep-Link Wiring
     function parseUrlParams() {
       const params = new URLSearchParams(window.location.search);
@@ -360,12 +419,19 @@
         if (params.get('cat')) tableState.category = params.get('cat');
         if (params.get('status')) tableState.status = params.get('status');
         if (params.get('q')) tableState.query = params.get('q');
-        if (params.get('layout') === 'cards') {
-          tableState.displayMode = 'cards';
-          setTimeout(() => { if (window.setTableLayoutMode) window.setTableLayoutMode('cards'); }, 150);
-        }
+        const targetItemId = params.get('item');
         setTimeout(() => {
           if (window.switchShoppingView) window.switchShoppingView('table');
+          if (targetItemId) {
+            setTimeout(() => {
+              const row = document.querySelector(`tr[data-item-id="${targetItemId}"]`);
+              if (row) {
+                row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                row.classList.add('row-pulse');
+                setTimeout(() => row.classList.remove('row-pulse'), 3000);
+              }
+            }, 200);
+          }
         }, 100);
       }
 
@@ -936,6 +1002,9 @@
                 <button class="shop-share-look-btn" type="button" onclick="window.shareItemOption('${item.id}', ${curOptIdx})" title="Share Look Link">
                   <span>📤</span>
                 </button>
+                <button class="shop-btn shop-btn-sm" type="button" onclick="window.jumpToLedgerItem('${item.id}')" title="Open in Execution Ledger & Accounting Table" style="font-size: 11px; padding: 3px 7px;">
+                  <span>📊</span>
+                </button>
                 <button class="shop-btn shop-btn-sm" type="button" onclick="window.openOptionIntakeModal('${item.id}')" title="Add Look" style="font-size: 11px; padding: 3px 7px;">
                   <span>➕</span>
                 </button>
@@ -1066,6 +1135,9 @@
                 </button>
                 <button class="shop-share-look-btn" type="button" onclick="window.shareItemOption('${item.id}', ${curOptIdx})" title="Share this look with family">
                   <span>📤 Share Look</span>
+                </button>
+                <button class="shop-btn shop-btn-sm" type="button" onclick="window.jumpToLedgerItem('${item.id}')" title="Open in Execution Ledger & Accounting Table" style="font-size: 11px; padding: 3px 8px;">
+                  <span>📊 Ledger</span>
                 </button>
                 <button class="shop-visual-search-btn" type="button" onclick="window.openVisualSearch('${(item.visualSearchQuery || (item.title + ' ' + (item.suggestedColor || '') + ' ' + (item.spec || ''))).replace(/'/g, "\\'")}')" title="Google Images Visual AI Search">
                   <span>🔍</span> Visual Search ↗
@@ -1229,8 +1301,7 @@
       category: 'all',
       status: 'all',
       query: '',
-      collapsedGroups: new Set(),
-      displayMode: 'table' // 'table' | 'cards' (AC-DEC-2026-034 / UI-DEC-2026-030)
+      collapsedGroups: new Set()
     };
     let pendingRemoteToastCount = 0;
     let remoteToastTimer = null;
@@ -1260,34 +1331,13 @@
           if (tableState.query) url.searchParams.set('q', tableState.query);
           else url.searchParams.delete('q');
 
-          if (tableState.displayMode && tableState.displayMode !== 'table') {
-            url.searchParams.set('layout', tableState.displayMode);
-          } else {
-            url.searchParams.delete('layout');
-          }
+          url.searchParams.delete('layout');
         }
         window.history.replaceState(null, '', url.toString());
       } catch (err) {
         // Silently tolerate restricted contexts
       }
     }
-
-    // Mutable Table Density & Layout Switcher (AC-DEC-2026-034 / UI-DEC-2026-030)
-    window.setTableLayoutMode = function(mode) {
-      tableState.displayMode = mode || 'table';
-      const tableEl = document.getElementById('shoppingDataTable');
-      const tableSec = document.getElementById('shoppingTableViewSection');
-      if (tableEl) {
-        tableEl.classList.toggle('mode-cards', mode === 'cards');
-      }
-      if (tableSec) {
-        tableSec.classList.toggle('mode-cards', mode === 'cards');
-      }
-      document.querySelectorAll('#tableLayoutSwitcher .table-group-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('data-layout') === mode);
-      });
-      syncTableUrlState();
-    };
 
     window.setTableGroupBy = function(groupBy) {
       tableState.groupBy = groupBy;
@@ -1335,7 +1385,6 @@
     };
 
     window.resetTableFilters = function() {
-      const currentMode = tableState.displayMode || 'table';
       tableState = {
         groupBy: 'chapter',
         sortKey: 'default',
@@ -1343,8 +1392,7 @@
         category: 'all',
         status: 'all',
         query: '',
-        collapsedGroups: new Set(),
-        displayMode: currentMode
+        collapsedGroups: new Set()
       };
       const searchInput = document.getElementById('tableSearchInput');
       if (searchInput) searchInput.value = '';
@@ -1826,6 +1874,7 @@
           </td>
           <td data-col-label="Actions" style="text-align: center;">
             <div class="cell-actions">
+              <button type="button" class="cell-action-btn" title="View in Curation Catalog & Showroom" onclick="window.jumpToCatalogItem('${item.id}')">👁️</button>
               <button type="button" class="cell-action-btn" title="Visual AI Search" onclick="window.openVisualSearchByItemId('${item.id}')">🔍</button>
               <button type="button" class="cell-action-btn" title="Share via WhatsApp" onclick="window.shareTableItemById('${item.id}')">📱</button>
             </div>

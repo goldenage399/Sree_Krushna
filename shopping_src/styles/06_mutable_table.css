@@ -605,94 +605,23 @@ tr.row-pulse td {
 }
 
 /* ==========================================================================
-   Card Layout Mode & Responsive Container Rules (AC-DEC-2026-034 / UI-DEC-2026-030)
+   Responsive Table Scrolling & Mobile Touch Optimization (Directive 2.2)
+   Cards mode retired. Pure tabular layout maintained across all viewports.
    ========================================================================== */
-.shop-data-table.mode-cards thead,
-.mode-cards .shop-data-table thead {
-  display: none;
-}
-
-.shop-data-table.mode-cards,
-.shop-data-table.mode-cards tbody,
-.mode-cards .shop-data-table,
-.mode-cards .shop-data-table tbody {
-  display: block;
-  width: 100%;
-}
-
-.shop-data-table.mode-cards tr:not(.table-group-header-row),
-.mode-cards .shop-data-table tr:not(.table-group-header-row) {
-  display: flex;
-  flex-direction: column;
-  background: rgba(26, 36, 54, 0.6);
-  border: 1px solid var(--border-subtle);
+.shop-table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
   border-radius: 8px;
-  margin-bottom: 12px;
-  padding: 14px 16px;
-  gap: 8px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
 }
 
-.shop-data-table.mode-cards tr:not(.table-group-header-row):hover,
-.mode-cards .shop-data-table tr:not(.table-group-header-row):hover {
-  background: rgba(26, 36, 54, 0.85);
-  border-color: rgba(245, 158, 11, 0.35);
-}
-
-.shop-data-table.mode-cards td,
-.mode-cards .shop-data-table td {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+.shop-data-table {
   width: 100%;
-  box-sizing: border-box;
-}
-
-.shop-data-table.mode-cards td.sticky-col,
-.mode-cards .shop-data-table td.sticky-col {
-  position: static;
-  background: none;
-  box-shadow: none;
-  padding-bottom: 10px;
-  margin-bottom: 4px;
-  border-bottom: 1px solid rgba(245, 158, 11, 0.25);
-}
-
-.shop-data-table.mode-cards td::before,
-.mode-cards .shop-data-table td::before {
-  content: attr(data-col-label);
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--gold-bright);
-  min-width: 120px;
-  flex-shrink: 0;
-}
-
-.shop-data-table.mode-cards td.sticky-col::before,
-.mode-cards .shop-data-table td.sticky-col::before {
-  display: none;
-}
-
-.shop-data-table.mode-cards tr.table-group-header-row,
-.mode-cards .shop-data-table tr.table-group-header-row {
-  display: block;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.shop-data-table.mode-cards tr.table-group-header-row td,
-.mode-cards .shop-data-table tr.table-group-header-row td {
-  display: block;
-  padding: 8px 14px;
-}
-
-.shop-data-table.mode-cards tr.table-group-header-row td::before,
-.mode-cards .shop-data-table tr.table-group-header-row td::before {
-  display: none;
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 900px;
 }
 
 /* Responsive Container Reflow */
@@ -704,8 +633,7 @@ tr.row-pulse td {
   .table-search-group {
     max-width: 100%;
   }
-  .table-group-switcher,
-  .table-layout-switcher {
+  .table-group-switcher {
     width: 100%;
     overflow-x: auto;
     justify-content: flex-start;
@@ -715,6 +643,23 @@ tr.row-pulse td {
     justify-content: flex-start;
     overflow-x: auto;
     padding-bottom: 4px;
+  }
+  .status-dropdown,
+  .table-price-input,
+  .table-notes-input {
+    min-height: 44px;
+    font-size: 0.85rem;
+  }
+  .cell-action-btn {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+  }
+  .cell-actions {
+    gap: 8px;
   }
 }
 
@@ -726,8 +671,7 @@ tr.row-pulse td {
   .table-search-group {
     max-width: 100%;
   }
-  .table-group-switcher,
-  .table-layout-switcher {
+  .table-group-switcher {
     width: 100%;
     overflow-x: auto;
     justify-content: flex-start;
@@ -738,4 +682,22 @@ tr.row-pulse td {
     overflow-x: auto;
     padding-bottom: 4px;
   }
+  .status-dropdown,
+  .table-price-input,
+  .table-notes-input {
+    min-height: 44px;
+    font-size: 0.85rem;
+  }
+  .cell-action-btn {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+  }
+  .cell-actions {
+    gap: 8px;
+  }
 }
+
