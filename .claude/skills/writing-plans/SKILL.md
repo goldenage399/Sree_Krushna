@@ -200,4 +200,3 @@ After saving the plan, present the execution approach to the user:
 - **Pre-Flight Deployment Gate**: `npm run verify:deployment`
 - **Shopping Domain Tests**: `npm run test:shopping`
 <!-- repo-specific:sree-krushna:end -->
-

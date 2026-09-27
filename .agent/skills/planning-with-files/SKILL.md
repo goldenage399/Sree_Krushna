@@ -1,8 +1,8 @@
 ---
 name: planning-with-files
 version: "2.11.0"
-description: "[DEPRECATED — use writing-plans] Implements Manus-style file-based planning for complex tasks. Consolidated under SK-008 into writing-plans."
-user-invocable: false
+description: "[DEPRECATED — use writing-plans] Implements Manus-style file-based planning for complex tasks. Creates task_plan.md, findings.md, and progress.md. Use when starting complex multi-step tasks, research projects, or any task requiring >5 tool calls. Integrates with Memory System for cross-session verification.
+user-invocable: true
 allowed-tools:
   - Read
   - Write
@@ -59,6 +59,7 @@ hooks:
 > **DEPRECATION NOTICE (SK-008 / AC-DEC-2026-044)**:
 > This skill is **deprecated** as of 2026-09-24. All planning workflows have been consolidated into the Universal Canonical Planning Engine: [`.agent/skills/writing-plans/SKILL.md`](../writing-plans/SKILL.md).
 > Do NOT generate unanchored `task_plan.md` or `findings.md` files in the project root. Multi-phase, complex, and research planning must use `writing-plans` with Gate 0 ticket anchoring in `enhancement-notes/{ID}/`.
+
 
 Work like Manus: Use persistent markdown files as your "working memory on disk."
 

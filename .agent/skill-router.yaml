@@ -39,6 +39,14 @@ skills:
     when: "Use whenever opening a new session in any repository, exploring unfamiliar domain architectures, inspecting entity relationships across documents, or enforcing canonical vocabulary across specs, PRDs, and governance artifacts via STD-UNIVERSAL-TAXONOMY-001."
     related_skills: [ssot-domain-mapper, repo-task-dependency-grapher, protocol-enforcer-pre-code]
 
+  - id: tabular-run-sheet-artisan
+    repo: [sree-krushna, task-dashboard, bms, capsicum, pio, ug-farmhouse, qsr]
+    triggers: ["print table", "printable run sheet", "tabular run sheet", "A4 run sheet", "paper run sheet", "elder printout", "generate run sheet", "/tabular-run-sheet-artisan", "STD-TABULAR-RUN-SHEET-SKILL-001", "STD-UI-PRINT-CONTAINER-001"]
+    cost: low
+    invoke: /tabular-run-sheet-artisan
+    when: "Use whenever turning any structured data table or dataset into an executive, ink-friendly physical paper run sheet formatted for A4 landscape/portrait printing, canonical Markdown reference table, or wiring container-scoped print buttons."
+    related_skills: [web-deployment-gate, mobile-ui-validator]
+
   - id: cockpit-intake
     repo: [task-dashboard]
     triggers: ["cockpit intake", "decorator intake", "ingest cockpit", "update cockpit layout"]

@@ -47,6 +47,10 @@ Every repository in the ecosystem (new or existing) receives and enforces the **
 │ PKG-004 │ Universal Sheet-Drive Media Relay        │ • .agent/skills/sheet-drive-relay │
 │         │ (STD-DRIVE-MEDIA-RELAY-001 / SK-015)     │ • .agent/patterns/sheet-drive-... │
 │         │                                          │ • Zero-CORS Simple POST Relay     │
+├─────────┼──────────────────────────────────────────┼───────────────────────────────────┤
+│ PKG-007 │ Universal Scoped Print Sandbox & Tabular │ • scripts/generate-tabular-run-sheet.cjs │
+│         │ Run Sheet Artisan (STD-TABULAR-RUN-001)  │ • templates/web-spa-shell/public/js/print_engine.js │
+│         │ (STD-UI-PRINT-CONTAINER-001 / SK-023)    │ • .agent/skills/tabular-run-sheet-artisan │
 └─────────┴──────────────────────────────────────────┴───────────────────────────────────┘
 ```
 

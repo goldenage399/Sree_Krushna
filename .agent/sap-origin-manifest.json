@@ -1,0 +1,57 @@
+{
+  "repository": "Sree_Krushna",
+  "version": "1.0.0",
+  "description": "Origin-ownership manifest declaring files that originate in Sree_Krushna and must NEVER be whole-file overwritten by external sync tools.",
+  "rules": {
+    "no_whole_file_overwrite": true,
+    "require_marker_merge": true
+  },
+  "whole_file_sync_allowlist": [],
+  "protected_files": [
+    {
+      "path": ".agent/skill-router.yaml",
+      "origin": "Sree_Krushna",
+      "reason": "Contains marriage-specific skills and local routing definitions"
+    },
+    {
+      "path": ".agent/standards-catalog.json",
+      "origin": "Sree_Krushna",
+      "reason": "Local standards catalog for Sree Krushna Marriage OS"
+    },
+    {
+      "path": ".agent/PREFLIGHT.md",
+      "origin": "Sree_Krushna",
+      "reason": "Local preflight gate table"
+    },
+    {
+      "path": "CLAUDE.md",
+      "origin": "Sree_Krushna",
+      "reason": "Tailored agent operating manual for Sree Krushna Marriage OS"
+    },
+    {
+      "path": "GEMINI.md",
+      "origin": "Sree_Krushna",
+      "reason": "Tailored agent operating manual for Sree Krushna Marriage OS"
+    },
+    {
+      "path": "DOCS_HUB.md",
+      "origin": "Sree_Krushna",
+      "reason": "Sree Krushna Marriage OS documentation hub"
+    },
+    {
+      "path": "ARCHITECTURE_SPEC.md",
+      "origin": "Sree_Krushna",
+      "reason": "Sree Krushna canonical architecture and state machines"
+    },
+    {
+      "path": "package.json",
+      "origin": "Sree_Krushna",
+      "reason": "Local package configuration and verification scripts"
+    },
+    {
+      "path": "scripts/verify-deployment.cjs",
+      "origin": "Sree_Krushna",
+      "reason": "Marriage OS specific deployment gate with local sandboxing mocks"
+    }
+  ]
+}

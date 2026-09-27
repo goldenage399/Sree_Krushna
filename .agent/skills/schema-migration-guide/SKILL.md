@@ -23,6 +23,7 @@ Get-ChildItem "backend/src/99_SchemaMigration_*.js"
 If found → Clone and adapt. If not → Create new using this template.
 
 ### Step 2: ANALYZE (Dry Run)
+Enforce [.agent/patterns/ghost-header-migration-parity-guard.md](../../patterns/ghost-header-migration-parity-guard.md) to detect ghost columns.
 
 ```javascript
 function ANALYZE_{Module}Schema_AllLocations() {

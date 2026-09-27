@@ -8,12 +8,15 @@ description: Create an implementation plan using the writing-plans skill
 Review relevant ecosystem patterns:
 - `.agent/patterns/P66-P67-collection-ownership.md`
 - `.agent/patterns/anti-masking-fallback-layers.md`
+- `.agent/patterns/button-primitive-and-preflight-gate.md`
 - `.agent/patterns/call-graph-and-rules-ast-verification-gate.md`
+- `.agent/patterns/candidate-looks-ergonomics-and-intake.md`
 - `.agent/patterns/canonical-stakeholder-deep-link-station.md`
 - `.agent/patterns/centralized-mutation-delegation.md`
 - `.agent/patterns/collab-visual-intake-and-deep-link-sharing.md`
 - `.agent/patterns/consumer-path-integration-verification.md`
 - `.agent/patterns/containing-block-viewport-escape-gate.md`
+- `.agent/patterns/contextual-multi-option-comments-engine.md`
 - `.agent/patterns/css-bridge-specificity-management.md`
 - `.agent/patterns/css-color-mix-gradient-silence.md`
 - `.agent/patterns/data-layer-verification-first.md`
@@ -23,6 +26,7 @@ Review relevant ecosystem patterns:
 - `.agent/patterns/deep-link-hook-composition.md`
 - `.agent/patterns/derive-dont-declare-guardrails.md`
 - `.agent/patterns/deterministic-ui-manual-capture-and-annotation-pipeline.md`
+- `.agent/patterns/dual-council-pre-planning-and-interaction-matrix.md`
 - `.agent/patterns/dynamic-fragment-lifecycle-and-modal-dismiss-contract.md`
 - `.agent/patterns/dynamic-module-timing-race-and-auth-reconnect.md`
 - `.agent/patterns/enhancement-id-staleness-collision.md`
@@ -31,7 +35,9 @@ Review relevant ecosystem patterns:
 - `.agent/patterns/evidence-scoped-cta-gating.md`
 - `.agent/patterns/external-iterative-design-gate.md`
 - `.agent/patterns/git-tracked-secret-scanning-p104.md`
+- `.agent/patterns/in-context-balance-refresh-cache-busting.md`
 - `.agent/patterns/intent-clarity-decoupling-and-plan-hardstop.md`
+- `.agent/patterns/interactive-multi-look-lightbox-carousel.md`
 - `.agent/patterns/ivp-001.md`
 - `.agent/patterns/jwt-claims-sync-gate.md`
 - `.agent/patterns/layout-linter-neutrality-gate.md`
@@ -69,6 +75,7 @@ Review relevant ecosystem patterns:
 - `.agent/patterns/sdca-pre-emit-syntax-gate.md`
 - `.agent/patterns/search-before-inventing.md`
 - `.agent/patterns/service-import-without-write-wiring.md`
+- `.agent/patterns/sheet-drive-media-relay.md`
 - `.agent/patterns/skill-source-verification-gate.md`
 - `.agent/patterns/ssot-preservation-template-guard.md`
 - `.agent/patterns/sub-engine-shadowing-and-tab-reconciliation.md`
@@ -80,10 +87,12 @@ Review relevant ecosystem patterns:
 - `.agent/patterns/two-tier-workspace-subview-decoupling.md`
 - `.agent/patterns/typography-weight-and-bridge-token-enforcement.md`
 - `.agent/patterns/ui-primitive-codebase-wide-standardization.md`
+- `.agent/patterns/universal-repository-taxonomy-and-discovery-graph.md`
 - `.agent/patterns/verifiable-implementation-before-adr-promotion.md`
 - `.agent/patterns/web-deployment-gate.md`
 - `.agent/patterns/write-site-contract-verification.md`
 - `.agent/patterns/write-without-reader.md`
+
 
 ## When to Use
 

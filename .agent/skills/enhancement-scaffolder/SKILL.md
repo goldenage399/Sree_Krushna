@@ -106,7 +106,7 @@ Before creating any folder or writing to any cluster file, confirm the enhanceme
 Before finalizing scaffolding, assert that:
 1. Every referenced task ID in `Depends On`, `Blocks`, and `Related` is verified to physically exist in `ENHANCEMENT-MASTER-REGISTRY.md` or `docs/enhancements/*.md`.
 2. When creating a child or continuation enhancement (e.g. `TASK-251`), immediately update the parent enhancement (e.g. `TASK-247`) with a reciprocal downstream link (`- **Downstream Child**: TASK-XXX`).
-3. Run `npm run check:enhancement-deps` to validate graph integrity and update `dist/enhancement-dependency-graph.json`.
+3. Run `npm run check:enhancement-deps` followed by `npm run cockpit` to validate graph integrity and immediately update the executive decision surfaces (COUNCIL-DEC-20260923-05).
 
 **Gate rule**: If the user says "skip" or the enhancement is trivially simple (≤ 2 hours, single-file change), this check may be deferred and logged as a note in the lean entry. For all other enhancements, it must be answered before Step 3.
 

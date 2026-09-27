@@ -46,13 +46,6 @@ if one or more apply:
   is perfectly clear but the requested action is only weakly related to the
   stated goal (e.g. "optimize performance" → "rewrite every component") —
   a clear prompt can still be solving the wrong problem; flag that too.
-- **Instance vs. systemic invariant (`INV-SYSTEMIC-ABSTRACTION-001`)** — a
-  single-entity bug report (a missing item, a price discrepancy, a broken
-  preview) is treated as a symptom, not the scope. Before proposing a
-  single-entity patch, ask: "is this a single data error, or a signal that an
-  entire capability (storage, sync, intake) is unbacked?" If the answer isn't
-  clearly "single data error," escalate to a systemic-pipeline audit before
-  patching. (Origin: `INC-099`.)
 
 **Do not flag** simple, direct, single-scope requests just to seem thorough.
 If nothing above applies, skip straight to answering normally — forcing a
