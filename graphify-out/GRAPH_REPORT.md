@@ -1,8 +1,8 @@
 # 🌐 Canonical Domain Entity Graph Report — Sree_Krushna
 
 > **Standard**: `STD-UNIVERSAL-TAXONOMY-001` / `STD-PCL-001`  
-> **Generated At**: 2026-09-27T07:22:32.006Z  
-> **Entities Indexed**: 131 | **Cross-Reference Edges**: 540 | **Dangling Targets**: 343  
+> **Generated At**: 2026-09-27T16:40:43.132Z  
+> **Entities Indexed**: 137 | **Cross-Reference Edges**: 580 | **Dangling Targets**: 392  
 
 ---
 
@@ -10,7 +10,7 @@
 
 | Prefix | Entity Domain Description | Node Count |
 | :--- | :--- | :--- |
-| **`OBL-###`** | Domain `OBL` entities | 50 |
+| **`OBL-###`** | Domain `OBL` entities | 54 |
 | **`TRS-###`** | Domain `TRS` entities | 44 |
 | **`RIT-###`** | Domain `RIT` entities | 13 |
 | **`EVT-###`** | Domain `EVT` entities | 8 |
@@ -18,6 +18,7 @@
 | **`DEC-###`** | Domain `DEC` entities | 2 |
 | **`VDR-###`** | Domain `VDR` entities | 2 |
 | **`VEN-###`** | Domain `VEN` entities | 2 |
+| **`AGP-###`** | Domain `AGP` entities | 2 |
 | **`FAM-###`** | Domain `FAM` entities | 1 |
 | **`PER-###`** | Domain `PER` entities | 1 |
 | **`PAY-###`** | Domain `PAY` entities | 1 |
@@ -29,67 +30,73 @@
 
 | Entity ID | Title / Concept | Status | File Location | Outbound Refs | Inbound Refs |
 | :--- | :--- | :--- | :--- | :--- | :--- |
+| **`AGP-001`** | Parent protocol defining the 15-step infra-first reasoning pipeline, cache usage, token economy, and governance rules for **all operations**. | `Documented` | [`docs/protocols/AGP-002-AUTONOMOUS-DEBUGGING-PROTOCOL.md`](../docs/protocols/AGP-002-AUTONOMOUS-DEBUGGING-PROTOCOL.md) | 0 | 0 |
+| **`AGP-002`** | Specialized child protocol defining **debugging-specific behaviors** when investigating data inconsistencies, query mismatches, and architectural issues. | `Documented` | [`docs/protocols/AGP-002-AUTONOMOUS-DEBUGGING-PROTOCOL.md`](../docs/protocols/AGP-002-AUTONOMOUS-DEBUGGING-PROTOCOL.md) | 0 | 0 |
 | **`DEC-002`** | Ratification of On-Site Hotel Inspection Checklist & Printable 4-Page Field Audit Dossier | `Approved` | [`00_GOVERNANCE/decisions/DEC-002_hotel_baseline_inspection_and_printable_checklist.md`](../00_GOVERNANCE/decisions/DEC-002_hotel_baseline_inspection_and_printable_checklist.md) | 5 | 0 |
 | **`DEC-003`** | Ratification of Dynamic UI Lifecycle, Script Sequencing, and 3-Trigger Modal Dismissibility Standard (STD-UI-LIFECYCLE-001) | `Approved` | [`00_GOVERNANCE/decisions/DEC-003_dynamic_ui_lifecycle_and_modal_dismissibility_contract.md`](../00_GOVERNANCE/decisions/DEC-003_dynamic_ui_lifecycle_and_modal_dismissibility_contract.md) | 2 | 0 |
 | **`EVT-###`** | Event Name | `Draft | Planned | Confirmed | In-Progress | Completed` | [`01_TIMELINE_EVENTS/event_template.md`](../01_TIMELINE_EVENTS/event_template.md) | 0 | 0 |
 | **`EVT-001`** | Nirbandha & Ashirbad | `Planned` | [`01_TIMELINE_EVENTS/pre_wedding/EVT-001_nirbandha_ashirbad.md`](../01_TIMELINE_EVENTS/pre_wedding/EVT-001_nirbandha_ashirbad.md) | 10 | 21 |
 | **`EVT-002`** | Mehendi & Sangeet Celebration | `Planned` | [`01_TIMELINE_EVENTS/pre_wedding/EVT-002_mehendi_sangeet.md`](../01_TIMELINE_EVENTS/pre_wedding/EVT-002_mehendi_sangeet.md) | 8 | 6 |
 | **`EVT-003`** | Mangan & Haldi Ceremony | `Planned` | [`01_TIMELINE_EVENTS/pre_wedding/EVT-003_haldi_mangan.md`](../01_TIMELINE_EVENTS/pre_wedding/EVT-003_haldi_mangan.md) | 6 | 2 |
-| **`EVT-004`** | Barat, Kanyadaan & Main Vedic Wedding | `Planned` | [`01_TIMELINE_EVENTS/wedding_day/EVT-004_barat_and_wedding.md`](../01_TIMELINE_EVENTS/wedding_day/EVT-004_barat_and_wedding.md) | 18 | 22 |
-| **`EVT-005`** | Grand Wedding Reception Banquet | `Planned` | [`01_TIMELINE_EVENTS/reception/EVT-005_grand_reception.md`](../01_TIMELINE_EVENTS/reception/EVT-005_grand_reception.md) | 7 | 3 |
+| **`EVT-004`** | Barat, Kanyadaan & Main Vedic Wedding | `Planned` | [`01_TIMELINE_EVENTS/wedding_day/EVT-004_barat_and_wedding.md`](../01_TIMELINE_EVENTS/wedding_day/EVT-004_barat_and_wedding.md) | 18 | 25 |
+| **`EVT-005`** | Grand Wedding Reception Banquet | `Planned` | [`01_TIMELINE_EVENTS/reception/EVT-005_grand_reception.md`](../01_TIMELINE_EVENTS/reception/EVT-005_grand_reception.md) | 7 | 4 |
 | **`EVT-006`** | Grihapravesh & Chauthi Ceremony | `Planned` | [`01_TIMELINE_EVENTS/post_wedding/EVT-006_chauthi_grihapravesh.md`](../01_TIMELINE_EVENTS/post_wedding/EVT-006_chauthi_grihapravesh.md) | 8 | 15 |
 | **`EVT-007`** | Astamangala (Eighth-Day Return Feast) | `Planned` | [`01_TIMELINE_EVENTS/post_wedding/EVT-007_astamangala.md`](../01_TIMELINE_EVENTS/post_wedding/EVT-007_astamangala.md) | 5 | 3 |
 | **`FAM-###`** | Family Household Unit: FAM-### | `Documented` | [`03_PEOPLE_GUESTS/family_template.md`](../03_PEOPLE_GUESTS/family_template.md) | 0 | 0 |
 | **`OBL-###`** | `OBL-###` — Customary Title | `pending_selection | shortlisted | procured` | [`02_RITUALS_CULTURE/obligation_template.md`](../02_RITUALS_CULTURE/obligation_template.md) | 0 | 0 |
-| **`OBL-001`** | `OBL-001` — Nirbandha Mudi (Bride ⟶ Groom) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-001.md`](../02_RITUALS_CULTURE/obligations/OBL-001.md) | 8 | 0 |
-| **`OBL-002`** | `OBL-002` — Groom's Engagement Shirt + Pant | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-002.md`](../02_RITUALS_CULTURE/obligations/OBL-002.md) | 7 | 0 |
-| **`OBL-003`** | `OBL-003` — Nirbandha Saree for Groom's Mom | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-003.md`](../02_RITUALS_CULTURE/obligations/OBL-003.md) | 7 | 0 |
-| **`OBL-004`** | `OBL-004` — Nirbandha Kurta/Shirt + Pant for Groom's Dad | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-004.md`](../02_RITUALS_CULTURE/obligations/OBL-004.md) | 7 | 0 |
-| **`OBL-005`** | `OBL-005` — Dress/Saree for Groom's Didi & Tiju | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-005.md`](../02_RITUALS_CULTURE/obligations/OBL-005.md) | 8 | 0 |
-| **`OBL-006`** | `OBL-006` — Dress for Bacha Party | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-006.md`](../02_RITUALS_CULTURE/obligations/OBL-006.md) | 6 | 0 |
-| **`OBL-007`** | `OBL-007` — 5 Varieties of Sweets (Bride ⟶ Groom) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-007.md`](../02_RITUALS_CULTURE/obligations/OBL-007.md) | 7 | 0 |
-| **`OBL-008`** | `OBL-008` — Nirbandha Mudi (Groom ⟶ Bride) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-008.md`](../02_RITUALS_CULTURE/obligations/OBL-008.md) | 8 | 0 |
-| **`OBL-009`** | `OBL-009` — Bridal Engagement Lehenga + Blouse | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-009.md`](../02_RITUALS_CULTURE/obligations/OBL-009.md) | 7 | 0 |
-| **`OBL-010`** | `OBL-010` — Engagement Trolley Presentation | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-010.md`](../02_RITUALS_CULTURE/obligations/OBL-010.md) | 6 | 0 |
-| **`OBL-011`** | `OBL-011` — Sweets, Coconut & Banana Kandhi Hamper | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-011.md`](../02_RITUALS_CULTURE/obligations/OBL-011.md) | 9 | 0 |
-| **`OBL-012`** | `OBL-012` — Nirbandha Phula (Floral Garlands) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-012.md`](../02_RITUALS_CULTURE/obligations/OBL-012.md) | 7 | 0 |
-| **`OBL-013`** | `OBL-013` — Nirbandha Desi Pana | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-013.md`](../02_RITUALS_CULTURE/obligations/OBL-013.md) | 7 | 0 |
-| **`OBL-014`** | `OBL-014` — Puri Jagannath Maha-Prasad | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-014.md`](../02_RITUALS_CULTURE/obligations/OBL-014.md) | 7 | 0 |
-| **`OBL-015`** | `OBL-015` — Nirbandha Non-Family Guest Honorarium (₹5,000/head) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-015.md`](../02_RITUALS_CULTURE/obligations/OBL-015.md) | 7 | 0 |
-| **`OBL-016`** | `OBL-016` — Gua/Haldi Basa Saree | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-016.md`](../02_RITUALS_CULTURE/obligations/OBL-016.md) | 7 | 0 |
-| **`OBL-017`** | `OBL-017` — Gua/Haldi Basa Makeup & Shringar | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-017.md`](../02_RITUALS_CULTURE/obligations/OBL-017.md) | 7 | 0 |
-| **`OBL-018`** | `OBL-018` — Haldi Basa Sacred Samagri (Coconut, Pana, Gua, Haldi) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-018.md`](../02_RITUALS_CULTURE/obligations/OBL-018.md) | 10 | 0 |
-| **`OBL-019`** | `OBL-019` — Bandhu Daksa (Pana, Gua) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-019.md`](../02_RITUALS_CULTURE/obligations/OBL-019.md) | 8 | 0 |
-| **`OBL-020`** | `OBL-020` — Bandhu Daksa (Dress for Daddy) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-020.md`](../02_RITUALS_CULTURE/obligations/OBL-020.md) | 7 | 0 |
-| **`OBL-021`** | `OBL-021` — Batabasana Groom Suit | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-021.md`](../02_RITUALS_CULTURE/obligations/OBL-021.md) | 7 | 0 |
-| **`OBL-022`** | `OBL-022` — Batabasana Gold Chain | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-022.md`](../02_RITUALS_CULTURE/obligations/OBL-022.md) | 7 | 0 |
-| **`OBL-023`** | `OBL-023` — Batabasana Gold Mudi (Ring) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-023.md`](../02_RITUALS_CULTURE/obligations/OBL-023.md) | 7 | 0 |
-| **`OBL-024`** | `OBL-024` — Batabasana Gold Bracelet | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-024.md`](../02_RITUALS_CULTURE/obligations/OBL-024.md) | 7 | 0 |
-| **`OBL-025`** | `OBL-025` — Ahiya Manduli (Saree for Mummy) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-025.md`](../02_RITUALS_CULTURE/obligations/OBL-025.md) | 7 | 0 |
-| **`OBL-026`** | `OBL-026` — Alta & Sindoor in Mandap | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-026.md`](../02_RITUALS_CULTURE/obligations/OBL-026.md) | 9 | 0 |
-| **`OBL-027`** | `OBL-027` — Sala Bidha Gift | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-027.md`](../02_RITUALS_CULTURE/obligations/OBL-027.md) | 7 | 0 |
-| **`OBL-028`** | `OBL-028` — Sali Hasta Ganthi Gift | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-028.md`](../02_RITUALS_CULTURE/obligations/OBL-028.md) | 7 | 0 |
-| **`OBL-029`** | `OBL-029` — Samdhi Milan (Baba ⟶ Daddy) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-029.md`](../02_RITUALS_CULTURE/obligations/OBL-029.md) | 9 | 1 |
-| **`OBL-030`** | `OBL-030` — Samdhi Milan (Daddy ⟶ Baba) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-030.md`](../02_RITUALS_CULTURE/obligations/OBL-030.md) | 9 | 1 |
-| **`OBL-031`** | `OBL-031` — Sadu Basana (Laddoo, Dress) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-031.md`](../02_RITUALS_CULTURE/obligations/OBL-031.md) | 8 | 0 |
-| **`OBL-032`** | `OBL-032` — Bridal Alankar (Groom ⟶ Bride) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-032.md`](../02_RITUALS_CULTURE/obligations/OBL-032.md) | 8 | 0 |
-| **`OBL-033`** | `OBL-033` — Unidentified TDK Customary Item | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-033.md`](../02_RITUALS_CULTURE/obligations/OBL-033.md) | 6 | 0 |
-| **`OBL-034`** | `OBL-034` — 5 Sets Dresses (Bride ⟶ Groom) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-034.md`](../02_RITUALS_CULTURE/obligations/OBL-034.md) | 7 | 0 |
-| **`OBL-035`** | `OBL-035` — Guin Chada Trolley | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-035.md`](../02_RITUALS_CULTURE/obligations/OBL-035.md) | 6 | 0 |
-| **`OBL-036`** | `OBL-036` — Bahu Daksa (Dress for Devas) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-036.md`](../02_RITUALS_CULTURE/obligations/OBL-036.md) | 7 | 0 |
-| **`OBL-037`** | `OBL-037` — Bahu Bandhapana (2 Sarees) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-037.md`](../02_RITUALS_CULTURE/obligations/OBL-037.md) | 7 | 0 |
-| **`OBL-038`** | `OBL-038` — Nananda Putuli (Gold Component) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-038.md`](../02_RITUALS_CULTURE/obligations/OBL-038.md) | 7 | 0 |
-| **`OBL-039`** | `OBL-039` — Nananda Putuli (Saree/Dress Sets × 2) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-039.md`](../02_RITUALS_CULTURE/obligations/OBL-039.md) | 7 | 0 |
-| **`OBL-040`** | `OBL-040` — Nananda Putuli (Luggage Trolleys × 2) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-040.md`](../02_RITUALS_CULTURE/obligations/OBL-040.md) | 6 | 0 |
-| **`OBL-041`** | `OBL-041` — Chaturthi Huma Saree Set | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-041.md`](../02_RITUALS_CULTURE/obligations/OBL-041.md) | 7 | 0 |
-| **`OBL-042`** | `OBL-042` — Chaturthi Huma Dhoti + Kurta | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-042.md`](../02_RITUALS_CULTURE/obligations/OBL-042.md) | 7 | 0 |
-| **`OBL-043`** | `OBL-043` — Huma Bali Utheibaku (Dress for Brother-in-Law) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-043.md`](../02_RITUALS_CULTURE/obligations/OBL-043.md) | 7 | 0 |
-| **`OBL-044`** | `OBL-044` — Uluguna Customary Items | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-044.md`](../02_RITUALS_CULTURE/obligations/OBL-044.md) | 6 | 0 |
-| **`OBL-045`** | `OBL-045` — Family Pack Bundles (6 Recipient Units) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-045.md`](../02_RITUALS_CULTURE/obligations/OBL-045.md) | 7 | 0 |
-| **`OBL-046`** | `OBL-046` — Kutha Madani Trolley Presentation | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-046.md`](../02_RITUALS_CULTURE/obligations/OBL-046.md) | 6 | 0 |
-| **`OBL-047`** | `OBL-047` — Grand Evening Reception Saree / Lehenga | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-047.md`](../02_RITUALS_CULTURE/obligations/OBL-047.md) | 7 | 0 |
-| **`OBL-048`** | `OBL-048` — Saga Macha Feast Hamper (Groom ⟶ Bride) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-048.md`](../02_RITUALS_CULTURE/obligations/OBL-048.md) | 6 | 0 |
-| **`OBL-049`** | `OBL-049` — Saga & Macha Return Feast (Bride ⟶ Groom) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-049.md`](../02_RITUALS_CULTURE/obligations/OBL-049.md) | 6 | 0 |
+| **`OBL-001`** | `OBL-001` — Nirbandha Mudi (ନିର୍ବନ୍ଧ ମୁଦି) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-001.md`](../02_RITUALS_CULTURE/obligations/OBL-001.md) | 8 | 0 |
+| **`OBL-002`** | `OBL-002` — Baranka Nirbandha Poshaka (ବରଙ୍କ ନିର୍ବନ୍ଧ ପୋଷାକ - ୨ଟି ଯୋଡ଼ା: ପାରମ୍ପରିକ ଓ ସୁଟ୍) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-002.md`](../02_RITUALS_CULTURE/obligations/OBL-002.md) | 8 | 0 |
+| **`OBL-003`** | `OBL-003` — Sasunka Nirbandha Pata Saree (ଶାଶୂଙ୍କ ନିର୍ବନ୍ଧ ପାଟ ଶାଢ଼ୀ) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-003.md`](../02_RITUALS_CULTURE/obligations/OBL-003.md) | 7 | 0 |
+| **`OBL-004`** | `OBL-004` — Sasuranka Nirbandha Poshaka (ଶ୍ୱଶୁରଙ୍କ ନିର୍ବନ୍ଧ ପୋଷାକ) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-004.md`](../02_RITUALS_CULTURE/obligations/OBL-004.md) | 7 | 0 |
+| **`OBL-005`** | `OBL-005` — Nananda & Nandaie Poshaka (ନଣନ୍ଦ ଓ ନନ୍ଦେଇଙ୍କ ପୋଷାକ / Didi & Tiju) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-005.md`](../02_RITUALS_CULTURE/obligations/OBL-005.md) | 8 | 0 |
+| **`OBL-006`** | `OBL-006` — Pila-Manka Poshaka (ପିଲାମାନଙ୍କ ପୋଷାକ / Bacha Party) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-006.md`](../02_RITUALS_CULTURE/obligations/OBL-006.md) | 6 | 0 |
+| **`OBL-007`** | `OBL-007` — Panchavidha Mitha Bhara (ପାଞ୍ଚବିଧ ମିଠା ଭାର) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-007.md`](../02_RITUALS_CULTURE/obligations/OBL-007.md) | 7 | 0 |
+| **`OBL-008`** | `OBL-008` — Kanyanka Nirbandha Mudi (କନ୍ୟାଙ୍କ ନିର୍ବନ୍ଧ ମୁଦି) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-008.md`](../02_RITUALS_CULTURE/obligations/OBL-008.md) | 8 | 0 |
+| **`OBL-009`** | `OBL-009` — Kanyanka Nirbandha Poshaka (କନ୍ୟାଙ୍କ ନିର୍ବନ୍ଧ ପୋଷାକ - ୨ଟି ଯୋଡ଼ା: ପାଟ ଶାଢ଼ୀ ଓ ଲେହେଙ୍ଗା) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-009.md`](../02_RITUALS_CULTURE/obligations/OBL-009.md) | 8 | 0 |
+| **`OBL-010`** | `OBL-010` — Nirbandha Trolley Presentation (ନିର୍ବନ୍ଧ ଟ୍ରଲି / ସଜ ବାକ୍ସ) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-010.md`](../02_RITUALS_CULTURE/obligations/OBL-010.md) | 6 | 0 |
+| **`OBL-011`** | `OBL-011` — Mitha, Nadia o Kadali Kandhi Bhara (ମିଠା, ନଡ଼ିଆ ଓ କଦଳୀ କାନ୍ଧି ଭାର) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-011.md`](../02_RITUALS_CULTURE/obligations/OBL-011.md) | 9 | 0 |
+| **`OBL-012`** | `OBL-012` — Nirbandha Phula Mala (ନିର୍ବନ୍ଧ ଫୁଲ ମାଳ) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-012.md`](../02_RITUALS_CULTURE/obligations/OBL-012.md) | 7 | 0 |
+| **`OBL-013`** | `OBL-013` — Nirbandha Desi Mitha Pana (ନିର୍ବନ୍ଧ ଦେଶୀ ମିଠା ପାନ) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-013.md`](../02_RITUALS_CULTURE/obligations/OBL-013.md) | 7 | 0 |
+| **`OBL-014`** | `OBL-014` — Puri Jagannath Mahaprasad o Nirmalya (ପୁରୀ ଜଗନ୍ନାଥ ମହାପ୍ରସାଦ ଓ ନିର୍ମାଲ୍ୟ) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-014.md`](../02_RITUALS_CULTURE/obligations/OBL-014.md) | 7 | 0 |
+| **`OBL-015`** | `OBL-015` — Nirbandha Bahara Nimantrita Dakshina (ବାହାର ନିମନ୍ତ୍ରିତ ଦକ୍ଷିଣା / ₹5,000) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-015.md`](../02_RITUALS_CULTURE/obligations/OBL-015.md) | 7 | 0 |
+| **`OBL-016`** | `OBL-016` — Gua-Haladi Basa Saree (ଗୁଆ-ହଳଦୀ ବସା ଶାଢ଼ୀ) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-016.md`](../02_RITUALS_CULTURE/obligations/OBL-016.md) | 7 | 0 |
+| **`OBL-017`** | `OBL-017` — Haladi Basa Shringar o Prasadhana (ହଳଦୀ ବସା ଶୃଙ୍ଗାର ଓ ପ୍ରସାଧନ) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-017.md`](../02_RITUALS_CULTURE/obligations/OBL-017.md) | 7 | 0 |
+| **`OBL-018`** | `OBL-018` — Haladi Basa Puja Samagri (ନଡ଼ିଆ, ଗୁଆ, ପାନ, ହଳଦୀ) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-018.md`](../02_RITUALS_CULTURE/obligations/OBL-018.md) | 10 | 0 |
+| **`OBL-019`** | `OBL-019` — Bandhu Dakara (ବନ୍ଧୁ ଡାକରା - ପାନ ଓ ଗୁଆ) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-019.md`](../02_RITUALS_CULTURE/obligations/OBL-019.md) | 8 | 0 |
+| **`OBL-020`** | `OBL-020` — Bandhu Dakara (ବନ୍ଧୁ ଡାକରା - Sasuranka Poshaka) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-020.md`](../02_RITUALS_CULTURE/obligations/OBL-020.md) | 7 | 0 |
+| **`OBL-021`** | `OBL-021` — Preetibhoji Baranka Suit (ପ୍ରୀତିଭୋଜି ବରଙ୍କ ସୁଟ୍) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-021.md`](../02_RITUALS_CULTURE/obligations/OBL-021.md) | 7 | 0 |
+| **`OBL-022`** | `OBL-022` — Batabarana Suna Chain (ବାଟବରଣ ସୁନା ଚେନ୍) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-022.md`](../02_RITUALS_CULTURE/obligations/OBL-022.md) | 7 | 0 |
+| **`OBL-023`** | `OBL-023` — Batabarana Suna Mudi (ବାଟବରଣ ସୁନା ମୁଦି) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-023.md`](../02_RITUALS_CULTURE/obligations/OBL-023.md) | 7 | 0 |
+| **`OBL-024`** | `OBL-024` — Batabarana Suna Bala/Bracelet (ବାଟବରଣ ସୁନା ବଳା / ଖଡୁ) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-024.md`](../02_RITUALS_CULTURE/obligations/OBL-024.md) | 7 | 0 |
+| **`OBL-025`** | `OBL-025` — Ahiya Manduli Saree (ଅହିଆ ମଣ୍ଡୁଳି - ଶାଶୂଙ୍କ ପାଟ ଶାଢ଼ୀ) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-025.md`](../02_RITUALS_CULTURE/obligations/OBL-025.md) | 7 | 0 |
+| **`OBL-026`** | `OBL-026` — Mandap Alata o Sindura (ମଣ୍ଡପ ଅଳତା ଓ ସିନ୍ଦୂର) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-026.md`](../02_RITUALS_CULTURE/obligations/OBL-026.md) | 9 | 0 |
+| **`OBL-027`** | `OBL-027` — Sala Bidha Upahara (ଶାଳା ବିଧା ଉପହାର) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-027.md`](../02_RITUALS_CULTURE/obligations/OBL-027.md) | 7 | 0 |
+| **`OBL-028`** | `OBL-028` — Sali Hasta-Ganthi Phita Gift (ଶାଳୀ ହସ୍ତଗଣ୍ଠି ଫିଟା ଉପହାର) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-028.md`](../02_RITUALS_CULTURE/obligations/OBL-028.md) | 7 | 0 |
+| **`OBL-029`** | `OBL-029` — Samandhi Bheta / Samdhi Milan (ସମନ୍ଧୀ ଭେଟ - Baba ⟶ Daddy) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-029.md`](../02_RITUALS_CULTURE/obligations/OBL-029.md) | 9 | 1 |
+| **`OBL-030`** | `OBL-030` — Samandhi Bheta / Samdhi Milan (ସମନ୍ଧୀ ଭେଟ - Daddy ⟶ Baba) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-030.md`](../02_RITUALS_CULTURE/obligations/OBL-030.md) | 9 | 1 |
+| **`OBL-031`** | `OBL-031` — Sadhu Basana (ସାଢୁ ବସନ - ଲଡୁ ଓ ପୋଷାକ) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-031.md`](../02_RITUALS_CULTURE/obligations/OBL-031.md) | 8 | 0 |
+| **`OBL-032`** | `OBL-032` — Kanya Alankara (କନ୍ୟା ଅଳଙ୍କାର - ସୁନା ଗହଣା) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-032.md`](../02_RITUALS_CULTURE/obligations/OBL-032.md) | 8 | 0 |
+| **`OBL-033`** | `OBL-033` — TDK Customary Item (ଅସ୍ପଷ୍ଟ ହସ୍ତଲିଖିତ - TDK) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-033.md`](../02_RITUALS_CULTURE/obligations/OBL-033.md) | 6 | 0 |
+| **`OBL-034`** | `OBL-034` — Baranka Pancha Joda Poshaka (ବରଙ୍କ ପାଞ୍ଚ ଯୋଡ଼ା ପୋଷାକ) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-034.md`](../02_RITUALS_CULTURE/obligations/OBL-034.md) | 7 | 0 |
+| **`OBL-035`** | `OBL-035` — Guna Chadha Trolley (ଗୁଣ ଚଢ଼ା ଟ୍ରଲି / ସଜ ଟ୍ରଲି) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-035.md`](../02_RITUALS_CULTURE/obligations/OBL-035.md) | 6 | 0 |
+| **`OBL-036`** | `OBL-036` — Bahu Dakara (ବୋହୂ ଡାକରା - Devaranka Poshaka / ଦେଅର) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-036.md`](../02_RITUALS_CULTURE/obligations/OBL-036.md) | 7 | 0 |
+| **`OBL-037`** | `OBL-037` — Bahu Bandapana Sarees (ବୋହୂ ବନ୍ଦାପନା - ୨ଟି ପାଟ ଶାଢ଼ୀ) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-037.md`](../02_RITUALS_CULTURE/obligations/OBL-037.md) | 7 | 0 |
+| **`OBL-038`** | `OBL-038` — Nananda Putuli - Suna (ନଣନ୍ଦ ପୁଟୁଳି - ସୁନା ଗହଣା) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-038.md`](../02_RITUALS_CULTURE/obligations/OBL-038.md) | 7 | 0 |
+| **`OBL-039`** | `OBL-039` — Nananda Putuli - Pata Shadhi (ନଣନ୍ଦ ପୁଟୁଳି - ପାଟ ଶାଢ଼ୀ) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-039.md`](../02_RITUALS_CULTURE/obligations/OBL-039.md) | 7 | 0 |
+| **`OBL-040`** | `OBL-040` — Nananda Putuli - Trolley (ନଣନ୍ଦ ପୁଟୁଳି - ୨ଟି ଟ୍ରଲି) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-040.md`](../02_RITUALS_CULTURE/obligations/OBL-040.md) | 6 | 0 |
+| **`OBL-041`** | `OBL-041` — Chauthi Homa Saree (ଚଉଠି ହୋମ ଶାଢ଼ୀ) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-041.md`](../02_RITUALS_CULTURE/obligations/OBL-041.md) | 7 | 0 |
+| **`OBL-042`** | `OBL-042` — Chauthi Homa Dhoti-Joda (ଚଉଠି ହୋମ ଧୋତି-ଯୋଡ଼ / ରେଶମୀ ଯୋଡ଼) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-042.md`](../02_RITUALS_CULTURE/obligations/OBL-042.md) | 7 | 0 |
+| **`OBL-043`** | `OBL-043` — Homa Bali Utheiba Poshaka (ହୋମ ବାଲି ଉଠାଇବା ପୋଷାକ / ଶାଳା ଉପହାର) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-043.md`](../02_RITUALS_CULTURE/obligations/OBL-043.md) | 7 | 0 |
+| **`OBL-044`** | `OBL-044` — Aluguna / Ulugani (ଅଲଗୁଣା / ଉଲୁଗୁଣି - Struck-out Item) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-044.md`](../02_RITUALS_CULTURE/obligations/OBL-044.md) | 6 | 0 |
+| **`OBL-045`** | `OBL-045` — Kutumba Pack / Family Pack (କୁଟୁମ୍ବ ଭାର - ୬ ଯୋଡ଼ା ପୋଷାକ) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-045.md`](../02_RITUALS_CULTURE/obligations/OBL-045.md) | 7 | 0 |
+| **`OBL-046`** | `OBL-046` — Kutha Mandani Trolley (କୁଠା ମଣ୍ଡଣି ଟ୍ରଲି) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-046.md`](../02_RITUALS_CULTURE/obligations/OBL-046.md) | 6 | 0 |
+| **`OBL-047`** | `OBL-047` — Bhoji / Preetibhoji Pata Saree (ପ୍ରୀତିଭୋଜି ପାଟ ଶାଢ଼ୀ / Lehenga) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-047.md`](../02_RITUALS_CULTURE/obligations/OBL-047.md) | 7 | 0 |
+| **`OBL-048`** | `OBL-048` — Saaga-Machha Astamangala Bhara (ଶାଗ-ମାଛ ଅଷ୍ଟମଙ୍ଗଳା ଭାର) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-048.md`](../02_RITUALS_CULTURE/obligations/OBL-048.md) | 6 | 0 |
+| **`OBL-049`** | `OBL-049` — Saaga-Machha Phiranti Bhara (ଶାଗ-ମାଛ ଫେରନ୍ତା ଭାର) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-049.md`](../02_RITUALS_CULTURE/obligations/OBL-049.md) | 6 | 0 |
+| **`OBL-050`** | `OBL-050` — Batabarana Baranka Royal Sherwani (ବାଟବରଣ ବରଙ୍କ ଶେରୱାନୀ ପୋଷାକ) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-050.md`](../02_RITUALS_CULTURE/obligations/OBL-050.md) | 10 | 0 |
+| **`OBL-051`** | `OBL-051` — Sacred Vivaha Mandap Pata Saree (ବିବାହ ମଣ୍ଡପ ପାଟ ଶାଢ଼ୀ / ବାଉଳା ପାଟ) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-051.md`](../02_RITUALS_CULTURE/obligations/OBL-051.md) | 10 | 0 |
+| **`OBL-052`** | `OBL-052` — Mandap Vedic Pure Silk Dhoti & Kurta (ମଣ୍ଡପ ରେଶମୀ ଧୋତି-ଯୋଡ଼ / ପାଟ ଯୋଡ଼) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-052.md`](../02_RITUALS_CULTURE/obligations/OBL-052.md) | 8 | 0 |
+| **`OBL-053`** | `OBL-053` — Ceremonial Mukuta & Hastaganthi Bandhana Vastra (ବିବାହ ମୁକୁଟ ଓ ହସ୍ତଗଣ୍ଠି ବନ୍ଧନ ବସ୍ତ୍ର) | `pending_selection` | [`02_RITUALS_CULTURE/obligations/OBL-053.md`](../02_RITUALS_CULTURE/obligations/OBL-053.md) | 10 | 0 |
 | **`PAY-###`** | Payment Record: PAY-### | `Pending | Paid | Reconciled` | [`06_FINANCE_COMMERCIALS/payment_template.md`](../06_FINANCE_COMMERCIALS/payment_template.md) | 0 | 0 |
 | **`PER-###`** | Firstname Lastname | `Documented` | [`03_PEOPLE_GUESTS/person_template.md`](../03_PEOPLE_GUESTS/person_template.md) | 4 | 0 |
 | **`RIT-###`** | Ritual Name | `Draft | Confirmed | Executed` | [`02_RITUALS_CULTURE/ritual_template.md`](../02_RITUALS_CULTURE/ritual_template.md) | 0 | 0 |
@@ -97,9 +104,9 @@
 | **`RIT-002`** | Deva Nimantrana (Puri Lord Jagannath & Kuladevata Card Offering) | `Planned` | [`02_RITUALS_CULTURE/specs/RIT-002_deva_nimantrana.md`](../02_RITUALS_CULTURE/specs/RIT-002_deva_nimantrana.md) | 5 | 2 |
 | **`RIT-003`** | Mangan, Mangalakrutya & Haldi Snana | `Planned` | [`02_RITUALS_CULTURE/specs/RIT-003_mangan_haldi.md`](../02_RITUALS_CULTURE/specs/RIT-003_mangan_haldi.md) | 7 | 7 |
 | **`RIT-004`** | Baranugam & Barat Reception | `Planned` | [`02_RITUALS_CULTURE/specs/RIT-004_baranugam.md`](../02_RITUALS_CULTURE/specs/RIT-004_baranugam.md) | 7 | 10 |
-| **`RIT-005`** | Kanyadaan & Hastaganthi | `Planned` | [`02_RITUALS_CULTURE/specs/RIT-005_kanyadaan.md`](../02_RITUALS_CULTURE/specs/RIT-005_kanyadaan.md) | 6 | 8 |
+| **`RIT-005`** | Kanyadaan & Hastaganthi | `Planned` | [`02_RITUALS_CULTURE/specs/RIT-005_kanyadaan.md`](../02_RITUALS_CULTURE/specs/RIT-005_kanyadaan.md) | 6 | 11 |
 | **`RIT-006`** | Lajahoma & Agni Pradakshina | `Planned` | [`02_RITUALS_CULTURE/specs/RIT-006_lajahoma_agni_pradakshina.md`](../02_RITUALS_CULTURE/specs/RIT-006_lajahoma_agni_pradakshina.md) | 6 | 2 |
-| **`RIT-007`** | Saptapadi (Seven Sacred Steps & Vows) | `Planned` | [`02_RITUALS_CULTURE/specs/RIT-007_saptapadi.md`](../02_RITUALS_CULTURE/specs/RIT-007_saptapadi.md) | 5 | 2 |
+| **`RIT-007`** | Saptapadi (Seven Sacred Steps & Vows) | `Planned` | [`02_RITUALS_CULTURE/specs/RIT-007_saptapadi.md`](../02_RITUALS_CULTURE/specs/RIT-007_saptapadi.md) | 5 | 3 |
 | **`RIT-008`** | Sindoor Daan & Mangalsutra Dharan | `Planned` | [`02_RITUALS_CULTURE/specs/RIT-008_sindoor_daan.md`](../02_RITUALS_CULTURE/specs/RIT-008_sindoor_daan.md) | 5 | 2 |
 | **`RIT-009`** | Kanyavida (Bahaghara Vida / Bride Farewell) | `Planned` | [`02_RITUALS_CULTURE/specs/RIT-009_kanyavida.md`](../02_RITUALS_CULTURE/specs/RIT-009_kanyavida.md) | 5 | 1 |
 | **`RIT-010`** | Grihapravesh (Welcoming the Bride as Goddess Lakshmi) | `Planned` | [`02_RITUALS_CULTURE/specs/RIT-010_grihapravesh.md`](../02_RITUALS_CULTURE/specs/RIT-010_grihapravesh.md) | 6 | 1 |
@@ -109,10 +116,10 @@
 | **`SAM-002`** | Deva Nimantrana Sacred Materials Checklist | `Documented` | [`02_RITUALS_CULTURE/samagri_checklists/SAM-002_deva_nimantrana_samagri.md`](../02_RITUALS_CULTURE/samagri_checklists/SAM-002_deva_nimantrana_samagri.md) | 3 | 1 |
 | **`SAM-003`** | Mangan, Mangalakrutya & Haldi Sacred Materials | `Documented` | [`02_RITUALS_CULTURE/samagri_checklists/SAM-003_mangan_haldi_samagri.md`](../02_RITUALS_CULTURE/samagri_checklists/SAM-003_mangan_haldi_samagri.md) | 3 | 3 |
 | **`SAM-004`** | Baranugam & Barat Welcoming Materials | `Documented` | [`02_RITUALS_CULTURE/samagri_checklists/SAM-004_baranugam_samagri.md`](../02_RITUALS_CULTURE/samagri_checklists/SAM-004_baranugam_samagri.md) | 3 | 1 |
-| **`SAM-005`** | Main Mandap, Kanyadaan, Homa & Saptapadi Samagri | `Documented` | [`02_RITUALS_CULTURE/samagri_checklists/SAM-005_kanyadaan_mandap_homa_samagri.md`](../02_RITUALS_CULTURE/samagri_checklists/SAM-005_kanyadaan_mandap_homa_samagri.md) | 10 | 6 |
+| **`SAM-005`** | Main Mandap, Kanyadaan, Homa & Saptapadi Samagri | `Documented` | [`02_RITUALS_CULTURE/samagri_checklists/SAM-005_kanyadaan_mandap_homa_samagri.md`](../02_RITUALS_CULTURE/samagri_checklists/SAM-005_kanyadaan_mandap_homa_samagri.md) | 10 | 7 |
 | **`SAM-006`** | Chauthi Puja & Bedchamber Samagri Checklist | `Documented` | [`02_RITUALS_CULTURE/samagri_checklists/SAM-006_chauthi_puja_samagri.md`](../02_RITUALS_CULTURE/samagri_checklists/SAM-006_chauthi_puja_samagri.md) | 3 | 2 |
 | **`SPEC-PROC-MEDIA-HIERARCHY-001`** | Multi-Module Google Drive Hierarchy & Mandatory Module Onboarding Specification | `RATIFIED` | [`docs/references/SPEC-PROC-MEDIA-HIERARCHY-001.md`](../docs/references/SPEC-PROC-MEDIA-HIERARCHY-001.md) | 1 | 0 |
-| **`TRS-BR-01`** | Sacred Vivaha Pata (Hastaganthi Saree) | `Shortlisted` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 0 |
+| **`TRS-BR-01`** | Sacred Vivaha Pata (Hastaganthi Saree) | `Shortlisted` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 1 |
 | **`TRS-BR-02`** | Bridal Sangeet Lehenga & Choli | `Shortlisted` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 0 |
 | **`TRS-BR-03`** | Haldi Mangala Snana Saree | `Planned` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 1 |
 | **`TRS-BR-04`** | Mehendi Garden Promenade Outfit | `Planned` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 0 |
@@ -125,9 +132,9 @@
 | **`TRS-EG-03`** | Groom Engagement Kurta Ensemble / Indo-Western Suit | `Planned` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 1 |
 | **`TRS-EG-04`** | Decorative Ring Platter & Nirbandha Sagan Thali Hampers | `Planned` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 0 |
 | **`TRS-EG-05`** | In-Laws Elder Return Vastra & Odia Sweets Hampers | `Planned` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 0 |
-| **`TRS-GR-01`** | Mandap Pure Silk Dhoti & Kurta | `Shortlisted` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 0 |
+| **`TRS-GR-01`** | Mandap Pure Silk Dhoti & Kurta | `Shortlisted` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 1 |
 | **`TRS-GR-02`** | Ceremonial Silk Patta (Angavastra) | `Planned` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 0 |
-| **`TRS-GR-03`** | Barat Royal Sherwani | `Shortlisted` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 0 |
+| **`TRS-GR-03`** | Barat Royal Sherwani | `Shortlisted` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 1 |
 | **`TRS-GR-04`** | Groom Safa (Turban) & Feather Kalgi | `Planned` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 0 |
 | **`TRS-GR-05`** | Barat Stole & Multi-Layer Pearl Mala | `Planned` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 0 |
 | **`TRS-GR-06`** | Sangeet Tuxedo / Royal Bandhgala | `Planned` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 1 |
@@ -147,8 +154,8 @@
 | **`TRS-OD-02`** | Balakati Hand-Cast Bell-Metal (Kansa) 7-Piece Dining Service | `Planned` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 0 |
 | **`TRS-OD-03`** | Cuttack Tarakasi Silver Filigree Sindura Phuda & Pana Batta | `Planned` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 0 |
 | **`TRS-OD-04`** | Sambalpuri Handloom Groom Joda & Silk Dhoti Set | `Planned` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 1 |
-| **`TRS-OD-05`** | Odia Sacred Bridal & Groom Mukuta Set (Shola & Silver Filigree) | `Planned` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 0 |
-| **`TRS-OD-06`** | Baula Patta Saree & Hastaganthi Bandhana Vastra Set | `Planned` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 0 |
+| **`TRS-OD-05`** | Odia Sacred Bridal & Groom Mukuta Set (Shola & Silver Filigree) | `Planned` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 1 |
+| **`TRS-OD-06`** | Baula Patta Saree & Hastaganthi Bandhana Vastra Set | `Planned` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 1 |
 | **`TRS-OD-07`** | Sacred Bamboo Kula & Odia Alaktaka (Alta) Ritual Set | `Planned` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 0 |
 | **`TRS-SA-01`** | Samandhi Vastra (Mother-in-Law Silk Saree) | `Shortlisted` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 2 |
 | **`TRS-SA-02`** | Samandhi Vastra (Father-in-Law Suiting / Dhoti) | `Shortlisted` | [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](../04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) | 0 | 4 |
@@ -246,11 +253,15 @@ These entity identifiers are referenced in documentation or catalogs but lack fo
 | **`DEC-2026-035`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`DEC-2026-036`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`DEC-2026-037`** | DEC | `UNSCAFFOLDED_REFERENCE` |
+| **`DEC-2026-038`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`DEC-2026-039`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`DEC-2026-042`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`DEC-2026-043`** | DEC | `UNSCAFFOLDED_REFERENCE` |
+| **`DEC-2026-044`** | DEC | `UNSCAFFOLDED_REFERENCE` |
+| **`DEC-2026-045`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`DEC-2026-046`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`DEC-2026-047`** | DEC | `UNSCAFFOLDED_REFERENCE` |
+| **`DEC-2026-050`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`DEC-2026-056`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`DEC-2026-057`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`DEC-2026-059`** | DEC | `UNSCAFFOLDED_REFERENCE` |
@@ -258,6 +269,10 @@ These entity identifiers are referenced in documentation or catalogs but lack fo
 | **`DEC-2026-061`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`DEC-2026-062`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`DEC-2026-063`** | DEC | `UNSCAFFOLDED_REFERENCE` |
+| **`DEC-2026-064`** | DEC | `UNSCAFFOLDED_REFERENCE` |
+| **`DEC-2026-067`** | DEC | `UNSCAFFOLDED_REFERENCE` |
+| **`DEC-2026-068`** | DEC | `UNSCAFFOLDED_REFERENCE` |
+| **`DEC-2026-069`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`DEC-POD-001`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`DEC-xxx`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`EVT-001_nirbandha_ashirbad`** | EVT | `UNSCAFFOLDED_REFERENCE` |
@@ -292,6 +307,7 @@ These entity identifiers are referenced in documentation or catalogs but lack fo
 | **`GATE-xxx`** | GATE | `UNSCAFFOLDED_REFERENCE` |
 | **`OBL-001-ITM-01`** | OBL | `UNSCAFFOLDED_REFERENCE` |
 | **`OBL-002-ITM-01`** | OBL | `UNSCAFFOLDED_REFERENCE` |
+| **`OBL-002-ITM-02`** | OBL | `UNSCAFFOLDED_REFERENCE` |
 | **`OBL-003-ITM-01`** | OBL | `UNSCAFFOLDED_REFERENCE` |
 | **`OBL-004-ITM-01`** | OBL | `UNSCAFFOLDED_REFERENCE` |
 | **`OBL-005-ITM-01`** | OBL | `UNSCAFFOLDED_REFERENCE` |
@@ -300,6 +316,7 @@ These entity identifiers are referenced in documentation or catalogs but lack fo
 | **`OBL-007-ITM-01`** | OBL | `UNSCAFFOLDED_REFERENCE` |
 | **`OBL-008-ITM-01`** | OBL | `UNSCAFFOLDED_REFERENCE` |
 | **`OBL-009-ITM-01`** | OBL | `UNSCAFFOLDED_REFERENCE` |
+| **`OBL-009-ITM-02`** | OBL | `UNSCAFFOLDED_REFERENCE` |
 | **`OBL-010-ITM-01`** | OBL | `UNSCAFFOLDED_REFERENCE` |
 | **`OBL-011-ITM-01`** | OBL | `UNSCAFFOLDED_REFERENCE` |
 | **`OBL-011-ITM-02`** | OBL | `UNSCAFFOLDED_REFERENCE` |
@@ -348,6 +365,17 @@ These entity identifiers are referenced in documentation or catalogs but lack fo
 | **`OBL-047-ITM-01`** | OBL | `UNSCAFFOLDED_REFERENCE` |
 | **`OBL-048-ITM-01`** | OBL | `UNSCAFFOLDED_REFERENCE` |
 | **`OBL-049-ITM-01`** | OBL | `UNSCAFFOLDED_REFERENCE` |
+| **`OBL-050-ITM-01`** | OBL | `UNSCAFFOLDED_REFERENCE` |
+| **`OBL-050-ITM-02`** | OBL | `UNSCAFFOLDED_REFERENCE` |
+| **`OBL-050-ITM-03`** | OBL | `UNSCAFFOLDED_REFERENCE` |
+| **`OBL-050-ITM-04`** | OBL | `UNSCAFFOLDED_REFERENCE` |
+| **`OBL-051-ITM-01`** | OBL | `UNSCAFFOLDED_REFERENCE` |
+| **`OBL-051-ITM-02`** | OBL | `UNSCAFFOLDED_REFERENCE` |
+| **`OBL-051-ITM-03`** | OBL | `UNSCAFFOLDED_REFERENCE` |
+| **`OBL-052-ITM-01`** | OBL | `UNSCAFFOLDED_REFERENCE` |
+| **`OBL-052-ITM-02`** | OBL | `UNSCAFFOLDED_REFERENCE` |
+| **`OBL-053-ITM-01`** | OBL | `UNSCAFFOLDED_REFERENCE` |
+| **`OBL-053-ITM-02`** | OBL | `UNSCAFFOLDED_REFERENCE` |
 | **`OBL-DECOUPLE-001`** | OBL | `UNSCAFFOLDED_REFERENCE` |
 | **`PAY-001`** | PAY | `UNSCAFFOLDED_REFERENCE` |
 | **`PAY-003`** | PAY | `UNSCAFFOLDED_REFERENCE` |
@@ -423,6 +451,34 @@ These entity identifiers are referenced in documentation or catalogs but lack fo
 | **`SHP-G07`** | SHP | `UNSCAFFOLDED_REFERENCE` |
 | **`SHP-GRM`** | SHP | `UNSCAFFOLDED_REFERENCE` |
 | **`SHP-SAM`** | SHP | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-001`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-002`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-003`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-004`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-005`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-006`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-007`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-008`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-009`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-010`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-011`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-012`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-013`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-014`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-015`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-016`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-017`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-018`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-019`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-020`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-021`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-022`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-023`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-024`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-025`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-026`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-027`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-NNN`** | SK | `UNSCAFFOLDED_REFERENCE` |
 | **`TRS-BR-01_opt_0`** | TRS | `UNSCAFFOLDED_REFERENCE` |
 | **`TRS-BR-01_opt_1`** | TRS | `UNSCAFFOLDED_REFERENCE` |
 | **`TSK-008`** | TSK | `UNSCAFFOLDED_REFERENCE` |

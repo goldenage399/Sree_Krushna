@@ -31,13 +31,13 @@ console.log(`⚡ Generating Tabular Run Sheets for ${obligations.length} Family 
 
 // Milestone taxonomy & ordering
 const milestoneOrder = [
-  { id: 'EVT-001', title: 'EVT-001: Nirbandha (Engagement Ceremony)', icon: '💍' },
-  { id: 'EVT-002', title: 'EVT-002: Pua-Bhauni & Mangan (Day 1 Pre-Wedding)', icon: '🌿' },
-  { id: 'EVT-003', title: 'EVT-003: Snana & Haldi (Day 2 Morning)', icon: '🟡' },
-  { id: 'EVT-004', title: 'EVT-004: Barat, Baranugam & Mandap Vivaha (Day 2 Wedding)', icon: '🔥' },
-  { id: 'EVT-005', title: 'EVT-005: Bandapana, Gruha Prabesha & Reception', icon: '🏛️' },
-  { id: 'EVT-006', title: 'EVT-006: Samandhi Bhoji, Basara & Reciprocal Handovers', icon: '🎁' },
-  { id: 'POST_WEDDING', title: 'POST_WEDDING: Post-Wedding Reciprocals & Feasts', icon: '🐟' }
+  { id: 'EVT-001', title: 'EVT-001: Nirbandha & Ashirbad (ନିର୍ବନ୍ଧ ଓ ଆଶୀର୍ବାଦ)', icon: '💍' },
+  { id: 'EVT-002', title: 'EVT-002: Pua-Bhauni & Mangan (ପୁଅ-ଭଉଣୀ ଓ ମଙ୍ଗନ)', icon: '🌿' },
+  { id: 'EVT-003', title: 'EVT-003: Snana & Haladi (ସ୍ନାନ ଓ ହଳଦୀ ଖେଳ)', icon: '🟡' },
+  { id: 'EVT-004', title: 'EVT-004: Barayatri, Batabarana & Mandap Baha (ବରଯାତ୍ରୀ, ବାଟବରଣ ଓ ବିବାହ)', icon: '🔥' },
+  { id: 'EVT-005', title: 'EVT-005: Bandapana & Gruha Prabesha (ବନ୍ଦାପନା ଓ ଗୃହ ପ୍ରବେଶ)', icon: '🏛️' },
+  { id: 'EVT-006', title: 'EVT-006: Samandhi Bhoji, Chauthi & Basara (ସମନ୍ଧୀ ଭୋଜି, ଚଉଠି ଓ ବାସର)', icon: '🎁' },
+  { id: 'POST_WEDDING', title: 'POST_WEDDING: Astamangala & Phiranti Bhoji (ଅଷ୍ଟମଙ୍ଗଳା ଓ ଫେରନ୍ତା ଭୋଜି)', icon: '🐟' }
 ];
 
 function getMilestoneKey(evtRef) {

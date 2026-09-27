@@ -87,8 +87,8 @@ let masterMd = `# 📜 Family Obligations Master Register (Vidhi Dayitva / Bhara
 
 | Direction | Count | Primary Focus |
 | :--- | :--- | :--- |
-| **Bride's Family ⟶ Groom / In-Laws** | ${stats.by_direction.bride_to_groom} | Batabasana attire/gold, Bandhu Daksa, Samdhi Milan, Nananda Putuli, Family Packs |
-| **Groom's Family ⟶ Bride / In-Laws** | ${stats.by_direction.groom_to_bride} | Ahiya Manduli (Saree for Mummy), Nirbandha lehenga, Haldi Basa, Sadu Basana, Alankar |
+| **Bride's Family ⟶ Groom / In-Laws** | ${stats.by_direction.bride_to_groom} | Batabarana attire/gold, Bandhu Daka, Samandhi Bheta, Nananda Putuli, Family Packs |
+| **Groom's Family ⟶ Bride / In-Laws** | ${stats.by_direction.groom_to_bride} | Ahiya Manduli (Saree for Mummy), Nirbandha lehenga, Haladi Basa, Sadhu Basana, Alankara |
 | **Joint / External** | ${stats.by_direction.joint + stats.by_direction.external} | Guest honoraria, temple offerings, shared travel trolleys |
 
 ---

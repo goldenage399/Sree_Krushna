@@ -11,33 +11,33 @@ window.FAMILY_OBLIGATIONS_DATA = {
     "version": "1.0.0",
     "standard": "STD-FAMILY-OBLIGATION-001",
     "governance_ref": "AC-DEC-2026-061 & AC-DEC-2026-062",
-    "updated_at": "2026-09-27T07:46:59.731Z"
+    "updated_at": "2026-09-27T17:24:23.112Z"
   },
   "stats": {
-    "total": 49,
+    "total": 53,
     "by_direction": {
-      "groom_to_bride": 21,
-      "bride_to_groom": 23,
-      "joint": 3,
+      "groom_to_bride": 22,
+      "bride_to_groom": 26,
+      "joint": 2,
       "external": 1
     },
     "by_lifecycle": {
       "Identified": 2,
-      "Agreed": 47,
+      "Agreed": 51,
       "Procuring": 0,
       "Staged": 0,
       "Handed_Over": 0,
       "Waived": 0
     },
     "by_spec_status": {
-      "Fully_Specified": 41,
+      "Fully_Specified": 45,
       "TBD_Family_Choice": 4,
       "Source_Unclear": 2,
       "Source_Redacted": 1,
       "Pending_Family_Confirmation": 1
     },
     "by_epistemic_tier": {
-      "SACRED_CORE": 31,
+      "SACRED_CORE": 35,
       "PROTOCOL_SPECIFIED": 16,
       "UNCERTAIN_EXPLORATORY": 2
     },
@@ -47,7 +47,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-001",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Nirbandha Mudi (Bride ⟶ Groom)",
+      "customary_title": "Nirbandha Mudi (ନିର୍ବନ୍ଧ ମୁଦି)",
       "english_descriptor": "Ceremonial Engagement Ring presented by Bride to Groom",
       "category": "gold_silver",
       "event_ref": "EVT-001",
@@ -111,8 +111,8 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-002",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Groom's Engagement Shirt + Pant",
-      "english_descriptor": "Formal / Festive attire for Groom presented by Bride's Family",
+      "customary_title": "Baranka Nirbandha Poshaka (ବରଙ୍କ ନିର୍ବନ୍ଧ ପୋଷାକ - ୨ଟି ଯୋଡ଼ା: ପାରମ୍ପରିକ ଓ ସୁଟ୍)",
+      "english_descriptor": "Dual-ensemble engagement wardrobe: Look 1 Traditional Kurta-Pajama for Phula-Pana Puja; Look 2 Formal Trouser & Shirt / Suit for Ring Exchange & Cake Cutting",
       "category": "attire",
       "event_ref": "EVT-001",
       "ritual_ref": "RIT-001",
@@ -143,7 +143,16 @@ window.FAMILY_OBLIGATIONS_DATA = {
       "items": [
         {
           "item_id": "OBL-002-ITM-01",
-          "description": "Festive Trouser + Shirt Set",
+          "description": "Festive Silk Kurta-Pajama Set for Phula-Pana Puja",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "set",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        },
+        {
+          "item_id": "OBL-002-ITM-02",
+          "description": "Festive Trouser & Shirt / Indo-Western Suit for Ring Exchange & Cake Cutting",
           "nature": "fabric",
           "quantity": 1,
           "unit": "set",
@@ -175,7 +184,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-003",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Nirbandha Saree for Groom's Mom",
+      "customary_title": "Sasunka Nirbandha Pata Saree (ଶାଶୂଙ୍କ ନିର୍ବନ୍ଧ ପାଟ ଶାଢ଼ୀ)",
       "english_descriptor": "Respect Silk Saree presented by Bride's Family to Groom's Mother",
       "category": "attire",
       "event_ref": "EVT-001",
@@ -239,7 +248,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-004",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Nirbandha Kurta/Shirt + Pant for Groom's Dad",
+      "customary_title": "Sasuranka Nirbandha Poshaka (ଶ୍ୱଶୁରଙ୍କ ନିର୍ବନ୍ଧ ପୋଷାକ)",
       "english_descriptor": "Formal respect outfit presented by Bride's Family to Groom's Father",
       "category": "attire",
       "event_ref": "EVT-001",
@@ -303,7 +312,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-005",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Dress/Saree for Groom's Didi & Tiju",
+      "customary_title": "Nananda & Nandaie Poshaka (ନଣନ୍ଦ ଓ ନନ୍ଦେଇଙ୍କ ପୋଷାକ / Didi & Tiju)",
       "english_descriptor": "Festive outfits presented by Bride's Family to Groom's Sister and Brother-in-Law",
       "category": "composite_bundle",
       "event_ref": "EVT-001",
@@ -376,7 +385,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-006",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Dress for Bacha Party",
+      "customary_title": "Pila-Manka Poshaka (ପିଲାମାନଙ୍କ ପୋଷାକ / Bacha Party)",
       "english_descriptor": "Festive clothing for nieces/nephews attending from Groom's extended family",
       "category": "attire",
       "event_ref": "EVT-001",
@@ -440,7 +449,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-007",
       "entity_type": "customary_family_obligation",
-      "customary_title": "5 Varieties of Sweets (Bride ⟶ Groom)",
+      "customary_title": "Panchavidha Mitha Bhara (ପାଞ୍ଚବିଧ ମିଠା ଭାର)",
       "english_descriptor": "Traditional Odia sweet hampers presented by Bride's Family",
       "category": "edible_hospitality",
       "event_ref": "EVT-001",
@@ -504,7 +513,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-008",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Nirbandha Mudi (Groom ⟶ Bride)",
+      "customary_title": "Kanyanka Nirbandha Mudi (କନ୍ୟାଙ୍କ ନିର୍ବନ୍ଧ ମୁଦି)",
       "english_descriptor": "Ceremonial Engagement Ring presented by Groom to Bride",
       "category": "gold_silver",
       "event_ref": "EVT-001",
@@ -568,8 +577,8 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-009",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Bridal Engagement Lehenga + Blouse",
-      "english_descriptor": "Ceremonial Engagement Outfit presented by Groom's Family to Bride",
+      "customary_title": "Kanyanka Nirbandha Poshaka (କନ୍ୟାଙ୍କ ନିର୍ବନ୍ଧ ପୋଷାକ - ୨ଟି ଯୋଡ଼ା: ପାଟ ଶାଢ଼ୀ ଓ ଲେହେଙ୍ଗା)",
+      "english_descriptor": "Dual-ensemble engagement wardrobe: Look 1 Traditional Silk Saree for Phula-Pana Puja; Look 2 Designer Lehenga for Ring Exchange & Cake Cutting",
       "category": "attire",
       "event_ref": "EVT-001",
       "ritual_ref": "RIT-001",
@@ -600,7 +609,16 @@ window.FAMILY_OBLIGATIONS_DATA = {
       "items": [
         {
           "item_id": "OBL-009-ITM-01",
-          "description": "Designer Bridal Engagement Lehenga & Blouse",
+          "description": "Traditional Handloom Silk Saree (Sambalpuri / Pata) for Phula-Pana Puja",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        },
+        {
+          "item_id": "OBL-009-ITM-02",
+          "description": "Designer Engagement Lehenga & Blouse for Ring Exchange & Cake Cutting",
           "nature": "fabric",
           "quantity": 1,
           "unit": "set",
@@ -632,7 +650,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-010",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Engagement Trolley Presentation",
+      "customary_title": "Nirbandha Trolley Presentation (ନିର୍ବନ୍ଧ ଟ୍ରଲି / ସଜ ବାକ୍ସ)",
       "english_descriptor": "Formal presentation luggage trolley containing bride's trousseau items",
       "category": "logistics",
       "event_ref": "EVT-001",
@@ -696,7 +714,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-011",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Sweets, Coconut & Banana Kandhi Hamper",
+      "customary_title": "Mitha, Nadia o Kadali Kandhi Bhara (ମିଠା, ନଡ଼ିଆ ଓ କଦଳୀ କାନ୍ଧି ଭାର)",
       "english_descriptor": "Auspicious food basket containing 5 varieties of sweets, whole coconuts, and banana cluster",
       "category": "composite_bundle",
       "event_ref": "EVT-001",
@@ -778,7 +796,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-012",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Nirbandha Phula (Floral Garlands)",
+      "customary_title": "Nirbandha Phula Mala (ନିର୍ବନ୍ଧ ଫୁଲ ମାଳ)",
       "english_descriptor": "Ceremonial floral garlands for Engagement",
       "category": "ceremonial_token",
       "event_ref": "EVT-001",
@@ -842,7 +860,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-013",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Nirbandha Desi Pana",
+      "customary_title": "Nirbandha Desi Mitha Pana (ନିର୍ବନ୍ଧ ଦେଶୀ ମିଠା ପାନ)",
       "english_descriptor": "Traditional sweet betel preparation for welcoming guest party",
       "category": "edible_hospitality",
       "event_ref": "EVT-001",
@@ -906,7 +924,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-014",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Puri Jagannath Maha-Prasad",
+      "customary_title": "Puri Jagannath Mahaprasad o Nirmalya (ପୁରୀ ଜଗନ୍ନାଥ ମହାପ୍ରସାଦ ଓ ନିର୍ମାଲ୍ୟ)",
       "english_descriptor": "Consecrated Nirmalya and Mahaprasad from Sri Jagannath Temple",
       "category": "ceremonial_token",
       "event_ref": "EVT-001",
@@ -970,7 +988,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-015",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Nirbandha Non-Family Guest Honorarium (₹5,000/head)",
+      "customary_title": "Nirbandha Bahara Nimantrita Dakshina (ବାହାର ନିମନ୍ତ୍ରିତ ଦକ୍ଷିଣା / ₹5,000)",
       "english_descriptor": "Customary cash honorarium per non-family guest attending the engagement",
       "category": "honorarium_cash",
       "event_ref": "EVT-001",
@@ -1034,7 +1052,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-016",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Gua/Haldi Basa Saree",
+      "customary_title": "Gua-Haladi Basa Saree (ଗୁଆ-ହଳଦୀ ବସା ଶାଢ଼ୀ)",
       "english_descriptor": "Auspicious yellow handloom silk saree presented by Groom's family for Bride's Haldi bath",
       "category": "attire",
       "event_ref": "EVT-002",
@@ -1098,7 +1116,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-017",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Gua/Haldi Basa Makeup & Shringar",
+      "customary_title": "Haladi Basa Shringar o Prasadhana (ହଳଦୀ ବସା ଶୃଙ୍ଗାର ଓ ପ୍ରସାଧନ)",
       "english_descriptor": "Bridal cosmetics and beauty styling support provided by Groom's family",
       "category": "service",
       "event_ref": "EVT-002",
@@ -1162,7 +1180,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-018",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Haldi Basa Sacred Samagri (Coconut, Pana, Gua, Haldi)",
+      "customary_title": "Haladi Basa Puja Samagri (ନଡ଼ିଆ, ଗୁଆ, ପାନ, ହଳଦୀ)",
       "english_descriptor": "Ritual offerings presented by Groom's family for the Bride's auspicious sanctification",
       "category": "composite_bundle",
       "event_ref": "EVT-002",
@@ -1253,7 +1271,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-019",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Bandhu Daksa (Pana, Gua)",
+      "customary_title": "Bandhu Dakara (ବନ୍ଧୁ ଡାକରା - ପାନ ଓ ଗୁଆ)",
       "english_descriptor": "Formal respect offerings presented by Bride's Family to Groom's Father",
       "category": "composite_bundle",
       "event_ref": "EVT-002",
@@ -1318,7 +1336,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
       "logistical_custody": {
         "custodian_role": "PER-007",
         "staging_location": "VEN-002",
-        "handover_moment": "Bandhu Daksa Greeting Milestone"
+        "handover_moment": "Bandhu Dakara Greeting Milestone"
       },
       "derived_direction": "bride_to_groom",
       "file_basename": "OBL-019.md"
@@ -1326,7 +1344,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-020",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Bandhu Daksa (Dress for Daddy)",
+      "customary_title": "Bandhu Dakara (ବନ୍ଧୁ ଡାକରା - Sasuranka Poshaka)",
       "english_descriptor": "Festive respect attire presented by Bride's Family to Groom's Father",
       "category": "attire",
       "event_ref": "EVT-002",
@@ -1382,7 +1400,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
       "logistical_custody": {
         "custodian_role": "PER-007",
         "staging_location": "VEN-002",
-        "handover_moment": "Bandhu Daksa Welcoming Milestone"
+        "handover_moment": "Bandhu Dakara Welcoming Milestone"
       },
       "derived_direction": "bride_to_groom",
       "file_basename": "OBL-020.md"
@@ -1390,11 +1408,11 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-021",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Batabasana Groom Suit",
-      "english_descriptor": "Tailored 3-piece executive suit presented by Bride's Family to Groom for entrance reception",
+      "customary_title": "Preetibhoji Baranka Suit (ପ୍ରୀତିଭୋଜି ବରଙ୍କ ସୁଟ୍)",
+      "english_descriptor": "Tailored 3-piece formal suit presented by Bride's Family to Groom for Grand Evening Reception / Preetibhoji",
       "category": "attire",
-      "event_ref": "EVT-004",
-      "ritual_ref": "RIT-004",
+      "event_ref": "EVT-005",
+      "ritual_ref": "RIT-007",
       "obligor": {
         "family": "bride",
         "primary_contact": "PER-007",
@@ -1422,7 +1440,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
       "items": [
         {
           "item_id": "OBL-021-ITM-01",
-          "description": "Raymond Made-to-Measure 3-Piece Suit & Shirt",
+          "description": "Raymond Made-to-Measure 3-Piece Formal Suit & Shirt",
           "nature": "fabric",
           "quantity": 1,
           "unit": "set",
@@ -1446,7 +1464,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
       "logistical_custody": {
         "custodian_role": "PER-007",
         "staging_location": "VEN-003",
-        "handover_moment": "Batabarana Doorstep Welcome"
+        "handover_moment": "Preetibhoji Reception Evening"
       },
       "derived_direction": "bride_to_groom",
       "file_basename": "OBL-021.md"
@@ -1454,7 +1472,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-022",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Batabasana Gold Chain",
+      "customary_title": "Batabarana Suna Chain (ବାଟବରଣ ସୁନା ଚେନ୍)",
       "english_descriptor": "22K Hallmarked Gold Chain presented by Bride's Family to Groom",
       "category": "gold_silver",
       "event_ref": "EVT-004",
@@ -1518,7 +1536,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-023",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Batabasana Gold Mudi (Ring)",
+      "customary_title": "Batabarana Suna Mudi (ବାଟବରଣ ସୁନା ମୁଦି)",
       "english_descriptor": "22K Gold Ring presented by Bride's Family to Groom",
       "category": "gold_silver",
       "event_ref": "EVT-004",
@@ -1582,7 +1600,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-024",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Batabasana Gold Bracelet",
+      "customary_title": "Batabarana Suna Bala/Bracelet (ବାଟବରଣ ସୁନା ବଳା / ଖଡୁ)",
       "english_descriptor": "22K Gold Bracelet presented by Bride's Family to Groom",
       "category": "gold_silver",
       "event_ref": "EVT-004",
@@ -1646,7 +1664,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-025",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Ahiya Manduli (Saree for Mummy)",
+      "customary_title": "Ahiya Manduli Saree (ଅହିଆ ମଣ୍ଡୁଳି - ଶାଶୂଙ୍କ ପାଟ ଶାଢ଼ୀ)",
       "english_descriptor": "Groom Family's Auspicious Saree Presentation to Bride's Mother immediately after Batabarana",
       "category": "attire",
       "event_ref": "EVT-004",
@@ -1710,7 +1728,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-026",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Alta & Sindoor in Mandap",
+      "customary_title": "Mandap Alata o Sindura (ମଣ୍ଡପ ଅଳତା ଓ ସିନ୍ଦୂର)",
       "english_descriptor": "Sacred Alta and Sindoor presented by Groom's family for the Bride's Vedic Mandap rites",
       "category": "ceremonial_token",
       "event_ref": "EVT-004",
@@ -1783,7 +1801,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-027",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Sala Bidha Gift",
+      "customary_title": "Sala Bidha Upahara (ଶାଳା ବିଧା ଉପହାର)",
       "english_descriptor": "Customary respect gift from Groom to Bride's Brother (Sala)",
       "category": "attire",
       "event_ref": "EVT-004",
@@ -1847,7 +1865,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-028",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Sali Hasta Ganthi Gift",
+      "customary_title": "Sali Hasta-Ganthi Phita Gift (ଶାଳୀ ହସ୍ତଗଣ୍ଠି ଫିଟା ଉପହାର)",
       "english_descriptor": "Customary teasing/honorarium gift from Groom to Bride's Sisters (Sali)",
       "category": "attire",
       "event_ref": "EVT-004",
@@ -1911,7 +1929,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-029",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Samdhi Milan (Baba ⟶ Daddy)",
+      "customary_title": "Samandhi Bheta / Samdhi Milan (ସମନ୍ଧୀ ଭେଟ - Baba ⟶ Daddy)",
       "english_descriptor": "Reciprocal ceremonial dress exchange from Groom's Father (Baba) to Bride's Father (Daddy)",
       "category": "attire",
       "event_ref": "EVT-004",
@@ -1975,7 +1993,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-030",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Samdhi Milan (Daddy ⟶ Baba)",
+      "customary_title": "Samandhi Bheta / Samdhi Milan (ସମନ୍ଧୀ ଭେଟ - Daddy ⟶ Baba)",
       "english_descriptor": "Reciprocal ceremonial dress exchange from Bride's Father (Daddy) to Groom's Father (Baba)",
       "category": "attire",
       "event_ref": "EVT-004",
@@ -2039,7 +2057,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-031",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Sadu Basana (Laddoo, Dress)",
+      "customary_title": "Sadhu Basana (ସାଢୁ ବସନ - ଲଡୁ ଓ ପୋଷାକ)",
       "english_descriptor": "Sweet hampers and respect dress presented by Groom's family to Bride's co-brothers/in-laws",
       "category": "composite_bundle",
       "event_ref": "EVT-004",
@@ -2112,7 +2130,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-032",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Bridal Alankar (Groom ⟶ Bride)",
+      "customary_title": "Kanya Alankara (କନ୍ୟା ଅଳଙ୍କାର - ସୁନା ଗହଣା)",
       "english_descriptor": "Precious gold jewellery gifted by Groom's family for the Mandap ornamentation",
       "category": "gold_silver",
       "event_ref": "EVT-004",
@@ -2176,7 +2194,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-033",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Unidentified TDK Customary Item",
+      "customary_title": "TDK Customary Item (ଅସ୍ପଷ୍ଟ ହସ୍ତଲିଖିତ - TDK)",
       "english_descriptor": "Item with blurred handwritten abbreviation 'TDK' flagged for verbal confirmation",
       "category": "attire",
       "event_ref": "EVT-004",
@@ -2240,7 +2258,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-034",
       "entity_type": "customary_family_obligation",
-      "customary_title": "5 Sets Dresses (Bride ⟶ Groom)",
+      "customary_title": "Baranka Pancha Joda Poshaka (ବରଙ୍କ ପାଞ୍ଚ ଯୋଡ଼ା ପୋଷାକ)",
       "english_descriptor": "Wardrobe suite of 5 festive attire sets gifted by Bride's family to the Groom",
       "category": "composite_bundle",
       "event_ref": "EVT-004",
@@ -2304,7 +2322,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-035",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Guin Chada Trolley",
+      "customary_title": "Guna Chadha Trolley (ଗୁଣ ଚଢ଼ା ଟ୍ରଲି / ସଜ ଟ୍ରଲି)",
       "english_descriptor": "Presentation trolley packed with bride's personal trousseau for welcoming at in-laws' home",
       "category": "logistics",
       "event_ref": "EVT-006",
@@ -2315,9 +2333,9 @@ window.FAMILY_OBLIGATIONS_DATA = {
         "role_title": "Bride's Mother (Mummy)"
       },
       "recipient": {
-        "family": "joint",
-        "primary_contact": "PER-001",
-        "role_title": "Newlywed Couple (Sree & Krushna)"
+        "family": "groom",
+        "primary_contact": "PER-005",
+        "role_title": "Groom's Family (Welcoming at In-Laws' Home)"
       },
       "exchange_cluster": {
         "is_exchange": false,
@@ -2362,13 +2380,13 @@ window.FAMILY_OBLIGATIONS_DATA = {
         "staging_location": "VEN-004",
         "handover_moment": "Grihapravesh Luggage Unloading"
       },
-      "derived_direction": "bride_to_joint",
+      "derived_direction": "bride_to_groom",
       "file_basename": "OBL-035.md"
     },
     {
       "id": "OBL-036",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Bahu Daksa (Dress for Devas)",
+      "customary_title": "Bahu Dakara (ବୋହୂ ଡାକରା - Devaranka Poshaka / ଦେଅର)",
       "english_descriptor": "Respect shirts and trousers presented by Bride's family to the Groom's younger brothers/cousins",
       "category": "composite_bundle",
       "event_ref": "EVT-006",
@@ -2381,7 +2399,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
       "recipient": {
         "family": "groom",
         "primary_contact": "PER-003",
-        "role_title": "Groom's Brothers & Male Cousins (Devas)"
+        "role_title": "Groom's Brothers & Male Cousins (Devaranka)"
       },
       "exchange_cluster": {
         "is_exchange": false,
@@ -2400,7 +2418,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
       "items": [
         {
           "item_id": "OBL-036-ITM-01",
-          "description": "Festive Shirts and Kurtas for Devas",
+          "description": "Festive Shirts and Kurtas for Devara",
           "nature": "fabric",
           "quantity": 1,
           "unit": "sets",
@@ -2432,7 +2450,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-037",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Bahu Bandhapana (2 Sarees)",
+      "customary_title": "Bahu Bandapana Sarees (ବୋହୂ ବନ୍ଦାପନା - ୨ଟି ପାଟ ଶାଢ଼ୀ)",
       "english_descriptor": "Two auspicious handloom sarees for the new bride's formal welcome and ceremonial blessing",
       "category": "attire",
       "event_ref": "EVT-006",
@@ -2443,9 +2461,9 @@ window.FAMILY_OBLIGATIONS_DATA = {
         "role_title": "Bride's Family"
       },
       "recipient": {
-        "family": "bride",
-        "primary_contact": "PER-001",
-        "role_title": "Bride (Sree)"
+        "family": "groom",
+        "primary_contact": "PER-005",
+        "role_title": "Groom's Family (Welcoming New Bride at In-Laws' Home)"
       },
       "exchange_cluster": {
         "is_exchange": false,
@@ -2490,13 +2508,13 @@ window.FAMILY_OBLIGATIONS_DATA = {
         "staging_location": "VEN-004",
         "handover_moment": "Bahu Bandhapana Welcoming Aarti"
       },
-      "derived_direction": "bride_to_bride",
+      "derived_direction": "bride_to_groom",
       "file_basename": "OBL-037.md"
     },
     {
       "id": "OBL-038",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Nananda Putuli (Gold Component)",
+      "customary_title": "Nananda Putuli - Suna (ନଣନ୍ଦ ପୁଟୁଳି - ସୁନା ଗହଣା)",
       "english_descriptor": "Traditional gift package from Bride to Groom's Sisters — Gold Component",
       "category": "gold_silver",
       "event_ref": "EVT-006",
@@ -2560,7 +2578,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-039",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Nananda Putuli (Saree/Dress Sets × 2)",
+      "customary_title": "Nananda Putuli - Pata Shadhi (ନଣନ୍ଦ ପୁଟୁଳି - ପାଟ ଶାଢ଼ୀ)",
       "english_descriptor": "Traditional gift package from Bride to Groom's Sisters — Attire Component",
       "category": "attire",
       "event_ref": "EVT-006",
@@ -2624,7 +2642,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-040",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Nananda Putuli (Luggage Trolleys × 2)",
+      "customary_title": "Nananda Putuli - Trolley (ନଣନ୍ଦ ପୁଟୁଳି - ୨ଟି ଟ୍ରଲି)",
       "english_descriptor": "Traditional gift package from Bride to Groom's Sisters — Trolley Component",
       "category": "logistics",
       "event_ref": "EVT-006",
@@ -2688,7 +2706,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-041",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Chaturthi Huma Saree Set",
+      "customary_title": "Chauthi Homa Saree (ଚଉଠି ହୋମ ଶାଢ଼ୀ)",
       "english_descriptor": "Sacred fire-ritual handloom saree gifted by Groom's family for Chauthi Puja havan",
       "category": "attire",
       "event_ref": "EVT-006",
@@ -2752,7 +2770,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-042",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Chaturthi Huma Dhoti + Kurta",
+      "customary_title": "Chauthi Homa Dhoti-Joda (ଚଉଠି ହୋମ ଧୋତି-ଯୋଡ଼ / ରେଶମୀ ଯୋଡ଼)",
       "english_descriptor": "Sacred unstitched Tussar silk Dhoti-Kurta presented by Bride's family for Groom's Chauthi Havan",
       "category": "attire",
       "event_ref": "EVT-006",
@@ -2816,7 +2834,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-043",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Huma Bali Utheibaku (Dress for Brother-in-Law)",
+      "customary_title": "Homa Bali Utheiba Poshaka (ହୋମ ବାଲି ଉଠାଇବା ପୋଷାକ / ଶାଳା ଉପହାର)",
       "english_descriptor": "Customary honorarium attire from Groom to Bride's brother for dismantling sacred fire altar",
       "category": "attire",
       "event_ref": "EVT-006",
@@ -2880,7 +2898,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-044",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Uluguna Customary Items",
+      "customary_title": "Aluguna / Ulugani (ଅଲଗୁଣା / ଉଲୁଗୁଣି - Struck-out Item)",
       "english_descriptor": "Items physically struck out in source sheets preserved with redacted status",
       "category": "composite_bundle",
       "event_ref": "EVT-006",
@@ -2944,7 +2962,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-045",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Family Pack Bundles (6 Recipient Units)",
+      "customary_title": "Kutumba Pack / Family Pack (କୁଟୁମ୍ବ ଭାର - ୬ ଯୋଡ଼ା ପୋଷାକ)",
       "english_descriptor": "Comprehensive family pack gifting from Bride's family to 6 recipient units of Groom's family",
       "category": "composite_bundle",
       "event_ref": "EVT-006",
@@ -3008,8 +3026,8 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-046",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Kutha Madani Trolley Presentation",
-      "english_descriptor": "Second trousseau presentation trolley from Bride's family for the new home setup",
+      "customary_title": "Kutha Mandani Trolley (କୁଠା ମଣ୍ଡଣି ଟ୍ରଲି)",
+      "english_descriptor": "Presentation luggage trolley from Bride's family packed with trousseau & home setup essentials for both Bride and Groom",
       "category": "logistics",
       "event_ref": "EVT-006",
       "ritual_ref": "RIT-011",
@@ -3019,9 +3037,9 @@ window.FAMILY_OBLIGATIONS_DATA = {
         "role_title": "Bride's Family"
       },
       "recipient": {
-        "family": "joint",
+        "family": "groom",
         "primary_contact": "PER-001",
-        "role_title": "Newlywed Couple (Sree & Krushna)"
+        "role_title": "Both Bride & Groom (New Home Setup at Groom's Residence)"
       },
       "exchange_cluster": {
         "is_exchange": false,
@@ -3040,7 +3058,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
       "items": [
         {
           "item_id": "OBL-046-ITM-01",
-          "description": "Hard-case Travel Luggage Trolley",
+          "description": "Hard-case Travel Luggage Trolley with Linens & New Home Essentials",
           "nature": "physical_asset",
           "quantity": 1,
           "unit": "pcs",
@@ -3066,13 +3084,13 @@ window.FAMILY_OBLIGATIONS_DATA = {
         "staging_location": "VEN-004",
         "handover_moment": "Chauthi Gifting Session"
       },
-      "derived_direction": "bride_to_joint",
+      "derived_direction": "bride_to_groom",
       "file_basename": "OBL-046.md"
     },
     {
       "id": "OBL-047",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Grand Evening Reception Saree / Lehenga",
+      "customary_title": "Bhoji / Preetibhoji Pata Saree (ପ୍ରୀତିଭୋଜି ପାଟ ଶାଢ଼ୀ / Lehenga)",
       "english_descriptor": "Opulent evening attire presented by Groom's family for Bride's reception party",
       "category": "attire",
       "event_ref": "EVT-005",
@@ -3136,7 +3154,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-048",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Saga Macha Feast Hamper (Groom ⟶ Bride)",
+      "customary_title": "Saaga-Machha Astamangala Bhara (ଶାଗ-ମାଛ ଅଷ୍ଟମଙ୍ଗଳା ଭାର)",
       "english_descriptor": "Customary fresh fish and greens feast hamper gifted by Groom's family for Astamangala",
       "category": "edible_hospitality",
       "event_ref": "EVT-007",
@@ -3200,7 +3218,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-049",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Saga & Macha Return Feast (Bride ⟶ Groom)",
+      "customary_title": "Saaga-Machha Phiranti Bhara (ଶାଗ-ମାଛ ଫେରନ୍ତା ଭାର)",
       "english_descriptor": "Reciprocal auspicious greens and fish feast presented by Bride's family for Astamangala",
       "category": "edible_hospitality",
       "event_ref": "EVT-007",
@@ -3260,6 +3278,325 @@ window.FAMILY_OBLIGATIONS_DATA = {
       },
       "derived_direction": "bride_to_groom",
       "file_basename": "OBL-049.md"
+    },
+    {
+      "id": "OBL-050",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Batabarana Baranka Royal Sherwani (ବାଟବରଣ ବରଙ୍କ ଶେରୱାନୀ ପୋଷାକ)",
+      "english_descriptor": "Groom's regal entrance wedding attire for Barat procession and Batabarana doorstep welcome: Royal Sherwani, Safa (Pagadi), Kalgi, Stole, Pearl Mala, and Mojaris",
+      "category": "attire",
+      "event_ref": "EVT-004",
+      "ritual_ref": "RIT-004",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-005",
+        "role_title": "Groom's Parents (Baba & Bou)"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-002",
+        "role_title": "Groom (Krushna)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Barat & Batabarana Groom Sherwani Ensemble",
+        "source_document": "Canonical Marriage Liturgy & Trousseau Specification (TRS-GR-03)",
+        "context_snippet": "EVENT 4 — DAY 2 WEDDING | Barat & Batabarana Entrance"
+      },
+      "items": [
+        {
+          "item_id": "OBL-050-ITM-01",
+          "description": "Barat Royal Embroidered Sherwani with Churidar / Dhoti",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "set",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        },
+        {
+          "item_id": "OBL-050-ITM-02",
+          "description": "Regal Safa (Turban) with Royal Feather Kalgi",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        },
+        {
+          "item_id": "OBL-050-ITM-03",
+          "description": "Barat Dupatta / Stole & Multi-Layer Pearl Kantha Mala",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "set",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        },
+        {
+          "item_id": "OBL-050-ITM-04",
+          "description": "Traditional Embroidered Wedding Mojaris",
+          "nature": "footwear",
+          "quantity": 1,
+          "unit": "pair",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-GR-03",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-002",
+        "staging_location": "VEN-003",
+        "handover_moment": "Barat Assembly & Departure"
+      },
+      "derived_direction": "groom_to_groom",
+      "file_basename": "OBL-050.md"
+    },
+    {
+      "id": "OBL-051",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Sacred Vivaha Mandap Pata Saree (ବିବାହ ମଣ୍ଡପ ପାଟ ଶାଢ଼ୀ / ବାଉଳା ପାଟ)",
+      "english_descriptor": "Bride's consecrated wedding silk saree for the sacred Vivaha Mandap, Hastaganthi knotting, and Saptapadi rites",
+      "category": "attire",
+      "event_ref": "EVT-004",
+      "ritual_ref": "RIT-005",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-005",
+        "role_title": "Groom's Family (presented as Kanya Vastra)"
+      },
+      "recipient": {
+        "family": "bride",
+        "primary_contact": "PER-001",
+        "role_title": "Bride (Sree)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Sacred Vivaha Pata & Hastaganthi Saree",
+        "source_document": "Canonical Marriage Liturgy & Trousseau Specification (TRS-BR-01)",
+        "context_snippet": "EVENT 4 — DAY 2 WEDDING | Vivaha Mandap Rituals"
+      },
+      "items": [
+        {
+          "item_id": "OBL-051-ITM-01",
+          "description": "Auspicious Baula Patta / Nuapatna Khandua Silk Saree",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        },
+        {
+          "item_id": "OBL-051-ITM-02",
+          "description": "Traditional Zari Embroidered Bridal Blouse",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        },
+        {
+          "item_id": "OBL-051-ITM-03",
+          "description": "Bridal Odhani / Mandap Veil",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-BR-01",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-006",
+        "staging_location": "VEN-003",
+        "handover_moment": "Vivaha Mandap Entry"
+      },
+      "derived_direction": "groom_to_bride",
+      "file_basename": "OBL-051.md"
+    },
+    {
+      "id": "OBL-052",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Mandap Vedic Pure Silk Dhoti & Kurta (ମଣ୍ଡପ ରେଶମୀ ଧୋତି-ଯୋଡ଼ / ପାଟ ଯୋଡ଼)",
+      "english_descriptor": "Groom's consecrated unstitched silk dhoti, kurta, and ceremonial angavastra for the Vedic Havan, Kanyadan, and Hastaganthi rites",
+      "category": "attire",
+      "event_ref": "EVT-004",
+      "ritual_ref": "RIT-005",
+      "obligor": {
+        "family": "groom",
+        "primary_contact": "PER-005",
+        "role_title": "Groom's Family"
+      },
+      "recipient": {
+        "family": "groom",
+        "primary_contact": "PER-002",
+        "role_title": "Groom (Krushna)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Mandap Pure Silk Dhoti & Kurta",
+        "source_document": "Canonical Marriage Liturgy & Trousseau Specification (TRS-GR-01)",
+        "context_snippet": "EVENT 4 — DAY 2 WEDDING | Vedic Mandap Rituals"
+      },
+      "items": [
+        {
+          "item_id": "OBL-052-ITM-01",
+          "description": "Pure Tussar/Mulberry Silk Unstitched Dhoti & Kurta Ensemble",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "set",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        },
+        {
+          "item_id": "OBL-052-ITM-02",
+          "description": "Ceremonial Silk Patta / Angavastra",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-GR-01",
+        "samagri_checklist_ref": null,
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-002",
+        "staging_location": "VEN-003",
+        "handover_moment": "Pre-Mandap Transition into Silk Dhoti"
+      },
+      "derived_direction": "groom_to_groom",
+      "file_basename": "OBL-052.md"
+    },
+    {
+      "id": "OBL-053",
+      "entity_type": "customary_family_obligation",
+      "customary_title": "Ceremonial Mukuta & Hastaganthi Bandhana Vastra (ବିବାହ ମୁକୁଟ ଓ ହସ୍ତଗଣ୍ଠି ବନ୍ଧନ ବସ୍ତ୍ର)",
+      "english_descriptor": "Sacred bridal & groom ceremonial Mukuta (Shola & silver filigree crowns) and nuptial knotting cloth for Hastaganthi binding",
+      "category": "ceremonial_token",
+      "event_ref": "EVT-004",
+      "ritual_ref": "RIT-005",
+      "obligor": {
+        "family": "joint",
+        "primary_contact": "PER-007",
+        "role_title": "Both Families (Purohit Coordination)"
+      },
+      "recipient": {
+        "family": "joint",
+        "primary_contact": "PER-001",
+        "role_title": "Newlywed Couple (Sree & Krushna)"
+      },
+      "exchange_cluster": {
+        "is_exchange": false,
+        "cluster_id": null,
+        "peer_obligation_id": null,
+        "synchronous_handover": false
+      },
+      "lifecycle_status": "Agreed",
+      "spec_status": "Fully_Specified",
+      "epistemic_tier": "SACRED_CORE",
+      "verbatim_provenance": {
+        "raw_source_text": "Bridal & Groom Mukuta Set and Hastaganthi Bandhana Vastra",
+        "source_document": "Canonical Marriage Liturgy & Trousseau Specification (TRS-OD-05, TRS-OD-06)",
+        "context_snippet": "EVENT 4 — DAY 2 WEDDING | Hastaganthi Ritual"
+      },
+      "items": [
+        {
+          "item_id": "OBL-053-ITM-01",
+          "description": "Traditional Shola & Silver Filigree Mukuta Pair for Bride and Groom",
+          "nature": "physical_asset",
+          "quantity": 1,
+          "unit": "pair",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        },
+        {
+          "item_id": "OBL-053-ITM-02",
+          "description": "Hastaganthi Bandhana Vastra (Sacred Silk Knotting Cloth)",
+          "nature": "fabric",
+          "quantity": 1,
+          "unit": "pcs",
+          "estimated_cost_inr": null,
+          "status": "pending_selection"
+        }
+      ],
+      "financial_obligation": {
+        "is_monetary": false,
+        "unit_amount_inr": null,
+        "headcount": null,
+        "estimated_total_inr": null,
+        "currency": "INR"
+      },
+      "downstream_projections": {
+        "commercial_shopping_ref": "TRS-OD-05",
+        "samagri_checklist_ref": "SAM-005",
+        "asset_custody_ref": null,
+        "finance_ledger_ref": null
+      },
+      "logistical_custody": {
+        "custodian_role": "PER-007",
+        "staging_location": "VEN-003",
+        "handover_moment": "Vivaha Mandap Hastaganthi Ritual"
+      },
+      "derived_direction": "joint_to_joint",
+      "file_basename": "OBL-053.md"
     }
   ]
 };

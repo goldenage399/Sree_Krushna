@@ -38,17 +38,39 @@ function loadConfig(repoRoot, customConfigPath = null) {
     }
   }
 
+  // 1. Auto-discover repo identity and entity prefix from enhancement-config.json if present
+  let autoRepoName = path.basename(repoRoot);
+  const autoPrefixes = [...DEFAULT_CANONICAL_PREFIXES];
+  const enhConfigPath = path.join(repoRoot, 'enhancement-config.json');
+  if (fs.existsSync(enhConfigPath)) {
+    try {
+      const enhRaw = fs.readFileSync(enhConfigPath, 'utf8');
+      const enhParsed = JSON.parse(enhRaw);
+      if (enhParsed.project_name || enhParsed.repo) {
+        autoRepoName = enhParsed.project_name || enhParsed.repo;
+      }
+      const prefix = enhParsed.id_prefix || enhParsed.canonical_prefix;
+      if (prefix && typeof prefix === 'string' && !autoPrefixes.includes(prefix)) {
+        autoPrefixes.unshift(prefix);
+      }
+    } catch (_) {}
+  }
+
   const defaults = {
-    repoName: path.basename(repoRoot),
-    canonicalPrefixes: DEFAULT_CANONICAL_PREFIXES,
+    repoName: autoRepoName,
+    canonicalPrefixes: autoPrefixes,
     targetDirectories: [
       '00_GOVERNANCE', '01_TIMELINE_EVENTS', '02_RITUALS_CULTURE',
       '03_PEOPLE_GUESTS', '04_PROCUREMENT_VENDORS', '05_OPERATIONS_LOGISTICS',
       '06_FINANCE_COMMERCIALS', '07_DOCUMENTS_ARCHIVE', '08_RESEARCH_REFERENCE',
       'docs'
     ],
-    rootFiles: ['ARCHITECTURE_SPEC.md', 'DOCS_HUB.md', 'README.md', 'ENHANCEMENT-MASTER-REGISTRY.md'],
-    ignoreDirectories: ['node_modules', '.git', 'graphify-out', 'scratch', 'User_Created'],
+    rootFiles: [
+      'ARCHITECTURE_SPEC.md', 'DOCS_HUB.md', 'README.md',
+      'ENHANCEMENT-MASTER-REGISTRY.md', 'ENHANCEMENTS.md', 'CLAUDE.md',
+      'COLLABORATOR_HANDOVER.md', 'REPLICATION_BLUEPRINT.md'
+    ],
+    ignoreDirectories: ['node_modules', '.git', 'graphify-out', 'scratch', 'User_Created', '.cache', 'dist', 'build', 'coverage'],
     outputDir: 'graphify-out'
   };
 
@@ -59,11 +81,15 @@ function loadConfig(repoRoot, customConfigPath = null) {
   try {
     const raw = fs.readFileSync(resolvedPath, 'utf8');
     const parsed = JSON.parse(raw);
+    const prefixes = Array.isArray(parsed.canonicalPrefixes) && parsed.canonicalPrefixes.length > 0
+      ? parsed.canonicalPrefixes
+      : defaults.canonicalPrefixes;
+    for (const p of autoPrefixes) {
+      if (!prefixes.includes(p)) prefixes.push(p);
+    }
     return {
       repoName: parsed.repoName || defaults.repoName,
-      canonicalPrefixes: Array.isArray(parsed.canonicalPrefixes) && parsed.canonicalPrefixes.length > 0
-        ? parsed.canonicalPrefixes
-        : defaults.canonicalPrefixes,
+      canonicalPrefixes: prefixes,
       targetDirectories: Array.isArray(parsed.targetDirectories)
         ? parsed.targetDirectories
         : defaults.targetDirectories,
@@ -80,6 +106,7 @@ function loadConfig(repoRoot, customConfigPath = null) {
     return defaults;
   }
 }
+
 
 // ─── Frontmatter & Link Parsers ───────────────────────────────────────────────
 function parseFrontmatter(text) {
@@ -156,19 +183,36 @@ function findSourceFiles(repoRoot, config = null) {
     try {
       const rootEntries = fs.readdirSync(repoRoot, { withFileTypes: true });
       for (const entry of rootEntries) {
-        if (entry.isDirectory() && !ignoreSet.has(entry.name)) {
+        if (entry.isDirectory() && !ignoreSet.has(entry.name) && !entry.name.startsWith('.')) {
           walk(path.join(repoRoot, entry.name));
         }
       }
     } catch (_) {}
   }
 
-  // Also check root markdown files
+  // Scan all root-level markdown and jsonl files
+  try {
+    const rootEntries = fs.readdirSync(repoRoot, { withFileTypes: true });
+    for (const entry of rootEntries) {
+      if (entry.isFile() && (entry.name.endsWith('.md') || entry.name.endsWith('.jsonl'))) {
+        const fullPath = path.join(repoRoot, entry.name);
+        const relPath = entry.name.replace(/\\/g, '/');
+        if (!visitedPaths.has(relPath)) {
+          visitedPaths.add(relPath);
+          try {
+            files.push({ filePath: relPath, content: fs.readFileSync(fullPath, 'utf8') });
+          } catch (_) {}
+        }
+      }
+    }
+  } catch (_) {}
+
+  // Also check explicit root files from config if not yet visited
   for (const rf of (cfg.rootFiles || [])) {
-    const fullPath = path.join(repoRoot, rf);
+    const fullPath = path.isAbsolute(rf) ? rf : path.join(repoRoot, rf);
     if (fs.existsSync(fullPath)) {
       try {
-        const relPath = rf.replace(/\\/g, '/');
+        const relPath = path.relative(repoRoot, fullPath).replace(/\\/g, '/');
         if (!visitedPaths.has(relPath)) {
           visitedPaths.add(relPath);
           files.push({ filePath: relPath, content: fs.readFileSync(fullPath, 'utf8') });
@@ -186,6 +230,7 @@ function buildGraph(files, config = null) {
   const nodes = {};
   const dangling = new Set();
   const prefixMatchRegex = new RegExp(`^(${prefixes.join('|')})-[A-Za-z0-9]+(-[A-Za-z0-9]+)?`);
+  const canonicalPrefixRegex = /^[A-Z]{2,6}$/;
 
   // First Pass: Register explicit nodes
   for (const file of files) {
@@ -195,22 +240,31 @@ function buildGraph(files, config = null) {
         try {
           const item = JSON.parse(line);
           if (item.id) {
-            nodes[item.id] = {
-              id: item.id,
-              type: item.id.split('-')[0],
-              title: item.title || item.name || item.id,
-              file: file.filePath,
-              status: item.status || 'Active',
-              category: item.category || '',
-              outbound: [],
-              inbound: []
-            };
+            const prefix = item.id.split('-')[0];
+            if (prefixes.includes(prefix) || canonicalPrefixRegex.test(prefix)) {
+              nodes[item.id] = {
+                id: item.id,
+                type: prefix,
+                title: item.title || item.name || item.id,
+                file: file.filePath,
+                status: item.status || 'Active',
+                category: item.category || '',
+                outbound: [],
+                inbound: []
+              };
+            }
           }
         } catch (_) {}
       }
     } else {
       const fm = parseFrontmatter(file.content);
       let nodeId = fm.id;
+      if (nodeId) {
+        const prefix = nodeId.split('-')[0];
+        if (!prefixes.includes(prefix) && !canonicalPrefixRegex.test(prefix)) {
+          nodeId = null; // Discard invalid/lowercase IDs like "page-admin", "modal-assign"
+        }
+      }
       if (!nodeId) {
         const base = path.basename(file.filePath);
         const match = base.match(prefixMatchRegex);
@@ -239,6 +293,32 @@ function buildGraph(files, config = null) {
           inbound: []
         };
       }
+
+      // Check for in-file markdown entity declarations (e.g. **OPS-001**: Title in registries)
+      const entryRegex = /^\*\*([A-Z]{2,6}-\d{2,4}(?:-[A-Za-z0-9_-]+)?)\*\*:\s*([^\r\n]+)/gm;
+      let entryMatch;
+      while ((entryMatch = entryRegex.exec(file.content)) !== null) {
+        const entryId = entryMatch[1];
+        const entryTitle = entryMatch[2].trim();
+        const prefix = entryId.split('-')[0];
+        if (prefixes.includes(prefix) || canonicalPrefixRegex.test(prefix)) {
+          if (!nodes[entryId]) {
+            const postSnippet = file.content.slice(entryMatch.index, entryMatch.index + 400);
+            const statusMatch = postSnippet.match(/-\s+\*\*Status\*\*:\s*([A-Za-z0-9_ -]+)/i);
+            const catMatch = postSnippet.match(/-\s+\*\*Category\*\*:\s*([A-Za-z0-9_ -]+)/i);
+            nodes[entryId] = {
+              id: entryId,
+              type: prefix,
+              title: entryTitle,
+              file: file.filePath,
+              status: statusMatch ? statusMatch[1].trim() : 'Documented',
+              category: catMatch ? catMatch[1].trim() : '',
+              outbound: [],
+              inbound: []
+            };
+          }
+        }
+      }
     }
   }
 
@@ -248,6 +328,12 @@ function buildGraph(files, config = null) {
     if (!file.filePath.endsWith('.jsonl')) {
       const fm = parseFrontmatter(file.content);
       sourceId = fm.id;
+      if (sourceId) {
+        const prefix = sourceId.split('-')[0];
+        if (!prefixes.includes(prefix) && !canonicalPrefixRegex.test(prefix)) {
+          sourceId = null;
+        }
+      }
       if (!sourceId) {
         const base = path.basename(file.filePath);
         const match = base.match(prefixMatchRegex);
@@ -258,6 +344,7 @@ function buildGraph(files, config = null) {
     const links = extractEntityLinks(file.content, prefixes);
     for (const targetId of links) {
       if (sourceId && sourceId === targetId) continue; // Skip self references
+
 
       if (sourceId && nodes[sourceId]) {
         if (!nodes[sourceId].outbound.includes(targetId)) {
