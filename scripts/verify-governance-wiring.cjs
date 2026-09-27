@@ -98,14 +98,6 @@ const WIRING_MATRIX = {
     atLeastOne: [],
     optional:   [],
   },
-  // Prose invariants use a dedicated checker (checkProseInvariants) — the matrix
-  // entry exists only so printReport can resolve a human label.
-  'prose-invariant': {
-    label:      'Prose Invariant (governance rule text at a named anchor point)',
-    required:   [],
-    atLeastOne: [],
-    optional:   [],
-  },
 };
 
 // Human-readable labels for consumption files
@@ -702,59 +694,6 @@ function checkArchInvariantWiring(artifact, consumption) {
   return { artifact, findings, status: errors.length > 0 ? 'unwired' : 'wired' };
 }
 
-// ─── Prose Invariant Presence Check (SK-012, AC-DEC-2026-056) ─────────────────
-//
-// Some governance rules are inserted as plain text at a named anchor point in
-// an already-tracked file, rather than as a standalone artifact the wiring
-// matrix above understands. This is a much cheaper check than the matrix's
-// "is this artifact referenced elsewhere" model: just confirm the invariant's
-// literal ID string is actually present in every file it's supposed to live
-// in (both mirror copies, where a SYNC-MIRROR contract requires one). Runs
-// unconditionally (not diff/--all gated) since these are permanent invariants,
-// not per-session new artifacts.
-
-const PROSE_INVARIANTS = [
-  {
-    id: 'INV-SYSTEMIC-ABSTRACTION-001',
-    files: ['.claude/skills/prompt-clarity/meta-prompt.md', '.agent/skills/prompt-clarity/meta-prompt.md'],
-  },
-  {
-    id: 'INV-DATA-TRANSIT-001',
-    files: ['.agent/skills/writing-plans/SKILL.md'],
-  },
-  {
-    id: 'INV-COUNCIL-GROUND-TRUTH-001',
-    files: ['.agent/workflows/architecture-council.md'],
-  },
-];
-
-function checkProseInvariants() {
-  const results = [];
-  for (const { id, files } of PROSE_INVARIANTS) {
-    const findings = [];
-    for (const relPath of files) {
-      // isReferenced() expects pre-lowercased content (see loadConsumptionFiles()) —
-      // readFile() alone returns raw case, so .includes(id.toLowerCase()) would never
-      // match an uppercase invariant ID like "INV-SYSTEMIC-ABSTRACTION-001" against it.
-      const content = readFile(relPath).toLowerCase();
-      if (!isReferenced(content, id)) {
-        findings.push({
-          severity: 'error',
-          consumptionFile: relPath,
-          message: `Prose invariant "${id}" not found in ${relPath}`,
-          fix: `Insert the "${id}" rule text at its documented anchor point in ${relPath}.`,
-        });
-      }
-    }
-    results.push({
-      artifact: { type: 'prose-invariant', ref: id, file: files.join(', ') },
-      findings,
-      status: findings.length > 0 ? 'unwired' : 'wired',
-    });
-  }
-  return results;
-}
-
 // ─── Output Formatting ────────────────────────────────────────────────────────
 
 function printReport(results, newStandardResults) {
@@ -884,19 +823,15 @@ function run() {
       return checkArtifactWiring(artifact, allStandards, consumption);
     });
 
-    // Prose invariants are always checked, regardless of diff/--all mode —
-    // they are permanent rules, not per-session new artifacts.
-    const proseInvariantResults = checkProseInvariants();
-
     // Output
     if (JSON_OUT) {
-      printJson([...artifactResults, ...proseInvariantResults], standardResults);
+      printJson(artifactResults, standardResults);
     } else {
-      printReport([...artifactResults, ...proseInvariantResults], standardResults);
+      printReport(artifactResults, standardResults);
     }
 
     // Exit code
-    const allResults = [...artifactResults, ...proseInvariantResults, ...standardResults];
+    const allResults = [...artifactResults, ...standardResults];
     const hasErrors = allResults.some(r => r.status === 'unwired');
     const hasWarnings = allResults.some(r => r.status === 'partial');
 

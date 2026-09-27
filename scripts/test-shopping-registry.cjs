@@ -236,13 +236,13 @@ const pubOblData = fs.readFileSync('public/js/obligations-data.js', 'utf8');
 assert.strictEqual(rootOblData, pubOblData, 'Byte parity between root and public js/obligations-data.js failed');
 console.log('  ✓ [PASS] js/obligations-data.js: 100% byte-identical across root and public/ (' + rootOblData.length + ' bytes)');
 
-// 3. Dataset Integrity: 49 obligations loaded and 44 trousseau items preserved (zero catalog inflation)
+// 3. Dataset Integrity: 53 obligations loaded and 44 trousseau items preserved (zero catalog inflation)
 global.window = {};
 require('../js/obligations-data.js');
 const oblDataset = window.FAMILY_OBLIGATIONS_DATA;
 assert(oblDataset && Array.isArray(oblDataset.obligations), 'FAMILY_OBLIGATIONS_DATA must export obligations array');
-assert.strictEqual(oblDataset.obligations.length, 49, 'Expected exactly 49 customary obligations');
-console.log('  ✓ [PASS] Verified 49 canonical family obligations in data layer (zero catalog inflation)');
+assert.strictEqual(oblDataset.obligations.length, 53, 'Expected exactly 53 customary obligations');
+console.log('  ✓ [PASS] Verified 53 canonical family obligations in data layer (zero catalog inflation)');
 
 // 4. Contract checks in compiled HTML
 const oblDomContracts = [
@@ -264,6 +264,6 @@ oblDomContracts.forEach(check => {
 });
 
 console.log('\n════════════════════════════════════════════════════════════════════════════════');
-console.log('🎉 SHOPPING REGISTRY & LITURGICAL RECONCILIATION GATE: 100% GREEN (44/44 ITEMS, 49/49 OBLIGATIONS)');
+console.log('🎉 SHOPPING REGISTRY & LITURGICAL RECONCILIATION GATE: 100% GREEN (44/44 ITEMS, 53/53 OBLIGATIONS)');
 console.log('════════════════════════════════════════════════════════════════════════════════\n');
 

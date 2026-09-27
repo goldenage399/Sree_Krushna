@@ -29,14 +29,14 @@ assert.strictEqual(rootBuf.length, pubBuf.length, `Byte length mismatch: ${rootB
 assert(rootBuf.equals(pubBuf), 'Root and Public run sheet HTML must have 100% byte parity');
 console.log(`  ✓ 100% Byte Parity verified between root and public (${rootBuf.length} bytes).`);
 
-// 3. Verify all 49 obligations are represented in the HTML
+// 3. Verify all 53 obligations are represented in the HTML
 const htmlContent = rootBuf.toString('utf8');
 const sandbox = {};
 const rawCode = fs.readFileSync(obligationsDataFile, 'utf8');
 eval(rawCode.replace('window.', 'sandbox.'));
 const obligations = sandbox.FAMILY_OBLIGATIONS_DATA.obligations || [];
 
-assert.strictEqual(obligations.length, 49, 'Expected exactly 49 obligations in SSOT dataset');
+assert.strictEqual(obligations.length, 53, 'Expected exactly 53 obligations in SSOT dataset');
 
 let missingInHtml = 0;
 let missingInMd = 0;
@@ -53,9 +53,9 @@ obligations.forEach(o => {
   }
 });
 
-assert.strictEqual(missingInHtml, 0, `All 49 obligations must be present in HTML (missing: ${missingInHtml})`);
-assert.strictEqual(missingInMd, 0, `All 49 obligations must be present in Markdown (missing: ${missingInMd})`);
-console.log('  ✓ All 49 canonical obligations (OBL-001 through OBL-049) verified in both HTML and Markdown tables.');
+assert.strictEqual(missingInHtml, 0, `All 53 obligations must be present in HTML (missing: ${missingInHtml})`);
+assert.strictEqual(missingInMd, 0, `All 53 obligations must be present in Markdown (missing: ${missingInMd})`);
+console.log('  ✓ All 53 canonical obligations (OBL-001 through OBL-053) verified in both HTML and Markdown tables.');
 
 // 4. Verify all milestones are present
 const expectedMilestones = ['EVT-001', 'EVT-002', 'EVT-004', 'EVT-005', 'EVT-006', 'POST_WEDDING'];
