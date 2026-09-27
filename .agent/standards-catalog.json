@@ -227,6 +227,146 @@
         "GEMINI.md",
         "CLAUDE.md"
       ]
+    },
+    {
+      "id": "STD-UI-PRINT-CONTAINER-001",
+      "category": "ui-quality",
+      "name": "Universal Scoped Container Print Engine & Zero-Dump Standard",
+      "description": "Retires unconditional multi-tab unrolling in global @media print to prevent 50-60 page dumps (INV-PRINT-ZERO-DUMP-001). Provides sandboxed headless iframe print isolation primitive (INV-PRINT-IFRAME-SANDBOX-001) in ui_primitives/scripts/print_engine.js for clean container printing.",
+      "severity": "HIGH",
+      "enforcement": {
+        "checkpoints": [
+          "pre-commit",
+          "CI"
+        ],
+        "manualOnly": false,
+        "automatedGate": "node scripts/test-print-container-contract.cjs"
+      },
+      "references": [
+        "User_Created/Discussion Threads/Council/260927_arch_council_scoped_container_print_engine_and_tabular_run_sheet_skill.md",
+        "ui_primitives/scripts/print_engine.js",
+        "public/css/main.css",
+        "GEMINI.md"
+      ]
+    },
+    {
+      "id": "STD-TABULAR-RUN-SHEET-SKILL-001",
+      "category": "governance",
+      "name": "Universal Tabular Run Sheet Artisan Skill & CLI Tooling",
+      "description": "Standardized skill and generic CLI generator (scripts/generate-tabular-run-sheet.cjs) to turn any tabular dataset into an ink-saving A4 landscape/portrait standalone printable run sheet with 100% dual-release byte parity, canonical Markdown table, and verification tests.",
+      "severity": "MEDIUM",
+      "enforcement": {
+        "checkpoints": [
+          "pre-commit"
+        ],
+        "manualOnly": false,
+        "automatedGate": "node scripts/test-print-container-contract.cjs"
+      },
+      "references": [
+        ".agent/skills/tabular-run-sheet-artisan/SKILL.md",
+        "scripts/generate-tabular-run-sheet.cjs",
+        "GEMINI.md"
+      ]
+    },
+    {
+      "id": "STD-EMPIRICAL-ADOPTION-001",
+      "category": "governance",
+      "name": "Empirical Multi-Repo Adoption Gate & Reality-First Invariant Standard",
+      "description": "Prohibits claiming cross-repo adoption or ecosystem-wide distribution for any tool, standard, or pattern without a verified automated terminal execution test passing against at least one real sibling repository on disk (INV-PROVE-BEFORE-CLAIM-001).",
+      "severity": "CRITICAL",
+      "enforcement": {
+        "checkpoints": [
+          "pre-commit",
+          "CI"
+        ],
+        "manualOnly": false,
+        "automatedGate": "node scripts/test-cross-repo-adoption.cjs"
+      },
+      "references": [
+        "User_Created/Discussion Threads/Council/260927_arch_council_empirical_validation_and_anti_process_theater_governance.md",
+        "scripts/test-cross-repo-adoption.cjs",
+        "GEMINI.md",
+        "CLAUDE.md"
+      ]
+    },
+    {
+      "id": "STD-ZERO-CONFIG-DISCOVERY-001",
+      "category": "tooling",
+      "name": "Zero-Config Repository Identity & Entity Discovery Standard",
+      "description": "Domain graph generator automatically detects repository identity and canonical prefixes from enhancement-config.json, scans root markdown files and registries (ENHANCEMENTS.md), and enforces strict uppercase prefix validation to eliminate entity noise.",
+      "severity": "HIGH",
+      "enforcement": {
+        "checkpoints": [
+          "pre-commit",
+          "CI"
+        ],
+        "manualOnly": false,
+        "automatedGate": "node scripts/test-cross-repo-adoption.cjs"
+      },
+      "references": [
+        "scripts/generate-domain-graph.cjs",
+        "scripts/test-domain-graph.cjs",
+        "GEMINI.md",
+        "CLAUDE.md"
+      ]
+    },
+    {
+      "id": "STD-COUNCIL-DUAL-GATE-001",
+      "category": "governance",
+      "name": "Mandatory Dual-Council Pre-Planning Governance Gate",
+      "description": "Any feature or refactor touching the presentation layer must receive explicit pre-planning clearance from BOTH the Architecture Council and the UI Council before implementation planning can conclude.",
+      "severity": "CRITICAL",
+      "enforcement": {
+        "checkpoints": [
+          "planning",
+          "pre-commit"
+        ],
+        "manualOnly": false,
+        "automatedGate": "node scripts/test-planning-engine-contract.cjs"
+      },
+      "references": [
+        ".agent/skills/writing-plans/SKILL.md",
+        "User_Created/Discussion Threads/Council/260927_arch_council_dual_council_governance_and_ui_ux_interaction_engine.md"
+      ]
+    },
+    {
+      "id": "STD-UI-INTERACTION-SPEC-001",
+      "category": "ui-quality",
+      "name": "Universal 7-Domain UI/UX Interaction Specification Matrix",
+      "description": "Every presentation-layer implementation plan must explicitly design for all 7 interaction domains: Data Tables, Media/Lightbox Viewers, Modals/Drawers, Interactive Controls/Touch, Keyboard/A11y, State Craft/Feedback, and Dual-Surface Media Isolation.",
+      "severity": "CRITICAL",
+      "enforcement": {
+        "checkpoints": [
+          "planning",
+          "pre-commit"
+        ],
+        "manualOnly": false,
+        "automatedGate": "node scripts/test-planning-engine-contract.cjs"
+      },
+      "references": [
+        ".agent/skills/writing-plans/SKILL.md",
+        "User_Created/Discussion Threads/Council/260927_arch_council_dual_council_governance_and_ui_ux_interaction_engine.md"
+      ]
+    },
+    {
+      "id": "STD-UI-ACCORDION-001",
+      "category": "ui-quality",
+      "name": "Universal Collapsible Container & Accordion Scannability Standard",
+      "description": "Grouped tabular records exceeding 15 items across >2 categories must be collapsible with tactile chevrons, bulk Expand/Collapse All controls, localStorage persistence, and forced unrolling in print media.",
+      "severity": "HIGH",
+      "enforcement": {
+        "checkpoints": [
+          "pre-commit",
+          "CI"
+        ],
+        "manualOnly": false,
+        "automatedGate": "node scripts/test-accordion-contract.cjs"
+      },
+      "references": [
+        "ui_primitives/scripts/collapsible_engine.js",
+        "User_Created/Discussion Threads/Council/260927_arch_council_ui_ergonomics_gate_and_collapsible_table_primitive.md"
+      ]
     }
   ]
 }
+

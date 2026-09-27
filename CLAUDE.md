@@ -91,6 +91,16 @@ All entities must use standardized 3-digit padded identifiers:
 - **SAP Dual-Block Isolation (`INV-SAP-DUAL-BLOCK-001`)**: All taxonomy dictionaries (`.agent/taxonomy_dictionary.cjs`) must isolate universal standards (`<!-- shared:std.agent.taxonomy.core -->`) from local repository terms (`<!-- repo-specific:... -->`) to guarantee lossless `/sap-sync` compatibility.
 - **Scoped Vocabulary Governance**: Documentation and governance artifacts must adhere to canonical terminology (`npm run verify:taxonomy`), while discussion scratchpads (`User_Created/`) remain strictly exempt.
 
+### 11. Empirical Multi-Repo Adoption Gate & Reality-First Invariant (`STD-EMPIRICAL-ADOPTION-001` / `INV-PROVE-BEFORE-CLAIM-001` / `AC-DEC-2026-069` / `SK-027`)
+- **Prohibition of Unearned Adoption Claims**: No tool, script, workflow, or architectural pattern in this repository may be documented, labeled, or referred to as "Adopted," "Ecosystem-Wide," or "Cross-Repo Portable" unless it has been physically executed against at least ONE real sibling repository on disk with zero uncommitted hacks and terminal logs citing exit code 0 and non-zero entities.
+- **Pre-Flight Adoption Verification**: All portable tools must pass automated multi-repo validation (`node scripts/test-cross-repo-adoption.cjs`). In the absence of passing sibling verification, artifacts MUST be explicitly labeled `LOCAL_ONLY` or `EXPERIMENTAL_PILOT`.
+- **Zero-Config Turnkey Discovery (`STD-ZERO-CONFIG-DISCOVERY-001`)**: Discovery tooling must operate zero-config by auto-reading `enhancement-config.json` for repository identity and canonical prefixes (`OPS`, `TASK`, `AGR`), auto-scanning single-file registries (`ENHANCEMENTS.md`), and enforcing strict uppercase entity prefix validation (`^[A-Z]{2,6}$`).
+
+### 12. Universal UI/UX Interaction Engine, Dual-Council Gate & Collapsible Progressive Disclosure Architecture (`STD-COUNCIL-DUAL-GATE-001` / `STD-UI-INTERACTION-SPEC-001` / `STD-UI-ACCORDION-001` / `INV-COLLAPSIBLE-PRINT-001` / `AC-DEC-2026-067` / `AC-DEC-2026-068` / `SK-025` / `SK-026`)
+- **Mandatory Dual-Council Pre-Planning Gate**: All implementation plans modifying user interfaces must pass BOTH Architecture Council (modularity, APIs, data contracts) and UI Council (craft, ergonomics, scannability, touch targets, accessibility).
+- **Universal 7-Domain Interaction Matrix (`STD-UI-INTERACTION-SPEC-001`)**: Every UI plan must define contracts across (1) Tables/Lists, (2) Media/Lightbox Viewers, (3) Modals/Drawers, (4) Touch & Controls, (5) Keyboard/A11y, (6) State Craft/Feedback, and (7) Dual-Surface Media Isolation before code execution.
+- **Accordion Print-Force-Unroll Contract (`INV-COLLAPSIBLE-PRINT-001`)**: Interactive screen view states (e.g. collapsed accordions, hidden tabs, compact viewports) must NEVER conceal data when printed or exported. In `@media print` and container-scoped print streams (`window.skPrintContainer`), all collapsible containers must unconditionally force-unroll (`display: table !important; height: auto !important`). See [SPEC-ARCH-UI-ERGONOMICS-AND-INTERACTION-ENGINE-001.md](./docs/references/SPEC-ARCH-UI-ERGONOMICS-AND-INTERACTION-ENGINE-001.md) (`FKL-DI-026` / `FKL-AL-010` / `FKL-WI-007`).
+
 ---
 
 ## 2. Session Startup Gate (MANDATORY)
@@ -222,3 +232,4 @@ This repository implements the following universal patterns:
 - `.agent/patterns/sheet-drive-media-relay.md`
 - `.agent/patterns/universal-repository-taxonomy-and-discovery-graph.md`
 - `.agent/patterns/table-domain-separation-and-mobile-scroll.md`
+- `.agent/patterns/dual-council-pre-planning-and-interaction-matrix.md`

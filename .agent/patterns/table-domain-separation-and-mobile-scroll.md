@@ -3,8 +3,12 @@ pattern: table-domain-separation-and-mobile-scroll
 activation_tier: reference
 status: VALIDATED
 consumed_by:
-  - file: .agent/workflows/plan.md
-    at: "Step 0.1: Universal Patterns Reference Check"
+  - file: GEMINI.md
+    at: "Pattern Activation & PACT-001 Cross-References"
+  - file: CLAUDE.md
+    at: "Pattern Activation & PACT-001 Cross-References"
+  - file: docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md
+    at: "FKL-DI-025"
 triggers: []
 portability: universal
 canonical_source: task-dashboard

@@ -19,8 +19,11 @@ Per the Universal Session Acceleration Protocol (`AC-DEC-2026-059`), all newly o
 
 | Ticket ID | Workstream / Domain | Status | Target Release | Governing Standard |
 |---|---|---|---|---|
-| [`SK-019`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-019/00_ENHANCEMENT_INDEX.md) | Universal Cross-Repository Graph, Taxonomy & Session Acceleration Engine | `IN_PROGRESS (Phase 2)` | `v2.9.0` | `STD-UNIVERSAL-TAXONOMY-001` / `PKG-006` |
-| [`SK-020`](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/260927_arch_council_shopping_tab_family_obligation_integration.md) | Family Obligation Register & Shopping Tab Subview Integration | `IN_PROGRESS` | `v2.9.0` | `STD-SHOPPING-OBLIGATION-001` |
+| [`SK-019`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-019/00_ENHANCEMENT_INDEX.md) | Universal Cross-Repository Graph, Taxonomy & Session Acceleration Engine | `COMPLETED` | `v2.9.0` | `STD-UNIVERSAL-TAXONOMY-001` / `PKG-006` |
+| [`SK-020`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-020/00_ENHANCEMENT_INDEX.md) | Family Obligation Register & Shopping Tab Subview Integration | `COMPLETED` | `v2.9.0` | `STD-SHOPPING-OBLIGATION-001` |
+| [`SK-025`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-025/00_ENHANCEMENT_INDEX.md) | Milestone Grouping Accordions, Progressive Disclosure & Dual-Surface Print Unrolling | `COMPLETED` | `v2.9.3` | `STD-UI-ACCORDION-001` / `INV-COLLAPSIBLE-PRINT-001` |
+| [`SK-026`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-026/00_ENHANCEMENT_INDEX.md) | Universal Dual-Council Governance Protocol & 7-Domain UI/UX Pre-Flight Engine | `COMPLETED` | `v2.9.4` | `STD-COUNCIL-DUAL-GATE-001` / `PKG-009` |
+| [`SK-027`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-027/00_ENHANCEMENT_INDEX.md) | Empirical Multi-Repo Adoption Gate, Zero-Config Discovery & Anti-Process-Theater Governance | `IN_PLANNING (Phase 1 Verified)` | `v2.9.5` | `STD-EMPIRICAL-ADOPTION-001` / `STD-ZERO-CONFIG-DISCOVERY-001` |
 
 ---
 
@@ -31,6 +34,10 @@ Per the Universal Session Acceleration Protocol (`AC-DEC-2026-059`), all newly o
 - **`AC-DEC-2026-061`**: Certified 49-Obligation Family Covenant Schema and bidirectional cross-domain linking.
 - **`AC-DEC-2026-062` (`UI-DEC-2026-047`)**: Certified Dedicated 6th Operating Mode in Shopping Tab (`#catalogSubnavStrip`) for Family Obligations.
 - **`AC-DEC-2026-063` (`GOV-DEC-2026-003`)**: Certified SAP Dual-Block Taxonomy Isolation & CommonJS Comment Protocol (`INV-SAP-DUAL-BLOCK-001`).
+- **`AC-DEC-2026-067` (`UI-DEC-2026-051`)**: Certified Milestone Grouping Accordions, Progressive Disclosure & Forced Print Unrolling Contract (`STD-UI-ACCORDION-001` / `INV-COLLAPSIBLE-PRINT-001` / `SK-025`).
+- **`AC-DEC-2026-068` (`UI-DEC-2026-052`)**: Certified Universal Dual-Council Governance Protocol & 7-Domain UI/UX Interaction Pre-Flight Engine (`STD-COUNCIL-DUAL-GATE-001` / `STD-UI-INTERACTION-SPEC-001` / `SK-026` / `PKG-009`).
+- **`AC-DEC-2026-069` (`GOV-DEC-2026-004`)**: Certified Empirical Multi-Repo Adoption Gate (`INV-PROVE-BEFORE-CLAIM-001`), Zero-Config Discovery (`STD-ZERO-CONFIG-DISCOVERY-001`), and Anti-Process-Theater Governance (`SK-027`). Live pilots empirically verified on `OperatusOS` (39 entities indexed) and `Task-Dashboard` (88 entities indexed, 0 noise nodes).
+
 
 See [`User_Created/Discussion Threads/Council/Council_Ledger.md`](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/Council_Ledger.md) for complete historical rulings.
 

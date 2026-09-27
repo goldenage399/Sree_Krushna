@@ -155,3 +155,21 @@ To support executive operations across diverse mobile, tablet, laptop, and ultra
    - Auto-fit ritual cards (`repeat(auto-fit, minmax(min(100%, 280px), 1fr))`) and accessible touch-target feedback (`min-height: 44px; touch-action: manipulation;`).
 5. **DO-PKOS Dynamic Viewport Scaling (`#tab-dopkos`):**
    - Dynamic viewport calculation (`height: calc(100dvh - 110px) !important; min-height: 480px !important;` at $\le 768\text{px}$), wrapping HUD stats, and horizontal touch-scrolling toolbar.
+
+---
+
+## 9. Universal UI/UX Interaction Engine & Collapsible Progressive Disclosure Architecture (SK-025 / SK-026)
+
+**Ruling:** `AC-DEC-2026-067` / `AC-DEC-2026-068` (`UI-DEC-2026-051` / `UI-DEC-2026-052`)  
+**SSOT Specification:** [`docs/references/SPEC-ARCH-UI-ERGONOMICS-AND-INTERACTION-ENGINE-001.md`](docs/references/SPEC-ARCH-UI-ERGONOMICS-AND-INTERACTION-ENGINE-001.md)  
+**Governing Standards:** `STD-COUNCIL-DUAL-GATE-001` / `STD-UI-INTERACTION-SPEC-001` / `STD-UI-ACCORDION-001` / `INV-COLLAPSIBLE-PRINT-001`
+
+To eliminate post-implementation UI rework and bridge the gap between static printability and interactive screen ergonomics:
+1. **Mandatory Dual-Council Pre-Planning Gate (`STD-COUNCIL-DUAL-GATE-001`):**
+   - Any implementation plan touching user interfaces must pass BOTH Architecture Council (modularity, APIs, data contracts) and UI Council (craft, ergonomics, scannability, touch targets, accessibility).
+2. **Universal 7-Domain Interaction Matrix (`STD-UI-INTERACTION-SPEC-001`):**
+   - Technical plans must declare specifications across 7 core interaction domains: (1) Tables & Lists, (2) Media/Lightbox Viewers, (3) Modals/Drawers, (4) Touch & Controls, (5) Keyboard/A11y, (6) State Craft/Feedback, (7) Dual-Surface Media Isolation before code execution.
+3. **Collapsible Progressive Disclosure with Forced Print Unrolling (`INV-COLLAPSIBLE-PRINT-001` / `FKL-DI-026`):**
+   - Interactive screen tables must support grouping accordions with tactile chevron feedback, bulk controls (`[▼ Expand All]`, `[▶ Collapse All]`), and `localStorage` state persistence.
+   - Physical paper and PDF print media (`@media print` and `window.skPrintContainer`) must unconditionally force-unroll all collapsed blocks (`display: table !important; height: auto !important`), guaranteeing zero truncated data on paper.
+

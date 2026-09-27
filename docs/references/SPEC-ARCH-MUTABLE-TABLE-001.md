@@ -157,6 +157,7 @@ content_ref: docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md
 - `FKL-DI-025` (Clean Domain Separation & Pure Tabular Responsive Architecture)  
 - `FKL-AL-009` (Anti-Pattern of Pseudo-Element Table Column Collapses)  
 - `FKL-WI-006` (Cross-Surface Bi-Directional Quick-Handoff Protocol)  
+- Pattern Contract: [.agent/patterns/table-domain-separation-and-mobile-scroll.md](../../.agent/patterns/table-domain-separation-and-mobile-scroll.md)  
 **Version:** `2.0.0` (Production Ratified — Path A Clean Separation)  
 
 ---
