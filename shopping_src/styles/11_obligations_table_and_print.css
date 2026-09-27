@@ -1,0 +1,248 @@
+/* ==========================================================================
+   Family Obligations High-Density Table View & Dedicated Print Engine
+   Standard: STD-SHOPPING-OBLIGATION-002 / AC-DEC-2026-064 / UI-DEC-2026-048
+   Ticket: SK-022 (Phases 2 & 3 SDCA Stylesheet)
+   ========================================================================== */
+
+/* 1. Table Container & Mode Toggle */
+.shop-obl-table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 16px;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.obl-table-milestone-block {
+  margin-bottom: 24px;
+}
+
+.obl-table-milestone-header {
+  background: rgba(30, 41, 59, 0.85);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.12));
+  padding: 8px 14px;
+  border-radius: 6px 6px 0 0;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--shop-gold, #e5a93c);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.obl-table-milestone-count {
+  font-size: 11px;
+  color: var(--shop-text-muted, #94a3b8);
+  font-weight: 500;
+}
+
+/* 2. Spreadsheet Table Styling */
+.obl-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11.5px;
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 0 0 6px 6px;
+  overflow: hidden;
+}
+
+.obl-data-table th,
+.obl-data-table td {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.obl-data-table th {
+  background: rgba(15, 23, 42, 0.95);
+  color: var(--shop-text-secondary, #cbd5e1);
+  font-weight: 700;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.obl-data-table tr:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.obl-td-code {
+  width: 75px;
+  font-family: monospace;
+  font-weight: 700;
+  color: var(--shop-gold, #e5a93c);
+}
+
+.obl-td-dir {
+  width: 115px;
+  font-weight: 600;
+  font-size: 11px;
+}
+
+.obl-td-dir.dir-bride { color: #60a5fa; }
+.obl-td-dir.dir-groom { color: #f472b6; }
+.obl-td-dir.dir-joint { color: #34d399; }
+
+.obl-td-title strong {
+  color: var(--shop-text-primary, #ffffff);
+  font-size: 12px;
+}
+
+.obl-td-title .obl-subdesc {
+  font-size: 10px;
+  color: var(--shop-text-muted, #94a3b8);
+  margin-top: 3px;
+}
+
+.obl-td-cat code {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  color: var(--shop-text-secondary, #cbd5e1);
+}
+
+.obl-td-specs {
+  font-size: 11px;
+  color: #e2e8f0;
+}
+
+.obl-td-cash {
+  width: 85px;
+  font-weight: 600;
+  color: #34d399;
+  text-align: right;
+}
+
+.obl-td-trs {
+  width: 85px;
+  text-align: center;
+}
+
+.obl-td-verif {
+  width: 50px;
+  text-align: center;
+}
+
+.obl-verif-box {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--border-subtle, rgba(255, 255, 255, 0.4));
+  border-radius: 2px;
+}
+
+/* 3. Dedicated Ink-Saving Print Rules (Phase 3) */
+@media print {
+  /* Suppress all interactive UI elements */
+  #header,
+  header,
+  nav,
+  .shop-header,
+  .shop-subnav-strip,
+  .shop-obl-toolbar,
+  .shop-obl-header-actions,
+  .shop-obl-kpis,
+  .screen-toolbar,
+  .no-print,
+  #shoppingStepper,
+  #shoppingClusterPods,
+  #shoppingStoreNavigator,
+  #itemsGrid,
+  #surveyStudioSection,
+  #shoppingTableViewSection,
+  #obligationsCardsContainer,
+  #oblLayoutSwitcher,
+  #toastContainer,
+  button,
+  .shop-btn {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 9.5px !important;
+  }
+
+  #shoppingObligationsView,
+  .shop-obligations-view,
+  .shop-obl-table-container {
+    display: block !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .shop-obl-header-banner {
+    border-bottom: 2px solid #000000 !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .shop-obl-title {
+    color: #000000 !important;
+    font-size: 15px !important;
+  }
+
+  .shop-obl-subtitle {
+    color: #333333 !important;
+    font-size: 9px !important;
+  }
+
+  .obl-table-milestone-block {
+    page-break-inside: avoid !important;
+    margin-bottom: 14px !important;
+  }
+
+  .obl-table-milestone-header {
+    background: #000000 !important;
+    color: #ffffff !important;
+    padding: 4px 8px !important;
+    font-size: 10px !important;
+  }
+
+  .obl-table-milestone-count {
+    color: #eeeeee !important;
+  }
+
+  .obl-data-table {
+    background: #ffffff !important;
+    font-size: 9px !important;
+  }
+
+  .obl-data-table th,
+  .obl-data-table td {
+    border: 1px solid #000000 !important;
+    padding: 3px 6px !important;
+    color: #000000 !important;
+  }
+
+  .obl-data-table th {
+    background: #f0f0f0 !important;
+    color: #000000 !important;
+    font-size: 8.5px !important;
+  }
+
+  .obl-td-code,
+  .obl-td-dir,
+  .obl-td-title strong,
+  .obl-td-cash {
+    color: #000000 !important;
+  }
+
+  .obl-verif-box {
+    border: 1.5px solid #000000 !important;
+  }
+
+  @page {
+    size: A4 landscape;
+    margin: 8mm 10mm;
+  }
+}

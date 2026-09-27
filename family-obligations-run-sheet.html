@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sree Krushna Marriage OS — Family Obligations Handover Run Sheet (A4 Landscape)</title>
+  <style>
+    /* Reset & Base Fonts */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: #111827;
+      background: #f9fafb;
+      line-height: 1.35;
+      font-size: 12px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Floating Screen Action Bar */
+    .screen-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #1e293b;
+      color: #ffffff;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .screen-toolbar-title {
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .screen-toolbar-actions {
+      display: flex;
+      gap: 12px;
+    }
+    .toolbar-btn {
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+    .btn-print { background: #d97706; color: #ffffff; }
+    .btn-print:hover { background: #b45309; }
+    .btn-back { background: #334155; color: #ffffff; }
+    .btn-back:hover { background: #475569; }
+
+    /* Printable Page Sheet Container */
+    .sheet-wrapper {
+      max-width: 1200px;
+      margin: 24px auto;
+      background: #ffffff;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+
+    /* Sheet Header Banner */
+    .sheet-header {
+      border-bottom: 2px solid #000000;
+      padding-bottom: 14px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .sheet-title-area h1 {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #000000;
+    }
+    .sheet-title-area p {
+      font-size: 11px;
+      color: #4b5563;
+      margin-top: 4px;
+    }
+    .sheet-meta-pills {
+      display: flex;
+      gap: 8px;
+      text-align: right;
+    }
+    .stat-pill {
+      border: 1px solid #d1d5db;
+      background: #f3f4f6;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+    }
+    .stat-pill strong { color: #000000; }
+
+    /* Milestone Table Sections */
+    .milestone-block {
+      margin-bottom: 28px;
+      page-break-inside: avoid;
+    }
+    .milestone-header {
+      background: #000000;
+      color: #ffffff;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .milestone-header-sub {
+      font-size: 10px;
+      font-weight: 500;
+      color: #e5e7eb;
+    }
+
+    /* High-Density Spreadsheet Table */
+    .run-sheet-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 10.5px;
+    }
+    .run-sheet-table th, .run-sheet-table td {
+      border: 1px solid #9ca3af;
+      padding: 5px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .run-sheet-table th {
+      background: #f3f4f6;
+      color: #000000;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 9.5px;
+      letter-spacing: 0.03em;
+    }
+    .run-sheet-table tr:nth-child(even) { background: #fafafa; }
+
+    /* Column Sizing */
+    .col-code { width: 75px; font-weight: 700; font-family: monospace; font-size: 10px; }
+    .col-dir { width: 115px; font-weight: 600; font-size: 10px; }
+    .col-title { width: 220px; }
+    .col-cat { width: 85px; font-size: 9.5px; }
+    .col-specs { width: 260px; font-size: 10px; }
+    .col-cash { width: 80px; font-weight: 600; text-align: right; }
+    .col-trs { width: 80px; font-family: monospace; font-size: 9.5px; text-align: center; }
+    .col-verif { width: 55px; text-align: center; font-size: 12px; }
+
+    .dir-bride { color: #1d4ed8; }
+    .dir-groom { color: #be185d; }
+    .dir-joint { color: #047857; }
+
+    .check-box-square {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 1.5px solid #000000;
+      border-radius: 2px;
+      margin: 2px auto;
+    }
+
+    /* Verification & Sign-off Footer */
+    .signoff-footer {
+      margin-top: 36px;
+      padding-top: 20px;
+      border-top: 1.5px solid #000000;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      page-break-inside: avoid;
+    }
+    .signoff-box {
+      width: 30%;
+      border-top: 1px dashed #000000;
+      padding-top: 6px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    /* Pure Black & White Ink-Saving Print Rules */
+    @media print {
+      .no-print { display: none !important; }
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 9.5px !important;
+      }
+      .sheet-wrapper {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+      }
+      .sheet-header {
+        border-bottom: 2px solid #000000 !important;
+        padding-bottom: 8px !important;
+        margin-bottom: 12px !important;
+      }
+      .sheet-title-area h1 { font-size: 16px !important; }
+      .sheet-title-area p { font-size: 9px !important; color: #000000 !important; }
+      .milestone-header {
+        background: #000000 !important;
+        color: #ffffff !important;
+        padding: 4px 8px !important;
+        font-size: 10px !important;
+      }
+      .run-sheet-table { font-size: 9px !important; }
+      .run-sheet-table th, .run-sheet-table td {
+        border: 1px solid #000000 !important;
+        padding: 3px 5px !important;
+      }
+      .run-sheet-table th {
+        background: #f0f0f0 !important;
+        color: #000000 !important;
+      }
+      .dir-bride, .dir-groom, .dir-joint { color: #000000 !important; }
+      .milestone-block { page-break-inside: avoid; margin-bottom: 16px !important; }
+      @page {
+        size: A4 landscape;
+        margin: 8mm 10mm;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Screen Action Toolbar (Hidden in Print) -->
+  <div class="screen-toolbar no-print">
+    <div class="screen-toolbar-title">
+      <span>📜</span>
+      <span>Sree Krushna Marriage OS — Customary Family Obligations Run Sheet</span>
+    </div>
+    <div class="screen-toolbar-actions">
+      <a href="shopping-registry.html?subview=obligations" class="toolbar-btn btn-back">
+        <span>←</span> Back to Interactive Registry
+      </a>
+      <button type="button" onclick="window.print()" class="toolbar-btn btn-print">
+        <span>🖨️</span> Print Run Sheet (Ctrl+P)
+      </button>
+    </div>
+  </div>
+
+  <div class="sheet-wrapper">
+    <!-- Header Banner -->
+    <header class="sheet-header">
+      <div class="sheet-title-area">
+        <h1>📜 SACRED LINEAGE PROTOCOLS — FAMILY OBLIGATIONS RUN SHEET</h1>
+        <p>Canonical Handover Register (Vidhi Dayitva / Bhara / Sara) • Sree & Krushna Hindu Vivaha • Bhubaneswar, Odisha</p>
+      </div>
+      <div class="sheet-meta-pills no-print">
+        <div class="stat-pill">Total: <strong>49</strong></div>
+        <div class="stat-pill">Bride Side: <strong>23</strong></div>
+        <div class="stat-pill">Groom Side: <strong>21</strong></div>
+        <div class="stat-pill">Unresolved: <strong>8</strong></div>
+      </div>
+    </header>
+
+    <main>
+
+      <!-- Milestone: EVT-001 -->
+      <section class="milestone-block">
+        <div class="milestone-header">
+          <span>💍 EVT-001: Nirbandha (Engagement Ceremony)</span>
+          <span class="milestone-header-sub">15 Customary Lineage Handovers</span>
+        </div>
+        <table class="run-sheet-table">
+          <thead>
+            <tr>
+              <th class="col-code">Code</th>
+              <th class="col-dir">Direction</th>
+              <th class="col-title">Customary Title &amp; Description</th>
+              <th class="col-cat">Category</th>
+              <th class="col-specs">Items / Specifications</th>
+              <th class="col-cash">Cash / Cost</th>
+              <th class="col-trs">Sourced Via</th>
+              <th class="col-verif">Verif</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td class="col-code"><strong>OBL-001</strong></td>
+              <td class="col-dir dir-bride">Bride ⟶ Groom</td>
+              <td class="col-title">
+                <strong>Nirbandha Mudi (Bride ⟶ Groom)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Ceremonial Engagement Ring presented by Bride to Groom</div>
+              </td>
+              <td class="col-cat"><code>gold_silver</code></td>
+              <td class="col-specs">• 1 pcs Gold Engagement Ring for Groom</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-EG-01</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-002</strong></td>
+              <td class="col-dir dir-bride">Bride ⟶ Groom</td>
+              <td class="col-title">
+                <strong>Groom's Engagement Shirt + Pant</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Formal / Festive attire for Groom presented by Bride's Family</div>
+              </td>
+              <td class="col-cat"><code>attire</code></td>
+              <td class="col-specs">• 1 set Festive Trouser + Shirt Set</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-EG-03</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-003</strong></td>
+              <td class="col-dir dir-bride">Bride ⟶ Groom</td>
+              <td class="col-title">
+                <strong>Nirbandha Saree for Groom's Mom</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Respect Silk Saree presented by Bride's Family to Groom's Mother</div>
+              </td>
+              <td class="col-cat"><code>attire</code></td>
+              <td class="col-specs">• 1 pcs Handloom Pure Silk Saree (Sambalpuri/Bomkai)</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-SA-01</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-004</strong></td>
+              <td class="col-dir dir-bride">Bride ⟶ Groom</td>
+              <td class="col-title">
+                <strong>Nirbandha Kurta/Shirt + Pant for Groom's Dad</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Formal respect outfit presented by Bride's Family to Groom's Father</div>
+              </td>
+              <td class="col-cat"><code>attire</code></td>
+              <td class="col-specs">• 1 set Silk Kurta-Pajama / Raymond Suiting Length</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-SA-02</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-005</strong></td>
+              <td class="col-dir dir-bride">Bride ⟶ Groom</td>
+              <td class="col-title">
+                <strong>Dress/Saree for Groom's Didi &amp; Tiju</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Festive outfits presented by Bride's Family to Groom's Sister and Brother-in-Law</div>
+              </td>
+              <td class="col-cat"><code>composite_bundle</code></td>
+              <td class="col-specs">• 1 pcs Festive Saree for Didi<br/>• 1 set Kurta / Shirt Set for Tiju</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-SA-04</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-006</strong></td>
+              <td class="col-dir dir-bride">Bride ⟶ Groom</td>
+              <td class="col-title">
+                <strong>Dress for Bacha Party</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Festive clothing for nieces/nephews attending from Groom's extended family</div>
+              </td>
+              <td class="col-cat"><code>attire</code></td>
+              <td class="col-specs">• 1 sets Kids Festive Wear Sets</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>Direct</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-007</strong></td>
+              <td class="col-dir dir-bride">Bride ⟶ Groom</td>
+              <td class="col-title">
+                <strong>5 Varieties of Sweets (Bride ⟶ Groom)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Traditional Odia sweet hampers presented by Bride's Family</div>
+              </td>
+              <td class="col-cat"><code>edible_hospitality</code></td>
+              <td class="col-specs">• 5 boxes 5 Distinct Odia Sweet Trays (Chhena Poda, Rasagola, etc.)</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-SA-06</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-008</strong></td>
+              <td class="col-dir dir-groom">Groom ⟶ Bride</td>
+              <td class="col-title">
+                <strong>Nirbandha Mudi (Groom ⟶ Bride)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Ceremonial Engagement Ring presented by Groom to Bride</div>
+              </td>
+              <td class="col-cat"><code>gold_silver</code></td>
+              <td class="col-specs">• 1 pcs Hallmarked Gold/Diamond Engagement Ring for Bride</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-EG-01</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-009</strong></td>
+              <td class="col-dir dir-groom">Groom ⟶ Bride</td>
+              <td class="col-title">
+                <strong>Bridal Engagement Lehenga + Blouse</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Ceremonial Engagement Outfit presented by Groom's Family to Bride</div>
+              </td>
+              <td class="col-cat"><code>attire</code></td>
+              <td class="col-specs">• 1 set Designer Bridal Engagement Lehenga & Blouse</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-EG-02</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-010</strong></td>
+              <td class="col-dir dir-groom">Groom ⟶ Bride</td>
+              <td class="col-title">
+                <strong>Engagement Trolley Presentation</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Formal presentation luggage trolley containing bride's trousseau items</div>
+              </td>
+              <td class="col-cat"><code>logistics</code></td>
+              <td class="col-specs">• 1 pcs Premium Hard-case Presentation Trolley</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>Direct</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-011</strong></td>
+              <td class="col-dir dir-groom">Groom ⟶ Bride</td>
+              <td class="col-title">
+                <strong>Sweets, Coconut &amp; Banana Kandhi Hamper</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Auspicious food basket containing 5 varieties of sweets, whole coconuts, and banana cluster</div>
+              </td>
+              <td class="col-cat"><code>composite_bundle</code></td>
+              <td class="col-specs">• 5 boxes 5 Varieties Sweets<br/>• 5 pcs Sacred Coconuts<br/>• 1 stem Auspicious Banana Kandhi (Whole Stem)</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-SA-06</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-012</strong></td>
+              <td class="col-dir dir-groom">Groom ⟶ Bride</td>
+              <td class="col-title">
+                <strong>Nirbandha Phula (Floral Garlands)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Ceremonial floral garlands for Engagement</div>
+              </td>
+              <td class="col-cat"><code>ceremonial_token</code></td>
+              <td class="col-specs">• 2 pairs Fresh Jasmine/Rose Garlands</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>Direct</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-013</strong></td>
+              <td class="col-dir dir-groom">Groom ⟶ Bride</td>
+              <td class="col-title">
+                <strong>Nirbandha Desi Pana</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Traditional sweet betel preparation for welcoming guest party</div>
+              </td>
+              <td class="col-cat"><code>edible_hospitality</code></td>
+              <td class="col-specs">• 1 set Ceremonial Odia Desi Sweet Pana Hamper</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>Direct</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-014</strong></td>
+              <td class="col-dir dir-joint">Joint / In-Laws</td>
+              <td class="col-title">
+                <strong>Puri Jagannath Maha-Prasad</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Consecrated Nirmalya and Mahaprasad from Sri Jagannath Temple</div>
+              </td>
+              <td class="col-cat"><code>ceremonial_token</code></td>
+              <td class="col-specs">• 1 hamper Puri Jagannath Temple Mahaprasad & Nirmalya Packets</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>Direct</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-015</strong></td>
+              <td class="col-dir dir-joint">Joint / In-Laws</td>
+              <td class="col-title">
+                <strong>Nirbandha Non-Family Guest Honorarium (₹5,000/head)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Customary cash honorarium per non-family guest attending the engagement</div>
+              </td>
+              <td class="col-cat"><code>honorarium_cash</code></td>
+              <td class="col-specs">• 1 envelopes Cash Shagun Envelopes (₹5,000 / recipient)</td>
+              <td class="col-cash">₹5000</td>
+              <td class="col-trs"><code>Direct</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Milestone: EVT-002 -->
+      <section class="milestone-block">
+        <div class="milestone-header">
+          <span>🌿 EVT-002: Pua-Bhauni &amp; Mangan (Day 1 Pre-Wedding)</span>
+          <span class="milestone-header-sub">5 Customary Lineage Handovers</span>
+        </div>
+        <table class="run-sheet-table">
+          <thead>
+            <tr>
+              <th class="col-code">Code</th>
+              <th class="col-dir">Direction</th>
+              <th class="col-title">Customary Title &amp; Description</th>
+              <th class="col-cat">Category</th>
+              <th class="col-specs">Items / Specifications</th>
+              <th class="col-cash">Cash / Cost</th>
+              <th class="col-trs">Sourced Via</th>
+              <th class="col-verif">Verif</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td class="col-code"><strong>OBL-016</strong></td>
+              <td class="col-dir dir-groom">Groom ⟶ Bride</td>
+              <td class="col-title">
+                <strong>Gua/Haldi Basa Saree</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Auspicious yellow handloom silk saree presented by Groom's family for Bride's Haldi bath</div>
+              </td>
+              <td class="col-cat"><code>attire</code></td>
+              <td class="col-specs">• 1 pcs Yellow Cotton-Silk Haldi Saree</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-BR-03</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-017</strong></td>
+              <td class="col-dir dir-groom">Groom ⟶ Bride</td>
+              <td class="col-title">
+                <strong>Gua/Haldi Basa Makeup &amp; Shringar</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Bridal cosmetics and beauty styling support provided by Groom's family</div>
+              </td>
+              <td class="col-cat"><code>service</code></td>
+              <td class="col-specs">• 1 kit Shringar Cosmetics Kit & Mehendi/Makeup Artist Support</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-SA-05</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-018</strong></td>
+              <td class="col-dir dir-groom">Groom ⟶ Bride</td>
+              <td class="col-title">
+                <strong>Haldi Basa Sacred Samagri (Coconut, Pana, Gua, Haldi)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Ritual offerings presented by Groom's family for the Bride's auspicious sanctification</div>
+              </td>
+              <td class="col-cat"><code>composite_bundle</code></td>
+              <td class="col-specs">• 5 pcs Sacred Coconuts (5 pcs)<br/>• 1 set Desi Sweet Pana Hamper<br/>• 1 kg Raw Betel Nuts (Gua)<br/>• 1 kg Pure Consecrated Turmeric Roots (Haldi)</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>Direct</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-019</strong></td>
+              <td class="col-dir dir-bride">Bride ⟶ Groom</td>
+              <td class="col-title">
+                <strong>Bandhu Daksa (Pana, Gua)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Formal respect offerings presented by Bride's Family to Groom's Father</div>
+              </td>
+              <td class="col-cat"><code>composite_bundle</code></td>
+              <td class="col-specs">• 1 pcs Ceremonial Silver/Brass Pana Batta<br/>• 1 pack Select Betel Nuts (Gua)</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>Direct</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-020</strong></td>
+              <td class="col-dir dir-bride">Bride ⟶ Groom</td>
+              <td class="col-title">
+                <strong>Bandhu Daksa (Dress for Daddy)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Festive respect attire presented by Bride's Family to Groom's Father</div>
+              </td>
+              <td class="col-cat"><code>attire</code></td>
+              <td class="col-specs">• 1 set Premium Silk Kurta-Dhoti Set or Formal Suiting Length</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-SA-02</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Milestone: EVT-004 -->
+      <section class="milestone-block">
+        <div class="milestone-header">
+          <span>🔥 EVT-004: Barat, Baranugam &amp; Mandap Vivaha (Day 2 Wedding)</span>
+          <span class="milestone-header-sub">14 Customary Lineage Handovers</span>
+        </div>
+        <table class="run-sheet-table">
+          <thead>
+            <tr>
+              <th class="col-code">Code</th>
+              <th class="col-dir">Direction</th>
+              <th class="col-title">Customary Title &amp; Description</th>
+              <th class="col-cat">Category</th>
+              <th class="col-specs">Items / Specifications</th>
+              <th class="col-cash">Cash / Cost</th>
+              <th class="col-trs">Sourced Via</th>
+              <th class="col-verif">Verif</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td class="col-code"><strong>OBL-021</strong></td>
+              <td class="col-dir dir-bride">Bride ⟶ Groom</td>
+              <td class="col-title">
+                <strong>Batabasana Groom Suit</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Tailored 3-piece executive suit presented by Bride's Family to Groom for entrance reception</div>
+              </td>
+              <td class="col-cat"><code>attire</code></td>
+              <td class="col-specs">• 1 set Raymond Made-to-Measure 3-Piece Suit & Shirt</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-GR-06</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-022</strong></td>
+              <td class="col-dir dir-bride">Bride ⟶ Groom</td>
+              <td class="col-title">
+                <strong>Batabasana Gold Chain</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">22K Hallmarked Gold Chain presented by Bride's Family to Groom</div>
+              </td>
+              <td class="col-cat"><code>gold_silver</code></td>
+              <td class="col-specs">• 1 pcs 22K Solid Gold Chain (~20-30g)</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>Direct</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-023</strong></td>
+              <td class="col-dir dir-bride">Bride ⟶ Groom</td>
+              <td class="col-title">
+                <strong>Batabasana Gold Mudi (Ring)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">22K Gold Ring presented by Bride's Family to Groom</div>
+              </td>
+              <td class="col-cat"><code>gold_silver</code></td>
+              <td class="col-specs">• 1 pcs 22K Gold Signet / Ceremonial Ring</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>Direct</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-024</strong></td>
+              <td class="col-dir dir-bride">Bride ⟶ Groom</td>
+              <td class="col-title">
+                <strong>Batabasana Gold Bracelet</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">22K Gold Bracelet presented by Bride's Family to Groom</div>
+              </td>
+              <td class="col-cat"><code>gold_silver</code></td>
+              <td class="col-specs">• 1 pcs 22K Gold Kada / Bracelet (~25-40g)</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>Direct</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-025</strong></td>
+              <td class="col-dir dir-groom">Groom ⟶ Bride</td>
+              <td class="col-title">
+                <strong>Ahiya Manduli (Saree for Mummy)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Groom Family's Auspicious Saree Presentation to Bride's Mother immediately after Batabarana</div>
+              </td>
+              <td class="col-cat"><code>attire</code></td>
+              <td class="col-specs">• 1 pcs Pure Bomkai / Berhampuri Pata Silk Saree with Zari Pallu</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-SA-01</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-026</strong></td>
+              <td class="col-dir dir-groom">Groom ⟶ Bride</td>
+              <td class="col-title">
+                <strong>Alta &amp; Sindoor in Mandap</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Sacred Alta and Sindoor presented by Groom's family for the Bride's Vedic Mandap rites</div>
+              </td>
+              <td class="col-cat"><code>ceremonial_token</code></td>
+              <td class="col-specs">• 1 bottle Pure Odia Ceremonial Alta Bottle<br/>• 1 pack Consecrated Vermilion (Sindoor Farua)</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-JW-09</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-027</strong></td>
+              <td class="col-dir dir-groom">Groom ⟶ Bride</td>
+              <td class="col-title">
+                <strong>Sala Bidha Gift</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Customary respect gift from Groom to Bride's Brother (Sala)</div>
+              </td>
+              <td class="col-cat"><code>attire</code></td>
+              <td class="col-specs">• 1 pcs Watch / Luxury Pen / Kurta Set</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-SA-03</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-028</strong></td>
+              <td class="col-dir dir-groom">Groom ⟶ Bride</td>
+              <td class="col-title">
+                <strong>Sali Hasta Ganthi Gift</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Customary teasing/honorarium gift from Groom to Bride's Sisters (Sali)</div>
+              </td>
+              <td class="col-cat"><code>attire</code></td>
+              <td class="col-specs">• 1 set Festive Sarees or Cash Envelopes for Sisters</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-SA-04</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-029</strong></td>
+              <td class="col-dir dir-groom">Groom ⟶ Bride</td>
+              <td class="col-title">
+                <strong>Samdhi Milan (Baba ⟶ Daddy)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Reciprocal ceremonial dress exchange from Groom's Father (Baba) to Bride's Father (Daddy)</div>
+              </td>
+              <td class="col-cat"><code>attire</code></td>
+              <td class="col-specs">• 1 set Raymond Super-120s Suiting Fabric / Tussar Dhoti-Kurta</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-SA-02</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-030</strong></td>
+              <td class="col-dir dir-bride">Bride ⟶ Groom</td>
+              <td class="col-title">
+                <strong>Samdhi Milan (Daddy ⟶ Baba)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Reciprocal ceremonial dress exchange from Bride's Father (Daddy) to Groom's Father (Baba)</div>
+              </td>
+              <td class="col-cat"><code>attire</code></td>
+              <td class="col-specs">• 1 set Pure Tussar Silk Dhoti-Kurta Set with Zari Border</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-SA-02</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-031</strong></td>
+              <td class="col-dir dir-groom">Groom ⟶ Bride</td>
+              <td class="col-title">
+                <strong>Sadu Basana (Laddoo, Dress)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Sweet hampers and respect dress presented by Groom's family to Bride's co-brothers/in-laws</div>
+              </td>
+              <td class="col-cat"><code>composite_bundle</code></td>
+              <td class="col-specs">• 1 box Special Motichoor / Besan Laddoo Hamper<br/>• 1 set Formal Shirt / Kurta Set for Sadu</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-SA-03</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-032</strong></td>
+              <td class="col-dir dir-groom">Groom ⟶ Bride</td>
+              <td class="col-title">
+                <strong>Bridal Alankar (Groom ⟶ Bride)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Precious gold jewellery gifted by Groom's family for the Mandap ornamentation</div>
+              </td>
+              <td class="col-cat"><code>gold_silver</code></td>
+              <td class="col-specs">• 1 set 22K Gold Temple Necklace / Sita Haar / Kadas</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-JW-01</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-033</strong></td>
+              <td class="col-dir dir-groom">Groom ⟶ Bride</td>
+              <td class="col-title">
+                <strong>Unidentified TDK Customary Item</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Item with blurred handwritten abbreviation 'TDK' flagged for verbal confirmation</div>
+              </td>
+              <td class="col-cat"><code>attire</code></td>
+              <td class="col-specs">• 1 pcs Handwritten abbreviation 'TDK' (Pending Oral Confirmation)</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>Direct</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-034</strong></td>
+              <td class="col-dir dir-bride">Bride ⟶ Groom</td>
+              <td class="col-title">
+                <strong>5 Sets Dresses (Bride ⟶ Groom)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Wardrobe suite of 5 festive attire sets gifted by Bride's family to the Groom</div>
+              </td>
+              <td class="col-cat"><code>composite_bundle</code></td>
+              <td class="col-specs">• 5 sets 5 Sets Festive Kurtas, Shirts, and Trousers</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-GR-07</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Milestone: EVT-005 -->
+      <section class="milestone-block">
+        <div class="milestone-header">
+          <span>🏛️ EVT-005: Bandapana, Gruha Prabesha &amp; Reception</span>
+          <span class="milestone-header-sub">1 Customary Lineage Handovers</span>
+        </div>
+        <table class="run-sheet-table">
+          <thead>
+            <tr>
+              <th class="col-code">Code</th>
+              <th class="col-dir">Direction</th>
+              <th class="col-title">Customary Title &amp; Description</th>
+              <th class="col-cat">Category</th>
+              <th class="col-specs">Items / Specifications</th>
+              <th class="col-cash">Cash / Cost</th>
+              <th class="col-trs">Sourced Via</th>
+              <th class="col-verif">Verif</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td class="col-code"><strong>OBL-047</strong></td>
+              <td class="col-dir dir-groom">Groom ⟶ Bride</td>
+              <td class="col-title">
+                <strong>Grand Evening Reception Saree / Lehenga</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Opulent evening attire presented by Groom's family for Bride's reception party</div>
+              </td>
+              <td class="col-cat"><code>attire</code></td>
+              <td class="col-specs">• 1 pcs Grand Kanjeevaram Silk / Royal Brocade Saree</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-BR-05</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Milestone: EVT-006 -->
+      <section class="milestone-block">
+        <div class="milestone-header">
+          <span>🎁 EVT-006: Samandhi Bhoji, Basara &amp; Reciprocal Handovers</span>
+          <span class="milestone-header-sub">12 Customary Lineage Handovers</span>
+        </div>
+        <table class="run-sheet-table">
+          <thead>
+            <tr>
+              <th class="col-code">Code</th>
+              <th class="col-dir">Direction</th>
+              <th class="col-title">Customary Title &amp; Description</th>
+              <th class="col-cat">Category</th>
+              <th class="col-specs">Items / Specifications</th>
+              <th class="col-cash">Cash / Cost</th>
+              <th class="col-trs">Sourced Via</th>
+              <th class="col-verif">Verif</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td class="col-code"><strong>OBL-035</strong></td>
+              <td class="col-dir dir-joint">Joint / In-Laws</td>
+              <td class="col-title">
+                <strong>Guin Chada Trolley</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Presentation trolley packed with bride's personal trousseau for welcoming at in-laws' home</div>
+              </td>
+              <td class="col-cat"><code>logistics</code></td>
+              <td class="col-specs">• 1 pcs Hard-case Travel Trolley with Linens and Toiletries</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>Direct</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-036</strong></td>
+              <td class="col-dir dir-bride">Bride ⟶ Groom</td>
+              <td class="col-title">
+                <strong>Bahu Daksa (Dress for Devas)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Respect shirts and trousers presented by Bride's family to the Groom's younger brothers/cousins</div>
+              </td>
+              <td class="col-cat"><code>composite_bundle</code></td>
+              <td class="col-specs">• 1 sets Festive Shirts and Kurtas for Devas</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-SA-03</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-037</strong></td>
+              <td class="col-dir dir-joint">Joint / In-Laws</td>
+              <td class="col-title">
+                <strong>Bahu Bandhapana (2 Sarees)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Two auspicious handloom sarees for the new bride's formal welcome and ceremonial blessing</div>
+              </td>
+              <td class="col-cat"><code>attire</code></td>
+              <td class="col-specs">• 2 pcs 2 Traditional Odisha Silk Sarees (Sambalpuri / Khandua)</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-BR-07</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-038</strong></td>
+              <td class="col-dir dir-bride">Bride ⟶ Groom</td>
+              <td class="col-title">
+                <strong>Nananda Putuli (Gold Component)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Traditional gift package from Bride to Groom's Sisters — Gold Component</div>
+              </td>
+              <td class="col-cat"><code>gold_silver</code></td>
+              <td class="col-specs">• 2 pcs Gold Rings / Pendants for 2 Sisters (Weight TBD)</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>Direct</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-039</strong></td>
+              <td class="col-dir dir-bride">Bride ⟶ Groom</td>
+              <td class="col-title">
+                <strong>Nananda Putuli (Saree/Dress Sets × 2)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Traditional gift package from Bride to Groom's Sisters — Attire Component</div>
+              </td>
+              <td class="col-cat"><code>attire</code></td>
+              <td class="col-specs">• 2 pcs 2 Festive Silk Sarees / Designer Suits</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-SA-04</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-040</strong></td>
+              <td class="col-dir dir-bride">Bride ⟶ Groom</td>
+              <td class="col-title">
+                <strong>Nananda Putuli (Luggage Trolleys × 2)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Traditional gift package from Bride to Groom's Sisters — Trolley Component</div>
+              </td>
+              <td class="col-cat"><code>logistics</code></td>
+              <td class="col-specs">• 2 pcs 2 Brand Hard-Case Luggage Trolleys</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>Direct</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-041</strong></td>
+              <td class="col-dir dir-groom">Groom ⟶ Bride</td>
+              <td class="col-title">
+                <strong>Chaturthi Huma Saree Set</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Sacred fire-ritual handloom saree gifted by Groom's family for Chauthi Puja havan</div>
+              </td>
+              <td class="col-cat"><code>attire</code></td>
+              <td class="col-specs">• 1 pcs Nuapatna Khandua Pata / Cotton-Silk Saree</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-OD-01</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-042</strong></td>
+              <td class="col-dir dir-bride">Bride ⟶ Groom</td>
+              <td class="col-title">
+                <strong>Chaturthi Huma Dhoti + Kurta</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Sacred unstitched Tussar silk Dhoti-Kurta presented by Bride's family for Groom's Chauthi Havan</div>
+              </td>
+              <td class="col-cat"><code>attire</code></td>
+              <td class="col-specs">• 1 set Pure Tussar Silk Dhoti & Kurta Set</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-OD-04</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-043</strong></td>
+              <td class="col-dir dir-groom">Groom ⟶ Bride</td>
+              <td class="col-title">
+                <strong>Huma Bali Utheibaku (Dress for Brother-in-Law)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Customary honorarium attire from Groom to Bride's brother for dismantling sacred fire altar</div>
+              </td>
+              <td class="col-cat"><code>attire</code></td>
+              <td class="col-specs">• 1 set Festive Kurta-Pajama or Casual Shirt/Trouser Set</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-SA-03</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-044</strong></td>
+              <td class="col-dir dir-bride">Bride ⟶ Groom</td>
+              <td class="col-title">
+                <strong>Uluguna Customary Items</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Items physically struck out in source sheets preserved with redacted status</div>
+              </td>
+              <td class="col-cat"><code>composite_bundle</code></td>
+              <td class="col-specs">• 1 set Preserved struck-out line item (Cancelled/Redacted)</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>Direct</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-045</strong></td>
+              <td class="col-dir dir-bride">Bride ⟶ Groom</td>
+              <td class="col-title">
+                <strong>Family Pack Bundles (6 Recipient Units)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Comprehensive family pack gifting from Bride's family to 6 recipient units of Groom's family</div>
+              </td>
+              <td class="col-cat"><code>composite_bundle</code></td>
+              <td class="col-specs">• 6 hampers 6 Saree & Suiting Gift Hampers</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>TRS-SA-04</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-046</strong></td>
+              <td class="col-dir dir-joint">Joint / In-Laws</td>
+              <td class="col-title">
+                <strong>Kutha Madani Trolley Presentation</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Second trousseau presentation trolley from Bride's family for the new home setup</div>
+              </td>
+              <td class="col-cat"><code>logistics</code></td>
+              <td class="col-specs">• 1 pcs Hard-case Travel Luggage Trolley</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>Direct</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Milestone: POST_WEDDING -->
+      <section class="milestone-block">
+        <div class="milestone-header">
+          <span>🐟 POST_WEDDING: Post-Wedding Reciprocals &amp; Feasts</span>
+          <span class="milestone-header-sub">2 Customary Lineage Handovers</span>
+        </div>
+        <table class="run-sheet-table">
+          <thead>
+            <tr>
+              <th class="col-code">Code</th>
+              <th class="col-dir">Direction</th>
+              <th class="col-title">Customary Title &amp; Description</th>
+              <th class="col-cat">Category</th>
+              <th class="col-specs">Items / Specifications</th>
+              <th class="col-cash">Cash / Cost</th>
+              <th class="col-trs">Sourced Via</th>
+              <th class="col-verif">Verif</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td class="col-code"><strong>OBL-048</strong></td>
+              <td class="col-dir dir-groom">Groom ⟶ Bride</td>
+              <td class="col-title">
+                <strong>Saga Macha Feast Hamper (Groom ⟶ Bride)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Customary fresh fish and greens feast hamper gifted by Groom's family for Astamangala</div>
+              </td>
+              <td class="col-cat"><code>edible_hospitality</code></td>
+              <td class="col-specs">• 1 hamper Fresh River Fish (Rohu/Bhakura) & Auspicious Greens Hamper</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>Direct</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+            <tr>
+              <td class="col-code"><strong>OBL-049</strong></td>
+              <td class="col-dir dir-bride">Bride ⟶ Groom</td>
+              <td class="col-title">
+                <strong>Saga &amp; Macha Return Feast (Bride ⟶ Groom)</strong>
+                <div style="font-size: 9.5px; color: #4b5563; margin-top: 2px;">Reciprocal auspicious greens and fish feast presented by Bride's family for Astamangala</div>
+              </td>
+              <td class="col-cat"><code>edible_hospitality</code></td>
+              <td class="col-specs">• 1 hamper Reciprocal Fresh Fish & Auspicious Greens Feast Hamper</td>
+              <td class="col-cash">—</td>
+              <td class="col-trs"><code>Direct</code></td>
+              <td class="col-verif"><span class="check-box-square"></span></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </section>
+
+    </main>
+
+    <!-- Sign-off Block for Family Coordinators -->
+    <footer class="signoff-footer">
+      <div class="signoff-box">
+        Bride's Family Representative<br/>
+        (Signature &amp; Date)
+      </div>
+      <div class="signoff-box">
+        Groom's Family Representative<br/>
+        (Signature &amp; Date)
+      </div>
+      <div class="signoff-box">
+        Lead Event / Ritual Coordinator<br/>
+        (Handover Seal &amp; Date)
+      </div>
+    </footer>
+  </div>
+
+</body>
+</html>

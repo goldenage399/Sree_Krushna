@@ -28,6 +28,10 @@
     let activeObligationFilter = 'all';
     let activeObligationEvent = 'all';
     let obligationSearchQuery = '';
+    let activeObligationLayout = 'cards';
+    try {
+      activeObligationLayout = localStorage.getItem('sk_obligation_layout') || 'cards';
+    } catch (e) {}
 
     function getObligationsList() {
       if (window.FAMILY_OBLIGATIONS_DATA && Array.isArray(window.FAMILY_OBLIGATIONS_DATA.obligations)) {
@@ -246,7 +250,11 @@
       });
 
       if (targetView === 'obligations') {
-        renderObligations();
+        if (activeObligationLayout === 'table') {
+          renderObligationsTable();
+        } else {
+          renderObligations();
+        }
       }
 
       // Synchronize URL query state if on catalog view
@@ -3689,22 +3697,18 @@
     // CUSTOMARY FAMILY OBLIGATIONS (OBL-001 to OBL-049) CONTROLLER ENGINE
     // Standard: STD-FAMILY-OBLIGATION-001 | AC-DEC-2026-061 / AC-DEC-2026-062
     // ========================================================================
-    function renderObligations() {
-      const container = document.getElementById('obligationsCardsContainer');
-      if (!container) return;
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
 
-      const obls = getObligationsList();
-      if (!obls || obls.length === 0) {
-        container.innerHTML = `
-          <div style="text-align: center; padding: 40px; color: var(--shop-text-muted); background: var(--shop-surface); border-radius: var(--shop-radius-md);">
-            No obligation records found in data layer (js/obligations-data.js).
-          </div>
-        `;
-        return;
-      }
-
-      // Update KPIs if elements exist
+    function updateObligationKpis() {
       const stats = (window.FAMILY_OBLIGATIONS_DATA && window.FAMILY_OBLIGATIONS_DATA.stats) || {};
+      const obls = getObligationsList();
       const elTotal = document.getElementById('oblKpiTotal');
       const elBride = document.getElementById('oblKpiBride');
       const elGroom = document.getElementById('oblKpiGroom');
@@ -3713,10 +3717,15 @@
       if (elBride) elBride.textContent = (stats.by_direction && (stats.by_direction.bride_to_groom + (stats.by_direction.joint || 0) + (stats.by_direction.external || 0))) || 27;
       if (elGroom) elGroom.textContent = (stats.by_direction && stats.by_direction.groom_to_bride) || 21;
       if (elUnresolved) elUnresolved.textContent = stats.unresolved_count || 8;
+    }
+
+    function getFilteredObligations() {
+      const obls = getObligationsList();
+      if (!obls || obls.length === 0) return [];
 
       const q = (obligationSearchQuery || '').toLowerCase().trim();
 
-      const filtered = obls.filter(o => {
+      return obls.filter(o => {
         // Filter by Event Milestone
         if (activeObligationEvent !== 'all' && o.event_ref !== activeObligationEvent) {
           return false;
@@ -3760,6 +3769,24 @@
 
         return text.includes(q);
       });
+    }
+
+    function renderObligations() {
+      const container = document.getElementById('obligationsCardsContainer');
+      if (!container) return;
+
+      const obls = getObligationsList();
+      if (!obls || obls.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 40px; color: var(--shop-text-muted); background: var(--shop-surface); border-radius: var(--shop-radius-md);">
+            No obligation records found in data layer (js/obligations-data.js).
+          </div>
+        `;
+        return;
+      }
+
+      updateObligationKpis();
+      const filtered = getFilteredObligations();
 
       if (filtered.length === 0) {
         container.innerHTML = `
@@ -4011,9 +4038,140 @@
     }
     window.shareAllObligationsWhatsApp = shareAllObligationsWhatsApp;
 
+    function renderObligationsTable() {
+      const tableContent = document.getElementById('obligationsTableContent');
+      if (!tableContent) return;
+
+      updateObligationKpis();
+      const filtered = getFilteredObligations();
+      if (filtered.length === 0) {
+        tableContent.innerHTML = `
+          <div style="text-align: center; padding: 40px; color: var(--shop-text-muted); background: var(--shop-surface); border-radius: var(--shop-radius-md);">
+            No customary obligations match the active filter or search query.
+          </div>
+        `;
+        return;
+      }
+
+      const milestoneMap = {
+        'EVT-001': 'EVT-001: Nirbandha (Engagement Ceremony)',
+        'EVT-002': 'EVT-002: Pua-Bhauni, Mangan & Diyas (Day 1)',
+        'EVT-003': 'EVT-003: Snana & Haldi (Day 2 Morning)',
+        'EVT-004': 'EVT-004: Barat, Baranugam & Mandap Vivaha (Day 2 Wedding)',
+        'EVT-005': 'EVT-005: Bandapana, Gruha Prabesha & Kaudi Khela (Day 3)',
+        'EVT-006': 'EVT-006: Samandhi Bhoji & Astamangala (Day 4/8 Culmination)',
+        'POST_WEDDING': 'POST_WEDDING: Post-Wedding Reciprocals'
+      };
+
+      const grouped = {};
+      filtered.forEach(o => {
+        const ev = o.event_ref || 'OTHER';
+        if (!grouped[ev]) grouped[ev] = [];
+        grouped[ev].push(o);
+      });
+
+      const eventOrder = ['EVT-001', 'EVT-002', 'EVT-003', 'EVT-004', 'EVT-005', 'EVT-006', 'POST_WEDDING', 'OTHER'];
+      const activeEvents = eventOrder.filter(ev => grouped[ev] && grouped[ev].length > 0);
+
+      let html = '';
+      activeEvents.forEach(ev => {
+        const groupTitle = milestoneMap[ev] || ev;
+        const groupObls = grouped[ev];
+
+        html += `
+          <div class="obl-table-milestone-block">
+            <div class="obl-table-milestone-header">
+              <span>🗓️ ${escapeHtml(groupTitle)}</span>
+              <span class="obl-table-milestone-count">${groupObls.length} ${groupObls.length === 1 ? 'Obligation' : 'Obligations'}</span>
+            </div>
+            <table class="obl-data-table">
+              <thead>
+                <tr>
+                  <th style="width: 75px;">Code</th>
+                  <th style="width: 115px;">Direction</th>
+                  <th style="width: 220px;">Customary Title &amp; Description</th>
+                  <th style="width: 85px;">Category</th>
+                  <th>Items / Specifications</th>
+                  <th style="width: 85px; text-align: right;">Cash / Cost</th>
+                  <th style="width: 90px; text-align: center;">Sourced Via</th>
+                  <th style="width: 50px; text-align: center;">Verif</th>
+                </tr>
+              </thead>
+              <tbody>
+        `;
+
+        groupObls.forEach(o => {
+          const dirClass = o.derived_direction === 'bride_to_groom' ? 'dir-bride' : (o.derived_direction === 'groom_to_bride' ? 'dir-groom' : 'dir-joint');
+          const dirLabel = o.derived_direction === 'bride_to_groom' ? 'Bride ⟶ Groom' : (o.derived_direction === 'groom_to_bride' ? 'Groom ⟶ Bride' : 'Joint / In-Laws');
+          const itemsText = (o.items || []).map(i => (i.quantity ? `${i.quantity} ${i.unit || ''} ` : '') + i.description).join('<br/>• ');
+          const cashText = o.financial_obligation && o.financial_obligation.is_monetary
+            ? `₹${o.financial_obligation.unit_amount_inr || o.financial_obligation.estimated_total_inr || 'TBD'}${o.financial_obligation.headcount ? '/head' : ''}`
+            : '—';
+          const trsRef = o.downstream_projections && o.downstream_projections.commercial_shopping_ref;
+          const trsHtml = trsRef
+            ? `<button type="button" class="shop-btn-sourced" onclick="window.navigateToShoppingItem('${trsRef}')" title="View Sourced Item ${trsRef}">🛍️ ${trsRef}</button>`
+            : '<span style="color: var(--shop-text-muted); font-size: 10px;">Direct</span>';
+
+          html += `
+            <tr id="table-row-${o.id}">
+              <td class="obl-td-code"><strong>${o.id}</strong></td>
+              <td class="obl-td-dir ${dirClass}">${dirLabel}</td>
+              <td class="obl-td-title">
+                <strong>${escapeHtml(o.customary_title)}</strong>
+                <div class="obl-subdesc">${escapeHtml(o.english_descriptor)}</div>
+              </td>
+              <td class="obl-td-cat"><code>${escapeHtml(o.category)}</code></td>
+              <td class="obl-td-specs">• ${itemsText}</td>
+              <td class="obl-td-cash">${cashText}</td>
+              <td class="obl-td-trs">${trsHtml}</td>
+              <td class="obl-td-verif"><span class="obl-verif-box"></span></td>
+            </tr>
+          `;
+        });
+
+        html += `
+              </tbody>
+            </table>
+          </div>
+        `;
+      });
+
+      tableContent.innerHTML = html;
+    }
+    window.renderObligationsTable = renderObligationsTable;
+
+    function setObligationLayoutMode(mode) {
+      activeObligationLayout = (mode === 'table') ? 'table' : 'cards';
+      try {
+        localStorage.setItem('sk_obligation_layout', activeObligationLayout);
+      } catch (e) {}
+
+      const btnCards = document.getElementById('btnOblLayoutCards');
+      const btnTable = document.getElementById('btnOblLayoutTable');
+      if (btnCards) btnCards.classList.toggle('active', activeObligationLayout === 'cards');
+      if (btnTable) btnTable.classList.toggle('active', activeObligationLayout === 'table');
+
+      const cardsContainer = document.getElementById('obligationsCardsContainer');
+      const tableContainer = document.getElementById('obligationsTableContainer');
+
+      if (activeObligationLayout === 'table') {
+        if (cardsContainer) cardsContainer.style.display = 'none';
+        if (tableContainer) tableContainer.style.display = 'block';
+        renderObligationsTable();
+      } else {
+        if (cardsContainer) cardsContainer.style.display = 'block';
+        if (tableContainer) tableContainer.style.display = 'none';
+        renderObligations();
+      }
+    }
+    window.setObligationLayoutMode = setObligationLayoutMode;
+
     function printObligationsSheet() {
       setCatalogSubView('obligations');
-      window.print();
+      setObligationLayoutMode('table');
+      setTimeout(() => {
+        window.print();
+      }, 100);
     }
     window.printObligationsSheet = printObligationsSheet;
 
@@ -4022,17 +4180,29 @@
       document.querySelectorAll('.shop-obl-pill').forEach(btn => {
         btn.classList.toggle('active', btn.getAttribute('data-obl-filter') === filter);
       });
-      renderObligations();
+      if (activeObligationLayout === 'table') {
+        renderObligationsTable();
+      } else {
+        renderObligations();
+      }
     };
 
     window.setObligationEventFilter = function(evt) {
       activeObligationEvent = evt;
-      renderObligations();
+      if (activeObligationLayout === 'table') {
+        renderObligationsTable();
+      } else {
+        renderObligations();
+      }
     };
 
     window.onObligationSearch = function(query) {
       obligationSearchQuery = query;
-      renderObligations();
+      if (activeObligationLayout === 'table') {
+        renderObligationsTable();
+      } else {
+        renderObligations();
+      }
     };
 
     // Initialize & Re-render API
@@ -4042,7 +4212,11 @@
       renderClusters();
       renderStores();
       renderItems();
-      renderObligations();
+      if (activeObligationLayout === 'table') {
+        setObligationLayoutMode('table');
+      } else {
+        setObligationLayoutMode('cards');
+      }
       if (typeof window.updateSurveyUI === 'function') {
         window.updateSurveyUI();
       }

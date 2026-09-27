@@ -95,11 +95,23 @@
           <option value="POST_WEDDING">POST_WEDDING: Post-Wedding Reciprocals</option>
         </select>
       </div>
+      <div class="table-layout-switcher" id="oblLayoutSwitcher" style="display: inline-flex; align-items: center; gap: 4px; background: rgba(15, 23, 42, 0.6); padding: 4px 6px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+        <span class="group-switcher-label">Layout:</span>
+        <button type="button" class="table-group-btn active" id="btnOblLayoutCards" data-layout="cards" onclick="window.setObligationLayoutMode('cards')" title="Visual Card Grid">🗂️ Cards</button>
+        <button type="button" class="table-group-btn" id="btnOblLayoutTable" data-layout="table" onclick="window.setObligationLayoutMode('table')" title="High-Density Spreadsheet Table">📊 Table</button>
+      </div>
     </div>
   </div>
 
   <!-- Dynamic Obligations Container (Milestones & Cards Rendered Here) -->
   <div class="shop-obl-container" id="obligationsCardsContainer">
     <!-- Populated dynamically by window.renderObligations() in controller.js -->
+  </div>
+
+  <!-- High-Density Spreadsheet Table Container (Table Mode Rendered Here) -->
+  <div class="shop-obl-table-container" id="obligationsTableContainer" style="display: none;">
+    <div id="obligationsTableContent">
+      <!-- Populated dynamically by window.renderObligationsTable() in controller.js -->
+    </div>
   </div>
 </section>

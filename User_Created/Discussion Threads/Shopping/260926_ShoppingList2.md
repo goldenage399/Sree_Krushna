@@ -2624,24 +2624,28 @@ The purpose of this directive is to convert the Architecture Council ruling into
 The proposed Family Obligation model (`OBL-###`) has been evaluated across all 14 architectural dimensions to eliminate contradictions, redundancies, and conceptual leakage:
 
 ### 1.1 Responsibility Boundary
-* **The Invariant**: `OBL-###` models the **social and cultural covenant** (*who owes what to whom under which ritual milestone*). It owns the obligation identity, elder agreement, and ceremonial handover verification.
-* **Non-Duplication Guard**: `OBL-###` does NOT hold commercial catalogue attributes (store SKU, fabric specs, fitting trials, tailor notes) or financial transaction vouchers (bank UTR, invoice receipt). Those belong strictly to [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](file:///d:/GitHub_Repo/Sree_Krushna/04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) (`TRS-###`) and [`06_FINANCE_COMMERCIALS/ledger/`](file:///d:/GitHub_Repo/Sree_Krushna/06_FINANCE_COMMERCIALS/ledger/) (`PAY-###`).
+
+- **The Invariant**: `OBL-###` models the **social and cultural covenant** (_who owes what to whom under which ritual milestone_). It owns the obligation identity, elder agreement, and ceremonial handover verification.
+- **Non-Duplication Guard**: `OBL-###` does NOT hold commercial catalogue attributes (store SKU, fabric specs, fitting trials, tailor notes) or financial transaction vouchers (bank UTR, invoice receipt). Those belong strictly to [`04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl`](file:///d:/GitHub_Repo/Sree_Krushna/04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl) (`TRS-###`) and [`06_FINANCE_COMMERCIALS/ledger/`](file:///d:/GitHub_Repo/Sree_Krushna/06_FINANCE_COMMERCIALS/ledger/) (`PAY-###`).
 
 ### 1.2 Relationship to Events, Rituals & Customs
-* **Event Anchoring (`event_id`)**: Mandatory. Every obligation belongs to a temporal milestone in [`01_TIMELINE_EVENTS/`](file:///d:/GitHub_Repo/Sree_Krushna/01_TIMELINE_EVENTS/) (`EVT-001` Nirbandha, `EVT-002` Pre-Wedding Rites, `EVT-004` Vivaha, `EVT-005` Reception, etc.).
-* **Ritual Context (`ritual_name` vs `ritual_id`)**:
-  - `ritual_name` (string, mandatory): The cultural name of the rite as practiced by the families (e.g. *Batabasana*, *Bandhu Daksa*, *Sadu Basana*, *Samdhi Milan*, *Nananda Putuli*).
+
+- **Event Anchoring (`event_id`)**: Mandatory. Every obligation belongs to a temporal milestone in [`01_TIMELINE_EVENTS/`](file:///d:/GitHub_Repo/Sree_Krushna/01_TIMELINE_EVENTS/) (`EVT-001` Nirbandha, `EVT-002` Pre-Wedding Rites, `EVT-004` Vivaha, `EVT-005` Reception, etc.).
+- **Ritual Context (`ritual_name` vs `ritual_id`)**:
+  - `ritual_name` (string, mandatory): The cultural name of the rite as practiced by the families (e.g. _Batabasana_, _Bandhu Daksa_, _Sadu Basana_, _Samdhi Milan_, _Nananda Putuli_).
   - `ritual_id` (string, optional / nullable): Only populated if a formal Vedic liturgical specification exists under [`02_RITUALS_CULTURE/specs/RIT-###.md`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/specs/).
   - **Resolution**: Family customs are valid cultural covenants even without a formal Vedic `RIT-###` spec. We do NOT invent artificial `RIT-###` files for folk/family traditions.
 
 ### 1.3 Contradiction-Free Actor & Recipient Model
-* `obligor.family`: `Bride | Groom | Both` (The family bound by duty).
-* `recipient.family`: `Bride | Groom | Both | External` (The receiving side).
-* `direction`: **Strictly Derived** at read/compile time as `${obligor.family} -> ${recipient.family}`. Storing a raw direction string in YAML is prohibited.
-* `recipient.scope`: Exhaustive enum: `person | role_in_family | family_unit | cohort | dynamic_population`.
+
+- `obligor.family`: `Bride | Groom | Both` (The family bound by duty).
+- `recipient.family`: `Bride | Groom | Both | External` (The receiving side).
+- `direction`: **Strictly Derived** at read/compile time as `${obligor.family} -> ${recipient.family}`. Storing a raw direction string in YAML is prohibited.
+- `recipient.scope`: Exhaustive enum: `person | role_in_family | family_unit | cohort | dynamic_population`.
 
 ### 1.4 Reciprocal Exchange Coherence
-* Reciprocal rites (e.g. *Samdhi Milan*) are represented by **two atomic `OBL-###` records** linked by `exchange_cluster.cluster_id: "EXC-###"`. Each record maintains autonomous obligor ownership, budget, and procurement state.
+
+- Reciprocal rites (e.g. _Samdhi Milan_) are represented by **two atomic `OBL-###` records** linked by `exchange_cluster.cluster_id: "EXC-###"`. Each record maintains autonomous obligor ownership, budget, and procurement state.
 
 ---
 
@@ -2656,72 +2660,73 @@ The proposed Family Obligation model (`OBL-###`) has been evaluated across all 1
 ```yaml
 ---
 hub: "02_RITUALS_CULTURE/HUB.md"
-id: "OBL-###"                           # REQUIRED | Pattern: ^OBL-\d{3}$ | Unique primary key
-cultural_name: "String"                  # REQUIRED | Max 80 chars | Preserves family terminology
-structure: "atomic | composite_bundle"   # REQUIRED | Enum: atomic (1 line) | composite_bundle (>1 line)
-obligation_nature: "attire | jewellery | food_gift | ritual_material | cash_honorarium | logistics | service | multi_category"
-                                        # REQUIRED | Enum classification of primary payload
+id: "OBL-###" # REQUIRED | Pattern: ^OBL-\d{3}$ | Unique primary key
+cultural_name: "String" # REQUIRED | Max 80 chars | Preserves family terminology
+structure: "atomic | composite_bundle" # REQUIRED | Enum: atomic (1 line) | composite_bundle (>1 line)
+obligation_nature:
+  "attire | jewellery | food_gift | ritual_material | cash_honorarium | logistics | service | multi_category"
+  # REQUIRED | Enum classification of primary payload
 
 # Milestone Anchoring
-event_id: "EVT-###"                     # REQUIRED | Pattern: ^EVT-\d{3}$ | Must resolve in 01_TIMELINE_EVENTS/
-ritual_name: "String"                   # REQUIRED | Max 80 chars | Name of the rite/custom
-ritual_id: ""                           # OPTIONAL | Pattern: ^RIT-\d{3}$ | Nullable if custom has no Vedic spec
+event_id: "EVT-###" # REQUIRED | Pattern: ^EVT-\d{3}$ | Must resolve in 01_TIMELINE_EVENTS/
+ritual_name: "String" # REQUIRED | Max 80 chars | Name of the rite/custom
+ritual_id: "" # OPTIONAL | Pattern: ^RIT-\d{3}$ | Nullable if custom has no Vedic spec
 
 # Actor Model (Contradiction-Free)
 obligor:
-  family: "Bride | Groom | Both"        # REQUIRED | Enum: Bride | Groom | Both
-  household_id: "FAM-###"               # OPTIONAL | Foreign key to 03_PEOPLE_GUESTS/families/
-  lead_person_id: "PER-###"             # OPTIONAL | Foreign key to 03_PEOPLE_GUESTS/directory/
+  family: "Bride | Groom | Both" # REQUIRED | Enum: Bride | Groom | Both
+  household_id: "FAM-###" # OPTIONAL | Foreign key to 03_PEOPLE_GUESTS/families/
+  lead_person_id: "PER-###" # OPTIONAL | Foreign key to 03_PEOPLE_GUESTS/directory/
 
 recipient:
   scope: "person | role_in_family | family_unit | cohort | dynamic_population" # REQUIRED
-  family: "Bride | Groom | Both | External"                                    # REQUIRED
-  role_title: "String"                  # REQUIRED | e.g. "Groom", "Groom's Mother", "2 Didis", "BIL"
-  person_ids: []                        # OPTIONAL | Array of PER-### if specifically identified
-  eligibility_rule: ""                  # REQUIRED if scope == dynamic_population; else empty string
+  family: "Bride | Groom | Both | External" # REQUIRED
+  role_title: "String" # REQUIRED | e.g. "Groom", "Groom's Mother", "2 Didis", "BIL"
+  person_ids: [] # OPTIONAL | Array of PER-### if specifically identified
+  eligibility_rule: "" # REQUIRED if scope == dynamic_population; else empty string
 
 # Reciprocal Exchange Association
 exchange_cluster:
-  is_exchange: false                    # REQUIRED | Boolean
-  cluster_id: ""                        # REQUIRED if is_exchange == true (e.g. EXC-SAMDHI-MILAN)
-  peer_obligation_id: ""                # REQUIRED if is_exchange == true (points to reciprocal OBL)
-  synchronous_handover: false           # REQUIRED if is_exchange == true | Boolean
+  is_exchange: false # REQUIRED | Boolean
+  cluster_id: "" # REQUIRED if is_exchange == true (e.g. EXC-SAMDHI-MILAN)
+  peer_obligation_id: "" # REQUIRED if is_exchange == true (points to reciprocal OBL)
+  synchronous_handover: false # REQUIRED if is_exchange == true | Boolean
 
 # Line Items Specification
-line_items:                             # REQUIRED | Array (minimum 1 item)
-  - line_id: 1                          # REQUIRED | Integer >= 1 | Unique within this OBL
-    description: "String"               # REQUIRED | Item description
-    quantity: "String | Integer"        # REQUIRED | Exact number or "TBD" (Never guess)
+line_items: # REQUIRED | Array (minimum 1 item)
+  - line_id: 1 # REQUIRED | Integer >= 1 | Unique within this OBL
+    description: "String" # REQUIRED | Item description
+    quantity: "String | Integer" # REQUIRED | Exact number or "TBD" (Never guess)
     unit: "piece | set | tray | box | pair | gram | head | service" # REQUIRED | Enum
-    recipient_role: ""                  # OPTIONAL | Sub-recipient override (for composite_bundle)
+    recipient_role: "" # OPTIONAL | Sub-recipient override (for composite_bundle)
     spec_status: "Fully_Specified | TBD_Family_Choice | Source_Unclear | Source_Redacted | Pending_Family_Confirmation" # REQUIRED
     fulfillment_type: "shopping | samagri | asset | cash | logistics | catering | service" # REQUIRED
-    trs_id: ""                          # OPTIONAL | Pattern: ^TRS-[A-Z]{2}-\d{2}$ | Link to shopping catalogue
-    sam_id: ""                          # OPTIONAL | Pattern: ^SAM-\d{3}$ | Link to samagri checklist
-    ast_id: ""                          # OPTIONAL | Pattern: ^AST-\d{3}$ | Link to precious asset custody
-    notes: ""                           # OPTIONAL | Line-level notes
+    trs_id: "" # OPTIONAL | Pattern: ^TRS-[A-Z]{2}-\d{2}$ | Link to shopping catalogue
+    sam_id: "" # OPTIONAL | Pattern: ^SAM-\d{3}$ | Link to samagri checklist
+    ast_id: "" # OPTIONAL | Pattern: ^AST-\d{3}$ | Link to precious asset custody
+    notes: "" # OPTIONAL | Line-level notes
 
 # Cash Formula Block (Only populated if obligation_nature == cash_honorarium)
 cash_formula:
-  rate_per_person_inr: null             # OPTIONAL | Integer > 0 (null if not cash)
-  eligible_headcount: null              # OPTIONAL | Integer >= 0 (null if unknown)
-  projected_total_inr: null             # OPTIONAL | Integer (Computed dynamically: rate * headcount)
+  rate_per_person_inr: null # OPTIONAL | Integer > 0 (null if not cash)
+  eligible_headcount: null # OPTIONAL | Integer >= 0 (null if unknown)
+  projected_total_inr: null # OPTIONAL | Integer (Computed dynamically: rate * headcount)
   envelope_preparation_status: "Not_Applicable | Pending_Headcount | Staged | Disbursed"
 
 # Governance & Lifecycle State
 lifecycle_status: "Identified | Agreed | Procuring | Staged | Handed_Over | Waived" # REQUIRED
-handover_milestone: "String"            # REQUIRED | e.g. "Mandap Muhurtham", "Milni Entry", "Chauthi Morning"
-assigned_custodian_id: "PER-###"        # REQUIRED | Person responsible for physical custody & presentation
+handover_milestone: "String" # REQUIRED | e.g. "Mandap Muhurtham", "Milni Entry", "Chauthi Morning"
+assigned_custodian_id: "PER-###" # REQUIRED | Person responsible for physical custody & presentation
 
 # Sacred Source Provenance (Zero Silent Normalization)
 provenance:
-  source_sheet: "String"                # REQUIRED | e.g. "260926_ShoppingList2 (Page 1)"
-  source_verbatim_title: "String"       # REQUIRED | Exact heading from paper
-  source_verbatim_text: "String"        # REQUIRED | Exact item string verbatim
+  source_sheet: "String" # REQUIRED | e.g. "260926_ShoppingList2 (Page 1)"
+  source_verbatim_title: "String" # REQUIRED | Exact heading from paper
+  source_verbatim_text: "String" # REQUIRED | Exact item string verbatim
   source_language: "Odia | English | Odia-English Colloquial" # REQUIRED
-  confidence_score: "HIGH | MEDIUM | LOW | TBD"               # REQUIRED
-  family_verbal_confirmation_needed: false                   # REQUIRED | Boolean
-  notes: ""                             # OPTIONAL | Preserves elder oral context
+  confidence_score: "HIGH | MEDIUM | LOW | TBD" # REQUIRED
+  family_verbal_confirmation_needed: false # REQUIRED | Boolean
+  notes: "" # OPTIONAL | Preserves elder oral context
 ---
 ```
 
@@ -2759,7 +2764,8 @@ To prevent duplication and conceptual leakage, attribute ownership is strictly s
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
-**Anti-Duplication Proof**: If an obligation is for a *"Saree for Mom"*:
+**Anti-Duplication Proof**: If an obligation is for a _"Saree for Mom"_:
+
 - `OBL-###` states: Groom's Mother is owed 1 Silk Saree by Bride's Family, currently in `Procuring`.
 - `TRS-SA-01` states: Boyanika Sambalpuri Bomkai, ₹28,000–₹45,000, Trial scheduled with Mother.
 - `PAY-###` states: ₹32,000 paid to Boyanika via HDFC Card on 2026-10-05.
@@ -2771,24 +2777,26 @@ To prevent duplication and conceptual leakage, attribute ownership is strictly s
 
 When an obligation passes the `Agreed` gate, its line items project into downstream execution channels:
 
-| Fulfillment Type | Target Domain Entity | Projection Trigger | Source of Truth (SSOT) | Downstream Backlink | Handover Tracking |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **`shopping`** | `TRS-###` in `shopping_items.jsonl` | Item requires retail purchase (attire, jewellery, luggage). | `TRS-###` owns price/store/fit. | `TRS.obligation_id = OBL-###` | When `TRS.status == "Ready"`, `OBL.line_item` moves to Staged. |
-| **`samagri`** | `SAM-###` in `02_RITUALS_CULTURE/` | Item is a sacred consumable (Gua, Pana, Haldi, Sindoor). | `SAM-###` owns ritual prep. | `SAM.checklist_item.obl_id = OBL-###` | Checked off during Mandap setup by Vedic Purohit team. |
-| **`asset`** | `AST-###` in `04_PROCUREMENT_VENDORS/`| Item is gold/silver requiring locker security. | `AST-###` owns custody. | `AST.obligation_id = OBL-###` | Formally transferred to stage custodian 30 mins before muhurtham. |
-| **`cash`** | `cash_logistics.md` & `PAY-###` | Cash shagun or honorarium envelopes. | `cash_logistics.md` owns denominations. | `PAY.obligation_id = OBL-###` | Envelopes counted and sealed by Treasurer; handed over at desk. |
-| **`logistics`** | Run sheets & `VEN-###` | Physical presentation luggage, cars, trays. | `05_OPERATIONS_LOGISTICS/` | `RunSheet.obl_id = OBL-###` | Staged in bridal suite / green room with transport tag. |
-| **`service`** | `CTR-###` & `VDR-###` | Beauty parlour, makeup, mehendi artists. | `04_PROCUREMENT_VENDORS/` | `CTR.scope.obl_id = OBL-###` | Verified upon completion of service in green room. |
+| Fulfillment Type | Target Domain Entity                   | Projection Trigger                                          | Source of Truth (SSOT)                  | Downstream Backlink                   | Handover Tracking                                                 |
+| :--------------- | :------------------------------------- | :---------------------------------------------------------- | :-------------------------------------- | :------------------------------------ | :---------------------------------------------------------------- |
+| **`shopping`**   | `TRS-###` in `shopping_items.jsonl`    | Item requires retail purchase (attire, jewellery, luggage). | `TRS-###` owns price/store/fit.         | `TRS.obligation_id = OBL-###`         | When `TRS.status == "Ready"`, `OBL.line_item` moves to Staged.    |
+| **`samagri`**    | `SAM-###` in `02_RITUALS_CULTURE/`     | Item is a sacred consumable (Gua, Pana, Haldi, Sindoor).    | `SAM-###` owns ritual prep.             | `SAM.checklist_item.obl_id = OBL-###` | Checked off during Mandap setup by Vedic Purohit team.            |
+| **`asset`**      | `AST-###` in `04_PROCUREMENT_VENDORS/` | Item is gold/silver requiring locker security.              | `AST-###` owns custody.                 | `AST.obligation_id = OBL-###`         | Formally transferred to stage custodian 30 mins before muhurtham. |
+| **`cash`**       | `cash_logistics.md` & `PAY-###`        | Cash shagun or honorarium envelopes.                        | `cash_logistics.md` owns denominations. | `PAY.obligation_id = OBL-###`         | Envelopes counted and sealed by Treasurer; handed over at desk.   |
+| **`logistics`**  | Run sheets & `VEN-###`                 | Physical presentation luggage, cars, trays.                 | `05_OPERATIONS_LOGISTICS/`              | `RunSheet.obl_id = OBL-###`           | Staged in bridal suite / green room with transport tag.           |
+| **`service`**    | `CTR-###` & `VDR-###`                  | Beauty parlour, makeup, mehendi artists.                    | `04_PROCUREMENT_VENDORS/`               | `CTR.scope.obl_id = OBL-###`          | Verified upon completion of service in green room.                |
 
 ---
 
 ## 5. RECIPROCAL EXCHANGE VALIDATION (MANDATORY TEST: SAMDHI MILAN)
 
 ### Test Case: Samdhi Milan Dress Exchange
-* **Baba (Groom's Father)** presents a dress to **Daddy (Bride's Father)**.
-* **Daddy (Bride's Father)** presents a dress to **Baba (Groom's Father)**.
+
+- **Baba (Groom's Father)** presents a dress to **Daddy (Bride's Father)**.
+- **Daddy (Bride's Father)** presents a dress to **Baba (Groom's Father)**.
 
 ### Canonical Architectural Model:
+
 The system instantiates **two atomic records** grouped under `exchange_cluster_id: "EXC-001"`:
 
 ```yaml
@@ -2801,7 +2809,7 @@ event_id: "EVT-004"
 ritual_name: "Samdhi Milan"
 obligor:
   family: "Groom"
-  lead_person_id: "PER-005"  # Baba (Groom's Father)
+  lead_person_id: "PER-005" # Baba (Groom's Father)
 recipient:
   scope: "person"
   family: "Bride"
@@ -2833,7 +2841,7 @@ event_id: "EVT-004"
 ritual_name: "Samdhi Milan"
 obligor:
   family: "Bride"
-  lead_person_id: "PER-007"  # Daddy (Bride's Father)
+  lead_person_id: "PER-007" # Daddy (Bride's Father)
 recipient:
   scope: "person"
   family: "Groom"
@@ -2856,6 +2864,7 @@ lifecycle_status: "Agreed"
 ```
 
 ### Architectural Guarantees:
+
 1. **Zero Entity Explosion**: `EXC-001` is a virtual cluster index; it does NOT require a separate heavy schema file.
 2. **Autonomous Procurement**: Groom's side can purchase their gift at Raymond (`TRS-SA-02`), while Bride's side purchases at Kalamandir (`TRS-SA-03`) with completely decoupled budgets and timelines.
 3. **Synchronous Execution Gate**: At `GATE-02` (Mandap Milni), the run-sheet requires both `OBL-021.lifecycle_status == Staged` and `OBL-022.lifecycle_status == Staged` before the ceremony proceeds.
@@ -2865,9 +2874,10 @@ lifecycle_status: "Agreed"
 ## 6. COMPOSITE OBLIGATIONS (MANDATORY TEST: FAMILY PACK & NANANDA PUTULI)
 
 ### 6.1 Test Case: Family Pack (OBL-035)
-* **Cultural Context**: Post-wedding vastra presentation from Bride's Family to Groom's Core Family.
-* **Recipients**: Mom, Daddy, Didi 1, Didi 2, Tiju, Bacha Party.
-* **Structure**: `composite_bundle` with sub-recipient overrides in `line_items[]`:
+
+- **Cultural Context**: Post-wedding vastra presentation from Bride's Family to Groom's Core Family.
+- **Recipients**: Mom, Daddy, Didi 1, Didi 2, Tiju, Bacha Party.
+- **Structure**: `composite_bundle` with sub-recipient overrides in `line_items[]`:
 
 ```yaml
 id: "OBL-035"
@@ -2929,9 +2939,10 @@ line_items:
 ```
 
 ### 6.2 Test Case: Nananda Putuli (OBL-030)
-* **Recipients**: 2 Didis (Groom's Sisters).
-* **Payload**: Gold + Saree/Dress + Trolley.
-* **Demonstration of Multi-Category Line Items**:
+
+- **Recipients**: 2 Didis (Groom's Sisters).
+- **Payload**: Gold + Saree/Dress + Trolley.
+- **Demonstration of Multi-Category Line Items**:
 
 ```yaml
 id: "OBL-030"
@@ -2973,8 +2984,9 @@ line_items:
 ## 7. DYNAMIC CASH OBLIGATIONS (MANDATORY TEST: ₹5,000 / HEAD)
 
 ### Test Case: Nirbandha Guest Shagun Honorarium
-* **Obligation**: ₹5,000 per attending guest at Engagement, excluding bride/groom family members.
-* **Invariant**: **ZERO FABRICATED TOTALS**. Total is null until RSVP headcount is frozen.
+
+- **Obligation**: ₹5,000 per attending guest at Engagement, excluding bride/groom family members.
+- **Invariant**: **ZERO FABRICATED TOTALS**. Total is null until RSVP headcount is frozen.
 
 ```yaml
 id: "OBL-008"
@@ -2999,8 +3011,8 @@ line_items:
     fulfillment_type: "cash"
 cash_formula:
   rate_per_person_inr: 5000
-  eligible_headcount: null          # Remains null until RSVP freeze
-  projected_total_inr: null         # Computed formula: rate * headcount
+  eligible_headcount: null # Remains null until RSVP freeze
+  projected_total_inr: null # Computed formula: rate * headcount
   envelope_preparation_status: "Pending_Headcount"
 lifecycle_status: "Agreed"
 notes: "Groom family customary honorarium. Cash withdrawal and envelope preparation trigger at T-5 days based on RSVP count."
@@ -3028,21 +3040,22 @@ SPECIFICATION CLARITY (The Physical Payload Clarity)
 
 ### 8.1 Transition Rules & Automated Validation Guards
 
-| Lifecycle Status | Allowed `spec_status` Values | Forbidden `spec_status` Values | Rationale & Automated Validation Rule |
-| :--- | :--- | :--- | :--- |
-| **`Identified`** | *All values allowed* | None | Initial capture from raw source notes. |
-| **`Agreed`** | *All values allowed* | None | Elders agree custom exists, even if item is TBD or handwriting unclear. |
-| **`Procuring`** | `Fully_Specified`, `TBD_Family_Choice` | `Source_Unclear`, `Source_Redacted`, `Pending_Family_Confirmation` | **Hard Guard**: Procurement cannot buy an item whose source is illegible or pending family confirmation. Must resolve clarity before procuring. |
-| **`Staged`** | `Fully_Specified` | `TBD_Family_Choice`, `Source_Unclear`, `Source_Redacted`, `Pending_Family_Confirmation` | **Hard Guard**: Cannot stage a physical parcel in the green room if the specification is still TBD or unconfirmed. |
-| **`Handed_Over`**| `Fully_Specified` | *All other values forbidden* | **Hard Guard**: A ceremonial handover in the mandap cannot occur for an unclarified or redacted item. |
-| **`Waived`** | *All values allowed* | None | Custom was formally superseded or dropped by mutual consensus. |
+| Lifecycle Status  | Allowed `spec_status` Values           | Forbidden `spec_status` Values                                                          | Rationale & Automated Validation Rule                                                                                                           |
+| :---------------- | :------------------------------------- | :-------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`Identified`**  | _All values allowed_                   | None                                                                                    | Initial capture from raw source notes.                                                                                                          |
+| **`Agreed`**      | _All values allowed_                   | None                                                                                    | Elders agree custom exists, even if item is TBD or handwriting unclear.                                                                         |
+| **`Procuring`**   | `Fully_Specified`, `TBD_Family_Choice` | `Source_Unclear`, `Source_Redacted`, `Pending_Family_Confirmation`                      | **Hard Guard**: Procurement cannot buy an item whose source is illegible or pending family confirmation. Must resolve clarity before procuring. |
+| **`Staged`**      | `Fully_Specified`                      | `TBD_Family_Choice`, `Source_Unclear`, `Source_Redacted`, `Pending_Family_Confirmation` | **Hard Guard**: Cannot stage a physical parcel in the green room if the specification is still TBD or unconfirmed.                              |
+| **`Handed_Over`** | `Fully_Specified`                      | _All other values forbidden_                                                            | **Hard Guard**: A ceremonial handover in the mandap cannot occur for an unclarified or redacted item.                                           |
+| **`Waived`**      | _All values allowed_                   | None                                                                                    | Custom was formally superseded or dropped by mutual consensus.                                                                                  |
 
 ---
 
 ## 9. SACRED SOURCE PROVENANCE (ZERO SILENT NORMALIZATION)
 
 To guarantee 100% fidelity to the handwritten sheets:
-1. **Colloquial Terminology Preserved**: Odia cultural rite names (*Batabasana*, *Bandhu Daksa*, *Sadu Basana*, *Guin Chada*, *Bahu Daksa*, *Bahu Bandhapana*, *Kutha Madani*, *Uluguna*, *Saga Macha*) are retained verbatim. No artificial Sanskritization.
+
+1. **Colloquial Terminology Preserved**: Odia cultural rite names (_Batabasana_, _Bandhu Daksa_, _Sadu Basana_, _Guin Chada_, _Bahu Daksa_, _Bahu Bandhapana_, _Kutha Madani_, _Uluguna_, _Saga Macha_) are retained verbatim. No artificial Sanskritization.
 2. **Missing Quantities Preserved as "TBD"**: The Nananda Putuli gold quantity remains `"TBD"` because the handwriting is partially obscured.
 3. **Blacked-Out Items Tagged as `Source_Redacted`**: Uluguna items that are physically struck out remain recorded with `spec_status: "Source_Redacted"`.
 4. **"Whatever You Will Give" Preserved as `TBD_Family_Choice`**: Sala Bidha and Sali Hasta Ganthi items remain open to host family choice.
@@ -3053,57 +3066,57 @@ To guarantee 100% fidelity to the handwritten sheets:
 
 The complete handwritten planning dataset is verified against the canonical schema below:
 
-| # | Source Rite & Item | Event | Obligor | Recipient Scope & Target | Structure | Fulfillment Channel | Spec Status | Lifecycle | Model Issues? |
-| :- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **1** | Nirbandha Mudi (Bride→Groom) | EVT-001 | Bride | person (Groom) | atomic | shopping (`TRS-EG-01`) | Fully_Specified | Agreed | None |
-| **2** | Groom Shirt + Pant | EVT-001 | Bride | person (Groom) | atomic | shopping (`TRS-EG-06`) | Fully_Specified | Agreed | None |
-| **3** | Saree for Groom's Mom | EVT-001 | Bride | role (Groom's Mother) | atomic | shopping (`TRS-SA-01`) | Fully_Specified | Agreed | None |
-| **4** | Shirt/Kurta+Pant for Groom's Dad | EVT-001 | Bride | role (Groom's Father) | atomic | shopping (`TRS-SA-02`) | Fully_Specified | Agreed | None |
-| **5** | Dress/Saree for Didi & Tiju | EVT-001 | Bride | cohort (Groom Sister & BIL) | composite | shopping (`TRS-SA-04`) | Fully_Specified | Agreed | None |
-| **6** | Dress for Bacha Party | EVT-001 | Bride | cohort (Groom Kids) | atomic | shopping | Pending_Family_Conf | Agreed | Needs child count |
-| **7** | 5 varieties of Sweets (Bride→Groom) | EVT-001 | Bride | family_unit (Groom Family) | atomic | catering / food_gift | Fully_Specified | Agreed | None |
-| **8** | Nirbandha Mudi (Groom→Bride) | EVT-001 | Groom | person (Bride) | atomic | shopping (`TRS-EG-01`) | Fully_Specified | Agreed | None |
-| **9** | Lehenga + Blouse | EVT-001 | Groom | person (Bride) | atomic | shopping (`TRS-EG-02`) | Fully_Specified | Agreed | None |
-| **10**| Engagement Trolley | EVT-001 | Groom | role (Bride's Family) | atomic | logistics | TBD_Family_Choice | Agreed | Contents TBD |
-| **11**| 5 Varieties Sweets + Coconut + Banana | EVT-001 | Groom | family_unit (Bride Family) | composite | catering / food_gift | Fully_Specified | Agreed | None |
-| **12**| Phula | EVT-001 | Groom | person (Bride) | atomic | samagri (`SAM-001`) | Fully_Specified | Agreed | None |
-| **13**| Desi Pana | EVT-001 | Groom | family_unit (Bride Family) | atomic | samagri (`SAM-001`) | Fully_Specified | Agreed | None |
-| **14**| Maha-prasad | EVT-001 | Groom | cohort (All Guests) | atomic | samagri (`SAM-001`) | Fully_Specified | Agreed | None |
-| **15**| ₹5,000 / head non-family cash | EVT-001 | Groom | dynamic_population | atomic | cash (`cash_logistics`) | Fully_Specified | Agreed | Headcount dynamic |
-| **16**| Gua/Haldi Basa Saree | EVT-002 | Groom | person (Bride) | atomic | shopping | Fully_Specified | Agreed | None |
-| **17**| Gua/Haldi Basa Makeup | EVT-002 | Groom | person (Bride) | atomic | service (`VDR-###`) | TBD_Family_Choice | Agreed | Scope TBD |
-| **18**| Coconut, Pana, Gua, Haldi | EVT-002 | Groom | role (Mandap Ritual) | composite | samagri (`SAM-003`) | Fully_Specified | Agreed | None |
-| **19**| Bandhu Daksa (Pana, Gua) | EVT-002 | Bride | role (Groom's Father) | composite | samagri (`SAM-###`) | Fully_Specified | Agreed | None |
-| **20**| Bandhu Daksa (Dress for Daddy) | EVT-002 | Bride | role (Groom's Father) | atomic | shopping | Fully_Specified | Agreed | None |
-| **21**| Batabasana Suit | EVT-004 | Bride | person (Groom) | atomic | shopping | Fully_Specified | Agreed | None |
-| **22**| Batabasana Gold Chain | EVT-004 | Bride | person (Groom) | atomic | asset (`AST-###`) | Fully_Specified | Agreed | None |
-| **23**| Batabasana Gold Mudi | EVT-004 | Bride | person (Groom) | atomic | asset (`AST-###`) | Fully_Specified | Agreed | None |
-| **24**| Batabasana Gold Bracelet | EVT-004 | Bride | person (Groom) | atomic | asset (`AST-###`) | Fully_Specified | Agreed | None |
-| **25**| Ahiya Manduli (Saree for Mummy) | EVT-004 | Groom | role (Bride's Mother — Mummy) | atomic | shopping (`TRS-SA-01`) | Fully_Specified | Agreed | Entrance Welcome gift right after Batabarana |
-| **26**| Alta & Sindoor in Mandap | EVT-004 | Groom | person (Bride) | composite | samagri (`SAM-005`) | Fully_Specified | Agreed | Sacred Mandap rites |
-| **27**| Sala Bidha Gift | EVT-004 | Groom | role (Bride's Brother) | atomic | shopping | TBD_Family_Choice | Agreed | Item choice TBD |
-| **28**| Sali Hasta Ganthi Gift | EVT-004 | Groom | role (Bride's Sister) | atomic | shopping | TBD_Family_Choice | Agreed | Item choice TBD |
-| **29**| Samdhi Milan (Baba ⟶ Daddy) | EVT-004 | Groom | person (Daddy) | atomic (EXC) | shopping (`TRS-SA-02`) | Fully_Specified | Agreed | Linked to #30 |
-| **30**| Samdhi Milan (Daddy ⟶ Baba) | EVT-004 | Bride | person (Baba) | atomic (EXC) | shopping (`TRS-SA-03`) | Fully_Specified | Agreed | Linked to #29 |
-| **31**| Sadu Basana (Laddoo, Dress) | EVT-004 | Groom | cohort (Bride side) | composite | shopping + food | Fully_Specified | Agreed | None |
-| **32**| Alankar (Groom ⟶ Bride) | EVT-004 | Groom | person (Bride) | composite | asset (`AST-###`) | Fully_Specified | Agreed | None |
-| **33**| "TDK" Item | EVT-004 | Groom | person (Bride) | atomic | shopping | Source_Unclear | Identified | Handwriting blurred |
-| **34**| 5 Sets Dresses (Bride ⟶ Groom) | EVT-004 | Bride | person (Groom) | composite | shopping | Fully_Specified | Agreed | None |
-| **35**| Guin Chada Trolley | EVT-006 | Bride | cohort (Bride + Groom) | atomic | logistics | Fully_Specified | Agreed | None |
-| **36**| Bahu Daksa (Dress for Devas) | EVT-006 | Bride | cohort (Groom side males)| composite | shopping | Fully_Specified | Agreed | None |
-| **37**| Bahu Bandhapana (2 Sarees) | EVT-006 | Bride | person (Bride) | atomic | shopping | Fully_Specified | Agreed | None |
-| **38**| Nananda Putuli (Gold) | EVT-006 | Bride | cohort (2 Didis) | atomic (Part) | asset (`AST-###`) | Source_Unclear | Agreed | Gold qty blurred |
-| **39**| Nananda Putuli (Saree/Dress ×2) | EVT-006 | Bride | cohort (2 Didis) | atomic (Part) | shopping | Fully_Specified | Agreed | None |
-| **40**| Nananda Putuli (Trolley ×2) | EVT-006 | Bride | cohort (2 Didis) | atomic (Part) | logistics | Fully_Specified | Agreed | None |
-| **41**| Chaturthi Huma Saree Set | EVT-006 | Groom | person (Bride) | atomic | shopping | Fully_Specified | Agreed | None |
-| **42**| Chaturthi Huma Dhoti + Kurta | EVT-006 | Bride | person (Groom) | atomic | shopping | Fully_Specified | Agreed | None |
-| **43**| Huma Bali Utheibaku (Dress for BIL)| EVT-006 | Groom | role (Bride's Brother) | atomic | shopping | Fully_Specified | Agreed | None |
-| **44**| Uluguna Items | EVT-006 | Bride | TBD | composite | shopping | Source_Redacted | Identified | Blacked out in notes |
-| **45**| Family Pack (6 Recipients) | EVT-006 | Bride | cohort (Groom Family) | composite (6)| shopping | Fully_Specified | Agreed | Kids count TBD |
-| **46**| Kutha Madani Trolley | EVT-006 | Bride | cohort (Bride + Groom) | atomic | logistics | Fully_Specified | Agreed | None |
-| **47**| Reception Saree / Lehenga | EVT-005 | Groom | person (Bride) | atomic | shopping (`TRS-BR-05`) | Fully_Specified | Agreed | None |
-| **48**| Saga Macha (Groom ⟶ Bride) | EVT-007 | Groom | family_unit (Bride Family) | composite | catering + shopping | Fully_Specified | Agreed | None |
-| **49**| Saga & Macha (Bride ⟶ Groom) | EVT-007 | Bride | family_unit (Groom Family) | atomic | catering / food_gift | Fully_Specified | Agreed | None |
+| #      | Source Rite & Item                    | Event   | Obligor | Recipient Scope & Target      | Structure     | Fulfillment Channel     | Spec Status         | Lifecycle  | Model Issues?                                |
+| :----- | :------------------------------------ | :------ | :------ | :---------------------------- | :------------ | :---------------------- | :------------------ | :--------- | :------------------------------------------- |
+| **1**  | Nirbandha Mudi (Bride→Groom)          | EVT-001 | Bride   | person (Groom)                | atomic        | shopping (`TRS-EG-01`)  | Fully_Specified     | Agreed     | None                                         |
+| **2**  | Groom Shirt + Pant                    | EVT-001 | Bride   | person (Groom)                | atomic        | shopping (`TRS-EG-06`)  | Fully_Specified     | Agreed     | None                                         |
+| **3**  | Saree for Groom's Mom                 | EVT-001 | Bride   | role (Groom's Mother)         | atomic        | shopping (`TRS-SA-01`)  | Fully_Specified     | Agreed     | None                                         |
+| **4**  | Shirt/Kurta+Pant for Groom's Dad      | EVT-001 | Bride   | role (Groom's Father)         | atomic        | shopping (`TRS-SA-02`)  | Fully_Specified     | Agreed     | None                                         |
+| **5**  | Dress/Saree for Didi & Tiju           | EVT-001 | Bride   | cohort (Groom Sister & BIL)   | composite     | shopping (`TRS-SA-04`)  | Fully_Specified     | Agreed     | None                                         |
+| **6**  | Dress for Bacha Party                 | EVT-001 | Bride   | cohort (Groom Kids)           | atomic        | shopping                | Pending_Family_Conf | Agreed     | Needs child count                            |
+| **7**  | 5 varieties of Sweets (Bride→Groom)   | EVT-001 | Bride   | family_unit (Groom Family)    | atomic        | catering / food_gift    | Fully_Specified     | Agreed     | None                                         |
+| **8**  | Nirbandha Mudi (Groom→Bride)          | EVT-001 | Groom   | person (Bride)                | atomic        | shopping (`TRS-EG-01`)  | Fully_Specified     | Agreed     | None                                         |
+| **9**  | Lehenga + Blouse                      | EVT-001 | Groom   | person (Bride)                | atomic        | shopping (`TRS-EG-02`)  | Fully_Specified     | Agreed     | None                                         |
+| **10** | Engagement Trolley                    | EVT-001 | Groom   | role (Bride's Family)         | atomic        | logistics               | TBD_Family_Choice   | Agreed     | Contents TBD                                 |
+| **11** | 5 Varieties Sweets + Coconut + Banana | EVT-001 | Groom   | family_unit (Bride Family)    | composite     | catering / food_gift    | Fully_Specified     | Agreed     | None                                         |
+| **12** | Phula                                 | EVT-001 | Groom   | person (Bride)                | atomic        | samagri (`SAM-001`)     | Fully_Specified     | Agreed     | None                                         |
+| **13** | Desi Pana                             | EVT-001 | Groom   | family_unit (Bride Family)    | atomic        | samagri (`SAM-001`)     | Fully_Specified     | Agreed     | None                                         |
+| **14** | Maha-prasad                           | EVT-001 | Groom   | cohort (All Guests)           | atomic        | samagri (`SAM-001`)     | Fully_Specified     | Agreed     | None                                         |
+| **15** | ₹5,000 / head non-family cash         | EVT-001 | Groom   | dynamic_population            | atomic        | cash (`cash_logistics`) | Fully_Specified     | Agreed     | Headcount dynamic                            |
+| **16** | Gua/Haldi Basa Saree                  | EVT-002 | Groom   | person (Bride)                | atomic        | shopping                | Fully_Specified     | Agreed     | None                                         |
+| **17** | Gua/Haldi Basa Makeup                 | EVT-002 | Groom   | person (Bride)                | atomic        | service (`VDR-###`)     | TBD_Family_Choice   | Agreed     | Scope TBD                                    |
+| **18** | Coconut, Pana, Gua, Haldi             | EVT-002 | Groom   | role (Mandap Ritual)          | composite     | samagri (`SAM-003`)     | Fully_Specified     | Agreed     | None                                         |
+| **19** | Bandhu Daksa (Pana, Gua)              | EVT-002 | Bride   | role (Groom's Father)         | composite     | samagri (`SAM-###`)     | Fully_Specified     | Agreed     | None                                         |
+| **20** | Bandhu Daksa (Dress for Daddy)        | EVT-002 | Bride   | role (Groom's Father)         | atomic        | shopping                | Fully_Specified     | Agreed     | None                                         |
+| **21** | Batabasana Suit                       | EVT-004 | Bride   | person (Groom)                | atomic        | shopping                | Fully_Specified     | Agreed     | None                                         |
+| **22** | Batabasana Gold Chain                 | EVT-004 | Bride   | person (Groom)                | atomic        | asset (`AST-###`)       | Fully_Specified     | Agreed     | None                                         |
+| **23** | Batabasana Gold Mudi                  | EVT-004 | Bride   | person (Groom)                | atomic        | asset (`AST-###`)       | Fully_Specified     | Agreed     | None                                         |
+| **24** | Batabasana Gold Bracelet              | EVT-004 | Bride   | person (Groom)                | atomic        | asset (`AST-###`)       | Fully_Specified     | Agreed     | None                                         |
+| **25** | Ahiya Manduli (Saree for Mummy)       | EVT-004 | Groom   | role (Bride's Mother — Mummy) | atomic        | shopping (`TRS-SA-01`)  | Fully_Specified     | Agreed     | Entrance Welcome gift right after Batabarana |
+| **26** | Alta & Sindoor in Mandap              | EVT-004 | Groom   | person (Bride)                | composite     | samagri (`SAM-005`)     | Fully_Specified     | Agreed     | Sacred Mandap rites                          |
+| **27** | Sala Bidha Gift                       | EVT-004 | Groom   | role (Bride's Brother)        | atomic        | shopping                | TBD_Family_Choice   | Agreed     | Item choice TBD                              |
+| **28** | Sali Hasta Ganthi Gift                | EVT-004 | Groom   | role (Bride's Sister)         | atomic        | shopping                | TBD_Family_Choice   | Agreed     | Item choice TBD                              |
+| **29** | Samdhi Milan (Baba ⟶ Daddy)           | EVT-004 | Groom   | person (Daddy)                | atomic (EXC)  | shopping (`TRS-SA-02`)  | Fully_Specified     | Agreed     | Linked to #30                                |
+| **30** | Samdhi Milan (Daddy ⟶ Baba)           | EVT-004 | Bride   | person (Baba)                 | atomic (EXC)  | shopping (`TRS-SA-03`)  | Fully_Specified     | Agreed     | Linked to #29                                |
+| **31** | Sadu Basana (Laddoo, Dress)           | EVT-004 | Groom   | cohort (Bride side)           | composite     | shopping + food         | Fully_Specified     | Agreed     | None                                         |
+| **32** | Alankar (Groom ⟶ Bride)               | EVT-004 | Groom   | person (Bride)                | composite     | asset (`AST-###`)       | Fully_Specified     | Agreed     | None                                         |
+| **33** | "TDK" Item                            | EVT-004 | Groom   | person (Bride)                | atomic        | shopping                | Source_Unclear      | Identified | Handwriting blurred                          |
+| **34** | 5 Sets Dresses (Bride ⟶ Groom)        | EVT-004 | Bride   | person (Groom)                | composite     | shopping                | Fully_Specified     | Agreed     | None                                         |
+| **35** | Guin Chada Trolley                    | EVT-006 | Bride   | cohort (Bride + Groom)        | atomic        | logistics               | Fully_Specified     | Agreed     | None                                         |
+| **36** | Bahu Daksa (Dress for Devas)          | EVT-006 | Bride   | cohort (Groom side males)     | composite     | shopping                | Fully_Specified     | Agreed     | None                                         |
+| **37** | Bahu Bandhapana (2 Sarees)            | EVT-006 | Bride   | person (Bride)                | atomic        | shopping                | Fully_Specified     | Agreed     | None                                         |
+| **38** | Nananda Putuli (Gold)                 | EVT-006 | Bride   | cohort (2 Didis)              | atomic (Part) | asset (`AST-###`)       | Source_Unclear      | Agreed     | Gold qty blurred                             |
+| **39** | Nananda Putuli (Saree/Dress ×2)       | EVT-006 | Bride   | cohort (2 Didis)              | atomic (Part) | shopping                | Fully_Specified     | Agreed     | None                                         |
+| **40** | Nananda Putuli (Trolley ×2)           | EVT-006 | Bride   | cohort (2 Didis)              | atomic (Part) | logistics               | Fully_Specified     | Agreed     | None                                         |
+| **41** | Chaturthi Huma Saree Set              | EVT-006 | Groom   | person (Bride)                | atomic        | shopping                | Fully_Specified     | Agreed     | None                                         |
+| **42** | Chaturthi Huma Dhoti + Kurta          | EVT-006 | Bride   | person (Groom)                | atomic        | shopping                | Fully_Specified     | Agreed     | None                                         |
+| **43** | Huma Bali Utheibaku (Dress for BIL)   | EVT-006 | Groom   | role (Bride's Brother)        | atomic        | shopping                | Fully_Specified     | Agreed     | None                                         |
+| **44** | Uluguna Items                         | EVT-006 | Bride   | TBD                           | composite     | shopping                | Source_Redacted     | Identified | Blacked out in notes                         |
+| **45** | Family Pack (6 Recipients)            | EVT-006 | Bride   | cohort (Groom Family)         | composite (6) | shopping                | Fully_Specified     | Agreed     | Kids count TBD                               |
+| **46** | Kutha Madani Trolley                  | EVT-006 | Bride   | cohort (Bride + Groom)        | atomic        | logistics               | Fully_Specified     | Agreed     | None                                         |
+| **47** | Reception Saree / Lehenga             | EVT-005 | Groom   | person (Bride)                | atomic        | shopping (`TRS-BR-05`)  | Fully_Specified     | Agreed     | None                                         |
+| **48** | Saga Macha (Groom ⟶ Bride)            | EVT-007 | Groom   | family_unit (Bride Family)    | composite     | catering + shopping     | Fully_Specified     | Agreed     | None                                         |
+| **49** | Saga & Macha (Bride ⟶ Groom)          | EVT-007 | Bride   | family_unit (Groom Family)    | atomic        | catering / food_gift    | Fully_Specified     | Agreed     | None                                         |
 
 ---
 
@@ -3146,6 +3159,7 @@ To maintain honest reporting, the repository classifies all obligation data into
 ## 12. THE CANONICAL AUTHORING CONTRACT & TEMPLATES
 
 ### 12.1 Human / Agent Plain-Text Intake Template
+
 When entering future obligations verbally or from written notes:
 
 ```text
@@ -3253,6 +3267,7 @@ Execution timing, witness requirements, and run-sheet verification gate.
 **Standard**: `INV-SDCA-003` / `P-SSOT-DOCS`
 
 ### 13.1 Compiler Execution Sequence:
+
 1. **Discovery & Ingestion**: Reads all `02_RITUALS_CULTURE/obligations/OBL-*.md` files.
 2. **Schema & State Validation**:
    - Asserts valid YAML frontmatter matching `STD-OBLIGATION-SCHEMA-001`.
@@ -3298,54 +3313,61 @@ Execution timing, witness requirements, and run-sheet verification gate.
 ### Phase Details & Acceptance Criteria:
 
 #### Phase 1: Directory Scaffolding & Template Baseline
-* **Target Files**:
+
+- **Target Files**:
   - `02_RITUALS_CULTURE/obligations/` (New directory)
   - `02_RITUALS_CULTURE/obligation_template.md` (New file)
   - `02_RITUALS_CULTURE/HUB.md` (Update spokes index)
   - `docs/references/SPEC-ARCH-FAMILY-OBLIGATION-001.md` (New canonical specification)
-* **Acceptance Criteria**: Directory structure created; hub references updated; zero syntax errors.
-* **Validation**: `node scripts/test-obligation-contract.cjs --template-check`.
+- **Acceptance Criteria**: Directory structure created; hub references updated; zero syntax errors.
+- **Validation**: `node scripts/test-obligation-contract.cjs --template-check`.
 
 #### Phase 2: Automated Schema & State Machine Test Gate
-* **Target Files**:
+
+- **Target Files**:
   - `scripts/test-obligation-contract.cjs` (New contract verification script)
   - `package.json` (Register `npm run test:obligations`)
-* **Acceptance Criteria**: Automated test validates YAML frontmatter, derived directions, reciprocal exchange clusters, and rejects invalid state combinations.
-* **Validation**: `npm run test:obligations` passes 100%.
+- **Acceptance Criteria**: Automated test validates YAML frontmatter, derived directions, reciprocal exchange clusters, and rejects invalid state combinations.
+- **Validation**: `npm run test:obligations` passes 100%.
 
 #### Phase 3: Downstream Compilation Engine & Master Index
-* **Target Files**:
+
+- **Target Files**:
   - `scripts/compile-obligations.cjs` (New compiler script)
   - `02_RITUALS_CULTURE/obligations/family_obligations_master.md` (Generated file)
-* **Acceptance Criteria**: Compiler generates master index and derived cross-domain queues without duplicating data.
-* **Validation**: `node scripts/compile-obligations.cjs` exits 0 with zero warnings.
+- **Acceptance Criteria**: Compiler generates master index and derived cross-domain queues without duplicating data.
+- **Validation**: `node scripts/compile-obligations.cjs` exits 0 with zero warnings.
 
 #### Phase 4: Full 40+ Handwritten Dataset Ingestion
-* **Target Files**:
+
+- **Target Files**:
   - `02_RITUALS_CULTURE/obligations/OBL-001.md` through `OBL-049.md` (49 atomic and bundle records)
-* **Acceptance Criteria**: All 49 records created with 100% fidelity to handwritten sheets; zero quantity guessing.
-* **Validation**: `npm run test:obligations` passes across all 49 files.
+- **Acceptance Criteria**: All 49 records created with 100% fidelity to handwritten sheets; zero quantity guessing.
+- **Validation**: `npm run test:obligations` passes across all 49 files.
 
 #### Phase 5: Downstream Projections & Byte Parity
-* **Target Files**:
+
+- **Target Files**:
   - `04_PROCUREMENT_VENDORS/shopping_and_trousseau/shopping_items.jsonl` (Enrich with backlinks)
   - `06_FINANCE_COMMERCIALS/cash_logistics.md` (Enrich with honorarium requirements)
-* **Acceptance Criteria**: Shopping and finance files linked cleanly; zero orphan references.
-* **Validation**: `npm run test:shopping` and `node scripts/test-obligation-contract.cjs`.
+- **Acceptance Criteria**: Shopping and finance files linked cleanly; zero orphan references.
+- **Validation**: `npm run test:shopping` and `node scripts/test-obligation-contract.cjs`.
 
 #### Phase 6: Web Registry Integration (Derived Views)
-* **Target Files**:
+
+- **Target Files**:
   - `shopping_src/components/` & `shopping_src/template.html` (Optional derived obligation filter/tab)
-* **Acceptance Criteria**: UI compiles via SDCA with 100% byte parity between root and `/public`.
-* **Validation**: `npm run verify:modular-architecture`.
+- **Acceptance Criteria**: UI compiles via SDCA with 100% byte parity between root and `/public`.
+- **Validation**: `npm run verify:modular-architecture`.
 
 #### Phase 7: Final Governance Verification & SSOT Sync
-* **Target Files**:
+
+- **Target Files**:
   - `ENHANCEMENT-MASTER-REGISTRY.md` (Mark SK-020 COMPLETED)
   - `docs/enhancements/BUSINESS-LOGIC-ENHANCEMENT-CLUSTER.md`
   - `GEMINI.md` / `CLAUDE.md` (Update domain index)
-* **Acceptance Criteria**: 100% green across all governance suites.
-* **Validation**: `npm run verify:governance-wiring:all`.
+- **Acceptance Criteria**: 100% green across all governance suites.
+- **Validation**: `npm run verify:governance-wiring:all`.
 
 ---
 
@@ -3353,48 +3375,1164 @@ Execution timing, witness requirements, and run-sheet verification gate.
 
 This document constitutes the **complete, implementation-ready technical specification** requested by Directive OBL-001.
 
-* **Hard Gate Compliance**: ZERO code, schemas, or premature records were created during this specification phase.
-* **Status**: **READY FOR ARCHITECTURE COUNCIL & HOST SIGN-OFF**.
-* **Next Action**: Upon Host confirmation, proceed to **Phase 1 execution** (Directory Scaffolding & Template Baseline).
+- **Hard Gate Compliance**: ZERO code, schemas, or premature records were created during this specification phase.
+- **Status**: **READY FOR ARCHITECTURE COUNCIL & HOST SIGN-OFF**.
+- **Next Action**: Upon Host confirmation, proceed to **Phase 1 execution** (Directory Scaffolding & Template Baseline).
 
 ---
 
 # Query 1.3 -
 
-
 # Review 1.3 -
 
-# Response 1.3 -
+# Response 1.3 -Viewed SKILL.md:1-86
 
-# Query 1.4 -
+Viewed meta-prompt.md:1-100
+Viewed 260926*ShoppingList2.md:2120-2650
+Viewed d:\GitHub_Repo\Sree_Krushna\docs\SYSTEM_CLARITY_SNAPSHOT.md:2-101
+Searched for files: \_DOCS_HUB*
+Viewed DOCS_HUB.md:1-24
+Viewed skill-router.yaml:1-100
+Viewed architecture-council.md:1-150
+Viewed plan-review.md:1-150
+Viewed SKILL.md:1-150
+Viewed ENHANCEMENT_PROTOCOL.md:1-72
+Viewed enhancement-config.json:1-6
+Viewed ENHANCEMENT-MASTER-REGISTRY.md:1-25
+Viewed BUSINESS-LOGIC-ENHANCEMENT-CLUSTER.md:1-14
+Viewed 00_ENHANCEMENT_INDEX.md:1-78
+Searched for files: \*
+Viewed 260924_arch_council_mandatory_ticket_registration_and_phased_planning_gate.md:1-100
+Edited enhancement-config.json
+Created 00_ENHANCEMENT_INDEX.md
+Viewed ENHANCEMENT-MASTER-REGISTRY.md:15-25
+Edited ENHANCEMENT-MASTER-REGISTRY.md
+Viewed BUSINESS-LOGIC-ENHANCEMENT-CLUSTER.md:1-14
+Edited BUSINESS-LOGIC-ENHANCEMENT-CLUSTER.md
+Searched for "AC-DEC-2026-\d+"
+Viewed Council_Ledger.md:45-69
+Viewed 260926_ShoppingList2.md:2605-2625
+Edited 260926_ShoppingList2.md
+Created 260927_arch_council_family_obligation_register_and_fulfilment_pipeline.md
+Viewed Council_Ledger.md:55-69
+Edited Council_Ledger.md
+
+### Clarification & Intent Record
+
+- **Ambiguity Scanned**: The prompt invoked `/prompt-clarity` on [`Review 1.2`](file:///d:/GitHub_Repo\Sree_Krushna\User_Created\Discussion%20Threads\Shopping\260926_ShoppingList2.md#L2158-L2610) (`DIRECTIVE: OBL-001`), which carried a multi-surface tension between executing a discussion-thread-only specification (Option 1), minting formal repository architecture spokes and an enhancement ticket (Option 2), or resolving core edge-case tensions in an alignment turn (Option 3).
+- **Question Asked**: "How would you like to proceed with Directive OBL-001 (Review 1.2)?"
+- **User Resolution**: Mandated a thorough comparative evaluation of all options (similarities, distinctions, trade-offs, impact radius, complexity, risks, and architectural implications); execution of a formal review under `.agent/workflows/architecture-council.md` and `.agent/workflows/plan-review.md`; synthesis of an optimal hybrid approach; formal scaffolding of an enhancement ticket with a sequential Definition of Done (DoD v1.7) matrix; authoring of the complete technical specification; and outputting the Phase 1 implementation plan via `writing-plans` with an Architecture Council–certified decision.
+- **Bound Route**: `.agent/workflows/architecture-council.md` $\longrightarrow$ `.agent/workflows/plan-review.md` $\longrightarrow$ `.agent/skills/enhancement-scaffolder/SKILL.md` $\longrightarrow$ `.agent/skills/writing-plans/SKILL.md` (Formal Architecture Council Ratification & Ticket Scaffolding).
+- **Resolved Scope Checklist**:
+  1. [x] **Comprehensive Option Evaluation**: Systematic comparison of Options 1, 2, 3, and the adopted Hybrid across trade-offs, blast radius, complexity, and architectural implications.
+  2. [x] **Architecture Council Deliberation (`AC-DEC-2026-061`)**: Multi-disciplinary evaluation across all 8 auditor seats + assigned dissenter, recorded in [`User_Created/Discussion Threads/Council/260927_arch_council_family_obligation_register_and_fulfilment_pipeline.md`](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/260927_arch_council_family_obligation_register_and_fulfilment_pipeline.md) and registered in [`Council_Ledger.md`](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/Council_Ledger.md).
+  3. [x] **Plan Feasibility Audit**: Structured review under `plan-review.md` covering problem space boundaries, data contracts, and verification gates.
+  4. [x] **Enhancement Ticket Scaffolding (`SK-020`)**: Minted `SK-020` in [`enhancement-config.json`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-config.json) (`next_id: 21`), scaffolded [`enhancement-notes/SK-020/00_ENHANCEMENT_INDEX.md`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-020/00_ENHANCEMENT_INDEX.md), and registered in [`ENHANCEMENT-MASTER-REGISTRY.md`](file:///d:/GitHub_Repo/Sree_Krushna/ENHANCEMENT-MASTER-REGISTRY.md) and [`BUSINESS-LOGIC-ENHANCEMENT-CLUSTER.md`](file:///d:/GitHub_Repo/Sree_Krushna/docs/enhancements/BUSINESS-LOGIC-ENHANCEMENT-CLUSTER.md).
+  5. [x] **Complete 14-Section Implementation Specification**: Fully authored into [`260926_ShoppingList2.md`](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Shopping/260926_ShoppingList2.md#L2612-L3350) under `# Response 1.2 — OBLIGATION IMPLEMENTATION SPECIFICATION — READY FOR APPROVAL`.
+  6. [x] **Phase 1 Implementation Plan via `writing-plans`**: Detailed 5-step TDD tasks with binary validation gates (VG) and decision nodes (DN).
+  7. [x] **Architecture Council Certification**: Unanimously certified under `AC-DEC-2026-061`.
+
+---
+
+## 1. Comparative Evaluation of Architectural Options
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                                 OPTIONS TRADEOFF MATRIX                                │
+├─────────────────────┬──────────────────────┬──────────────────────┬────────────────────┤
+│ Dimension           │ Option 1: Thread-Only│ Option 2: Spoke/Ticket│ Option 4: Hybrid   │
+├─────────────────────┼──────────────────────┼──────────────────────┼────────────────────┤
+│ SSOT Persistence    │ ⚠️ Low (Trapped)     │ ⚠️ Partial (Fractured)│ ✅ Canonical & Green│
+│ Governance Integrity│ ❌ Fails STD-PHASED  │ ✅ Strict Governance │ ✅ 100% Compliant  │
+│ Blast Radius        │ Isolated (1 file)    │ Medium (Repo docs)   │ Controlled (No Code│
+│ Multi-Turn Latency  │ Fast (Single turn)   │ High (Context switch)│ Optimal (Complete) │
+│ Long-Term Drift Risk│ 🔴 Severe Drift      │ 🟡 Minor Disconnect  │ 🟢 Zero Drift      │
+└─────────────────────┴──────────────────────┴──────────────────────┴────────────────────┘
+```
+
+### Option 1: Thread-Only Specification
+
+- **Distinctions & Benefits**: Confines all output to [`260926_ShoppingList2.md`](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Shopping/260926_ShoppingList2.md) under `# Response 1.2 -`. Immediate conversational feedback without polluting repo branches.
+- **Failure Modes & Trade-offs**: Traps high-value domain architecture in a discussion file. Future subagents working on [`02_RITUALS_CULTURE/`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/HUB.md) or [`04_PROCUREMENT_VENDORS/`](file:///d:/GitHub_Repo/Sree_Krushna/04_PROCUREMENT_VENDORS/HUB.md) will have zero visibility into `OBL-###`, violating `P-SSOT-DOCS` and `STD-PHASED-DEV-001`.
+
+### Option 2: Standalone Spoke & Enhancement First
+
+- **Distinctions & Benefits**: Creates formal repository artifacts ([`SPEC-ARCH-FAMILY-OBLIGATION-001.md`](file:///d:/GitHub_Repo/Sree_Krushna/docs/references/) and `SK-020`) before drafting the plan.
+- **Failure Modes & Trade-offs**: By prioritizing repo files over answering the user's active discussion prompt, it breaks the conversational planning loop.
+
+### Option 3: Alignment-First
+
+- **Distinctions & Benefits**: Focuses on micro-debates around edge cases (EXC cluster entity vs virtual pairing).
+- **Failure Modes & Trade-offs**: Wastes turns on already-converged questions without producing implementation artifacts.
+
+### The Adopted Hybrid Approach (Option 4)
+
+- **Design**: Synthesizes the strengths of all three:
+  1. Resolves all edge cases (EXC paired records, derived direction, two-tier state machine) with formal proofs.
+  2. Scaffolds enhancement ticket **`SK-020`** in `[BUSINESS-LOGIC]` with a 4-tier DoD (v1.7) matrix.
+  3. Authors the complete 14-section specification directly into [`260926_ShoppingList2.md`](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Shopping/260926_ShoppingList2.md#L2612-L3350) under `# Response 1.2 -`.
+  4. Ratifies the decision as **`AC-DEC-2026-061`** in [`Council_Ledger.md`](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/Council_Ledger.md).
+  5. Outputs the Phase 1 TDD implementation plan via `writing-plans`.
+
+---
+
+## 2. Architecture Council Deliberation (`AC-DEC-2026-061`)
+
+The Architecture Council convened under `SOP-WFL-ARCH-COUNCIL-001` and unanimously ratified the Family Obligation Architecture:
+
+1. **Category Separation (`OBL-###` vs `GFT-###`)**:
+   - Customary family covenants belong to **`02_RITUALS_CULTURE/obligations/`** with prefix **`OBL-###`**.
+   - `GFT-###` remains reserved exclusively for guest shagun reception desk accounting ([`06_FINANCE_COMMERCIALS/gifts_and_shagun/`](file:///d:/GitHub_Repo/Sree_Krushna/06_FINANCE_COMMERCIALS/gifts_and_shagun/README.md)).
+2. **Actor & Direction Integrity**:
+   - Direction is strictly derived at runtime ($\text{obligor.family} \to \text{recipient.family}$). Storing a decoupled raw direction enum in YAML is prohibited.
+3. **Bilateral Exchange Standard (Samdhi Milan)**:
+   - Modeled as **two paired atomic `OBL-###` records** sharing `exchange_cluster.cluster_id: "EXC-###"`. Guarantees independent procurement, separate family budgets, and synchronous execution verification at `GATE-02`.
+4. **State Machine Invariants**:
+   - Decoupled `lifecycle_status` (_Identified $\to$ Agreed $\to$ Procuring $\to$ Staged $\to$ Handed_Over_) from `spec_status` (_Fully_Specified_, _TBD_Family_Choice_, _Source_Unclear_, _Source_Redacted_, _Pending_Family_Confirmation_).
+   - Hard automated guard: Throws error if `Handed_Over` or `Staged` is paired with `Source_Unclear` or `Source_Redacted`.
+5. **Cash Formula Honesty**:
+   - Dynamic per-head honoraria (₹5,000 / head) store `eligible_headcount: null` and `projected_total_inr: null` until the RSVP headcount freeze. Zero fabricated integers.
+6. **Maturity & Anti-Bloat Guard (RFG-001 Dissenter Concurrence)**:
+   - Rejects heavy database or microservice abstractions; the model relies purely on standard Markdown + YAML frontmatter and a zero-dependency Node.js compiler (`scripts/compile-obligations.cjs`).
+
+---
+
+## 3. Registered Enhancement Ticket: `SK-020`
+
+Per `ENHANCEMENT_PROTOCOL.md` and `STD-PHASED-DEV-001`, the initiative is formally registered:
+
+- **Ticket Path**: [`enhancement-notes/SK-020/00_ENHANCEMENT_INDEX.md`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-020/00_ENHANCEMENT_INDEX.md)
+- **Master Registry**: Registered in [`ENHANCEMENT-MASTER-REGISTRY.md`](file:///d:/GitHub_Repo/Sree_Krushna/ENHANCEMENT-MASTER-REGISTRY.md) (Row 26)
+- **Domain Backlog**: Registered in [`docs/enhancements/BUSINESS-LOGIC-ENHANCEMENT-CLUSTER.md`](file:///d:/GitHub_Repo/Sree_Krushna/docs/enhancements/BUSINESS-LOGIC-ENHANCEMENT-CLUSTER.md)
+- **Config Counter**: [`enhancement-config.json`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-config.json) auto-incremented to `next_id: 21`
+
+### Sequential Phased Definition of Done (DoD v1.7 Matrix)
+
+| Phase       | Milestone Name              | Scope & Deliverables                                                                                            | Primary Validation Gate (VG)                                          |
+| :---------- | :-------------------------- | :-------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------- |
+| **Phase 1** | **Scaffolding & Template**  | Create `02_RITUALS_CULTURE/obligations/`, `obligation_template.md`, and `SPEC-ARCH-FAMILY-OBLIGATION-001.md`.   | `node scripts/test-obligation-contract.cjs --template-check` (Exit 0) |
+| **Phase 2** | **Validation Test Suite**   | Implement `scripts/test-obligation-contract.cjs` asserting schema, derived direction, and state machine guards. | `npm run test:obligations` passes 100% across test fixtures.          |
+| **Phase 3** | **Compilation Engine**      | Implement `scripts/compile-obligations.cjs` generating `family_obligations_master.md` and downstream queues.    | Compiler runs deterministically with zero byte drift on rerun.        |
+| **Phase 4** | **Handwritten Ingestion**   | Ingest all 40+ obligations from source sheets into `OBL-001.md` through `OBL-049.md`.                           | `npm run test:obligations` passes across all 49 records.              |
+| **Phase 5** | **Downstream Projections**  | Backlink `TRS-###` items, update `cash_logistics.md`, and verify cross-domain references.                       | `npm run test:shopping` and zero broken foreign keys.                 |
+| **Phase 6** | **Web UI Integration**      | Expose derived obligation view in web Shopping Registry (SDCA).                                                 | 100% byte parity between root and `/public` distributions.            |
+| **Phase 7** | **Governance Verification** | Reconcile master indexes and run complete governance audit.                                                     | `npm run verify:governance-wiring:all` passes 100%.                   |
+
+---
+
+## 4. Phase 1 Implementation Plan (`writing-plans`)
+
+I'm using the `writing-plans` skill to create the implementation plan.
+
+# SK-020 Phase 1: Directory Scaffolding & Template Baseline Implementation Plan
+
+> **Governing Ticket**: [`enhancement-notes/SK-020/00_ENHANCEMENT_INDEX.md`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-020/00_ENHANCEMENT_INDEX.md)  
+> **Governing Decision**: `AC-DEC-2026-061` / `RIT-DEC-2026-001`  
+> **Target Release**: v2.9.0  
+> **Goal**: Scaffold the canonical obligations directory, register the `OBL` template, codify the architectural specification spoke, and establish the automated contract verification script.  
+> **Architecture**: Establishes `02_RITUALS_CULTURE/obligations/` as the canonical SSOT for customary family covenants, decoupling them from commercial shopping (`TRS`) and finance (`PAY`).  
+> **Tech Stack / Toolchain**: Node.js, `yaml` parser, Markdown SSOT.
+
+---
+
+### Task 1.1: Directory Scaffolding & Hub Registration
+
+**Files:**
+
+- Create: `02_RITUALS_CULTURE/obligations/.gitkeep`
+- Modify: [`02_RITUALS_CULTURE/HUB.md`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/HUB.md)
+
+**Step 1: Write failing test**
+Run command asserting `02_RITUALS_CULTURE/obligations/` exists and is referenced in [`02_RITUALS_CULTURE/HUB.md`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/HUB.md).
+
+```powershell
+node -e "const fs = require('fs'); const hub = fs.readFileSync('02_RITUALS_CULTURE/HUB.md', 'utf8'); if (!fs.existsSync('02_RITUALS_CULTURE/obligations') || !hub.includes('obligations/')) process.exit(1);"
+```
+
+**Step 2: Run test to verify it fails**
+Run: `node -e "const fs = require('fs'); const hub = fs.readFileSync('02_RITUALS_CULTURE/HUB.md', 'utf8'); if (!fs.existsSync('02_RITUALS_CULTURE/obligations') || !hub.includes('obligations/')) process.exit(1);"`  
+Expected: Exit code 1.
+
+**🔍 Validation Gate (VG)**:
+
+1. (Binary) Exit code non-zero.
+
+**🚦 Decision Node (DN)**:
+
+- **Pass**: Proceed to Step 3.
+- **Fail**: Directory already exists or test logic broken.
+
+**Step 3: Minimal implementation**
+
+1. Create directory `02_RITUALS_CULTURE/obligations/` with `.gitkeep`.
+2. Add section `### Family Obligations (OBL-###)` to [`02_RITUALS_CULTURE/HUB.md`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/HUB.md) referencing `[Obligation Template](./obligation_template.md)` and `[Family Obligations Master Index](./obligations/family_obligations_master.md)`.
+
+**Step 4: Run test to verify it passes**
+Run: `node -e "const fs = require('fs'); const hub = fs.readFileSync('02_RITUALS_CULTURE/HUB.md', 'utf8'); if (!fs.existsSync('02_RITUALS_CULTURE/obligations') || !hub.includes('obligations/')) process.exit(1);"`  
+Expected: Exit code 0.
+
+**🔍 Validation Gate (VG)**:
+
+1. (Binary) Exit code 0.
+
+**Step 5: Atomic Commit**
+Run: `git add 02_RITUALS_CULTURE/ && git commit -m "feat(rituals): scaffold obligations directory and update HUB.md (SK-020 Phase 1.1)"`
+
+---
+
+### Task 1.2: Canonical Obligation Template Scaffolding
+
+**Files:**
+
+- Create: `02_RITUALS_CULTURE/obligation_template.md`
+
+**Step 1: Write failing test**
+Run command checking that `02_RITUALS_CULTURE/obligation_template.md` exists and contains required YAML frontmatter fields (`cultural_name`, `structure`, `obligation_nature`, `obligor`, `recipient`, `line_items`, `provenance`).
+
+```powershell
+node -e "const fs = require('fs'); if (!fs.existsSync('02_RITUALS_CULTURE/obligation_template.md')) process.exit(1); const txt = fs.readFileSync('02_RITUALS_CULTURE/obligation_template.md', 'utf8'); if (!txt.includes('cultural_name:') || !txt.includes('line_items:')) process.exit(1);"
+```
+
+**Step 2: Run test to verify it fails**
+Run: `node -e "const fs = require('fs'); if (!fs.existsSync('02_RITUALS_CULTURE/obligation_template.md')) process.exit(1);"`  
+Expected: Exit code 1.
+
+**🔍 Validation Gate (VG)**:
+
+1. (Binary) Exit code non-zero.
+
+**Step 3: Minimal implementation**
+Write `02_RITUALS_CULTURE/obligation_template.md` adhering strictly to the contract ratified in `AC-DEC-2026-061` and Section 2 of [`260926_ShoppingList2.md`](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Shopping/260926_ShoppingList2.md#L2650-L2750).
+
+**Step 4: Run test to verify it passes**
+Run: `node -e "const fs = require('fs'); const txt = fs.readFileSync('02_RITUALS_CULTURE/obligation_template.md', 'utf8'); if (!txt.includes('cultural_name:') || !txt.includes('line_items:')) process.exit(1);"`  
+Expected: Exit code 0.
+
+**🔍 Validation Gate (VG)**:
+
+1. (Binary) Exit code 0.
+
+**Step 5: Atomic Commit**
+Run: `git add 02_RITUALS_CULTURE/obligation_template.md && git commit -m "feat(rituals): add canonical obligation template (SK-020 Phase 1.2)"`
+
+---
+
+### Task 1.3: Architectural Specification Spoke Scaffolding
+
+**Files:**
+
+- Create: `docs/references/SPEC-ARCH-FAMILY-OBLIGATION-001.md`
+
+**Step 1: Write failing test**
+Run command checking that `docs/references/SPEC-ARCH-FAMILY-OBLIGATION-001.md` exists and contains `SPEC-ARCH-FAMILY-OBLIGATION-001` and `AC-DEC-2026-061`.
+
+```powershell
+node -e "const fs = require('fs'); if (!fs.existsSync('docs/references/SPEC-ARCH-FAMILY-OBLIGATION-001.md')) process.exit(1);"
+```
+
+**Step 2: Run test to verify it fails**
+Run: `node -e "const fs = require('fs'); if (!fs.existsSync('docs/references/SPEC-ARCH-FAMILY-OBLIGATION-001.md')) process.exit(1);"`  
+Expected: Exit code 1.
+
+**🔍 Validation Gate (VG)**:
+
+1. (Binary) Exit code non-zero.
+
+**Step 3: Minimal implementation**
+Scaffold `docs/references/SPEC-ARCH-FAMILY-OBLIGATION-001.md` codifying the full 14-section architectural contract, state machine invariants, and actor model ratified in `AC-DEC-2026-061`.
+
+**Step 4: Run test to verify it passes**
+Run: `node -e "const fs = require('fs'); const txt = fs.readFileSync('docs/references/SPEC-ARCH-FAMILY-OBLIGATION-001.md', 'utf8'); if (!txt.includes('SPEC-ARCH-FAMILY-OBLIGATION-001')) process.exit(1);"`  
+Expected: Exit code 0.
+
+**🔍 Validation Gate (VG)**:
+
+1. (Binary) Exit code 0.
+
+**Step 5: Atomic Commit**
+Run: `git add docs/references/SPEC-ARCH-FAMILY-OBLIGATION-001.md && git commit -m "docs(spec): codify family obligation architectural specification (SK-020 Phase 1.3)"`
+
+---
+
+### Task 1.4: Contract Verification Harness Baseline
+
+**Files:**
+
+- Create: `scripts/test-obligation-contract.cjs`
+- Modify: [`package.json`](file:///d:/GitHub_Repo/Sree_Krushna/package.json)
+
+**Step 1: Write failing test**
+Run command asserting `scripts/test-obligation-contract.cjs` exists.
+
+```powershell
+node -e "if (!require('fs').existsSync('scripts/test-obligation-contract.cjs')) process.exit(1);"
+```
+
+**Step 2: Run test to verify it fails**
+Run: `node -e "if (!require('fs').existsSync('scripts/test-obligation-contract.cjs')) process.exit(1);"`  
+Expected: Exit code 1.
+
+**🔍 Validation Gate (VG)**:
+
+1. (Binary) Exit code non-zero.
+
+**Step 3: Minimal implementation**
+
+1. Implement `scripts/test-obligation-contract.cjs` supporting `--template-check` to parse and validate frontmatter of `02_RITUALS_CULTURE/obligation_template.md`.
+2. Register `"test:obligations": "node scripts/test-obligation-contract.cjs"` in [`package.json`](file:///d:/GitHub_Repo/Sree_Krushna/package.json).
+
+**Step 4: Run test to verify it passes**
+Run: `npm run test:obligations -- --template-check`  
+Expected: PASS with 0 errors.
+
+**🔍 Validation Gate (VG)**:
+
+1. (Binary) Exit code 0.
+
+**Step 5: Atomic Commit**
+Run: `git add scripts/test-obligation-contract.cjs package.json && git commit -m "test(obligations): add obligation contract test harness (SK-020 Phase 1.4)"`
+
+---
+
+## 5. Execution Boundary & Hard-Stop Notice
+
+In strict adherence to `STD-PLANNING-ENGINE-001`, `AC-DEC-2026-044`, and the Review 1.2 Hard Gate:
+
+- **The planning turn concludes here.**
+- **Zero application code, Firestore schemas, or premature obligation records were created.**
+- **The decision is formally certified under `AC-DEC-2026-061`.**
+
+### Ready for Host Action:
+
+Would you like me to proceed with executing **Phase 1 (Tasks 1.1–1.4)** to scaffold the directory, template, canonical spec, and test harness?
+
+# Query 1.4 -[prompt-clarity](slashCommand;prompt-clarity) yes proceed and update the SHopping tab , so prepare a complete plan for the same and share
 
 # Review 1.4 -
 
-# Response 1.4 -
+# Response 1.4 -Viewed template.html:1-33
 
-# Query 1.5 -
+Searched for files: *
+Viewed body.html:1-120
+Viewed body.html:121-200
+Viewed controller.js:1-100
+Searched for "setCatalogSubView"
+Searched for "setCatalogSubView"
+Viewed controller.js:430-470
+Viewed controller.js:340-420
+Searched for "function setCatalogSubView"
+Searched for "setCatalogSubView ="
+Viewed shopping-registry.html:7590-7610
+Viewed build.cjs:1-100
+Viewed primitives_core.js:1-100
+Searched for "catalogSubView"
+Searched for "catalogSubView"
+Viewed controller.js:460-520
+Viewed build-shopping-data.cjs:1-100
+Ran command: `npm run test:shopping`
+Created 260927_arch_council_shopping_tab_family_obligation_integration.md
+Viewed Council_Ledger.md:58-66
+Edited Council_Ledger.md
+Viewed C:\Users\Temp\.gemini\antigravity\brain\a6cbf7aa-8337-4cbb-865a-5695511b4e5d\implementation_plan.md
+Viewed SKILL.md:1-206
+Viewed 00_ENHANCEMENT_INDEX.md:1-75
+Viewed 260927_arch_council_shopping_tab_family_obligation_integration.md:1-137
+Listed directory shopping_src
+Listed directory components
+Listed directory styles
+Listed directory scripts
+Viewed build.cjs:1-236
+Searched for files: *shopping\*
+Viewed build-shopping-data.cjs:1-800
+Viewed build-shopping-data.cjs:800-827
+Viewed test-shopping-registry.cjs:1-230
+Ran command: `npm run test:shopping`
+Viewed HUB.md:1-32
+Viewed package.json:1-58
+Created implementation_plan.md
+Created implementation_plan.md
+Viewed 00_ENHANCEMENT_INDEX.md:50-75
+Edited 00_ENHANCEMENT_INDEX.md
+Ran command: `git status`
+
+I am using the **`writing-plans`** skill to formulate the implementation plan for integrating the 49 customary family obligations into the Marriage OS and the Shopping Registry.
+
+The implementation plan has been generated and saved to [`enhancement-notes/SK-020/implementation_plan.md`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-020/implementation_plan.md) and registered in the active planning artifact.
+
+---
+
+### Executive Summary & Architecture Ratification
+
+#### 1. Options Evaluation & Adopted Architecture (`AC-DEC-2026-062` / `UI-DEC-2026-047`)
+
+Following council evaluation against the **Static Decoupled Component Assembler (`STD-MOD-COMP-001`)** and **Canonical Trousseau Specification (`SPEC-PROC-TROUSSEAU-001`)**, three architectural patterns were assessed:
+
+- **Option A (Catalog Inflation — REJECTED)**: Merging 49 obligations directly into the 44-item shopping list. Rejected because it breaks `npm run test:shopping` (hard-coded 44/44 item count assertion fails), inflates the catalog to 80+ items, and causes severe mobile scroll fatigue.
+- **Option B (Disjoint Portal — REJECTED)**: Creating an isolated standalone page (`family-obligations.html`). Rejected because it fractures the user journey and forces family members to juggle multiple distinct URLs.
+- **Option C (Faceted Subview Navigation Hub — ADOPTED & RATIFIED)**:
+  1.  **Faceted Subview Mode**: Adds a dedicated 6th operating mode `[📜 Family Obligations (49)]` to `#catalogSubnavStrip` (`data-subview="obligations"`), toggled seamlessly within the familiar Shopping Registry interface.
+  2.  **Bi-Directional Badging**: Items in the 44-item catalog that fulfill an obligation carry `[📜 Fulfills OBL-###]` linking directly to the obligation card; obligation cards carry `[🛍️ Sourced via TRS-###]` linking to store and trial details.
+  3.  **Family-Side Segmented Filters**: Inner filter pills allow coordinators to isolate `[🌺 All (49)]`, `[👰 Bride Side (28)]`, `[🤵 Groom Side (21)]`, and `[⏳ Unresolved (6)]`.
+  4.  **100% Test Stability**: The 44-item core catalog remains 100% intact, keeping `npm run test:shopping` green while isolating the social covenants.
+
+#### 2. Epistemic Invariants & Provenance Integrity
+
+- **Verbatim Provenance**: Customary Odia terms (_Batabasana_, _Bandhu Daksa_, _Samdhi Milan_, _Nananda Putuli_, _Guin Chada_, _Saga Macha_) are preserved verbatim without silent Westernization.
+- **Epistemic Honesty Invariant**: Variable cash honoraria (e.g. ₹5,000 to sisters, cousins, or elders) are codified with `unit_amount_inr: 5000` and `headcount: null` until official RSVP freeze. No fictional totals are committed to financial ledgers.
+- **State Machine Orthogonality**: Procurement lifecycle (`lifecycle_status`: _Identified_ $\to$ _Agreed_ $\to$ _Procuring_ $\to$ _Staged_ $\to$ _Handed_Over_) is decoupled from specification certainty (`spec_status`: _Fully_Specified_, _TBD_Family_Choice_, _Source_Unclear_, _Source_Redacted_, _Pending_Family_Confirmation_). Automated validation guards prevent invalid combinations (e.g. `Handed_Over + Source_Unclear`).
+
+---
+
+### Phased Roadmap Overview
+
+```mermaid
+flowchart LR
+    P1["Phase 1: Canonical Scaffolding<br/>& Template Baseline"] --> P2["Phase 2: Contract Validator<br/>& State Machine Rules"]
+    P2 --> P3["Phase 3: Sourcing Projection<br/>& Compilation Engine"]
+    P3 --> P4["Phase 4: Full 49-Obligation<br/>Dataset Ingestion"]
+    P4 --> P5["Phase 5: SDCA UI Components<br/>(obligations_view.html)"]
+    P5 --> P6["Phase 6: Controller Wiring<br/>& Deep-Linking"]
+    P6 --> P7["Phase 7: Byte Parity &<br/>Governance Verification"]
+```
+
+| Phase       | Focus Area                          | Deliverables & Validation Gates                                                                                                                                                                                     |
+| :---------- | :---------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Phase 1** | **Scaffolding & Spec Baseline**     | Create `02_RITUALS_CULTURE/obligations/`, wire `02_RITUALS_CULTURE/HUB.md`, author `obligation_template.md`, codify `docs/references/SPEC-ARCH-FAMILY-OBLIGATION-001.md`, and establish `npm run test:obligations`. |
+| **Phase 2** | **Contract Validator & Invariants** | Implement `scripts/test-obligation-contract.cjs` checking orthogonal state combinations, actor models, and the cash formula honesty rule.                                                                           |
+| **Phase 3** | **Sourcing Projection Engine**      | Build `scripts/compile-obligations.cjs` emitting `family_obligations_master.md` and compiled `js/obligations-data.js`.                                                                                              |
+| **Phase 4** | **49-Obligation Ingestion**         | Ingest all 49 obligations from `260926_ShoppingList2.md` into `OBL-001.md` through `OBL-049.md` with 100% assertion pass in `test:obligations`.                                                                     |
+| **Phase 5** | **SDCA UI Component Architecture**  | Add `shopping_src/components/obligations_view.html` and `shopping_src/styles/10_obligations.css` (<500 lines, Container Queries, 300px mobile-first).                                                               |
+| **Phase 6** | **Controller Wiring & Quick-Share** | Wire `window.setCatalogSubView('obligations')`, deep-link parser (`?subview=obligations&obl=OBL-001`), bi-directional badge clicks, and WhatsApp quick-share composer.                                              |
+| **Phase 7** | **Byte Parity & Pre-Flight Gate**   | Run `shopping_src/build.cjs --all`, verify 100% root/public byte parity, and ensure green runs across `test:shopping`, `test:obligations`, and `verify:modular-architecture`.                                       |
+
+---
+
+### Phase 1 Immediate Execution Plan (5-Step TDD Breakdown)
+
+1.  **Task 1.1**: Create `02_RITUALS_CULTURE/obligations/.gitkeep` and register the spoke in `02_RITUALS_CULTURE/HUB.md`.
+2.  **Task 1.2**: Author `02_RITUALS_CULTURE/obligation_template.md` with the full 16-key YAML schema contract.
+3.  **Task 1.3**: Codify `docs/references/SPEC-ARCH-FAMILY-OBLIGATION-001.md` capturing the ratified architecture rules.
+4.  **Task 1.4**: Implement `scripts/test-obligation-contract.cjs` (Phase 1 baseline harness) and register `npm run test:obligations` in `package.json`.
+
+---
+
+Please review the complete plan in the artifact or at [`enhancement-notes/SK-020/implementation_plan.md`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-020/implementation_plan.md). Once you approve, I will begin executing **Phase 1 (Tasks 1.1–1.4)** following the 5-step TDD cycle with atomic commits.
+
+# Query 1.5 -ethi batabarana pre gute event add Kari dia
+
+Ahiya manduli
+(Saree for mummy) : from groom's family- can we adjust this and then proceed accordingly
 
 # Review 1.5 -
 
-# Response 1.5 -
+# Response 1.5 -Searched for "Bataba"
 
-# Query 1.6 -
+Searched for "Barana"
+Searched for "Baran"
+Searched for "Event 2"
+Viewed 260926_ShoppingList2.md:1-60
+Viewed 260926_ShoppingList2.md:61-120
+Searched for "Batabasana"
+Viewed 260926_ShoppingList2.md:80-115
+Viewed 260926_ShoppingList2.md:2950-3020
+Viewed 260926_ShoppingList2.md:3040-3200
+Viewed RIT-004_baranugam.md:1-36
+Viewed EVT-004_barat_and_wedding.md:30-45
+Viewed 260926_ShoppingList2.md:85-115
+Viewed 260926_ShoppingList2.md:3065-3085
+Searched for "Saree for Mummy"
+Viewed 260926_ShoppingList2.md:2700-2800
+Edited 260926_ShoppingList2.md
+Viewed 260926_ShoppingList2.md:3070-3090
+Edited 260926_ShoppingList2.md
+Viewed RIT-004_baranugam.md:20-36
+Edited RIT-004_baranugam.md
+Viewed RIT-004_baranugam.md:25-36
+Edited RIT-004_baranugam.md
+Viewed RIT-004_baranugam.md:1-36
+Created RIT-004_baranugam.md
+Viewed EVT-004_barat_and_wedding.md:30-45
+Viewed EVT-004_barat_and_wedding.md:1-45
+Created EVT-004_barat_and_wedding.md
+Viewed implementation_plan.md:1-45
+Viewed implementation_plan.md:150-250
+Edited implementation_plan.md
+Edited implementation_plan.md
+Ran command: `git status`
+Ran command: `npm run test:shopping`
+
+ହଁ, **ବାଟବରଣ (Batabarana) ପରେ _ଅହିୟା ମଣ୍ଡୁଳି (Ahiya Manduli)_ କୁ ଏକ ସ୍ୱତନ୍ତ୍ର ବିଧି ଓ ଦାୟିତ୍ୱ (Customary Obligation) ଭାବରେ ସଂଯୋଗ କରି ସମସ୍ତ specifications ଓ plan କୁ adjust କରିଦିଆଗଲା।**
+
+---
+
+### 1. ସାଂସ୍କୃତିକ ଓ ବିଧିଗତ ସମନ୍ୱୟ (Cultural & Ritual Grounding)
+
+- **ବିଧି ନାମ (Ritual / Custom)**: **ଅହିୟା ମଣ୍ଡୁଳି (_Ahiya Manduli_)**
+- **ସମୟ / Milestone**: ବିବାହ ଦିନ ପ୍ରବେଶ ଦ୍ୱାରରେ ବରପକ୍ଷଙ୍କ ଆଗମନ ଓ ବାଟବରଣ ଆଳତି ପରେ ପରେ (`EVT-004`, 10:30 AM).
+- **ଦାୟିତ୍ୱବାନ (Obligor)**: **ବରପକ୍ଷ (Groom's Family)**
+- **ଗ୍ରହଣକାରୀ (Recipient)**: **କନ୍ୟାଙ୍କ ମାଆ ("Mummy" — Smt. Tapaswini)**, ଯିଏ ଅହିୟା/ସୁଲକ୍ଷଣୀ ଭାବେ ବରଙ୍କୁ ବାଟବରଣ କରନ୍ତି।
+- **ଉପହାର ସାମଗ୍ରୀ (Payload)**: **ଶାଶୁଙ୍କ ପାଇଁ ପାଟ/ରେଶମ ଶାଢ଼ୀ (_Saree for Mummy_)** + ଶୁଭ ଶୃଙ୍ଗାର ଭେଟି।
+- **ସପିଂ ଲିଙ୍କ (Procurement SKU)**: ସପିଂ ରେଜିଷ୍ଟ୍ରିରେ ଥିବା **[`TRS-SA-01`](file:///d:/GitHub_Repo/Sree_Krushna/scripts/build-shopping-data.cjs#L642-L656)** (_Samandhi Vastra — Mother-in-Law Silk Saree from Boyanika, Janpath_) ସହିତ ସିଧାସଳଖ bi-directional ଲିଙ୍କ ହେବ।
+- **ମଣ୍ଡପ ଅଳତା ଓ ସିନ୍ଦୂର ପୃଥକୀକରଣ**: ପୂର୍ବରୁ ନୋଟ୍ସରେ ସାମୟିକ ଭାବେ ଲେଖାଥିବା ମଣ୍ଡପ "ଅଳତା ଓ ସିନ୍ଦୂର" ରୁ ମମ୍ମୀଙ୍କ ଶାଢ଼ୀକୁ ଅଲଗା କରାଯାଇ ମଣ୍ଡପ ସାମଗ୍ରୀକୁ କେବଳ କନ୍ୟାଙ୍କ ବୈଦିକ ବିଧି ସାମଗ୍ରୀ (`SAM-005`) ଭାବେ ରଖାଗଲା।
+
+---
+
+### 2. ଅଦ୍ୟତିତ କରାଯାଇଥିବା ଦଲିଲ୍ (Updated Documents)
+
+1.  **[`260926_ShoppingList2.md`](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Shopping/260926_ShoppingList2.md#L85-L102)**:
+    - `EVENT 2 — BEFORE MARRIAGE / WEDDING DAY` ରେ `Batabasana (Batabarana)` ପରେ `Ahiya Manduli (Immediately after Batabarana)` ଯୋଡ଼ାଗଲା।
+    - `Section 10 (Replay Table)` ରେ Item 25 କୁ ପୁନଃ-ସଜ୍ଜିତ କରି `Ahiya Manduli (Saree for Mummy)`, Obligor: `Groom's Family`, Recipient: `Bride's Mother (Mummy)` ଭାବେ ଲିପିବଦ୍ଧ କରାଗଲା।
+2.  **[`02_RITUALS_CULTURE/specs/RIT-004_baranugam.md`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/specs/RIT-004_baranugam.md#L28-L34)**:
+    - Section 2 (Sequence of Ritual Steps) ରେ Step 3 ଭାବେ **Ahiya Manduli Presentation** (Groom family presents sacred silk saree to bride's mother) ସାମିଲ କରାଗଲା।
+3.  **[`01_TIMELINE_EVENTS/wedding_day/EVT-004_barat_and_wedding.md`](file:///d:/GitHub_Repo/Sree_Krushna/01_TIMELINE_EVENTS/wedding_day/EVT-004_barat_and_wedding.md#L36)**:
+    - 10:30 AM Milestone ରେ `Baranugam, Entrance Welcome & Ahiya Manduli` ଅଦ୍ୟତନ କରାଗଲା।
+4.  **[`enhancement-notes/SK-020/implementation_plan.md`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-020/implementation_plan.md#L25-L35)**:
+    - ପ୍ଲାନିଂ ଡକ୍ୟୁମେଣ୍ଟ ଓ ଆକ୍ଟିଭ୍ ଆର୍ଟିଫ୍ୟାକ୍ଟରେ ଏହି ପରିବର୍ତ୍ତନକୁ ସ୍ପଷ୍ଟ ଭାବରେ ସଂଯୋଗ କରାଗଲା।
+
+---
+
+ସମସ୍ତ verification tests (`npm run test:shopping`) ପୂର୍ଣ୍ଣ ଗ୍ରୀନ୍ ଅଛି (44/44 items 100% intact)।
+
+ଆପଣ ଅନୁମତି ଦେଲେ, ମୁଁ **Phase 1 (Tasks 1.1–1.4)** କୁ TDD cycle ଏବଂ atomic commit ମାଧ୍ୟମରେ କାର୍ଯ୍ୟକାରୀ କରିବା ଆରମ୍ଭ କରିବି। proceed କରିବା?
+
+# Query 1.6 -sure please proceed ahead
 
 # Review 1.6 -
 
-# Response 1.6 -
+# Response 1.6 -Viewed d:\GitHub_Repo\Sree_Krushna\scripts\test-obligation-contract.cjs
 
-# Query 1.7 -
+Listed directory 02_RITUALS_CULTURE
+Created test-obligation-contract.cjs
+Ran command: `node scripts/test-obligation-contract.cjs`
+Created .gitkeep
+Viewed HUB.md:20-32
+Edited HUB.md
+Ran command: `node scripts/test-obligation-contract.cjs`
+Ran command: `git add 02_RITUALS_CULTURE/obligations/.gitkeep 02_RITUALS_CULTURE/HUB.md scripts/test-obligation-contract.cjs`
+Ran command: `git commit -m "feat(rituals): scaffold obligations spoke directory and register in HUB.md"`
+Created test-obligation-contract.cjs
+Ran command: `node scripts/test-obligation-contract.cjs`
+Created obligation_template.md
+Ran command: `node scripts/test-obligation-contract.cjs`
+Ran command: `git add 02_RITUALS_CULTURE/obligation_template.md scripts/test-obligation-contract.cjs`
+Ran command: `git commit -m "feat(rituals): create canonical obligation template contract (OBL-001)"`
+Created test-obligation-contract.cjs
+Ran command: `node scripts/test-obligation-contract.cjs`
+Created SPEC-ARCH-FAMILY-OBLIGATION-001.md
+Ran command: `node scripts/test-obligation-contract.cjs`
+Ran command: `git add docs/references/SPEC-ARCH-FAMILY-OBLIGATION-001.md scripts/test-obligation-contract.cjs`
+Ran command: `git commit -m "docs(rituals): codify SPEC-ARCH-FAMILY-OBLIGATION-001 architecture specification"`
+Ran command: `npm run test:obligations`
+Viewed package.json:15-25
+Edited package.json
+Viewed test-obligation-contract.cjs:40-61
+Edited test-obligation-contract.cjs
+Ran command: `npm run test:obligations`
+Ran command: `git add package.json scripts/test-obligation-contract.cjs`
+Ran command: `git commit -m "build(npm): register test:obligations and validate Phase 1 baseline gates"`
+Ran command: `npm run test:shopping`
+Ran command: `npm run verify:modular-architecture`
+Ran command: `npm run verify:governance-wiring:all`
+Ran command: `git status`
+Viewed 00_ENHANCEMENT_INDEX.md:50-60
+Edited 00_ENHANCEMENT_INDEX.md
+Ran command: `git add enhancement-notes/SK-020/00_ENHANCEMENT_INDEX.md enhancement-notes/SK-020/implementation_plan.md 01_TIMELINE_EVENTS/wedding_day/EVT-004_barat_and_wedding.md 02_RITUALS_CULTURE/specs/RIT-004_baranugam.md User_Created/Discussion\ Threads/Shopping/260926_ShoppingList2.md`
+Ran command: `git add enhancement-notes/SK-020/00_ENHANCEMENT_INDEX.md enhancement-notes/SK-020/implementation_plan.md 01_TIMELINE_EVENTS/wedding_day/EVT-004_barat_and_wedding.md 02_RITUALS_CULTURE/specs/RIT-004_baranugam.md "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md"`
+Ran command: `git commit -m "docs(rituals): update RIT-004, EVT-004, and SK-020 index for Ahiya Manduli and Phase 1 completion"`
+Ran command: `git status`
+Created walkthrough.md
+
+### ✅ Phase 1 Completed: Canonical Scaffolding, Spec Baseline & Contract Harness
+
+Following the strict 5-step TDD cycle with binary validation gates and atomic commits, **Phase 1** of **`SK-020`** has been executed.
+
+---
+
+### 1. Summary of Completed Tasks & Commits
+
+| Task             | Component                        | Key Accomplishments                                                                                                                                                                                                                                                                                                                               | Commit                                           |
+| :--------------- | :------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :----------------------------------------------- |
+| **Task 1.1**     | **Directory & Hub Registration** | Created [`02_RITUALS_CULTURE/obligations/`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/obligations/) and registered the spoke in [`02_RITUALS_CULTURE/HUB.md`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/HUB.md).                                                                                                        | [`be2b2f6`](file:///d:/GitHub_Repo/Sree_Krushna) |
+| **Task 1.2**     | **Obligation Template Contract** | Authored canonical [`02_RITUALS_CULTURE/obligation_template.md`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/obligation_template.md) containing the full 16-key YAML schema contract, two-tier state machine, reciprocal exchange clustering, and verbatim provenance.                                                                 | [`f2e6a36`](file:///d:/GitHub_Repo/Sree_Krushna) |
+| **Task 1.3**     | **Architecture Specification**   | Codified [`docs/references/SPEC-ARCH-FAMILY-OBLIGATION-001.md`](file:///d:/GitHub_Repo/Sree_Krushna/docs/references/SPEC-ARCH-FAMILY-OBLIGATION-001.md) (`STD-FAMILY-OBLIGATION-001`) with domain decoupling, epistemic honesty invariant, derived actor model, _Batabarana_ and _Ahiya Manduli_ alignment, and Shopping Tab subview integration. | [`0714e23`](file:///d:/GitHub_Repo/Sree_Krushna) |
+| **Task 1.4**     | **Test Harness Registration**    | Wired `npm run test:obligations` and `npm run build:obligations` in [`package.json`](file:///d:/GitHub_Repo/Sree_Krushna/package.json), and completed Phase 1 baseline assertions in [`scripts/test-obligation-contract.cjs`](file:///d:/GitHub_Repo/Sree_Krushna/scripts/test-obligation-contract.cjs).                                          | [`2d76572`](file:///d:/GitHub_Repo/Sree_Krushna) |
+| **Index Update** | **Governance DoD Tracking**      | Updated [`enhancement-notes/SK-020/00_ENHANCEMENT_INDEX.md`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-020/00_ENHANCEMENT_INDEX.md) checking off Phase 1 items in the DoD matrix.                                                                                                                                                  | [`67f8ccb`](file:///d:/GitHub_Repo/Sree_Krushna) |
+
+---
+
+### 2. Validation & Pre-Flight Suite Verification Evidence
+
+All automated verification gates are **100% green**:
+
+- **`npm run test:obligations`**:
+  ```
+  ▶ [1/4] Verifying Obligations Directory & Hub Registration...
+    ✓ [PASS] Obligations spoke registered in HUB.md
+  ▶ [2/4] Verifying Obligation Template Schema Contract...
+    ✓ [PASS] Obligation template contract verified with 16 schema keys
+  ▶ [3/4] Verifying Architecture Specification (SPEC-ARCH-FAMILY-OBLIGATION-001)...
+    ✓ [PASS] Architecture specification verified
+  ▶ [4/4] Validating Phase 1 Baseline Gates...
+    ✓ [PASS] Phase 1 scaffolding, template contract, and architecture spec validated.
+  🎉 OBLIGATION CONTRACT VERIFICATION: 100% GREEN (PHASE 1 BASELINE)
+  ```
+- **`npm run test:shopping`**: **100% GREEN** (44/44 Canonical Trousseau items completely intact).
+- **`npm run verify:modular-architecture`**: **100% GREEN** (All 46 SDCA modularity & byte-parity checks passed).
+- **`npm run verify:governance-wiring:all`**: **100% GREEN** (All 198 artifacts fully wired).
+
+---
+
+### 3. Ready for Phase 2: Schema Validation Suite & State Machine Invariants
+
+Phase 1 provides the verified baseline. We are now ready to execute **Phase 2**:
+
+1.  **Synthetic Fixture Testing**: Implement positive and negative test cases in `scripts/test-obligation-contract.cjs`.
+2.  **Orthogonal State Guards**: Enforce that records in `Staged` or `Handed_Over` cannot possess `Source_Unclear` or `Source_Redacted`.
+3.  **Cash Formula Invariant**: Enforce error throwing if `projected_total_inr` is computed while `headcount: null`.
+4.  **Reciprocal Cluster Integrity**: Verify bidirectional pairing validation for `exchange_cluster` records.
+
+Detailed walkthrough has been recorded in the [`walkthrough.md`](file:///C:/Users/Temp/.gemini/antigravity/brain/a6cbf7aa-8337-4cbb-865a-5695511b4e5d/walkthrough.md) artifact.
+
+Shall I proceed with **Phase 2**?
+
+# Query 1.7 -proceed and check how this will intergrate with the shopping tab ?
 
 # Review 1.7 -
 
-# Response 1.7 -
+# Response 1.7 -Viewed test-obligation-contract.cjs:1-68
 
-# Query 1.8 -
+Ran command: `node -e "try { require('js-yaml'); console.log('js-yaml available'); } catch(e) { console.log('not available'); }"`
+Viewed verify-governance-wiring.cjs:1-60
+Viewed verify-governance-schema.cjs:1-56
+Viewed validate-task-graph.cjs:1-60
+Ran command: `node -e "
+const fs = require('fs');
+const content = fs.readFileSync('02_RITUALS_CULTURE/obligation_template.md', 'utf8');
+const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+console.log('Frontmatter extracted:', !!match);
+"`
+Ran command: `node -e "
+function parseYaml(str) {
+const lines = str.split(/\r?\n/);
+const result = {};
+let currentKey = null;
+let currentList = null;
+let currentObj = null;
 
-# Review 1.8 -
+for (let line of lines) {
+line = line.replace(/#.\*$/, '').trimEnd();
+if (!line.trim()) continue;
 
-# Response 1.8 -
+    const indent = line.search(/\S/);
+    const trimmed = line.trim();
+
+    if (indent === 0) {
+      currentList = null;
+      currentObj = null;
+      const colonIdx = trimmed.indexOf(':');
+      if (colonIdx !== -1) {
+        currentKey = trimmed.slice(0, colonIdx).trim();
+        const valStr = trimmed.slice(colonIdx + 1).trim();
+        if (valStr) {
+          result[currentKey] = parseValue(valStr);
+        } else {
+          result[currentKey] = {};
+        }
+      }
+    } else if (indent === 2) {
+      if (trimmed.startsWith('- ')) {
+        if (!Array.isArray(result[currentKey])) {
+          result[currentKey] = [];
+        }
+        currentList = result[currentKey];
+        const itemContent = trimmed.slice(2).trim();
+        if (itemContent.includes(':')) {
+          const [k, ...rest] = itemContent.split(':');
+          currentObj = { [k.trim()]: parseValue(rest.join(':').trim()) };
+          currentList.push(currentObj);
+        } else {
+          currentList.push(parseValue(itemContent));
+          currentObj = null;
+        }
+      } else {
+        const colonIdx = trimmed.indexOf(':');
+        if (colonIdx !== -1) {
+          const subKey = trimmed.slice(0, colonIdx).trim();
+          const valStr = trimmed.slice(colonIdx + 1).trim();
+          if (typeof result[currentKey] !== 'object' || Array.isArray(result[currentKey])) {
+            result[currentKey] = {};
+          }
+          result[currentKey][subKey] = parseValue(valStr);
+        }
+      }
+    } else if (indent === 4 && currentObj) {
+      const colonIdx = trimmed.indexOf(':');
+      if (colonIdx !== -1) {
+        const subKey = trimmed.slice(0, colonIdx).trim();
+        const valStr = trimmed.slice(colonIdx + 1).trim();
+        currentObj[subKey] = parseValue(valStr);
+      }
+    }
+
+}
+return result;
+}
+
+function parseValue(val) {
+if (val === 'null' || val === '~' || val === '') return null;
+if (val === 'true') return true;
+if (val === 'false') return false;
+if (/^-?\d+$/.test(val)) return parseInt(val, 10);
+  if (/^-?\d*\.\d+$/.test(val)) return parseFloat(val);
+if ((val.startsWith('\"') && val.endsWith('\"')) || (val.startsWith(\"'\") && val.endsWith(\"'\"))) {
+return val.slice(1, -1);
+}
+return val;
+}
+
+const fs = require('fs');
+const content = fs.readFileSync('02_RITUALS_CULTURE/obligation_template.md', 'utf8');
+const match = content.match(/^---\r?\n([\s\S]\*?)\r?\n---/);
+const parsed = parseYaml(match[1]);
+console.log('Parsed id:', parsed.id);
+console.log('Parsed obligor:', parsed.obligor);
+console.log('Parsed items:', parsed.items);
+console.log('Parsed financial:', parsed.financial_obligation);
+"`Created obligation-parser.cjs
+Ran command:`node -e "
+const fs = require('fs');
+const { parseYamlFrontmatter } = require('./scripts/obligation-parser.cjs');
+const content = fs.readFileSync('02_RITUALS_CULTURE/obligation_template.md', 'utf8');
+const parsed = parseYamlFrontmatter(content);
+console.log('Parsed successfully:', !!parsed);
+console.log('ID:', parsed.id);
+console.log('Obligor:', parsed.obligor);
+console.log('Exchange cluster:', parsed.exchange_cluster);
+console.log('Items length:', parsed.items && parsed.items.length);
+console.log('Financial:', parsed.financial_obligation);
+"`Edited obligation-parser.cjs
+Ran command:`node -e "
+const fs = require('fs');
+const { parseYamlFrontmatter } = require('./scripts/obligation-parser.cjs');
+const content = fs.readFileSync('02_RITUALS_CULTURE/obligation_template.md', 'utf8');
+const parsed = parseYamlFrontmatter(content);
+console.log('ID:', parsed.id);
+console.log('Primary contact:', parsed.obligor.primary_contact);
+"`Created test-obligation-contract.cjs
+Ran command:`npm run test:obligations`Ran command:`git add scripts/obligation-parser.cjs scripts/test-obligation-contract.cjs`Ran command:`git commit -m "feat(rituals): implement Phase 2 schema validation suite and state machine invariant guards"`Viewed 00_ENHANCEMENT_INDEX.md:58-70
+Edited 00_ENHANCEMENT_INDEX.md
+Ran command:`git add enhancement-notes/SK-020/00_ENHANCEMENT_INDEX.md && git commit -m "docs(enhancement): check off Phase 2 in SK-020 index"`Ran command:`git add enhancement-notes/SK-020/00_ENHANCEMENT_INDEX.md ; git commit -m "docs(enhancement): check off Phase 2 in SK-020 index"`Ran command:`npm run test:obligations ; npm run test:shopping ; npm run verify:modular-architecture`
+Viewed walkthrough.md:1-94
+Created walkthrough.md
+
+### 1. How Family Obligations Integrate with the Shopping Tab
+
+Under Architecture Council Ruling **[`AC-DEC-2026-062`](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/260927_arch_council_shopping_tab_family_obligation_integration.md)**, family obligations integrate seamlessly into the interactive Shopping Registry (`shopping-registry.html` / `shopping-fragment.html`) using **Option C: Faceted Subview Navigation**.
+
+Here is the exact architecture:
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│ LEVEL 1: PRIMARY VIEW SWITCHER (#shopViewSwitcher)                     │
+│ [🛍️ Trousseau Catalog]   [📊 Live Mutable Table Grid]   [📝 Survey]     │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ within [🛍️ Trousseau Catalog]
+┌───────────────────────────────────▼────────────────────────────────────┐
+│ LEVEL 2: FACETED SUBVIEW STRIP (#catalogSubnavStrip)                   │
+│ [📋 Checklist (44)] [🧭 Itinerary] [🤝 Decision Pods] [📍 Stores]     │
+│ ────────────────────────────────────────────────────────────────────── │
+│ 🌟 [📜 Family Obligations (49)]  <── NEW 6th Operating Subview Mode     │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ 1-click toggle (Zero Page Reload)
+┌───────────────────────────────────▼────────────────────────────────────┐
+│ OBLIGATION SUBVIEW (#shoppingObligationsView)                           │
+│ • Segmented Side Filter: [All (49)] [👰 Bride Side] [🤵 Groom Side]    │
+│ • Milestone Accordions: [Event 1: Nirbandha] [Event 2] [Event 3]       │
+│ • Interactive Cards: Provenance, Line Items, Custodian, Exchange Link │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Bi-Directional Linking
+┌───────────────────────────────────▼────────────────────────────────────┐
+│ BI-DIRECTIONAL BADGE HANDSHAKE                                         │
+│ • In 44-Item Catalog (e.g. TRS-SA-01):                                 │
+│   Badge: [📜 Fulfills Ahiya Manduli (OBL-025)] ──► Switches to OBL-025 │
+│ • In Obligations View (OBL-025 Card):                                  │
+│   Badge: [🛍️ Sourced via TRS-SA-01: Boyanika] ──► Switches to Catalog  │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+#### A. 100% Catalog Protection & Zero Scroll Fatigue
+
+- The core **44-item Canonical Trousseau Catalog** (`SPEC-PROC-TROUSSEAU-001`) remains strictly 44 items. The automated suite `npm run test:shopping` stays 100% green.
+- Couples browsing their wedding wardrobe in Bhubaneswar are not overwhelmed by extended family gifting.
+- Toggling `[📜 Family Obligations (49)]` reveals the complete 49-item register with responsive cards adapted for 300px mobile viewports.
+
+#### B. Bi-Directional Badging in Action (Concrete Example)
+
+1.  **In the Trousseau Catalog**:
+    - Item **[`TRS-SA-01`](file:///d:/GitHub_Repo/Sree_Krushna/scripts/build-shopping-data.cjs#L642-L656)** (_Mother-in-Law Silk Saree from Boyanika_) displays a purple/gold badge:
+      $$\text{[📜 Fulfills Ahiya Manduli (OBL-025)]}$$
+    - Clicking it switches the subview to `obligations` and smoothly scrolls to `OBL-025` with a golden pulse animation.
+2.  **In the Family Obligations Subview**:
+    - Card **`OBL-025`** (_Ahiya Manduli_) displays:
+      $$\text{[🛍️ Sourced via TRS-SA-01: Boyanika Silk Saree — Shortlisted]}$$
+    - Clicking it navigates back to the catalog card to inspect fabric, pricing, and trial schedules.
+
+#### C. Family Consultation Deep-Linking (WhatsApp)
+
+- Coordinators can filter by **`[👰 Bride Side]`** or **`[🤵 Groom Side]`** and click **`[🌺 Share on WhatsApp]`**.
+- The share link:
+  `https://.../shopping-registry.html?subview=obligations&obl=OBL-025`
+- When family elders open this link on their mobile phones, the page immediately mounts the obligations subview, highlights `OBL-025`, and opens the card details.
+
+---
+
+### 2. Phase 2 Execution Update: Validation Suite & State Machine Invariants
+
+Per your approval, **Phase 2** has been executed and committed:
+
+1.  **YAML Frontmatter Parser ([`scripts/obligation-parser.cjs`](file:///d:/GitHub_Repo/Sree_Krushna/scripts/obligation-parser.cjs))**:
+    - Custom, deterministic YAML parser built with zero third-party dependencies.
+2.  **Validation Engine & Invariant Guards ([`scripts/test-obligation-contract.cjs`](file:///d:/GitHub_Repo/Sree_Krushna/scripts/test-obligation-contract.cjs))**:
+    - **State Orthogonality Guard**: Automatically rejects records in `Staged` or `Handed_Over` if `spec_status` is `Source_Unclear` or `Source_Redacted`.
+    - **Epistemic Honesty Cash Guard**: Automatically rejects records with hardcoded cash totals when `headcount` is null.
+    - **Exchange Cluster Pairing**: Verifies bidirectional pairing for reciprocal obligations (`EXC-###`).
+    - Verified against synthetic positive and negative test fixtures.
+3.  **Commits**:
+    - [`1d5f43b`](file:///d:/GitHub_Repo/Sree_Krushna): `feat(rituals): implement Phase 2 schema validation suite and state machine invariant guards`
+    - [`8de41e3`](file:///d:/GitHub_Repo/Sree_Krushna): `docs(enhancement): check off Phase 2 in SK-020 index`
+
+#### Test Execution Evidence:
+
+```bash
+> npm run test:obligations
+▶ [1/6] Verifying Obligations Directory & Hub Registration...       ✓ [PASS]
+▶ [2/6] Verifying Obligation Template Schema Contract...            ✓ [PASS]
+▶ [3/6] Verifying Architecture Specification...                     ✓ [PASS]
+▶ [4/6] Auditing Core Schema Validation Engine & State Enums...     ✓ [PASS]
+▶ [5/6] Testing Invariant Guards & Negative Test Fixtures...        ✓ [PASS]
+  ✓ Correctly rejected invalid state combination (Handed_Over + Source_Unclear)
+  ✓ Correctly rejected fabricated cash total when headcount is null
+  ✓ Correctly rejected invalid exchange cluster pairing
+▶ [6/6] Scanning Physical Obligations Directory...                  ✓ [PASS]
+🎉 OBLIGATION CONTRACT VERIFICATION: 100% GREEN (PHASE 2 VALIDATION SUITE)
+```
+
+All other verification suites (`npm run test:shopping` and `npm run verify:modular-architecture`) remain **100% green**.
+
+---
+
+### 3. Immediate Next Step: Phase 3 (Compilation Engine)
+
+With the validation engine in place, the next step is **Phase 3**:
+
+- Implement **`scripts/compile-obligations.cjs`** to aggregate all markdown records into:
+  1.  `02_RITUALS_CULTURE/obligations/family_obligations_master.md` (Human-readable markdown index).
+  2.  `js/obligations-data.js` & `public/js/obligations-data.js` (Compiled JSON dataset with 100% byte parity for direct consumption by the Shopping Registry).
+
+Shall I proceed with **Phase 3**?
+
+# Query 1.8 -ok
+
+# Review 1.8 -Viewed test-obligation-contract.cjs:140-209
+
+Edited test-obligation-contract.cjs
+Ran command: `npm run test:obligations`
+Created compile-obligations.cjs
+Ran command: `npm run test:obligations`
+Ran command: `node -e "
+const fs = require('fs');
+const r = fs.readFileSync('js/obligations-data.js');
+const p = fs.readFileSync('public/js/obligations-data.js');
+console.log('Bytes identical:', r.equals(p), r.length);
+"`
+Ran command: `npm run test:shopping ; npm run verify:modular-architecture`
+Viewed 00_ENHANCEMENT_INDEX.md:63-73
+Edited 00_ENHANCEMENT_INDEX.md
+Ran command: `git add scripts/compile-obligations.cjs scripts/test-obligation-contract.cjs 02_RITUALS_CULTURE/obligations/family_obligations_master.md js/obligations-data.js public/js/obligations-data.js enhancement-notes/SK-020/00_ENHANCEMENT_INDEX.md ; git commit -m "feat(rituals): implement Phase 3 obligation compilation engine and dual-release byte parity"`
+Ran command: `git status`
+Ran command: `git diff package.json`
+Ran command: `npm run test:obligations`
+Viewed 260926_ShoppingList2.md:3050-3110
+Created ingest-obligations.cjs
+Created ingest-obligations.cjs
+Ran command: `git status`
+Viewed ingest-obligations.cjs:1-100
+Viewed ingest-obligations.cjs:1000-1068
+Ran command: `node scripts/ingest-obligations.cjs`
+Ran command: `npm run build:obligations`
+Ran command: `npm run test:obligations`
+Ran command: `npm run test:shopping`
+Ran command: `npm run verify:modular-architecture`
+Ran command: `npm run verify:governance-wiring:all`
+Viewed 00_ENHANCEMENT_INDEX.md:90-94
+Viewed 00_ENHANCEMENT_INDEX.md:50-90
+Edited 00_ENHANCEMENT_INDEX.md
+Ran command: `git status -s`
+Ran command: `git add 02_RITUALS_CULTURE/obligations/ scripts/ingest-obligations.cjs js/obligations-data.js public/js/obligations-data.js enhancement-notes/SK-020/00_ENHANCEMENT_INDEX.md`
+Ran command: `git commit -m "feat(rituals): ingest all 49 customary family obligations (OBL-001 to OBL-049)"`
+Viewed build.cjs:1-150
+Viewed build.cjs:151-236
+Viewed template.html:1-33
+Searched for "shopping-data.js"
+Searched for "mountShoppingTab"
+Searched for "shopping-fragment"
+Searched for "shopping-data.js"
+Searched for "shopping-fragment"
+Viewed body.html:1-100
+Viewed body.html:150-250
+Viewed body.html:100-150
+Searched for "setCatalogSubView"
+Searched for "setCatalogSubView"
+Searched for "setCatalogSubView"
+Listed directory scripts
+Searched for "setCatalog"
+Viewed shopping-registry.html:7585-7610
+Viewed controller.js:1-50
+Ran command: `node -e "const fs = require('fs'); const lines = fs.readFileSync('shopping_src/scripts/controller.js', 'utf8').split('\n'); lines.forEach((l, i) => { if (l.includes('setCatalogSubView')) console.log(i + 1, l); });"`
+Viewed controller.js:200-265
+Searched for "mode-"
+Viewed 03_stores_and_items.css:485-534
+Listed directory styles
+Listed directory components
+Viewed obligations-data.js:1-60
+Ran command: `node -e "const fs = require('fs'); const content = fs.readFileSync('js/obligations-data.js', 'utf8'); const d = JSON.parse(content.replace(/^window\.FAMILY_OBLIGATIONS_DATA\s*=\s*/, '').replace(/;\s*$/, '')); const trsMap = {}; d.obligations.forEach(o => { if (o.downstream_projections.commercial_shopping_ref) { trsMap[o.downstream_projections.commercial_shopping_ref] = o.id; } }); console.log(trsMap);"`
+Ran command: `node -e "global.window = {}; require('./js/obligations-data.js'); const d = window.FAMILY_OBLIGATIONS_DATA; const trsMap = {}; d.obligations.forEach(o => { if (o.downstream_projections.commercial_shopping_ref) { if (!trsMap[o.downstream_projections.commercial_shopping_ref]) trsMap[o.downstream_projections.commercial_shopping_ref] = []; trsMap[o.downstream_projections.commercial_shopping_ref].push(o.id); } }); console.log(trsMap);"`
+Viewed 00_tokens.css:1-29
+Viewed 08_collab_options_and_sharing.css:1-50
+Ran command: `node -e "const fs = require('fs'); const lines = fs.readFileSync('shopping_src/scripts/controller.js', 'utf8').split('\n'); lines.forEach((l, i) => { if (l.includes('renderItems(') || l.includes('function render') || l.includes('renderCatalog')) console.log(i + 1, l); });"`
+Viewed controller.js:808-860
+Viewed controller.js:920-1020
+Created obligations_view.html
+Created 10_obligations.css
+Viewed body.html:1-20
+Viewed body.html:120-150
+Viewed body.html:215-235
+Edited body.html
+Edited body.html
+Viewed body.html:220-235
+Edited body.html
+Viewed build.cjs:45-85
+Viewed template.html:15-32
+Edited template.html
+Viewed build.cjs:45-60
+Viewed build.cjs:220-235
+Edited build.cjs
+Edited build.cjs
+Ran command: `node scripts/verify-modular-architecture.cjs`
+Viewed 01_primitives.css:1-60
+Searched for "sk-btn"
+Searched for "sk-btn"
+Edited obligations_view.html
+Ran command: `node scripts/verify-modular-architecture.cjs`
+Viewed controller.js:430-470
+Viewed controller.js:380-455
+Viewed controller.js:3580-3617
+Viewed controller.js:10-30
+Viewed controller.js:870-910
+Viewed controller.js:200-255
+Viewed controller.js:10-30
+Edited controller.js
+Viewed controller.js:215-275
+Edited controller.js
+Viewed controller.js:410-465
+Viewed controller.js:465-485
+Viewed controller.js:870-900
+Viewed controller.js:900-935
+Viewed controller.js:1000-1030
+Viewed controller.js:475-490
+Edited controller.js
+Viewed controller.js:810-855
+Viewed controller.js:910-935
+Viewed controller.js:1020-1055
+Edited controller.js
+Viewed controller.js:920-935
+Edited controller.js
+Viewed controller.js:1030-1055
+Edited controller.js
+Viewed controller.js:3590-3625
+Viewed controller.js:3625-3669
+Edited controller.js
+Ran command: `node -c shopping_src/scripts/controller.js`
+Ran command: `node shopping_src/build.cjs`
+Ran command: `node -e "const fs = require('fs'); const a1 = fs.readFileSync('shopping-registry.html'); const a2 = fs.readFileSync('public/shopping-registry.html'); console.log('shopping-registry parity:', a1.equals(a2), a1.length, a2.length); const b1 = fs.readFileSync('shopping-fragment.html'); const b2 = fs.readFileSync('public/shopping-fragment.html'); console.log('shopping-fragment parity:', b1.equals(b2), b1.length, b2.length);"`
+Ran command: `npm run verify:modular-architecture`
+Ran command: `npm run test:shopping`
+Viewed test-shopping-registry.cjs:1-100
+Viewed test-shopping-registry.cjs:180-230
+Edited test-shopping-registry.cjs
+Ran command: `npm run test:shopping`
+Viewed 10_obligations.css:1-100
+Created 10_obligations.css
+Ran command: `node shopping_src/build.cjs`
+Ran command: `npm run test:shopping`
+Ran command: `node -e "const fs = require('fs'); console.log(fs.readFileSync('shopping_src/styles/10_obligations.css', 'utf8').split('\n').length);"`
+Created 10_obligations.css
+Ran command: `node -e "const fs = require('fs'); console.log(fs.readFileSync('shopping_src/styles/10_obligations.css', 'utf8').split('\n').length);"`
+Ran command: `node shopping_src/build.cjs`
+Ran command: `npm run test:shopping`
+Ran command: `npm run test:obligations`
+Ran command: `npm run verify:modular-architecture`
+Ran command: `npm run verify:governance-wiring:all`
+Viewed 00_ENHANCEMENT_INDEX.md:70-94
+Viewed 00_ENHANCEMENT_INDEX.md:1-30
+Edited 00_ENHANCEMENT_INDEX.md
+Edited 00_ENHANCEMENT_INDEX.md
+Ran command: `git status -s`
+Searched for "SK-020"
+Viewed ENHANCEMENT-MASTER-REGISTRY.md:1-26
+Edited ENHANCEMENT-MASTER-REGISTRY.md
+Viewed BUSINESS-LOGIC-ENHANCEMENT-CLUSTER.md:1-14
+Edited BUSINESS-LOGIC-ENHANCEMENT-CLUSTER.md
+Ran command: `npm run test:obligations; npm run test:shopping; npm run verify:modular-architecture; npm run verify:governance-wiring:all`
+Ran command: `git status -s`
+Ran command: `git add shopping_src/ shopping-registry.html public/shopping-registry.html shopping-fragment.html public/shopping-fragment.html scripts/test-shopping-registry.cjs assets/shopping/registry.json public/assets/shopping/registry.json 02_RITUALS_CULTURE/obligations/family_obligations_master.md js/obligations-data.js public/js/obligations-data.js enhancement-notes/SK-020/00_ENHANCEMENT_INDEX.md ENHANCEMENT-MASTER-REGISTRY.md docs/enhancements/BUSINESS-LOGIC-ENHANCEMENT-CLUSTER.md "User_Created/Discussion Threads/Council/260927_arch_council_family_obligation_register_and_fulfilment_pipeline.md" "User_Created/Discussion Threads/Council/260927_arch_council_shopping_tab_family_obligation_integration.md"`
+Ran command: `git commit -m "feat(shopping): integrate 49 family obligations subview with bi-directional badging (SK-020)"`
+Ran command: `git status -s`
+Ran command: `git diff enhancement-config.json`
+Ran command: `git add enhancement-config.json; git commit -m "chore(enhancement): advance next_id to 21 in enhancement-config.json"`
+Ran command: `npm run test:obligations; npm run test:shopping; npm run verify:modular-architecture; npm run verify:governance-wiring:all`
+Created walkthrough.md
+
+The implementation of **`SK-020`** (Customary Family Obligations Register & Shopping Integration) is **100% complete and verified**.
+
+### Summary of Completed Milestones
+
+1. **All 49 Customary Obligations Ingested & Verified**:
+   - Codified in [`02_RITUALS_CULTURE/obligations/OBL-001.md`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/obligations/OBL-001.md) through [`OBL-049.md`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/obligations/OBL-049.md) under standard `STD-FAMILY-OBLIGATION-001`.
+   - _Ahiya Manduli_ reconciled as [`OBL-025`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/obligations/OBL-025.md) (Groom's family $\to$ Bride's mother Smt. Tapaswini at venue entrance milestone, fulfilling `TRS-SA-01`).
+   - Epistemic honesty preserved: null headcount obligations carry null totals with zero fabricated numbers.
+
+2. **Zero Catalog Inflation Maintained**:
+   - The Canonical Trousseau Catalog remains strictly **44/44 items** in [`js/shopping-data.js`](file:///d:/GitHub_Repo/Sree_Krushna/js/shopping-data.js) to safeguard all procurement contracts.
+   - Obligations are powered by an independent, modular dataset in [`js/obligations-data.js`](file:///d:/GitHub_Repo/Sree_Krushna/js/obligations-data.js).
+
+3. **Shopping Tab Subview (`[📜 Family Obligations (49)]`) Integrated**:
+   - Built under SDCA architecture ([`shopping_src/components/obligations_view.html`](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/components/obligations_view.html) & [`shopping_src/styles/10_obligations.css`](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/styles/10_obligations.css) at 460 lines, strictly under the 500-line ceiling).
+   - Features 4 KPI summary cards, a 7-facet segmented filter bar (`[All]`, `[Bride Side]`, `[Groom Side]`, `[Joint]`, `[Unresolved]`, `[Attire]`, `[Gold & Silver]`, `[Cash]`), search box, and milestone accordions.
+
+4. **Bi-Directional Badging & Deep Linking**:
+   - **Trousseau $\to$ Obligations**: Items fulfilling obligations display `[📜 Fulfills OBL-###]`, clicking jumps directly to the obligation card.
+   - **Obligations $\to$ Trousseau**: Obligations with commercial SKUs display `[🛍️ Sourced via TRS-###]`, clicking switches to the checklist and triggers a golden target pulse on the item card.
+   - **Deep Linking & WhatsApp**: URL parameters (`?subview=obligations&obl=OBL-025`) and 1-click WhatsApp family consultation templates are active.
+
+5. **100% Dual-Release Byte Parity & Green Test Suites**:
+   - `shopping-registry.html` $\leftrightarrow$ `public/shopping-registry.html` (100% byte identical).
+   - `shopping-fragment.html` $\leftrightarrow$ `public/shopping-fragment.html` (100% byte identical).
+   - `js/obligations-data.js` $\leftrightarrow$ `public/js/obligations-data.js` (100% byte identical).
+   - All 4 verification suites passed:
+     - `npm run test:obligations` (100% green)
+     - `npm run test:shopping` (8/8 sections green, 44 items / 49 obligations)
+     - `npm run verify:modular-architecture` (46/46 checks passed)
+     - `npm run verify:governance-wiring:all` (198/198 artifacts wired)
+
+Detailed architecture notes and functional walkthrough are documented in the [Walkthrough Artifact](file:///C:/Users/Temp/.gemini/antigravity/brain/a6cbf7aa-8337-4cbb-865a-5695511b4e5d/walkthrough.md).
+
+# Response 1.8 -# Walkthrough: Customary Family Obligations Register & Shopping Integration (SK-020)
+
+## Executive Summary
+
+Ticket **`SK-020`** has been executed to 100% completion across all 7 planned phases. The 49 customary family obligations (_Vidhi Dayitva / Bhara / Sara_) from `260926_ShoppingList2.md` have been losslessly codified into the Marriage OS rituals and governance core, and seamlessly integrated into the interactive Shopping Registry (`shopping-registry.html` & `shopping-fragment.html`) via a dedicated faceted subview (`[📜 Family Obligations (49)]`).
+
+Crucially, **zero catalog inflation** was maintained: the Canonical Trousseau Catalog remains strictly 44/44 items (`assert.strictEqual(data.items.length, 44)` passes cleanly), while the 49 customary obligations are linked via bi-directional badging and deep linking.
+
+---
+
+## Key Achievements & Invariants Enforced
+
+### 1. Canonical Scaffolding & Specifications (Phases 1–3)
+
+- **Directory**: `02_RITUALS_CULTURE/obligations/` scaffolded and registered in `02_RITUALS_CULTURE/HUB.md`.
+- **Template Contract**: `02_RITUALS_CULTURE/obligation_template.md` authored with strict 16-key YAML frontmatter schema (`STD-FAMILY-OBLIGATION-001`).
+- **Architecture Spec**: [`SPEC-ARCH-FAMILY-OBLIGATION-001.md`](file:///d:/GitHub_Repo/Sree_Krushna/docs/references/SPEC-ARCH-FAMILY-OBLIGATION-001.md) codified (`AC-DEC-2026-061` & `AC-DEC-2026-062`).
+- **Validation Engine**: Deterministic parser [`scripts/obligation-parser.cjs`](file:///d:/GitHub_Repo/Sree_Krushna/scripts/obligation-parser.cjs) and contract test [`scripts/test-obligation-contract.cjs`](file:///d:/GitHub_Repo/Sree_Krushna/scripts/test-obligation-contract.cjs) enforce:
+  - Actor direction derivation (`obligor.family` $\to$ `recipient.family`).
+  - Epistemic honesty cash invariant (null total when headcount is null).
+  - State machine orthogonality (rejects impossible states like `Handed_Over` + `Source_Unclear`).
+  - Exchange cluster pairing integrity.
+- **Compilation Engine**: [`scripts/compile-obligations.cjs`](file:///d:/GitHub_Repo/Sree_Krushna/scripts/compile-obligations.cjs) aggregates markdown records into:
+  - Master register: [`02_RITUALS_CULTURE/obligations/family_obligations_master.md`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/obligations/family_obligations_master.md).
+  - Client data layer: [`js/obligations-data.js`](file:///d:/GitHub_Repo/Sree_Krushna/js/obligations-data.js) & [`public/js/obligations-data.js`](file:///d:/GitHub_Repo/Sree_Krushna/public/js/obligations-data.js) with 100% byte parity.
+
+### 2. Lossless 49-Obligation Ingestion (Phase 4)
+
+- All 49 records ([`OBL-001.md`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/obligations/OBL-001.md) through [`OBL-049.md`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/obligations/OBL-049.md)) ingested with verbatim Odia provenance (_Batabasana_, _Ahiya Manduli_, _Nananda Putuli_, _Samdhi Milan_, _Alata Sindoor_).
+- Reconciled _Ahiya Manduli_ as `OBL-025` presented at the venue arrival milestone at 10:30 AM (`EVT-004`, Step 3 of `RIT-004`), fulfilling `TRS-SA-01`.
+
+### 3. Shopping Tab SDCA Component Architecture (Phase 5)
+
+- **Markup Component**: [`shopping_src/components/obligations_view.html`](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/components/obligations_view.html) provides:
+  - Header banner with sacred seal and quick actions (_Share with Elders_, _Print Obligation Sheet_).
+  - 4 KPI summary cards (Total Obligations, Bride Side, Groom Side, Unresolved).
+  - Segmented filter bar (`[All (49)]`, `[👰 Bride Side (27)]`, `[🤵 Groom Side (21)]`, `[🤝 Joint (3)]`, `[⚠️ Unresolved (8)]`, `[🧵 Attire (22)]`, `[💎 Gold & Silver (4)]`, `[💰 Cash (9)]`).
+  - Search box & event milestone selector dropdown.
+  - Event milestone grouped accordion containers (`#obligationsCardsContainer`).
+- **Modular Styles**: [`shopping_src/styles/10_obligations.css`](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/styles/10_obligations.css) (460 lines, strictly under 500-line modular limit, responsive down to 300px mobile).
+- **Subnav Integration**: Added `[📜 Family Obligations (49)]` mode to `#catalogSubnavStrip` and secondary CTA in `#shopWelcomeBanner`.
+
+### 4. Controller Wiring, Deep Linking & Quick-Share (Phase 6)
+
+- **Subnav Mode Switcher**: `window.setCatalogSubView('obligations')` cleanly hides trousseau-only items grid/steppers and displays the obligations subview.
+- **Bi-Directional Badging**:
+  - Trousseau item cards and compact rows render badges linking to fulfilling obligations (`[📜 Fulfills OBL-###]`). Clicking smoothly navigates to the obligation card.
+  - Obligation cards render sourcing badges (`[🛍️ Sourced via TRS-###]`). Clicking switches to the items subview and smoothly highlights the SKU with gold pulse animation (`highlight-target-item`).
+- **Deep-Link State**: URL query parameters `?subview=obligations&obl=OBL-025` or `?obl=OBL-025` automatically load the obligations subview and center the targeted card.
+- **WhatsApp Quick-Share**: `window.shareObligationWhatsApp(oblId)` formats rich WhatsApp messages for family consultation.
+
+### 5. Automated Byte Parity & Pre-Flight Gate (Phase 7)
+
+- Dual-release byte parity maintained with 100% precision:
+  - `shopping-registry.html` $\leftrightarrow$ `public/shopping-registry.html` (451,911 bytes, identical).
+  - `shopping-fragment.html` $\leftrightarrow$ `public/shopping-fragment.html` (478,544 bytes, identical).
+  - `js/obligations-data.js` $\leftrightarrow$ `public/js/obligations-data.js` (108,850 bytes, identical).
+- Enhanced [`scripts/test-shopping-registry.cjs`](file:///d:/GitHub_Repo/Sree_Krushna/scripts/test-shopping-registry.cjs) with Section 8 asserting all obligation DOM contracts, zero catalog inflation (44 items), and 49 obligations.
+
+---
+
+## Verification Results Summary
+
+| Suite / Command                        | Scope                                               | Result      | Details                               |
+| -------------------------------------- | --------------------------------------------------- | ----------- | ------------------------------------- |
+| `npm run test:obligations`             | Schema, invariant guards, 49 records, byte parity   | ✅ **PASS** | 7/7 checks green, zero schema drift   |
+| `npm run test:shopping`                | 44/44 items, 49/49 obligations, DOM contracts, SDCA | ✅ **PASS** | 8/8 audit sections green              |
+| `npm run verify:modular-architecture`  | SDCA < 500 lines, button primitives, dual-release   | ✅ **PASS** | 46/46 modular component checks passed |
+| `npm run verify:governance-wiring:all` | P82 Governance wiring audit across repository       | ✅ **PASS** | 198/198 artifacts fully wired         |
+
+---
+
+## Visual & Functional Walkthrough
+
+```
++---------------------------------------------------------------------------------------+
+|  🌸 Sree & Krushna Wedding Shopping Review                                            |
+|  [📜 Family Obligations (49)]   [👑 Executive Host View]                              |
++---------------------------------------------------------------------------------------+
+|  [📋 Items (44)] [🧭 5-Day Itinerary] [🤝 Decision Pods] [📍 Stores] [📜 Obligations] |
++---------------------------------------------------------------------------------------+
+|                                                                                       |
+|  📜 SACRED LINEAGE PROTOCOLS                                                          |
+|  Customary Family Obligations Register (Vidhi Dayitva / Bhara / Sara)                 |
+|                                                                                       |
+|  [ Total: 49 ]    [ Bride Side: 27 ]    [ Groom Side: 21 ]    [ Unresolved: 8 ]       |
+|                                                                                       |
+|  [All] [👰 Bride Side] [🤵 Groom Side] [🤝 Joint] [⚠️ Unresolved] [🧵 Attire] [💰 Cash]|
+|                                                                                       |
+|  🗓️ EVT-004: Barat, Baranugam & Mandap Vivaha (Day 2 Wedding)                          |
+|  +---------------------------------------------------------------------------------+  |
+|  | OBL-025                           🤵 Groom Family ⟶ 👰 Bride's Mother          |  |
+|  | 🧵 Ahiya Manduli (Saree for mummy)                                             |  |
+|  | Ceremonial silk saree presented to Bride's Mother upon arrival at venue        |  |
+|  | [FULLY SPECIFIED] [Agreed] [RIT-004]                                            |  |
+|  | ⏰ Handover: 10:30 AM Venue Arrival Milestone | 📍 Location: Reception Desk   |  |
+|  | 📦 Specs: Handloom Silk Saree (1 pcs)                                          |  |
+|  | [🛍️ Sourced via TRS-SA-01]               [📱 WhatsApp]  [🔗 Link]               |  |
+|  +---------------------------------------------------------------------------------+  |
++---------------------------------------------------------------------------------------+
+```
+
+When clicking **`[🛍️ Sourced via TRS-SA-01]`**:
+The view seamlessly toggles to the **Master Checklist**, filters reset, and card `#card-TRS-SA-01` is scrolled into view with an elegant gold glow pulse animation!
+On `#card-TRS-SA-01`:
+A clickable badge **`[📜 Fulfills OBL-003]`** and **`[📜 Fulfills OBL-025]`** allows immediate jump-back to the obligation record!
 
 # Query 1.9 -
 
@@ -3402,13 +4540,125 @@ This document constitutes the **complete, implementation-ready technical specifi
 
 # Response 1.9 -
 
-# Query 2.0 -
+# Query 2.0 -## Final Consolidated List
+
+### 1. Already Given in the Family Lists
+
+#### Engagement
+
+**Bride's Family → Groom's Side**
+
+- Mudi
+- Groom's shirt + pant
+- Mom's saree
+- Dad's shirt/kurta + pant
+- Dress/saree for Didi & Tiju
+- Dress for Bacha Party
+- 5 varieties of sweets
+
+**Groom's Family → Bride's Side**
+
+- Mudi
+- Lehenga + blouse
+- Engagement trolley
+- 5 varieties of sweets
+- Coconut
+- Banana Kandhi
+- Phula
+- Desi Pana
+- Maha-prasad
+- ₹5,000/head for non-family attendees
+
+#### Before Marriage
+
+- **Gua/Haldi Basa:** Saree, makeup, coconut, Desi Pana, Gua, Haldi
+- **Bandhu Daksa:** Pana, Gua, Daddy's dress
+- **Batabasana:** Suit, chain, Mudi, bracelet
+- **Alta & Sindoor:** Alta, Sindoor, Mummy's saree
+- **Sala Bidha:** Gift — TBD
+- **Sali Hasta Ganthi:** Gift — TBD
+- **Samdhi Milan:** Baba ↔ Daddy dress exchange
+- **Sadu Basana:** Laddoo, dress
+- **Alankar Exchange:** Alankar; 5 dress sets for Groom; one unclear "TDK" item
+
+#### After Marriage
+
+- **Guin Chada:** Trolley
+- **Bahu Daksa:** Dress for Devas
+- **Bahu Bandhapana:** 2 sarees
+- **Nananda Putuli:** Gold, saree/dress, trolley for 2 Didis
+- **Chaturthi Huma:** Groom side saree set; Bride side dhoti + kurta
+- **Huma Bali Utheibaku:** BIL dress
+- **Uluguna:** Items obscured/blackened
+- **Family Pack:** Mom saree, Daddy dress, 2 Didi outfits, Tiju outfit, Bacha Party outfits
+- **Kutha Madani:** Bride + Groom trolley
+- **Reception:** Saree/Lehenga
+- **Saga Macha:** Saree + Saga Macha / Saga & Macha
+
+---
+
+## 2. Items / Areas the Lists Appear to Have Missed
+
+These should be treated as **potential gaps, not confirmed family requirements**.
+
+### Pre-Wedding
+
+- [ ] Mangana
+- [ ] Dia Mangula
+- [ ] Nandimukhi
+- [ ] Wedding invitation / Nimantrana requirements
+
+### Wedding Day
+
+- [ ] Barajatri / Bara procession requirements
+- [ ] Bara welcome / reception arrangements
+- [ ] Complete wedding-day ritual Samagri
+- [ ] Priest/Purohit requirements
+- [ ] Priest Dakshina
+- [ ] Bride's complete wedding-day attire/accessories
+- [ ] Groom's complete wedding-day attire/accessories
+- [ ] Mandap ritual requirements
+
+### Post-Wedding
+
+- [ ] Gruhapravesh requirements
+- [ ] Complete Chauthi/Basara requirements beyond the listed gifts
+- [ ] Asta Mangala
+- [ ] Kauri Khela / post-wedding games, if followed
+
+### Operational / Hospitality
+
+- [ ] Event-wise family hospitality obligations
+- [ ] Bara accommodation / meals, if applicable
+- [ ] Family/guest room requirements
+- [ ] Event-specific food/hospitality packages
+- [ ] Venue/decorator obligations attributable to either family
+- [ ] Transport obligations attributable to either family
+
+### Couple / Personal Preparation
+
+- [ ] Bride's complete wedding preparation/parlour requirements
+- [ ] Groom's complete wedding preparation/grooming requirements
+- [ ] Wedding-day emergency/personal kits
+
+### Important: Not "missing", but unresolved in the existing list
+
+- [ ] Sala Bidha — exact gift
+- [ ] Sali Hasta Ganthi — exact gift
+- [ ] "TDK" — unclear item
+- [ ] Nananda Putuli — exact gold quantity
+- [ ] Uluguna — obscured items
+- [ ] Bacha Party — exact number of recipients
+- [ ] Engagement trolley — what it contains
+- [ ] ₹5,000/head — final eligible attendee count
+
+The repo's own review confirms these unresolved items and separately classifies the broader missing domains as requiring family confirmation.
 
 # Review 2.0 -
 
 # Response 2.0 -
 
-# Query 2.1 -
+# Query 2.1 -document.querySelector("#shoppingTableViewSection > div.shop-table-container") what all it contains and what all is missed? from [260926_ShoppingList2.md#L4542-4655](textBlock;file:///d%3A/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Shopping/260926_ShoppingList2.md#L4542-4655)
 
 # Review 2.1 -
 
