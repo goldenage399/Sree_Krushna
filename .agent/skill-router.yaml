@@ -47,7 +47,16 @@ skills:
     when: "Use whenever turning any structured data table or dataset into an executive, ink-friendly physical paper run sheet formatted for A4 landscape/portrait printing, canonical Markdown reference table, or wiring container-scoped print buttons."
     related_skills: [web-deployment-gate, mobile-ui-validator]
 
+  - id: structural-contract-verifier
+    repo: [sree-krushna, task-dashboard]
+    triggers: ["structural contract", "verify structural contracts", "check html balance", "sdca structural", "/structural-contract-verifier", "STD-STRUCTURAL-CONTRACT-001"]
+    cost: low
+    invoke: /structural-contract-verifier
+    when: "Validates SDCA HTML component tag balance and DOM structural contracts across source files, compiled artifacts, and runtime mount containers under STD-STRUCTURAL-CONTRACT-001."
+    related_skills: [web-deployment-gate, mobile-ui-validator]
+
   - id: cockpit-intake
+
     repo: [task-dashboard]
     triggers: ["cockpit intake", "decorator intake", "ingest cockpit", "update cockpit layout"]
     cost: medium

@@ -78,7 +78,9 @@ Review relevant ecosystem patterns:
 - `.agent/patterns/sheet-drive-media-relay.md`
 - `.agent/patterns/skill-source-verification-gate.md`
 - `.agent/patterns/ssot-preservation-template-guard.md`
+- `.agent/patterns/structural-dom-contract-gate.md`
 - `.agent/patterns/sub-engine-shadowing-and-tab-reconciliation.md`
+
 - `.agent/patterns/subcollection-write-cache-atomicity.md`
 - `.agent/patterns/table-domain-separation-and-mobile-scroll.md`
 - `.agent/patterns/theme-button-opt-out-contract.md`

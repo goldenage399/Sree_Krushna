@@ -19,8 +19,20 @@
 const fs   = require('fs');
 const path = require('path');
 
-const rootDir       = path.join(__dirname, '..');
+const args = process.argv.slice(2);
+let customDir = null;
+for (let i = 0; i < args.length; i++) {
+  if (args[i].startsWith('--dir=')) {
+    customDir = args[i].split('=')[1];
+  } else if (args[i] === '--dir' && args[i + 1]) {
+    customDir = args[i + 1];
+    i++;
+  }
+}
+
+const rootDir       = customDir ? path.resolve(customDir) : path.join(__dirname, '..');
 const contractsDir  = path.join(rootDir, '.structural-contracts');
+
 
 let passes   = 0;
 let failures = 0;
