@@ -14,4 +14,9 @@ Tracks architecture integrity, Hub & Spoke structures, compilers, verification s
 
 ## 🗃️ Backlog
 
-- None pending.
+### **SK-028: SDCA HTML Balance Gate — Source-Level Tag Validation** 📋 **PENDING**
+**Added**: 2026-09-27
+**Status**: 📋 **PENDING**
+**Priority**: HIGH
+**Scope**: Create `scripts/check-html-balance.cjs` (stack-based tag validator) and wire into `verify:modular-architecture` step [2/6] for all 11 SDCA `components/*.html` files. Council ruling: `AC-DEC-2026-070` (EXPEDITED).
+**Documentation**: [SK-028-SDCA-HTML-Balance-Gate.md](../../enhancement-notes/SK-028-SDCA-HTML-Balance-Gate.md)

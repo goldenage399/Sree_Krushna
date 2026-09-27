@@ -85,7 +85,36 @@ sdcaModules.forEach(mod => {
   } else {
     fail(`${mod}/scripts/controller.js missing`);
   }
+
+  // Tag-Balance Gate (AC-DEC-2026-070 / SK-028 Phase 1 / Gap Variant A)
+  // Validates that every component HTML file has balanced open/close tag pairs
+  // before it reaches the SDCA compiler. Does NOT validate nesting hierarchy
+  // (Gap Variant B → verify-structural-contracts.cjs / SK-028 Phase 2).
+  const checkBalanceScript = path.join(rootDir, 'scripts', 'check-html-balance.cjs');
+  const compDir = path.join(modDir, 'components');
+  if (fs.existsSync(compDir)) {
+    const scanDirs = [compDir];
+    // cockpit_src has a modals/ subdirectory with additional HTML components
+    const modalsDir = path.join(compDir, 'modals');
+    if (fs.existsSync(modalsDir)) scanDirs.push(modalsDir);
+
+    scanDirs.forEach(dir => {
+      const htmlFiles = fs.readdirSync(dir).filter(f => f.endsWith('.html'));
+      htmlFiles.forEach(htmlFile => {
+        const htmlPath = path.join(dir, htmlFile);
+        const relHtml  = path.relative(rootDir, htmlPath);
+        try {
+          execFileSync(process.execPath, [checkBalanceScript, htmlPath], { stdio: 'pipe' });
+          pass(`${relHtml}: tag-balance OK (Gap Variant A)`);
+        } catch (err) {
+          const detail = (err.stdout || err.stderr || '').toString().trim();
+          fail(`${relHtml}: tag-balance FAILED — ${detail}`);
+        }
+      });
+    });
+  }
 });
+
 
 // ----------------------------------------------------------------------------
 // 3. Per-Source JavaScript Syntax Gate (node -c)
