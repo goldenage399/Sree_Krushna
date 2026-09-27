@@ -144,9 +144,11 @@ To enable remote collaboration between distributed family leads (e.g. bride & gr
 To support executive operations across diverse mobile, tablet, laptop, and ultra-wide form factors without visual degradation:
 1. **Header Saturation Gate (`#stickyHeaderShell` & `#headerQuickActionsPopover`):**
    - On compact viewports ($\le 360\text{px}$), secondary buttons (Cockpit, Decisions, Shopping, Share, Intake) collapse automatically into a single `[⚡ Actions ▾]` popover button with 3-trigger dismissibility (`INV-LIFECYCLE-03`).
-2. **Mutable Table Dual-Mode Card/Table Reflow (`#shoppingRegistryFrame` / `FKL-DI-022`):**
-   - On desktop ($>768\text{px}$), renders fluid table with sticky frozen column `th/td:first-child` (`position: sticky; left: 0; z-index: 2;`).
-   - On mobile ($\le 768\text{px}$), collapses `tr` into self-contained vertical card pods with `td::before { content: attr(data-col-label); }`, preserving real-time inline editing without horizontal panning.
+2. **Mutable Table Pure Tabular Architecture & Domain Separation (`#shoppingRegistryFrame` / `FKL-DI-025` / `P-TABLE-DOMAIN-SEPARATION-001`):**
+   - Cards mode permanently retired (`INC-100` / `Directive 2.2` / `SK-021`). Pure tabular grid layout maintained across all viewports.
+   - Pinned frozen key column `td.sticky-col` (`position: sticky; left: 0; z-index: 2;`) with solid background and elevation shadow.
+   - Native hardware-accelerated touch-scrolling container (`overflow-x: auto; -webkit-overflow-scrolling: touch; min-width: 900px;`) with $\ge 44\times 44\text{px}$ touch targets.
+   - Bi-directional 1-tap cross-surface navigation (`window.jumpToCatalogItem` $\leftrightarrow$ `window.jumpToLedgerItem`) with target highlight glow.
 3. **SDCA At-Rule Scoping Invariant (`INV-SDCA-004` / `FKL-AL-006`):**
    - SDCA build compilers (`cockpit_src/build.cjs`, `shopping_src/build.cjs`, `decision_registry_src/build.cjs`) scope CSS partials using `/^@(media|container|supports|layer)[^{]*\{/` to prevent `@container` queries from being mangled with parent selector prefixes.
 4. **Fluid Vedic Liturgy Grid (`#tab-rituals`):**

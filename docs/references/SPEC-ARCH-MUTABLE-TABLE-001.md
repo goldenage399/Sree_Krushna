@@ -1,7 +1,7 @@
-# SPEC-ARCH-MUTABLE-TABLE-001: Mutable Table Dual-Mode Card/Table Reflow & Multi-Viewport Architecture
+# SPEC-ARCH-MUTABLE-TABLE-001: Mutable Table Pure Tabular Architecture, Frozen Column & Cross-Surface Navigation
 
 <details>
-<summary>🔑 FKL Item Header (FKL-DI-022)</summary>
+<summary>🔑 FKL Item Header (FKL-DI-022 — SUPERSEDED)</summary>
 
 ```yaml
 ---
@@ -9,6 +9,32 @@ fkl_id: FKL-DI-022
 fkl_type: DesignInvariant
 source:
   - docs/incidents/INC-093-sdca-compiler-regex-container-query-mangling.md
+  - WT-02
+  - WT-06
+promoted_from: ""
+applies_to:
+  - MutableTable
+  - ShoppingRegistry
+workflow_activation:
+  - WT-02
+  - WT-06
+promotion_status: Superseded
+superseded_by: FKL-DI-025
+content_ref: docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md
+---
+```
+</details>
+
+<details>
+<summary>🔑 FKL Item Header (FKL-DI-025)</summary>
+
+```yaml
+---
+fkl_id: FKL-DI-025
+fkl_type: DesignInvariant
+source:
+  - docs/incidents/INC-100-mutable-table-cards-mode-degradation-and-cross-domain-conflation.md
+  - Directive 2.2 / SK-021
   - WT-02
   - WT-06
 promoted_from: ""
@@ -51,6 +77,29 @@ content_ref: docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md
 </details>
 
 <details>
+<summary>🔑 FKL Item Header (FKL-AL-009)</summary>
+
+```yaml
+---
+fkl_id: FKL-AL-009
+fkl_type: ArchitecturalLearning
+source:
+  - docs/incidents/INC-100-mutable-table-cards-mode-degradation-and-cross-domain-conflation.md
+  - Directive 2.2 / SK-021
+promoted_from: ""
+applies_to:
+  - MutableTable
+  - ResponsiveDesign
+workflow_activation:
+  - WT-06
+promotion_status: Active
+superseded_by: ""
+content_ref: docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md
+---
+```
+</details>
+
+<details>
 <summary>🔑 FKL Item Header (FKL-WI-004)</summary>
 
 ```yaml
@@ -74,117 +123,144 @@ content_ref: docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md
 ```
 </details>
 
+<details>
+<summary>🔑 FKL Item Header (FKL-WI-006)</summary>
+
+```yaml
+---
+fkl_id: FKL-WI-006
+fkl_type: WorkflowImprovement
+source:
+  - docs/incidents/INC-100-mutable-table-cards-mode-degradation-and-cross-domain-conflation.md
+  - Directive 2.2 / SK-021
+promoted_from: ""
+applies_to:
+  - MutableTable
+  - CatalogShowroom
+  - CrossSurfaceNavigation
+workflow_activation:
+  - WT-02
+  - WT-06
+promotion_status: Active
+superseded_by: ""
+content_ref: docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md
+---
+```
+</details>
+
 **Specification Reference:** `SPEC-ARCH-MUTABLE-TABLE-001`  
-**Governing Decisions:** `AC-DEC-2026-034` / `UI-DEC-2026-030` (`P-MULTI-VIEWPORT-RESPONSIVE-001`)  
+**Governing Decisions:** `AC-DEC-2026-034` / `UI-DEC-2026-030` (`P-MULTI-VIEWPORT-RESPONSIVE-001`), `Directive 2.2 / SK-021` (`P-TABLE-DOMAIN-SEPARATION-001`)  
 **Standard References:**  
 - `STD-MOD-COMP-001` (Modular Component Architecture & SDCA Structure)  
 - `INV-SDCA-004` (SDCA At-Rule Compiler Scoping Invariant)  
 - `INV-LIFECYCLE-03` (3-Trigger Modal/Drawer Dismissibility)  
-- `FKL-DI-022` (Mutable Table Dual-Mode Card/Table Reflow with Frozen Column)  
-**Version:** `1.0.0` (Production Baseline)  
+- `FKL-DI-025` (Clean Domain Separation & Pure Tabular Responsive Architecture)  
+- `FKL-AL-009` (Anti-Pattern of Pseudo-Element Table Column Collapses)  
+- `FKL-WI-006` (Cross-Surface Bi-Directional Quick-Handoff Protocol)  
+**Version:** `2.0.0` (Production Ratified — Path A Clean Separation)  
 
 ---
 
-## 1. Architectural Problem & Domain Requirements
+## 1. Architectural Problem & Domain Boundaries
 
-High-density collaborative operational interfaces—such as the **Bhubaneswar Shopping Registry** (`#shoppingRegistryFrame`), **Master Decision Registry** (`#decisionRegistryFrame`), and **Decorator Cockpit** (`#cockpitFrame`)—present severe responsiveness paradoxes:
+Operational wedding management interfaces—such as the **Bhubaneswar Shopping Registry** (`#shoppingRegistryFrame`), **Master Decision Registry** (`#decisionRegistryFrame`), and **Decorator Cockpit** (`#cockpitFrame`)—contain two distinct domains that must never be conflated:
 
-1. **Cell Mutability vs Horizontal Scrolling**:
-   Traditional responsive tables wrap table markup in `overflow-x: auto`. On small mobile viewports ($\le 480\text{px}$), horizontal scroll forces users to pan sideways repeatedly to edit quantities, notes, vendor prices, and status selectors. This produces high operational friction and frequent mis-taps.
-2. **Identifier Loss During Scroll**:
-   When scrolling horizontally, row headers (Item Code, Title) scroll out of view, detaching data inputs from the item identity.
-3. **Container Query Mangling in SDCA Compilers (`INV-SDCA-004`)**:
-   SDCA build scripts (`build.cjs`) compile standalone HTML pages and fragment HTML files by pre-scoping CSS partials using a parent selector prefix (e.g. `#shoppingRegistryFrame`). When CSS introduces `@container` rules, naive compilers checking only `trimmed.startsWith('@media')` treat `@container` as a regular CSS selector and prepend the parent ID (e.g. `#shoppingRegistryFrame @container (...)`), producing invalid CSS syntax that fails to parse in modern browsers.
-4. **Header Saturation on Compact Displays**:
-   Dense header shells with multiple quick-action buttons, search fields, and status indicators wrap into multiple chaotic vertical lines on ultra-compact mobile screens ($300\text{px}$–$360\text{px}$).
+1. **Decision & Curation Domain**: "What do we want?"
+   - Explores candidate looks, multi-photo lightboxes, stakeholder consensus voting (Bride / Sisters / In-Laws), and Pinterest intake.
+   - Requires rich visual cards, lookbook photography, and emotional deliberation.
+2. **Procurement & Execution Domain**: "What are we doing about it?"
+   - Tracks purchasing status (`Planned` $\to$ `Shortlisted` $\to$ `In Trial` $\to$ `Ordered` $\to$ `Purchased` $\to$ `Dropped`), actual price vs estimated budget, tailor specifications, store vendor attribution, and delivery.
+   - Requires high-density spreadsheet grid layout for glanceability and batch accounting.
+
+### Invariant: Domain vs Surface Boundary
+> *A surface never becomes the owner of a fact because it displays or edits it.*
+- **Catalog Surface** (`#catalogViewSection`): Strictly an exploratory showroom. It projects procurement data (e.g. status tags) but delegates execution commands to the Ledger.
+- **Ledger Surface** (`#shoppingTableViewSection`): Strictly an execution spreadsheet. It projects approved design selections but delegates look curation to the Catalog.
 
 ---
 
 ## 2. Invariant Specifications
 
-### 2.1 Invariant FKL-DI-022: Mutable Table Dual-Mode Card/Table Reflow
-Tables supporting interactive editing (`input`, `select`, `textarea`) MUST implement a dual presentation state based on container width:
+### 2.1 Invariant FKL-DI-025: Pure Tabular Responsive Architecture (Supersedes FKL-DI-022)
+The experimental Cards mode (`.mode-cards`) in the Mutable Table is permanently retired. Tables supporting interactive editing MUST maintain tabular grid semantics across all viewports ($\le 320\text{px}$ to $\ge 1440\text{px}$) using a native horizontal touch-scrolling container with pinned left key columns:
 
 ```css
-/* Desktop & Laptop Viewports (> 768px): Traditional Grid Table */
-.data-table-container {
+/* Container & Table Structure */
+.shop-table-container {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   position: relative;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
 }
-.data-table {
+
+.shop-data-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
+  min-width: 900px;
 }
-.data-table th.sticky-col,
-.data-table td.sticky-col {
+
+/* Sticky Frozen Left Key Column */
+.shop-data-table td.sticky-col {
   position: sticky;
   left: 0;
   z-index: 2;
-  background: var(--bg-card);
-}
-.data-table th.sticky-col {
-  z-index: 6; /* Intersecting header + sticky col must be higher */
+  background: rgba(15, 23, 42, 0.96);
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.25);
 }
 
-/* Mobile & Small Tablet Viewports (<= 768px): Reflowed Card Pods */
+.shop-data-table th.sticky-col {
+  position: sticky;
+  left: 0;
+  top: 0;
+  z-index: 6;
+  background: rgba(26, 36, 54, 0.98);
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.35);
+}
+
+/* Mobile Touch Optimization (<= 768px) */
 @media (max-width: 768px) {
-  .data-table thead {
-    display: none; /* Hide tabular header */
+  .status-dropdown,
+  .table-price-input,
+  .table-notes-input {
+    min-height: 44px;
+    font-size: 0.85rem;
   }
-  .data-table,
-  .data-table tbody,
-  .data-table tr,
-  .data-table td {
-    display: block;
-    width: 100% !important;
-  }
-  .data-table tr {
-    margin-bottom: 12px;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 10px 12px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-  }
-  .data-table td {
-    display: flex;
-    justify-content: space-between;
+  .cell-action-btn {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
     align-items: center;
-    padding: 6px 0;
-    border: none;
-    border-bottom: 1px dashed var(--border-color-subtle);
+    justify-content: center;
+    font-size: 1rem;
   }
-  .data-table td:last-child {
-    border-bottom: none;
-  }
-  .data-table td::before {
-    content: attr(data-col-label);
-    font-weight: 600;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-right: 12px;
-    flex-shrink: 0;
-  }
-  .data-table td .cell-input,
-  .data-table td .cell-select {
-    width: 60%;
-    min-height: 36px;
+  .cell-actions {
+    gap: 8px;
   }
 }
 ```
 
-### 2.2 Invariant FKL-AL-006 / INV-SDCA-004: At-Rule Compiler Scoping
-SDCA build compilers that parse modular CSS partials to generate scoped fragment bundles MUST match all CSS at-rules using the regular expression:
+### 2.2 Invariant FKL-AL-009: Anti-Pattern of Pseudo-Element Table Column Collapses
+Collapsing data table rows into card blocks using `display: block` and `td::before { content: attr(data-col-label); }` is an anti-pattern in high-density operational software. It strips table column headers, breaks spreadsheet glanceability, creates unformatted wireframe blocks, and causes cross-domain confusion without providing genuine visual lookbook capabilities.
+
+### 2.3 Invariant FKL-WI-006: Cross-Surface Bi-Directional Quick-Handoff Protocol
+Instead of duplicating features between Catalog and Ledger, paired surfaces must implement 1-tap cross-navigation in $\le 2$ interactions:
+1. **Ledger $\to$ Catalog (`window.jumpToCatalogItem(itemId)`)**:
+   Switches view to `catalog`, clears search filters, centers `#card-${itemId}`, and applies a 3-second gold glow pulse (`.highlight-target-item`).
+2. **Catalog $\to$ Ledger (`window.jumpToLedgerItem(itemId)`)**:
+   Switches view to `table`, calls `window.resetTableFilters()` to uncollapse groups and clear filters, centers `tr[data-item-id="${itemId}"]`, and applies a 3-second update pulse (`.row-pulse`).
+
+### 2.4 Invariant FKL-AL-006 / INV-SDCA-004: At-Rule Compiler Scoping
+SDCA build compilers that parse modular CSS partials to generate scoped fragment bundles MUST match all CSS at-rules using:
 ```javascript
 const atRuleRegex = /^@(media|container|supports|layer)[^{]*\{/;
 ```
-Any at-rule matched by this pattern MUST preserve the at-rule signature verbatim at the root of the stylesheet, recursively scoping only the selectors contained *inside* the block.
+Any at-rule matched by this pattern MUST preserve the signature at the root of the stylesheet, recursively scoping only selectors inside the block.
 
-### 2.3 Invariant FKL-WI-004: Header Saturation Gate & Popover Fallback
-At viewports $\le 360\text{px}$, sticky headers (`#stickyHeaderShell`) must not exceed a single horizontal row ($48\text{px}$–$56\text{px}$). Secondary and tertiary actions must be grouped into a single `[⚡ Actions ▾]` popover button with:
-1. `min-height: 44px` touch target compliance (WCAG 2.5.8).
-2. 3-Trigger dismissibility: (a) Button toggle, (b) Outside click / backdrop, (c) `Escape` keydown (`INV-LIFECYCLE-03`).
+### 2.5 Invariant FKL-WI-004: Header Saturation Gate & Popover Fallback
+At viewports $\le 360\text{px}$, sticky headers (`#stickyHeaderShell`) must not exceed a single horizontal row ($48\text{px}$–$56\text{px}$). Secondary and tertiary actions must collapse into a single touch-compliant popover with 3-trigger dismissibility (`INV-LIFECYCLE-03`).
 
 ---
 
@@ -196,6 +272,6 @@ All implementations of `SPEC-ARCH-MUTABLE-TABLE-001` must pass automated validat
 | :--- | :--- | :--- | :--- |
 | **Desktop Ultra** | $1440\text{px}$ | 100% Fluid Grid Table, Sticky Headers, Frozen Col 1 | `npm run test:shopping` |
 | **Laptop Standard** | $1024\text{px}$ | Grid Table, Horizontal Scroll with Sticky Left Col | `npm run test:shopping` |
-| **Tablet Portrait** | $768\text{px}$ | Card Reflow Transition Point, Full-Width Inputs | `npm run verify:mobile` |
-| **Mobile Standard** | $480\text{px}$ | Single Column Cards, Auto-fit Images, 44px Targets | `npm run verify:mobile` |
-| **Ultra-Compact** | $320\text{px}$ | Header Quick-Actions Popover, 0 Horizontal Bleed | `npm run verify:mobile` |
+| **Tablet Portrait** | $768\text{px}$ | Pure Grid Table, Horizontal Scroll, 44px Touch Targets | `npm run test:shopping` |
+| **Mobile Standard** | $480\text{px}$ | Pure Grid Table, Pinned Identity Col, 44px Targets | `npm run test:shopping` |
+| **Ultra-Compact** | $320\text{px}$ | Pure Grid Table, Pinned Col, Header Popover | `npm run test:shopping` |

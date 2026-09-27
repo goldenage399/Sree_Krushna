@@ -43,8 +43,8 @@ All entities must use standardized 3-digit padded identifiers:
 - **Stakeholder Deep-Link Station & Pathname Conflation Case Study**: See [INC-090-spa-pathname-drift-in-stakeholder-share-links.md](./docs/incidents/INC-090-spa-pathname-drift-in-stakeholder-share-links.md).
 - **SDCA At-Rule Compiler Scoping Case Study**: See [INC-093-sdca-compiler-regex-container-query-mangling.md](./docs/incidents/INC-093-sdca-compiler-regex-container-query-mangling.md).
 - **3-Tier Multi-Surface Deployment**: See [260916_arch_council_multi_surface_web_app_and_shopping_deployment.md](./User_Created/Discussion Threads/Council/260916_arch_council_multi_surface_web_app_and_shopping_deployment.md) (`AC-DEC-2026-026` / `P-MULTI-SURFACE-DEPLOY-001`).
-- **Universal Quick-Share Architecture**: See [260916_arch_council_universal_executive_quick_share_and_deep_link_architecture.md](./User_Created/Discussion Threads/Council/260916_arch_council_universal_executive_quick_share_and_deep_link_architecture.md) (`AC-DEC-2026-027` / `UI-DEC-2026-023` / `P-QUICK-SHARE-001`).
-- **Mutable Table & Multi-Viewport Architecture**: See [SPEC-ARCH-MUTABLE-TABLE-001.md](./docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md) (`FKL-DI-022` / `INV-SDCA-004` / `AC-DEC-2026-034`).
+- **Mutable Table & Multi-Viewport Architecture**: See [SPEC-ARCH-MUTABLE-TABLE-001.md](./docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md) (`FKL-DI-025` / `INV-SDCA-004` / `AC-DEC-2026-034` / `SK-021` / `P-TABLE-DOMAIN-SEPARATION-001`).
+- **Mutable Table Pseudo-Card Degradation & Cross-Domain Conflation**: See [INC-100-mutable-table-cards-mode-degradation-and-cross-domain-conflation.md](./docs/incidents/INC-100-mutable-table-cards-mode-degradation-and-cross-domain-conflation.md).
 - **Tri-Modal Visual Intake & Collaborative Deep-Link Sharing**: See [260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md](./User_Created/Discussion Threads/Council/260924_arch_council_pinterest_intake_and_collaborative_visual_sharing.md) (`AC-DEC-2026-035` / `P-COLLAB-VISUAL-INTAKE-001` / `INC-094`).
 - **Top-Left Brand Seal & Adaptive Drawer Architecture**: See [260923_arch_council_top_left_brand_seal_and_navigation_drawer_architecture.md](./User_Created/Discussion Threads/Council/260923_arch_council_top_left_brand_seal_and_navigation_drawer_architecture.md) (`AC-DEC-2026-036` / `UI-DEC-2026-032` / `P-BRAND-NAV-HYBRID-001` / `INC-095`).
 - **Shopping Catalog Domain Decoupling & Two-Tier Operating Modes**: See [260923_arch_council_shopping_catalog_information_architecture_and_domain_decoupling.md](./User_Created/Discussion Threads/Council/260923_arch_council_shopping_catalog_information_architecture_and_domain_decoupling.md) (`AC-DEC-2026-037` / `UI-DEC-2026-033` / `P-SHOPPING-JOURNEY-HUBS-001` / `INC-096`).
@@ -218,3 +218,4 @@ This repository implements the following universal patterns:
 - `.agent/patterns/interactive-multi-look-lightbox-carousel.md`
 - `.agent/patterns/sheet-drive-media-relay.md`
 - `.agent/patterns/universal-repository-taxonomy-and-discovery-graph.md`
+- `.agent/patterns/table-domain-separation-and-mobile-scroll.md`

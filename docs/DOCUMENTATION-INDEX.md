@@ -18,7 +18,7 @@ Welcome to the **Sree Krushna Marriage OS** documentation catalog.
 ## Reference Specs
 - [SPEC-PROC-TROUSSEAU-001.md](./references/SPEC-PROC-TROUSSEAU-001.md) — Canonical Trousseau & Bridal Shopping Specification
 - [A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md](./references/A4_FAMILY_SHOPPING_CONSULTATION_DOSSIER.md) — Physical-Digital Dual Surface Family Trousseau & 'Sara' Decision Survey Dossier
-- [SPEC-ARCH-MUTABLE-TABLE-001.md](./references/SPEC-ARCH-MUTABLE-TABLE-001.md) — Mutable Table Dual-Mode Card/Table Reflow with Frozen Column & Multi-Viewport Architecture (FKL-DI-022 / INV-SDCA-004)
+- [SPEC-ARCH-MUTABLE-TABLE-001.md](./references/SPEC-ARCH-MUTABLE-TABLE-001.md) — Mutable Table Pure Tabular Architecture, Frozen Column & Cross-Surface Navigation (FKL-DI-025 / INV-SDCA-004 / P-TABLE-DOMAIN-SEPARATION-001)
 
 ---
 
@@ -31,5 +31,6 @@ Welcome to the **Sree Krushna Marriage OS** documentation catalog.
 - [INC-092-dynamic-module-timing-race-and-unauthenticated-local-fallback.md](./incidents/INC-092-dynamic-module-timing-race-and-unauthenticated-local-fallback.md) — Dynamic ES Module Timing Race & Unauthenticated Local Mode Fallback in Showroom Shopping Table (STD-UI-LIFECYCLE-001 / dynamic-module-timing-race-and-auth-reconnect)
 - [INC-093-sdca-compiler-regex-container-query-mangling.md](./incidents/INC-093-sdca-compiler-regex-container-query-mangling.md) — SDCA Build Compiler Regex At-Rule Container Query Mangling (STD-MOD-COMP-001 / INV-SDCA-004 / sdca-container-query-scoping)
 - [INC-094-duplicate-urlparam-scope-shadowing-and-pre-emit-syntax-gate.md](./incidents/INC-094-duplicate-urlparam-scope-shadowing-and-pre-emit-syntax-gate.md) — Duplicate URL Parameter Variable Re-declaration & Validation via SDCA Pre-Emit Syntax Gate (STD-MOD-COMP-001 / INV-SDCA-003 / P-COLLAB-VISUAL-INTAKE-001)
+- [INC-100-mutable-table-cards-mode-degradation-and-cross-domain-conflation.md](./incidents/INC-100-mutable-table-cards-mode-degradation-and-cross-domain-conflation.md) — Mutable Table Pseudo-Card Degradation & Cross-Domain Conflation (P-TABLE-DOMAIN-SEPARATION-001 / AC-DEC-2026-034 / SK-021)
 
 

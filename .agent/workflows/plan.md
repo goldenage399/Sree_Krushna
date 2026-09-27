@@ -73,6 +73,7 @@ Review relevant ecosystem patterns:
 - `.agent/patterns/ssot-preservation-template-guard.md`
 - `.agent/patterns/sub-engine-shadowing-and-tab-reconciliation.md`
 - `.agent/patterns/subcollection-write-cache-atomicity.md`
+- `.agent/patterns/table-domain-separation-and-mobile-scroll.md`
 - `.agent/patterns/theme-button-opt-out-contract.md`
 - `.agent/patterns/three-way-schema-alignment.md`
 - `.agent/patterns/triage-anomalies-first.md`
