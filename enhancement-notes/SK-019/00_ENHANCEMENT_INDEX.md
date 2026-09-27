@@ -6,10 +6,11 @@
 > **Certifying Decision**: `AC-DEC-2026-060` (`GOV-DEC-2026-002`)  
 > **Cluster**: Governance / Cross-Repo Agent Infrastructure  
 > **Tier**: Complex  
-> **Status**: `IN_PROGRESS (Phase 2 Verified)`  
+> **Status**: `COMPLETED`  
 > **Target Release**: `v2.9.0`  
 > **Branch**: `main`  
 > **Registered**: 2026-09-26  
+> **Completed**: 2026-09-27  
 
 ---
 
@@ -61,13 +62,13 @@ Build the **Universal Cross-Repository Graph, Taxonomy & Session Acceleration En
 
 ---
 
-### Phase 3: Repo-Agnostic Parameterization & Portable SAP Package
-- **T1 (Static)**: Parameterize `scripts/generate-domain-graph.cjs` to read declarative configuration from `.agent/domain-graph-config.json` (root candidates, hub patterns, entity prefix regex).
-- **T2 (Functional)**: Verify script runs cleanly with `--root <path>` against arbitrary repos.
-- **T3 (Integrated)**: Scaffold portable skill `.agent/skills/repo-taxonomy-graph/SKILL.md` (and dual mirror in `.claude/skills/`), bundling parameterized engine templates.
-- **T4 (Governance)**: Update `.agent/standards-catalog.json`, `.agent/skill-router.yaml`, and `aos-session-open.md` with SAP sync markers (`<!-- shared:std.agent.repo-taxonomy-graph:start -->`) for 1-command distribution via `/sap-sync`.
+### Phase 3: Repo-Agnostic Parameterization & Portable SAP Package (COMPLETE)
+- [x] **T1 (Static)**: Parameterize `scripts/generate-domain-graph.cjs` to read declarative configuration from `.agent/domain-graph-config.json` (root candidates, hub patterns, entity prefix regex).
+- [x] **T2 (Functional)**: Extended unit tests `scripts/test-domain-graph.cjs` (7/7 passed), verifying CLI flags (`--root`, `--config`, `--out`) and graceful fallback.
+- [x] **T3 (Integrated)**: Scaffold portable skill `.agent/skills/repo-taxonomy-graph/SKILL.md` (and dual mirror in `.claude/skills/repo-taxonomy-graph/SKILL.md`), bundling parameterized engine templates.
+- [x] **T4 (Governance)**: Update `.agent/standards-catalog.json`, `.agent/skill-router.yaml`, and `GEMINI.md` with SAP sync markers (`<!-- shared:std.agent.repo-taxonomy-graph:start -->`) for 1-command distribution via `/sap-sync`.
 
-**Validation Gate (VG)**: `npm run verify:governance-wiring:all` passes 100% green.
+**Validation Gate (VG)**: `npm run verify:governance-wiring:all` passes 100% green (199 artifacts verified).
 
 ---
 

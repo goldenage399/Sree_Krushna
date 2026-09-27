@@ -7,8 +7,8 @@
     "targetEnvironment": "Multi-Repo SAP Spoke",
     "governanceModel": "AI-Driven Development (Antigravity Agent)",
     "sourceOfTruth": "GEMINI.md",
-    "totalStandards": 10,
-    "lastUpdated": "2026-09-26"
+    "totalStandards": 11,
+    "lastUpdated": "2026-09-27"
   },
   "categories": {
     "governance": "Process and workflow controls",
@@ -198,6 +198,32 @@
         "User_Created/Discussion Threads/Council/260926_arch_council_sheet_media_hierarchy_and_module_onboarding.md",
         "docs/references/SPEC-PROC-MEDIA-HIERARCHY-001.md",
         "backend_gas/media-routing-taxonomy.json",
+        "GEMINI.md",
+        "CLAUDE.md"
+      ]
+    },
+    {
+      "id": "STD-UNIVERSAL-TAXONOMY-001",
+      "category": "governance",
+      "name": "Universal Repository Taxonomy, Entity Discovery Graph & Session Acceleration Standard",
+      "description": "Native 3-tier session acceleration engine: mandatory DOCS_HUB.md and docs/SYSTEM_CLARITY_SNAPSHOT.md read gate, zero-dependency Node.js domain graph generator (scripts/generate-domain-graph.cjs), and SAP dual-block taxonomy vocabulary linter (scripts/verify-taxonomy-vocabulary.cjs) enforcing canonical terminology across all 9 SAP repositories.",
+      "severity": "CRITICAL",
+      "enforcement": {
+        "checkpoints": [
+          "pre-commit",
+          "CI"
+        ],
+        "manualOnly": false,
+        "automatedGate": "npm run verify:taxonomy"
+      },
+      "references": [
+        "User_Created/Discussion Threads/Council/260926_arch_council_cross_repo_graph_taxonomy_and_session_acceleration.md",
+        "User_Created/Discussion Threads/Council/260927_arch_council_sap_dual_block_taxonomy_and_cross_repo_portability.md",
+        ".agent/skills/repo-taxonomy-graph/SKILL.md",
+        ".agent/domain-graph-config.json",
+        ".agent/taxonomy_dictionary.cjs",
+        "docs/SYSTEM_CLARITY_SNAPSHOT.md",
+        "DOCS_HUB.md",
         "GEMINI.md",
         "CLAUDE.md"
       ]

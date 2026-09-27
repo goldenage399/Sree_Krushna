@@ -31,6 +31,14 @@ skills:
     when: "Use whenever an application or workflow requires an image, photo, or document upload pipeline without incurring Firebase Blaze / Cloud Storage billing hurdles. Provides a zero-CORS GAS relay backed by Google Drive storage, dynamic Google Sheet routing, and an immutable 12-dimension transaction audit ledger."
     related_skills: [gas-deploy-guard, protocol-enforcer-pre-code, web-deployment-gate]
 
+  - id: repo-taxonomy-graph
+    repo: [task-dashboard, sree-krushna, bms, capsicum, pio, ug-farmhouse, qsr]
+    triggers: ["generate domain graph", "repo taxonomy", "build entity graph", "verify taxonomy", "domain graph", "session acceleration", "system clarity snapshot", "/repo-taxonomy-graph", "STD-UNIVERSAL-TAXONOMY-001", "PKG-006"]
+    cost: low
+    invoke: /repo-taxonomy-graph
+    when: "Use whenever opening a new session in any repository, exploring unfamiliar domain architectures, inspecting entity relationships across documents, or enforcing canonical vocabulary across specs, PRDs, and governance artifacts via STD-UNIVERSAL-TAXONOMY-001."
+    related_skills: [ssot-domain-mapper, repo-task-dependency-grapher, protocol-enforcer-pre-code]
+
   - id: cockpit-intake
     repo: [task-dashboard]
     triggers: ["cockpit intake", "decorator intake", "ingest cockpit", "update cockpit layout"]

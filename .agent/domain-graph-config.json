@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "version": "1.0.0",
+  "standard": "STD-UNIVERSAL-TAXONOMY-001",
+  "repoName": "Sree_Krushna",
+  "description": "Declarative Domain Graph Configuration for Sree Krushna Marriage OS",
+  "canonicalPrefixes": [
+    "EVT",
+    "RIT",
+    "SAM",
+    "PER",
+    "FAM",
+    "VEN",
+    "VDR",
+    "CTR",
+    "TSK",
+    "DEC",
+    "PAY",
+    "RSK",
+    "AST",
+    "CHG",
+    "GATE",
+    "CP",
+    "TRS",
+    "SHP",
+    "GFT",
+    "OBL",
+    "EXC"
+  ],
+  "targetDirectories": [
+    "00_GOVERNANCE",
+    "01_TIMELINE_EVENTS",
+    "02_RITUALS_CULTURE",
+    "03_PEOPLE_GUESTS",
+    "04_PROCUREMENT_VENDORS",
+    "05_OPERATIONS_LOGISTICS",
+    "06_FINANCE_COMMERCIALS",
+    "07_DOCUMENTS_ARCHIVE",
+    "08_RESEARCH_REFERENCE",
+    "docs"
+  ],
+  "rootFiles": [
+    "ARCHITECTURE_SPEC.md",
+    "DOCS_HUB.md",
+    "README.md",
+    "ENHANCEMENT-MASTER-REGISTRY.md"
+  ],
+  "ignoreDirectories": [
+    "node_modules",
+    ".git",
+    "graphify-out",
+    "scratch",
+    "User_Created"
+  ],
+  "outputDir": "graphify-out"
+}

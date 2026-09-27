@@ -57,6 +57,18 @@
         "RIT-011_chauthi_puja"
       ],
       "inbound": [
+        "OBL-035",
+        "OBL-036",
+        "OBL-037",
+        "OBL-038",
+        "OBL-039",
+        "OBL-040",
+        "OBL-041",
+        "OBL-042",
+        "OBL-043",
+        "OBL-044",
+        "OBL-045",
+        "OBL-046",
         "RIT-010",
         "RIT-011",
         "VDR-002"
@@ -77,6 +89,8 @@
         "RIT-012_astamangala"
       ],
       "inbound": [
+        "OBL-048",
+        "OBL-049",
         "RIT-012"
       ]
     },
@@ -101,6 +115,21 @@
       ],
       "inbound": [
         "DEC-002",
+        "OBL-001",
+        "OBL-002",
+        "OBL-003",
+        "OBL-004",
+        "OBL-005",
+        "OBL-006",
+        "OBL-007",
+        "OBL-008",
+        "OBL-009",
+        "OBL-010",
+        "OBL-011",
+        "OBL-012",
+        "OBL-013",
+        "OBL-014",
+        "OBL-015",
         "RIT-001",
         "RIT-002",
         "PER-###",
@@ -126,6 +155,11 @@
         "VEN-001_rayagada_engagement_venue"
       ],
       "inbound": [
+        "OBL-016",
+        "OBL-017",
+        "OBL-018",
+        "OBL-019",
+        "OBL-020",
         "VDR-002"
       ]
     },
@@ -166,6 +200,7 @@
         "PER-008"
       ],
       "inbound": [
+        "OBL-047",
         "PER-###",
         "VDR-002"
       ]
@@ -198,6 +233,20 @@
         "RIT-009_kanyavida"
       ],
       "inbound": [
+        "OBL-021",
+        "OBL-022",
+        "OBL-023",
+        "OBL-024",
+        "OBL-025",
+        "OBL-026",
+        "OBL-027",
+        "OBL-028",
+        "OBL-029",
+        "OBL-030",
+        "OBL-031",
+        "OBL-032",
+        "OBL-033",
+        "OBL-034",
         "RIT-004",
         "RIT-005",
         "RIT-006",
@@ -207,6 +256,900 @@
         "PER-###",
         "VDR-002"
       ]
+    },
+    "OBL-001": {
+      "id": "OBL-001",
+      "type": "OBL",
+      "title": "`OBL-001` — Nirbandha Mudi (Bride ⟶ Groom)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-001.md",
+      "status": "pending_selection",
+      "category": "gold_silver",
+      "outbound": [
+        "EVT-001",
+        "RIT-001",
+        "PER-007",
+        "PER-002",
+        "OBL-001-ITM-01",
+        "TRS-EG-01",
+        "AST-001",
+        "VEN-001"
+      ],
+      "inbound": []
+    },
+    "OBL-002": {
+      "id": "OBL-002",
+      "type": "OBL",
+      "title": "`OBL-002` — Groom's Engagement Shirt + Pant",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-002.md",
+      "status": "pending_selection",
+      "category": "attire",
+      "outbound": [
+        "EVT-001",
+        "RIT-001",
+        "PER-007",
+        "PER-002",
+        "OBL-002-ITM-01",
+        "TRS-EG-03",
+        "VEN-001"
+      ],
+      "inbound": []
+    },
+    "OBL-003": {
+      "id": "OBL-003",
+      "type": "OBL",
+      "title": "`OBL-003` — Nirbandha Saree for Groom's Mom",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-003.md",
+      "status": "pending_selection",
+      "category": "attire",
+      "outbound": [
+        "EVT-001",
+        "RIT-001",
+        "PER-006",
+        "PER-004",
+        "OBL-003-ITM-01",
+        "TRS-SA-01",
+        "VEN-001"
+      ],
+      "inbound": []
+    },
+    "OBL-004": {
+      "id": "OBL-004",
+      "type": "OBL",
+      "title": "`OBL-004` — Nirbandha Kurta/Shirt + Pant for Groom's Dad",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-004.md",
+      "status": "pending_selection",
+      "category": "attire",
+      "outbound": [
+        "EVT-001",
+        "RIT-001",
+        "PER-007",
+        "PER-003",
+        "OBL-004-ITM-01",
+        "TRS-SA-02",
+        "VEN-001"
+      ],
+      "inbound": []
+    },
+    "OBL-005": {
+      "id": "OBL-005",
+      "type": "OBL",
+      "title": "`OBL-005` — Dress/Saree for Groom's Didi & Tiju",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-005.md",
+      "status": "pending_selection",
+      "category": "composite_bundle",
+      "outbound": [
+        "EVT-001",
+        "RIT-001",
+        "PER-006",
+        "PER-010",
+        "OBL-005-ITM-01",
+        "OBL-005-ITM-02",
+        "TRS-SA-04",
+        "VEN-001"
+      ],
+      "inbound": []
+    },
+    "OBL-006": {
+      "id": "OBL-006",
+      "type": "OBL",
+      "title": "`OBL-006` — Dress for Bacha Party",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-006.md",
+      "status": "pending_selection",
+      "category": "attire",
+      "outbound": [
+        "EVT-001",
+        "RIT-001",
+        "PER-006",
+        "PER-010",
+        "OBL-006-ITM-01",
+        "VEN-001"
+      ],
+      "inbound": []
+    },
+    "OBL-007": {
+      "id": "OBL-007",
+      "type": "OBL",
+      "title": "`OBL-007` — 5 Varieties of Sweets (Bride ⟶ Groom)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-007.md",
+      "status": "pending_selection",
+      "category": "edible_hospitality",
+      "outbound": [
+        "EVT-001",
+        "RIT-001",
+        "PER-007",
+        "PER-003",
+        "OBL-007-ITM-01",
+        "TRS-SA-06",
+        "VEN-001"
+      ],
+      "inbound": []
+    },
+    "OBL-008": {
+      "id": "OBL-008",
+      "type": "OBL",
+      "title": "`OBL-008` — Nirbandha Mudi (Groom ⟶ Bride)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-008.md",
+      "status": "pending_selection",
+      "category": "gold_silver",
+      "outbound": [
+        "EVT-001",
+        "RIT-001",
+        "PER-003",
+        "PER-001",
+        "OBL-008-ITM-01",
+        "TRS-EG-01",
+        "AST-002",
+        "VEN-001"
+      ],
+      "inbound": []
+    },
+    "OBL-009": {
+      "id": "OBL-009",
+      "type": "OBL",
+      "title": "`OBL-009` — Bridal Engagement Lehenga + Blouse",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-009.md",
+      "status": "pending_selection",
+      "category": "attire",
+      "outbound": [
+        "EVT-001",
+        "RIT-001",
+        "PER-004",
+        "PER-001",
+        "OBL-009-ITM-01",
+        "TRS-EG-02",
+        "VEN-001"
+      ],
+      "inbound": []
+    },
+    "OBL-010": {
+      "id": "OBL-010",
+      "type": "OBL",
+      "title": "`OBL-010` — Engagement Trolley Presentation",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-010.md",
+      "status": "pending_selection",
+      "category": "logistics",
+      "outbound": [
+        "EVT-001",
+        "RIT-001",
+        "PER-003",
+        "PER-001",
+        "OBL-010-ITM-01",
+        "VEN-001"
+      ],
+      "inbound": []
+    },
+    "OBL-011": {
+      "id": "OBL-011",
+      "type": "OBL",
+      "title": "`OBL-011` — Sweets, Coconut & Banana Kandhi Hamper",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-011.md",
+      "status": "pending_selection",
+      "category": "composite_bundle",
+      "outbound": [
+        "EVT-001",
+        "RIT-001",
+        "PER-003",
+        "PER-007",
+        "OBL-011-ITM-01",
+        "OBL-011-ITM-02",
+        "OBL-011-ITM-03",
+        "TRS-SA-06",
+        "VEN-001"
+      ],
+      "inbound": []
+    },
+    "OBL-012": {
+      "id": "OBL-012",
+      "type": "OBL",
+      "title": "`OBL-012` — Nirbandha Phula (Floral Garlands)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-012.md",
+      "status": "pending_selection",
+      "category": "ceremonial_token",
+      "outbound": [
+        "EVT-001",
+        "RIT-001",
+        "PER-003",
+        "PER-001",
+        "OBL-012-ITM-01",
+        "SAM-001",
+        "VEN-001"
+      ],
+      "inbound": []
+    },
+    "OBL-013": {
+      "id": "OBL-013",
+      "type": "OBL",
+      "title": "`OBL-013` — Nirbandha Desi Pana",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-013.md",
+      "status": "pending_selection",
+      "category": "edible_hospitality",
+      "outbound": [
+        "EVT-001",
+        "RIT-001",
+        "PER-003",
+        "PER-007",
+        "OBL-013-ITM-01",
+        "SAM-001",
+        "VEN-001"
+      ],
+      "inbound": []
+    },
+    "OBL-014": {
+      "id": "OBL-014",
+      "type": "OBL",
+      "title": "`OBL-014` — Puri Jagannath Maha-Prasad",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-014.md",
+      "status": "pending_selection",
+      "category": "ceremonial_token",
+      "outbound": [
+        "EVT-001",
+        "RIT-001",
+        "PER-003",
+        "PER-007",
+        "OBL-014-ITM-01",
+        "SAM-001",
+        "VEN-001"
+      ],
+      "inbound": []
+    },
+    "OBL-015": {
+      "id": "OBL-015",
+      "type": "OBL",
+      "title": "`OBL-015` — Nirbandha Non-Family Guest Honorarium (₹5,000/head)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-015.md",
+      "status": "pending_selection",
+      "category": "honorarium_cash",
+      "outbound": [
+        "EVT-001",
+        "RIT-001",
+        "PER-003",
+        "PER-014",
+        "OBL-015-ITM-01",
+        "PAY-001",
+        "VEN-001"
+      ],
+      "inbound": []
+    },
+    "OBL-016": {
+      "id": "OBL-016",
+      "type": "OBL",
+      "title": "`OBL-016` — Gua/Haldi Basa Saree",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-016.md",
+      "status": "pending_selection",
+      "category": "attire",
+      "outbound": [
+        "EVT-002",
+        "RIT-003",
+        "PER-004",
+        "PER-001",
+        "OBL-016-ITM-01",
+        "TRS-BR-03",
+        "VEN-002"
+      ],
+      "inbound": []
+    },
+    "OBL-017": {
+      "id": "OBL-017",
+      "type": "OBL",
+      "title": "`OBL-017` — Gua/Haldi Basa Makeup & Shringar",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-017.md",
+      "status": "pending_selection",
+      "category": "service",
+      "outbound": [
+        "EVT-002",
+        "RIT-003",
+        "PER-004",
+        "PER-001",
+        "OBL-017-ITM-01",
+        "TRS-SA-05",
+        "VEN-002"
+      ],
+      "inbound": []
+    },
+    "OBL-018": {
+      "id": "OBL-018",
+      "type": "OBL",
+      "title": "`OBL-018` — Haldi Basa Sacred Samagri (Coconut, Pana, Gua, Haldi)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-018.md",
+      "status": "pending_selection",
+      "category": "composite_bundle",
+      "outbound": [
+        "EVT-002",
+        "RIT-003",
+        "PER-003",
+        "PER-007",
+        "OBL-018-ITM-01",
+        "OBL-018-ITM-02",
+        "OBL-018-ITM-03",
+        "OBL-018-ITM-04",
+        "SAM-003",
+        "VEN-002"
+      ],
+      "inbound": []
+    },
+    "OBL-019": {
+      "id": "OBL-019",
+      "type": "OBL",
+      "title": "`OBL-019` — Bandhu Daksa (Pana, Gua)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-019.md",
+      "status": "pending_selection",
+      "category": "composite_bundle",
+      "outbound": [
+        "EVT-002",
+        "RIT-003",
+        "PER-007",
+        "PER-003",
+        "OBL-019-ITM-01",
+        "OBL-019-ITM-02",
+        "SAM-003",
+        "VEN-002"
+      ],
+      "inbound": []
+    },
+    "OBL-020": {
+      "id": "OBL-020",
+      "type": "OBL",
+      "title": "`OBL-020` — Bandhu Daksa (Dress for Daddy)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-020.md",
+      "status": "pending_selection",
+      "category": "attire",
+      "outbound": [
+        "EVT-002",
+        "RIT-003",
+        "PER-007",
+        "PER-003",
+        "OBL-020-ITM-01",
+        "TRS-SA-02",
+        "VEN-002"
+      ],
+      "inbound": []
+    },
+    "OBL-021": {
+      "id": "OBL-021",
+      "type": "OBL",
+      "title": "`OBL-021` — Batabasana Groom Suit",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-021.md",
+      "status": "pending_selection",
+      "category": "attire",
+      "outbound": [
+        "EVT-004",
+        "RIT-004",
+        "PER-007",
+        "PER-002",
+        "OBL-021-ITM-01",
+        "TRS-GR-06",
+        "VEN-003"
+      ],
+      "inbound": []
+    },
+    "OBL-022": {
+      "id": "OBL-022",
+      "type": "OBL",
+      "title": "`OBL-022` — Batabasana Gold Chain",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-022.md",
+      "status": "pending_selection",
+      "category": "gold_silver",
+      "outbound": [
+        "EVT-004",
+        "RIT-004",
+        "PER-007",
+        "PER-002",
+        "OBL-022-ITM-01",
+        "AST-003",
+        "VEN-003"
+      ],
+      "inbound": []
+    },
+    "OBL-023": {
+      "id": "OBL-023",
+      "type": "OBL",
+      "title": "`OBL-023` — Batabasana Gold Mudi (Ring)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-023.md",
+      "status": "pending_selection",
+      "category": "gold_silver",
+      "outbound": [
+        "EVT-004",
+        "RIT-004",
+        "PER-007",
+        "PER-002",
+        "OBL-023-ITM-01",
+        "AST-004",
+        "VEN-003"
+      ],
+      "inbound": []
+    },
+    "OBL-024": {
+      "id": "OBL-024",
+      "type": "OBL",
+      "title": "`OBL-024` — Batabasana Gold Bracelet",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-024.md",
+      "status": "pending_selection",
+      "category": "gold_silver",
+      "outbound": [
+        "EVT-004",
+        "RIT-004",
+        "PER-007",
+        "PER-002",
+        "OBL-024-ITM-01",
+        "AST-005",
+        "VEN-003"
+      ],
+      "inbound": []
+    },
+    "OBL-025": {
+      "id": "OBL-025",
+      "type": "OBL",
+      "title": "`OBL-025` — Ahiya Manduli (Saree for Mummy)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-025.md",
+      "status": "pending_selection",
+      "category": "attire",
+      "outbound": [
+        "EVT-004",
+        "RIT-004",
+        "PER-003",
+        "PER-006",
+        "OBL-025-ITM-01",
+        "TRS-SA-01",
+        "VEN-003"
+      ],
+      "inbound": []
+    },
+    "OBL-026": {
+      "id": "OBL-026",
+      "type": "OBL",
+      "title": "`OBL-026` — Alta & Sindoor in Mandap",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-026.md",
+      "status": "pending_selection",
+      "category": "ceremonial_token",
+      "outbound": [
+        "EVT-004",
+        "RIT-005",
+        "PER-004",
+        "PER-001",
+        "OBL-026-ITM-01",
+        "OBL-026-ITM-02",
+        "TRS-JW-09",
+        "SAM-005",
+        "VEN-003"
+      ],
+      "inbound": []
+    },
+    "OBL-027": {
+      "id": "OBL-027",
+      "type": "OBL",
+      "title": "`OBL-027` — Sala Bidha Gift",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-027.md",
+      "status": "pending_selection",
+      "category": "attire",
+      "outbound": [
+        "EVT-004",
+        "RIT-005",
+        "PER-002",
+        "PER-011",
+        "OBL-027-ITM-01",
+        "TRS-SA-03",
+        "VEN-003"
+      ],
+      "inbound": []
+    },
+    "OBL-028": {
+      "id": "OBL-028",
+      "type": "OBL",
+      "title": "`OBL-028` — Sali Hasta Ganthi Gift",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-028.md",
+      "status": "pending_selection",
+      "category": "attire",
+      "outbound": [
+        "EVT-004",
+        "RIT-005",
+        "PER-002",
+        "PER-012",
+        "OBL-028-ITM-01",
+        "TRS-SA-04",
+        "VEN-003"
+      ],
+      "inbound": []
+    },
+    "OBL-029": {
+      "id": "OBL-029",
+      "type": "OBL",
+      "title": "`OBL-029` — Samdhi Milan (Baba ⟶ Daddy)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-029.md",
+      "status": "pending_selection",
+      "category": "attire",
+      "outbound": [
+        "EVT-004",
+        "RIT-004",
+        "PER-003",
+        "PER-007",
+        "EXC-001",
+        "OBL-030",
+        "OBL-029-ITM-01",
+        "TRS-SA-02",
+        "VEN-003"
+      ],
+      "inbound": [
+        "OBL-030"
+      ]
+    },
+    "OBL-030": {
+      "id": "OBL-030",
+      "type": "OBL",
+      "title": "`OBL-030` — Samdhi Milan (Daddy ⟶ Baba)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-030.md",
+      "status": "pending_selection",
+      "category": "attire",
+      "outbound": [
+        "EVT-004",
+        "RIT-004",
+        "PER-007",
+        "PER-003",
+        "EXC-001",
+        "OBL-029",
+        "OBL-030-ITM-01",
+        "TRS-SA-02",
+        "VEN-003"
+      ],
+      "inbound": [
+        "OBL-029"
+      ]
+    },
+    "OBL-031": {
+      "id": "OBL-031",
+      "type": "OBL",
+      "title": "`OBL-031` — Sadu Basana (Laddoo, Dress)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-031.md",
+      "status": "pending_selection",
+      "category": "composite_bundle",
+      "outbound": [
+        "EVT-004",
+        "RIT-004",
+        "PER-003",
+        "PER-007",
+        "OBL-031-ITM-01",
+        "OBL-031-ITM-02",
+        "TRS-SA-03",
+        "VEN-003"
+      ],
+      "inbound": []
+    },
+    "OBL-032": {
+      "id": "OBL-032",
+      "type": "OBL",
+      "title": "`OBL-032` — Bridal Alankar (Groom ⟶ Bride)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-032.md",
+      "status": "pending_selection",
+      "category": "gold_silver",
+      "outbound": [
+        "EVT-004",
+        "RIT-005",
+        "PER-004",
+        "PER-001",
+        "OBL-032-ITM-01",
+        "TRS-JW-01",
+        "AST-006",
+        "VEN-003"
+      ],
+      "inbound": []
+    },
+    "OBL-033": {
+      "id": "OBL-033",
+      "type": "OBL",
+      "title": "`OBL-033` — Unidentified TDK Customary Item",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-033.md",
+      "status": "pending_selection",
+      "category": "attire",
+      "outbound": [
+        "EVT-004",
+        "RIT-005",
+        "PER-003",
+        "PER-001",
+        "OBL-033-ITM-01",
+        "VEN-003"
+      ],
+      "inbound": []
+    },
+    "OBL-034": {
+      "id": "OBL-034",
+      "type": "OBL",
+      "title": "`OBL-034` — 5 Sets Dresses (Bride ⟶ Groom)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-034.md",
+      "status": "pending_selection",
+      "category": "composite_bundle",
+      "outbound": [
+        "EVT-004",
+        "RIT-005",
+        "PER-007",
+        "PER-002",
+        "OBL-034-ITM-01",
+        "TRS-GR-07",
+        "VEN-003"
+      ],
+      "inbound": []
+    },
+    "OBL-035": {
+      "id": "OBL-035",
+      "type": "OBL",
+      "title": "`OBL-035` — Guin Chada Trolley",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-035.md",
+      "status": "pending_selection",
+      "category": "logistics",
+      "outbound": [
+        "EVT-006",
+        "RIT-011",
+        "PER-006",
+        "PER-001",
+        "OBL-035-ITM-01",
+        "VEN-004"
+      ],
+      "inbound": []
+    },
+    "OBL-036": {
+      "id": "OBL-036",
+      "type": "OBL",
+      "title": "`OBL-036` — Bahu Daksa (Dress for Devas)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-036.md",
+      "status": "pending_selection",
+      "category": "composite_bundle",
+      "outbound": [
+        "EVT-006",
+        "RIT-011",
+        "PER-007",
+        "PER-003",
+        "OBL-036-ITM-01",
+        "TRS-SA-03",
+        "VEN-004"
+      ],
+      "inbound": []
+    },
+    "OBL-037": {
+      "id": "OBL-037",
+      "type": "OBL",
+      "title": "`OBL-037` — Bahu Bandhapana (2 Sarees)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-037.md",
+      "status": "pending_selection",
+      "category": "attire",
+      "outbound": [
+        "EVT-006",
+        "RIT-011",
+        "PER-006",
+        "PER-001",
+        "OBL-037-ITM-01",
+        "TRS-BR-07",
+        "VEN-004"
+      ],
+      "inbound": []
+    },
+    "OBL-038": {
+      "id": "OBL-038",
+      "type": "OBL",
+      "title": "`OBL-038` — Nananda Putuli (Gold Component)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-038.md",
+      "status": "pending_selection",
+      "category": "gold_silver",
+      "outbound": [
+        "EVT-006",
+        "RIT-011",
+        "PER-007",
+        "PER-010",
+        "OBL-038-ITM-01",
+        "AST-007",
+        "VEN-004"
+      ],
+      "inbound": []
+    },
+    "OBL-039": {
+      "id": "OBL-039",
+      "type": "OBL",
+      "title": "`OBL-039` — Nananda Putuli (Saree/Dress Sets × 2)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-039.md",
+      "status": "pending_selection",
+      "category": "attire",
+      "outbound": [
+        "EVT-006",
+        "RIT-011",
+        "PER-006",
+        "PER-010",
+        "OBL-039-ITM-01",
+        "TRS-SA-04",
+        "VEN-004"
+      ],
+      "inbound": []
+    },
+    "OBL-040": {
+      "id": "OBL-040",
+      "type": "OBL",
+      "title": "`OBL-040` — Nananda Putuli (Luggage Trolleys × 2)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-040.md",
+      "status": "pending_selection",
+      "category": "logistics",
+      "outbound": [
+        "EVT-006",
+        "RIT-011",
+        "PER-007",
+        "PER-010",
+        "OBL-040-ITM-01",
+        "VEN-004"
+      ],
+      "inbound": []
+    },
+    "OBL-041": {
+      "id": "OBL-041",
+      "type": "OBL",
+      "title": "`OBL-041` — Chaturthi Huma Saree Set",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-041.md",
+      "status": "pending_selection",
+      "category": "attire",
+      "outbound": [
+        "EVT-006",
+        "RIT-011",
+        "PER-004",
+        "PER-001",
+        "OBL-041-ITM-01",
+        "TRS-OD-01",
+        "VEN-004"
+      ],
+      "inbound": []
+    },
+    "OBL-042": {
+      "id": "OBL-042",
+      "type": "OBL",
+      "title": "`OBL-042` — Chaturthi Huma Dhoti + Kurta",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-042.md",
+      "status": "pending_selection",
+      "category": "attire",
+      "outbound": [
+        "EVT-006",
+        "RIT-011",
+        "PER-007",
+        "PER-002",
+        "OBL-042-ITM-01",
+        "TRS-OD-04",
+        "VEN-004"
+      ],
+      "inbound": []
+    },
+    "OBL-043": {
+      "id": "OBL-043",
+      "type": "OBL",
+      "title": "`OBL-043` — Huma Bali Utheibaku (Dress for Brother-in-Law)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-043.md",
+      "status": "pending_selection",
+      "category": "attire",
+      "outbound": [
+        "EVT-006",
+        "RIT-011",
+        "PER-002",
+        "PER-011",
+        "OBL-043-ITM-01",
+        "TRS-SA-03",
+        "VEN-004"
+      ],
+      "inbound": []
+    },
+    "OBL-044": {
+      "id": "OBL-044",
+      "type": "OBL",
+      "title": "`OBL-044` — Uluguna Customary Items",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-044.md",
+      "status": "pending_selection",
+      "category": "composite_bundle",
+      "outbound": [
+        "EVT-006",
+        "RIT-011",
+        "PER-007",
+        "PER-003",
+        "OBL-044-ITM-01",
+        "VEN-004"
+      ],
+      "inbound": []
+    },
+    "OBL-045": {
+      "id": "OBL-045",
+      "type": "OBL",
+      "title": "`OBL-045` — Family Pack Bundles (6 Recipient Units)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-045.md",
+      "status": "pending_selection",
+      "category": "composite_bundle",
+      "outbound": [
+        "EVT-006",
+        "RIT-011",
+        "PER-006",
+        "PER-003",
+        "OBL-045-ITM-01",
+        "TRS-SA-04",
+        "VEN-004"
+      ],
+      "inbound": []
+    },
+    "OBL-046": {
+      "id": "OBL-046",
+      "type": "OBL",
+      "title": "`OBL-046` — Kutha Madani Trolley Presentation",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-046.md",
+      "status": "pending_selection",
+      "category": "logistics",
+      "outbound": [
+        "EVT-006",
+        "RIT-011",
+        "PER-007",
+        "PER-001",
+        "OBL-046-ITM-01",
+        "VEN-004"
+      ],
+      "inbound": []
+    },
+    "OBL-047": {
+      "id": "OBL-047",
+      "type": "OBL",
+      "title": "`OBL-047` — Grand Evening Reception Saree / Lehenga",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-047.md",
+      "status": "pending_selection",
+      "category": "attire",
+      "outbound": [
+        "EVT-005",
+        "RIT-011",
+        "PER-004",
+        "PER-001",
+        "OBL-047-ITM-01",
+        "TRS-BR-05",
+        "VEN-004"
+      ],
+      "inbound": []
+    },
+    "OBL-048": {
+      "id": "OBL-048",
+      "type": "OBL",
+      "title": "`OBL-048` — Saga Macha Feast Hamper (Groom ⟶ Bride)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-048.md",
+      "status": "pending_selection",
+      "category": "edible_hospitality",
+      "outbound": [
+        "EVT-007",
+        "RIT-012",
+        "PER-003",
+        "PER-007",
+        "OBL-048-ITM-01",
+        "VEN-002"
+      ],
+      "inbound": []
+    },
+    "OBL-049": {
+      "id": "OBL-049",
+      "type": "OBL",
+      "title": "`OBL-049` — Saga & Macha Return Feast (Bride ⟶ Groom)",
+      "file": "02_RITUALS_CULTURE/obligations/OBL-049.md",
+      "status": "pending_selection",
+      "category": "edible_hospitality",
+      "outbound": [
+        "EVT-007",
+        "RIT-012",
+        "PER-007",
+        "PER-003",
+        "OBL-049-ITM-01",
+        "VEN-004"
+      ],
+      "inbound": []
     },
     "OBL-###": {
       "id": "OBL-###",
@@ -242,6 +1185,9 @@
         "PER-007"
       ],
       "inbound": [
+        "OBL-012",
+        "OBL-013",
+        "OBL-014",
         "RIT-001"
       ]
     },
@@ -274,6 +1220,8 @@
         "PER-006"
       ],
       "inbound": [
+        "OBL-018",
+        "OBL-019",
         "RIT-003"
       ]
     },
@@ -313,6 +1261,7 @@
         "PER-007"
       ],
       "inbound": [
+        "OBL-026",
         "RIT-005",
         "RIT-006",
         "RIT-007",
@@ -357,6 +1306,21 @@
       ],
       "inbound": [
         "EVT-001",
+        "OBL-001",
+        "OBL-002",
+        "OBL-003",
+        "OBL-004",
+        "OBL-005",
+        "OBL-006",
+        "OBL-007",
+        "OBL-008",
+        "OBL-009",
+        "OBL-010",
+        "OBL-011",
+        "OBL-012",
+        "OBL-013",
+        "OBL-014",
+        "OBL-015",
         "SAM-001"
       ]
     },
@@ -397,6 +1361,11 @@
       ],
       "inbound": [
         "EVT-003",
+        "OBL-016",
+        "OBL-017",
+        "OBL-018",
+        "OBL-019",
+        "OBL-020",
         "SAM-003"
       ]
     },
@@ -418,6 +1387,14 @@
       ],
       "inbound": [
         "EVT-004",
+        "OBL-021",
+        "OBL-022",
+        "OBL-023",
+        "OBL-024",
+        "OBL-025",
+        "OBL-029",
+        "OBL-030",
+        "OBL-031",
         "SAM-004"
       ]
     },
@@ -438,6 +1415,12 @@
       ],
       "inbound": [
         "EVT-004",
+        "OBL-026",
+        "OBL-027",
+        "OBL-028",
+        "OBL-032",
+        "OBL-033",
+        "OBL-034",
         "SAM-005"
       ]
     },
@@ -552,6 +1535,19 @@
       ],
       "inbound": [
         "EVT-006",
+        "OBL-035",
+        "OBL-036",
+        "OBL-037",
+        "OBL-038",
+        "OBL-039",
+        "OBL-040",
+        "OBL-041",
+        "OBL-042",
+        "OBL-043",
+        "OBL-044",
+        "OBL-045",
+        "OBL-046",
+        "OBL-047",
         "SAM-006"
       ]
     },
@@ -570,7 +1566,9 @@
         "SAM-007"
       ],
       "inbound": [
-        "EVT-007"
+        "EVT-007",
+        "OBL-048",
+        "OBL-049"
       ]
     },
     "FAM-###": {
@@ -626,7 +1624,9 @@
       "status": "Planned",
       "category": "bridal",
       "outbound": [],
-      "inbound": []
+      "inbound": [
+        "OBL-016"
+      ]
     },
     "TRS-BR-04": {
       "id": "TRS-BR-04",
@@ -646,7 +1646,9 @@
       "status": "Planned",
       "category": "bridal",
       "outbound": [],
-      "inbound": []
+      "inbound": [
+        "OBL-047"
+      ]
     },
     "TRS-BR-06": {
       "id": "TRS-BR-06",
@@ -666,7 +1668,9 @@
       "status": "Planned",
       "category": "bridal",
       "outbound": [],
-      "inbound": []
+      "inbound": [
+        "OBL-037"
+      ]
     },
     "TRS-GR-01": {
       "id": "TRS-GR-01",
@@ -726,7 +1730,9 @@
       "status": "Planned",
       "category": "groom",
       "outbound": [],
-      "inbound": []
+      "inbound": [
+        "OBL-021"
+      ]
     },
     "TRS-GR-07": {
       "id": "TRS-GR-07",
@@ -736,7 +1742,9 @@
       "status": "Planned",
       "category": "groom",
       "outbound": [],
-      "inbound": []
+      "inbound": [
+        "OBL-034"
+      ]
     },
     "TRS-GR-08": {
       "id": "TRS-GR-08",
@@ -756,7 +1764,9 @@
       "status": "Planned",
       "category": "jewellery",
       "outbound": [],
-      "inbound": []
+      "inbound": [
+        "OBL-032"
+      ]
     },
     "TRS-JW-02": {
       "id": "TRS-JW-02",
@@ -836,7 +1846,9 @@
       "status": "Planned",
       "category": "jewellery",
       "outbound": [],
-      "inbound": []
+      "inbound": [
+        "OBL-026"
+      ]
     },
     "TRS-SA-01": {
       "id": "TRS-SA-01",
@@ -846,7 +1858,10 @@
       "status": "Shortlisted",
       "category": "sara",
       "outbound": [],
-      "inbound": []
+      "inbound": [
+        "OBL-003",
+        "OBL-025"
+      ]
     },
     "TRS-SA-02": {
       "id": "TRS-SA-02",
@@ -856,7 +1871,12 @@
       "status": "Shortlisted",
       "category": "sara",
       "outbound": [],
-      "inbound": []
+      "inbound": [
+        "OBL-004",
+        "OBL-020",
+        "OBL-029",
+        "OBL-030"
+      ]
     },
     "TRS-SA-03": {
       "id": "TRS-SA-03",
@@ -866,7 +1886,12 @@
       "status": "Planned",
       "category": "sara",
       "outbound": [],
-      "inbound": []
+      "inbound": [
+        "OBL-027",
+        "OBL-031",
+        "OBL-036",
+        "OBL-043"
+      ]
     },
     "TRS-SA-04": {
       "id": "TRS-SA-04",
@@ -876,7 +1901,12 @@
       "status": "Planned",
       "category": "sara",
       "outbound": [],
-      "inbound": []
+      "inbound": [
+        "OBL-005",
+        "OBL-028",
+        "OBL-039",
+        "OBL-045"
+      ]
     },
     "TRS-SA-05": {
       "id": "TRS-SA-05",
@@ -886,7 +1916,9 @@
       "status": "Planned",
       "category": "sara",
       "outbound": [],
-      "inbound": []
+      "inbound": [
+        "OBL-017"
+      ]
     },
     "TRS-SA-06": {
       "id": "TRS-SA-06",
@@ -896,7 +1928,10 @@
       "status": "Planned",
       "category": "sara",
       "outbound": [],
-      "inbound": []
+      "inbound": [
+        "OBL-007",
+        "OBL-011"
+      ]
     },
     "TRS-OD-01": {
       "id": "TRS-OD-01",
@@ -906,7 +1941,9 @@
       "status": "Planned",
       "category": "bridal",
       "outbound": [],
-      "inbound": []
+      "inbound": [
+        "OBL-041"
+      ]
     },
     "TRS-OD-02": {
       "id": "TRS-OD-02",
@@ -936,7 +1973,9 @@
       "status": "Planned",
       "category": "groom",
       "outbound": [],
-      "inbound": []
+      "inbound": [
+        "OBL-042"
+      ]
     },
     "TRS-EG-01": {
       "id": "TRS-EG-01",
@@ -946,7 +1985,10 @@
       "status": "Planned",
       "category": "engagement",
       "outbound": [],
-      "inbound": []
+      "inbound": [
+        "OBL-001",
+        "OBL-008"
+      ]
     },
     "TRS-EG-02": {
       "id": "TRS-EG-02",
@@ -956,7 +1998,9 @@
       "status": "Planned",
       "category": "engagement",
       "outbound": [],
-      "inbound": []
+      "inbound": [
+        "OBL-009"
+      ]
     },
     "TRS-EG-03": {
       "id": "TRS-EG-03",
@@ -966,7 +2010,9 @@
       "status": "Planned",
       "category": "engagement",
       "outbound": [],
-      "inbound": []
+      "inbound": [
+        "OBL-002"
+      ]
     },
     "TRS-EG-04": {
       "id": "TRS-EG-04",
@@ -1099,6 +2145,21 @@
         "EVT-001",
         "EVT-002",
         "EVT-003",
+        "OBL-001",
+        "OBL-002",
+        "OBL-003",
+        "OBL-004",
+        "OBL-005",
+        "OBL-006",
+        "OBL-007",
+        "OBL-008",
+        "OBL-009",
+        "OBL-010",
+        "OBL-011",
+        "OBL-012",
+        "OBL-013",
+        "OBL-014",
+        "OBL-015",
         "RIT-001"
       ]
     },
@@ -1142,6 +2203,7 @@
     "AST-004",
     "AST-005",
     "AST-006",
+    "AST-007",
     "AST-Based",
     "AST-Grep",
     "AST-based",
@@ -1181,6 +2243,9 @@
     "DEC-01",
     "DEC-12",
     "DEC-14",
+    "DEC-2026-001",
+    "DEC-2026-002",
+    "DEC-2026-003",
     "DEC-2026-004",
     "DEC-2026-005",
     "DEC-2026-006",
@@ -1216,8 +2281,11 @@
     "DEC-2026-047",
     "DEC-2026-056",
     "DEC-2026-057",
+    "DEC-2026-059",
+    "DEC-2026-060",
     "DEC-2026-061",
     "DEC-2026-062",
+    "DEC-2026-063",
     "DEC-POD-001",
     "DEC-xxx",
     "EVT-001_nirbandha_ashirbad",
@@ -1229,6 +2297,7 @@
     "EVT-006_chauthi_grihapravesh",
     "EVT-007_astamangala",
     "EVT-xxx",
+    "EXC-001",
     "FAM-001",
     "FAM-002",
     "FAM-003",
@@ -1249,6 +2318,65 @@
     "GATE-03",
     "GATE-04",
     "GATE-xxx",
+    "OBL-001-ITM-01",
+    "OBL-002-ITM-01",
+    "OBL-003-ITM-01",
+    "OBL-004-ITM-01",
+    "OBL-005-ITM-01",
+    "OBL-005-ITM-02",
+    "OBL-006-ITM-01",
+    "OBL-007-ITM-01",
+    "OBL-008-ITM-01",
+    "OBL-009-ITM-01",
+    "OBL-010-ITM-01",
+    "OBL-011-ITM-01",
+    "OBL-011-ITM-02",
+    "OBL-011-ITM-03",
+    "OBL-012-ITM-01",
+    "OBL-013-ITM-01",
+    "OBL-014-ITM-01",
+    "OBL-015-ITM-01",
+    "OBL-016-ITM-01",
+    "OBL-017-ITM-01",
+    "OBL-018-ITM-01",
+    "OBL-018-ITM-02",
+    "OBL-018-ITM-03",
+    "OBL-018-ITM-04",
+    "OBL-019-ITM-01",
+    "OBL-019-ITM-02",
+    "OBL-020-ITM-01",
+    "OBL-021-ITM-01",
+    "OBL-022-ITM-01",
+    "OBL-023-ITM-01",
+    "OBL-024-ITM-01",
+    "OBL-025-ITM-01",
+    "OBL-026-ITM-01",
+    "OBL-026-ITM-02",
+    "OBL-027-ITM-01",
+    "OBL-028-ITM-01",
+    "OBL-029-ITM-01",
+    "OBL-030-ITM-01",
+    "OBL-031-ITM-01",
+    "OBL-031-ITM-02",
+    "OBL-032-ITM-01",
+    "OBL-033-ITM-01",
+    "OBL-034-ITM-01",
+    "OBL-035-ITM-01",
+    "OBL-036-ITM-01",
+    "OBL-037-ITM-01",
+    "OBL-038-ITM-01",
+    "OBL-039-ITM-01",
+    "OBL-040-ITM-01",
+    "OBL-041-ITM-01",
+    "OBL-042-ITM-01",
+    "OBL-043-ITM-01",
+    "OBL-044-ITM-01",
+    "OBL-045-ITM-01",
+    "OBL-046-ITM-01",
+    "OBL-047-ITM-01",
+    "OBL-048-ITM-01",
+    "OBL-049-ITM-01",
+    "OBL-DECOUPLE-001",
     "PAY-001",
     "PAY-003",
     "PAY-015",
@@ -1410,6 +2538,7 @@
     "VEN-002",
     "VEN-002-Room-301",
     "VEN-003",
+    "VEN-004",
     "VEN-xxx"
   ]
 }

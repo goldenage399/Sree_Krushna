@@ -82,15 +82,21 @@ All entities must use standardized 3-digit padded identifiers:
 - **Mandatory Module Onboarding Gate**: Whenever any module introduces photo intake or media uploading, it MUST (1) declare its routing taxonomy in `backend_gas/media-routing-taxonomy.json`, (2) forward explicit `module`, `event`, and `category` parameters from its frontend controller, (3) register seed routing rows in `Config_Routing`, and (4) pass automated contract verification (`node scripts/test-media-hierarchy-contract.cjs`). Implicit or ambiguous folder dumping is strictly prohibited.
 - **Control Plane Auto-Healing Invariant (`INV-RELAY-AUTO-HEAL-006`)**: The media relay backend MUST implement automated bootstrap initialization (`setupMediaRelaySheets()`) and runtime fallback auto-healing (`_getOrHealSheet()`) to guarantee zero dropped audit records in `Upload_Ledger`.
 
+### 10. Universal Repository Taxonomy, Discovery Graph & Session Acceleration Invariant (`STD-UNIVERSAL-TAXONOMY-001` / `PKG-006` / `AC-DEC-2026-060` / `AC-DEC-2026-063`)
+- **Native 3-Tier Acceleration**: All agent sessions must adhere to (1) Mandatory `DOCS_HUB.md` reading before discovery traversals, (2) Living operational status tracking in `docs/SYSTEM_CLARITY_SNAPSHOT.md`, and (3) Automated entity graph generation (`scripts/generate-domain-graph.cjs`) emitting `graphify-out/GRAPH_REPORT.md` and `graphify-out/graph.json`.
+- **SAP Dual-Block Isolation (`INV-SAP-DUAL-BLOCK-001`)**: All taxonomy dictionaries (`.agent/taxonomy_dictionary.cjs`) must isolate universal standards (`<!-- shared:std.agent.taxonomy.core -->`) from local repository terms (`<!-- repo-specific:... -->`) to guarantee lossless `/sap-sync` compatibility.
+- **Scoped Vocabulary Governance**: Documentation and governance artifacts must adhere to canonical terminology (`npm run verify:taxonomy`), while discussion scratchpads (`User_Created/`) remain strictly exempt.
+
 ---
 
 ## 2. Session Startup Gate (MANDATORY)
 
 Before any task work, review:
-1. `.agent/skill-router.yaml` — Skill Router Index
-2. `ARCHITECTURE_SPEC.md` — Canonical entity architecture and state machines
-3. `.agent/PREFLIGHT.md` — Preflight check matrix
-4. Follow `.agent/workflows/aos-session-open.md` at session start and `.agent/workflows/aos-session-close.md` at session close.
+1. `DOCS_HUB.md` & `docs/SYSTEM_CLARITY_SNAPSHOT.md` — Mandatory Session Acceleration Gate (`INV-SESSION-ACCEL-003`)
+2. `.agent/skill-router.yaml` — Skill Router Index
+3. `ARCHITECTURE_SPEC.md` — Canonical entity architecture and state machines
+4. `.agent/PREFLIGHT.md` — Preflight check matrix
+5. Follow `.agent/workflows/aos-session-open.md` at session start and `.agent/workflows/aos-session-close.md` at session close.
 
 ---
 
@@ -104,6 +110,7 @@ Before any task work, review:
 | Clarify ambiguous prompt | `.agent/skills/prompt-clarity/SKILL.md` |
 | Idea incubation & concept proposals | `.agent/workflows/idea-incubator.md` & `.agent/skills/idea-incubator/SKILL.md` |
 | Domain mapping & entity linking | `.agent/skills/ssot-domain-mapper/SKILL.md` |
+| Repository Taxonomy & Entity Graph | `.agent/skills/repo-taxonomy-graph/SKILL.md` & `scripts/generate-domain-graph.cjs` |
 | Flowchart & architecture visuals | `.agent/skills/mermaid-skill/SKILL.md` |
 | Capture new pattern | `.agent/workflows/capture-pattern.md` / `.agent/workflows/capture-pattern-lite.md` |
 | Onboard new skill | `.agent/workflows/skill-onboarding.md` |
