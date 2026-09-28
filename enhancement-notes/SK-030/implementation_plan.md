@@ -4,7 +4,7 @@
 > **Ruling**: `AC-DEC-2026-074` / `UI-DEC-2026-053`  
 > **Governing Ticket**: [`enhancement-notes/SK-030/00_ENHANCEMENT_INDEX.md`](./00_ENHANCEMENT_INDEX.md)  
 > **Cluster**: `[UI-QUALITY]` / `[SHARED-PRIMITIVES]`  
-> **Status**: `PROPOSED` — Awaiting User Approval (Plan Hard-Stop)  
+> **Status**: `IN_PROGRESS` — Phase 1 Complete (VG-1 Passed)  
 
 ---
 
@@ -37,11 +37,11 @@ Upgrade SK-030 into a **complete 3-Layer Decoupled Primitive Architecture**:
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│ Phase 1: Universal Faceted Filter Headless Engine (Layer 1)            │
+│ Phase 1: Universal Faceted Filter Headless Engine (Layer 1) [DONE]     │
 │  - Author ui_primitives/scripts/faceted_filter_engine.js               │
 │  - Implement declarative schema & computeCounts() aggregation math     │
 │  - Author scripts/test-faceted-filter-primitive.cjs                    │
-│  - Validation Gate (VG-1): Unit test harness 100% green                │
+│  - Validation Gate (VG-1): Unit test harness 100% green (10/10 PASS)   │
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
 ┌───────────────────────────────────▼────────────────────────────────────┐

@@ -4,7 +4,7 @@
 
 - **Category**: UI_QUALITY / SHARED_PRIMITIVES / ARCHITECTURE
 - **Priority**: HIGH
-- **Status**: READY (Planned)
+- **Status**: IN_PROGRESS (Phase 1 Complete)
 - **Estimate**: 6 hours
 - **Target Release**: v2.9.8
 - **Risk Level**: LOW (Isolated new primitive in `ui_primitives/` + clean consumer mounting)
@@ -50,11 +50,11 @@ dependencies:
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│ Phase 1: Universal Faceted Filter Headless Engine (Layer 1)            │
+│ Phase 1: Universal Faceted Filter Headless Engine (Layer 1) [DONE]     │
 │  - Author ui_primitives/scripts/faceted_filter_engine.js               │
 │  - Implement declarative schema & computeCounts() aggregation math     │
 │  - Author scripts/test-faceted-filter-primitive.cjs                    │
-│  - Validation Gate (VG-1): Unit test harness 100% green                │
+│  - Validation Gate (VG-1): Unit test harness 100% green (10/10 PASS)   │
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
 ┌───────────────────────────────────▼────────────────────────────────────┐
