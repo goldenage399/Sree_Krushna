@@ -43,17 +43,24 @@
         </div>
       </div>
 
-      <!-- Section 2: Page Break Orchestration -->
+      <!-- Section 2: Page Break Orchestration (STD-UI-PRINT-RUNSHEET-003) -->
       <div class="sk-print-option-section">
         <span class="sk-print-section-label">📑 Page Break Orchestration</span>
         <div class="sk-print-cards-grid">
-          <label class="sk-print-radio-card" for="optPbSmart">
-            <input type="radio" id="optPbSmart" name="skPrintPageBreak" value="smart" checked>
-            <span class="sk-print-card-icon">⚡</span>
+          <label class="sk-print-radio-card" for="optPbCohesive">
+            <input type="radio" id="optPbCohesive" name="skPrintPageBreak" value="cohesive" checked>
+            <span class="sk-print-card-icon">🧩</span>
             <span class="sk-print-card-name">
-              Smart Flow <span class="sk-print-badge-rec">Recommended</span>
+              Cohesive Flow <span class="sk-print-badge-rec">Default</span>
             </span>
-            <span class="sk-print-card-desc">Fluid compact printing. Never splits headers; repeats column titles across sheets.</span>
+            <span class="sk-print-card-desc">Packs multiple milestones per sheet; moves overflowing milestone blocks to next page as complete units.</span>
+          </label>
+
+          <label class="sk-print-radio-card" for="optPbFluid">
+            <input type="radio" id="optPbFluid" name="skPrintPageBreak" value="fluid">
+            <span class="sk-print-card-icon">⚡</span>
+            <span class="sk-print-card-name">Dense Fluid</span>
+            <span class="sk-print-card-desc">Maximum paper compactness. Rows break freely across page breaks. Best for internal scratch drafts.</span>
           </label>
 
           <label class="sk-print-radio-card" for="optPbMilestones">

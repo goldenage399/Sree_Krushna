@@ -135,7 +135,7 @@ check('print_engine.js stays below 500 lines (STD-MOD-COMP-001)', () => {
 });
 
 // 3. Functional Execution of print_engine Preferences
-console.log('\n▶ [3/3] Functional Execution of Print Engine Preferences API...');
+console.log('\n▶ [3/4] Functional Execution of Print Engine Preferences API...');
 check('skGetPrintPreferences defaults to cohesive and validates 3-tier spectrum', () => {
   // Clear any cached require
   delete require.cache[require.resolve(printEnginePath)];
@@ -148,13 +148,40 @@ check('skGetPrintPreferences defaults to cohesive and validates 3-tier spectrum'
   assert(prefs.pageBreaks === 'cohesive', `Default pageBreaks must be 'cohesive', got '${prefs.pageBreaks}'`);
 });
 
+// 4. Audit Pre-Print Options Dialog Component (print_options_modal.html)
+console.log('\n▶ [4/4] Auditing 3-Tier Pre-Print Options Modal (print_options_modal.html)...');
+const modalPath = path.join(rootDir, 'ui_primitives', 'components', 'print_options_modal.html');
+assert(fs.existsSync(modalPath), 'Missing print_options_modal.html');
+const modalContent = fs.readFileSync(modalPath, 'utf8');
+
+check('print_options_modal.html contains all 3 pagination radio options (cohesive, fluid, milestones)', () => {
+  assert(
+    modalContent.includes('name="skPrintPageBreak"') && modalContent.includes('value="cohesive"'),
+    'Missing skPrintPageBreak radio with value="cohesive"'
+  );
+  assert(
+    modalContent.includes('name="skPrintPageBreak"') && modalContent.includes('value="fluid"'),
+    'Missing skPrintPageBreak radio with value="fluid"'
+  );
+  assert(
+    modalContent.includes('name="skPrintPageBreak"') && modalContent.includes('value="milestones"'),
+    'Missing skPrintPageBreak radio with value="milestones"'
+  );
+});
+
+check('print_options_modal.html defaults to cohesive with checked attribute', () => {
+  const match = modalContent.match(/<input[^>]+name="skPrintPageBreak"[^>]+value="cohesive"[^>]*>/);
+  assert(match, 'Missing cohesive radio input element');
+  assert(match[0].includes('checked'), 'Cohesive radio must have checked attribute by default');
+});
+
 console.log('\n════════════════════════════════════════════════════════════════════════════');
 if (failures === 0) {
-  console.log('🎉 ALL COHESIVE PAGE-BREAK CONTRACT CHECKS PASSED: SK-032 PHASE 1 VERIFIED!');
+  console.log('🎉 ALL COHESIVE PAGE-BREAK CONTRACT CHECKS PASSED: SK-032 VERIFIED!');
   console.log('════════════════════════════════════════════════════════════════════════════\n');
   process.exit(0);
 } else {
-  console.error(`❌ ${failures} CHECK(S) FAILED IN SK-032 PHASE 1 VERIFICATION.`);
+  console.error(`❌ ${failures} CHECK(S) FAILED IN SK-032 VERIFICATION.`);
   console.log('════════════════════════════════════════════════════════════════════════════\n');
   process.exit(1);
 }
