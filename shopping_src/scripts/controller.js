@@ -2192,7 +2192,7 @@
 
     window.printShoppingTable = function() {
       const tableContainer = document.querySelector('#shoppingTableViewSection .shop-table-container') || document.getElementById('shoppingDataTable');
-      const prefs = typeof window.skGetPrintPreferences === 'function' ? window.skGetPrintPreferences() : { theme: 'eco', pageBreaks: 'smart', orientation: 'landscape', includeSignoff: true };
+      const prefs = typeof window.skGetPrintPreferences === 'function' ? window.skGetPrintPreferences() : { theme: 'eco', pageBreaks: 'cohesive', orientation: 'landscape', includeSignoff: true };
       if (typeof window.skPrintContainer === 'function' && tableContainer) {
         window.skPrintContainer(tableContainer, {
           title: 'Sree Krushna Marriage OS — Commercial Trousseau Sourcing Catalog',
@@ -2201,7 +2201,7 @@
           pageSize: 'A4',
           margin: '8mm 10mm',
           theme: prefs.theme || 'eco',
-          pageBreaks: prefs.pageBreaks || 'smart',
+          pageBreaks: prefs.pageBreaks || 'cohesive',
           includeSignoff: prefs.includeSignoff !== false
         });
       } else {
@@ -4373,7 +4373,7 @@
         const groupTitle = milestoneMap[ev] || ev;
         const groupObls = sortObligationsList(grouped[ev], activeOblTableSort.key, activeOblTableSort.dir);
         const isCollapsed = !!accordionState[ev];
-        const collapseClass = isCollapsed ? 'obl-table-milestone-block is-collapsed' : 'obl-table-milestone-block';
+        const collapseClass = isCollapsed ? 'obl-table-milestone-block sk-print-cohesive-block is-collapsed' : 'obl-table-milestone-block sk-print-cohesive-block';
         const ariaExpanded = isCollapsed ? 'false' : 'true';
 
         html += `
@@ -4474,7 +4474,7 @@
         const tableContainer = document.getElementById('obligationsTableContainer') || document.querySelector('.shop-obl-table-container');
         const obls = getObligationsList();
         const totalCount = obls.length || 53;
-        const prefs = typeof window.skGetPrintPreferences === 'function' ? window.skGetPrintPreferences() : { theme: 'eco', pageBreaks: 'smart', orientation: 'landscape', includeSignoff: true };
+        const prefs = typeof window.skGetPrintPreferences === 'function' ? window.skGetPrintPreferences() : { theme: 'eco', pageBreaks: 'cohesive', orientation: 'landscape', includeSignoff: true };
         if (typeof window.skPrintContainer === 'function' && tableContainer) {
           window.skPrintContainer(tableContainer, {
             title: 'Sree Krushna Marriage OS — Customary Family Obligations Run Sheet',
@@ -4483,7 +4483,7 @@
             pageSize: 'A4',
             margin: '8mm 10mm',
             theme: prefs.theme || 'eco',
-            pageBreaks: prefs.pageBreaks || 'smart',
+            pageBreaks: prefs.pageBreaks || 'cohesive',
             includeSignoff: prefs.includeSignoff !== false
           });
         } else {

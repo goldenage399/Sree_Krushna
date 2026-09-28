@@ -175,6 +175,26 @@ check('print_options_modal.html defaults to cohesive with checked attribute', ()
   assert(match[0].includes('checked'), 'Cohesive radio must have checked attribute by default');
 });
 
+// 5. Audit Consumer Integration in Controller (shopping_src/scripts/controller.js)
+console.log('\n▶ [5/5] Auditing Consumer Integration (controller.js)...');
+const controllerPath = path.join(rootDir, 'shopping_src', 'scripts', 'controller.js');
+assert(fs.existsSync(controllerPath), 'Missing controller.js');
+const controllerContent = fs.readFileSync(controllerPath, 'utf8');
+
+check('shopping_src/scripts/controller.js decorates milestone blocks with .sk-print-cohesive-block (INV-PAGE-COHESION-001)', () => {
+  assert(
+    controllerContent.includes('obl-table-milestone-block sk-print-cohesive-block'),
+    'Milestone blocks rendered by controller.js must include universal token sk-print-cohesive-block'
+  );
+});
+
+check('shopping_src/scripts/controller.js defaults pageBreaks to cohesive across print calls', () => {
+  assert(
+    controllerContent.includes("pageBreaks: prefs.pageBreaks || 'cohesive'"),
+    'controller.js print handlers must default pageBreaks to cohesive'
+  );
+});
+
 console.log('\n════════════════════════════════════════════════════════════════════════════');
 if (failures === 0) {
   console.log('🎉 ALL COHESIVE PAGE-BREAK CONTRACT CHECKS PASSED: SK-032 VERIFIED!');
