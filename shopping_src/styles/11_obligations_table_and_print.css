@@ -381,24 +381,39 @@
   }
 
   .obl-table-milestone-block {
-    page-break-inside: avoid !important;
     margin-bottom: 14px !important;
   }
 
+  /* Executive Wireframe Milestone Header (INV-INK-SAVER-001 / STD-UI-PRINT-RUNSHEET-002) */
   .obl-table-milestone-header {
-    background: #000000 !important;
-    color: #ffffff !important;
-    padding: 4px 8px !important;
-    font-size: 10px !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border: 1.5px solid #0f172a !important;
+    border-left: 6px solid #0f172a !important;
+    padding: 5px 10px !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    break-after: avoid !important;
+    page-break-after: avoid !important;
   }
 
   .obl-table-milestone-count {
-    color: #eeeeee !important;
+    color: #334155 !important;
+    background: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+    padding: 1px 6px !important;
+    border-radius: 3px !important;
+    font-size: 9px !important;
+    font-weight: 600 !important;
   }
 
   .obl-data-table {
     background: #ffffff !important;
     font-size: 9px !important;
+  }
+
+  .obl-data-table thead {
+    display: table-header-group !important;
   }
 
   .obl-data-table th,
@@ -414,9 +429,10 @@
   }
 
   .obl-data-table th {
-    background: #f0f0f0 !important;
+    background: #f8fafc !important;
     color: #000000 !important;
     font-size: 8.5px !important;
+    font-weight: 700 !important;
   }
 
   .obl-td-code,

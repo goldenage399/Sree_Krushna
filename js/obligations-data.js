@@ -11,7 +11,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     "version": "1.0.0",
     "standard": "STD-FAMILY-OBLIGATION-001",
     "governance_ref": "AC-DEC-2026-061 & AC-DEC-2026-062",
-    "updated_at": "2026-09-28T05:20:18.984Z"
+    "updated_at": "2026-09-28T06:44:57.229Z"
   },
   "stats": {
     "total": 53,

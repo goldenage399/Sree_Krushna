@@ -23,6 +23,8 @@
     "test:sheet-drive-relay": "node scripts/test-sheet-drive-relay-contract.cjs",
     "test:media-hierarchy": "node scripts/test-media-hierarchy-contract.cjs",
     "test:obligations": "node scripts/test-obligation-contract.cjs",
+    "test:density": "node scripts/test-obligations-table-density.cjs",
+    "test:print-ink-saver": "node scripts/test-print-ink-saver-contract.cjs",
     "build:obligations": "node scripts/compile-obligations.cjs",
     "verify:modular-architecture": "node scripts/verify-modular-architecture.cjs",
     "verify:structural-contracts": "node scripts/verify-structural-contracts.cjs",

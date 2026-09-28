@@ -27,6 +27,7 @@ Per the Universal Session Acceleration Protocol (`AC-DEC-2026-059`), all newly o
 | [`SK-028`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-028/00_ENHANCEMENT_INDEX.md) | SDCA Structural DOM Contract & Cross-Repo Portable Validation Framework | `COMPLETED` | `v2.9.6` | `STD-STRUCTURAL-CONTRACT-001` / `STD-MOD-COMP-001` |
 | [`SK-029`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-029/00_ENHANCEMENT_INDEX.md) | Multi-Viewport Fluid Table Budgeting, Inner Container Clamping & Print Run-Sheet Preservation | `COMPLETED` | `v2.9.7` | `STD-TABLE-BUDGET-001` / `INV-TABLE-DOM-001` |
 | [`SK-030`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-030/00_ENHANCEMENT_INDEX.md) | Universal Faceted Filter Primitive Engine, State Orthogonality & Dual-Mode UI Ergonomics | `READY (Planned)` | `v2.9.8` | `STD-UI-PRIMITIVE-FACETED-FILTER-001` |
+| [`SK-031`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-031/00_ENHANCEMENT_INDEX.md) | Universal Ink-Saving Print Engine, Configurable Themes & Accordion Page-Break Orchestration | `IN_PROGRESS (Phase 1 Verified)` | `v2.9.9` | `STD-UI-PRINT-RUNSHEET-002` |
 
 ---
 
@@ -42,6 +43,7 @@ Per the Universal Session Acceleration Protocol (`AC-DEC-2026-059`), all newly o
 - **`AC-DEC-2026-069` (`GOV-DEC-2026-004`)**: Certified Empirical Multi-Repo Adoption Gate (`INV-PROVE-BEFORE-CLAIM-001`), Zero-Config Discovery (`STD-ZERO-CONFIG-DISCOVERY-001`), and Anti-Process-Theater Governance (`SK-027`). Live pilots empirically verified on `OperatusOS` (39 entities indexed) and `Task-Dashboard` (88 entities indexed, 0 noise nodes).
 - **`AC-DEC-2026-070`**: Certified SDCA Structural DOM Contract & Cross-Repo Portable Validation Framework (`STD-STRUCTURAL-CONTRACT-001` / `SK-028`). Closes 5-layer failure model: source tag balance (16/16 pass), compile-time hierarchy contracts (17/17 pass), Playwright runtime DOM assertions (8/8 pass), and cross-repo zero-config portability (verified on `Task-Dashboard` and `OperatusOS`).
 - **`AC-DEC-2026-071` (`UI-DEC-2026-053`)**: Certified Multi-Viewport Fluid Table Budgeting, Inner Container Clamping & Print Run-Sheet Preservation (`STD-TABLE-BUDGET-001` / `INV-TABLE-DOM-001` / `SK-029`). Closes table-cell display model override and asymmetric slack absorption. Phase 1 structural decoupling and density gates verified.
+- **`AC-DEC-2026-072` (`UI-DEC-2026-054`)**: Certified Universal Ink-Saving Print Engine, Configurable Themes & Accordion Page-Break Orchestration (`STD-UI-PRINT-RUNSHEET-002` / `INV-INK-SAVER-001` / `INV-PAGE-BREAK-ORCH-001` / `SK-031`). Abolishes solid black headers in @media print and print_engine.js in favor of Executive Wireframe; enforces break-after: avoid on milestone headers and repeating thead; Phase 1 verified green.
 
 See [`User_Created/Discussion Threads/Council/Council_Ledger.md`](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/Council_Ledger.md) for complete historical rulings.
 
