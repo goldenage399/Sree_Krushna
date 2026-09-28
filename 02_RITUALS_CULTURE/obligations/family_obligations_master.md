@@ -2,7 +2,7 @@
 
 > **Parent Hub**: [`02_RITUALS_CULTURE/HUB.md`](../HUB.md)  
 > **Standard**: `STD-FAMILY-OBLIGATION-001` | **Rulings**: `AC-DEC-2026-061` & `AC-DEC-2026-062`  
-> **Total Obligations**: 53 | **Unresolved**: 8 | **Last Compiled**: 2026-09-28T12:06:02.502Z  
+> **Total Obligations**: 53 | **Unresolved**: 8 | **Last Compiled**: 2026-09-28T12:21:48.539Z  
 
 ---
 
@@ -10,9 +10,9 @@
 
 | Direction | Count | Primary Focus |
 | :--- | :--- | :--- |
-| **Bride's Family ⟶ Groom / In-Laws** | 29 | Batabarana attire/gold, Bandhu Daka, Samandhi Bheta, Nananda Putuli, Family Packs |
+| **Bride's Family ⟶ Groom / In-Laws** | 30 | Batabarana attire/gold, Bandhu Daka, Samandhi Bheta, Nananda Putuli, Family Packs |
 | **Groom's Family ⟶ Bride / In-Laws** | 23 | Ahiya Manduli (Saree for Mummy), Nirbandha lehenga, Haladi Basa, Sadhu Basana, Alankara |
-| **Joint / External** | 1 | Guest honoraria, temple offerings, shared travel trolleys |
+| **Joint / External** | 0 | Guest honoraria, temple offerings, shared travel trolleys |
 
 ---
 
@@ -72,7 +72,7 @@
 | [`OBL-050`](./OBL-050.md) | **Batabarana Baranka Royal Sherwani (ବାଟବରଣ ବରଙ୍କ ଶେରୱାନୀ ପୋଷାକ)** | EVT-004 | bride_to_groom | `attire` | `Fully_Specified` | `Agreed` | `TRS-GR-03` |
 | [`OBL-051`](./OBL-051.md) | **Sacred Vivaha Mandap Pata Saree (ବିବାହ ମଣ୍ଡପ ପାଟ ଶାଢ଼ୀ / ବାଉଳା ପାଟ)** | EVT-004 | groom_to_bride | `attire` | `Fully_Specified` | `Agreed` | `TRS-BR-01` |
 | [`OBL-052`](./OBL-052.md) | **Mandap Vedic Pure Silk Dhoti & Kurta (ମଣ୍ଡପ ରେଶମୀ ଧୋତି-ଯୋଡ଼ / ପାଟ ଯୋଡ଼)** | EVT-004 | bride_to_groom | `attire` | `Fully_Specified` | `Agreed` | `TRS-GR-01` |
-| [`OBL-053`](./OBL-053.md) | **Ceremonial Mukuta & Hastaganthi Bandhana Vastra (ବିବାହ ମୁକୁଟ ଓ ହସ୍ତଗଣ୍ଠି ବନ୍ଧନ ବସ୍ତ୍ର)** | EVT-004 | joint_to_joint | `ceremonial_token` | `Fully_Specified` | `Agreed` | `TRS-OD-05` |
+| [`OBL-053`](./OBL-053.md) | **Ceremonial Mukuta & Hastaganthi Bandhana Vastra (ବିବାହ ମୁକୁଟ ଓ ହସ୍ତଗଣ୍ଠି ବନ୍ଧନ ବସ୍ତ୍ର)** | EVT-004 | bride_to_groom | `ceremonial_token` | `Fully_Specified` | `Agreed` | `TRS-OD-05` |
 
 ---
 

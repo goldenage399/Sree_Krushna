@@ -3836,7 +3836,7 @@
       if (elTotal) elTotal.textContent = totalCount;
       if (elBride) {
         const brideCount = obls.filter(o => o.obligor && o.obligor.family === 'bride').length;
-        elBride.textContent = brideCount || 29;
+        elBride.textContent = brideCount || 30;
       }
       if (elGroom) {
         const groomCount = obls.filter(o => o.obligor && o.obligor.family === 'groom').length;
@@ -4246,7 +4246,7 @@
       const shareUrl = `${window.location.origin}${window.location.pathname}?subview=obligations`;
       const obls = getObligationsList();
       const totalCount = obls.length || 53;
-      const brideCount = obls.filter(o => o.obligor && o.obligor.family === 'bride').length || 29;
+      const brideCount = obls.filter(o => o.obligor && o.obligor.family === 'bride').length || 30;
       const groomCount = obls.filter(o => o.obligor && o.obligor.family === 'groom').length || 23;
       const unresCount = obls.filter(o => ['TBD_Family_Choice', 'Source_Unclear', 'Source_Redacted', 'Pending_Family_Confirmation'].includes(o.spec_status) || o.lifecycle_status === 'Identified').length || 8;
 

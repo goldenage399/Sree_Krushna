@@ -418,6 +418,37 @@
   outline-offset: 2px;
 }
 
+/* Preset Pill Button (STD-TABLE-COL-VIS-001) */
+.sk-btn-preset {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--sk-border, rgba(255, 255, 255, 0.16));
+  color: var(--sk-text-primary, #f1f5f9);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-height: 28px;
+  box-sizing: border-box;
+}
+
+.sk-btn-preset:hover {
+  border-color: var(--sk-gold, #e5a93c);
+  background: rgba(229, 169, 60, 0.1);
+}
+
+.sk-btn-preset.is-active {
+  background: rgba(229, 169, 60, 0.2);
+  border-color: var(--sk-gold, #e5a93c);
+  color: var(--sk-gold, #e5a93c);
+  font-weight: 700;
+}
+
 
 
     /**
@@ -6127,10 +6158,104 @@ tr.row-pulse td {
   text-transform: uppercase;
 }
 
-.sk-print-card-desc {
+/* Column Selection & Privacy Data Masking (STD-TABLE-COL-VIS-001) */
+.sk-print-section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.sk-print-preset-pills {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.sk-print-preset-label {
   font-size: 11px;
+  font-weight: 600;
   color: var(--shop-text-secondary, #94a3b8);
-  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.sk-btn-preset {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: var(--shop-text-primary, #f1f5f9);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.sk-btn-preset:hover {
+  border-color: var(--shop-gold, #d4af37);
+  background: rgba(212, 175, 55, 0.08);
+}
+
+.sk-btn-preset.is-active {
+  background: rgba(212, 175, 55, 0.18);
+  border-color: var(--shop-gold, #d4af37);
+  color: var(--shop-gold, #d4af37);
+  font-weight: 700;
+  box-shadow: 0 0 6px rgba(212, 175, 55, 0.25);
+}
+
+.sk-print-columns-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 8px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  max-height: 160px;
+  overflow-y: auto;
+}
+
+.sk-print-col-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--shop-text-primary, #e2e8f0);
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  user-select: none;
+  min-height: 32px;
+}
+
+.sk-print-col-check:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.sk-print-col-check input[type="checkbox"] {
+  accent-color: #d4af37;
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+  margin: 0;
+}
+
+.sk-print-masking-note {
+  margin-top: 8px;
+  font-size: 11px;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 6px;
+  padding: 6px 10px;
   line-height: 1.35;
 }
 
@@ -6557,7 +6682,7 @@ tr.row-pulse td {
       <span class="shop-obl-kpi-sub">Across 6 Canonical Milestones</span>
     </div>
     <div class="shop-obl-kpi-card">
-      <span class="shop-obl-kpi-num" style="color: #60a5fa;" id="oblKpiBride">29</span>
+      <span class="shop-obl-kpi-num" style="color: #60a5fa;" id="oblKpiBride">30</span>
       <span class="shop-obl-kpi-lbl">Bride Side Obligations</span>
       <span class="shop-obl-kpi-sub">Bride Family to Groom / In-Laws</span>
     </div>
@@ -7815,7 +7940,26 @@ tr.row-pulse td {
         </div>
       </div>
 
-      <!-- Section 3: Orientation & Sign-off Options -->
+      <!-- Section 3: Columns & Privacy Data Masking (STD-TABLE-COL-VIS-001) -->
+      <div class="sk-print-option-section" id="skPrintColumnSection" style="display: none;">
+        <div class="sk-print-section-header-row">
+          <span class="sk-print-section-label">👁️ Columns &amp; Privacy Masking</span>
+          <div class="sk-print-preset-pills" id="skPrintPresetGroup">
+            <span class="sk-print-preset-label">Audience Presets:</span>
+            <button type="button" class="sk-btn-preset is-active" data-preset="full" id="skPresetFull">Full Operational</button>
+            <button type="button" class="sk-btn-preset" data-preset="elder" id="skPresetElder">Elder / Ritual</button>
+            <button type="button" class="sk-btn-preset" data-preset="vendor" id="skPresetVendor">Vendor / Logistics</button>
+          </div>
+        </div>
+        <div class="sk-print-columns-grid" id="skPrintColumnsContainer">
+          <!-- Populated dynamically by column_visibility_engine -->
+        </div>
+        <div class="sk-print-masking-note">
+          <span>🔒 <strong>Confidential Data Masking Active:</strong> Unselected columns are physically excised from the document to protect private costs and family notes (INV-TABLE-COL-MASK-001).</span>
+        </div>
+      </div>
+
+      <!-- Section 4: Orientation & Sign-off Options -->
       <div class="sk-print-options-row">
         <div>
           <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--shop-text-secondary, #94a3b8); margin-right: 8px;">Orientation:</span>
@@ -9074,21 +9218,7 @@ tr.row-pulse td {
 (function (window, document) {
   'use strict';
 
-  /**
-   * Universal Scoped Container Print Function
-   * @param {string|HTMLElement} target - CSS selector or DOM element to print
-   * @param {Object} [options] - Configuration options
-   * @param {'eco'|'tint'|'contrast'} [options.theme='eco'] - Print theme (zero-ink eco, executive tint, high contrast)
-   * @param {'cohesive'|'fluid'|'milestones'} [options.pageBreaks='cohesive'] - Page break mode (cohesive block flow vs fluid vs milestone per page)
-   * @param {string} [options.title] - Document header title
-   * @param {string} [options.subtitle] - Header subtitle / timestamp
-   * @param {'landscape'|'portrait'} [options.orientation='landscape'] - Page orientation
-   * @param {string} [options.pageSize='A4'] - Paper size (e.g. 'A4')
-   * @param {string} [options.margin='8mm 10mm'] - Print margins
-   * @param {string} [options.customCss=''] - Additional CSS rules
-   * @param {boolean} [options.includeSignoff=false] - Appends coordinator sign-off block
-   * @returns {boolean} Whether print initiation succeeded
-   */
+  /** Universal Scoped Container Print Function (STD-UI-PRINT-CONTAINER-001 / STD-TABLE-COL-VIS-001) */
   function skPrintContainer(target, options) {
     options = options || {};
     var theme = (options.theme === 'tint' || options.theme === 'contrast') ? options.theme : 'eco';
@@ -9116,10 +9246,21 @@ tr.row-pulse td {
 
     // 3. Clone and Clean Target Content
     var clone = el.cloneNode(true);
-    // Suppress screen-only buttons and tools inside the clone
     var noPrintEls = clone.querySelectorAll('.no-print, button, .sk-btn, .shop-btn, input, select');
     for (var i = 0; i < noPrintEls.length; i++) {
       noPrintEls[i].parentNode.removeChild(noPrintEls[i]);
+    }
+
+    // Physical DOM excision for confidential data masking (INV-TABLE-COL-MASK-001)
+    if (typeof window !== 'undefined' && window.skColumnVisibilityEngine && (options.tableId || options.activeColumns)) {
+      var tables = clone.querySelectorAll ? clone.querySelectorAll('table') : [];
+      if (clone.tagName === 'TABLE') tables = [clone];
+      var colsToUse = options.activeColumns || (options.tableId ? window.skColumnVisibilityEngine.getActiveColumns(options.tableId) : null);
+      if (colsToUse && tables.length > 0) {
+        for (var t = 0; t < tables.length; t++) {
+          window.skColumnVisibilityEngine.filterTableDOMForPrint(tables[t], colsToUse);
+        }
+      }
     }
 
     // 4. Construct Headless Sandbox Iframe
@@ -9447,8 +9588,14 @@ tr.row-pulse td {
     }
 
     var signoffCheck = backdrop.querySelector('#skPrintSignoffCheckbox');
-    if (signoffCheck) {
-      signoffCheck.checked = prefs.includeSignoff;
+    if (signoffCheck) signoffCheck.checked = prefs.includeSignoff;
+
+    // Mount Column Visibility section if tableId is provided (STD-TABLE-COL-VIS-001)
+    if (config.tableId && typeof window !== 'undefined' && window.skColumnVisibilityEngine) {
+      window.skColumnVisibilityEngine.mountModalSection(backdrop, config.tableId);
+    } else {
+      var colSec = backdrop.querySelector('#skPrintColumnSection');
+      if (colSec) colSec.style.display = 'none';
     }
 
     // Modal state activation
@@ -9462,9 +9609,7 @@ tr.row-pulse td {
     }
 
     function handleKeydown(e) {
-      if (e.key === 'Escape') {
-        closeModal();
-      }
+      if (e.key === 'Escape') closeModal();
     }
     window.addEventListener('keydown', handleKeydown);
 
@@ -9496,6 +9641,11 @@ tr.row-pulse td {
 
         if (signoffCheck) includeSignoff = signoffCheck.checked;
 
+        var activeCols = null;
+        if (config.tableId && typeof window !== 'undefined' && window.skColumnVisibilityEngine) {
+          activeCols = window.skColumnVisibilityEngine.getSelectedColumnsFromModal(backdrop);
+        }
+
         var newPrefs = {
           theme: selectedTheme,
           pageBreaks: selectedPb,
@@ -9512,7 +9662,9 @@ tr.row-pulse td {
             theme: selectedTheme,
             pageBreaks: selectedPb,
             orientation: selectedOrient,
-            includeSignoff: includeSignoff
+            includeSignoff: includeSignoff,
+            tableId: config.tableId,
+            activeColumns: activeCols
           });
         }, 120);
       };
@@ -13910,7 +14062,7 @@ tr.row-pulse td {
       if (elTotal) elTotal.textContent = totalCount;
       if (elBride) {
         const brideCount = obls.filter(o => o.obligor && o.obligor.family === 'bride').length;
-        elBride.textContent = brideCount || 29;
+        elBride.textContent = brideCount || 30;
       }
       if (elGroom) {
         const groomCount = obls.filter(o => o.obligor && o.obligor.family === 'groom').length;
@@ -14320,7 +14472,7 @@ tr.row-pulse td {
       const shareUrl = `${window.location.origin}${window.location.pathname}?subview=obligations`;
       const obls = getObligationsList();
       const totalCount = obls.length || 53;
-      const brideCount = obls.filter(o => o.obligor && o.obligor.family === 'bride').length || 29;
+      const brideCount = obls.filter(o => o.obligor && o.obligor.family === 'bride').length || 30;
       const groomCount = obls.filter(o => o.obligor && o.obligor.family === 'groom').length || 23;
       const unresCount = obls.filter(o => ['TBD_Family_Choice', 'Source_Unclear', 'Source_Redacted', 'Pending_Family_Confirmation'].includes(o.spec_status) || o.lifecycle_status === 'Identified').length || 8;
 

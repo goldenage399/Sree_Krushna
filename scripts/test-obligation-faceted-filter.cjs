@@ -124,14 +124,15 @@ assert(!groomAll.some(o => o.id === 'OBL-030'), 'OBL-030 must NOT be present in 
 engine.setFacet('direction', 'bride');
 const brideAllCheck = engine.filter(obls);
 assert(brideAllCheck.some(o => o.id === 'OBL-030'), 'OBL-030 must be present in Bride Side');
+assert(brideAllCheck.some(o => o.id === 'OBL-053'), 'OBL-053 must be present in Bride Side');
 assert(!brideAllCheck.some(o => o.id === 'OBL-029'), 'OBL-029 must NOT be present in Bride Side');
 
 engine.setFacet('direction', 'joint');
 const jointAll = engine.filter(obls);
 assert(!jointAll.some(o => o.id === 'OBL-029'), 'OBL-029 must NOT leak into Joint filter');
 assert(!jointAll.some(o => o.id === 'OBL-030'), 'OBL-030 must NOT leak into Joint filter');
-assert.strictEqual(jointAll.length, 1, 'Joint filter must strictly contain 1 true joint obligation (OBL-053)');
-console.log('  ✓ [PASS] Directional isolation verified: OBL-029 (Groom), OBL-030 (Bride), and Joint (1 item) are completely disjoint');
+assert.strictEqual(jointAll.length, 0, 'Joint filter contains 0 items as OBL-053 is assigned to Bride Side Mandap Samagri');
+console.log('  ✓ [PASS] Directional isolation verified: OBL-029 (Groom), OBL-030 (Bride), and OBL-053 (Bride Side Mandap Samagri)');
 
 // 4. Dynamic Count Badges Aggregation Verification
 console.log('\n▶ [4/5] Testing Dynamic Count Recalculation across Orthogonal Facets...');

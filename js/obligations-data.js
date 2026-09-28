@@ -11,14 +11,14 @@ window.FAMILY_OBLIGATIONS_DATA = {
     "version": "1.0.0",
     "standard": "STD-FAMILY-OBLIGATION-001",
     "governance_ref": "AC-DEC-2026-061 & AC-DEC-2026-062",
-    "updated_at": "2026-09-28T12:06:02.503Z"
+    "updated_at": "2026-09-28T12:21:48.541Z"
   },
   "stats": {
     "total": 53,
     "by_direction": {
       "groom_to_bride": 23,
-      "bride_to_groom": 29,
-      "joint": 1,
+      "bride_to_groom": 30,
+      "joint": 0,
       "external": 0
     },
     "by_lifecycle": {
@@ -3534,14 +3534,14 @@ window.FAMILY_OBLIGATIONS_DATA = {
       "event_ref": "EVT-004",
       "ritual_ref": "RIT-005",
       "obligor": {
-        "family": "joint",
+        "family": "bride",
         "primary_contact": "PER-007",
-        "role_title": "Both Families (Purohit Coordination)"
+        "role_title": "Bride's Family (Mandap Samagri SAM-005 Custodian)"
       },
       "recipient": {
-        "family": "joint",
-        "primary_contact": "PER-001",
-        "role_title": "Newlywed Couple (Sree & Krushna)"
+        "family": "groom",
+        "primary_contact": "PER-002",
+        "role_title": "Groom & Mandap Union (Krushna & Sree)"
       },
       "exchange_cluster": {
         "is_exchange": false,
@@ -3595,7 +3595,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
         "staging_location": "VEN-003",
         "handover_moment": "Vivaha Mandap Hastaganthi Ritual"
       },
-      "derived_direction": "joint_to_joint",
+      "derived_direction": "bride_to_groom",
       "file_basename": "OBL-053.md"
     }
   ]

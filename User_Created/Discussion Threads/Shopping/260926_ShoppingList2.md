@@ -8430,11 +8430,145 @@ We have codified this across the liturgical specifications, family obligation re
 - **Governance Audit (P82)**: `206/206 artifacts fully wired`
 - **Git Commit**: [`b9fdb73`](file:///d:/GitHub_Repo/Sree_Krushna) — _feat(culture): codify authentic Odia Sadu Barana ritual in OBL-031 and RIT-004_
 
-# Query 4.7 -
+# Query 4.7 -OBL-053 Joint / In-Laws Ceremonial Mukuta & Hastaganthi Bandhana Vastra (ବିବାହ ମୁକୁଟ ଓ ହସ୍ତଗଣ୍ଠି ବନ୍ଧନ ବସ୍ତ୍ର- who should give this ?
 
-# Review 4.7 -
+# Review 4.7 -Viewed OBL-053.md:1-74
 
-# Response 4.7 -
+Searched for "Mukuta"
+Viewed 260926_ShoppingList2.md:8780-8810
+Viewed 260926_ShoppingList2.md:8700-8780
+Searched for "OBL-053"
+Searched for "OBL-053"
+Viewed 260926_ShoppingList2.md:7010-7050
+Viewed OBL-050.md:1-30
+Viewed OBL-051.md:1-25
+Viewed OBL-052.md:1-25
+Listed directory specs
+Viewed RIT-005_kanyadaan.md:1-34
+Searched for "SAM-005"
+Viewed SAM-005_kanyadaan_mandap_homa_samagri.md:1-33
+Searched for "PER-007"
+Searched for "PER-007"
+Viewed shopping-data.js:1290-1330
+Searched for "Baula Patta"
+Searched for "Baula"
+Searched for "ବାଉଳା"
+Viewed 260926_ShoppingList2.md:8740-8780
+Searched for "# Query "
+
+ଓଡ଼ିଆ ହିନ୍ଦୁ ବିବାହ ପରମ୍ପରା (Odia Hindu Wedding Tradition) ଏବଂ ବୈଦିକ ମଣ୍ଡପ ବିଧି ଅନୁଯାୟୀ ଏହାର ସ୍ପଷ୍ଟ ସାଂସ୍କୃତିକ ଓ ବ୍ୟାବହାରିକ ନିୟମ:
+
+---
+
+### 1. ହସ୍ତଗଣ୍ଠି ବନ୍ଧନ ବସ୍ତ୍ର (Hastaganthi Bandhana Vastra) — କିଏ ଦେବେ?
+
+- **ପରମ୍ପରା**: **କନ୍ୟାପକ୍ଷ / କନ୍ୟାଙ୍କ ପିତା (Bride's Family)**
+- **କାରଣ**: ହସ୍ତଗଣ୍ଠି ବନ୍ଧନ ବସ୍ତ୍ର (ହଳଦିଆ/ପାଟ ଗଣ୍ଠିଆଳ ବସ୍ତ୍ର, ଗୁଆ, ଦୁବଘାସ ଓ ମୁଦ୍ରା) ହେଉଛି **କନ୍ୟାଦାନ ସାମଗ୍ରୀ ([`SAM-005`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/samagri_checklists/SAM-005_kanyadaan_mandap_homa_samagri.md))** ର ଏକ ପବିତ୍ର ଅଂଶ। ଯେହେତୁ କନ୍ୟାଦାନ କନ୍ୟାପକ୍ଷଙ୍କ ଦ୍ୱାରା ସମ୍ପାଦିତ ହୁଏ, ଏହି ବସ୍ତ୍ର ପୁରୋହିତଙ୍କ ନିର୍ଦ୍ଦେଶନାରେ କନ୍ୟାପିତା ହିଁ ମଣ୍ଡପକୁ ପ୍ରଦାନ କରିଥାନ୍ତି।
+
+---
+
+### 2. ବିବାହ ମୁକୁଟ (Ceremonial Mukuta Pair) — କିଏ ଦେବେ?
+
+ଓଡ଼ିଶାରେ ମୁକୁଟ ପାଇଁ ଦୁଇଟି ପ୍ରଚଳିତ ପରମ୍ପରା ରହିଛି:
+
+#### କ. ମୁଖ୍ୟ ପ୍ରଚଳିତ ପରମ୍ପରା (Most Common — କନ୍ୟାପକ୍ଷ ଉଭୟ ଯୋଡ଼ା ବ୍ୟବସ୍ଥା କରନ୍ତି):
+
+- **କନ୍ୟାପକ୍ଷ (Bride's Family)** ଉଭୟ ବର ଓ କନ୍ୟାଙ୍କ ପାଇଁ ମେଳ ଖାଉଥିବା (Matching Cuttack Tarakasi Silver Filigree କିମ୍ବା Solapitha) ମୁକୁଟ ଯୋଡ଼ା ବ୍ୟବସ୍ଥା କରନ୍ତି।
+- **ବର ମୁକୁଟ**: ବାଟବରଣ କିମ୍ବା ମଣ୍ଡପ ପ୍ରବେଶ ସମୟରେ କନ୍ୟାପକ୍ଷ ବରଙ୍କୁ ପିନ୍ଧାଇ ସମ୍ମାନିତ କରନ୍ତି।
+- **କନ୍ୟା ମୁକୁଟ**: କନ୍ୟା ସଜେଇ ହୋଇ ମଣ୍ଡପକୁ ଆସିବା ବେଳେ ପିନ୍ଧନ୍ତି।
+- _ବ୍ୟାବହାରିକ ସୁବିଧା_: କଟକ ତାରକସି କିମ୍ବା ପିପିଲି ଶୋଲ କାରିଗରଙ୍କ ଠାରୁ ଏକାସାଙ୍ଗରେ ଗଢ଼ାଗଲେ ଉଭୟଙ୍କ ମୁକୁଟର ଡିଜାଇନ୍, ଉଚ୍ଚତା ଓ ଫିଟିଙ୍ଗ୍ ସମ୍ପୂର୍ଣ୍ଣ ମେଳ ଖାଏ।
+
+#### ଖ. ପାରସ୍ପରିକ ଆଦାନପ୍ରଦାନ ପରମ୍ପରା (Cross-Gifting Custom):
+
+- **ବର ମୁକୁଟ**: **କନ୍ୟାପକ୍ଷ** ବାଟବରଣ ସମୟରେ ବରଙ୍କୁ ଦିଅନ୍ତି (Barabastra ସହିତ)।
+- **କନ୍ୟା ମୁକୁଟ**: **ବରପକ୍ଷ** ବିବାହ ଦିନ ପଠାଉଥିବା **ବାଉଳା ପାଟ / କନ୍ୟା ବସ୍ତ୍ର ([`OBL-051`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/obligations/OBL-051.md))** ଓ ସିନ୍ଦୂର-ଅଳଙ୍କାର ସହିତ ପଠାନ୍ତି।
+
+---
+
+### 3. ଏହା OS ରେ "Joint / In-Laws" କାହିଁକି ଥିଲା?
+
+ପୂର୍ବରୁ ଟ୍ରୁସୋ କାଟାଲଗ୍ ([`TRS-OD-05`](file:///d:/GitHub_Repo/Sree_Krushna/public/js/shopping-data.js#L1296)) ଡିଜାଇନ୍ ବେଳେ ଉଭୟ ମୁକୁଟ ଓ ହସ୍ତଗଣ୍ଠି ବସ୍ତ୍ରକୁ ଗୋଟିଏ ସାଧାରଣ ଲିଙ୍କ୍ ହିସାବରେ ରଖାଯାଇଥିଲା, ଯାହାଫଳରେ ଉଭୟ ପରିବାର ମିଶି ମାପ ଓ ଡିଜାଇନ୍ ସ୍ଥିର କରିବେ। କିନ୍ତୁ ପ୍ରକୃତ କ୍ରୟ (Procurement) କ୍ଷେତ୍ରରେ କାହାର ଦାୟିତ୍ୱ ତାହା ସ୍ପଷ୍ଟ ହେବା ଜରୁରୀ।
+
+---
+
+### 4. ଆପଣଙ୍କ ପାଇଁ ୩ଟି ବିକଳ୍ପ (Options):
+
+| Option                                        | କାହା ଦାୟିତ୍ୱ (Obligor)                                             | ବ୍ୟାଖ୍ୟା                                                                                                                                                                                                                                                                 |
+| :-------------------------------------------- | :----------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Option 1 (ସର୍ବାଧିକ ପ୍ରଚଳିତ — Recommended)** | **Bride's Family (କନ୍ୟାପକ୍ଷ ⟶ ବର ଓ କନ୍ୟା)**                        | ମଣ୍ଡପ ବିଧି ଓ କନ୍ୟାଦାନ ସାମଗ୍ରୀ ([`SAM-005`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/samagri_checklists/SAM-005_kanyadaan_mandap_homa_samagri.md)) ହିସାବରେ କନ୍ୟାପକ୍ଷ ଉଭୟ ମୁକୁଟ ଯୋଡ଼ା ଏବଂ ହସ୍ତଗଣ୍ଠି ବସ୍ତ୍ର ଆୟୋଜନ କରିବେ। (ଏହା `OBL-052` ପାଟ ଯୋଡ଼ା ସହିତ ସମାନ)। |
+| **Option 2 (ପୃଥକୀକରଣ - Split)**               | **ବର ମୁକୁଟ + ବସ୍ତ୍ର ⟶ Bride Side**<br>**କନ୍ୟା ମୁକୁଟ ⟶ Groom Side** | `OBL-053` କୁ ଦୁଇଭାଗ କରି ବର ମୁକୁଟ କନ୍ୟାପକ୍ଷ ଏବଂ କନ୍ୟା ମୁକୁଟ ବରପକ୍ଷଙ୍କ ବାଉଳା ପାଟ ([`OBL-051`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/obligations/OBL-051.md)) ସହ ଯୋଡ଼ାଯିବ।                                                                                 |
+| **Option 3 (ଯୌଥ ପସନ୍ଦ - Keep Joint)**         | **Joint / In-Laws (ଉଭୟ ପକ୍ଷ)**                                     | ଉଭୟ ପକ୍ଷ ଏକାଠି ମିଶି କଟକ/ଭୁବନେଶ୍ୱରରୁ ଯୋଡ଼ା ମୁକୁଟ ପସନ୍ଦ କରି କ୍ରୟ କରିବେ।                                                                                                                                                                                                    |
+
+ଆପଣଙ୍କ ପରିବାରରେ କେଉଁ ପରମ୍ପରା ଅନୁସରଣ କରିବାକୁ ଚାହାନ୍ତି?
+ଆପଣ **Option 1 (Bride Side)** କିମ୍ବା **Option 2 (Split)** ମଧ୍ୟରୁ ଯାହା କହିବେ, ତାହା ଅନୁଯାୟୀ `OBL-053` ର ଦାୟିତ୍ୱ ଏବଂ ଫିଲ୍ଟର୍ ସଙ୍ଗେ ସଙ୍ଗେ ଅପଡେଟ୍ କରିଦିଆଯିବ।
+
+# Response 4.7 -option 1
+
+Viewed compile-obligations.cjs:60-120
+Viewed compile-obligations.cjs:30-60
+Viewed controller.js:610-645
+Searched for "val === 'bride'"
+Searched for "'bride'"
+Searched for "derived_direction"
+Searched for "obligor.family"
+Viewed controller.js:3860-3885
+Viewed test-obligation-faceted-filter.cjs:1-100
+Viewed test-obligation-faceted-filter.cjs:101-170
+Ran command: `npm run test:obligations`
+Viewed package.json:1-60
+Ran command: `node scripts/test-obligation-faceted-filter.cjs`
+Searched for "29"
+Viewed obligations_view.html:30-60
+Edited OBL-053.md
+Ran command: `node scripts/compile-obligations.cjs`
+Viewed family_obligations_master.md:80-93
+Viewed family_obligations_master.md:1-30
+Listed directory scripts
+Ran command: `node scripts/generate-obligations-table.cjs`
+Ran command: `node scripts/generate-tabular-run-sheet.cjs`
+Viewed obligations_view.html:35-55
+Edited obligations_view.html
+Viewed controller.js:3835-3845
+Viewed controller.js:4245-4255
+Edited controller.js
+Edited controller.js
+Ran command: `npm run build:shopping:all`
+Viewed test-obligation-faceted-filter.cjs:120-140
+Edited test-obligation-faceted-filter.cjs
+Ran command: `node scripts/test-obligation-faceted-filter.cjs`
+Ran command: `npm run verify:all`
+Ran command: `git status -s`
+Ran command: `git diff -- "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md"`
+Searched for "# Response 4.7"
+
+**Option 1** ସମ୍ପୂର୍ଣ୍ଣ ଭାବେ କାର୍ଯ୍ୟକାରୀ କରାଯାଇ ସମସ୍ତ SSOT, କାଟାଲଗ୍, ରନ୍-ସିଟ୍ ଏବଂ ଫିଲ୍ଟରିଂ ସିଷ୍ଟମକୁ ଅପଡେଟ୍ କରିଦିଆଗଲା।
+
+---
+
+### କରାଯାଇଥିବା ମୁଖ୍ୟ ପରିବର୍ତ୍ତନଗୁଡ଼ିକ (Summary of Updates):
+
+1. **[`OBL-053.md`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/obligations/OBL-053.md) ର ଦାୟିତ୍ୱ (Obligor) ପୁନଃନିର୍ଦ୍ଧାରଣ**:
+   - **Obligor Family**: `bride` (**Bride's Family / କନ୍ୟାପକ୍ଷ**)
+   - **Obligor Role**: `Bride's Family (Mandap Samagri SAM-005 Custodian)`
+   - **Recipient**: `Groom & Mandap Union (Krushna & Sree)`
+   - **Derived Direction**: `bride_to_groom` (**Bride Side**)
+   - **ସାଂସ୍କୃତିକ ଆଧାର**: ମଣ୍ଡପରେ ବର-କନ୍ୟାଙ୍କ ପବିତ୍ର ମୁକୁଟ ଯୋଡ଼ା ଏବଂ ହସ୍ତଗଣ୍ଠି ବନ୍ଧନ ବସ୍ତ୍ର କନ୍ୟାଦାନ ସାମଗ୍ରୀ ([`SAM-005`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/samagri_checklists/SAM-005_kanyadaan_mandap_homa_samagri.md)) ଅଧୀନରେ କନ୍ୟାପକ୍ଷଙ୍କ ଦ୍ୱାରା ପ୍ରଦାନ କରାଯିବ।
+
+2. **KPI ବ୍ୟାନର୍ ଓ ଦିଗ ନିର୍ଣ୍ଣୟ (Directional Balance)**:
+   - **Bride Side (କନ୍ୟାପକ୍ଷ)**: **30** (ପୂର୍ବରୁ ୨୯ ଥିଲା, ଏବେ `OBL-053` ଯୋଡ଼ି ହେଲା)
+   - **Groom Side (ବରପକ୍ଷ)**: **23**
+   - **Joint / Undefined**: **0** (ସମସ୍ତ ୫୩ଟି ବାଧ୍ୟତାମୂଳକ ବିଧିର ଦାୟିତ୍ୱ ଏବେ ୧୦୦% ସ୍ପଷ୍ଟ)
+   - **ମୋଟ (Total Obligations)**: **53**
+
+3. **ସିଷ୍ଟମ୍ ସିଙ୍କ୍ ଓ କମ୍ପାଇଲେସନ୍ (100% Dual-Release Byte Parity)**:
+   - [`family_obligations_master.md`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/obligations/family_obligations_master.md) & [`family_obligations_table.md`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/obligations/family_obligations_table.md) ପୁନଃକମ୍ପାଇଲ୍ ହୋଇଛି।
+   - କ୍ଲାଏଣ୍ଟ ଡାଟା ଲେୟାର୍ ([`js/obligations-data.js`](file:///d:/GitHub_Repo/Sree_Krushna/js/obligations-data.js) ଏବଂ [`public/js/obligations-data.js`](file:///d:/GitHub_Repo/Sree_Krushna/public/js/obligations-data.js)) ସିଙ୍କ୍ ହୋଇଛି।
+   - ପ୍ରିଣ୍ଟେବଲ୍ ରନ୍-ସିଟ୍ ([`family-obligations-run-sheet.html`](file:///d:/GitHub_Repo/Sree_Krushna/family-obligations-run-sheet.html) ଏବଂ [`public/family-obligations-run-sheet.html`](file:///d:/GitHub_Repo/Sree_Krushna/public/family-obligations-run-sheet.html)) ରେ ମଧ୍ୟ ଅପଡେଟ୍ ହୋଇଛି।
+   - ଇଣ୍ଟରାକ୍ଟିଭ୍ ଶପିଂ ରେଜିଷ୍ଟ୍ରି ([`shopping-registry.html`](file:///d:/GitHub_Repo/Sree_Krushna/shopping-registry.html) & `public/`) SDCA କମ୍ପାଇଲର୍ ଦ୍ୱାରା ପୁନଃନିର୍ମାଣ ହୋଇଛି।
+
+4. **ଟେଷ୍ଟ୍ ଭେରିଫିକେସନ୍ (Test Evidence)**:
+   - `node scripts/test-obligation-faceted-filter.cjs` ➜ **PASS (5/5)** (Bride Side: 30 items)
+   - `npm run verify:all` ➜ **100% GREEN** (ସମସ୍ତ ୪୮ଟି ଆର୍କିଟେକ୍ଚରାଲ୍ ଚେକ୍ ଏବଂ ୨୦୬ଟି ଗଭର୍ଣ୍ଣାନ୍ସ ୱାୟାରିଂ ପାସ୍)
 
 # Query 4.8 -
 
