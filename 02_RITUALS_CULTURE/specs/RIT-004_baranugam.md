@@ -30,7 +30,7 @@ When the Barat procession arrives at the wedding venue, the groom is received as
 2. **Baranugam Aarti (Batabarana):** Bride's mother conducts auspicious aarti, washes the groom's feet with sacred water, and applies tilak.
 3. **Ahiya Manduli Presentation:** Groom's family presents the sacred *Ahiya Manduli* (consecrated silk saree and auspicious shringar presentation) to the bride's mother (*Mummy*) in honor of her matriarchal welcome.
 4. **Jay Mala / Varamala (Garland Exchange):** Exchange of floral garlands between bride and groom on the stage.
-5. **Mandap Entry:** Groom is escorted by the priest and elders to the Vedic Mandap.
+5. **Mandap Entry & Sadu Barana (ସାଢୁ ବରଣ):** At the entrance of the Mandap, the Bride's elder sister's husband (*Sadu Bhai* / Didi's Husband) conducts the customary *Sadu Barana* welcoming ritual, formally granting permission (ଅନୁମତି) for the Groom to ascend the sacred Mandap. The Groom's family honors him with the *Sadu Barana* offerings (formal kurta/shirt attire and sweet hamper, [`OBL-031`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/obligations/OBL-031.md)). Groom is then escorted to his ceremonial seat.
 
 ## 3. Required Materials & Samagri
 *Authoritative Checklist: [`SAM-004`](file:///d:/GitHub_Repo/Sree_Krushna/02_RITUALS_CULTURE/samagri_checklists/SAM-004_baranugam_samagri.md)*

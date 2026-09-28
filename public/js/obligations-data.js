@@ -11,7 +11,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
     "version": "1.0.0",
     "standard": "STD-FAMILY-OBLIGATION-001",
     "governance_ref": "AC-DEC-2026-061 & AC-DEC-2026-062",
-    "updated_at": "2026-09-28T12:01:47.139Z"
+    "updated_at": "2026-09-28T12:06:02.503Z"
   },
   "stats": {
     "total": 53,
@@ -2057,20 +2057,20 @@ window.FAMILY_OBLIGATIONS_DATA = {
     {
       "id": "OBL-031",
       "entity_type": "customary_family_obligation",
-      "customary_title": "Sadhu Basana (ସାଢୁ ବସନ - ଲଡୁ ଓ ପୋଷାକ)",
-      "english_descriptor": "Sweet hampers and respect dress presented by Groom's family to Bride's co-brothers/in-laws",
+      "customary_title": "Sadu Barana (ସାଢୁ ବରଣ - ଲଡୁ ଓ ପୋଷାକ)",
+      "english_descriptor": "Customary Mandap entry permission & welcome ritual where Bride's Elder Sister's Husband (Sadu Bhai / Didi's Husband) permits the Groom to the Mandap; Groom's family honors him with Laddoo hamper & formal attire",
       "category": "composite_bundle",
       "event_ref": "EVT-004",
       "ritual_ref": "RIT-004",
       "obligor": {
         "family": "groom",
         "primary_contact": "PER-003",
-        "role_title": "Groom's Family"
+        "role_title": "Groom's Family (Baba / Krushna)"
       },
       "recipient": {
         "family": "bride",
         "primary_contact": "PER-007",
-        "role_title": "Bride's Extended Family (Sadu Cohort)"
+        "role_title": "Bride's Sister's Husband / Sadu Bhai (Didi's Husband)"
       },
       "exchange_cluster": {
         "is_exchange": false,
@@ -2122,7 +2122,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
       "logistical_custody": {
         "custodian_role": "PER-003",
         "staging_location": "VEN-003",
-        "handover_moment": "Post-Varamala Stage Welcome"
+        "handover_moment": "Mandap Welcoming / Sadu Permission Ritual"
       },
       "derived_direction": "groom_to_bride",
       "file_basename": "OBL-031.md"

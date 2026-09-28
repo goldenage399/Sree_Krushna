@@ -2,7 +2,7 @@
 
 > **Parent Hub**: [`02_RITUALS_CULTURE/HUB.md`](../HUB.md)  
 > **Standard**: `STD-FAMILY-OBLIGATION-001` | **Rulings**: `AC-DEC-2026-061` & `AC-DEC-2026-062`  
-> **Total Obligations**: 53 | **Unresolved**: 8 | **Last Compiled**: 2026-09-28T12:01:47.137Z  
+> **Total Obligations**: 53 | **Unresolved**: 8 | **Last Compiled**: 2026-09-28T12:06:02.502Z  
 
 ---
 
@@ -50,7 +50,7 @@
 | [`OBL-028`](./OBL-028.md) | **Sali Hasta-Ganthi Phita Gift (ଶାଳୀ ହସ୍ତଗଣ୍ଠି ଫିଟା ଉପହାର)** | EVT-004 | groom_to_bride | `attire` | `TBD_Family_Choice` | `Agreed` | `TRS-SA-04` |
 | [`OBL-029`](./OBL-029.md) | **Samandhi Bheta / Samdhi Milan (ସମନ୍ଧୀ ଭେଟ - Baba ⟶ Daddy)** | EVT-004 | groom_to_bride | `attire` | `Fully_Specified` | `Agreed` | `TRS-SA-02` |
 | [`OBL-030`](./OBL-030.md) | **Samandhi Bheta / Samdhi Milan (ସମନ୍ଧୀ ଭେଟ - Daddy ⟶ Baba)** | EVT-004 | bride_to_groom | `attire` | `Fully_Specified` | `Agreed` | `TRS-SA-02` |
-| [`OBL-031`](./OBL-031.md) | **Sadhu Basana (ସାଢୁ ବସନ - ଲଡୁ ଓ ପୋଷାକ)** | EVT-004 | groom_to_bride | `composite_bundle` | `Fully_Specified` | `Agreed` | `TRS-SA-03` |
+| [`OBL-031`](./OBL-031.md) | **Sadu Barana (ସାଢୁ ବରଣ - ଲଡୁ ଓ ପୋଷାକ)** | EVT-004 | groom_to_bride | `composite_bundle` | `Fully_Specified` | `Agreed` | `TRS-SA-03` |
 | [`OBL-032`](./OBL-032.md) | **Kanya Alankara (କନ୍ୟା ଅଳଙ୍କାର - ସୁନା ଗହଣା)** | EVT-004 | groom_to_bride | `gold_silver` | `Fully_Specified` | `Agreed` | `TRS-JW-01` |
 | [`OBL-033`](./OBL-033.md) | **TDK Customary Item (ଅସ୍ପଷ୍ଟ ହସ୍ତଲିଖିତ - TDK)** | EVT-004 | groom_to_bride | `attire` | `Source_Unclear` | `Identified` | `-` |
 | [`OBL-034`](./OBL-034.md) | **Baranka Pancha Joda Poshaka (ବରଙ୍କ ପାଞ୍ଚ ଯୋଡ଼ା ପୋଷାକ)** | EVT-004 | bride_to_groom | `composite_bundle` | `Fully_Specified` | `Agreed` | `TRS-GR-07` |
