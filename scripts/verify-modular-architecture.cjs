@@ -129,7 +129,8 @@ const controllers = [
   path.join(rootDir, 'ui_primitives', 'scripts', 'zoom_pan_engine.js'),
   path.join(rootDir, 'ui_primitives', 'scripts', 'comments_engine.js'),
   path.join(rootDir, 'ui_primitives', 'scripts', 'print_engine.js'),
-  path.join(rootDir, 'ui_primitives', 'scripts', 'faceted_filter_engine.js')
+  path.join(rootDir, 'ui_primitives', 'scripts', 'faceted_filter_engine.js'),
+  path.join(rootDir, 'ui_primitives', 'scripts', 'column_visibility_engine.js')
 ];
 
 controllers.forEach(ctrl => {
@@ -168,7 +169,8 @@ const expectedPrimitives = [
   'scripts/zoom_pan_engine.js',
   'scripts/comments_engine.js',
   'scripts/print_engine.js',
-  'scripts/faceted_filter_engine.js'
+  'scripts/faceted_filter_engine.js',
+  'scripts/column_visibility_engine.js'
 ];
 
 expectedPrimitives.forEach(rel => {

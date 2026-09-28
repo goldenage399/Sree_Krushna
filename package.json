@@ -26,6 +26,7 @@
     "test:density": "node scripts/test-obligations-table-density.cjs",
     "test:print-ink-saver": "node scripts/test-print-ink-saver-contract.cjs",
     "test:print-cohesion": "node scripts/test-print-cohesion-contract.cjs",
+    "test:column-visibility": "node scripts/test-column-visibility-contract.cjs",
     "test:faceted-filter": "node scripts/test-faceted-filter-primitive.cjs",
     "test:faceted-toolbar": "node scripts/test-faceted-toolbar-dom.cjs",
     "test:obligation-faceted-filter": "node scripts/test-obligation-faceted-filter.cjs",
