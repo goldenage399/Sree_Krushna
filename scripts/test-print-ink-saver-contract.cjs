@@ -157,7 +157,7 @@ check('Functional test: skGetPrintPreferences & skSavePrintPreferences logic', (
   const prefs = engine.skGetPrintPreferences();
   assert(prefs && typeof prefs === 'object', 'Preferences must return an object');
   assert(['eco', 'tint', 'contrast'].includes(prefs.theme), 'Preferences theme must be valid');
-  assert(['smart', 'milestones'].includes(prefs.pageBreaks), 'Preferences pageBreaks must be valid');
+  assert(['smart', 'milestones', 'cohesive', 'fluid'].includes(prefs.pageBreaks), 'Preferences pageBreaks must be valid');
 });
 
 // 3. Modularity Line Limit & Component Audits

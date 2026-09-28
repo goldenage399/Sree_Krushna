@@ -29,6 +29,7 @@ Per the Universal Session Acceleration Protocol (`AC-DEC-2026-059`), all newly o
 | [`SK-030`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-030/00_ENHANCEMENT_INDEX.md) | Universal Faceted Filter Primitive Engine, State Orthogonality & Dual-Mode UI Ergonomics | `COMPLETED` | `v2.9.8` | `STD-UI-PRIMITIVE-FACETED-FILTER-001` |
 | [`SK-031`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-031/00_ENHANCEMENT_INDEX.md) | Universal Ink-Saving Print Engine, Configurable Themes & Accordion Page-Break Orchestration | `COMPLETED` | `v2.9.9` | `STD-UI-PRINT-RUNSHEET-002` |
 | [`SK-032`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-032/00_ENHANCEMENT_INDEX.md) | Smart Cohesive Page-Break Orchestration & Cross-Repo Tabular Packaging | `IN_PLANNING` | `v2.9.9` | `STD-UI-PRINT-RUNSHEET-003` / `INV-PAGE-COHESION-001` |
+| [`SK-033`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-033/00_ENHANCEMENT_INDEX.md) | Universal Column Visibility & Print Data Masking Engine | `IN_PLANNING` | `v2.10.0` | `STD-TABLE-COL-VIS-001` / `INV-TABLE-COL-MASK-001` |
 
 ---
 
@@ -46,6 +47,7 @@ Per the Universal Session Acceleration Protocol (`AC-DEC-2026-059`), all newly o
 - **`AC-DEC-2026-071` (`UI-DEC-2026-053`)**: Certified Multi-Viewport Fluid Table Budgeting, Inner Container Clamping & Print Run-Sheet Preservation (`STD-TABLE-BUDGET-001` / `INV-TABLE-DOM-001` / `SK-029`). Closes table-cell display model override and asymmetric slack absorption. Phase 1 structural decoupling and density gates verified.
 - **`AC-DEC-2026-072` (`UI-DEC-2026-054`)**: Certified Universal Ink-Saving Print Engine, Configurable Themes & Accordion Page-Break Orchestration (`STD-UI-PRINT-RUNSHEET-002` / `INV-INK-SAVER-001` / `INV-PAGE-BREAK-ORCH-001` / `SK-031`). Abolishes solid black headers in @media print and print_engine.js in favor of Executive Wireframe; enforces break-after: avoid on milestone headers and repeating thead; Phase 1 verified green.
 - **`AC-DEC-2026-075` (`UI-DEC-2026-055`)**: Certified Smart Cohesive Page-Break Orchestration & Cross-Repo Tabular Packaging (`STD-UI-PRINT-RUNSHEET-003` / `INV-PAGE-COHESION-001` / `SK-032`). Ratifies declarative block cohesion (break-inside: avoid !important), vetoes fragile JS height math, establishes 3-tier pagination spectrum (cohesive, fluid, milestones), and defines universal token .sk-print-cohesive-block.
+- **`AC-DEC-2026-076` (`UI-DEC-2026-056`)**: Certified Universal Column Visibility & Print Data Masking Engine (`STD-TABLE-COL-VIS-001` / `INV-TABLE-COL-MASK-001` / `SK-033`). Decoupled from SK-032 to protect 500-line modular limit in print_engine.js; mandates DOM excision for confidential financial/relationship data masking, 1-click audience presets (Full, Elder, Vendor), and dynamic proportional width re-budgeting (STD-TABLE-BUDGET-001).
 
 See [`User_Created/Discussion Threads/Council/Council_Ledger.md`](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/Council_Ledger.md) for complete historical rulings.
 

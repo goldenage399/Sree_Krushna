@@ -261,9 +261,26 @@
     border: 1.5px solid #0f172a !important;
   }
 
+  /* Smart Cohesive Page-Break Packaging (STD-UI-PRINT-RUNSHEET-003 / INV-PAGE-COHESION-001) */
+  body[data-print-pagebreak="cohesive"] .obl-table-milestone-block,
+  body[data-print-pagebreak="cohesive"] .shop-table-group,
+  body[data-print-pagebreak="cohesive"] .sk-print-cohesive-block,
+  .sk-print-cohesive-block {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  body[data-print-pagebreak="fluid"] .obl-table-milestone-block,
+  body[data-print-pagebreak="fluid"] .shop-table-group,
+  body[data-print-pagebreak="fluid"] .sk-print-cohesive-block {
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
+
   /* Scoped Page Break Modes (INV-PAGE-BREAK-ORCH-001) */
   body[data-print-pagebreak="milestones"] .obl-table-milestone-block:not(:first-child),
-  body[data-print-pagebreak="milestones"] .shop-table-group:not(:first-child) {
+  body[data-print-pagebreak="milestones"] .shop-table-group:not(:first-child),
+  body[data-print-pagebreak="milestones"] .sk-print-cohesive-block:not(:first-child) {
     break-before: page !important;
     page-break-before: always !important;
     margin-top: 0 !important;

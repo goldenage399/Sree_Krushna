@@ -20,7 +20,7 @@
    * @param {string|HTMLElement} target - CSS selector or DOM element to print
    * @param {Object} [options] - Configuration options
    * @param {'eco'|'tint'|'contrast'} [options.theme='eco'] - Print theme (zero-ink eco, executive tint, high contrast)
-   * @param {'smart'|'milestones'} [options.pageBreaks='smart'] - Page break mode (smart flow vs milestone per page)
+   * @param {'cohesive'|'fluid'|'milestones'} [options.pageBreaks='cohesive'] - Page break mode (cohesive block flow vs fluid vs milestone per page)
    * @param {string} [options.title] - Document header title
    * @param {string} [options.subtitle] - Header subtitle / timestamp
    * @param {'landscape'|'portrait'} [options.orientation='landscape'] - Page orientation
@@ -33,7 +33,7 @@
   function skPrintContainer(target, options) {
     options = options || {};
     var theme = (options.theme === 'tint' || options.theme === 'contrast') ? options.theme : 'eco';
-    var pageBreaks = options.pageBreaks === 'milestones' ? 'milestones' : 'smart';
+    var pageBreaks = (options.pageBreaks === 'milestones' || options.pageBreaks === 'fluid') ? options.pageBreaks : 'cohesive';
     var title = options.title || document.title || 'Print Run Sheet';
     var subtitle = options.subtitle || ('Generated: ' + new Date().toLocaleString());
     var orientation = options.orientation === 'portrait' ? 'portrait' : 'landscape';
@@ -210,9 +210,24 @@
       '  color: #ffffff !important;',
       '  border: 1.5px solid #0f172a !important;',
       '}',
-      '/* Page Break Modes (INV-PAGE-BREAK-ORCH-001) */',
+      '/* Smart Cohesive Page-Break Packaging (STD-UI-PRINT-RUNSHEET-003 / INV-PAGE-COHESION-001) */',
+      'body[data-print-pagebreak="cohesive"] .obl-table-milestone-block,',
+      'body[data-print-pagebreak="cohesive"] .shop-table-group,',
+      'body[data-print-pagebreak="cohesive"] .sk-print-cohesive-block,',
+      '.sk-print-cohesive-block {',
+      '  break-inside: avoid !important;',
+      '  page-break-inside: avoid !important;',
+      '}',
+      'body[data-print-pagebreak="fluid"] .obl-table-milestone-block,',
+      'body[data-print-pagebreak="fluid"] .shop-table-group,',
+      'body[data-print-pagebreak="fluid"] .sk-print-cohesive-block {',
+      '  break-inside: auto !important;',
+      '  page-break-inside: auto !important;',
+      '}',
+      '/* Scoped Page Break Modes (INV-PAGE-BREAK-ORCH-001) */',
       'body[data-print-pagebreak="milestones"] .obl-table-milestone-block:not(:first-child),',
-      'body[data-print-pagebreak="milestones"] .shop-table-group:not(:first-child) {',
+      'body[data-print-pagebreak="milestones"] .shop-table-group:not(:first-child),',
+      'body[data-print-pagebreak="milestones"] .sk-print-cohesive-block:not(:first-child) {',
       '  break-before: page !important;',
       '  page-break-before: always !important;',
       '  margin-top: 0 !important;',
@@ -297,7 +312,7 @@
           if (parsed && typeof parsed === 'object') {
             return {
               theme: parsed.theme === 'tint' || parsed.theme === 'contrast' ? parsed.theme : 'eco',
-              pageBreaks: parsed.pageBreaks === 'milestones' ? 'milestones' : 'smart',
+              pageBreaks: (parsed.pageBreaks === 'milestones' || parsed.pageBreaks === 'fluid') ? parsed.pageBreaks : 'cohesive',
               orientation: parsed.orientation === 'portrait' ? 'portrait' : 'landscape',
               includeSignoff: parsed.includeSignoff !== false
             };
@@ -307,7 +322,7 @@
     } catch (e) {
       console.warn('[skGetPrintPreferences] Error reading preferences:', e);
     }
-    return { theme: 'eco', pageBreaks: 'smart', orientation: 'landscape', includeSignoff: true };
+    return { theme: 'eco', pageBreaks: 'cohesive', orientation: 'landscape', includeSignoff: true };
   }
 
   /**
@@ -407,7 +422,7 @@
     if (submitBtn) {
       submitBtn.onclick = function () {
         var selectedTheme = 'eco';
-        var selectedPb = 'smart';
+        var selectedPb = 'cohesive';
         var selectedOrient = 'landscape';
         var includeSignoff = true;
 
