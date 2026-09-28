@@ -28,7 +28,7 @@ Per the Universal Session Acceleration Protocol (`AC-DEC-2026-059`), all newly o
 | [`SK-029`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-029/00_ENHANCEMENT_INDEX.md) | Multi-Viewport Fluid Table Budgeting, Inner Container Clamping & Print Run-Sheet Preservation | `COMPLETED` | `v2.9.7` | `STD-TABLE-BUDGET-001` / `INV-TABLE-DOM-001` |
 | [`SK-030`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-030/00_ENHANCEMENT_INDEX.md) | Universal Faceted Filter Primitive Engine, State Orthogonality & Dual-Mode UI Ergonomics | `COMPLETED` | `v2.9.8` | `STD-UI-PRIMITIVE-FACETED-FILTER-001` |
 | [`SK-031`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-031/00_ENHANCEMENT_INDEX.md) | Universal Ink-Saving Print Engine, Configurable Themes & Accordion Page-Break Orchestration | `COMPLETED` | `v2.9.9` | `STD-UI-PRINT-RUNSHEET-002` |
-| [`SK-032`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-032/00_ENHANCEMENT_INDEX.md) | Smart Cohesive Page-Break Orchestration & Cross-Repo Tabular Packaging | `IN_PLANNING` | `v2.9.9` | `STD-UI-PRINT-RUNSHEET-003` / `INV-PAGE-COHESION-001` |
+| [`SK-032`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-032/00_ENHANCEMENT_INDEX.md) | Smart Cohesive Page-Break Orchestration & Cross-Repo Tabular Packaging | `COMPLETED` | `v2.9.9` | `STD-UI-PRINT-RUNSHEET-003` / `INV-PAGE-COHESION-001` |
 | [`SK-033`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-033/00_ENHANCEMENT_INDEX.md) | Universal Column Visibility & Print Data Masking Engine | `IN_PLANNING` | `v2.10.0` | `STD-TABLE-COL-VIS-001` / `INV-TABLE-COL-MASK-001` |
 
 ---
