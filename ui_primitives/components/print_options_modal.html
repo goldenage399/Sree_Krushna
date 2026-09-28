@@ -72,7 +72,26 @@
         </div>
       </div>
 
-      <!-- Section 3: Orientation & Sign-off Options -->
+      <!-- Section 3: Columns & Privacy Data Masking (STD-TABLE-COL-VIS-001) -->
+      <div class="sk-print-option-section" id="skPrintColumnSection" style="display: none;">
+        <div class="sk-print-section-header-row">
+          <span class="sk-print-section-label">👁️ Columns &amp; Privacy Masking</span>
+          <div class="sk-print-preset-pills" id="skPrintPresetGroup">
+            <span class="sk-print-preset-label">Audience Presets:</span>
+            <button type="button" class="sk-btn-preset is-active" data-preset="full" id="skPresetFull">Full Operational</button>
+            <button type="button" class="sk-btn-preset" data-preset="elder" id="skPresetElder">Elder / Ritual</button>
+            <button type="button" class="sk-btn-preset" data-preset="vendor" id="skPresetVendor">Vendor / Logistics</button>
+          </div>
+        </div>
+        <div class="sk-print-columns-grid" id="skPrintColumnsContainer">
+          <!-- Populated dynamically by column_visibility_engine -->
+        </div>
+        <div class="sk-print-masking-note">
+          <span>🔒 <strong>Confidential Data Masking Active:</strong> Unselected columns are physically excised from the document to protect private costs and family notes (INV-TABLE-COL-MASK-001).</span>
+        </div>
+      </div>
+
+      <!-- Section 4: Orientation & Sign-off Options -->
       <div class="sk-print-options-row">
         <div>
           <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--shop-text-secondary, #94a3b8); margin-right: 8px;">Orientation:</span>

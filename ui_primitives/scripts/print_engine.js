@@ -15,21 +15,7 @@
 (function (window, document) {
   'use strict';
 
-  /**
-   * Universal Scoped Container Print Function
-   * @param {string|HTMLElement} target - CSS selector or DOM element to print
-   * @param {Object} [options] - Configuration options
-   * @param {'eco'|'tint'|'contrast'} [options.theme='eco'] - Print theme (zero-ink eco, executive tint, high contrast)
-   * @param {'cohesive'|'fluid'|'milestones'} [options.pageBreaks='cohesive'] - Page break mode (cohesive block flow vs fluid vs milestone per page)
-   * @param {string} [options.title] - Document header title
-   * @param {string} [options.subtitle] - Header subtitle / timestamp
-   * @param {'landscape'|'portrait'} [options.orientation='landscape'] - Page orientation
-   * @param {string} [options.pageSize='A4'] - Paper size (e.g. 'A4')
-   * @param {string} [options.margin='8mm 10mm'] - Print margins
-   * @param {string} [options.customCss=''] - Additional CSS rules
-   * @param {boolean} [options.includeSignoff=false] - Appends coordinator sign-off block
-   * @returns {boolean} Whether print initiation succeeded
-   */
+  /** Universal Scoped Container Print Function (STD-UI-PRINT-CONTAINER-001 / STD-TABLE-COL-VIS-001) */
   function skPrintContainer(target, options) {
     options = options || {};
     var theme = (options.theme === 'tint' || options.theme === 'contrast') ? options.theme : 'eco';
@@ -57,10 +43,21 @@
 
     // 3. Clone and Clean Target Content
     var clone = el.cloneNode(true);
-    // Suppress screen-only buttons and tools inside the clone
     var noPrintEls = clone.querySelectorAll('.no-print, button, .sk-btn, .shop-btn, input, select');
     for (var i = 0; i < noPrintEls.length; i++) {
       noPrintEls[i].parentNode.removeChild(noPrintEls[i]);
+    }
+
+    // Physical DOM excision for confidential data masking (INV-TABLE-COL-MASK-001)
+    if (typeof window !== 'undefined' && window.skColumnVisibilityEngine && (options.tableId || options.activeColumns)) {
+      var tables = clone.querySelectorAll ? clone.querySelectorAll('table') : [];
+      if (clone.tagName === 'TABLE') tables = [clone];
+      var colsToUse = options.activeColumns || (options.tableId ? window.skColumnVisibilityEngine.getActiveColumns(options.tableId) : null);
+      if (colsToUse && tables.length > 0) {
+        for (var t = 0; t < tables.length; t++) {
+          window.skColumnVisibilityEngine.filterTableDOMForPrint(tables[t], colsToUse);
+        }
+      }
     }
 
     // 4. Construct Headless Sandbox Iframe
@@ -388,8 +385,14 @@
     }
 
     var signoffCheck = backdrop.querySelector('#skPrintSignoffCheckbox');
-    if (signoffCheck) {
-      signoffCheck.checked = prefs.includeSignoff;
+    if (signoffCheck) signoffCheck.checked = prefs.includeSignoff;
+
+    // Mount Column Visibility section if tableId is provided (STD-TABLE-COL-VIS-001)
+    if (config.tableId && typeof window !== 'undefined' && window.skColumnVisibilityEngine) {
+      window.skColumnVisibilityEngine.mountModalSection(backdrop, config.tableId);
+    } else {
+      var colSec = backdrop.querySelector('#skPrintColumnSection');
+      if (colSec) colSec.style.display = 'none';
     }
 
     // Modal state activation
@@ -403,9 +406,7 @@
     }
 
     function handleKeydown(e) {
-      if (e.key === 'Escape') {
-        closeModal();
-      }
+      if (e.key === 'Escape') closeModal();
     }
     window.addEventListener('keydown', handleKeydown);
 
@@ -437,6 +438,11 @@
 
         if (signoffCheck) includeSignoff = signoffCheck.checked;
 
+        var activeCols = null;
+        if (config.tableId && typeof window !== 'undefined' && window.skColumnVisibilityEngine) {
+          activeCols = window.skColumnVisibilityEngine.getSelectedColumnsFromModal(backdrop);
+        }
+
         var newPrefs = {
           theme: selectedTheme,
           pageBreaks: selectedPb,
@@ -453,7 +459,9 @@
             theme: selectedTheme,
             pageBreaks: selectedPb,
             orientation: selectedOrient,
-            includeSignoff: includeSignoff
+            includeSignoff: includeSignoff,
+            tableId: config.tableId,
+            activeColumns: activeCols
           });
         }, 120);
       };

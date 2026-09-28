@@ -316,6 +316,118 @@
     });
   }
 
+  /**
+   * Mount and synchronize column selection section in the Pre-Print modal
+   * @param {HTMLElement} modalEl - Modal container element containing #skPrintColumnSection
+   * @param {string} tableId - Registered table ID
+   * @param {Function} [onStateChange] - Optional callback when active columns change
+   */
+  function mountModalSection(modalEl, tableId, onStateChange) {
+    if (!modalEl) return null;
+    var section = modalEl.querySelector ? modalEl.querySelector('#skPrintColumnSection') : null;
+    if (!section) return null;
+
+    var cfg = getTableConfig(tableId);
+    if (!cfg || !Array.isArray(cfg.columns) || cfg.columns.length === 0) {
+      section.style.display = 'none';
+      return null;
+    }
+
+    section.style.display = 'block';
+
+    var container = section.querySelector ? section.querySelector('#skPrintColumnsContainer') : null;
+    var presetGroup = section.querySelector ? section.querySelector('#skPrintPresetGroup') : null;
+    var activeKeys = getActiveColumns(tableId);
+    var activeMap = {};
+    activeKeys.forEach(function (k) { activeMap[k] = true; });
+
+    var doc = (modalEl && modalEl.ownerDocument) ? modalEl.ownerDocument : (typeof document !== 'undefined' ? document : null);
+
+    // 1. Populate Checkboxes
+    if (container) {
+      container.innerHTML = '';
+      cfg.columns.forEach(function (col) {
+        var isChecked = activeMap[col.id] === true;
+        if (doc && doc.createElement) {
+          var lbl = doc.createElement('label');
+          lbl.className = 'sk-print-col-check';
+          lbl.innerHTML = '<input type="checkbox" data-col-id="' + col.id + '"' + (isChecked ? ' checked' : '') + '> ' +
+                          '<span>' + (col.label || col.id) + '</span>';
+          container.appendChild(lbl);
+        }
+      });
+
+      // Bind change listeners to checkboxes
+      var inputs = container.querySelectorAll('input[type="checkbox"]');
+      for (var i = 0; i < inputs.length; i++) {
+        inputs[i].addEventListener('change', function () {
+          var selected = [];
+          for (var j = 0; j < inputs.length; j++) {
+            if (inputs[j].checked) {
+              selected.push(inputs[j].getAttribute('data-col-id'));
+            }
+          }
+          setActiveColumns(tableId, selected);
+          syncPresetPillHighlight(presetGroup, cfg, selected);
+          if (typeof onStateChange === 'function') onStateChange(selected);
+        });
+      }
+    }
+
+    // 2. Bind Preset Pills
+    if (presetGroup) {
+      var presetBtns = presetGroup.querySelectorAll('.sk-btn-preset');
+      for (var p = 0; p < presetBtns.length; p++) {
+        (function (btn) {
+          btn.onclick = function () {
+            var presetId = btn.getAttribute('data-preset');
+            var newKeys = applyPreset(tableId, presetId);
+            if (container) {
+              var chks = container.querySelectorAll('input[type="checkbox"]');
+              for (var c = 0; c < chks.length; c++) {
+                var colId = chks[c].getAttribute('data-col-id');
+                chks[c].checked = newKeys.indexOf(colId) !== -1;
+              }
+            }
+            syncPresetPillHighlight(presetGroup, cfg, newKeys);
+            if (typeof onStateChange === 'function') onStateChange(newKeys);
+          };
+        })(presetBtns[p]);
+      }
+      syncPresetPillHighlight(presetGroup, cfg, activeKeys);
+    }
+
+    return section;
+  }
+
+  function syncPresetPillHighlight(presetGroup, cfg, activeKeys) {
+    if (!presetGroup || !cfg || !cfg.presets) return;
+    var activeSet = (activeKeys || []).slice().sort().join(',');
+    var presetBtns = presetGroup.querySelectorAll('.sk-btn-preset');
+    for (var i = 0; i < presetBtns.length; i++) {
+      var btn = presetBtns[i];
+      var presetId = btn.getAttribute('data-preset');
+      var presetCols = (cfg.presets[presetId] || []).slice().sort().join(',');
+      if (presetCols && presetCols === activeSet) {
+        btn.classList.add('is-active');
+      } else {
+        btn.classList.remove('is-active');
+      }
+    }
+  }
+
+  function getSelectedColumnsFromModal(modalEl) {
+    if (!modalEl) return null;
+    var container = modalEl.querySelector ? modalEl.querySelector('#skPrintColumnsContainer') : null;
+    if (!container) return null;
+    var inputs = container.querySelectorAll('input[type="checkbox"]:checked');
+    var res = [];
+    for (var i = 0; i < inputs.length; i++) {
+      res.push(inputs[i].getAttribute('data-col-id'));
+    }
+    return res;
+  }
+
   return {
     registerTable: registerTable,
     getTableConfig: getTableConfig,
@@ -324,6 +436,8 @@
     applyPreset: applyPreset,
     resetTableState: resetTableState,
     calculateRebalancedWidths: calculateRebalancedWidths,
-    filterTableDOMForPrint: filterTableDOMForPrint
+    filterTableDOMForPrint: filterTableDOMForPrint,
+    mountModalSection: mountModalSection,
+    getSelectedColumnsFromModal: getSelectedColumnsFromModal
   };
 });

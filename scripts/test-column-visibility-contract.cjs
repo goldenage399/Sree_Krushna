@@ -316,12 +316,165 @@ if (engine) {
     assert(titleHeader.style.width, 'Remaining th must have width style');
     assert(statusHeader.style.width, 'Remaining th must have width style');
   });
+
+  // 6. Pre-Print Options Dialog & Role Presets Contract (Phase 2 / STD-TABLE-COL-VIS-001)
+  console.log('\n▶ [6/6] Auditing Pre-Print Modal Integration & Role Presets (Phase 2)...');
+
+  const modalHtmlPath = path.join(rootDir, 'ui_primitives', 'components', 'print_options_modal.html');
+  check('print_options_modal.html contains Section 3 (Columns & Privacy Masking)', () => {
+    assert(fs.existsSync(modalHtmlPath), 'Missing print_options_modal.html');
+    const modalContent = fs.readFileSync(modalHtmlPath, 'utf8');
+    assert(modalContent.includes('id="skPrintColumnSection"'), 'Missing #skPrintColumnSection');
+    assert(modalContent.includes('id="skPrintPresetGroup"'), 'Missing #skPrintPresetGroup');
+    assert(modalContent.includes('data-preset="full"'), 'Missing Full Operational preset');
+    assert(modalContent.includes('data-preset="elder"'), 'Missing Elder / Ritual preset');
+    assert(modalContent.includes('data-preset="vendor"'), 'Missing Vendor / Logistics preset');
+    assert(modalContent.includes('id="skPrintColumnsContainer"'), 'Missing #skPrintColumnsContainer');
+    assert(modalContent.includes('Confidential Data Masking Active'), 'Missing privacy masking note');
+  });
+
+  check('print_options_modal.html passes tag-balance gate (Gap Variant A)', () => {
+    const checkBalanceScript = path.join(rootDir, 'scripts', 'check-html-balance.cjs');
+    execFileSync(process.execPath, [checkBalanceScript, modalHtmlPath], { stdio: 'pipe' });
+  });
+
+  check('print_engine.js wires column visibility engine and maintains modular limit (<500 lines)', () => {
+    const printEnginePath = path.join(rootDir, 'ui_primitives', 'scripts', 'print_engine.js');
+    const peContent = fs.readFileSync(printEnginePath, 'utf8');
+    const peLines = peContent.split(/\r?\n/).length;
+    assert(peLines < 500, `print_engine.js (${peLines} lines) must be strictly under 500 lines (STD-MOD-COMP-001)`);
+    assert(peContent.includes('skColumnVisibilityEngine'), 'print_engine.js must integrate skColumnVisibilityEngine');
+    assert(peContent.includes('mountModalSection'), 'print_engine.js must mount modal section');
+    assert(peContent.includes('filterTableDOMForPrint'), 'print_engine.js must execute filterTableDOMForPrint in sandbox');
+  });
+
+  check('mountModalSection dynamically binds role presets and checkbox states', () => {
+    function createMockElement(tag, id, className) {
+      const classes = new Set(className ? className.split(' ') : []);
+      const attrs = {};
+      if (id) attrs.id = id;
+      const el = {
+        tagName: tag.toUpperCase(),
+        children: [],
+        attributes: attrs,
+        style: {},
+        classList: {
+          add: function(c) { classes.add(c); },
+          remove: function(c) { classes.delete(c); },
+          contains: function(c) { return classes.has(c); }
+        },
+        checked: false,
+        onclick: null,
+        listeners: {},
+        addEventListener: function(type, fn) {
+          if (!this.listeners[type]) this.listeners[type] = [];
+          this.listeners[type].push(fn);
+        },
+        dispatchEvent: function(type) {
+          (this.listeners[type] || []).forEach(fn => fn({ target: this }));
+        },
+        getAttribute: function(k) { return this.attributes[k] || null; },
+        setAttribute: function(k, v) { this.attributes[k] = String(v); },
+        appendChild: function(c) { this.children.push(c); c.parentNode = this; return c; },
+        querySelector: function(sel) {
+          if (sel === '#skPrintColumnSection') return sectionEl;
+          if (sel === '#skPrintColumnsContainer') return containerEl;
+          if (sel === '#skPrintPresetGroup') return presetGroupEl;
+          return null;
+        },
+        querySelectorAll: function(sel) {
+          if (sel === '.sk-btn-preset') return presetBtns;
+          if (sel === 'input[type="checkbox"]') {
+            const list = [];
+            containerEl.children.forEach(lbl => {
+              (lbl.children || []).forEach(c => { if (c.tagName === 'INPUT') list.push(c); });
+            });
+            return list;
+          }
+          if (sel === 'input[type="checkbox"]:checked') {
+            const list = [];
+            containerEl.children.forEach(lbl => {
+              (lbl.children || []).forEach(c => { if (c.tagName === 'INPUT' && c.checked) list.push(c); });
+            });
+            return list;
+          }
+          return [];
+        }
+      };
+
+      Object.defineProperty(el, 'innerHTML', {
+        set: function(val) {
+          this._html = val;
+          const match = val.match(/<input\s+type="checkbox"\s+data-col-id="([^"]+)"(\s+checked)?/);
+          if (match) {
+            const inp = createMockElement('input');
+            inp.setAttribute('data-col-id', match[1]);
+            inp.checked = Boolean(match[2]);
+            this.children = [inp];
+            inp.parentNode = this;
+          } else {
+            this.children = [];
+          }
+        },
+        get: function() { return this._html || ''; }
+      });
+
+      return el;
+    }
+
+    const mockDoc = {
+      createElement: function(tag) {
+        return createMockElement(tag);
+      }
+    };
+
+    const sectionEl = createMockElement('div', 'skPrintColumnSection');
+    const presetGroupEl = createMockElement('div', 'skPrintPresetGroup');
+    const containerEl = createMockElement('div', 'skPrintColumnsContainer');
+
+    const btnFull = createMockElement('button', 'skPresetFull', 'sk-btn-preset is-active');
+    btnFull.setAttribute('data-preset', 'full');
+    const btnElder = createMockElement('button', 'skPresetElder', 'sk-btn-preset');
+    btnElder.setAttribute('data-preset', 'elder');
+    const btnVendor = createMockElement('button', 'skPresetVendor', 'sk-btn-preset');
+    btnVendor.setAttribute('data-preset', 'vendor');
+
+    const presetBtns = [btnFull, btnElder, btnVendor];
+    presetBtns.forEach(b => presetGroupEl.appendChild(b));
+    sectionEl.appendChild(presetGroupEl);
+    sectionEl.appendChild(containerEl);
+
+    const mockModal = {
+      ownerDocument: mockDoc,
+      querySelector: function(sel) {
+        if (sel === '#skPrintColumnSection') return sectionEl;
+        if (sel === '#skPrintColumnsContainer') return containerEl;
+        if (sel === '#skPrintPresetGroup') return presetGroupEl;
+        return null;
+      }
+    };
+
+    let lastState = null;
+    engine.mountModalSection(mockModal, 'family-obligations', (keys) => {
+      lastState = keys;
+    });
+
+    assert.strictEqual(sectionEl.style.display, 'block', 'Column section must be displayed');
+
+    // Preset click simulation: Elder preset
+    btnElder.onclick();
+    const elderActive = engine.getActiveColumns('family-obligations');
+    assert.deepStrictEqual(elderActive, samplePresets.elder);
+    assert.deepStrictEqual(lastState, samplePresets.elder);
+    assert(btnElder.classList.contains('is-active'), 'Elder preset button must have is-active');
+    assert(!btnFull.classList.contains('is-active'), 'Full preset button must not have is-active');
+  });
 }
 
 // Summary
 console.log('\n════════════════════════════════════════════════════════════════════════════');
 if (failures === 0) {
-  console.log('🎉 ALL COLUMN VISIBILITY CONTRACT CHECKS PASSED: SK-033 PHASE 1 VERIFIED!');
+  console.log('🎉 ALL COLUMN VISIBILITY CONTRACT CHECKS PASSED: SK-033 PHASES 1 & 2 VERIFIED!');
   console.log('════════════════════════════════════════════════════════════════════════════\n');
   process.exit(0);
 } else {

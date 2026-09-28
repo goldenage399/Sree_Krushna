@@ -348,3 +348,34 @@
   outline-offset: 2px;
 }
 
+/* Preset Pill Button (STD-TABLE-COL-VIS-001) */
+.sk-btn-preset {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--sk-border, rgba(255, 255, 255, 0.16));
+  color: var(--sk-text-primary, #f1f5f9);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-height: 28px;
+  box-sizing: border-box;
+}
+
+.sk-btn-preset:hover {
+  border-color: var(--sk-gold, #e5a93c);
+  background: rgba(229, 169, 60, 0.1);
+}
+
+.sk-btn-preset.is-active {
+  background: rgba(229, 169, 60, 0.2);
+  border-color: var(--sk-gold, #e5a93c);
+  color: var(--sk-gold, #e5a93c);
+  font-weight: 700;
+}
+
