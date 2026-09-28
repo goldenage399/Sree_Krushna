@@ -3945,17 +3945,408 @@ In [`scripts/test-obligations-table-density.cjs`](file:///d:/GitHub_Repo/Sree_Kr
 | **Obligations Schema Contract**  | `npm run test:obligations`                        | ✅ **PASS** (53 records validated)                  |
 | **Dynamic UI Lifecycle Gate**    | `npm run verify:ui-lifecycle`                     | ✅ **PASS** (All 4 checks green)                    |
 
-# Query 4.3 -
+# Query 4.3 -[harvest-frontend-knowledge].agent/workflows/harvest-frontend-knowledge.md
 
-# Review 4.3 -
+[capture-pattern].agent/workflows/capture-pattern.md
+[ssot-reconciliation].agent/workflows/ssot-reconciliation.md
+[post-incident-governance].agent/workflows/post-incident-governance.md
+[phased-commit-orchestrator]phased-commit-orchestrator
 
-# Response 4.3 -
+# Review 4.3 -Viewed harvest-frontend-knowledge.md:1-100
+
+Searched for files: _FKL_
+Searched for "FKL-"
+Viewed capture-pattern.md:1-100
+Viewed ssot-reconciliation.md:1-100
+Viewed post-incident-governance.md:1-100
+Listed directory incidents
+Viewed SKILL.md:1-100
+Viewed SPEC-ARCH-MUTABLE-TABLE-001.md:1-50
+Viewed SPEC-ARCH-MUTABLE-TABLE-001.md:230-279
+Viewed SPEC-ARCH-MUTABLE-TABLE-001.md:120-160
+Edited SPEC-ARCH-MUTABLE-TABLE-001.md
+Viewed SPEC-ARCH-MUTABLE-TABLE-001.md:320-360
+Edited SPEC-ARCH-MUTABLE-TABLE-001.md
+Searched for files: _table_
+Viewed table-domain-separation-and-mobile-scroll.md:1-60
+Created table-cell-display-model-isolation-and-slack-budgeting.md
+Viewed README.md:1-60
+Viewed README.md:110-149
+Edited README.md
+Viewed GEMINI.md:190-230
+Viewed GEMINI.md:230-236
+Edited GEMINI.md
+Viewed CLAUDE.md:225-236
+Edited CLAUDE.md
+Ran command: `npm run verify:governance-wiring:all`
+Viewed SPEC-ARCH-MUTABLE-TABLE-001.md:220-240
+Viewed SPEC-ARCH-MUTABLE-TABLE-001.md:240-255
+Edited SPEC-ARCH-MUTABLE-TABLE-001.md
+Ran command: `npm run verify:governance-wiring:all`
+Viewed DOCUMENTATION-INDEX.md:1-37
+Viewed SYSTEM_CLARITY_SNAPSHOT.md:20-50
+Edited SYSTEM_CLARITY_SNAPSHOT.md
+Viewed ARCHITECTURE_SPEC.md:145-176
+Edited ARCHITECTURE_SPEC.md
+Viewed standards-catalog.json:1-60
+Viewed standards-catalog.json:330-373
+Edited standards-catalog.json
+Created INC-102-table-cell-display-model-override-and-asymmetric-slack-absorption.md
+Viewed DOCUMENTATION-INDEX.md:25-37
+Edited DOCUMENTATION-INDEX.md
+Ran command: `npm run verify:taxonomy`
+Ran command: `git status`
+Ran command: `npm run verify:deployment`
+Ran command: `git add 02_RITUALS_CULTURE/obligations/ family-obligations-run-sheet.html public/family-obligations-run-sheet.html js/obligations-data.js public/js/obligations-data.js scripts/ingest-obligations.cjs "User_Created/Discussion Threads/Shopping/" graphify-out/`
+Ran command: `git commit -m "feat(obligations): sync customary obligation records, data catalogs and A4 run-sheet"`
+Ran command: `git add shopping_src/ scripts/test-obligations-table-density.cjs assets/shopping/ public/assets/shopping/ shopping-registry.html public/shopping-registry.html shopping-fragment.html public/shopping-fragment.html docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md .agent/patterns/table-cell-display-model-isolation-and-slack-budgeting.md .agent/patterns/README.md .agent/standards-catalog.json docs/incidents/INC-102-table-cell-display-model-override-and-asymmetric-slack-absorption.md docs/DOCUMENTATION-INDEX.md docs/SYSTEM_CLARITY_SNAPSHOT.md ARCHITECTURE_SPEC.md CLAUDE.md GEMINI.md enhancement-config.json ENHANCEMENT-MASTER-REGISTRY.md docs/enhancements/UI-QUALITY-ENHANCEMENT-CLUSTER.md enhancement-notes/SK-029/ "User_Created/Discussion Threads/Council/260928_arch_council_multi_viewport_fluid_table_budgeting_and_print_run_sheet.md" "User_Created/Discussion Threads/Council/Council_Ledger.md"`
+Ran command: `git commit -m "feat(sk-029): decouple table-cell line-clamp into inner container and enforce proportional budgeting (AC-DEC-2026-071)"`
+Ran command: `git status`
+Ran command: `git add "User_Created/Discussion Threads/Council/260928_arch_council_family_obligations_multi_dimensional_filtering_and_table_ux.md" enhancement-notes/SK-030/`
+Ran command: `git commit -m "docs(sk-030): scaffold family obligations multi-dimensional filtering ticket and council deliberation"`
+Ran command: `git status`
+Ran command: `npm run verify:governance-wiring:all; node scripts/test-obligations-table-density.cjs; npm run verify:structural-contracts; npm run verify:modular-architecture`
+Ran command: `git status`
+Viewed 00_ENHANCEMENT_INDEX.md:1-45
+Viewed 11_obligations_table_and_print.css:1-120
+Viewed 11_obligations_table_and_print.css:121-260
+Viewed 11_obligations_table_and_print.css:261-432
+Searched for "renderObligationsTableView"
+Searched for "obl-data-table"
+Searched for "obl-specs-clamp"
+Viewed controller.js:4280-4350
+Viewed 260928_arch_council_multi_viewport_fluid_table_budgeting_and_print_run_sheet.md:80-160
+Searched for "function getSortTh"
+Searched for "getSortTh"
+Viewed controller.js:4250-4286
+Viewed test-obligations-table-density.cjs:1-113
+Ran command: `git log -n 5 --oneline`
+Ran command: `git show --stat 407e0aa`
+Ran command: `git show --stat 90cc255`
+Viewed implementation_plan.md:1-109
+Viewed walkthrough.md:1-80
+Created implementation_plan.md
+
+I have prepared the implementation plan for **Phase 2 of [SK-029](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-029/00_ENHANCEMENT_INDEX.md)**: **Proportional Table Budgeting & Multi-Viewport Styling** (`STD-TABLE-BUDGET-001` / `AC-DEC-2026-071`).
+
+Please review the details in the [implementation plan](file:///C:/Users/Temp/.gemini/antigravity/brain/e7b66641-e09d-46f9-9c31-21e32099db33/implementation_plan.md).
+
+### Key Architectural Highlights
+
+- **Proportional Budgeting (`table-layout: fixed`)**: The 8 table columns are strictly partitioned, giving **29% to Customary Title** and **25% to Specifications** (totaling 54% combined), eliminating widescreen whitespace starvation while keeping both columns optically balanced (1.16x ratio).
+- **Multi-Viewport Ergonomics**: Below `1024px`, `.obl-data-table` enforces `min-width: 880px` with hardware-accelerated horizontal touch scrolling in `.shop-obl-table-container`, preserving legibility while providing the Cards mode toggle for phones (<768px).
+
+Once you approve the plan, I will proceed with Phase 2 implementation, SDCA compilation, and automated validation gates.
+
+# Response 4.3 -# Implementation Plan: SK-029 Phase 2 — Proportional Table Budgeting & Multi-Viewport Styling
+
+Establish deterministic proportional column budgeting via `table-layout: fixed; width: 100%;` and responsive multi-viewport adaptation (`min-width: 880px` on `<1024px`) per `STD-TABLE-BUDGET-001` and Architecture Council Ruling `AC-DEC-2026-071` / `UI-DEC-2026-053`.
+
+## User Review Required
+
+> [!IMPORTANT]
+> **Proportional Column Budgeting Allocation (`STD-TABLE-BUDGET-001`)**:
+> With native `table-layout: fixed; width: 100%;`, column widths are strictly partitioned by percentage across the 8 columns:
+>
+> - **Code**: `7.5%` (min 70px)
+> - **Direction**: `11.5%` (min 105px)
+> - **Customary Title & Description**: `29.0%` (min 220px)
+> - **Category**: `8.5%` (min 80px)
+> - **Items / Specifications**: `25.0%` (min 200px)
+> - **Cash / Cost**: `7.5%` (min 75px)
+> - **Sourced Via**: `7.5%` (min 75px)
+> - **Verif**: `3.5%` (min 40px)
+>   **Sum**: `100.0%`.
+>
+> This guarantees:
+>
+> 1. **Harmonious Optical Ratio**: Title (`29%`) and Specs (`25%`) share `54%` of the total viewport, scaling smoothly in lockstep across 1280px, 1440px, and 1920px viewports.
+> 2. **Zero Single-Column Starvation**: Neither column can greedily absorb 100% of widescreen slack while starving the other.
+
+> [!NOTE]
+> **Multi-Viewport Ergonomics (<1024px down to 300px)**:
+>
+> - When the viewport drops below `1024px` (tablets and phones), `.obl-data-table` enforces `min-width: 880px;`.
+> - The parent container (`.shop-obl-table-container`) provides native hardware-accelerated horizontal touch scrolling (`overflow-x: auto; -webkit-overflow-scrolling: touch;`).
+> - Mobile phones (<768px) retain the layout switcher toggle button to switch to Cards mode (`SK-021` / `SK-022`), preserving mobile ergonomic best practices.
+
+## Open Questions
+
+None. The mathematical distribution and invariants were ratified by unanimous Architecture Council vote in [`AC-DEC-2026-071`](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/260928_arch_council_multi_viewport_fluid_table_budgeting_and_print_run_sheet.md).
+
+---
+
+## Proposed Changes
+
+### Obligations Table Stylesheet
+
+#### [MODIFY] [11_obligations_table_and_print.css](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/styles/11_obligations_table_and_print.css)
+
+- On `.obl-data-table`:
+  - Add `table-layout: fixed;` and confirm `width: 100%;`.
+- Add responsive media query for `@media (max-width: 1024px)`:
+  - Set `.obl-data-table { min-width: 880px; }`.
+  - Ensure `.shop-obl-table-container` maintains smooth touch-scrolling.
+- Ensure `.obl-td-title` and `.obl-td-specs` have proper overflow wrapping (`word-break: break-word;`).
+- Remove obsolete rigid pixel overrides on `.obl-td-code`, `.obl-td-dir`, etc., that could conflict with `table-layout: fixed` percentage allocation.
+
+---
+
+### Shopping Module Controller
+
+#### [MODIFY] [controller.js](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/scripts/controller.js#L4285-L4296)
+
+- In `renderObligationsTable()` around lines 4287–4295, update `<thead><tr>` column definitions to pass calibrated percentage widths with fallback minimums:
+  - Code: `width: 7.5%; min-width: 70px;`
+  - Direction: `width: 11.5%; min-width: 105px;`
+  - Title: `width: 29%; min-width: 220px;`
+  - Category: `width: 8.5%; min-width: 80px;`
+  - Items / Specs: `width: 25%; min-width: 200px;`
+  - Cash / Cost: `width: 7.5%; min-width: 75px; text-align: right;`
+  - Sourced: `width: 7.5%; min-width: 75px; text-align: center;`
+  - Verif: `width: 3.5%; min-width: 40px; text-align: center;`
+
+---
+
+### Density & Table Contract Test Suite
+
+#### [MODIFY] [test-obligations-table-density.cjs](file:///d:/GitHub_Repo/Sree_Krushna/scripts/test-obligations-table-density.cjs)
+
+- Add Section 5: **Phase 2 Proportional Budgeting & Multi-Viewport Assertions**:
+  1. Verify `.obl-data-table` declares `table-layout: fixed;`.
+  2. Verify responsive `@media (max-width: 1024px)` declares `min-width: 880px`.
+  3. Verify header row in `controller.js` declares percentage budgets (`width: 29%` and `width: 25%`).
+
+---
+
+## Verification Plan
+
+### Automated Tests
+
+1. Run updated density test:
+   ```powershell
+   node scripts/test-obligations-table-density.cjs
+   ```
+2. Run structural contracts check:
+   ```powershell
+   npm run verify:structural-contracts
+   ```
+3. Run SDCA compilation and byte parity verification:
+   ```powershell
+   node shopping_src/build.cjs
+   npm run verify:modular-architecture
+   ```
+4. Run obligations regression test:
+   ```powershell
+   npm run test:obligations
+   ```
+5. Run deployment gate:
+   ```powershell
+   npm run verify:deployment
+   ```
+
+### Manual Verification
+
+- Test viewport responsiveness at 1920px, 1440px, 1280px, 1024px, and 768px:
+  - Verify Title (`29%`) and Specs (`25%`) expand fluidly without truncation at wide viewports.
+  - Verify horizontal scrolling kicks in cleanly below 1024px without breaking cell borders or headers.
+  - Verify Cards toggle still functions smoothly.
 
 # Query 4.4 -
 
-# Review 4.4 -
+# Review 4.4 -Viewed 11_obligations_table_and_print.css:70-185
 
-# Response 4.4 -
+Edited 11_obligations_table_and_print.css
+Viewed controller.js:4280-4300
+Edited controller.js
+Viewed test-obligations-table-density.cjs:80-113
+Edited test-obligations-table-density.cjs
+Ran command: `node scripts/test-obligations-table-density.cjs`
+Viewed 11_obligations_table_and_print.css:50-90
+Viewed test-obligations-table-density.cjs:90-110
+Edited test-obligations-table-density.cjs
+Ran command: `node scripts/test-obligations-table-density.cjs`
+Ran command: `node shopping_src/build.cjs`
+Ran command: `npm run verify:structural-contracts`
+Ran command: `npm run verify:modular-architecture`
+Ran command: `npm run test:obligations`
+Ran command: `npm run verify:ui-lifecycle`
+Ran command: `npm run verify:deployment`
+Ran command: `npm run verify:taxonomy`
+Ran command: `npm run verify:governance-wiring:all`
+Ran command: `git status`
+Ran command: `git diff --stat`
+Ran command: `git diff 02_RITUALS_CULTURE/obligations/family_obligations_master.md js/obligations-data.js`
+Ran command: `git diff enhancement-notes/SK-030/`
+Viewed 00_ENHANCEMENT_INDEX.md:1-45
+Viewed 11_obligations_table_and_print.css:360-430
+Viewed 11_obligations_table_and_print.css:400-455
+Searched for "skPrintContainer"
+Edited 11_obligations_table_and_print.css
+Viewed test-obligations-table-density.cjs:50-65
+Edited test-obligations-table-density.cjs
+Ran command: `node shopping_src/build.cjs`
+Ran command: `node scripts/test-obligations-table-density.cjs`
+Ran command: `npm run verify:structural-contracts`
+Ran command: `npm run verify:modular-architecture`
+Ran command: `npm run test:obligations`
+Ran command: `npm run verify:ui-lifecycle`
+Ran command: `npm run verify:deployment`
+Viewed 00_ENHANCEMENT_INDEX.md:1-45
+Viewed ENHANCEMENT-MASTER-REGISTRY.md:30-36
+Viewed UI-QUALITY-ENHANCEMENT-CLUSTER.md:23-23
+Viewed UI-QUALITY-ENHANCEMENT-CLUSTER.md:1-23
+Edited 00_ENHANCEMENT_INDEX.md
+Edited ENHANCEMENT-MASTER-REGISTRY.md
+Edited UI-QUALITY-ENHANCEMENT-CLUSTER.md
+Viewed UI-QUALITY-ENHANCEMENT-CLUSTER.md:13-22
+Edited UI-QUALITY-ENHANCEMENT-CLUSTER.md
+Viewed SYSTEM_CLARITY_SNAPSHOT.md:1-60
+Edited SYSTEM_CLARITY_SNAPSHOT.md
+Viewed walkthrough.md:1-80
+Created walkthrough.md
+Ran command: `git status`
+Ran command: `git add shopping_src/styles/11_obligations_table_and_print.css shopping_src/scripts/controller.js scripts/test-obligations-table-density.cjs shopping-registry.html public/shopping-registry.html shopping-fragment.html public/shopping-fragment.html assets/shopping/registry.json public/assets/shopping/registry.json 02_RITUALS_CULTURE/obligations/family_obligations_master.md js/obligations-data.js public/js/obligations-data.js enhancement-notes/SK-029/00_ENHANCEMENT_INDEX.md ENHANCEMENT-MASTER-REGISTRY.md docs/enhancements/UI-QUALITY-ENHANCEMENT-CLUSTER.md docs/SYSTEM_CLARITY_SNAPSHOT.md`
+Ran command: `git commit -m "feat(sk-029): implement proportional table budgeting, multi-viewport touch scroll and print unrolling (AC-DEC-2026-071)"`
+Ran command: `git status`
+Ran command: `git add enhancement-notes/SK-030/00_ENHANCEMENT_INDEX.md enhancement-notes/SK-030/implementation_plan.md "User_Created/Discussion Threads/Council/260928_arch_council_reusable_faceted_filter_primitive_and_ecosystem_standards.md"`
+Ran command: `git commit -m "docs(sk-030): refine faceted filter primitive architecture and test plan"`
+Ran command: `git status`
+Ran command: `npm run verify:governance-wiring:all`
+Checked task Verify governance wiring
+
+### 🚀 **SK-029: Multi-Viewport Fluid Table Budgeting & Print Preservation — Complete**
+
+All phases of **[SK-029](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-029/00_ENHANCEMENT_INDEX.md)** have been executed, compiled via SDCA, and verified across all automated validation gates (`AC-DEC-2026-071` / `UI-DEC-2026-053`).
+
+For full details, see the updated [walkthrough](file:///C:/Users/Temp/.gemini/antigravity/brain/e7b66641-e09d-46f9-9c31-21e32099db33/walkthrough.md).
+
+---
+
+### 🛠️ Summary of Delivered Improvements
+
+1. **Table-Cell Display Isolation (`INV-TABLE-DOM-001`)**:
+   - Stripped `display: -webkit-box` and `-webkit-line-clamp` off `td.obl-td-specs`, restoring native `display: table-cell`.
+   - Line-clamping (3 lines with full text hover tooltip) is now encapsulated inside `<div class="obl-specs-clamp">` in [`shopping_src/scripts/controller.js`](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/scripts/controller.js#L4323).
+
+2. **Proportional Column Budgeting (`STD-TABLE-BUDGET-001`)**:
+   - `.obl-data-table` now uses `table-layout: fixed; width: 100%;` in [`11_obligations_table_and_print.css`](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/styles/11_obligations_table_and_print.css).
+   - Fluid column percentages are strictly budgeted across the 8 columns:
+     - **Code**: `7.5%` (min 70px)
+     - **Direction**: `11.5%` (min 105px)
+     - **Customary Title & Description**: `29.0%` (min 220px)
+     - **Category**: `8.5%` (min 80px)
+     - **Items / Specifications**: `25.0%` (min 200px)
+     - **Cash / Cost**: `7.5%` (min 75px)
+     - **Sourced Via**: `7.5%` (min 75px)
+     - **Verif**: `3.5%` (min 40px)
+   - **Result**: Title (`29%`) and Specs (`25%`) together claim **`54%`** of the table, expanding in a balanced 1.16x optical ratio across widescreen monitors without whitespace starvation.
+
+3. **Multi-Viewport Touch Ergonomics (`STD-UI-INTERACTION-SPEC-001`)**:
+   - Hardware-accelerated touch scroll (`-webkit-overflow-scrolling: touch;`) on `.shop-obl-table-container`.
+   - `@media (max-width: 1024px)` enforces `min-width: 880px` on `.obl-data-table`, preventing column squishing on tablets and phones while keeping the Cards toggle accessible.
+
+4. **Paper Run-Sheet Unclamping & Row Integrity (`INV-COLLAPSIBLE-PRINT-001`)**:
+   - In `@media print`, `.obl-specs-clamp` unclamps completely (`-webkit-line-clamp: unset !important; overflow: visible !important; height: auto !important;`), delivering 100% uncut liturgical specifications.
+   - Declared `break-inside: avoid !important; page-break-inside: avoid !important;` on `.obl-data-table tr` to prevent torn rows on A4 landscape printouts.
+
+---
+
+### ✅ Verification Gate Summary
+
+| Gate / Audit                      | Command                                           | Status                                              |
+| --------------------------------- | ------------------------------------------------- | --------------------------------------------------- |
+| **Density & Budgeting Gate**      | `node scripts/test-obligations-table-density.cjs` | ✅ **PASS** (All 4 audit sections green)            |
+| **SDCA Tag Balance Gate (Gap A)** | `node scripts/check-html-balance.cjs`             | ✅ **PASS** (16/16 templates balanced)              |
+| **Structural Contracts (Gap B)**  | `npm run verify:structural-contracts`             | ✅ **PASS** (17/17 hierarchy checks green)          |
+| **Modular Architecture (SDCA)**   | `npm run verify:modular-architecture`             | ✅ **PASS** (All 64 checks green, 100% byte parity) |
+| **Obligations Schema Contract**   | `npm run test:obligations`                        | ✅ **PASS** (53 records validated)                  |
+| **Dynamic UI Lifecycle Gate**     | `npm run verify:ui-lifecycle`                     | ✅ **PASS** (All 4 dynamic checks green)            |
+| **Pre-Flight Deployment Gate**    | `npm run verify:deployment`                       | ✅ **PASS** (All 10 deployment layers green)        |
+| **Taxonomy Linter**               | `npm run verify:taxonomy`                         | ✅ **PASS** (259 files, 0 prohibited synonyms)      |
+| **Governance Wiring Audit (P82)** | `npm run verify:governance-wiring:all`            | ✅ **PASS** (All 203 artifacts fully wired)         |
+
+---
+
+### 📦 Git Commit Log
+
+- `b26d8f4`: `feat(sk-029): implement proportional table budgeting, multi-viewport touch scroll and print unrolling (AC-DEC-2026-071)`
+- `a4b9276`: `docs(sk-030): refine faceted filter primitive architecture and test plan`
+- **Working Tree**: 100% clean.
+
+# Response 4.4 -# Walkthrough: SK-029 Full Execution (Phases 1–4 Complete)
+
+All phases of **[SK-029](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-029/00_ENHANCEMENT_INDEX.md)** have been successfully executed, compiled, and verified, resolving the asymmetric table column expansion defect, establishing deterministic proportional budgeting (`STD-TABLE-BUDGET-001`), providing responsive multi-viewport touch scrolling, and preserving uncut paper run sheets (`INV-COLLAPSIBLE-PRINT-001`).
+
+---
+
+## Changes Made by Phase
+
+### Phase 1: Structural Decoupling (`INV-TABLE-DOM-001`)
+
+- **Controller Refactoring**: In [`shopping_src/scripts/controller.js`](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/scripts/controller.js#L4323), extracted line-clamping out of `td.obl-td-specs` into an inner wrapper container:
+  ```html
+  <td class="obl-td-specs">
+    <div class="obl-specs-clamp" title="${escapeHtml(itemsTooltip)}">
+      • ${itemsText}
+    </div>
+  </td>
+  ```
+- **CSS Separation**: In [`shopping_src/styles/11_obligations_table_and_print.css`](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/styles/11_obligations_table_and_print.css), stripped `display: -webkit-box`, `-webkit-line-clamp: 3`, and `overflow: hidden` from `.obl-td-specs` (restoring native `display: table-cell`), and assigned them exclusively to `.obl-specs-clamp`.
+
+### Phase 2: Proportional Table Budgeting & Multi-Viewport Styling (`STD-TABLE-BUDGET-001`)
+
+- **Fixed Table Layout**: Declared `table-layout: fixed; width: 100%;` on `.obl-data-table`.
+- **Proportional Column Budgeting**: Configured calibrated percentage widths on all 8 table columns in `renderObligationsTable()`:
+  - **Code**: `7.5%` (min 70px)
+  - **Direction**: `11.5%` (min 105px)
+  - **Customary Title & Description**: `29.0%` (min 220px)
+  - **Category**: `8.5%` (min 80px)
+  - **Items / Specifications**: `25.0%` (min 200px)
+  - **Cash / Cost**: `7.5%` (min 75px)
+  - **Sourced Via**: `7.5%` (min 75px)
+  - **Verif**: `3.5%` (min 40px)
+  - **Total**: `100.0%`. Title (29%) and Specs (25%) together claim `54%` of the table, expanding in a balanced 1.16x optical ratio without single-column whitespace starvation.
+- **Multi-Viewport Touch Scroll**: Added hardware-accelerated touch-scrolling (`-webkit-overflow-scrolling: touch;`) on `.shop-obl-table-container`, and declared `@media (max-width: 1024px) { .obl-data-table { min-width: 880px; } }` to protect column legibility on narrow viewports.
+
+### Phase 3: Paper Run-Sheet Unclamping & Row Break Avoidance (`INV-COLLAPSIBLE-PRINT-001`)
+
+- **Unclamped Specifications**: In `@media print`, `.obl-specs-clamp` is forced unrolled:
+  ```css
+  .obl-specs-clamp {
+    display: block !important;
+    -webkit-line-clamp: unset !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+  ```
+- **Row Break Avoidance**: Declared `break-inside: avoid !important; page-break-inside: avoid !important;` on `.obl-data-table tr` to prevent liturgical rows from being torn across page boundaries.
+
+### Phase 4: SDCA Compilation, Byte Parity & Regression Sweeps
+
+- Recompiled `shopping-registry.html` and `shopping-fragment.html` via `node shopping_src/build.cjs`.
+- Verified 100% byte parity between root files and `/public/` distribution targets.
+- Updated master governance ledgers:
+  - [`ENHANCEMENT-MASTER-REGISTRY.md`](file:///d:/GitHub_Repo/Sree_Krushna/ENHANCEMENT-MASTER-REGISTRY.md): Marked SK-029 as `COMPLETED`.
+  - [`docs/enhancements/UI-QUALITY-ENHANCEMENT-CLUSTER.md`](file:///d:/GitHub_Repo/Sree_Krushna/docs/enhancements/UI-QUALITY-ENHANCEMENT-CLUSTER.md): Marked SK-029 as `COMPLETED`.
+  - [`docs/SYSTEM_CLARITY_SNAPSHOT.md`](file:///d:/GitHub_Repo/Sree_Krushna/docs/SYSTEM_CLARITY_SNAPSHOT.md): Marked SK-029 as `COMPLETED`.
+
+---
+
+## Validation Results
+
+| Test / Gate                                  | Command                                           | Result                                              |
+| -------------------------------------------- | ------------------------------------------------- | --------------------------------------------------- |
+| **Density, Budgeting & Viewport Gate**       | `node scripts/test-obligations-table-density.cjs` | ✅ **PASS** (All 4 audit sections green)            |
+| **SDCA Tag Balance Gate (Gap Variant A)**    | `node scripts/check-html-balance.cjs`             | ✅ **PASS** (16/16 templates balanced)              |
+| **Structural DOM Contracts (Gap Variant B)** | `npm run verify:structural-contracts`             | ✅ **PASS** (17/17 hierarchy checks green)          |
+| **Modular Component Architecture (SDCA)**    | `npm run verify:modular-architecture`             | ✅ **PASS** (All 64 checks green, 100% byte parity) |
+| **Obligations Schema Contract**              | `npm run test:obligations`                        | ✅ **PASS** (53 records validated)                  |
+| **Dynamic UI Lifecycle Gate**                | `npm run verify:ui-lifecycle`                     | ✅ **PASS** (All 4 dynamic checks green)            |
+| **Pre-Flight Deployment Gate**               | `npm run verify:deployment`                       | ✅ **PASS** (All 10 deployment layers green)        |
+| **Taxonomy Linter**                          | `npm run verify:taxonomy`                         | ✅ **PASS** (259 files, 0 prohibited synonyms)      |
+| **Governance Wiring Audit (P82)**            | `npm run verify:governance-wiring:all`            | ✅ **PASS** (All 203 artifacts fully wired)         |
 
 # Query 4.5 -[prompt-clarity](slashCommand;prompt-clarity) why 1 and 2 cant be applied simultaneusly ??
 

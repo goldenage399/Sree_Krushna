@@ -1,7 +1,7 @@
-# Implementation Plan — SK-030: Universal Faceted Filter Primitive Engine & Ecosystem Standards
+# Implementation Plan — SK-030: Universal 3-Layer Agnostic Faceted Filter Architecture & Ecosystem Shared Primitive
 
 > **Standard**: `STD-UI-PRIMITIVE-FACETED-FILTER-001` / `STD-PLANNING-ENGINE-001`  
-> **Ruling**: `AC-DEC-2026-073` / `UI-DEC-2026-052`  
+> **Ruling**: `AC-DEC-2026-074` / `UI-DEC-2026-053`  
 > **Governing Ticket**: [`enhancement-notes/SK-030/00_ENHANCEMENT_INDEX.md`](./00_ENHANCEMENT_INDEX.md)  
 > **Cluster**: `[UI-QUALITY]` / `[SHARED-PRIMITIVES]`  
 > **Status**: `PROPOSED` — Awaiting User Approval (Plan Hard-Stop)  
@@ -11,13 +11,14 @@
 ## 1. Ground Truth & Intent
 
 ### Problem
-Across modern web applications and dashboards in our ecosystem (Family Obligations, Trousseau Shopping, Decision Registry, Task-Dashboard), filter state is frequently implemented via ad-hoc scalar strings (e.g. `activeObligationFilter = 'bride'`), causing mutually exclusive filter collisions when orthogonal dimensions (Family Direction $\times$ Material Category) are selected simultaneously. Badges show static totals rather than dynamic intersection counts, and table/card layouts desynchronize.
+In the initial SK-030 draft, the headless filtering engine was extracted to `ui_primitives/scripts/faceted_filter_engine.js`, but the UI component markup, CSS styling, and DOM event binding remained tightly coupled to `shopping_src/components/obligations_view.html` and `shopping_src/scripts/controller.js`. Sibling repositories (`Task-Dashboard`, `OperatusOS`) or other local modules (`decision-registry`, `decorator-cockpit`) could not reuse the visual toolbar without writing bespoke HTML, CSS, and click listeners from scratch.
 
 ### Objective
-1. **Author Universal Faceted Filter Primitive Engine** in [`ui_primitives/scripts/faceted_filter_engine.js`](file:///d:/GitHub_Repo/Sree_Krushna/ui_primitives/scripts/faceted_filter_engine.js) as a reusable, zero-dependency vanilla JS module.
-2. Provide declarative schema definition, boolean `AND` conjunctive intersection, dynamic disjunctive facet count aggregation (`computeFacetCounts()`), and reset/serialization mechanisms.
-3. Verify the engine in isolation via standalone unit test suite `scripts/test-faceted-filter-primitive.cjs`.
-4. Integrate the engine into `shopping_src` (Phase 2), update UI markup/styles (Phase 3), and ratify the ecosystem pattern/standard (Phase 4).
+Upgrade SK-030 into a **complete 3-Layer Decoupled Primitive Architecture**:
+1. **Layer 1 (Headless Engine)**: `ui_primitives/scripts/faceted_filter_engine.js` (zero-dependency schema engine with Boolean AND intersection and dynamic count aggregation math).
+2. **Layer 2 (Agnostic UI Component & Tokens)**: `ui_primitives/components/faceted_toolbar.html` and `ui_primitives/styles/04_faceted_toolbar.css` (`.sk-facet-*` design system classes).
+3. **Layer 3 (Lifecycle Mounter)**: `skFacetedToolbar.mount(container, engine, options)` auto-binding events, toggling active states, and redrawing counts.
+4. **Phase 1 Execution Focus**: Build and verify the Layer 1 Headless Engine (`ui_primitives/scripts/faceted_filter_engine.js`) in isolation via standalone unit test suite `scripts/test-faceted-filter-primitive.cjs`.
 
 ---
 
@@ -25,8 +26,8 @@ Across modern web applications and dashboards in our ecosystem (Family Obligatio
 
 | File | Purpose | Changes |
 | :--- | :--- | :--- |
-| `ui_primitives/scripts/faceted_filter_engine.js` | **New Reusable Primitive** | Implement `skCreateFacetedFilterEngine(config)` with schema registration, `filter(items)`, `computeCounts(items, targetDim)`, state get/set, and URL query helpers. |
-| `scripts/test-faceted-filter-primitive.cjs` | **New TDD Test Harness** | Unit tests verifying multi-dimensional filtering, dynamic counts, search, and edge cases. |
+| `ui_primitives/scripts/faceted_filter_engine.js` | **Layer 1 Headless Engine** | Implement `skCreateFacetedFilterEngine(config)` with schema registration, `filter(items)`, `computeCounts(items, targetDim)`, state get/set, and URL query helpers. |
+| `scripts/test-faceted-filter-primitive.cjs` | **Phase 1 TDD Test Harness** | Unit tests verifying multi-dimensional filtering, dynamic counts, search, and edge cases. |
 | `scripts/verify-modular-architecture.cjs` | Modular auditor update | Register `ui_primitives/scripts/faceted_filter_engine.js` in `expectedPrimitives` and `controllers` syntax gate. |
 | `package.json` | Script registration | Add `"test:faceted-filter": "node scripts/test-faceted-filter-primitive.cjs"`. |
 
@@ -35,36 +36,39 @@ Across modern web applications and dashboards in our ecosystem (Family Obligatio
 ## 3. Phased Definition of Done (DoD v1.7 Matrix)
 
 ```
-┌────────────────────────────────────────────────────────┐
-│ Phase 1: Universal Faceted Filter Primitive Engine     │
-│  - Author ui_primitives/scripts/faceted_filter_engine  │
-│  - Implement declarative schema & computeFacetCounts() │
-│  - Author scripts/test-faceted-filter-primitive.cjs    │
-│  - Validation Gate (VG-1): Unit test harness 100% green│
-└──────────────────────────┬─────────────────────────────┘
-                           │
-┌──────────────────────────▼─────────────────────────────┐
-│ Phase 2: Family Obligations Controller Integration     │
-│  - Instantiate engine in shopping_src/controller.js    │
-│  - Export window.setObligationDirection/Category() etc.│
-│  - Author scripts/test-obligation-faceted-filter.cjs   │
-│  - Validation Gate (VG-2): Contract tests 100% green   │
-└──────────────────────────┬─────────────────────────────┘
-                           │
-┌──────────────────────────▼─────────────────────────────┐
-│ Phase 3: Two-Tier Segmented Toolbar Markup & Styles    │
-│  - Update shopping_src/components/obligations_view.html│
-│  - Add active chip styles in 10_obligations.css (<500) │
-│  - Validation Gate (VG-3): check-html-balance 100%     │
-└──────────────────────────┬─────────────────────────────┘
-                           │
-┌──────────────────────────▼─────────────────────────────┐
-│ Phase 4: SDCA Compilation, Byte Parity & Ecosystem Standard │
-│  - Compile shopping-registry.html & fragment           │
-│  - 100% Byte Parity across root and public/            │
-│  - Register declarative-orthogonal-faceted-filtering.md│
-│  - Validation Gate (VG-4): npm run verify:all (6/6)    │
-└────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────┐
+│ Phase 1: Universal Faceted Filter Headless Engine (Layer 1)            │
+│  - Author ui_primitives/scripts/faceted_filter_engine.js               │
+│  - Implement declarative schema & computeCounts() aggregation math     │
+│  - Author scripts/test-faceted-filter-primitive.cjs                    │
+│  - Validation Gate (VG-1): Unit test harness 100% green                │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+┌───────────────────────────────────▼────────────────────────────────────┐
+│ Phase 2: Agnostic UI Component, Token Styles & Mounter (Layer 2)       │
+│  - Author ui_primitives/components/faceted_toolbar.html                │
+│  - Author ui_primitives/styles/04_faceted_toolbar.css (.sk-facet-*)    │
+│  - Implement skFacetedToolbar.mount() lifecycle in faceted_filter_eng. │
+│  - Author scripts/test-faceted-toolbar-dom.cjs                         │
+│  - Validation Gate (VG-2): DOM mounter & tag balance checks 100% green │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+┌───────────────────────────────────▼────────────────────────────────────┐
+│ Phase 3: Reference Consumer Integration (Family Obligations)           │
+│  - Wire shopping_src/scripts/controller.js to mount skFacetedToolbar   │
+│  - Replace inlined static filters in obligations_view.html             │
+│  - Author scripts/test-obligation-faceted-filter.cjs                   │
+│  - Validation Gate (VG-3): Obligations 2D query contract 100% green    │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+┌───────────────────────────────────▼────────────────────────────────────┐
+│ Phase 4: SDCA Compilation, Byte Parity & Ecosystem Standard Audit      │
+│  - Compile shopping-registry.html & fragment via SDCA build            │
+│  - Verify 100% Byte Parity across root and public/                     │
+│  - Register declarative-orthogonal-faceted-filtering.md pattern        │
+│  - Update scripts/verify-modular-architecture.cjs                      │
+│  - Validation Gate (VG-4): npm run verify:all (6/6 gates green)        │
+└────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -82,7 +86,7 @@ Across modern web applications and dashboards in our ecosystem (Family Obligatio
 - **Run Command**: `node scripts/test-faceted-filter-primitive.cjs`
 - **Expected Result**: Fails initially (module not found).
 
-### Task 2: Implement Universal Faceted Filter Engine (`ui_primitives/scripts/faceted_filter_engine.js`)
+### Task 2: Implement Universal Faceted Filter Headless Engine (`ui_primitives/scripts/faceted_filter_engine.js`)
 - **Action**: Author self-contained UMD/IIFE module exporting `window.skCreateFacetedFilterEngine` (or `module.exports` under Node.js):
   ```javascript
   (function (root, factory) {
