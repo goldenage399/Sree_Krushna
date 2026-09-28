@@ -6255,9 +6255,26 @@ tr.row-pulse td {
     border: 1.5px solid #0f172a !important;
   }
 
+  /* Smart Cohesive Page-Break Packaging (STD-UI-PRINT-RUNSHEET-003 / INV-PAGE-COHESION-001) */
+  body[data-print-pagebreak="cohesive"] .obl-table-milestone-block,
+  body[data-print-pagebreak="cohesive"] .shop-table-group,
+  body[data-print-pagebreak="cohesive"] .sk-print-cohesive-block,
+  .sk-print-cohesive-block {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  body[data-print-pagebreak="fluid"] .obl-table-milestone-block,
+  body[data-print-pagebreak="fluid"] .shop-table-group,
+  body[data-print-pagebreak="fluid"] .sk-print-cohesive-block {
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
+
   /* Scoped Page Break Modes (INV-PAGE-BREAK-ORCH-001) */
   body[data-print-pagebreak="milestones"] .obl-table-milestone-block:not(:first-child),
-  body[data-print-pagebreak="milestones"] .shop-table-group:not(:first-child) {
+  body[data-print-pagebreak="milestones"] .shop-table-group:not(:first-child),
+  body[data-print-pagebreak="milestones"] .sk-print-cohesive-block:not(:first-child) {
     break-before: page !important;
     page-break-before: always !important;
     margin-top: 0 !important;
@@ -6540,12 +6557,12 @@ tr.row-pulse td {
       <span class="shop-obl-kpi-sub">Across 6 Canonical Milestones</span>
     </div>
     <div class="shop-obl-kpi-card">
-      <span class="shop-obl-kpi-num" style="color: #60a5fa;" id="oblKpiBride">27</span>
+      <span class="shop-obl-kpi-num" style="color: #60a5fa;" id="oblKpiBride">29</span>
       <span class="shop-obl-kpi-lbl">Bride Side Obligations</span>
-      <span class="shop-obl-kpi-sub">25 to Groom Side + 2 Joint</span>
+      <span class="shop-obl-kpi-sub">Bride Family to Groom / In-Laws</span>
     </div>
     <div class="shop-obl-kpi-card">
-      <span class="shop-obl-kpi-num" style="color: #f472b6;" id="oblKpiGroom">26</span>
+      <span class="shop-obl-kpi-num" style="color: #f472b6;" id="oblKpiGroom">23</span>
       <span class="shop-obl-kpi-lbl">Groom Side Obligations</span>
       <span class="shop-obl-kpi-sub">Groom Family to Bride / In-Laws</span>
     </div>
@@ -7769,17 +7786,24 @@ tr.row-pulse td {
         </div>
       </div>
 
-      <!-- Section 2: Page Break Orchestration -->
+      <!-- Section 2: Page Break Orchestration (STD-UI-PRINT-RUNSHEET-003) -->
       <div class="sk-print-option-section">
         <span class="sk-print-section-label">📑 Page Break Orchestration</span>
         <div class="sk-print-cards-grid">
-          <label class="sk-print-radio-card" for="optPbSmart">
-            <input type="radio" id="optPbSmart" name="skPrintPageBreak" value="smart" checked>
-            <span class="sk-print-card-icon">⚡</span>
+          <label class="sk-print-radio-card" for="optPbCohesive">
+            <input type="radio" id="optPbCohesive" name="skPrintPageBreak" value="cohesive" checked>
+            <span class="sk-print-card-icon">🧩</span>
             <span class="sk-print-card-name">
-              Smart Flow <span class="sk-print-badge-rec">Recommended</span>
+              Cohesive Flow <span class="sk-print-badge-rec">Default</span>
             </span>
-            <span class="sk-print-card-desc">Fluid compact printing. Never splits headers; repeats column titles across sheets.</span>
+            <span class="sk-print-card-desc">Packs multiple milestones per sheet; moves overflowing milestone blocks to next page as complete units.</span>
+          </label>
+
+          <label class="sk-print-radio-card" for="optPbFluid">
+            <input type="radio" id="optPbFluid" name="skPrintPageBreak" value="fluid">
+            <span class="sk-print-card-icon">⚡</span>
+            <span class="sk-print-card-name">Dense Fluid</span>
+            <span class="sk-print-card-desc">Maximum paper compactness. Rows break freely across page breaks. Best for internal scratch drafts.</span>
           </label>
 
           <label class="sk-print-radio-card" for="optPbMilestones">
@@ -9055,7 +9079,7 @@ tr.row-pulse td {
    * @param {string|HTMLElement} target - CSS selector or DOM element to print
    * @param {Object} [options] - Configuration options
    * @param {'eco'|'tint'|'contrast'} [options.theme='eco'] - Print theme (zero-ink eco, executive tint, high contrast)
-   * @param {'smart'|'milestones'} [options.pageBreaks='smart'] - Page break mode (smart flow vs milestone per page)
+   * @param {'cohesive'|'fluid'|'milestones'} [options.pageBreaks='cohesive'] - Page break mode (cohesive block flow vs fluid vs milestone per page)
    * @param {string} [options.title] - Document header title
    * @param {string} [options.subtitle] - Header subtitle / timestamp
    * @param {'landscape'|'portrait'} [options.orientation='landscape'] - Page orientation
@@ -9068,7 +9092,7 @@ tr.row-pulse td {
   function skPrintContainer(target, options) {
     options = options || {};
     var theme = (options.theme === 'tint' || options.theme === 'contrast') ? options.theme : 'eco';
-    var pageBreaks = options.pageBreaks === 'milestones' ? 'milestones' : 'smart';
+    var pageBreaks = (options.pageBreaks === 'milestones' || options.pageBreaks === 'fluid') ? options.pageBreaks : 'cohesive';
     var title = options.title || document.title || 'Print Run Sheet';
     var subtitle = options.subtitle || ('Generated: ' + new Date().toLocaleString());
     var orientation = options.orientation === 'portrait' ? 'portrait' : 'landscape';
@@ -9245,9 +9269,24 @@ tr.row-pulse td {
       '  color: #ffffff !important;',
       '  border: 1.5px solid #0f172a !important;',
       '}',
-      '/* Page Break Modes (INV-PAGE-BREAK-ORCH-001) */',
+      '/* Smart Cohesive Page-Break Packaging (STD-UI-PRINT-RUNSHEET-003 / INV-PAGE-COHESION-001) */',
+      'body[data-print-pagebreak="cohesive"] .obl-table-milestone-block,',
+      'body[data-print-pagebreak="cohesive"] .shop-table-group,',
+      'body[data-print-pagebreak="cohesive"] .sk-print-cohesive-block,',
+      '.sk-print-cohesive-block {',
+      '  break-inside: avoid !important;',
+      '  page-break-inside: avoid !important;',
+      '}',
+      'body[data-print-pagebreak="fluid"] .obl-table-milestone-block,',
+      'body[data-print-pagebreak="fluid"] .shop-table-group,',
+      'body[data-print-pagebreak="fluid"] .sk-print-cohesive-block {',
+      '  break-inside: auto !important;',
+      '  page-break-inside: auto !important;',
+      '}',
+      '/* Scoped Page Break Modes (INV-PAGE-BREAK-ORCH-001) */',
       'body[data-print-pagebreak="milestones"] .obl-table-milestone-block:not(:first-child),',
-      'body[data-print-pagebreak="milestones"] .shop-table-group:not(:first-child) {',
+      'body[data-print-pagebreak="milestones"] .shop-table-group:not(:first-child),',
+      'body[data-print-pagebreak="milestones"] .sk-print-cohesive-block:not(:first-child) {',
       '  break-before: page !important;',
       '  page-break-before: always !important;',
       '  margin-top: 0 !important;',
@@ -9332,7 +9371,7 @@ tr.row-pulse td {
           if (parsed && typeof parsed === 'object') {
             return {
               theme: parsed.theme === 'tint' || parsed.theme === 'contrast' ? parsed.theme : 'eco',
-              pageBreaks: parsed.pageBreaks === 'milestones' ? 'milestones' : 'smart',
+              pageBreaks: (parsed.pageBreaks === 'milestones' || parsed.pageBreaks === 'fluid') ? parsed.pageBreaks : 'cohesive',
               orientation: parsed.orientation === 'portrait' ? 'portrait' : 'landscape',
               includeSignoff: parsed.includeSignoff !== false
             };
@@ -9342,7 +9381,7 @@ tr.row-pulse td {
     } catch (e) {
       console.warn('[skGetPrintPreferences] Error reading preferences:', e);
     }
-    return { theme: 'eco', pageBreaks: 'smart', orientation: 'landscape', includeSignoff: true };
+    return { theme: 'eco', pageBreaks: 'cohesive', orientation: 'landscape', includeSignoff: true };
   }
 
   /**
@@ -9442,7 +9481,7 @@ tr.row-pulse td {
     if (submitBtn) {
       submitBtn.onclick = function () {
         var selectedTheme = 'eco';
-        var selectedPb = 'smart';
+        var selectedPb = 'cohesive';
         var selectedOrient = 'landscape';
         var includeSignoff = true;
 
@@ -12227,7 +12266,7 @@ tr.row-pulse td {
 
     window.printShoppingTable = function() {
       const tableContainer = document.querySelector('#shoppingTableViewSection .shop-table-container') || document.getElementById('shoppingDataTable');
-      const prefs = typeof window.skGetPrintPreferences === 'function' ? window.skGetPrintPreferences() : { theme: 'eco', pageBreaks: 'smart', orientation: 'landscape', includeSignoff: true };
+      const prefs = typeof window.skGetPrintPreferences === 'function' ? window.skGetPrintPreferences() : { theme: 'eco', pageBreaks: 'cohesive', orientation: 'landscape', includeSignoff: true };
       if (typeof window.skPrintContainer === 'function' && tableContainer) {
         window.skPrintContainer(tableContainer, {
           title: 'Sree Krushna Marriage OS — Commercial Trousseau Sourcing Catalog',
@@ -12236,7 +12275,7 @@ tr.row-pulse td {
           pageSize: 'A4',
           margin: '8mm 10mm',
           theme: prefs.theme || 'eco',
-          pageBreaks: prefs.pageBreaks || 'smart',
+          pageBreaks: prefs.pageBreaks || 'cohesive',
           includeSignoff: prefs.includeSignoff !== false
         });
       } else {
@@ -13870,12 +13909,12 @@ tr.row-pulse td {
       const totalCount = stats.total || obls.length || 53;
       if (elTotal) elTotal.textContent = totalCount;
       if (elBride) {
-        const brideCount = obls.filter(o => o.obligor && (o.obligor.family === 'bride' || o.obligor.family === 'joint')).length;
-        elBride.textContent = brideCount || 27;
+        const brideCount = obls.filter(o => o.obligor && o.obligor.family === 'bride').length;
+        elBride.textContent = brideCount || 29;
       }
       if (elGroom) {
         const groomCount = obls.filter(o => o.obligor && o.obligor.family === 'groom').length;
-        elGroom.textContent = groomCount || 26;
+        elGroom.textContent = groomCount || 23;
       }
       if (elUnresolved) elUnresolved.textContent = stats.unresolved_count || 8;
 
@@ -13902,9 +13941,9 @@ tr.row-pulse td {
             options: ['all', 'bride', 'groom', 'joint', 'unresolved'],
             predicate: function (o, val) {
               if (val === 'all') return true;
-              if (val === 'bride') return o.obligor && (o.obligor.family === 'bride' || o.obligor.family === 'joint');
+              if (val === 'bride') return o.obligor && o.obligor.family === 'bride';
               if (val === 'groom') return o.obligor && o.obligor.family === 'groom';
-              if (val === 'joint') return (o.obligor && o.obligor.family === 'joint') || (o.exchange_cluster && o.exchange_cluster.is_exchange);
+              if (val === 'joint') return (o.obligor && o.obligor.family === 'joint') || (o.derived_direction && o.derived_direction.includes('joint'));
               if (val === 'unresolved') {
                 return ['TBD_Family_Choice', 'Source_Unclear', 'Source_Redacted', 'Pending_Family_Confirmation'].includes(o.spec_status) || o.lifecycle_status === 'Identified';
               }
@@ -14281,8 +14320,8 @@ tr.row-pulse td {
       const shareUrl = `${window.location.origin}${window.location.pathname}?subview=obligations`;
       const obls = getObligationsList();
       const totalCount = obls.length || 53;
-      const brideCount = obls.filter(o => o.obligor && (o.obligor.family === 'bride' || o.obligor.family === 'joint')).length || 27;
-      const groomCount = obls.filter(o => o.obligor && o.obligor.family === 'groom').length || 26;
+      const brideCount = obls.filter(o => o.obligor && o.obligor.family === 'bride').length || 29;
+      const groomCount = obls.filter(o => o.obligor && o.obligor.family === 'groom').length || 23;
       const unresCount = obls.filter(o => ['TBD_Family_Choice', 'Source_Unclear', 'Source_Redacted', 'Pending_Family_Confirmation'].includes(o.spec_status) || o.lifecycle_status === 'Identified').length || 8;
 
       const msg = `🌺 *Sree Krushna Marriage OS — Customary Family Obligations Register* 🌺\n\n` +
@@ -14408,7 +14447,7 @@ tr.row-pulse td {
         const groupTitle = milestoneMap[ev] || ev;
         const groupObls = sortObligationsList(grouped[ev], activeOblTableSort.key, activeOblTableSort.dir);
         const isCollapsed = !!accordionState[ev];
-        const collapseClass = isCollapsed ? 'obl-table-milestone-block is-collapsed' : 'obl-table-milestone-block';
+        const collapseClass = isCollapsed ? 'obl-table-milestone-block sk-print-cohesive-block is-collapsed' : 'obl-table-milestone-block sk-print-cohesive-block';
         const ariaExpanded = isCollapsed ? 'false' : 'true';
 
         html += `
@@ -14509,7 +14548,7 @@ tr.row-pulse td {
         const tableContainer = document.getElementById('obligationsTableContainer') || document.querySelector('.shop-obl-table-container');
         const obls = getObligationsList();
         const totalCount = obls.length || 53;
-        const prefs = typeof window.skGetPrintPreferences === 'function' ? window.skGetPrintPreferences() : { theme: 'eco', pageBreaks: 'smart', orientation: 'landscape', includeSignoff: true };
+        const prefs = typeof window.skGetPrintPreferences === 'function' ? window.skGetPrintPreferences() : { theme: 'eco', pageBreaks: 'cohesive', orientation: 'landscape', includeSignoff: true };
         if (typeof window.skPrintContainer === 'function' && tableContainer) {
           window.skPrintContainer(tableContainer, {
             title: 'Sree Krushna Marriage OS — Customary Family Obligations Run Sheet',
@@ -14518,7 +14557,7 @@ tr.row-pulse td {
             pageSize: 'A4',
             margin: '8mm 10mm',
             theme: prefs.theme || 'eco',
-            pageBreaks: prefs.pageBreaks || 'smart',
+            pageBreaks: prefs.pageBreaks || 'cohesive',
             includeSignoff: prefs.includeSignoff !== false
           });
         } else {

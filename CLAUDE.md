@@ -236,3 +236,4 @@ This repository implements the following universal patterns:
 - `.agent/patterns/structural-dom-contract-gate.md`
 - `.agent/patterns/table-cell-display-model-isolation-and-slack-budgeting.md`
 - `.agent/patterns/declarative-orthogonal-faceted-filtering.md`
+- `.agent/patterns/smart-cohesive-page-break-packaging.md`

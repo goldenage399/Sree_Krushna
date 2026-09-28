@@ -12,17 +12,17 @@ Use this skill whenever you need to turn a complex dataset, data table, or regis
 This skill directly prevents the common catastrophic single-page application (SPA) failure mode where calling browser print dumps **50 to 60 unintended pages** of inactive tabs, navigation chrome, and dark theme backgrounds.
 
 ### Standards & Rulings
-- **Standard**: `STD-TABULAR-RUN-SHEET-SKILL-001`, `STD-UI-PRINT-CONTAINER-001` & `STD-UI-PRINT-RUNSHEET-002`
-- **Invariants**: `INV-PRINT-ZERO-DUMP-001` / `INV-PRINT-IFRAME-SANDBOX-001` / `INV-INK-SAVER-001` / `INV-PAGE-BREAK-ORCH-001` / `INV-LIFECYCLE-02`
-- **Rulings**: `AC-DEC-2026-064` / `AC-DEC-2026-065` / `AC-DEC-2026-072` / `UI-DEC-2026-054`
+- **Standard**: `STD-TABULAR-RUN-SHEET-SKILL-001`, `STD-UI-PRINT-CONTAINER-001`, `STD-UI-PRINT-RUNSHEET-002` & `STD-UI-PRINT-RUNSHEET-003`
+- **Invariants**: `INV-PRINT-ZERO-DUMP-001` / `INV-PRINT-IFRAME-SANDBOX-001` / `INV-INK-SAVER-001` / `INV-PAGE-BREAK-ORCH-001` / `INV-PAGE-COHESION-001` / `INV-LIFECYCLE-02`
+- **Rulings**: `AC-DEC-2026-064` / `AC-DEC-2026-065` / `AC-DEC-2026-072` / `AC-DEC-2026-075` / `UI-DEC-2026-054` / `UI-DEC-2026-055`
 - **Governing Package**: `PKG-007` (Universal Scoped Print Sandbox & Tabular Run Sheet Artisan)
-- **Governing Pattern**: [.agent/patterns/ink-saving-print-themes-and-page-break-orchestration.md](../../patterns/ink-saving-print-themes-and-page-break-orchestration.md)
+- **Governing Pattern**: [.agent/patterns/ink-saving-print-themes-and-page-break-orchestration.md](../../patterns/ink-saving-print-themes-and-page-break-orchestration.md) & [.agent/patterns/smart-cohesive-page-break-packaging.md](../../patterns/smart-cohesive-page-break-packaging.md)
 
 ---
 
 <!-- shared:std.agent.tabular-run-sheet-artisan.core:start -->
 
-## The 3 Core Architectural Invariants
+## The 4 Core Architectural Invariants
 
 1. **`INV-PRINT-ZERO-DUMP-001` (Zero Multi-Tab Global Dump Contract)**:
    - In single-page applications with tab navigation, `@media print` in the global stylesheet (`main.css`) must NEVER unroll all tabs (`.tab-content { display: block !important; }`).
@@ -33,7 +33,12 @@ This skill directly prevents the common catastrophic single-page application (SP
    - The print engine isolates the target HTML into a temporary hidden, same-origin `<iframe>`, injects self-contained ink-saving A4 styles, triggers print, and cleans up the iframe asynchronously.
    - Screen-only UI controls (`.no-print`, buttons, search bars, pagination pills) are stripped automatically before rendering.
 
-3. **`INV-DUAL-RELEASE-BYTE-PARITY` (100% Byte Parity on Standalone Sheets)**:
+3. **`INV-PAGE-COHESION-001` (Smart Cohesive Block Packaging & Pagination Spectrum)**:
+   - Milestone containers and elements decorated with `.sk-print-cohesive-block` declare `break-inside: avoid !important; page-break-inside: avoid !important;` under `data-print-pagebreak="cohesive"`.
+   - Browser print engines pack multiple blocks on a sheet if they fit; if a block cannot fit in the remaining space, it evicts cleanly to the next page as a complete unit. Giant tables taller than an A4 sheet start on a fresh page and fragment gracefully with repeating `thead`.
+   - Pre-Print dialogs must support the 3-tier pagination spectrum (`cohesive` [default], `fluid`, `milestones`).
+
+4. **`INV-DUAL-RELEASE-BYTE-PARITY` (100% Byte Parity on Standalone Sheets)**:
    - Any standalone printable HTML run sheet emitted in the repository root (`/<name>.html`) must maintain 100% byte-for-byte identity with its public release copy (`/public/<name>.html`).
 
 ---

@@ -18,7 +18,7 @@ Tracks visual hierarchy, component modularization, design tokens, responsive lay
 | **SK-029** | Multi-Viewport Fluid Table Budgeting, Inner Container Clamping & Print Run-Sheet Preservation | P1 | `COMPLETED` | [00_ENHANCEMENT_INDEX.md](../../enhancement-notes/SK-029/00_ENHANCEMENT_INDEX.md) |
 | **SK-030** | Universal Faceted Filter Primitive Engine, State Orthogonality & Dual-Mode UI Ergonomics | P1 | `COMPLETED` | [00_ENHANCEMENT_INDEX.md](../../enhancement-notes/SK-030/00_ENHANCEMENT_INDEX.md) |
 | **SK-031** | Universal Ink-Saving Print Engine, Configurable Themes & Accordion Page-Break Orchestration | P1 | `COMPLETED` | [00_ENHANCEMENT_INDEX.md](../../enhancement-notes/SK-031/00_ENHANCEMENT_INDEX.md) |
-| **SK-032** | Smart Cohesive Page-Break Orchestration & Cross-Repo Tabular Packaging | P1 | `IN_PLANNING` | [00_ENHANCEMENT_INDEX.md](../../enhancement-notes/SK-032/00_ENHANCEMENT_INDEX.md) |
+| **SK-032** | Smart Cohesive Page-Break Orchestration & Cross-Repo Tabular Packaging | P1 | `COMPLETED` | [00_ENHANCEMENT_INDEX.md](../../enhancement-notes/SK-032/00_ENHANCEMENT_INDEX.md) |
 | **SK-033** | Universal Column Visibility & Print Data Masking Engine | P1 | `IN_PLANNING` | [00_ENHANCEMENT_INDEX.md](../../enhancement-notes/SK-033/00_ENHANCEMENT_INDEX.md) |
 
 ## 🗃️ Backlog

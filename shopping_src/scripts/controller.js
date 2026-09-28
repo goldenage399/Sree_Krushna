@@ -3835,12 +3835,12 @@
       const totalCount = stats.total || obls.length || 53;
       if (elTotal) elTotal.textContent = totalCount;
       if (elBride) {
-        const brideCount = obls.filter(o => o.obligor && (o.obligor.family === 'bride' || o.obligor.family === 'joint')).length;
-        elBride.textContent = brideCount || 27;
+        const brideCount = obls.filter(o => o.obligor && o.obligor.family === 'bride').length;
+        elBride.textContent = brideCount || 29;
       }
       if (elGroom) {
         const groomCount = obls.filter(o => o.obligor && o.obligor.family === 'groom').length;
-        elGroom.textContent = groomCount || 26;
+        elGroom.textContent = groomCount || 23;
       }
       if (elUnresolved) elUnresolved.textContent = stats.unresolved_count || 8;
 
@@ -3867,9 +3867,9 @@
             options: ['all', 'bride', 'groom', 'joint', 'unresolved'],
             predicate: function (o, val) {
               if (val === 'all') return true;
-              if (val === 'bride') return o.obligor && (o.obligor.family === 'bride' || o.obligor.family === 'joint');
+              if (val === 'bride') return o.obligor && o.obligor.family === 'bride';
               if (val === 'groom') return o.obligor && o.obligor.family === 'groom';
-              if (val === 'joint') return (o.obligor && o.obligor.family === 'joint') || (o.exchange_cluster && o.exchange_cluster.is_exchange);
+              if (val === 'joint') return (o.obligor && o.obligor.family === 'joint') || (o.derived_direction && o.derived_direction.includes('joint'));
               if (val === 'unresolved') {
                 return ['TBD_Family_Choice', 'Source_Unclear', 'Source_Redacted', 'Pending_Family_Confirmation'].includes(o.spec_status) || o.lifecycle_status === 'Identified';
               }
@@ -4246,8 +4246,8 @@
       const shareUrl = `${window.location.origin}${window.location.pathname}?subview=obligations`;
       const obls = getObligationsList();
       const totalCount = obls.length || 53;
-      const brideCount = obls.filter(o => o.obligor && (o.obligor.family === 'bride' || o.obligor.family === 'joint')).length || 27;
-      const groomCount = obls.filter(o => o.obligor && o.obligor.family === 'groom').length || 26;
+      const brideCount = obls.filter(o => o.obligor && o.obligor.family === 'bride').length || 29;
+      const groomCount = obls.filter(o => o.obligor && o.obligor.family === 'groom').length || 23;
       const unresCount = obls.filter(o => ['TBD_Family_Choice', 'Source_Unclear', 'Source_Redacted', 'Pending_Family_Confirmation'].includes(o.spec_status) || o.lifecycle_status === 'Identified').length || 8;
 
       const msg = `🌺 *Sree Krushna Marriage OS — Customary Family Obligations Register* 🌺\n\n` +

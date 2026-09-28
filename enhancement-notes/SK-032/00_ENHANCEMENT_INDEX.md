@@ -3,7 +3,7 @@
 ## 📊 Metadata
 - **Category**: UI QUALITY / PRINTS / ARCHITECTURE / ECOSYSTEM
 - **Priority**: HIGH
-- **Status**: IN_PLANNING
+- **Status**: COMPLETED
 - **Estimate**: 4 Phases
 - **Target Release**: v2.9.9
 - **Risk Level**: LOW
@@ -13,7 +13,7 @@
 
 ## 🔗 Dependencies
 - **Depends On**: `SK-031` (Universal ink-saving print engine & page-break orchestration), `SK-029` (Proportional table budgeting & print unclamping)
-- **Blocks**: None
+- **Blocks**: `SK-033` (Universal Column Visibility & Print Data Masking Engine)
 
 ## 🎯 Goal
 
@@ -41,7 +41,7 @@ Eliminate the awkward pagination defect where milestone/section tables get slice
 | **Phase 1: Declarative Block Cohesion Engine & Core Test Harness** | Implement `data-print-pagebreak="cohesive"` with `break-inside: avoid !important` in `12_print_themes_and_options.css` and `ui_primitives/scripts/print_engine.js`; support `.obl-table-milestone-block`, `.shop-table-group`, and `.sk-print-cohesive-block`; author `scripts/test-print-cohesion-contract.cjs`. | **VG-1**: `node scripts/test-print-cohesion-contract.cjs` passes 100% green; `break-inside: avoid` asserted on cohesive selectors. | **DN-1**: Confirm modern browser print engines push overflowing blocks to next page cleanly without layout loops. | ✅ **COMPLETED** |
 | **Phase 2: 3-Tier Pre-Print Configuration Modal Upgrade** | Upgrade `ui_primitives/components/print_options_modal.html` and `ui_primitives/scripts/print_engine.js` to expose 3-way pagination options (`cohesive`, `fluid`, `milestones`); update preferences parser and sync logic. | **VG-2**: Headless lifecycle test verifying all 3 pagination radio values pass correctly to `skPrintContainer` and persist in `localStorage`. | **DN-2**: Confirm modal layout maintains 300px mobile responsiveness and passes `STD-UI-LIFECYCLE-001`. | ✅ **COMPLETED** |
 | **Phase 3: Consumer Integration & Visual Layout Verification** | Tag obligations tables and catalog groups with `.sk-print-cohesive-block`; verify Family Obligations Register and Canonical Trousseau Catalog in both screen preview and print emulation. | **VG-3**: Automated integration test verifying zero broken milestone blocks in simulated multi-milestone print stream. | **DN-3**: Host review confirming multi-milestone packing on Page 1 with clean unbroken block eviction. | ✅ **COMPLETED** |
-| **Phase 4: SDCA Compilation, Byte Parity & Ecosystem Standards Promotion** | Recompile SDCA modules via `build.cjs`; assert 100% byte parity to `/public`; update `tabular-run-sheet-artisan` skill; codify pattern in `.agent/patterns/`; pass full regression suite. | **VG-4**: 100% dual-release byte parity; all 69 modular checks green; all 10 deployment gate layers pass with exit code 0; taxonomy 100% clean. | **DN-4**: Formal release readiness sign-off for v2.9.9. | 🟡 **IN_PROGRESS / READY** |
+| **Phase 4: SDCA Compilation, Byte Parity & Ecosystem Standards Promotion** | Recompile SDCA modules via `build.cjs`; assert 100% byte parity to `/public`; update `tabular-run-sheet-artisan` skill; codify pattern in `.agent/patterns/smart-cohesive-page-break-packaging.md`; pass full regression suite. | **VG-4**: 100% dual-release byte parity; all 69 modular checks green; all 10 deployment gate layers pass with exit code 0; taxonomy 100% clean. | **DN-4**: Formal release readiness sign-off for v2.9.9. | ✅ **COMPLETED** |
 
 ---
 

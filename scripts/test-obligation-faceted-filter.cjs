@@ -50,9 +50,9 @@ const engine = createEngine({
       options: ['all', 'bride', 'groom', 'joint', 'unresolved'],
       predicate: (o, val) => {
         if (val === 'all') return true;
-        if (val === 'bride') return o.obligor && (o.obligor.family === 'bride' || o.obligor.family === 'joint');
+        if (val === 'bride') return o.obligor && o.obligor.family === 'bride';
         if (val === 'groom') return o.obligor && o.obligor.family === 'groom';
-        if (val === 'joint') return (o.obligor && o.obligor.family === 'joint') || (o.exchange_cluster && o.exchange_cluster.is_exchange);
+        if (val === 'joint') return (o.obligor && o.obligor.family === 'joint') || (o.derived_direction && o.derived_direction.includes('joint'));
         if (val === 'unresolved') {
           return ['TBD_Family_Choice', 'Source_Unclear', 'Source_Redacted', 'Pending_Family_Confirmation'].includes(o.spec_status) || o.lifecycle_status === 'Identified';
         }
@@ -110,13 +110,33 @@ engine.setFacet('category', 'attire');
 const brideAttire = engine.filter(obls);
 assert(brideAttire.length > 0, 'Bride + Attire items must be non-empty');
 assert(brideAttire.length < brideAll.length, 'Bride + Attire must be a proper subset of all Bride items');
-assert(brideAttire.every(o => (o.obligor.family === 'bride' || o.obligor.family === 'joint') && o.category === 'attire'),
+assert(brideAttire.every(o => o.obligor && o.obligor.family === 'bride' && o.category === 'attire'),
   'All returned items must satisfy BOTH direction=bride AND category=attire');
 console.log(`  ✓ [PASS] Simultaneous 2D Intersection verified: found ${brideAttire.length} Bride Attire items without 1D overwrite collision!`);
+
+// Verify OBL-029 and OBL-030 directional isolation
+engine.setFacet('category', 'all');
+engine.setFacet('direction', 'groom');
+const groomAll = engine.filter(obls);
+assert(groomAll.some(o => o.id === 'OBL-029'), 'OBL-029 must be present in Groom Side');
+assert(!groomAll.some(o => o.id === 'OBL-030'), 'OBL-030 must NOT be present in Groom Side');
+
+engine.setFacet('direction', 'bride');
+const brideAllCheck = engine.filter(obls);
+assert(brideAllCheck.some(o => o.id === 'OBL-030'), 'OBL-030 must be present in Bride Side');
+assert(!brideAllCheck.some(o => o.id === 'OBL-029'), 'OBL-029 must NOT be present in Bride Side');
+
+engine.setFacet('direction', 'joint');
+const jointAll = engine.filter(obls);
+assert(!jointAll.some(o => o.id === 'OBL-029'), 'OBL-029 must NOT leak into Joint filter');
+assert(!jointAll.some(o => o.id === 'OBL-030'), 'OBL-030 must NOT leak into Joint filter');
+assert.strictEqual(jointAll.length, 1, 'Joint filter must strictly contain 1 true joint obligation (OBL-053)');
+console.log('  ✓ [PASS] Directional isolation verified: OBL-029 (Groom), OBL-030 (Bride), and Joint (1 item) are completely disjoint');
 
 // 4. Dynamic Count Badges Aggregation Verification
 console.log('\n▶ [4/5] Testing Dynamic Count Recalculation across Orthogonal Facets...');
 // When direction='bride', computing category counts should reflect breakdown among bride items
+engine.setFacet('direction', 'bride');
 const brideCategoryCounts = engine.computeCounts(obls, 'category');
 assert.strictEqual(brideCategoryCounts.all, brideAll.length, 'category.all count must equal total bride items');
 assert.strictEqual(brideCategoryCounts.attire, brideAttire.length, 'category.attire count must match true subset count');

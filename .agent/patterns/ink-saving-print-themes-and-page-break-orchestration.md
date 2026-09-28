@@ -94,12 +94,14 @@ Supported Themes:
 - `tint`: Subtle 4% gray header fill (`#f1f5f9`), slate border framing (`#64748b`) for formal physical briefings.
 - `contrast`: High-contrast solid dark banner (`#0f172a`) for digital screen PDF distribution.
 
-Supported Page Breaks:
-- `smart` (Default): Fluid flow with orphan suppression and repeating headers.
+Supported Page Breaks (3-Tier Pagination Spectrum per `STD-UI-PRINT-RUNSHEET-003` / `SK-032`):
+- `cohesive` (Default / Recommended): Smart cohesive block packaging (`break-inside: avoid !important`). Multiple milestones fit per page; overflowing blocks move to the next page as complete intact units.
+- `fluid`: Dense space-saving fluid flow (`break-inside: auto !important`), breaking freely between rows.
 - `milestones`: Forces each major event/milestone block onto a fresh A4 sheet for ring-binder dossiers:
   ```css
   body[data-print-pagebreak="milestones"] .obl-table-milestone-block:not(:first-child),
-  body[data-print-pagebreak="milestones"] .shop-table-group:not(:first-child) {
+  body[data-print-pagebreak="milestones"] .shop-table-group:not(:first-child),
+  body[data-print-pagebreak="milestones"] .sk-print-cohesive-block:not(:first-child) {
     break-before: page !important;
     page-break-before: always !important;
     margin-top: 0 !important;
