@@ -1,0 +1,234 @@
+/**
+ * Universal 2-Tier Agnostic Faceted Toolbar Styles (STD-UI-PRIMITIVE-FACETED-FILTER-001)
+ * Standard: STD-MOD-COMP-001 | STD-UI-PRIMITIVE-002
+ * Ruling: AC-DEC-2026-074 / UI-DEC-2026-053
+ * Scope: Agnostic design tokens for two-tier segmented faceted filters
+ */
+
+.sk-facet-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--sk-surface, #181b24);
+  border: 1px solid var(--sk-border, #2d3245);
+  border-radius: var(--sk-radius-lg, 16px);
+  padding: 14px 18px;
+  box-shadow: var(--sk-shadow-card, 0 4px 20px rgba(0, 0, 0, 0.35));
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+/* Tier 1: Primary Segmented Pill Bar */
+.sk-facet-tier {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sk-facet-tier-primary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--sk-border-subtle, rgba(255, 255, 255, 0.08));
+}
+
+/* Primary Pill Button */
+.sk-facet-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--sk-radius-full, 9999px);
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--sk-border, #2d3245);
+  background: var(--sk-surface-elevated, #222634);
+  color: var(--sk-text-secondary, #9ca3af);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  min-height: var(--sk-touch-target, 44px);
+  box-sizing: border-box;
+  text-decoration: none;
+  user-select: none;
+}
+
+.sk-facet-pill:hover {
+  border-color: var(--sk-gold, #e5a93c);
+  color: var(--sk-text-primary, #f3f4f6);
+  background: rgba(229, 169, 60, 0.08);
+}
+
+.sk-facet-pill.is-active {
+  background: var(--sk-gold, #e5a93c);
+  border-color: var(--sk-gold, #e5a93c);
+  color: #0f1117;
+  font-weight: 700;
+  box-shadow: 0 2px 10px rgba(229, 169, 60, 0.3);
+}
+
+.sk-facet-pill.is-active .sk-facet-badge {
+  background: rgba(15, 17, 23, 0.25);
+  color: #0f1117;
+  font-weight: 700;
+}
+
+/* Tier 2: Secondary Dimension & Search Strip */
+.sk-facet-tier-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.sk-facet-chips-scroll {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Secondary Chip Button */
+.sk-facet-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: var(--sk-radius-md, 10px);
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid var(--sk-border, #2d3245);
+  background: transparent;
+  color: var(--sk-text-secondary, #9ca3af);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-height: 34px;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+.sk-facet-chip:hover {
+  border-color: var(--sk-text-secondary, #9ca3af);
+  color: var(--sk-text-primary, #f3f4f6);
+}
+
+.sk-facet-chip.is-active {
+  background: var(--sk-surface-elevated, #222634);
+  border-color: var(--sk-gold, #e5a93c);
+  color: var(--sk-gold, #e5a93c);
+  font-weight: 600;
+}
+
+/* Dynamic Count Badges */
+.sk-facet-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--sk-radius-full, 9999px);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--sk-text-secondary, #9ca3af);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+/* Search & Reset Wrap */
+.sk-facet-search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.sk-facet-search-input-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--sk-surface-elevated, #222634);
+  border: 1px solid var(--sk-border, #2d3245);
+  border-radius: var(--sk-radius-full, 9999px);
+  padding: 4px 12px;
+  transition: border-color 0.18s ease;
+}
+
+.sk-facet-search-input-box:focus-within {
+  border-color: var(--sk-gold, #e5a93c);
+}
+
+.sk-facet-search-icon {
+  font-size: 13px;
+  opacity: 0.6;
+}
+
+.sk-facet-search-input {
+  border: none;
+  background: transparent;
+  color: var(--sk-text-primary, #f3f4f6);
+  font-size: 12px;
+  outline: none;
+  width: 140px;
+  font-family: inherit;
+}
+
+.sk-facet-search-input::placeholder {
+  color: var(--sk-text-muted, #6b7280);
+}
+
+/* Reset Button */
+.sk-facet-reset-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: var(--sk-radius-full, 9999px);
+  min-height: 32px;
+}
+
+.sk-facet-reset-icon {
+  font-size: 13px;
+}
+
+/* Mobile & Tablet Responsive Media Queries */
+@media (max-width: 768px) {
+  .sk-facet-toolbar {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .sk-facet-tier-primary {
+    gap: 6px;
+  }
+
+  .sk-facet-pill {
+    padding: 6px 12px;
+    font-size: 12px;
+    min-height: var(--sk-touch-target, 44px);
+  }
+
+  .sk-facet-tier-secondary {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sk-facet-search-wrap {
+    margin-left: 0;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .sk-facet-search-input-box {
+    flex: 1;
+  }
+
+  .sk-facet-search-input {
+    width: 100%;
+  }
+}

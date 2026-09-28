@@ -1,0 +1,25 @@
+<!-- Universal 2-Tier Agnostic Faceted Toolbar Primitive (STD-UI-PRIMITIVE-FACETED-FILTER-001) -->
+<div class="sk-facet-toolbar" id="skFacetedToolbarRoot" role="region" aria-label="Faceted Filters">
+  <!-- Tier 1: Primary Dimension Segmented Bar (e.g., Direction / Scope) -->
+  <div class="sk-facet-tier sk-facet-tier-primary" id="skFacetTierPrimary" role="tablist" aria-label="Primary Filter Dimension">
+    <!-- Populated dynamically by skFacetedToolbar.mount() or static declarative markup -->
+  </div>
+
+  <!-- Tier 2: Secondary Dimension & Search Strip (e.g., Category / Sub-facet + Search Query) -->
+  <div class="sk-facet-tier sk-facet-tier-secondary">
+    <div class="sk-facet-chips-scroll" id="skFacetTierSecondary" role="group" aria-label="Category Sub-Filters">
+      <!-- Populated dynamically by skFacetedToolbar.mount() -->
+    </div>
+
+    <div class="sk-facet-search-wrap">
+      <div class="sk-facet-search-input-box">
+        <span class="sk-facet-search-icon" aria-hidden="true">🔍</span>
+        <input type="search" class="sk-facet-search-input" id="skFacetSearchInput" placeholder="Filter by keyword..." aria-label="Filter items by search keyword">
+      </div>
+      <button type="button" class="sk-btn sk-btn-secondary sk-facet-reset-btn" id="skFacetResetBtn" title="Reset all filters" aria-label="Reset all filters">
+        <span class="sk-facet-reset-icon" aria-hidden="true">↺</span>
+        <span class="sk-facet-reset-label">Reset</span>
+      </button>
+    </div>
+  </div>
+</div>

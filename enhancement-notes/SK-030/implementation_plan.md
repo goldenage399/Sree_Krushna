@@ -45,7 +45,7 @@ Upgrade SK-030 into a **complete 3-Layer Decoupled Primitive Architecture**:
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
 ┌───────────────────────────────────▼────────────────────────────────────┐
-│ Phase 2: Agnostic UI Component, Token Styles & Mounter (Layer 2)       │
+│ Phase 2: Agnostic UI Component, Token Styles & Mounter (Layer 2) [DONE]│
 │  - Author ui_primitives/components/faceted_toolbar.html                │
 │  - Author ui_primitives/styles/04_faceted_toolbar.css (.sk-facet-*)    │
 │  - Implement skFacetedToolbar.mount() lifecycle in faceted_filter_eng. │

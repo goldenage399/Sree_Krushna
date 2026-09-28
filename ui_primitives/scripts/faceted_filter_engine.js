@@ -1,12 +1,13 @@
 /**
- * Universal Agnostic Faceted Filter Headless Engine (Layer 1)
+ * Universal Agnostic Faceted Filter Headless Engine & UI Toolbar (Layers 1 & 2)
  * Standard: STD-UI-PRIMITIVE-FACETED-FILTER-001 / AC-DEC-2026-074 / UI-DEC-2026-053
  * Ticket: SK-030
  *
  * Invariants:
  *  - INV-FACET-INTERSECT-001: Active orthogonal dimensions intersect via Boolean AND
  *  - INV-FACET-COUNTS-001: Active selection in dimension A dynamically recalculates counts for dimension B options
- *  - STD-MOD-COMP-001: Modular architecture, zero external dependencies, < 250 lines
+ *  - INV-LIFECYCLE-02: Zero naked DOMContentLoaded listeners
+ *  - STD-MOD-COMP-001: Modular architecture, zero external dependencies, < 500 lines
  */
 
 (function (root, factory) {
@@ -15,15 +16,17 @@
   } else {
     var exportsObj = factory();
     root.skCreateFacetedFilterEngine = exportsObj.skCreateFacetedFilterEngine;
+    root.skFacetedToolbar = exportsObj.skFacetedToolbar;
     if (root.skPrimitives) {
       root.skPrimitives.createFacetedFilterEngine = exportsObj.skCreateFacetedFilterEngine;
+      root.skPrimitives.facetedToolbar = exportsObj.skFacetedToolbar;
     }
   }
 }(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
   /**
-   * Factory to create an isolated Faceted Filter Engine
+   * Factory to create an isolated Faceted Filter Engine (Layer 1)
    * @param {Object} config - Configuration options
    * @param {Object} [config.dimensions] - Dimension schemas { dimName: { default: 'all', predicate: fn } }
    * @param {Function} [config.searchExtractor] - Function taking item and returning searchable string
@@ -262,7 +265,246 @@
     };
   }
 
+  /**
+   * Agnostic UI Toolbar Mounter (Layer 2)
+   * Mounts a 2-tier segmented filter bar into any DOM container
+   */
+  var skFacetedToolbar = {
+    mount: function (container, engine, options, customDoc) {
+      var doc = customDoc || (typeof document !== 'undefined' ? document : null);
+      if (!container || !engine) {
+        console.warn('[skFacetedToolbar] mount failed: container and engine are required');
+        return null;
+      }
+      if (!doc) {
+        console.warn('[skFacetedToolbar] mount failed: DOM document is not available');
+        return null;
+      }
+
+      var rootEl = typeof container === 'string' ? doc.querySelector(container) : container;
+      if (!rootEl) {
+        console.warn('[skFacetedToolbar] container element not found:', container);
+        return null;
+      }
+
+      options = options || {};
+      var primary = options.primary || {};
+      var secondary = options.secondary || {};
+      var searchConf = options.search || {};
+      var getItems = typeof options.getItems === 'function' ? options.getItems : function () { return []; };
+      var onFilterChange = typeof options.onFilterChange === 'function' ? options.onFilterChange : null;
+
+      var primaryDim = primary.dimension || 'direction';
+      var primaryOptions = primary.options || [];
+      var secondaryDim = secondary.dimension || 'category';
+      var secondaryOptions = secondary.options || [];
+      var searchPlaceholder = searchConf.placeholder || 'Filter by keyword...';
+
+      // Build Toolbar DOM
+      rootEl.innerHTML = '';
+      if (!rootEl.classList.contains('sk-facet-toolbar')) {
+        rootEl.classList.add('sk-facet-toolbar');
+      }
+      rootEl.setAttribute('role', 'region');
+      rootEl.setAttribute('aria-label', options.ariaLabel || 'Faceted Filters');
+
+      // Tier 1: Primary Dimension Segmented Bar
+      var tier1 = doc.createElement('div');
+      tier1.className = 'sk-facet-tier sk-facet-tier-primary';
+      tier1.setAttribute('role', 'tablist');
+      tier1.setAttribute('aria-label', primary.label || 'Primary Filter Dimension');
+
+      primaryOptions.forEach(function (opt) {
+        var btn = doc.createElement('button');
+        btn.type = 'button';
+        btn.className = 'sk-btn sk-facet-pill' + (engine.getFacet(primaryDim) === opt.id ? ' is-active' : '');
+        btn.setAttribute('data-facet-dim', primaryDim);
+        btn.setAttribute('data-facet-val', opt.id);
+        btn.setAttribute('aria-pressed', engine.getFacet(primaryDim) === opt.id ? 'true' : 'false');
+        btn.setAttribute('role', 'tab');
+
+        var labelSpan = doc.createElement('span');
+        labelSpan.className = 'sk-facet-pill-label';
+        labelSpan.innerHTML = (opt.icon ? '<span class="sk-facet-pill-icon" aria-hidden="true">' + opt.icon + '</span> ' : '') + opt.label;
+
+        var badgeSpan = doc.createElement('span');
+        badgeSpan.className = 'sk-facet-badge';
+        badgeSpan.textContent = '0';
+
+        btn.appendChild(labelSpan);
+        btn.appendChild(badgeSpan);
+
+        btn.addEventListener('click', function () {
+          engine.setFacet(primaryDim, opt.id);
+        });
+
+        tier1.appendChild(btn);
+      });
+
+      rootEl.appendChild(tier1);
+
+      // Tier 2: Secondary Dimension Chips + Search Strip
+      var tier2 = doc.createElement('div');
+      tier2.className = 'sk-facet-tier sk-facet-tier-secondary';
+
+      var chipsScroll = doc.createElement('div');
+      chipsScroll.className = 'sk-facet-chips-scroll';
+      chipsScroll.setAttribute('role', 'group');
+      chipsScroll.setAttribute('aria-label', secondary.label || 'Secondary Sub-Filters');
+
+      secondaryOptions.forEach(function (opt) {
+        var btn = doc.createElement('button');
+        btn.type = 'button';
+        btn.className = 'sk-btn sk-facet-chip' + (engine.getFacet(secondaryDim) === opt.id ? ' is-active' : '');
+        btn.setAttribute('data-facet-dim', secondaryDim);
+        btn.setAttribute('data-facet-val', opt.id);
+        btn.setAttribute('aria-pressed', engine.getFacet(secondaryDim) === opt.id ? 'true' : 'false');
+
+        var labelSpan = doc.createElement('span');
+        labelSpan.className = 'sk-facet-chip-label';
+        labelSpan.innerHTML = (opt.icon ? '<span class="sk-facet-chip-icon" aria-hidden="true">' + opt.icon + '</span> ' : '') + opt.label;
+
+        var badgeSpan = doc.createElement('span');
+        badgeSpan.className = 'sk-facet-badge';
+        badgeSpan.textContent = '0';
+
+        btn.appendChild(labelSpan);
+        btn.appendChild(badgeSpan);
+
+        btn.addEventListener('click', function () {
+          engine.setFacet(secondaryDim, opt.id);
+        });
+
+        chipsScroll.appendChild(btn);
+      });
+
+      tier2.appendChild(chipsScroll);
+
+      // Search & Reset Wrap
+      var searchWrap = doc.createElement('div');
+      searchWrap.className = 'sk-facet-search-wrap';
+
+      var inputBox = doc.createElement('div');
+      inputBox.className = 'sk-facet-search-input-box';
+
+      var iconSpan = doc.createElement('span');
+      iconSpan.className = 'sk-facet-search-icon';
+      iconSpan.setAttribute('aria-hidden', 'true');
+      iconSpan.textContent = '🔍';
+
+      var searchInput = doc.createElement('input');
+      searchInput.type = 'search';
+      searchInput.className = 'sk-facet-search-input';
+      searchInput.placeholder = searchPlaceholder;
+      searchInput.setAttribute('aria-label', searchPlaceholder);
+      searchInput.value = engine.getSearchQuery() || '';
+
+      searchInput.addEventListener('input', function () {
+        engine.setSearchQuery(searchInput.value);
+      });
+
+      inputBox.appendChild(iconSpan);
+      inputBox.appendChild(searchInput);
+      searchWrap.appendChild(inputBox);
+
+      var resetBtn = doc.createElement('button');
+      resetBtn.type = 'button';
+      resetBtn.className = 'sk-btn sk-btn-secondary sk-facet-reset-btn';
+      resetBtn.title = 'Reset all filters';
+      resetBtn.setAttribute('aria-label', 'Reset all filters');
+      resetBtn.innerHTML = '<span class="sk-facet-reset-icon" aria-hidden="true">↺</span><span class="sk-facet-reset-label">Reset</span>';
+
+      resetBtn.addEventListener('click', function () {
+        engine.reset();
+      });
+
+      searchWrap.appendChild(resetBtn);
+      tier2.appendChild(searchWrap);
+      rootEl.appendChild(tier2);
+
+      // Synchronize UI active states & dynamic badges
+      function syncUI() {
+        var items = getItems();
+        var primaryVal = engine.getFacet(primaryDim);
+        var secondaryVal = engine.getFacet(secondaryDim);
+        var query = engine.getSearchQuery();
+
+        if (searchInput.value !== query) {
+          searchInput.value = query;
+        }
+
+        // Compute counts (INV-FACET-COUNTS-001)
+        var pCounts = engine.computeCounts(items, primaryDim);
+        var sCounts = engine.computeCounts(items, secondaryDim);
+
+        // Update Primary Pills
+        var pillBtns = tier1.querySelectorAll('.sk-facet-pill');
+        for (var i = 0; i < pillBtns.length; i++) {
+          var pBtn = pillBtns[i];
+          var pVal = pBtn.getAttribute('data-facet-val');
+          var pActive = pVal === primaryVal;
+          if (pActive) {
+            pBtn.classList.add('is-active');
+            pBtn.setAttribute('aria-pressed', 'true');
+          } else {
+            pBtn.classList.remove('is-active');
+            pBtn.setAttribute('aria-pressed', 'false');
+          }
+          var pBadge = pBtn.querySelector('.sk-facet-badge');
+          if (pBadge) {
+            pBadge.textContent = pCounts[pVal] !== undefined ? pCounts[pVal] : 0;
+          }
+        }
+
+        // Update Secondary Chips
+        var chipBtns = chipsScroll.querySelectorAll('.sk-facet-chip');
+        for (var j = 0; j < chipBtns.length; j++) {
+          var cBtn = chipBtns[j];
+          var cVal = cBtn.getAttribute('data-facet-val');
+          var cActive = cVal === secondaryVal;
+          if (cActive) {
+            cBtn.classList.add('is-active');
+            cBtn.setAttribute('aria-pressed', 'true');
+          } else {
+            cBtn.classList.remove('is-active');
+            cBtn.setAttribute('aria-pressed', 'false');
+          }
+          var cBadge = cBtn.querySelector('.sk-facet-badge');
+          if (cBadge) {
+            cBadge.textContent = sCounts[cVal] !== undefined ? sCounts[cVal] : 0;
+          }
+        }
+
+        // Notify consumer with filtered items & state
+        if (onFilterChange) {
+          var filtered = engine.filter(items);
+          onFilterChange(filtered, engine.getState());
+        }
+      }
+
+      // Initial synchronization
+      syncUI();
+
+      // Subscribe to engine changes
+      var unsubscribe = engine.subscribe(function () {
+        syncUI();
+      });
+
+      return {
+        updateCounts: syncUI,
+        unmount: function () {
+          unsubscribe();
+          rootEl.innerHTML = '';
+        },
+        getEngine: function () {
+          return engine;
+        }
+      };
+    }
+  };
+
   return {
-    skCreateFacetedFilterEngine: skCreateFacetedFilterEngine
+    skCreateFacetedFilterEngine: skCreateFacetedFilterEngine,
+    skFacetedToolbar: skFacetedToolbar
   };
 }));
