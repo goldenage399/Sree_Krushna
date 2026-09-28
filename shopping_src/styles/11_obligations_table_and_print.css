@@ -8,6 +8,7 @@
 .shop-obl-table-container {
   width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   margin-top: 16px;
   background: rgba(15, 23, 42, 0.4);
   border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));
@@ -71,14 +72,22 @@
 }
 
 
-/* 2. Spreadsheet Table Styling */
+/* 2. Spreadsheet Table Styling (STD-TABLE-BUDGET-001 / AC-DEC-2026-071) */
 .obl-data-table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   font-size: 11.5px;
   background: rgba(15, 23, 42, 0.6);
   border-radius: 0 0 6px 6px;
   overflow: hidden;
+}
+
+/* Multi-Viewport Table Degradation & Horizontal Touch Scroll */
+@media (max-width: 1024px) {
+  .obl-data-table {
+    min-width: 880px;
+  }
 }
 
 .obl-data-table th,
@@ -103,21 +112,30 @@
 }
 
 .obl-td-code {
-  width: 75px;
   font-family: monospace;
   font-weight: 700;
   color: var(--shop-gold, #e5a93c);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .obl-td-dir {
-  width: 115px;
   font-weight: 600;
   font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .obl-td-dir.dir-bride { color: #60a5fa; }
 .obl-td-dir.dir-groom { color: #f472b6; }
 .obl-td-dir.dir-joint { color: #34d399; }
+
+.obl-td-title {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
 
 .obl-td-title strong {
   color: var(--shop-text-primary, #ffffff);
@@ -128,6 +146,14 @@
   font-size: 10px;
   color: var(--shop-text-muted, #94a3b8);
   margin-top: 3px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.obl-td-cat {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .obl-td-cat code {
@@ -142,12 +168,15 @@
   font-size: 11px;
   color: #e2e8f0;
   vertical-align: top;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .obl-specs-clamp {
   width: 100%;
   line-height: 1.4;
   word-break: break-word;
+  overflow-wrap: break-word;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -155,19 +184,17 @@
 }
 
 .obl-td-cash {
-  width: 85px;
   font-weight: 600;
   color: #34d399;
   text-align: right;
+  white-space: nowrap;
 }
 
 .obl-td-trs {
-  width: 85px;
   text-align: center;
 }
 
 .obl-td-verif {
-  width: 50px;
   text-align: center;
 }
 
@@ -379,6 +406,11 @@
     border: 1px solid #000000 !important;
     padding: 3px 6px !important;
     color: #000000 !important;
+  }
+
+  .obl-data-table tr {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
 
   .obl-data-table th {

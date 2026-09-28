@@ -4284,14 +4284,14 @@
 
               <thead>
                 <tr>
-                  ${getSortTh('code', 'Code', 'width: 75px;')}
-                  ${getSortTh('direction', 'Direction', 'width: 115px;')}
-                  ${getSortTh('title', 'Customary Title & Description', 'width: 220px; max-width: 260px;')}
-                  ${getSortTh('category', 'Category', 'width: 85px;')}
-                  <th style="width: 220px; max-width: 260px;" class="col-specs">Items / Specifications</th>
-                  ${getSortTh('cost', 'Cash / Cost', 'width: 85px; text-align: right;')}
-                  ${getSortTh('trs', 'Sourced Via', 'width: 90px; text-align: center;')}
-                  <th style="width: 50px; text-align: center;">Verif</th>
+                  ${getSortTh('code', 'Code', 'width: 7.5%; min-width: 70px;')}
+                  ${getSortTh('direction', 'Direction', 'width: 11.5%; min-width: 105px;')}
+                  ${getSortTh('title', 'Customary Title & Description', 'width: 29%; min-width: 220px;')}
+                  ${getSortTh('category', 'Category', 'width: 8.5%; min-width: 80px;')}
+                  <th style="width: 25%; min-width: 200px;" class="col-specs">Items / Specifications</th>
+                  ${getSortTh('cost', 'Cash / Cost', 'width: 7.5%; min-width: 75px; text-align: right;')}
+                  ${getSortTh('trs', 'Sourced Via', 'width: 7.5%; min-width: 75px; text-align: center;')}
+                  <th style="width: 3.5%; min-width: 40px; text-align: center;">Verif</th>
                 </tr>
               </thead>
               <tbody>

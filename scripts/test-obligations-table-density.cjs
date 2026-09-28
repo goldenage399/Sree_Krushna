@@ -58,6 +58,13 @@ check('@media print unclamps .obl-specs-clamp to prevent cutting off text on pap
   );
 });
 
+check('@media print enforces break-inside: avoid on .obl-data-table tr to prevent torn rows', () => {
+  assert(
+    cssContent.includes('.obl-data-table tr') && (cssContent.includes('break-inside: avoid') || cssContent.includes('page-break-inside: avoid')),
+    '@media print must prevent row breaks inside .obl-data-table tr'
+  );
+});
+
 // 2. Audit Table Header & Cell Rendering in controller.js
 console.log('\n▶ [2/4] Auditing Table Header & Cell Attributes in controller.js...');
 const controllerContent = fs.readFileSync(controllerPath, 'utf8');
@@ -92,8 +99,38 @@ check('Zero "+N more" JS truncation code is introduced (Data Hiding Veto)', () =
   );
 });
 
-// 3. Modularity Line Limit Check
-console.log('\n▶ [3/4] Auditing SDCA Modularity & CSS Line Count...');
+// 3. Proportional Budgeting & Multi-Viewport Styling (Phase 2 / STD-TABLE-BUDGET-001)
+console.log('\n▶ [3/4] Auditing Proportional Table Budgeting & Responsive Viewport Rules...');
+
+check('.obl-data-table declares table-layout: fixed (STD-TABLE-BUDGET-001)', () => {
+  assert(cssContent.includes('.obl-data-table'), 'Missing .obl-data-table selector');
+  const match = cssContent.match(/(?:^|\n)\.obl-data-table\s*\{[^}]+\}/s);
+  assert(match, 'Cannot extract .obl-data-table CSS block');
+  const block = match[0];
+  assert(block.includes('table-layout: fixed'), '.obl-data-table must declare table-layout: fixed');
+  assert(block.includes('width: 100%'), '.obl-data-table must declare width: 100%');
+});
+
+check('.shop-obl-table-container declares hardware-accelerated touch scroll', () => {
+  const match = cssContent.match(/\.shop-obl-table-container\s*\{[^}]+\}/s);
+  assert(match, 'Cannot extract .shop-obl-table-container CSS block');
+  const block = match[0];
+  assert(block.includes('overflow-x: auto'), 'Container missing overflow-x: auto');
+  assert(block.includes('-webkit-overflow-scrolling: touch'), 'Container missing -webkit-overflow-scrolling: touch');
+});
+
+check('@media (max-width: 1024px) enforces min-width: 880px to prevent mobile squishing', () => {
+  const match = cssContent.match(/@media\s*\(max-width:\s*1024px\)\s*\{[^}]+\.obl-data-table\s*\{[^}]+min-width:\s*880px[^}]+\}[^}]*\}/s);
+  assert(match, 'Missing @media (max-width: 1024px) with .obl-data-table min-width: 880px');
+});
+
+check('controller.js allocates fluid proportional widths to Title (29%) and Specs (25%)', () => {
+  assert(controllerContent.includes("width: 29%; min-width: 220px;"), 'Title missing width: 29% budget');
+  assert(controllerContent.includes('style="width: 25%; min-width: 200px;" class="col-specs"'), 'Specs missing width: 25% budget');
+});
+
+// 4. Modularity Line Limit Check
+console.log('\n▶ [4/4] Auditing SDCA Modularity & CSS Line Count...');
 check('11_obligations_table_and_print.css stays below 500 lines (STD-MOD-COMP-001)', () => {
   const lineCount = cssContent.split('\n').length;
   assert(lineCount < 500, `11_obligations_table_and_print.css has ${lineCount} lines (limit: 500)`);
@@ -102,11 +139,11 @@ check('11_obligations_table_and_print.css stays below 500 lines (STD-MOD-COMP-00
 // Summary
 console.log('\n════════════════════════════════════════════════════════════════════════════');
 if (failures === 0) {
-  console.log('🎉 ALL DENSITY & INNER CLAMP CHECKS PASSED: SK-029 PHASE 1 VERIFIED!');
+  console.log('🎉 ALL DENSITY, BUDGETING & VIEWPORT CHECKS PASSED: SK-029 PHASES 1 & 2 VERIFIED!');
   console.log('════════════════════════════════════════════════════════════════════════════\n');
   process.exit(0);
 } else {
-  console.error(`❌ ${failures} CHECK(S) FAILED IN SK-029 PHASE 1 VERIFICATION.`);
+  console.error(`❌ ${failures} CHECK(S) FAILED IN SK-029 VERIFICATION.`);
   console.log('════════════════════════════════════════════════════════════════════════════\n');
   process.exit(1);
 }

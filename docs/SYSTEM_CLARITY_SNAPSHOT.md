@@ -3,7 +3,7 @@
 > **Standard**: `STD-UNIVERSAL-TAXONOMY-001` / `P-SESSION-ACCELERATION-001`  
 > **Ticket**: [`SK-019`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-019/00_ENHANCEMENT_INDEX.md)  
 > **Status**: `LIVING_OPERATIONAL_LEDGER`  
-> **Last Updated**: 2026-09-27  
+> **Last Updated**: 2026-09-28  
 
 ---
 
@@ -25,7 +25,8 @@ Per the Universal Session Acceleration Protocol (`AC-DEC-2026-059`), all newly o
 | [`SK-026`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-026/00_ENHANCEMENT_INDEX.md) | Universal Dual-Council Governance Protocol & 7-Domain UI/UX Pre-Flight Engine | `COMPLETED` | `v2.9.4` | `STD-COUNCIL-DUAL-GATE-001` / `PKG-009` |
 | [`SK-027`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-027/00_ENHANCEMENT_INDEX.md) | Empirical Multi-Repo Adoption Gate, Zero-Config Discovery & Anti-Process-Theater Governance | `IN_PLANNING (Phase 1 Verified)` | `v2.9.5` | `STD-EMPIRICAL-ADOPTION-001` / `STD-ZERO-CONFIG-DISCOVERY-001` |
 | [`SK-028`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-028/00_ENHANCEMENT_INDEX.md) | SDCA Structural DOM Contract & Cross-Repo Portable Validation Framework | `COMPLETED` | `v2.9.6` | `STD-STRUCTURAL-CONTRACT-001` / `STD-MOD-COMP-001` |
-| [`SK-029`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-029/00_ENHANCEMENT_INDEX.md) | Multi-Viewport Fluid Table Budgeting, Inner Container Clamping & Print Run-Sheet Preservation | `IN_PROGRESS (Phase 1 Verified)` | `v2.9.7` | `STD-TABLE-BUDGET-001` / `INV-TABLE-DOM-001` |
+| [`SK-029`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-029/00_ENHANCEMENT_INDEX.md) | Multi-Viewport Fluid Table Budgeting, Inner Container Clamping & Print Run-Sheet Preservation | `COMPLETED` | `v2.9.7` | `STD-TABLE-BUDGET-001` / `INV-TABLE-DOM-001` |
+| [`SK-030`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-030/00_ENHANCEMENT_INDEX.md) | Universal Faceted Filter Primitive Engine, State Orthogonality & Dual-Mode UI Ergonomics | `READY (Planned)` | `v2.9.8` | `STD-UI-PRIMITIVE-FACETED-FILTER-001` |
 
 ---
 

@@ -3,8 +3,8 @@
 ## 📊 Metadata
 - **Category**: UI QUALITY / ARCHITECTURE / ERGONOMICS
 - **Priority**: HIGH
-- **Status**: IN_PLANNING
-- **Estimate**: 4 Phases
+- **Status**: COMPLETED
+- **Estimate**: 4 Phases (Completed)
 - **Target Release**: v2.9.7
 - **Risk Level**: LOW
 - **Council Ruling**: `AC-DEC-2026-071` / `UI-DEC-2026-053` (FULL COUNCIL CERTIFIED, 2026-09-28)
@@ -27,12 +27,12 @@ Resolve the asymmetric table column expansion defect where `Customary Title & De
 
 ## 4-Phase Definition of Done (DoD v1.7) & Sequential Phasing
 
-| Phase | Scope & Deliverables | Validation Gate (VG) | Decision Node (DN) |
-|---|---|---|---|
-| **Phase 1: Structural Decoupling & Test Contract Update** | Isolate line-clamp into `<div class="obl-specs-clamp">` in `shopping_src/scripts/controller.js`; update `shopping_src/styles/11_obligations_table_and_print.css` to remove `-webkit-box` from `.obl-td-specs`; update `scripts/test-obligations-table-density.cjs` to assert inner wrapper contract. | **VG-1**: `node scripts/test-obligations-table-density.cjs` passes; `.obl-td-specs` retains `display: table-cell`; `.obl-specs-clamp` enforces 3-line clamp with tooltip. | **DN-1**: Confirm inner wrapper does not violate structural contract rules or break tag balance. |
-| **Phase 2: Proportional Table Budgeting & Multi-Viewport Styling** | Enforce `table-layout: fixed; width: 100%;` on `.obl-data-table`; allocate percentage widths (Code: 8%, Dir: 12%, Title: 30%, Cat: 9%, Specs: 25%, Cash: 8%, Sourced: 8%); configure horizontal touch-scroll wrapper (`min-width: 880px`) for viewports `<1024px`. | **VG-2**: Visual inspection on 1920px (Desktop), 1366px (Laptop), and 768px (Tablet); verify Title and Specs expand in proportional harmony; verify horizontal scroll operates cleanly without layout breaks. | **DN-2**: Verify no column header or content wraps awkwardly at standard 1280px laptop width. |
-| **Phase 3: Print Run-Sheet Unclamping & Container Isolation** | Enhance `@media print` and `window.skPrintContainer` scoped rules in `11_obligations_table_and_print.css`; ensure `.obl-specs-clamp` unclamps completely (`-webkit-line-clamp: unset !important; overflow: visible !important; height: auto !important;`); enforce `break-inside: avoid;` on rows. | **VG-3**: Test print stream rendering on Chrome headless / print preview; verify 100% of items and descriptions unroll on paper with zero ellipsis cutoffs across all 53 obligations. | **DN-3**: Confirm milestone page breaks adhere to A4 landscape margins without orphaned single rows. |
-| **Phase 4: SDCA Compilation, Byte Parity & Regression Sweeps** | Compile SDCA via `node shopping_src/build.cjs`; synchronize `shopping-registry.html` and `shopping-fragment.html` to root and `public/`; execute complete regression suite (`npm run test:obligations`, `npm run verify:modular-architecture`, `npm run verify:ui-lifecycle`, `npm run verify:deployment`). | **VG-4**: 100% byte parity between root and `public/`; all 64 modular checks green; all 10 deployment gate layers pass with exit code 0. | **DN-4**: Formal release readiness sign-off for v2.9.7. |
+| Phase | Scope & Deliverables | Validation Gate (VG) | Decision Node (DN) | Status |
+|---|---|---|---|---|
+| **Phase 1: Structural Decoupling & Test Contract Update** | Isolate line-clamp into `<div class="obl-specs-clamp">` in `shopping_src/scripts/controller.js`; update `shopping_src/styles/11_obligations_table_and_print.css` to remove `-webkit-box` from `.obl-td-specs`; update `scripts/test-obligations-table-density.cjs` to assert inner wrapper contract. | **VG-1**: `node scripts/test-obligations-table-density.cjs` passes; `.obl-td-specs` retains `display: table-cell`; `.obl-specs-clamp` enforces 3-line clamp with tooltip. | **DN-1**: Confirm inner wrapper does not violate structural contract rules or break tag balance. | ✅ **COMPLETED** |
+| **Phase 2: Proportional Table Budgeting & Multi-Viewport Styling** | Enforce `table-layout: fixed; width: 100%;` on `.obl-data-table`; allocate percentage widths (Code: 7.5%, Dir: 11.5%, Title: 29%, Cat: 8.5%, Specs: 25%, Cash: 7.5%, Sourced: 7.5%, Verif: 3.5%); configure horizontal touch-scroll wrapper (`min-width: 880px`) for viewports `<1024px`. | **VG-2**: Visual inspection on 1920px (Desktop), 1366px (Laptop), and 768px (Tablet); verify Title and Specs expand in proportional harmony; verify horizontal scroll operates cleanly without layout breaks. | **DN-2**: Verify no column header or content wraps awkwardly at standard 1280px laptop width. | ✅ **COMPLETED** |
+| **Phase 3: Print Run-Sheet Unclamping & Container Isolation** | Enhance `@media print` and `window.skPrintContainer` scoped rules in `11_obligations_table_and_print.css`; ensure `.obl-specs-clamp` unclamps completely (`-webkit-line-clamp: unset !important; overflow: visible !important; height: auto !important;`); enforce `break-inside: avoid;` on rows. | **VG-3**: Test print stream rendering on Chrome headless / print preview; verify 100% of items and descriptions unroll on paper with zero ellipsis cutoffs across all 53 obligations. | **DN-3**: Confirm milestone page breaks adhere to A4 landscape margins without orphaned single rows. | ✅ **COMPLETED** |
+| **Phase 4: SDCA Compilation, Byte Parity & Regression Sweeps** | Compile SDCA via `node shopping_src/build.cjs`; synchronize `shopping-registry.html` and `shopping-fragment.html` to root and `public/`; execute complete regression suite (`npm run test:obligations`, `npm run verify:modular-architecture`, `npm run verify:ui-lifecycle`, `npm run verify:deployment`). | **VG-4**: 100% byte parity between root and `public/`; all 64 modular checks green; all 10 deployment gate layers pass with exit code 0. | **DN-4**: Formal release readiness sign-off for v2.9.7. | ✅ **COMPLETED** |
 
 ---
 
