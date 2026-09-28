@@ -42,10 +42,14 @@ const commentsDrawerPath = path.join(rootDir, 'ui_primitives', 'components', 'co
 if (fs.existsSync(commentsDrawerPath)) {
   bodyHtml += '\n\n' + fs.readFileSync(commentsDrawerPath, 'utf8');
 }
+const printOptionsModalPath = path.join(rootDir, 'ui_primitives', 'components', 'print_options_modal.html');
+if (fs.existsSync(printOptionsModalPath)) {
+  bodyHtml += '\n\n' + fs.readFileSync(printOptionsModalPath, 'utf8');
+}
 
 // Read Primitives & Controller Scripts
 const primScriptsDir = path.join(rootDir, 'ui_primitives', 'scripts');
-const primScriptFiles = ['drive_normalizer.js', 'zoom_pan_engine.js', 'comments_engine.js', 'primitives_core.js', 'print_engine.js'];
+const primScriptFiles = ['drive_normalizer.js', 'zoom_pan_engine.js', 'comments_engine.js', 'primitives_core.js', 'print_engine.js', 'faceted_filter_engine.js'];
 const primJs = primScriptFiles.map(f => fs.readFileSync(path.join(primScriptsDir, f), 'utf8')).join('\n\n');
 const controllerJs = fs.readFileSync(controllerPath, 'utf8');
 const fullControllerJs = primJs + '\n\n' + controllerJs;

@@ -1,0 +1,271 @@
+/* Sree Krushna Marriage OS — Configurable Print Themes & Pre-Print Options Dialog */
+/* Standard: STD-UI-PRINT-RUNSHEET-002 | Ruling: AC-DEC-2026-072 / UI-DEC-2026-054 */
+/* Ticket: SK-031 Phase 2 & 3 */
+
+/* ==========================================================================
+   1. Screen Styles: Print Options Modal Dialog (STD-UI-LIFECYCLE-001)
+   ========================================================================== */
+
+.sk-print-modal-card {
+  width: 95%;
+  max-width: 580px;
+  background: var(--shop-card-bg, #161a23);
+  border: 1px solid var(--shop-gold-border, rgba(212, 175, 55, 0.35));
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.65);
+  color: var(--shop-text-primary, #f1f5f9);
+}
+
+.sk-print-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+}
+
+.sk-print-modal-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sk-print-modal-icon {
+  font-size: 28px;
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 8px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sk-print-modal-title {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+
+.sk-print-modal-sub {
+  font-size: 12px;
+  color: var(--shop-text-secondary, #94a3b8);
+  margin: 3px 0 0 0;
+}
+
+.sk-print-option-section {
+  margin-bottom: 20px;
+}
+
+.sk-print-section-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--shop-gold, #d4af37);
+  margin-bottom: 10px;
+}
+
+.sk-print-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.sk-print-radio-card {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 12px;
+  transition: all 0.2s ease;
+}
+
+.sk-print-radio-card:hover {
+  border-color: rgba(212, 175, 55, 0.5);
+  background: rgba(212, 175, 55, 0.04);
+}
+
+.sk-print-radio-card input[type="radio"] {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  margin: 0;
+  accent-color: #d4af37;
+}
+
+.sk-print-radio-card:has(input:checked) {
+  border-color: #d4af37;
+  background: rgba(212, 175, 55, 0.08);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+}
+
+.sk-print-card-icon {
+  font-size: 20px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.sk-print-card-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sk-print-badge-rec {
+  background: #10b981;
+  color: #ffffff;
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.sk-print-card-desc {
+  font-size: 11px;
+  color: var(--shop-text-secondary, #94a3b8);
+  margin-top: 4px;
+  line-height: 1.35;
+}
+
+.sk-print-options-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 16px;
+}
+
+.sk-print-checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--shop-text-primary, #e2e8f0);
+  cursor: pointer;
+}
+
+.sk-print-checkbox-label input[type="checkbox"] {
+  accent-color: #d4af37;
+  width: 15px;
+  height: 15px;
+}
+
+.sk-print-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 18px;
+}
+
+/* Button Group with Gear Icon */
+.shop-print-btn-group {
+  display: inline-flex;
+  align-items: stretch;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.shop-print-btn-group .shop-btn {
+  border-radius: 0;
+  margin: 0;
+}
+
+.shop-print-btn-group .shop-btn:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.shop-print-btn-group .shop-print-gear-btn {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: var(--shop-gold-dark, #b8860b);
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.shop-print-btn-group .shop-print-gear-btn:hover {
+  background: #d4af37;
+}
+
+/* ==========================================================================
+   2. Print Styles: Dynamic Print Themes & Page-Break Invariants
+   ========================================================================== */
+
+@media print {
+  /* Scoped Print Themes (STD-UI-PRINT-RUNSHEET-002) */
+  body[data-print-theme="eco"] .obl-table-milestone-header {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border: 1.5px solid #0f172a !important;
+    border-left: 6px solid #0f172a !important;
+  }
+
+  body[data-print-theme="eco"] th {
+    background: #f8fafc !important;
+    color: #000000 !important;
+    border: 1.5px solid #000000 !important;
+  }
+
+  body[data-print-theme="tint"] .obl-table-milestone-header {
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+    border: 1.5px solid #64748b !important;
+    border-left: 6px solid #0f172a !important;
+  }
+
+  body[data-print-theme="tint"] th {
+    background: #e2e8f0 !important;
+    color: #0f172a !important;
+    border: 1.5px solid #64748b !important;
+  }
+
+  body[data-print-theme="contrast"] .obl-table-milestone-header {
+    background: #0f172a !important;
+    color: #ffffff !important;
+    border: 1.5px solid #0f172a !important;
+    border-left: 6px solid #000000 !important;
+  }
+
+  body[data-print-theme="contrast"] .obl-table-milestone-count {
+    background: #1e293b !important;
+    color: #f8fafc !important;
+    border-color: #475569 !important;
+  }
+
+  body[data-print-theme="contrast"] th {
+    background: #1e293b !important;
+    color: #ffffff !important;
+    border: 1.5px solid #0f172a !important;
+  }
+
+  /* Scoped Page Break Modes (INV-PAGE-BREAK-ORCH-001) */
+  body[data-print-pagebreak="milestones"] .obl-table-milestone-block:not(:first-child),
+  body[data-print-pagebreak="milestones"] .shop-table-group:not(:first-child) {
+    break-before: page !important;
+    page-break-before: always !important;
+    margin-top: 0 !important;
+  }
+}

@@ -1,0 +1,97 @@
+<!-- Universal Pre-Print Configuration Modal Primitive (STD-UI-PRINT-RUNSHEET-002) -->
+<!-- Standard: STD-MOD-COMP-001 / STD-UI-LIFECYCLE-001 | Ruling: AC-DEC-2026-072 / UI-DEC-2026-054 -->
+<div class="sk-modal-backdrop" id="skPrintOptionsModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="skPrintModalTitle">
+  <div class="sk-modal-card sk-print-modal-card">
+    <div class="sk-print-modal-header">
+      <div class="sk-print-modal-header-left">
+        <div class="sk-print-modal-icon">🖨️</div>
+        <div>
+          <h3 id="skPrintModalTitle" class="sk-print-modal-title">Print Run Sheet Configuration</h3>
+          <p class="sk-print-modal-sub">Configure ink-saving themes and page break layout before printing (STD-UI-PRINT-RUNSHEET-002)</p>
+        </div>
+      </div>
+      <button type="button" class="sk-modal-close" id="skPrintModalClose" aria-label="Close modal">✕</button>
+    </div>
+
+    <div class="sk-print-modal-body">
+      <!-- Section 1: Print Theme (Ink Consumption) -->
+      <div class="sk-print-option-section">
+        <span class="sk-print-section-label">🎨 Ink Optimization Theme</span>
+        <div class="sk-print-cards-grid">
+          <label class="sk-print-radio-card" for="optThemeEco">
+            <input type="radio" id="optThemeEco" name="skPrintTheme" value="eco" checked>
+            <span class="sk-print-card-icon">🌿</span>
+            <span class="sk-print-card-name">
+              Eco Wireframe <span class="sk-print-badge-rec">Default</span>
+            </span>
+            <span class="sk-print-card-desc">Pure white headers with crisp black borders. Slashes toner/ink drain by &gt;95%.</span>
+          </label>
+
+          <label class="sk-print-radio-card" for="optThemeTint">
+            <input type="radio" id="optThemeTint" name="skPrintTheme" value="tint">
+            <span class="sk-print-card-icon">📄</span>
+            <span class="sk-print-card-name">Executive Tint</span>
+            <span class="sk-print-card-desc">Subtle 4% gray header fill with steel borders. Elegant physical briefing aesthetic.</span>
+          </label>
+
+          <label class="sk-print-radio-card" for="optThemeContrast">
+            <input type="radio" id="optThemeContrast" name="skPrintTheme" value="contrast">
+            <span class="sk-print-card-icon">🖥️</span>
+            <span class="sk-print-card-name">High Contrast</span>
+            <span class="sk-print-card-desc">Solid dark banner headers. Optimized for digital screen PDF distribution.</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Section 2: Page Break Orchestration -->
+      <div class="sk-print-option-section">
+        <span class="sk-print-section-label">📑 Page Break Orchestration</span>
+        <div class="sk-print-cards-grid">
+          <label class="sk-print-radio-card" for="optPbSmart">
+            <input type="radio" id="optPbSmart" name="skPrintPageBreak" value="smart" checked>
+            <span class="sk-print-card-icon">⚡</span>
+            <span class="sk-print-card-name">
+              Smart Flow <span class="sk-print-badge-rec">Recommended</span>
+            </span>
+            <span class="sk-print-card-desc">Fluid compact printing. Never splits headers; repeats column titles across sheets.</span>
+          </label>
+
+          <label class="sk-print-radio-card" for="optPbMilestones">
+            <input type="radio" id="optPbMilestones" name="skPrintPageBreak" value="milestones">
+            <span class="sk-print-card-icon">📖</span>
+            <span class="sk-print-card-name">Milestone per Page</span>
+            <span class="sk-print-card-desc">Forces each ritual milestone onto a fresh A4 sheet. Ideal for physical handover ring-binders.</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Section 3: Orientation & Sign-off Options -->
+      <div class="sk-print-options-row">
+        <div>
+          <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--shop-text-secondary, #94a3b8); margin-right: 8px;">Orientation:</span>
+          <label style="display: inline-flex; align-items: center; gap: 4px; font-size: 12px; margin-right: 12px; cursor: pointer;">
+            <input type="radio" name="skPrintOrientation" value="landscape" checked style="accent-color: #d4af37;">
+            Landscape (Recommended)
+          </label>
+          <label style="display: inline-flex; align-items: center; gap: 4px; font-size: 12px; cursor: pointer;">
+            <input type="radio" name="skPrintOrientation" value="portrait" style="accent-color: #d4af37;">
+            Portrait
+          </label>
+        </div>
+
+        <label class="sk-print-checkbox-label" for="skPrintSignoffCheckbox">
+          <input type="checkbox" id="skPrintSignoffCheckbox" checked>
+          <span>Include Elder &amp; Coordinator Sign-off Box</span>
+        </label>
+      </div>
+
+      <!-- Modal Action Buttons -->
+      <div class="sk-print-modal-actions">
+        <button type="button" class="sk-btn sk-btn-secondary" id="skPrintModalCancel">Cancel</button>
+        <button type="button" class="sk-btn sk-btn-primary" id="skPrintModalSubmit">
+          <span>🖨️</span> Print Run Sheet
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

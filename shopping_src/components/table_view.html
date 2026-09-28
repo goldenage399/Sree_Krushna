@@ -50,9 +50,14 @@
         <button type="button" class="shop-btn" onclick="window.exportShoppingTable('csv')" title="Download CSV for Google Sheets">
           <span>📊</span> CSV
         </button>
-        <button type="button" class="shop-btn" id="btnPrintShoppingTable" onclick="window.printShoppingTable()" title="Print Scoped Catalog Table Run Sheet (A4 Landscape)">
-          <span>🖨️</span> Print Table
-        </button>
+        <div class="shop-print-btn-group">
+          <button type="button" class="shop-btn" id="btnPrintShoppingTable" onclick="window.printShoppingTable()" title="Print Scoped Catalog Table Run Sheet (A4 Landscape)">
+            <span>🖨️</span> Print Table
+          </button>
+          <button type="button" class="shop-btn shop-print-gear-btn" onclick="window.openCatalogPrintOptions()" title="Configure Print Theme &amp; Page Breaks" aria-label="Print Options">
+            <span>⚙️</span>
+          </button>
+        </div>
         <button type="button" class="shop-btn shop-btn-whatsapp" onclick="window.copyStakeholderShare('shopping-table')" title="Copy Table View Link for WhatsApp">
           <span>🔗</span> Share Table
         </button>

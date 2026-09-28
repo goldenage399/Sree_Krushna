@@ -19,9 +19,14 @@
       <button type="button" class="shop-btn shop-btn-secondary shop-btn-sm" onclick="window.shareAllObligationsWhatsApp()" title="Share complete obligations summary on WhatsApp">
         <span>📱</span> Share with Elders
       </button>
-      <button type="button" class="shop-btn shop-btn-primary shop-btn-sm" onclick="window.printObligationsSheet()" title="Print Ink-Friendly A4 Handover Run Sheet">
-        <span>🖨️</span> Print Obligation Sheet
-      </button>
+      <div class="shop-print-btn-group">
+        <button type="button" class="shop-btn shop-btn-primary shop-btn-sm" onclick="window.printObligationsSheet()" title="Print Ink-Friendly A4 Handover Run Sheet">
+          <span>🖨️</span> Print Sheet
+        </button>
+        <button type="button" class="shop-btn shop-btn-primary shop-btn-sm shop-print-gear-btn" onclick="window.openObligationsPrintOptions()" title="Configure Print Theme &amp; Page Breaks" aria-label="Print Options">
+          <span>⚙️</span>
+        </button>
+      </div>
     </div>
   </div>
 

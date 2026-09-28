@@ -19,6 +19,8 @@
    * Universal Scoped Container Print Function
    * @param {string|HTMLElement} target - CSS selector or DOM element to print
    * @param {Object} [options] - Configuration options
+   * @param {'eco'|'tint'|'contrast'} [options.theme='eco'] - Print theme (zero-ink eco, executive tint, high contrast)
+   * @param {'smart'|'milestones'} [options.pageBreaks='smart'] - Page break mode (smart flow vs milestone per page)
    * @param {string} [options.title] - Document header title
    * @param {string} [options.subtitle] - Header subtitle / timestamp
    * @param {'landscape'|'portrait'} [options.orientation='landscape'] - Page orientation
@@ -30,6 +32,8 @@
    */
   function skPrintContainer(target, options) {
     options = options || {};
+    var theme = (options.theme === 'tint' || options.theme === 'contrast') ? options.theme : 'eco';
+    var pageBreaks = options.pageBreaks === 'milestones' ? 'milestones' : 'smart';
     var title = options.title || document.title || 'Print Run Sheet';
     var subtitle = options.subtitle || ('Generated: ' + new Date().toLocaleString());
     var orientation = options.orientation === 'portrait' ? 'portrait' : 'landscape';
@@ -167,6 +171,52 @@
       '  break-after: avoid;',
       '  page-break-after: avoid;',
       '}',
+      '/* Print Theme Variants (STD-UI-PRINT-RUNSHEET-002) */',
+      'body[data-print-theme="eco"] .obl-table-milestone-header {',
+      '  background: #ffffff !important;',
+      '  color: #0f172a !important;',
+      '  border: 1.5px solid #0f172a !important;',
+      '  border-left: 6px solid #0f172a !important;',
+      '}',
+      'body[data-print-theme="eco"] th {',
+      '  background: #f8fafc !important;',
+      '  color: #000000 !important;',
+      '  border: 1.5px solid #000000 !important;',
+      '}',
+      'body[data-print-theme="tint"] .obl-table-milestone-header {',
+      '  background: #f1f5f9 !important;',
+      '  color: #0f172a !important;',
+      '  border: 1.5px solid #64748b !important;',
+      '  border-left: 6px solid #0f172a !important;',
+      '}',
+      'body[data-print-theme="tint"] th {',
+      '  background: #e2e8f0 !important;',
+      '  color: #0f172a !important;',
+      '  border: 1.5px solid #64748b !important;',
+      '}',
+      'body[data-print-theme="contrast"] .obl-table-milestone-header {',
+      '  background: #0f172a !important;',
+      '  color: #ffffff !important;',
+      '  border: 1.5px solid #0f172a !important;',
+      '  border-left: 6px solid #000000 !important;',
+      '}',
+      'body[data-print-theme="contrast"] .obl-table-milestone-count {',
+      '  background: #1e293b !important;',
+      '  color: #f8fafc !important;',
+      '  border-color: #475569 !important;',
+      '}',
+      'body[data-print-theme="contrast"] th {',
+      '  background: #1e293b !important;',
+      '  color: #ffffff !important;',
+      '  border: 1.5px solid #0f172a !important;',
+      '}',
+      '/* Page Break Modes (INV-PAGE-BREAK-ORCH-001) */',
+      'body[data-print-pagebreak="milestones"] .obl-table-milestone-block:not(:first-child),',
+      'body[data-print-pagebreak="milestones"] .shop-table-group:not(:first-child) {',
+      '  break-before: page !important;',
+      '  page-break-before: always !important;',
+      '  margin-top: 0 !important;',
+      '}',
       '.obl-verif-box, .verif-box {',
       '  display: inline-block;',
       '  width: 13px;',
@@ -193,7 +243,8 @@
     var doc = iframe.contentWindow.document;
     doc.open();
     doc.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>' + title + '</title>');
-    doc.write('<style>' + defaultStyles + '</style></head><body>');
+    doc.write('<style>' + defaultStyles + '</style></head>');
+    doc.write('<body data-print-theme="' + theme + '" data-print-pagebreak="' + pageBreaks + '">');
     doc.write('<header class="sk-print-header">');
     doc.write('<div><h1 class="sk-print-title">' + title + '</h1><div class="sk-print-sub">' + subtitle + '</div></div>');
     doc.write('<div><span class="sk-print-badge">' + orientation.toUpperCase() + ' RUN SHEET</span></div>');
@@ -231,10 +282,181 @@
     return true;
   }
 
+  var PREFS_STORAGE_KEY = 'sk_print_options';
+
+  /**
+   * Retrieves persistent print preferences
+   * @returns {Object} { theme, pageBreaks, orientation, includeSignoff }
+   */
+  function skGetPrintPreferences() {
+    try {
+      if (typeof localStorage !== 'undefined') {
+        var raw = localStorage.getItem(PREFS_STORAGE_KEY);
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') {
+            return {
+              theme: parsed.theme === 'tint' || parsed.theme === 'contrast' ? parsed.theme : 'eco',
+              pageBreaks: parsed.pageBreaks === 'milestones' ? 'milestones' : 'smart',
+              orientation: parsed.orientation === 'portrait' ? 'portrait' : 'landscape',
+              includeSignoff: parsed.includeSignoff !== false
+            };
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('[skGetPrintPreferences] Error reading preferences:', e);
+    }
+    return { theme: 'eco', pageBreaks: 'smart', orientation: 'landscape', includeSignoff: true };
+  }
+
+  /**
+   * Saves persistent print preferences
+   * @param {Object} prefs
+   */
+  function skSavePrintPreferences(prefs) {
+    if (!prefs || typeof prefs !== 'object') return;
+    try {
+      if (typeof localStorage !== 'undefined') {
+        var current = skGetPrintPreferences();
+        var updated = {
+          theme: prefs.theme || current.theme,
+          pageBreaks: prefs.pageBreaks || current.pageBreaks,
+          orientation: prefs.orientation || current.orientation,
+          includeSignoff: prefs.includeSignoff !== undefined ? Boolean(prefs.includeSignoff) : current.includeSignoff
+        };
+        localStorage.setItem(PREFS_STORAGE_KEY, JSON.stringify(updated));
+      }
+    } catch (e) {
+      console.warn('[skSavePrintPreferences] Error saving preferences:', e);
+    }
+  }
+
+  /**
+   * Universal Pre-Print Options Dialog Orchestrator (STD-UI-LIFECYCLE-001)
+   * Opens the universal print options modal, syncs preferences, and initiates printing.
+   * @param {Object} config - { target, title, subtitle }
+   */
+  function skOpenPrintOptionsModal(config) {
+    config = config || {};
+    var backdrop = document.getElementById('skPrintOptionsModalBackdrop');
+    if (!backdrop) {
+      // Fallback: direct print with saved preferences if modal DOM is absent
+      var fallbackPrefs = skGetPrintPreferences();
+      skPrintContainer(config.target, {
+        title: config.title,
+        subtitle: config.subtitle,
+        theme: fallbackPrefs.theme,
+        pageBreaks: fallbackPrefs.pageBreaks,
+        orientation: fallbackPrefs.orientation,
+        includeSignoff: fallbackPrefs.includeSignoff
+      });
+      return;
+    }
+
+    var prefs = skGetPrintPreferences();
+
+    // Sync radio controls
+    var themeRadios = backdrop.querySelectorAll('input[name="skPrintTheme"]');
+    for (var i = 0; i < themeRadios.length; i++) {
+      themeRadios[i].checked = themeRadios[i].value === prefs.theme;
+    }
+
+    var pbRadios = backdrop.querySelectorAll('input[name="skPrintPageBreak"]');
+    for (var j = 0; j < pbRadios.length; j++) {
+      pbRadios[j].checked = pbRadios[j].value === prefs.pageBreaks;
+    }
+
+    var orientRadios = backdrop.querySelectorAll('input[name="skPrintOrientation"]');
+    for (var k = 0; k < orientRadios.length; k++) {
+      orientRadios[k].checked = orientRadios[k].value === prefs.orientation;
+    }
+
+    var signoffCheck = backdrop.querySelector('#skPrintSignoffCheckbox');
+    if (signoffCheck) {
+      signoffCheck.checked = prefs.includeSignoff;
+    }
+
+    // Modal state activation
+    backdrop.classList.add('is-active');
+    document.body.classList.add('sk-modal-open');
+
+    function closeModal() {
+      backdrop.classList.remove('is-active');
+      document.body.classList.remove('sk-modal-open');
+      window.removeEventListener('keydown', handleKeydown);
+    }
+
+    function handleKeydown(e) {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    }
+    window.addEventListener('keydown', handleKeydown);
+
+    var closeBtn = backdrop.querySelector('#skPrintModalClose');
+    if (closeBtn) closeBtn.onclick = closeModal;
+    var cancelBtn = backdrop.querySelector('#skPrintModalCancel');
+    if (cancelBtn) cancelBtn.onclick = closeModal;
+
+    backdrop.onclick = function (e) {
+      if (e.target === backdrop) closeModal();
+    };
+
+    var submitBtn = backdrop.querySelector('#skPrintModalSubmit');
+    if (submitBtn) {
+      submitBtn.onclick = function () {
+        var selectedTheme = 'eco';
+        var selectedPb = 'smart';
+        var selectedOrient = 'landscape';
+        var includeSignoff = true;
+
+        var checkedTheme = backdrop.querySelector('input[name="skPrintTheme"]:checked');
+        if (checkedTheme) selectedTheme = checkedTheme.value;
+
+        var checkedPb = backdrop.querySelector('input[name="skPrintPageBreak"]:checked');
+        if (checkedPb) selectedPb = checkedPb.value;
+
+        var checkedOrient = backdrop.querySelector('input[name="skPrintOrientation"]:checked');
+        if (checkedOrient) selectedOrient = checkedOrient.value;
+
+        if (signoffCheck) includeSignoff = signoffCheck.checked;
+
+        var newPrefs = {
+          theme: selectedTheme,
+          pageBreaks: selectedPb,
+          orientation: selectedOrient,
+          includeSignoff: includeSignoff
+        };
+        skSavePrintPreferences(newPrefs);
+        closeModal();
+
+        setTimeout(function () {
+          skPrintContainer(config.target, {
+            title: config.title,
+            subtitle: config.subtitle,
+            theme: selectedTheme,
+            pageBreaks: selectedPb,
+            orientation: selectedOrient,
+            includeSignoff: includeSignoff
+          });
+        }, 120);
+      };
+    }
+  }
+
   // Lifecycle-safe registration (INV-LIFECYCLE-02)
   window.skPrintContainer = skPrintContainer;
+  window.skGetPrintPreferences = skGetPrintPreferences;
+  window.skSavePrintPreferences = skSavePrintPreferences;
+  window.skOpenPrintOptionsModal = skOpenPrintOptionsModal;
 
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { skPrintContainer: skPrintContainer };
+    module.exports = {
+      skPrintContainer: skPrintContainer,
+      skGetPrintPreferences: skGetPrintPreferences,
+      skSavePrintPreferences: skSavePrintPreferences,
+      skOpenPrintOptionsModal: skOpenPrintOptionsModal
+    };
   }
 })(typeof window !== 'undefined' ? window : this, typeof document !== 'undefined' ? document : {});

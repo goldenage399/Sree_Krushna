@@ -163,6 +163,7 @@ This repository implements the following universal patterns:
 - `.agent/patterns/evidence-scoped-cta-gating.md`
 - `.agent/patterns/external-iterative-design-gate.md`
 - `.agent/patterns/git-tracked-secret-scanning-p104.md`
+- `.agent/patterns/ink-saving-print-themes-and-page-break-orchestration.md`
 - `.agent/patterns/intent-clarity-decoupling-and-plan-hardstop.md`
 - `.agent/patterns/ivp-001.md`
 - `.agent/patterns/jwt-claims-sync-gate.md`

@@ -17,7 +17,7 @@ Tracks visual hierarchy, component modularization, design tokens, responsive lay
 | **SK-021** | Shopping Surface Architecture — Clean Domain Separation & Cards Mode Retirement | P1 | `COMPLETED` | [00_ENHANCEMENT_INDEX.md](../../enhancement-notes/SK-021/00_ENHANCEMENT_INDEX.md) |
 | **SK-029** | Multi-Viewport Fluid Table Budgeting, Inner Container Clamping & Print Run-Sheet Preservation | P1 | `COMPLETED` | [00_ENHANCEMENT_INDEX.md](../../enhancement-notes/SK-029/00_ENHANCEMENT_INDEX.md) |
 | **SK-030** | Universal Faceted Filter Primitive Engine, State Orthogonality & Dual-Mode UI Ergonomics | P1 | `READY (Planned)` | [00_ENHANCEMENT_INDEX.md](../../enhancement-notes/SK-030/00_ENHANCEMENT_INDEX.md) |
-| **SK-031** | Universal Ink-Saving Print Engine, Configurable Themes & Accordion Page-Break Orchestration | P1 | `READY (Planned)` | [00_ENHANCEMENT_INDEX.md](../../enhancement-notes/SK-031/00_ENHANCEMENT_INDEX.md) |
+| **SK-031** | Universal Ink-Saving Print Engine, Configurable Themes & Accordion Page-Break Orchestration | P1 | `COMPLETED` | [00_ENHANCEMENT_INDEX.md](../../enhancement-notes/SK-031/00_ENHANCEMENT_INDEX.md) |
 
 ## 🗃️ Backlog
 

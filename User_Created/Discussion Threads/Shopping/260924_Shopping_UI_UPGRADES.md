@@ -4272,7 +4272,7 @@ For full details, see the updated [walkthrough](file:///C:/Users/Temp/.gemini/an
 
 - `b26d8f4`: `feat(sk-029): implement proportional table budgeting, multi-viewport touch scroll and print unrolling (AC-DEC-2026-071)`
 - `a4b9276`: `docs(sk-030): refine faceted filter primitive architecture and test plan`
-- **Working Tree**: 100% clean.
+- **Working Tree**: 100% clean.k
 
 # Response 4.4 -# Walkthrough: SK-029 Full Execution (Phases 1–4 Complete)
 
@@ -4492,17 +4492,324 @@ The Joint Architecture & UI Council has formally deliberated and certified the d
 
 # Response 4.5 -
 
-# Query 4.6 -
+# Query 4.6 -[prompt-clarity](slashCommand;prompt-clarity) also think this in a broader sense since we always look for ways to generate reusable skills and templates and standards and patterns that can be shared across our repo ecosystem ? considering this would u like to change anythign in the plan ?
 
 # Review 4.6 -
 
-# Response 4.6 -
+# Response 4.6 -Listed directory ui_primitives
 
-# Query 4.7 -
+Listed directory scripts
+Listed directory components
+Viewed verify-modular-architecture.cjs:115-165
+Viewed primitives_core.js:1-60
+Viewed print_engine.js:1-60
+Created 260928_arch_council_reusable_faceted_filter_primitive_and_ecosystem_standards.md
+Edited ENHANCEMENT-MASTER-REGISTRY.md
+Created 00_ENHANCEMENT_INDEX.md
+Created implementation_plan.md
+
+### 🔍 Clarification & Intent Record
+
+- **Ambiguity Scanned**: The user requested that we evaluate the solution in a broader ecosystem context—generating reusable skills, templates, standards, and patterns across our repository ecosystem (SAP, `Sree_Krushna`, `Task-Dashboard`, `OperatusOS`)—and determine what changes should be made to the implementation plan.
+- **Root Intent**: Conduct a comprehensive Architecture & UI Council evaluation of candidate approaches for reusable faceted filtering, design an optimal hybrid architecture that avoids bespoke one-off patches, scaffold the updated enhancement ticket (`SK-030`), and emit the Phase 1 implementation plan under canonical `writing-plans` governance.
+- **Bound Route**: `.agent/skills/writing-plans/SKILL.md` / `STD-PHASED-DEV-001` / `AC-DEC-2026-073` (Phase 1 Implementation Plan).
+
+---
+
+## 1. 🌐 Ecosystem Context: The Recurring Multi-Faceted Filter Anti-Pattern
+
+When reviewing the repository ecosystem (`Sree_Krushna`, `Task-Dashboard`, and `OperatusOS`), the 1D filter collision seen in Family Obligations (`Bride Side` colliding with `Attire & Silks`) is **not an isolated bug**—it is a recurring frontend architectural anti-pattern:
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                        RECURRING ECOSYSTEM FILTER ANTI-PATTERNS                        │
+├─────────────────────────┬──────────────────────────────────┬───────────────────────────┤
+│ Target Surface          │ Independent Axes Conflated       │ Typical Failure Mode      │
+├─────────────────────────┼──────────────────────────────────┼───────────────────────────┤
+│ Family Obligations      │ Direction × Category × Status    │ 1D scalar string overwrite│
+│ Trousseau / Shopping    │ Chapter × Store × Attire × Status│ Reset on category switch  │
+│ Decorator Cockpit       │ Zone × Topic × Vendor Status     │ Desynchronized tab chips  │
+│ Task-Dashboard          │ Assignee × Priority × Domain     │ Hardcoded badge totals    │
+│ OperatusOS              │ Lifecycle × Dept × Milestone     │ Card/Table state desync   │
+└─────────────────────────┴──────────────────────────────────┴───────────────────────────┘
+```
+
+### The Architectural Diagnosis:
+
+If we only patch `activeOblState` locally inside [`shopping_src/scripts/controller.js`](file:///d:/GitHub_Repo/Sree_Krushna/shopping_src/scripts/controller.js), we create another **bespoke, un-reusable snowflake**. Every time another dashboard module or sibling repository needs multi-dimensional filtering, engineers must reinvent the predicate math, the count aggregation, and the DOM binding from scratch.
+
+---
+
+## 2. 📊 Comparative Evaluation Matrix of Candidate Architectures
+
+The Joint Architecture & UI Council evaluated four strategies across the 8 mandatory governance dimensions:
+
+| Evaluation Dimension              | Option A: Ad-Hoc Surgical Patch in `controller.js` Only         | Option B: Heavyweight External Library (crossfilter / lunr)    | Option C: Speculative Multi-Repo Big Bang Rollout                                   | **Option D (Council Hybrid): Universal Zero-Dependency Faceted Primitive Engine (`ui_primitives/`) + Proven Consumer Rollout (ADOPTED)**                       |
+| :-------------------------------- | :-------------------------------------------------------------- | :------------------------------------------------------------- | :---------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1. Similarities**               | Solves the immediate obligations collision.                     | Solves multi-dimensional indexing.                             | Targets cross-repo portability.                                                     | Solves the immediate obligations bug AND provides cross-repo portability.                                                                                      |
+| **2. Distinctions**               | Localized to 1 file; zero reusable assets.                      | Introduces heavy external runtime dependencies, bundle bloat.  | Attempts to modify multiple repositories simultaneously without local verification. | **Zero-dependency, vanilla JS ES6/UMD primitive (~180 lines) placed in `ui_primitives/scripts/faceted_filter_engine.js`. Proven on Family Obligations first.** |
+| **3. Trade-offs**                 | Fast immediate turnaround vs. massive long-term technical debt. | High feature set vs. bundle bloat and CORS/build complexities. | Broad scope vs. violation of `STD-EMPIRICAL-ADOPTION-001` (prove before claim).     | **Balanced investment**: Delivers immediate production fix while establishing a durable foundation for all subsequent modules.                                 |
+| **4. Dependencies**               | None.                                                           | npm packages, build bundlers.                                  | Multi-repo git coordination.                                                        | **Zero external dependencies**. Native browser DOM and Node.js runtime parity.                                                                                 |
+| **5. Impact Radius**              | Scoped strictly to `shopping_src/scripts/controller.js`.        | Broad bundle size increase.                                    | Uncontrolled blast radius across sibling repos.                                     | **Controlled**: Extends `ui_primitives/`, updates `shopping_src/`, and exports standard for other modules.                                                     |
+| **6. Complexity**                 | Low ($O(1)$ implementation), high future rework ($O(N)$).       | High ($O(N \log N)$ indexing, memory overhead).                | Extremely high organizational complexity.                                           | **Minimal & Elegant**: Clean declarative schema, functional predicates, $O(N)$ scanning with instantaneous performance for $<10,000$ entities.                 |
+| **7. Risks**                      | Bug recurrence in other modules.                                | Dependency lock-in, bundle size warnings.                      | Plan drift and token exhaustion.                                                    | **Mitigated**: Tested via isolated unit harness (`VG-1`), consumer contract (`VG-2`), and byte parity gate (`VG-3`).                                           |
+| **8. Architectural Implications** | Reinforces monolithic, siloed scripts.                          | Violates zero-dependency SDCA mandate.                         | Premature abstraction before proving.                                               | **Establishes `STD-UI-PRIMITIVE-FACETED-FILTER-001` as a first-class SAP design system primitive.**                                                            |
+
+---
+
+## 3. 🏛️ Architecture Council Decision Record (`AC-DEC-2026-073`)
+
+The Joint Architecture & UI Council has formally deliberated and certified the updated decision record:  
+📄 [**`260928_arch_council_reusable_faceted_filter_primitive_and_ecosystem_standards.md`**](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/260928_arch_council_reusable_faceted_filter_primitive_and_ecosystem_standards.md)
+
+### Architectural Invariants Enacted:
+
+1. **`STD-UI-PRIMITIVE-FACETED-FILTER-001` (Universal Faceted Filter Primitive Engine)**:
+   All multi-axis filtering across our web applications must instantiate a shared declarative engine from `ui_primitives/scripts/faceted_filter_engine.js`.
+2. **`INV-FACET-INTERSECT-001` (Conjunctive Filtering)**:
+   Candidates must satisfy all active orthogonal dimensions via boolean `AND`:
+   $$\text{Match}(x) = \text{Match}_{\text{search}}(x) \land \prod_{d \in D} \text{Predicate}_d(x, \text{State}[d])$$
+3. **`INV-FACET-COUNTS-001` (Disjunctive Dynamic Count Aggregation)**:
+   Selecting an option in dimension $A$ (e.g., `Bride Side`) dynamically recalculates the count badges for dimension $B$ (e.g., `Attire (13)`), reflecting the true available intersection.
+4. **`INV-FACET-UI-001` (Two-Tier Segmented Ribbon Ergonomics)**:
+   The UI must visually separate Primary Entity Axis (Tier 1) from Secondary Attribute Facets (Tier 2).
+
+---
+
+## 4. 📋 Updated Enhancement Ticket: `SK-030`
+
+- **Registry Entry**: [`ENHANCEMENT-MASTER-REGISTRY.md`](file:///d:/GitHub_Repo/Sree_Krushna/ENHANCEMENT-MASTER-REGISTRY.md#L36)  
+  `SK-030: Universal Faceted Filter Primitive Engine, State Orthogonality & Dual-Mode UI Ergonomics (STD-UI-PRIMITIVE-FACETED-FILTER-001)`
+- **Enhancement Specification**: [**`enhancement-notes/SK-030/00_ENHANCEMENT_INDEX.md`**](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-030/00_ENHANCEMENT_INDEX.md)
+- **Status**: `READY (Planned)` • **Target Release**: `v2.9.8` • **Cluster**: `[UI-QUALITY]` / `[SHARED-PRIMITIVES]`
+
+```
+┌────────────────────────────────────────────────────────┐
+│ Phase 1: Universal Faceted Filter Primitive Engine     │
+│  - Author ui_primitives/scripts/faceted_filter_engine  │
+│  - Implement declarative schema & computeFacetCounts() │
+│  - Author scripts/test-faceted-filter-primitive.cjs    │
+│  - Validation Gate (VG-1): Unit test harness 100% green│
+└──────────────────────────┬─────────────────────────────┘
+                           │
+┌──────────────────────────▼─────────────────────────────┐
+│ Phase 2: Family Obligations Controller Integration     │
+│  - Instantiate engine in shopping_src/controller.js    │
+│  - Export window.setObligationDirection/Category() etc.│
+│  - Author scripts/test-obligation-faceted-filter.cjs   │
+│  - Validation Gate (VG-2): Contract tests 100% green   │
+└──────────────────────────┬─────────────────────────────┘
+                           │
+┌──────────────────────────▼─────────────────────────────┐
+│ Phase 3: Two-Tier Segmented Toolbar Markup & Styles    │
+│  - Update shopping_src/components/obligations_view.html│
+│  - Add active chip styles in 10_obligations.css (<500) │
+│  - Validation Gate (VG-3): check-html-balance 100%     │
+└──────────────────────────┬─────────────────────────────┘
+                           │
+┌──────────────────────────▼─────────────────────────────┐
+│ Phase 4: SDCA Compilation, Byte Parity & Ecosystem Standard │
+│  - Compile shopping-registry.html & fragment           │
+│  - 100% Byte Parity across root and public/            │
+│  - Register declarative-orthogonal-faceted-filtering.md│
+│  - Validation Gate (VG-4): npm run verify:all (6/6)    │
+└────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 5. 🛠️ Phase 1 Implementation Plan ([`SK-030`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-030/implementation_plan.md))
+
+Per the canonical `writing-plans` engine, the detailed 5-step TDD tasks are scoped specifically to **Phase 1** first:
+
+### Task Breakdown:
+
+1. **Task 1: Automated TDD Unit Test Suite** (`scripts/test-faceted-filter-primitive.cjs`):
+   - Assert single-dimension filtering (`direction = 'bride'`).
+   - Assert multidimensional conjunctive intersection (`direction = 'bride'` AND `category = 'attire'`).
+   - Assert search text integration.
+   - Assert `computeCounts(items, 'category')` computes accurate subset distributions.
+   - Assert reset and state serialization.
+2. **Task 2: Author Universal Faceted Filter Engine** ([`ui_primitives/scripts/faceted_filter_engine.js`](file:///d:/GitHub_Repo/Sree_Krushna/ui_primitives/scripts/faceted_filter_engine.js)):
+   - Implement zero-dependency vanilla JS module exporting `window.skCreateFacetedFilterEngine` / CommonJS factory.
+   - Expose `setFacet()`, `getFacet()`, `filter()`, `computeCounts()`, and `reset()`.
+3. **Task 3: Register in Modular Verifier & Execute Phase 1 Validation Gate (`VG-1`)**:
+   - Register the new primitive in [`scripts/verify-modular-architecture.cjs`](file:///d:/GitHub_Repo/Sree_Krushna/scripts/verify-modular-architecture.cjs).
+   - Add `"test:faceted-filter": "node scripts/test-faceted-filter-primitive.cjs"` to [`package.json`](file:///d:/GitHub_Repo/Sree_Krushna/package.json).
+   - Verify: `npm run test:faceted-filter && npm run verify:modular-architecture`.
+
+---
+
+> [!IMPORTANT]
+> **Mandatory Plan Hard-Stop (`INC-079` / `AC-DEC-2026-044`)**:  
+> All council deliberation requirements, comparative evaluations, and ticket scaffolding are certified and written to disk. To proceed with the execution of **Phase 1** (building the reusable `ui_primitives/scripts/faceted_filter_engine.js`), please confirm and I will begin the implementation!
+
+Edited 260924_Shopping_UI_UPGRADES.md
+Viewed 260924_Shopping_UI_UPGRADES.md:4472-4517
+
+# Query 4.7 -[prompt-clarity](slashCommand;prompt-clarity) is all of this plan SK030 is modular and reusable and have agnostic components for reusability across all repos?
 
 # Review 4.7 -
 
-# Response 4.7 -
+# Response 4.7 -Listed directory styles
+
+Created 260928_arch_council_agnostic_faceted_filter_primitive_and_3_layer_architecture.md
+Created 00_ENHANCEMENT_INDEX.md
+Created implementation_plan.md
+Ran command: `git status -s`
+Ran command: `npm run test:obligations; node scripts/test-obligations-table-density.cjs`
+
+### 🔍 Clarification & Intent Record
+
+- **User Inquiry**: _"Is all of this plan SK030 modular and reusable and have agnostic components for reusability across all repos?"_
+- **Diagnostic Result**: **Partially Agnostic / Identified Coupling Gap**. While Layer 1 (the headless engine) was designed to be agnostic, Layers 2 and 3 (the HTML template, CSS tokens, and DOM event mounter) remained tightly coupled to `shopping_src` in the prior draft.
+- **Council Action**: Upgraded [`SK-030`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-030/00_ENHANCEMENT_INDEX.md) into a **complete 3-Layer Agnostic Decoupled Architecture** (`STD-UI-PRIMITIVE-FACETED-FILTER-001` / `AC-DEC-2026-074`), making 100% of the filtering machinery turnkey and portable across `Sree_Krushna`, `Task-Dashboard`, and `OperatusOS`.
+
+---
+
+## 1. 🔬 Architectural Audit: Was the Prior Plan Truly 100% Agnostic?
+
+An impartial audit against `STD-MOD-COMP-001` (Shared Primitives First) revealed three specific coupling gaps in the earlier iteration of `SK-030`:
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                        ARCHITECTURAL COUPLING AUDIT OF PRIOR PLAN                      │
+├─────────────────────┬───────────────────────┬────────────┬─────────────────────────────┤
+│ Layer               │ Prior Location        │ Verdict    │ Coupling Gap Identified     │
+├─────────────────────┼───────────────────────┼────────────┼─────────────────────────────┤
+│ 1. Logic Engine     │ ui_primitives/scripts │ ✅ Agnostic│ Zero DOM/wedding coupling.  │
+│ 2. UI Markup        │ shopping_src/comp...  │ ❌ Coupled │ Gap UI-A: No template in UI │
+│                     │                       │            │ primitives for sibling repos│
+│ 3. CSS Styling      │ shopping_src/styles/  │ ❌ Coupled │ Gap UI-B: Hardcoded shop-*  │
+│                     │                       │            │ classes instead of tokens   │
+│ 4. Event Binding    │ controller.js (inline)│ ❌ Coupled │ Gap UI-C: Manual DOM wiring │
+│                     │                       │            │ required in every consumer  │
+└─────────────────────┴───────────────────────┴────────────┴─────────────────────────────┘
+```
+
+**Verdict**: The engine was portable, but the UI was not. Sibling repositories (`Task-Dashboard`, `OperatusOS`) would still have had to write bespoke HTML, CSS, and click listeners from scratch.
+
+---
+
+## 2. 📊 Comparative Evaluation Matrix of Architectural Options
+
+The Joint Architecture & UI Council evaluated three candidate architectures across the 8 mandatory governance dimensions:
+
+| Evaluation Dimension              | Option A: Engine-Only Primitive (UI Remains Local)              | Option B: Heavyweight Web Component (`<sk-faceted-toolbar>`)                                | **Option C (Council Hybrid): 3-Layer Agnostic Decoupled Architecture (`ui_primitives/` Template + CSS + Engine + Mounter) (ADOPTED)**                                   |
+| :-------------------------------- | :-------------------------------------------------------------- | :------------------------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1. Similarities**               | Solves the Family Obligations 1D bug.                           | Solves the Family Obligations 1D bug.                                                       | Solves the Family Obligations 1D bug.                                                                                                                                   |
+| **2. Distinctions**               | UI template and CSS remain locked in `shopping_src`.            | Uses Shadow DOM Web Components (`customElements.define`).                                   | **Standard SDCA template (`faceted_toolbar.html`) + Design Token CSS (`04_faceted_toolbar.css`) + Headless Engine & Lightweight Mounter (`faceted_filter_engine.js`).** |
+| **3. Trade-offs**                 | Fast local delivery vs. high technical debt for sibling repos.  | Maximum isolation vs. Shadow DOM CSS theming friction and print engine piercing complexity. | **Optimal**: Zero Shadow DOM friction; 100% themeable via CSS variables; seamlessly readable by `skPrintContainer` and `@media print`.                                  |
+| **4. Dependencies**               | None.                                                           | Web Component polyfills on legacy browsers.                                                 | **Zero external dependencies**. Native browser DOM and Node.js runtime parity.                                                                                          |
+| **5. Impact Radius**              | Scoped to `shopping_src`.                                       | Cross-cutting DOM encapsulation changes.                                                    | **Controlled**: Extends `ui_primitives/` and cleanly refactors `shopping_src` as Reference Consumer #1.                                                                 |
+| **6. Complexity**                 | Low ($O(1)$) locally; $O(N)$ across ecosystem.                  | High ($O(N)$ Shadow DOM event retargeting).                                                 | **Minimal & Elegant**: Declarative schema + pure DOM tree injection. Cleanly decomposed under 250 lines per file.                                                       |
+| **7. Risks**                      | Duplicated UI code when sibling repos implement faceted search. | Shadow DOM print stylesheet concealment (`INV-COLLAPSIBLE-PRINT-001`).                      | **Mitigated**: Regular Light DOM rendering ensures `@media print` unrolls and unclamps cleanly without hacks.                                                           |
+| **8. Architectural Implications** | Violates `STD-MOD-COMP-001` (Shared Primitives First).          | Introduces divergent component model in an SDCA repository.                                 | **Fulfills `STD-MOD-COMP-001`, `STD-UI-PRIMITIVE-002`, and `STD-EMPIRICAL-ADOPTION-001` with turnkey portability.**                                                     |
+
+---
+
+## 3. 🏛️ Architecture Council Decision Record (`AC-DEC-2026-074`)
+
+The Joint Architecture & UI Council has formally deliberated and certified the 3-Layer Decoupled Architecture:  
+📄 [**`260928_arch_council_agnostic_faceted_filter_primitive_and_3_layer_architecture.md`**](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/260928_arch_council_agnostic_faceted_filter_primitive_and_3_layer_architecture.md)
+
+### The 3-Layer Agnostic Primitive Architecture:
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│             STD-UI-PRIMITIVE-FACETED-FILTER-001 (3-LAYER AGNOSTIC ENGINE)              │
+├────────────────────────────────────────────────────────────────────────────────────────┤
+│ LAYER 1: HEADLESS PREDICATE & COUNT ENGINE                                             │
+│  - File: ui_primitives/scripts/faceted_filter_engine.js                                │
+│  - Pure functional schema: { dimensions, searchExtractor }                            │
+│  - Methods: setFacet(), getFacet(), filter(items), computeCounts(items, targetDim)     │
+│  - Zero DOM dependencies; CommonJS & Browser UMD compatible.                           │
+├────────────────────────────────────────────────────────────────────────────────────────┤
+│ LAYER 2: REUSABLE UI TEMPLATE, DESIGN TOKENS & DOM MOUNTER                             │
+│  - Component Template: ui_primitives/components/faceted_toolbar.html                  │
+│  - Token Stylesheet: ui_primitives/styles/04_faceted_toolbar.css                       │
+│    (Defines .sk-facet-bar, .sk-facet-tier, .sk-facet-pill, .sk-facet-chip, etc.)      │
+│  - Lightweight Mounter: skFacetedToolbar.mount(container, engine, { onFilterChange })  │
+│    (Auto-binds clicks, updates active styling, and updates dynamic count badges)       │
+├────────────────────────────────────────────────────────────────────────────────────────┤
+│ LAYER 3: PLUGGABLE CONSUMER ADAPTATION (ZERO CUSTOM CSS IN MODULES)                    │
+│  - Reference Consumer #1: shopping_src/scripts/controller.js (Family Obligations)     │
+│  - Reference Consumer #2: Task-Dashboard / OperatusOS (Future Sibling Import)          │
+│  - Consumer provides only data arrays and declarative dimension definitions.           │
+└────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 4. 📋 Updated Enhancement Ticket: `SK-030`
+
+- **Registry Entry**: [`ENHANCEMENT-MASTER-REGISTRY.md`](file:///d:/GitHub_Repo/Sree_Krushna/ENHANCEMENT-MASTER-REGISTRY.md#L36)  
+  `SK-030: Universal 3-Layer Agnostic Faceted Filter Architecture & Family Obligations 2D Ergonomics (STD-UI-PRIMITIVE-FACETED-FILTER-001)`
+- **Enhancement Specification**: [**`enhancement-notes/SK-030/00_ENHANCEMENT_INDEX.md`**](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-030/00_ENHANCEMENT_INDEX.md)
+- **Status**: `READY (Planned)` • **Target Release**: `v2.9.8` • **Cluster**: `[UI-QUALITY]` / `[SHARED-PRIMITIVES]`
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│ Phase 1: Universal Faceted Filter Headless Engine (Layer 1)            │
+│  - Author ui_primitives/scripts/faceted_filter_engine.js               │
+│  - Implement declarative schema & computeCounts() aggregation math     │
+│  - Author scripts/test-faceted-filter-primitive.cjs                    │
+│  - Validation Gate (VG-1): Unit test harness 100% green                │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+┌───────────────────────────────────▼────────────────────────────────────┐
+│ Phase 2: Agnostic UI Component, Token Styles & Mounter (Layer 2)       │
+│  - Author ui_primitives/components/faceted_toolbar.html                │
+│  - Author ui_primitives/styles/04_faceted_toolbar.css (.sk-facet-*)    │
+│  - Implement skFacetedToolbar.mount() lifecycle in faceted_filter_eng. │
+│  - Author scripts/test-faceted-toolbar-dom.cjs                         │
+│  - Validation Gate (VG-2): DOM mounter & tag balance checks 100% green │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+┌───────────────────────────────────▼────────────────────────────────────┐
+│ Phase 3: Reference Consumer Integration (Family Obligations)           │
+│  - Wire shopping_src/scripts/controller.js to mount skFacetedToolbar   │
+│  - Replace inlined static filters in obligations_view.html             │
+│  - Author scripts/test-obligation-faceted-filter.cjs                   │
+│  - Validation Gate (VG-3): Obligations 2D query contract 100% green    │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+┌───────────────────────────────────▼────────────────────────────────────┐
+│ Phase 4: SDCA Compilation, Byte Parity & Ecosystem Standard Audit      │
+│  - Compile shopping-registry.html & fragment via SDCA build            │
+│  - Verify 100% Byte Parity across root and public/                     │
+│  - Register declarative-orthogonal-faceted-filtering.md pattern        │
+│  - Update scripts/verify-modular-architecture.cjs                      │
+│  - Validation Gate (VG-4): npm run verify:all (6/6 gates green)        │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 5. 🛠️ Phase 1 Implementation Plan ([`SK-030`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-030/implementation_plan.md))
+
+Per canonical `writing-plans` governance, the 5-step TDD tasks are scoped strictly to **Phase 1** first:
+
+1. **Task 1: Automated TDD Unit Test Suite** (`scripts/test-faceted-filter-primitive.cjs`):
+   - Assert single-dimension filtering (`direction = 'bride'`).
+   - Assert multidimensional conjunctive intersection (`direction = 'bride'` AND `category = 'attire'`).
+   - Assert search text integration.
+   - Assert dynamic disjunctive facet count aggregation (`computeCounts(items, 'category')`) returns the exact subset distribution.
+   - Assert reset and state serialization.
+2. **Task 2: Author Universal Faceted Filter Headless Engine** ([`ui_primitives/scripts/faceted_filter_engine.js`](file:///d:/GitHub_Repo/Sree_Krushna/ui_primitives/scripts/faceted_filter_engine.js)):
+   - Implement zero-dependency vanilla JS module exporting `window.skCreateFacetedFilterEngine` / CommonJS factory.
+   - Zero DOM dependencies; strictly under 250 lines.
+3. **Task 3: Register in Modular Verifier & Execute Phase 1 Validation Gate (`VG-1`)**:
+   - Register the new primitive in [`scripts/verify-modular-architecture.cjs`](file:///d:/GitHub_Repo/Sree_Krushna/scripts/verify-modular-architecture.cjs).
+   - Register `"test:faceted-filter": "node scripts/test-faceted-filter-primitive.cjs"` in [`package.json`](file:///d:/GitHub_Repo/Sree_Krushna/package.json).
+   - Verify: `npm run test:faceted-filter && npm run verify:modular-architecture`.
+
+---
+
+> [!IMPORTANT]
+> **Mandatory Plan Hard-Stop (`INC-079` / `AC-DEC-2026-044`)**:  
+> The enhancement ticket, council certification (`AC-DEC-2026-074`), and implementation plan have been updated to guarantee **100% modular, decoupled reusability across all repositories**.  
+> To proceed with executing **Phase 1** (building and testing the Layer 1 Headless Engine), please confirm and I will begin the implementation!
 
 # Query 4.8 -
 

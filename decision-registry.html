@@ -1366,6 +1366,242 @@
 }
 
 
+    /**
+ * Universal 2-Tier Agnostic Faceted Toolbar Styles (STD-UI-PRIMITIVE-FACETED-FILTER-001)
+ * Standard: STD-MOD-COMP-001 | STD-UI-PRIMITIVE-002
+ * Ruling: AC-DEC-2026-074 / UI-DEC-2026-053
+ * Scope: Agnostic design tokens for two-tier segmented faceted filters
+ */
+
+.sk-facet-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--sk-surface, #181b24);
+  border: 1px solid var(--sk-border, #2d3245);
+  border-radius: var(--sk-radius-lg, 16px);
+  padding: 14px 18px;
+  box-shadow: var(--sk-shadow-card, 0 4px 20px rgba(0, 0, 0, 0.35));
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+/* Tier 1: Primary Segmented Pill Bar */
+.sk-facet-tier {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sk-facet-tier-primary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--sk-border-subtle, rgba(255, 255, 255, 0.08));
+}
+
+/* Primary Pill Button */
+.sk-facet-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--sk-radius-full, 9999px);
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--sk-border, #2d3245);
+  background: var(--sk-surface-elevated, #222634);
+  color: var(--sk-text-secondary, #9ca3af);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  min-height: var(--sk-touch-target, 44px);
+  box-sizing: border-box;
+  text-decoration: none;
+  user-select: none;
+}
+
+.sk-facet-pill:hover {
+  border-color: var(--sk-gold, #e5a93c);
+  color: var(--sk-text-primary, #f3f4f6);
+  background: rgba(229, 169, 60, 0.08);
+}
+
+.sk-facet-pill.is-active {
+  background: var(--sk-gold, #e5a93c);
+  border-color: var(--sk-gold, #e5a93c);
+  color: #0f1117;
+  font-weight: 700;
+  box-shadow: 0 2px 10px rgba(229, 169, 60, 0.3);
+}
+
+.sk-facet-pill.is-active .sk-facet-badge {
+  background: rgba(15, 17, 23, 0.25);
+  color: #0f1117;
+  font-weight: 700;
+}
+
+/* Tier 2: Secondary Dimension & Search Strip */
+.sk-facet-tier-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.sk-facet-chips-scroll {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Secondary Chip Button */
+.sk-facet-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: var(--sk-radius-md, 10px);
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid var(--sk-border, #2d3245);
+  background: transparent;
+  color: var(--sk-text-secondary, #9ca3af);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-height: 34px;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+.sk-facet-chip:hover {
+  border-color: var(--sk-text-secondary, #9ca3af);
+  color: var(--sk-text-primary, #f3f4f6);
+}
+
+.sk-facet-chip.is-active {
+  background: var(--sk-surface-elevated, #222634);
+  border-color: var(--sk-gold, #e5a93c);
+  color: var(--sk-gold, #e5a93c);
+  font-weight: 600;
+}
+
+/* Dynamic Count Badges */
+.sk-facet-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--sk-radius-full, 9999px);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--sk-text-secondary, #9ca3af);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+/* Search & Reset Wrap */
+.sk-facet-search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.sk-facet-search-input-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--sk-surface-elevated, #222634);
+  border: 1px solid var(--sk-border, #2d3245);
+  border-radius: var(--sk-radius-full, 9999px);
+  padding: 4px 12px;
+  transition: border-color 0.18s ease;
+}
+
+.sk-facet-search-input-box:focus-within {
+  border-color: var(--sk-gold, #e5a93c);
+}
+
+.sk-facet-search-icon {
+  font-size: 13px;
+  opacity: 0.6;
+}
+
+.sk-facet-search-input {
+  border: none;
+  background: transparent;
+  color: var(--sk-text-primary, #f3f4f6);
+  font-size: 12px;
+  outline: none;
+  width: 140px;
+  font-family: inherit;
+}
+
+.sk-facet-search-input::placeholder {
+  color: var(--sk-text-muted, #6b7280);
+}
+
+/* Reset Button */
+.sk-facet-reset-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: var(--sk-radius-full, 9999px);
+  min-height: 32px;
+}
+
+.sk-facet-reset-icon {
+  font-size: 13px;
+}
+
+/* Mobile & Tablet Responsive Media Queries */
+@media (max-width: 768px) {
+  .sk-facet-toolbar {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .sk-facet-tier-primary {
+    gap: 6px;
+  }
+
+  .sk-facet-pill {
+    padding: 6px 12px;
+    font-size: 12px;
+    min-height: var(--sk-touch-target, 44px);
+  }
+
+  .sk-facet-tier-secondary {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sk-facet-search-wrap {
+    margin-left: 0;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .sk-facet-search-input-box {
+    flex: 1;
+  }
+
+  .sk-facet-search-input {
+    width: 100%;
+  }
+}
+
+
     /* ==========================================================================
        DECISION REGISTRY & EVENT STEPPER SCOPED CSS (INC-086 COMPLIANT)
        All rules are prefixed with #decisionRegistryRoot, #drLightboxModal, or .dr-*
@@ -3677,6 +3913,105 @@
 </div>
 
 
+<!-- Universal Pre-Print Configuration Modal Primitive (STD-UI-PRINT-RUNSHEET-002) -->
+<!-- Standard: STD-MOD-COMP-001 / STD-UI-LIFECYCLE-001 | Ruling: AC-DEC-2026-072 / UI-DEC-2026-054 -->
+<div class="sk-modal-backdrop" id="skPrintOptionsModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="skPrintModalTitle">
+  <div class="sk-modal-card sk-print-modal-card">
+    <div class="sk-print-modal-header">
+      <div class="sk-print-modal-header-left">
+        <div class="sk-print-modal-icon">🖨️</div>
+        <div>
+          <h3 id="skPrintModalTitle" class="sk-print-modal-title">Print Run Sheet Configuration</h3>
+          <p class="sk-print-modal-sub">Configure ink-saving themes and page break layout before printing (STD-UI-PRINT-RUNSHEET-002)</p>
+        </div>
+      </div>
+      <button type="button" class="sk-modal-close" id="skPrintModalClose" aria-label="Close modal">✕</button>
+    </div>
+
+    <div class="sk-print-modal-body">
+      <!-- Section 1: Print Theme (Ink Consumption) -->
+      <div class="sk-print-option-section">
+        <span class="sk-print-section-label">🎨 Ink Optimization Theme</span>
+        <div class="sk-print-cards-grid">
+          <label class="sk-print-radio-card" for="optThemeEco">
+            <input type="radio" id="optThemeEco" name="skPrintTheme" value="eco" checked>
+            <span class="sk-print-card-icon">🌿</span>
+            <span class="sk-print-card-name">
+              Eco Wireframe <span class="sk-print-badge-rec">Default</span>
+            </span>
+            <span class="sk-print-card-desc">Pure white headers with crisp black borders. Slashes toner/ink drain by &gt;95%.</span>
+          </label>
+
+          <label class="sk-print-radio-card" for="optThemeTint">
+            <input type="radio" id="optThemeTint" name="skPrintTheme" value="tint">
+            <span class="sk-print-card-icon">📄</span>
+            <span class="sk-print-card-name">Executive Tint</span>
+            <span class="sk-print-card-desc">Subtle 4% gray header fill with steel borders. Elegant physical briefing aesthetic.</span>
+          </label>
+
+          <label class="sk-print-radio-card" for="optThemeContrast">
+            <input type="radio" id="optThemeContrast" name="skPrintTheme" value="contrast">
+            <span class="sk-print-card-icon">🖥️</span>
+            <span class="sk-print-card-name">High Contrast</span>
+            <span class="sk-print-card-desc">Solid dark banner headers. Optimized for digital screen PDF distribution.</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Section 2: Page Break Orchestration -->
+      <div class="sk-print-option-section">
+        <span class="sk-print-section-label">📑 Page Break Orchestration</span>
+        <div class="sk-print-cards-grid">
+          <label class="sk-print-radio-card" for="optPbSmart">
+            <input type="radio" id="optPbSmart" name="skPrintPageBreak" value="smart" checked>
+            <span class="sk-print-card-icon">⚡</span>
+            <span class="sk-print-card-name">
+              Smart Flow <span class="sk-print-badge-rec">Recommended</span>
+            </span>
+            <span class="sk-print-card-desc">Fluid compact printing. Never splits headers; repeats column titles across sheets.</span>
+          </label>
+
+          <label class="sk-print-radio-card" for="optPbMilestones">
+            <input type="radio" id="optPbMilestones" name="skPrintPageBreak" value="milestones">
+            <span class="sk-print-card-icon">📖</span>
+            <span class="sk-print-card-name">Milestone per Page</span>
+            <span class="sk-print-card-desc">Forces each ritual milestone onto a fresh A4 sheet. Ideal for physical handover ring-binders.</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Section 3: Orientation & Sign-off Options -->
+      <div class="sk-print-options-row">
+        <div>
+          <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--shop-text-secondary, #94a3b8); margin-right: 8px;">Orientation:</span>
+          <label style="display: inline-flex; align-items: center; gap: 4px; font-size: 12px; margin-right: 12px; cursor: pointer;">
+            <input type="radio" name="skPrintOrientation" value="landscape" checked style="accent-color: #d4af37;">
+            Landscape (Recommended)
+          </label>
+          <label style="display: inline-flex; align-items: center; gap: 4px; font-size: 12px; cursor: pointer;">
+            <input type="radio" name="skPrintOrientation" value="portrait" style="accent-color: #d4af37;">
+            Portrait
+          </label>
+        </div>
+
+        <label class="sk-print-checkbox-label" for="skPrintSignoffCheckbox">
+          <input type="checkbox" id="skPrintSignoffCheckbox" checked>
+          <span>Include Elder &amp; Coordinator Sign-off Box</span>
+        </label>
+      </div>
+
+      <!-- Modal Action Buttons -->
+      <div class="sk-print-modal-actions">
+        <button type="button" class="sk-btn sk-btn-secondary" id="skPrintModalCancel">Cancel</button>
+        <button type="button" class="sk-btn sk-btn-primary" id="skPrintModalSubmit">
+          <span>🖨️</span> Print Run Sheet
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <!-- Embedded Data Layer -->
 <script src="./js/decision-registry-data.js"></script>
 
@@ -4902,6 +5237,8 @@
    * Universal Scoped Container Print Function
    * @param {string|HTMLElement} target - CSS selector or DOM element to print
    * @param {Object} [options] - Configuration options
+   * @param {'eco'|'tint'|'contrast'} [options.theme='eco'] - Print theme (zero-ink eco, executive tint, high contrast)
+   * @param {'smart'|'milestones'} [options.pageBreaks='smart'] - Page break mode (smart flow vs milestone per page)
    * @param {string} [options.title] - Document header title
    * @param {string} [options.subtitle] - Header subtitle / timestamp
    * @param {'landscape'|'portrait'} [options.orientation='landscape'] - Page orientation
@@ -4913,6 +5250,8 @@
    */
   function skPrintContainer(target, options) {
     options = options || {};
+    var theme = (options.theme === 'tint' || options.theme === 'contrast') ? options.theme : 'eco';
+    var pageBreaks = options.pageBreaks === 'milestones' ? 'milestones' : 'smart';
     var title = options.title || document.title || 'Print Run Sheet';
     var subtitle = options.subtitle || ('Generated: ' + new Date().toLocaleString());
     var orientation = options.orientation === 'portrait' ? 'portrait' : 'landscape';
@@ -5017,10 +5356,10 @@
       '  page-break-after: auto;',
       '}',
       'th {',
-      '  background: #000000 !important;',
-      '  color: #ffffff !important;',
+      '  background: #f8fafc !important;',
+      '  color: #000000 !important;',
       '  padding: 4px 6px;',
-      '  border: 1px solid #000000;',
+      '  border: 1.5px solid #000000;',
       '  font-size: 8.5px;',
       '  font-weight: 700;',
       '  text-align: left;',
@@ -5038,13 +5377,63 @@
       '  background: #fafafa !important;',
       '}',
       '.obl-table-milestone-header {',
-      '  background: #222222 !important;',
-      '  color: #ffffff !important;',
-      '  padding: 4px 8px;',
+      '  background: #ffffff !important;',
+      '  color: #0f172a !important;',
+      '  border: 1.5px solid #0f172a;',
+      '  border-left: 6px solid #0f172a;',
+      '  padding: 5px 8px;',
       '  font-weight: 700;',
-      '  font-size: 9.5px;',
-      '  margin-top: 8px;',
+      '  font-size: 10px;',
+      '  margin-top: 10px;',
       '  margin-bottom: 4px;',
+      '  break-after: avoid;',
+      '  page-break-after: avoid;',
+      '}',
+      '/* Print Theme Variants (STD-UI-PRINT-RUNSHEET-002) */',
+      'body[data-print-theme="eco"] .obl-table-milestone-header {',
+      '  background: #ffffff !important;',
+      '  color: #0f172a !important;',
+      '  border: 1.5px solid #0f172a !important;',
+      '  border-left: 6px solid #0f172a !important;',
+      '}',
+      'body[data-print-theme="eco"] th {',
+      '  background: #f8fafc !important;',
+      '  color: #000000 !important;',
+      '  border: 1.5px solid #000000 !important;',
+      '}',
+      'body[data-print-theme="tint"] .obl-table-milestone-header {',
+      '  background: #f1f5f9 !important;',
+      '  color: #0f172a !important;',
+      '  border: 1.5px solid #64748b !important;',
+      '  border-left: 6px solid #0f172a !important;',
+      '}',
+      'body[data-print-theme="tint"] th {',
+      '  background: #e2e8f0 !important;',
+      '  color: #0f172a !important;',
+      '  border: 1.5px solid #64748b !important;',
+      '}',
+      'body[data-print-theme="contrast"] .obl-table-milestone-header {',
+      '  background: #0f172a !important;',
+      '  color: #ffffff !important;',
+      '  border: 1.5px solid #0f172a !important;',
+      '  border-left: 6px solid #000000 !important;',
+      '}',
+      'body[data-print-theme="contrast"] .obl-table-milestone-count {',
+      '  background: #1e293b !important;',
+      '  color: #f8fafc !important;',
+      '  border-color: #475569 !important;',
+      '}',
+      'body[data-print-theme="contrast"] th {',
+      '  background: #1e293b !important;',
+      '  color: #ffffff !important;',
+      '  border: 1.5px solid #0f172a !important;',
+      '}',
+      '/* Page Break Modes (INV-PAGE-BREAK-ORCH-001) */',
+      'body[data-print-pagebreak="milestones"] .obl-table-milestone-block:not(:first-child),',
+      'body[data-print-pagebreak="milestones"] .shop-table-group:not(:first-child) {',
+      '  break-before: page !important;',
+      '  page-break-before: always !important;',
+      '  margin-top: 0 !important;',
       '}',
       '.obl-verif-box, .verif-box {',
       '  display: inline-block;',
@@ -5072,7 +5461,8 @@
     var doc = iframe.contentWindow.document;
     doc.open();
     doc.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>' + title + '</title>');
-    doc.write('<style>' + defaultStyles + '</style></head><body>');
+    doc.write('<style>' + defaultStyles + '</style></head>');
+    doc.write('<body data-print-theme="' + theme + '" data-print-pagebreak="' + pageBreaks + '">');
     doc.write('<header class="sk-print-header">');
     doc.write('<div><h1 class="sk-print-title">' + title + '</h1><div class="sk-print-sub">' + subtitle + '</div></div>');
     doc.write('<div><span class="sk-print-badge">' + orientation.toUpperCase() + ' RUN SHEET</span></div>');
@@ -5110,11 +5500,182 @@
     return true;
   }
 
+  var PREFS_STORAGE_KEY = 'sk_print_options';
+
+  /**
+   * Retrieves persistent print preferences
+   * @returns {Object} { theme, pageBreaks, orientation, includeSignoff }
+   */
+  function skGetPrintPreferences() {
+    try {
+      if (typeof localStorage !== 'undefined') {
+        var raw = localStorage.getItem(PREFS_STORAGE_KEY);
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') {
+            return {
+              theme: parsed.theme === 'tint' || parsed.theme === 'contrast' ? parsed.theme : 'eco',
+              pageBreaks: parsed.pageBreaks === 'milestones' ? 'milestones' : 'smart',
+              orientation: parsed.orientation === 'portrait' ? 'portrait' : 'landscape',
+              includeSignoff: parsed.includeSignoff !== false
+            };
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('[skGetPrintPreferences] Error reading preferences:', e);
+    }
+    return { theme: 'eco', pageBreaks: 'smart', orientation: 'landscape', includeSignoff: true };
+  }
+
+  /**
+   * Saves persistent print preferences
+   * @param {Object} prefs
+   */
+  function skSavePrintPreferences(prefs) {
+    if (!prefs || typeof prefs !== 'object') return;
+    try {
+      if (typeof localStorage !== 'undefined') {
+        var current = skGetPrintPreferences();
+        var updated = {
+          theme: prefs.theme || current.theme,
+          pageBreaks: prefs.pageBreaks || current.pageBreaks,
+          orientation: prefs.orientation || current.orientation,
+          includeSignoff: prefs.includeSignoff !== undefined ? Boolean(prefs.includeSignoff) : current.includeSignoff
+        };
+        localStorage.setItem(PREFS_STORAGE_KEY, JSON.stringify(updated));
+      }
+    } catch (e) {
+      console.warn('[skSavePrintPreferences] Error saving preferences:', e);
+    }
+  }
+
+  /**
+   * Universal Pre-Print Options Dialog Orchestrator (STD-UI-LIFECYCLE-001)
+   * Opens the universal print options modal, syncs preferences, and initiates printing.
+   * @param {Object} config - { target, title, subtitle }
+   */
+  function skOpenPrintOptionsModal(config) {
+    config = config || {};
+    var backdrop = document.getElementById('skPrintOptionsModalBackdrop');
+    if (!backdrop) {
+      // Fallback: direct print with saved preferences if modal DOM is absent
+      var fallbackPrefs = skGetPrintPreferences();
+      skPrintContainer(config.target, {
+        title: config.title,
+        subtitle: config.subtitle,
+        theme: fallbackPrefs.theme,
+        pageBreaks: fallbackPrefs.pageBreaks,
+        orientation: fallbackPrefs.orientation,
+        includeSignoff: fallbackPrefs.includeSignoff
+      });
+      return;
+    }
+
+    var prefs = skGetPrintPreferences();
+
+    // Sync radio controls
+    var themeRadios = backdrop.querySelectorAll('input[name="skPrintTheme"]');
+    for (var i = 0; i < themeRadios.length; i++) {
+      themeRadios[i].checked = themeRadios[i].value === prefs.theme;
+    }
+
+    var pbRadios = backdrop.querySelectorAll('input[name="skPrintPageBreak"]');
+    for (var j = 0; j < pbRadios.length; j++) {
+      pbRadios[j].checked = pbRadios[j].value === prefs.pageBreaks;
+    }
+
+    var orientRadios = backdrop.querySelectorAll('input[name="skPrintOrientation"]');
+    for (var k = 0; k < orientRadios.length; k++) {
+      orientRadios[k].checked = orientRadios[k].value === prefs.orientation;
+    }
+
+    var signoffCheck = backdrop.querySelector('#skPrintSignoffCheckbox');
+    if (signoffCheck) {
+      signoffCheck.checked = prefs.includeSignoff;
+    }
+
+    // Modal state activation
+    backdrop.classList.add('is-active');
+    document.body.classList.add('sk-modal-open');
+
+    function closeModal() {
+      backdrop.classList.remove('is-active');
+      document.body.classList.remove('sk-modal-open');
+      window.removeEventListener('keydown', handleKeydown);
+    }
+
+    function handleKeydown(e) {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    }
+    window.addEventListener('keydown', handleKeydown);
+
+    var closeBtn = backdrop.querySelector('#skPrintModalClose');
+    if (closeBtn) closeBtn.onclick = closeModal;
+    var cancelBtn = backdrop.querySelector('#skPrintModalCancel');
+    if (cancelBtn) cancelBtn.onclick = closeModal;
+
+    backdrop.onclick = function (e) {
+      if (e.target === backdrop) closeModal();
+    };
+
+    var submitBtn = backdrop.querySelector('#skPrintModalSubmit');
+    if (submitBtn) {
+      submitBtn.onclick = function () {
+        var selectedTheme = 'eco';
+        var selectedPb = 'smart';
+        var selectedOrient = 'landscape';
+        var includeSignoff = true;
+
+        var checkedTheme = backdrop.querySelector('input[name="skPrintTheme"]:checked');
+        if (checkedTheme) selectedTheme = checkedTheme.value;
+
+        var checkedPb = backdrop.querySelector('input[name="skPrintPageBreak"]:checked');
+        if (checkedPb) selectedPb = checkedPb.value;
+
+        var checkedOrient = backdrop.querySelector('input[name="skPrintOrientation"]:checked');
+        if (checkedOrient) selectedOrient = checkedOrient.value;
+
+        if (signoffCheck) includeSignoff = signoffCheck.checked;
+
+        var newPrefs = {
+          theme: selectedTheme,
+          pageBreaks: selectedPb,
+          orientation: selectedOrient,
+          includeSignoff: includeSignoff
+        };
+        skSavePrintPreferences(newPrefs);
+        closeModal();
+
+        setTimeout(function () {
+          skPrintContainer(config.target, {
+            title: config.title,
+            subtitle: config.subtitle,
+            theme: selectedTheme,
+            pageBreaks: selectedPb,
+            orientation: selectedOrient,
+            includeSignoff: includeSignoff
+          });
+        }, 120);
+      };
+    }
+  }
+
   // Lifecycle-safe registration (INV-LIFECYCLE-02)
   window.skPrintContainer = skPrintContainer;
+  window.skGetPrintPreferences = skGetPrintPreferences;
+  window.skSavePrintPreferences = skSavePrintPreferences;
+  window.skOpenPrintOptionsModal = skOpenPrintOptionsModal;
 
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { skPrintContainer: skPrintContainer };
+    module.exports = {
+      skPrintContainer: skPrintContainer,
+      skGetPrintPreferences: skGetPrintPreferences,
+      skSavePrintPreferences: skSavePrintPreferences,
+      skOpenPrintOptionsModal: skOpenPrintOptionsModal
+    };
   }
 })(typeof window !== 'undefined' ? window : this, typeof document !== 'undefined' ? document : {});
 

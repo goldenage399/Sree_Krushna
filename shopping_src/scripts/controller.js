@@ -2187,17 +2187,33 @@
 
     window.printShoppingTable = function() {
       const tableContainer = document.querySelector('#shoppingTableViewSection .shop-table-container') || document.getElementById('shoppingDataTable');
+      const prefs = typeof window.skGetPrintPreferences === 'function' ? window.skGetPrintPreferences() : { theme: 'eco', pageBreaks: 'smart', orientation: 'landscape', includeSignoff: true };
       if (typeof window.skPrintContainer === 'function' && tableContainer) {
         window.skPrintContainer(tableContainer, {
           title: 'Sree Krushna Marriage OS — Commercial Trousseau Sourcing Catalog',
           subtitle: '44 Canonical Items, Bespoke Attire & Odia Heirlooms (Bhubaneswar Market Run Sheet)',
-          orientation: 'landscape',
+          orientation: prefs.orientation || 'landscape',
           pageSize: 'A4',
           margin: '8mm 10mm',
-          includeSignoff: true
+          theme: prefs.theme || 'eco',
+          pageBreaks: prefs.pageBreaks || 'smart',
+          includeSignoff: prefs.includeSignoff !== false
         });
       } else {
         window.print();
+      }
+    };
+
+    window.openCatalogPrintOptions = function() {
+      const tableContainer = document.querySelector('#shoppingTableViewSection .shop-table-container') || document.getElementById('shoppingDataTable');
+      if (typeof window.skOpenPrintOptionsModal === 'function') {
+        window.skOpenPrintOptionsModal({
+          target: tableContainer,
+          title: 'Sree Krushna Marriage OS — Commercial Trousseau Sourcing Catalog',
+          subtitle: '44 Canonical Items, Bespoke Attire & Odia Heirlooms (Bhubaneswar Market Run Sheet)'
+        });
+      } else {
+        window.printShoppingTable();
       }
     };
 
@@ -4372,14 +4388,17 @@
         const tableContainer = document.getElementById('obligationsTableContainer') || document.querySelector('.shop-obl-table-container');
         const obls = getObligationsList();
         const totalCount = obls.length || 53;
+        const prefs = typeof window.skGetPrintPreferences === 'function' ? window.skGetPrintPreferences() : { theme: 'eco', pageBreaks: 'smart', orientation: 'landscape', includeSignoff: true };
         if (typeof window.skPrintContainer === 'function' && tableContainer) {
           window.skPrintContainer(tableContainer, {
             title: 'Sree Krushna Marriage OS — Customary Family Obligations Run Sheet',
             subtitle: `${totalCount} Codified Ritual Dayitva & Handover Covenants (Vidhi Dayitva / Bhara / Sara)`,
-            orientation: 'landscape',
+            orientation: prefs.orientation || 'landscape',
             pageSize: 'A4',
             margin: '8mm 10mm',
-            includeSignoff: true
+            theme: prefs.theme || 'eco',
+            pageBreaks: prefs.pageBreaks || 'smart',
+            includeSignoff: prefs.includeSignoff !== false
           });
         } else {
           window.print();
@@ -4387,6 +4406,26 @@
       }, 150);
     }
     window.printObligationsSheet = printObligationsSheet;
+
+    function openObligationsPrintOptions() {
+      setCatalogSubView('obligations');
+      setObligationLayoutMode('table');
+      setTimeout(() => {
+        const tableContainer = document.getElementById('obligationsTableContainer') || document.querySelector('.shop-obl-table-container');
+        const obls = getObligationsList();
+        const totalCount = obls.length || 53;
+        if (typeof window.skOpenPrintOptionsModal === 'function') {
+          window.skOpenPrintOptionsModal({
+            target: tableContainer,
+            title: 'Sree Krushna Marriage OS — Customary Family Obligations Run Sheet',
+            subtitle: `${totalCount} Codified Ritual Dayitva & Handover Covenants (Vidhi Dayitva / Bhara / Sara)`
+          });
+        } else {
+          printObligationsSheet();
+        }
+      }, 150);
+    }
+    window.openObligationsPrintOptions = openObligationsPrintOptions;
 
     window.setObligationFilter = function(filter) {
       activeObligationFilter = filter;

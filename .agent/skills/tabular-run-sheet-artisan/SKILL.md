@@ -12,10 +12,11 @@ Use this skill whenever you need to turn a complex dataset, data table, or regis
 This skill directly prevents the common catastrophic single-page application (SPA) failure mode where calling browser print dumps **50 to 60 unintended pages** of inactive tabs, navigation chrome, and dark theme backgrounds.
 
 ### Standards & Rulings
-- **Standard**: `STD-TABULAR-RUN-SHEET-SKILL-001` & `STD-UI-PRINT-CONTAINER-001`
-- **Invariants**: `INV-PRINT-ZERO-DUMP-001` / `INV-PRINT-IFRAME-SANDBOX-001` / `INV-LIFECYCLE-02`
-- **Rulings**: `AC-DEC-2026-064` / `AC-DEC-2026-065` / `UI-DEC-2026-048` / `UI-DEC-2026-049`
+- **Standard**: `STD-TABULAR-RUN-SHEET-SKILL-001`, `STD-UI-PRINT-CONTAINER-001` & `STD-UI-PRINT-RUNSHEET-002`
+- **Invariants**: `INV-PRINT-ZERO-DUMP-001` / `INV-PRINT-IFRAME-SANDBOX-001` / `INV-INK-SAVER-001` / `INV-PAGE-BREAK-ORCH-001` / `INV-LIFECYCLE-02`
+- **Rulings**: `AC-DEC-2026-064` / `AC-DEC-2026-065` / `AC-DEC-2026-072` / `UI-DEC-2026-054`
 - **Governing Package**: `PKG-007` (Universal Scoped Print Sandbox & Tabular Run Sheet Artisan)
+- **Governing Pattern**: [.agent/patterns/ink-saving-print-themes-and-page-break-orchestration.md](../../patterns/ink-saving-print-themes-and-page-break-orchestration.md)
 
 ---
 
@@ -121,8 +122,9 @@ When designing custom tabular run sheets, enforce these standard specifications:
 |---|---|
 | **Orientation** | **Landscape** for ≥5 columns; **Portrait** for ≤4 narrow columns |
 | **Page Size & Margins** | `@page { size: A4 [orientation]; margin: 8mm 10mm; }` |
-| **Color Fidelity** | Pure black (`#000000`) text on white (`#ffffff`) background; zero dark toner fills |
-| **Table Header** | `th { background: #000000 !important; color: #ffffff !important; }` with `display: table-header-group;` so headers repeat on multi-page overflows |
+| **Color Fidelity** | Pure black (`#000000`) text on white (`#ffffff`) background; zero dark toner fills (`INV-INK-SAVER-001`) |
+| **Milestone / Group Header** | Wireframe default (`.milestone-header { background: #ffffff !important; color: #0f172a !important; border-left: 6px solid #0f172a; break-after: avoid !important; }`) to prevent orphan headers (`INV-PAGE-BREAK-ORCH-001`) |
+| **Table Header** | Wireframe default (`th { background: #f8fafc !important; color: #000000 !important; border: 1.5px solid #000000; }`) with `display: table-header-group;` so headers repeat on multi-page overflows (`INV-INK-SAVER-001`) |
 | **Row Break Avoidance** | `tr { page-break-inside: avoid; }` to prevent half-cut text across page margins |
 | **Checkboxes** | `display: inline-block; width: 13px; height: 13px; border: 1.5px solid #000000; border-radius: 2px;` |
 | **Sign-Off Block** | Signature lines for *Coordinator / Lead* and *Approval Authority* with `page-break-inside: avoid;` |

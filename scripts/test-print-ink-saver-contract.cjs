@@ -124,11 +124,64 @@ check('print_engine.js enforces table-header-group on thead (INV-PAGE-BREAK-ORCH
   );
 });
 
-// 3. Modularity Line Limit Audits
-console.log('\n▶ [3/4] Auditing SDCA Modularity Limits (<500 lines)...');
+check('print_engine.js accepts and parses options.theme and options.pageBreaks (STD-UI-PRINT-RUNSHEET-002)', () => {
+  assert(printEngineContent.includes('options.theme'), 'print_engine.js must inspect options.theme');
+  assert(printEngineContent.includes('options.pageBreaks'), 'print_engine.js must inspect options.pageBreaks');
+  assert(printEngineContent.includes("data-print-theme=\"' + theme"), 'print_engine.js must stamp data-print-theme on sandbox body');
+  assert(printEngineContent.includes("data-print-pagebreak=\"' + pageBreaks"), 'print_engine.js must stamp data-print-pagebreak on sandbox body');
+});
+
+check('print_engine.js defines scoped CSS rules for eco, tint, and contrast themes (STD-UI-PRINT-RUNSHEET-002)', () => {
+  assert(printEngineContent.includes('body[data-print-theme="eco"]'), 'Missing data-print-theme="eco" rule');
+  assert(printEngineContent.includes('body[data-print-theme="tint"]'), 'Missing data-print-theme="tint" rule');
+  assert(printEngineContent.includes('body[data-print-theme="contrast"]'), 'Missing data-print-theme="contrast" rule');
+});
+
+check('print_engine.js defines milestone page-break rule with break-before: page (INV-PAGE-BREAK-ORCH-001)', () => {
+  assert(printEngineContent.includes('body[data-print-pagebreak="milestones"]'), 'Missing data-print-pagebreak="milestones" rule');
+  assert(printEngineContent.includes('break-before: page !important'), 'Missing break-before: page !important rule');
+});
+
+check('print_engine.js exports preferences API and modal launcher (STD-UI-LIFECYCLE-001)', () => {
+  assert(printEngineContent.includes('skGetPrintPreferences'), 'Missing skGetPrintPreferences export');
+  assert(printEngineContent.includes('skSavePrintPreferences'), 'Missing skSavePrintPreferences export');
+  assert(printEngineContent.includes('skOpenPrintOptionsModal'), 'Missing skOpenPrintOptionsModal export');
+});
+
+// Functional Execution of preferences API
+check('Functional test: skGetPrintPreferences & skSavePrintPreferences logic', () => {
+  const engine = require(printEnginePath);
+  assert(typeof engine.skGetPrintPreferences === 'function', 'skGetPrintPreferences must be a function');
+  assert(typeof engine.skSavePrintPreferences === 'function', 'skSavePrintPreferences must be a function');
+  assert(typeof engine.skOpenPrintOptionsModal === 'function', 'skOpenPrintOptionsModal must be a function');
+  const prefs = engine.skGetPrintPreferences();
+  assert(prefs && typeof prefs === 'object', 'Preferences must return an object');
+  assert(['eco', 'tint', 'contrast'].includes(prefs.theme), 'Preferences theme must be valid');
+  assert(['smart', 'milestones'].includes(prefs.pageBreaks), 'Preferences pageBreaks must be valid');
+});
+
+// 3. Modularity Line Limit & Component Audits
+console.log('\n▶ [3/4] Auditing SDCA Modularity Limits & Component Assets (<500 lines)...');
 check('11_obligations_table_and_print.css stays below 500 lines (STD-MOD-COMP-001)', () => {
   const lines = cssContent.split('\n').length;
   assert(lines < 500, `11_obligations_table_and_print.css has ${lines} lines (limit: 500)`);
+});
+
+const printOptionsCssPath = path.join(rootDir, 'shopping_src', 'styles', '12_print_themes_and_options.css');
+check('12_print_themes_and_options.css exists and stays below 500 lines (STD-MOD-COMP-001)', () => {
+  assert(fs.existsSync(printOptionsCssPath), 'Missing 12_print_themes_and_options.css');
+  const lines = fs.readFileSync(printOptionsCssPath, 'utf8').split('\n').length;
+  assert(lines < 500, `12_print_themes_and_options.css has ${lines} lines (limit: 500)`);
+});
+
+const printModalHtmlPath = path.join(rootDir, 'ui_primitives', 'components', 'print_options_modal.html');
+check('ui_primitives/components/print_options_modal.html exists and is non-empty', () => {
+  assert(fs.existsSync(printModalHtmlPath), 'Missing ui_primitives/components/print_options_modal.html');
+  const content = fs.readFileSync(printModalHtmlPath, 'utf8');
+  assert(content.length > 50, 'print_options_modal.html should not be empty');
+  assert(content.includes('id="skPrintOptionsModalBackdrop"'), 'Missing modal backdrop ID');
+  assert(content.includes('id="skPrintModalClose"'), 'Missing close button ID');
+  assert(content.includes('id="skPrintModalSubmit"'), 'Missing submit button ID');
 });
 
 check('print_engine.js stays below 500 lines (STD-MOD-COMP-001)', () => {
@@ -139,11 +192,11 @@ check('print_engine.js stays below 500 lines (STD-MOD-COMP-001)', () => {
 // Summary
 console.log('\n════════════════════════════════════════════════════════════════════════════');
 if (failures === 0) {
-  console.log('🎉 ALL INK-SAVING & PAGE-BREAK CONTRACT CHECKS PASSED: SK-031 PHASE 1 VERIFIED!');
+  console.log('🎉 ALL INK-SAVING & PAGE-BREAK CONTRACT CHECKS PASSED: SK-031 PHASE 1 & 2 VERIFIED!');
   console.log('════════════════════════════════════════════════════════════════════════════\n');
   process.exit(0);
 } else {
-  console.error(`❌ ${failures} CHECK(S) FAILED IN SK-031 PHASE 1 VERIFICATION.`);
+  console.error(`❌ ${failures} CHECK(S) FAILED IN SK-031 VERIFICATION.`);
   console.log('════════════════════════════════════════════════════════════════════════════\n');
   process.exit(1);
 }
