@@ -250,6 +250,11 @@
       });
 
       if (targetView === 'obligations') {
+        if (!obligationFacetedToolbar) {
+          initObligationFilterEngine();
+        } else if (obligationFacetedToolbar.updateCounts) {
+          obligationFacetedToolbar.updateCounts();
+        }
         if (activeObligationLayout === 'table') {
           renderObligationsTable();
         } else {
@@ -3845,60 +3850,141 @@
       });
     }
 
+    // ------------------------------------------------------------------------
+    // Agnostic Faceted Filter Engine & Mounter (STD-UI-PRIMITIVE-FACETED-FILTER-001)
+    // ------------------------------------------------------------------------
+    let obligationFilterEngine = null;
+    let obligationFacetedToolbar = null;
+
+    function initObligationFilterEngine() {
+      if (obligationFilterEngine) return;
+      if (typeof window.skCreateFacetedFilterEngine !== 'function') return;
+
+      obligationFilterEngine = window.skCreateFacetedFilterEngine({
+        dimensions: {
+          direction: {
+            default: 'all',
+            options: ['all', 'bride', 'groom', 'joint', 'unresolved'],
+            predicate: function (o, val) {
+              if (val === 'all') return true;
+              if (val === 'bride') return o.obligor && (o.obligor.family === 'bride' || o.obligor.family === 'joint');
+              if (val === 'groom') return o.obligor && o.obligor.family === 'groom';
+              if (val === 'joint') return (o.obligor && o.obligor.family === 'joint') || (o.exchange_cluster && o.exchange_cluster.is_exchange);
+              if (val === 'unresolved') {
+                return ['TBD_Family_Choice', 'Source_Unclear', 'Source_Redacted', 'Pending_Family_Confirmation'].includes(o.spec_status) || o.lifecycle_status === 'Identified';
+              }
+              return true;
+            }
+          },
+          category: {
+            default: 'all',
+            options: ['all', 'attire', 'gold_silver', 'composite_bundle', 'edible_hospitality', 'cash', 'logistics'],
+            predicate: function (o, val) {
+              if (val === 'all') return true;
+              if (val === 'attire') return o.category === 'attire';
+              if (val === 'gold_silver') return o.category === 'gold_silver';
+              if (val === 'cash') {
+                return o.category === 'cash_envelope' || o.category === 'honorarium_cash' || (o.financial_obligation && o.financial_obligation.is_monetary);
+              }
+              if (val === 'composite_bundle') return o.category === 'composite_bundle';
+              if (val === 'edible_hospitality') return o.category === 'edible_hospitality';
+              if (val === 'logistics') return o.category === 'logistics' || o.category === 'service';
+              return o.category === val;
+            }
+          },
+          event: {
+            default: 'all',
+            predicate: function (o, val) {
+              return val === 'all' || o.event_ref === val;
+            }
+          }
+        },
+        searchExtractor: function (o) {
+          const itemsText = (o.items || []).map(function (i) { return i.description; }).join(' ');
+          return [
+            o.id,
+            o.customary_title,
+            o.english_descriptor,
+            o.obligor ? o.obligor.role_title : '',
+            o.obligor ? o.obligor.primary_contact : '',
+            o.recipient ? o.recipient.role_title : '',
+            o.recipient ? o.recipient.primary_contact : '',
+            o.event_ref,
+            o.ritual_ref,
+            itemsText,
+            o.verbatim_provenance ? o.verbatim_provenance.raw_source_text : ''
+          ].join(' ');
+        }
+      });
+
+      const mountContainer = document.getElementById('oblFacetedToolbarMount');
+      if (mountContainer && typeof window.skFacetedToolbar === 'object' && window.skFacetedToolbar.mount) {
+        obligationFacetedToolbar = window.skFacetedToolbar.mount(mountContainer, obligationFilterEngine, {
+          primary: {
+            dimension: 'direction',
+            label: 'Protocol Direction',
+            options: [
+              { id: 'all', label: 'All Obligations', icon: '📜' },
+              { id: 'bride', label: 'Bride Side', icon: '👰' },
+              { id: 'groom', label: 'Groom Side', icon: '🤵' },
+              { id: 'joint', label: 'Joint Handlers', icon: '🤝' },
+              { id: 'unresolved', label: 'Unresolved', icon: '⚠️' }
+            ]
+          },
+          secondary: {
+            dimension: 'category',
+            label: 'Item Category',
+            options: [
+              { id: 'all', label: 'All Categories' },
+              { id: 'attire', label: 'Attire & Silks', icon: '🧵' },
+              { id: 'gold_silver', label: 'Gold & Silver', icon: '💎' },
+              { id: 'composite_bundle', label: 'Bundles & Sara', icon: '📦' },
+              { id: 'edible_hospitality', label: 'Food & Bhara', icon: '🍲' },
+              { id: 'cash', label: 'Cash Dakshina', icon: '💰' },
+              { id: 'logistics', label: 'Logistics', icon: '🚚' }
+            ]
+          },
+          search: {
+            placeholder: 'Search obligations, relatives, rituals, or OBL-###...'
+          },
+          getItems: function () {
+            return getObligationsList();
+          },
+          onFilterChange: function (filtered, state) {
+            // Synchronize legacy variables for backward compatibility
+            activeObligationFilter = state.facets.category !== 'all' ? state.facets.category : (state.facets.direction !== 'all' ? state.facets.direction : 'all');
+            document.querySelectorAll('.obl-inner-pill').forEach(function (btn) {
+              const innerVal = btn.getAttribute('data-inner-filter');
+              btn.classList.toggle('active', innerVal === state.facets.category || (innerVal === 'all' && state.facets.category === 'all'));
+            });
+            if (activeObligationLayout === 'table') {
+              renderObligationsTable();
+            } else {
+              renderObligations();
+            }
+          }
+        });
+      }
+    }
+
     function getFilteredObligations() {
       const obls = getObligationsList();
       if (!obls || obls.length === 0) return [];
 
+      if (!obligationFilterEngine) {
+        initObligationFilterEngine();
+      }
+
+      if (obligationFilterEngine) {
+        return obligationFilterEngine.filter(obls);
+      }
+
       const q = (obligationSearchQuery || '').toLowerCase().trim();
-
-      return obls.filter(o => {
-        // Filter by Event Milestone
-        if (activeObligationEvent !== 'all' && o.event_ref !== activeObligationEvent) {
-          return false;
-        }
-
-        // Filter by Category / Direction / Status Pill
-        if (activeObligationFilter === 'bride') {
-          if (o.obligor.family !== 'bride' && o.obligor.family !== 'joint') return false;
-        } else if (activeObligationFilter === 'groom') {
-          if (o.obligor.family !== 'groom') return false;
-        } else if (activeObligationFilter === 'joint') {
-          if (o.obligor.family !== 'joint' && !o.exchange_cluster.is_exchange) return false;
-        } else if (activeObligationFilter === 'unresolved') {
-          const isUnresolved = ['TBD_Family_Choice', 'Source_Unclear', 'Source_Redacted', 'Pending_Family_Confirmation'].includes(o.spec_status) || o.lifecycle_status === 'Identified';
-          if (!isUnresolved) return false;
-        } else if (activeObligationFilter === 'attire') {
-          if (o.category !== 'attire') return false;
-        } else if (activeObligationFilter === 'gold_silver') {
-          if (o.category !== 'gold_silver') return false;
-        } else if (activeObligationFilter === 'cash') {
-          const isCash = o.category === 'cash_envelope' || o.category === 'honorarium_cash' || (o.financial_obligation && o.financial_obligation.is_monetary);
-          if (!isCash) return false;
-        } else if (activeObligationFilter === 'composite_bundle') {
-          if (o.category !== 'composite_bundle') return false;
-        } else if (activeObligationFilter === 'edible_hospitality') {
-          if (o.category !== 'edible_hospitality') return false;
-        } else if (activeObligationFilter === 'logistics') {
-          if (o.category !== 'logistics' && o.category !== 'service') return false;
-        }
-
-        // Search Query Match
+      return obls.filter(function (o) {
+        if (activeObligationEvent !== 'all' && o.event_ref !== activeObligationEvent) return false;
         if (!q) return true;
-        const itemsText = (o.items || []).map(i => i.description).join(' ');
-        const text = [
-          o.id,
-          o.customary_title,
-          o.english_descriptor,
-          o.obligor ? o.obligor.role_title : '',
-          o.obligor ? o.obligor.primary_contact : '',
-          o.recipient ? o.recipient.role_title : '',
-          o.recipient ? o.recipient.primary_contact : '',
-          o.event_ref,
-          o.ritual_ref,
-          itemsText,
-          o.verbatim_provenance ? o.verbatim_provenance.raw_source_text : ''
-        ].join(' ').toLowerCase();
-
+        const itemsText = (o.items || []).map(function (i) { return i.description; }).join(' ');
+        const text = [o.id, o.customary_title, o.english_descriptor, itemsText].join(' ').toLowerCase();
         return text.includes(q);
       });
     }
@@ -4429,6 +4515,19 @@
 
     window.setObligationFilter = function(filter) {
       activeObligationFilter = filter;
+      if (!obligationFilterEngine) {
+        initObligationFilterEngine();
+      }
+      if (obligationFilterEngine) {
+        if (filter === 'all') {
+          obligationFilterEngine.setFacet('direction', 'all');
+          obligationFilterEngine.setFacet('category', 'all');
+        } else if (['bride', 'groom', 'joint', 'unresolved'].includes(filter)) {
+          obligationFilterEngine.setFacet('direction', filter);
+        } else if (['attire', 'gold_silver', 'cash', 'composite_bundle', 'edible_hospitality', 'logistics'].includes(filter)) {
+          obligationFilterEngine.setFacet('category', filter);
+        }
+      }
       document.querySelectorAll('.shop-obl-pill').forEach(btn => {
         btn.classList.toggle('active', btn.getAttribute('data-obl-filter') === filter);
       });
@@ -4444,6 +4543,12 @@
 
     window.setObligationEventFilter = function(evt) {
       activeObligationEvent = evt;
+      if (!obligationFilterEngine) {
+        initObligationFilterEngine();
+      }
+      if (obligationFilterEngine) {
+        obligationFilterEngine.setFacet('event', evt);
+      }
       if (activeObligationLayout === 'table') {
         renderObligationsTable();
       } else {
@@ -4453,6 +4558,12 @@
 
     window.onObligationSearch = function(query) {
       obligationSearchQuery = query;
+      if (!obligationFilterEngine) {
+        initObligationFilterEngine();
+      }
+      if (obligationFilterEngine) {
+        obligationFilterEngine.setSearchQuery(query);
+      }
       if (activeObligationLayout === 'table') {
         renderObligationsTable();
       } else {
@@ -4467,6 +4578,7 @@
       renderClusters();
       renderStores();
       renderItems();
+      initObligationFilterEngine();
       if (activeObligationLayout === 'table') {
         setObligationLayoutMode('table');
       } else {

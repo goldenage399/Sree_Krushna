@@ -339,7 +339,7 @@ window.DECISION_REGISTRY_DATA = {
   {
     "id": "PLATE-07",
     "index": 6,
-    "title": "20×8ft Rectangular Central Island & Dual Main Buffet",
+    "title": "BOH Satellite Finishing Kitchen & Linear Buffets",
     "category": "catering",
     "categoryLabel": "Catering & Stalls",
     "events": [
@@ -349,10 +349,10 @@ window.DECISION_REGISTRY_DATA = {
     "zone": "Zone C & Rear BOH — Food Operations",
     "spec": "SPEC-OPS-VENUE-GROUND-001 §2.4",
     "clause": "CTR-DECOR-RIDER-001 Cl 6",
-    "photoSrc": "./assets/decor/marquee/hybrid-rectangular-island-inner-view.jpg",
-    "blueprintSrc": "./assets/decor/marquee/blueprint-open-ground-100x160.jpg",
+    "photoSrc": "./assets/decor/stalls_catering/photo-wedding-buffet-setup.jpg",
+    "blueprintSrc": "./assets/decor/stalls_catering/plate-07-satellite-kitchen-buffet.svg",
     "mandatory": true,
-    "dimensions": "20×8ft Central Island • 70ft Dual Main Baseline • 15ft Clear Aisles",
+    "dimensions": "Dual 24ft Linear Buffet Runs • 640 sq. ft. BOH Pass",
     "status": "locked",
     "statusBadge": "LOCKED SPEC",
     "linkedDecisions": [
@@ -361,8 +361,8 @@ window.DECISION_REGISTRY_DATA = {
     ],
     "clusterId": null,
     "clusterOption": null,
-    "notes": "Freestanding 20×8ft rectangular central island providing 360° multi-sided servicing of salads, chaats, artisanal breads, and dual-tier plate stacks with 15ft perimeter aisles; 70ft dual main-course buffet backed by enclosed exterior BOH kitchen (DWG A103 / AC-DEC-2026-030).",
-    "prompt": "An eye-level interior architectural 3D perspective rendering of a luxury 100x160 ft Indian wedding marquee pavilion featuring a grand 20x8 ft rectangular central island with warm under-counter lighting, neatly arranged gourmet salads, artisanal bread baskets, cold raitas, live artisanal chaat bowls, and elegant stacks of plates accessible from all four sides, with an inward-facing 70ft dual main buffet behind."
+    "notes": "Fire-retardant printed camouflage screening wall, gas tandoor and deep-fryer fire safety perimeter with CO2/DCP extinguishers, electric hot box warming cabinets, 2,000L utility water bowser, dual high-throughput buffet lines.",
+    "prompt": "A grand, opulent royal Indian wedding dining buffet spread inside a decorated marquee dining pavilion. Long linear buffet counters draped in midnight navy and gold brocade linens, presenting an array of polished brass and copper chafing dishes with live flame burners below. Fresh aromatic floral runners of tuberoses and baby's breath along the center of the buffet. Elegant menu signage stands with gold calligraphy. Behind the service counter, impeccably uniformed banquet staff in turbans. Warm ambient lighting creating an inviting royal feast ambiance. Photorealistic, 8k."
   },
   {
     "id": "PLATE-08",

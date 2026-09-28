@@ -4,7 +4,7 @@
 
 - **Category**: UI_QUALITY / SHARED_PRIMITIVES / ARCHITECTURE
 - **Priority**: HIGH
-- **Status**: IN_PROGRESS (Phase 1 Complete)
+- **Status**: COMPLETE (All 4 Phases Verified)
 - **Estimate**: 6 hours
 - **Target Release**: v2.9.8
 - **Risk Level**: LOW (Isolated new primitive in `ui_primitives/` + clean consumer mounting)
@@ -67,7 +67,7 @@ dependencies:
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
 ┌───────────────────────────────────▼────────────────────────────────────┐
-│ Phase 3: Reference Consumer Integration (Family Obligations)           │
+│ Phase 3: Reference Consumer Integration (Family Obligations) [DONE]    │
 │  - Wire shopping_src/scripts/controller.js to mount skFacetedToolbar   │
 │  - Replace inlined static filters in obligations_view.html             │
 │  - Author scripts/test-obligation-faceted-filter.cjs                   │
@@ -75,10 +75,10 @@ dependencies:
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
 ┌───────────────────────────────────▼────────────────────────────────────┐
-│ Phase 4: SDCA Compilation, Byte Parity & Ecosystem Standard Audit      │
+│ Phase 4: SDCA Compilation, Byte Parity & Ecosystem Standard Audit[DONE]│
 │  - Compile shopping-registry.html & fragment via SDCA build            │
 │  - Verify 100% Byte Parity across root and public/                     │
-│  - Register declarative-orthogonal-faceted-filtering.md pattern        │
+│  - Register .agent/patterns/declarative-orthogonal-faceted-filtering.md│
 │  - Update scripts/verify-modular-architecture.cjs                      │
 │  - Validation Gate (VG-4): npm run verify:all (6/6 gates green)        │
 └────────────────────────────────────────────────────────────────────────┘

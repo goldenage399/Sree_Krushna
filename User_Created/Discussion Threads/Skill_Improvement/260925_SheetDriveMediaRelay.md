@@ -202,7 +202,7 @@ One thing on your end: open `/hooks` once (or restart) to activate the Phase 4c 
 
 # Response 1.8 -
 
-# Query 1.9 -
+# Query 1.9 -PRINTABILITY
 
 # Review 1.9 -
 

@@ -4,7 +4,7 @@
 > **Ruling**: `AC-DEC-2026-074` / `UI-DEC-2026-053`  
 > **Governing Ticket**: [`enhancement-notes/SK-030/00_ENHANCEMENT_INDEX.md`](./00_ENHANCEMENT_INDEX.md)  
 > **Cluster**: `[UI-QUALITY]` / `[SHARED-PRIMITIVES]`  
-> **Status**: `IN_PROGRESS` — Phase 1 Complete (VG-1 Passed)  
+> **Status**: `COMPLETE` — All 4 Phases Verified (VG-1 through VG-4 Passed)  
 
 ---
 
@@ -54,7 +54,7 @@ Upgrade SK-030 into a **complete 3-Layer Decoupled Primitive Architecture**:
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
 ┌───────────────────────────────────▼────────────────────────────────────┐
-│ Phase 3: Reference Consumer Integration (Family Obligations)           │
+│ Phase 3: Reference Consumer Integration (Family Obligations) [DONE]    │
 │  - Wire shopping_src/scripts/controller.js to mount skFacetedToolbar   │
 │  - Replace inlined static filters in obligations_view.html             │
 │  - Author scripts/test-obligation-faceted-filter.cjs                   │
@@ -62,10 +62,10 @@ Upgrade SK-030 into a **complete 3-Layer Decoupled Primitive Architecture**:
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
 ┌───────────────────────────────────▼────────────────────────────────────┐
-│ Phase 4: SDCA Compilation, Byte Parity & Ecosystem Standard Audit      │
+│ Phase 4: SDCA Compilation, Byte Parity & Ecosystem Standard Audit[DONE]│
 │  - Compile shopping-registry.html & fragment via SDCA build            │
 │  - Verify 100% Byte Parity across root and public/                     │
-│  - Register declarative-orthogonal-faceted-filtering.md pattern        │
+│  - Register .agent/patterns/declarative-orthogonal-faceted-filtering.md│
 │  - Update scripts/verify-modular-architecture.cjs                      │
 │  - Validation Gate (VG-4): npm run verify:all (6/6 gates green)        │
 └────────────────────────────────────────────────────────────────────────┘

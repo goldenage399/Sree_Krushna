@@ -54,40 +54,11 @@
     </div>
   </div>
 
-  <!-- Obligations Segmented Filter & Search Toolbar -->
-  <div class="shop-obl-toolbar">
-    <div class="shop-obl-filters" id="oblFilterPills" role="tablist" aria-label="Obligation Filters">
-      <button type="button" class="shop-obl-pill active" data-obl-filter="all" onclick="window.setObligationFilter('all')">
-        All Obligations (53)
-      </button>
-      <button type="button" class="shop-obl-pill" data-obl-filter="bride" onclick="window.setObligationFilter('bride')">
-        👰 Bride Side (27)
-      </button>
-      <button type="button" class="shop-obl-pill" data-obl-filter="groom" onclick="window.setObligationFilter('groom')">
-        🤵 Groom Side (26)
-      </button>
-      <button type="button" class="shop-obl-pill" data-obl-filter="joint" onclick="window.setObligationFilter('joint')">
-        🤝 Joint Handlers (3)
-      </button>
-      <button type="button" class="shop-obl-pill" data-obl-filter="unresolved" onclick="window.setObligationFilter('unresolved')">
-        ⚠️ Unresolved (8)
-      </button>
-      <button type="button" class="shop-obl-pill" data-obl-filter="attire" onclick="window.setObligationFilter('attire')">
-        🧵 Attire &amp; Silks (22)
-      </button>
-      <button type="button" class="shop-obl-pill" data-obl-filter="gold_silver" onclick="window.setObligationFilter('gold_silver')">
-        💎 Gold &amp; Silver (4)
-      </button>
-      <button type="button" class="shop-obl-pill" data-obl-filter="cash" onclick="window.setObligationFilter('cash')">
-        💰 Cash Dakshina (9)
-      </button>
-    </div>
+  <!-- Universal 2-Tier Segmented Faceted Filter Toolbar (Mounted via skFacetedToolbar) -->
+  <div class="shop-obl-toolbar-section">
+    <div id="oblFacetedToolbarMount" class="shop-obl-filters"></div>
 
-    <div class="shop-obl-controls">
-      <div class="shop-search-box shop-obl-search">
-        <span class="shop-search-icon">🔍</span>
-        <input type="text" id="oblSearchInput" class="shop-search-input" placeholder="Search obligations, relatives, rituals, or OBL-###..." oninput="window.onObligationSearch(this.value)">
-      </div>
+    <div class="shop-obl-controls" style="margin-top: -10px; margin-bottom: 16px; display: flex; justify-content: flex-end; align-items: center; gap: 12px;">
       <div class="shop-obl-event-select-wrap">
         <select id="oblEventFilter" class="shop-obl-select" onchange="window.setObligationEventFilter(this.value)" aria-label="Filter by Event Milestone">
           <option value="all">All Event Milestones</option>

@@ -149,12 +149,36 @@
 
       counts.all = relevantItems.length;
 
-      // Aggregate counts by targetDim value
-      for (var j = 0; j < relevantItems.length; j++) {
-        var itm = relevantItems[j];
-        var itemVal = itm[targetDim];
-        if (itemVal !== undefined && itemVal !== null && itemVal !== '') {
-          counts[itemVal] = (counts[itemVal] || 0) + 1;
+      var targetConf = dimensionConfigs[targetDim] || {};
+      if (typeof targetConf.valueExtractor === 'function') {
+        for (var j = 0; j < relevantItems.length; j++) {
+          var extractedVal = targetConf.valueExtractor(relevantItems[j]);
+          if (extractedVal !== undefined && extractedVal !== null && extractedVal !== '') {
+            counts[extractedVal] = (counts[extractedVal] || 0) + 1;
+          }
+        }
+      } else if (Array.isArray(targetConf.options)) {
+        var targetPred = predicates[targetDim];
+        for (var k = 0; k < targetConf.options.length; k++) {
+          var optKey = targetConf.options[k];
+          var optId = typeof optKey === 'object' ? optKey.id : optKey;
+          if (optId === 'all') continue;
+          var matchCount = 0;
+          for (var j = 0; j < relevantItems.length; j++) {
+            if (targetPred && targetPred(relevantItems[j], optId)) {
+              matchCount++;
+            }
+          }
+          counts[optId] = matchCount;
+        }
+      } else {
+        // Aggregate counts by direct property lookup
+        for (var j = 0; j < relevantItems.length; j++) {
+          var itm = relevantItems[j];
+          var itemVal = itm[targetDim];
+          if (itemVal !== undefined && itemVal !== null && itemVal !== '') {
+            counts[itemVal] = (counts[itemVal] || 0) + 1;
+          }
         }
       }
 
