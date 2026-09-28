@@ -2,7 +2,7 @@
 
 > **Parent Hub**: [`02_RITUALS_CULTURE/HUB.md`](../HUB.md)  
 > **Standard**: `STD-FAMILY-OBLIGATION-001` | **Rulings**: `AC-DEC-2026-061` & `AC-DEC-2026-062`  
-> **Total Obligations**: 53 | **Unresolved**: 8 | **Last Compiled**: 2026-09-27T17:24:23.110Z  
+> **Total Obligations**: 53 | **Unresolved**: 8 | **Last Compiled**: 2026-09-28T04:49:07.203Z  
 
 ---
 
@@ -10,9 +10,9 @@
 
 | Direction | Count | Primary Focus |
 | :--- | :--- | :--- |
-| **Bride's Family ⟶ Groom / In-Laws** | 26 | Batabarana attire/gold, Bandhu Daka, Samandhi Bheta, Nananda Putuli, Family Packs |
-| **Groom's Family ⟶ Bride / In-Laws** | 22 | Ahiya Manduli (Saree for Mummy), Nirbandha lehenga, Haladi Basa, Sadhu Basana, Alankara |
-| **Joint / External** | 3 | Guest honoraria, temple offerings, shared travel trolleys |
+| **Bride's Family ⟶ Groom / In-Laws** | 29 | Batabarana attire/gold, Bandhu Daka, Samandhi Bheta, Nananda Putuli, Family Packs |
+| **Groom's Family ⟶ Bride / In-Laws** | 23 | Ahiya Manduli (Saree for Mummy), Nirbandha lehenga, Haladi Basa, Sadhu Basana, Alankara |
+| **Joint / External** | 1 | Guest honoraria, temple offerings, shared travel trolleys |
 
 ---
 
@@ -33,8 +33,8 @@
 | [`OBL-011`](./OBL-011.md) | **Mitha, Nadia o Kadali Kandhi Bhara (ମିଠା, ନଡ଼ିଆ ଓ କଦଳୀ କାନ୍ଧି ଭାର)** | EVT-001 | groom_to_bride | `composite_bundle` | `Fully_Specified` | `Agreed` | `TRS-SA-06` |
 | [`OBL-012`](./OBL-012.md) | **Nirbandha Phula Mala (ନିର୍ବନ୍ଧ ଫୁଲ ମାଳ)** | EVT-001 | groom_to_bride | `ceremonial_token` | `Fully_Specified` | `Agreed` | `-` |
 | [`OBL-013`](./OBL-013.md) | **Nirbandha Desi Mitha Pana (ନିର୍ବନ୍ଧ ଦେଶୀ ମିଠା ପାନ)** | EVT-001 | groom_to_bride | `edible_hospitality` | `Fully_Specified` | `Agreed` | `-` |
-| [`OBL-014`](./OBL-014.md) | **Puri Jagannath Mahaprasad o Nirmalya (ପୁରୀ ଜଗନ୍ନାଥ ମହାପ୍ରସାଦ ଓ ନିର୍ମାଲ୍ୟ)** | EVT-001 | groom_to_joint | `ceremonial_token` | `Fully_Specified` | `Agreed` | `-` |
-| [`OBL-015`](./OBL-015.md) | **Nirbandha Bahara Nimantrita Dakshina (ବାହାର ନିମନ୍ତ୍ରିତ ଦକ୍ଷିଣା / ₹5,000)** | EVT-001 | groom_to_external | `honorarium_cash` | `Fully_Specified` | `Agreed` | `-` |
+| [`OBL-014`](./OBL-014.md) | **Puri Jagannath Mahaprasad o Nirmalya (ପୁରୀ ଜଗନ୍ନାଥ ମହାପ୍ରସାଦ ଓ ନିର୍ମାଲ୍ୟ)** | EVT-001 | groom_to_bride | `ceremonial_token` | `Fully_Specified` | `Agreed` | `-` |
+| [`OBL-015`](./OBL-015.md) | **Nirbandha Bahara Nimantrita Dakshina (ବାହାର ନିମନ୍ତ୍ରିତ ଦକ୍ଷିଣା / ₹5,000)** | EVT-001 | bride_to_groom | `honorarium_cash` | `Fully_Specified` | `Agreed` | `-` |
 | [`OBL-016`](./OBL-016.md) | **Gua-Haladi Basa Saree (ଗୁଆ-ହଳଦୀ ବସା ଶାଢ଼ୀ)** | EVT-002 | groom_to_bride | `attire` | `Fully_Specified` | `Agreed` | `TRS-BR-03` |
 | [`OBL-017`](./OBL-017.md) | **Haladi Basa Shringar o Prasadhana (ହଳଦୀ ବସା ଶୃଙ୍ଗାର ଓ ପ୍ରସାଧନ)** | EVT-002 | groom_to_bride | `service` | `TBD_Family_Choice` | `Agreed` | `TRS-SA-05` |
 | [`OBL-018`](./OBL-018.md) | **Haladi Basa Puja Samagri (ନଡ଼ିଆ, ଗୁଆ, ପାନ, ହଳଦୀ)** | EVT-002 | groom_to_bride | `composite_bundle` | `Fully_Specified` | `Agreed` | `-` |
@@ -69,9 +69,9 @@
 | [`OBL-047`](./OBL-047.md) | **Bhoji / Preetibhoji Pata Saree (ପ୍ରୀତିଭୋଜି ପାଟ ଶାଢ଼ୀ / Lehenga)** | EVT-005 | groom_to_bride | `attire` | `Fully_Specified` | `Agreed` | `TRS-BR-05` |
 | [`OBL-048`](./OBL-048.md) | **Saaga-Machha Astamangala Bhara (ଶାଗ-ମାଛ ଅଷ୍ଟମଙ୍ଗଳା ଭାର)** | EVT-007 | groom_to_bride | `edible_hospitality` | `Fully_Specified` | `Agreed` | `-` |
 | [`OBL-049`](./OBL-049.md) | **Saaga-Machha Phiranti Bhara (ଶାଗ-ମାଛ ଫେରନ୍ତା ଭାର)** | EVT-007 | bride_to_groom | `edible_hospitality` | `Fully_Specified` | `Agreed` | `-` |
-| [`OBL-050`](./OBL-050.md) | **Batabarana Baranka Royal Sherwani (ବାଟବରଣ ବରଙ୍କ ଶେରୱାନୀ ପୋଷାକ)** | EVT-004 | groom_to_groom | `attire` | `Fully_Specified` | `Agreed` | `TRS-GR-03` |
+| [`OBL-050`](./OBL-050.md) | **Batabarana Baranka Royal Sherwani (ବାଟବରଣ ବରଙ୍କ ଶେରୱାନୀ ପୋଷାକ)** | EVT-004 | bride_to_groom | `attire` | `Fully_Specified` | `Agreed` | `TRS-GR-03` |
 | [`OBL-051`](./OBL-051.md) | **Sacred Vivaha Mandap Pata Saree (ବିବାହ ମଣ୍ଡପ ପାଟ ଶାଢ଼ୀ / ବାଉଳା ପାଟ)** | EVT-004 | groom_to_bride | `attire` | `Fully_Specified` | `Agreed` | `TRS-BR-01` |
-| [`OBL-052`](./OBL-052.md) | **Mandap Vedic Pure Silk Dhoti & Kurta (ମଣ୍ଡପ ରେଶମୀ ଧୋତି-ଯୋଡ଼ / ପାଟ ଯୋଡ଼)** | EVT-004 | groom_to_groom | `attire` | `Fully_Specified` | `Agreed` | `TRS-GR-01` |
+| [`OBL-052`](./OBL-052.md) | **Mandap Vedic Pure Silk Dhoti & Kurta (ମଣ୍ଡପ ରେଶମୀ ଧୋତି-ଯୋଡ଼ / ପାଟ ଯୋଡ଼)** | EVT-004 | bride_to_groom | `attire` | `Fully_Specified` | `Agreed` | `TRS-GR-01` |
 | [`OBL-053`](./OBL-053.md) | **Ceremonial Mukuta & Hastaganthi Bandhana Vastra (ବିବାହ ମୁକୁଟ ଓ ହସ୍ତଗଣ୍ଠି ବନ୍ଧନ ବସ୍ତ୍ର)** | EVT-004 | joint_to_joint | `ceremonial_token` | `Fully_Specified` | `Agreed` | `TRS-OD-05` |
 
 ---

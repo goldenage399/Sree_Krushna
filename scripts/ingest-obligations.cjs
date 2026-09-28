@@ -277,7 +277,7 @@ const obligations = [
     event_ref: "EVT-001",
     ritual_ref: "RIT-001",
     obligor: { family: "groom", primary_contact: "PER-003", role_title: "Groom's Family" },
-    recipient: { family: "joint", primary_contact: "PER-007", role_title: "All Attendees" },
+    recipient: { family: "bride", primary_contact: "PER-007", role_title: "Bride's Family" },
     exchange_cluster: { is_exchange: false, cluster_id: null, peer_obligation_id: null, synchronous_handover: false },
     lifecycle_status: "Agreed",
     spec_status: "Fully_Specified",
@@ -295,17 +295,17 @@ const obligations = [
     category: "honorarium_cash",
     event_ref: "EVT-001",
     ritual_ref: "RIT-001",
-    obligor: { family: "groom", primary_contact: "PER-003", role_title: "Groom's Family" },
-    recipient: { family: "external", primary_contact: "PER-014", role_title: "Confirmed Non-Family Engagement Attendees" },
+    obligor: { family: "bride", primary_contact: "PER-007", role_title: "Bride's Family" },
+    recipient: { family: "groom", primary_contact: "PER-014", role_title: "Confirmed Non-Family Engagement Attendees" },
     exchange_cluster: { is_exchange: false, cluster_id: null, peer_obligation_id: null, synchronous_handover: false },
     lifecycle_status: "Agreed",
     spec_status: "Fully_Specified",
     epistemic_tier: "PROTOCOL_SPECIFIED",
-    verbatim_provenance: { raw_source_text: "8. ₹5,000 per head for those attending the engagement, excluding family members", source_document: "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md", context_snippet: "EVENT 1 — ENGAGEMENT | Groom's Family -> Bride / Bride's Family" },
+    verbatim_provenance: { raw_source_text: "8. ₹5,000 per head for those attending the engagement, excluding family members", source_document: "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md", context_snippet: "EVENT 1 — ENGAGEMENT | Bride's Family -> Non-Family Attendees" },
     items: [{ item_id: "OBL-015-ITM-01", description: "Cash Shagun Envelopes (₹5,000 / recipient)", nature: "consumable", quantity: 1, unit: "envelopes", estimated_cost_inr: null, status: "pending_selection" }],
     financial_obligation: { is_monetary: true, unit_amount_inr: 5000, headcount: null, estimated_total_inr: null, currency: "INR" },
     downstream_projections: { commercial_shopping_ref: null, samagri_checklist_ref: null, asset_custody_ref: null, finance_ledger_ref: "PAY-001" },
-    logistical_custody: { custodian_role: "PER-003", staging_location: "VEN-001", handover_moment: "Nirbandha Guest Departure Gate" }
+    logistical_custody: { custodian_role: "PER-007", staging_location: "VEN-001", handover_moment: "Nirbandha Guest Departure Gate" }
   },
 
   // ─── EVENT 2: BEFORE MARRIAGE & WEDDING DAY (EVT-002 / EVT-004) ───────────

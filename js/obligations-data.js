@@ -11,15 +11,15 @@ window.FAMILY_OBLIGATIONS_DATA = {
     "version": "1.0.0",
     "standard": "STD-FAMILY-OBLIGATION-001",
     "governance_ref": "AC-DEC-2026-061 & AC-DEC-2026-062",
-    "updated_at": "2026-09-27T17:24:23.112Z"
+    "updated_at": "2026-09-28T04:49:07.205Z"
   },
   "stats": {
     "total": 53,
     "by_direction": {
-      "groom_to_bride": 22,
-      "bride_to_groom": 26,
-      "joint": 2,
-      "external": 1
+      "groom_to_bride": 23,
+      "bride_to_groom": 29,
+      "joint": 1,
+      "external": 0
     },
     "by_lifecycle": {
       "Identified": 2,
@@ -935,9 +935,9 @@ window.FAMILY_OBLIGATIONS_DATA = {
         "role_title": "Groom's Family"
       },
       "recipient": {
-        "family": "joint",
+        "family": "bride",
         "primary_contact": "PER-007",
-        "role_title": "All Attendees"
+        "role_title": "Bride's Family"
       },
       "exchange_cluster": {
         "is_exchange": false,
@@ -982,7 +982,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
         "staging_location": "VEN-001",
         "handover_moment": "Nirbandha Astrological Sankalpa"
       },
-      "derived_direction": "groom_to_joint",
+      "derived_direction": "groom_to_bride",
       "file_basename": "OBL-014.md"
     },
     {
@@ -994,12 +994,12 @@ window.FAMILY_OBLIGATIONS_DATA = {
       "event_ref": "EVT-001",
       "ritual_ref": "RIT-001",
       "obligor": {
-        "family": "groom",
-        "primary_contact": "PER-003",
-        "role_title": "Groom's Family"
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Family"
       },
       "recipient": {
-        "family": "external",
+        "family": "groom",
         "primary_contact": "PER-014",
         "role_title": "Confirmed Non-Family Engagement Attendees"
       },
@@ -1015,7 +1015,7 @@ window.FAMILY_OBLIGATIONS_DATA = {
       "verbatim_provenance": {
         "raw_source_text": "8. ₹5,000 per head for those attending the engagement, excluding family members",
         "source_document": "User_Created/Discussion Threads/Shopping/260926_ShoppingList2.md",
-        "context_snippet": "EVENT 1 — ENGAGEMENT | Groom's Family -> Bride / Bride's Family"
+        "context_snippet": "EVENT 1 — ENGAGEMENT | Bride's Family -> Non-Family Attendees"
       },
       "items": [
         {
@@ -1042,11 +1042,11 @@ window.FAMILY_OBLIGATIONS_DATA = {
         "finance_ledger_ref": "PAY-001"
       },
       "logistical_custody": {
-        "custodian_role": "PER-003",
+        "custodian_role": "PER-007",
         "staging_location": "VEN-001",
         "handover_moment": "Nirbandha Guest Departure Gate"
       },
-      "derived_direction": "groom_to_external",
+      "derived_direction": "bride_to_groom",
       "file_basename": "OBL-015.md"
     },
     {
@@ -3288,9 +3288,9 @@ window.FAMILY_OBLIGATIONS_DATA = {
       "event_ref": "EVT-004",
       "ritual_ref": "RIT-004",
       "obligor": {
-        "family": "groom",
-        "primary_contact": "PER-005",
-        "role_title": "Groom's Parents (Baba & Bou)"
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Family (presented as Barabastra / Batabarana Poshaka)"
       },
       "recipient": {
         "family": "groom",
@@ -3363,11 +3363,11 @@ window.FAMILY_OBLIGATIONS_DATA = {
         "finance_ledger_ref": null
       },
       "logistical_custody": {
-        "custodian_role": "PER-002",
+        "custodian_role": "PER-007",
         "staging_location": "VEN-003",
         "handover_moment": "Barat Assembly & Departure"
       },
-      "derived_direction": "groom_to_groom",
+      "derived_direction": "bride_to_groom",
       "file_basename": "OBL-050.md"
     },
     {
@@ -3461,9 +3461,9 @@ window.FAMILY_OBLIGATIONS_DATA = {
       "event_ref": "EVT-004",
       "ritual_ref": "RIT-005",
       "obligor": {
-        "family": "groom",
-        "primary_contact": "PER-005",
-        "role_title": "Groom's Family"
+        "family": "bride",
+        "primary_contact": "PER-007",
+        "role_title": "Bride's Family (presented as Mandap Baradhoti / Pata Joda)"
       },
       "recipient": {
         "family": "groom",
@@ -3518,11 +3518,11 @@ window.FAMILY_OBLIGATIONS_DATA = {
         "finance_ledger_ref": null
       },
       "logistical_custody": {
-        "custodian_role": "PER-002",
+        "custodian_role": "PER-007",
         "staging_location": "VEN-003",
         "handover_moment": "Pre-Mandap Transition into Silk Dhoti"
       },
-      "derived_direction": "groom_to_groom",
+      "derived_direction": "bride_to_groom",
       "file_basename": "OBL-052.md"
     },
     {

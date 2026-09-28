@@ -1,8 +1,8 @@
 # 🌐 Canonical Domain Entity Graph Report — Sree_Krushna
 
 > **Standard**: `STD-UNIVERSAL-TAXONOMY-001` / `STD-PCL-001`  
-> **Generated At**: 2026-09-27T16:40:43.132Z  
-> **Entities Indexed**: 137 | **Cross-Reference Edges**: 580 | **Dangling Targets**: 392  
+> **Generated At**: 2026-09-28T04:41:35.107Z  
+> **Entities Indexed**: 137 | **Cross-Reference Edges**: 580 | **Dangling Targets**: 396  
 
 ---
 
@@ -262,6 +262,8 @@ These entity identifiers are referenced in documentation or catalogs but lack fo
 | **`DEC-2026-046`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`DEC-2026-047`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`DEC-2026-050`** | DEC | `UNSCAFFOLDED_REFERENCE` |
+| **`DEC-2026-051`** | DEC | `UNSCAFFOLDED_REFERENCE` |
+| **`DEC-2026-052`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`DEC-2026-056`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`DEC-2026-057`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`DEC-2026-059`** | DEC | `UNSCAFFOLDED_REFERENCE` |
@@ -273,6 +275,7 @@ These entity identifiers are referenced in documentation or catalogs but lack fo
 | **`DEC-2026-067`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`DEC-2026-068`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`DEC-2026-069`** | DEC | `UNSCAFFOLDED_REFERENCE` |
+| **`DEC-2026-070`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`DEC-POD-001`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`DEC-xxx`** | DEC | `UNSCAFFOLDED_REFERENCE` |
 | **`EVT-001_nirbandha_ashirbad`** | EVT | `UNSCAFFOLDED_REFERENCE` |
@@ -478,6 +481,7 @@ These entity identifiers are referenced in documentation or catalogs but lack fo
 | **`SK-025`** | SK | `UNSCAFFOLDED_REFERENCE` |
 | **`SK-026`** | SK | `UNSCAFFOLDED_REFERENCE` |
 | **`SK-027`** | SK | `UNSCAFFOLDED_REFERENCE` |
+| **`SK-028`** | SK | `UNSCAFFOLDED_REFERENCE` |
 | **`SK-NNN`** | SK | `UNSCAFFOLDED_REFERENCE` |
 | **`TRS-BR-01_opt_0`** | TRS | `UNSCAFFOLDED_REFERENCE` |
 | **`TRS-BR-01_opt_1`** | TRS | `UNSCAFFOLDED_REFERENCE` |

@@ -2,7 +2,7 @@
 
 **Standard:** `STD-SHOPPING-OBLIGATION-002` / `AC-DEC-2026-064`  
 **Governing Ticket:** `SK-022`  
-**Generated Date:** 2026-09-27  
+**Generated Date:** 2026-09-28  
 **Total Obligations:** 53  
 
 ---
@@ -11,10 +11,10 @@
 
 | Milestone | Event Title | Count | Bride Side | Groom Side | Joint / Ext |
 | :--- | :--- | :---: | :---: | :---: | :---: |
-| `EVT-001` | EVT-001: Nirbandha & Ashirbad (ନିର୍ବନ୍ଧ ଓ ଆଶୀର୍ବାଦ) | **15** | 7 | 6 | 2 |
+| `EVT-001` | EVT-001: Nirbandha & Ashirbad (ନିର୍ବନ୍ଧ ଓ ଆଶୀର୍ବାଦ) | **15** | 8 | 7 | 0 |
 | `EVT-002` | EVT-002: Pua-Bhauni & Mangan (ପୁଅ-ଭଉଣୀ ଓ ମଙ୍ଗନ) | **5** | 2 | 3 | 0 |
 | `EVT-003` | EVT-003: Snana & Haladi (ସ୍ନାନ ଓ ହଳଦୀ ଖେଳ) | **0** | 0 | 0 | 0 |
-| `EVT-004` | EVT-004: Barayatri, Batabarana & Mandap Baha (ବରଯାତ୍ରୀ, ବାଟବରଣ ଓ ବିବାହ) | **17** | 5 | 9 | 3 |
+| `EVT-004` | EVT-004: Barayatri, Batabarana & Mandap Baha (ବରଯାତ୍ରୀ, ବାଟବରଣ ଓ ବିବାହ) | **17** | 7 | 9 | 1 |
 | `EVT-005` | EVT-005: Bandapana & Gruha Prabesha (ବନ୍ଦାପନା ଓ ଗୃହ ପ୍ରବେଶ) | **2** | 1 | 1 | 0 |
 | `EVT-006` | EVT-006: Samandhi Bhoji, Chauthi & Basara (ସମନ୍ଧୀ ଭୋଜି, ଚଉଠି ଓ ବାସର) | **12** | 10 | 2 | 0 |
 | `POST_WEDDING` | POST_WEDDING: Astamangala & Phiranti Bhoji (ଅଷ୍ଟମଙ୍ଗଳା ଓ ଫେରନ୍ତା ଭୋଜି) | **2** | 1 | 1 | 0 |
@@ -40,8 +40,8 @@
 | [**OBL-011**](./OBL-011.md) | Groom ⟶ Bride | **Mitha, Nadia o Kadali Kandhi Bhara (ମିଠା, ନଡ଼ିଆ ଓ କଦଳୀ କାନ୍ଧି ଭାର)**<br/>_Auspicious food basket containing 5 varieties of sweets, whole coconuts, and banana cluster_ | `composite_bundle` | 5 boxes 5 Varieties Sweets; 5 pcs Sacred Coconuts; 1 stem Auspicious Banana Kandhi (Whole Stem) | — | `TRS-SA-06` | [ ] |
 | [**OBL-012**](./OBL-012.md) | Groom ⟶ Bride | **Nirbandha Phula Mala (ନିର୍ବନ୍ଧ ଫୁଲ ମାଳ)**<br/>_Ceremonial floral garlands for Engagement_ | `ceremonial_token` | 2 pairs Fresh Jasmine/Rose Garlands | — | `Direct` | [ ] |
 | [**OBL-013**](./OBL-013.md) | Groom ⟶ Bride | **Nirbandha Desi Mitha Pana (ନିର୍ବନ୍ଧ ଦେଶୀ ମିଠା ପାନ)**<br/>_Traditional sweet betel preparation for welcoming guest party_ | `edible_hospitality` | 1 set Ceremonial Odia Desi Sweet Pana Hamper | — | `Direct` | [ ] |
-| [**OBL-014**](./OBL-014.md) | Joint / In-Laws | **Puri Jagannath Mahaprasad o Nirmalya (ପୁରୀ ଜଗନ୍ନାଥ ମହାପ୍ରସାଦ ଓ ନିର୍ମାଲ୍ୟ)**<br/>_Consecrated Nirmalya and Mahaprasad from Sri Jagannath Temple_ | `ceremonial_token` | 1 hamper Puri Jagannath Temple Mahaprasad & Nirmalya Packets | — | `Direct` | [ ] |
-| [**OBL-015**](./OBL-015.md) | Joint / In-Laws | **Nirbandha Bahara Nimantrita Dakshina (ବାହାର ନିମନ୍ତ୍ରିତ ଦକ୍ଷିଣା / ₹5,000)**<br/>_Customary cash honorarium per non-family guest attending the engagement_ | `honorarium_cash` | 1 envelopes Cash Shagun Envelopes (₹5,000 / recipient) | ₹5000 | `Direct` | [ ] |
+| [**OBL-014**](./OBL-014.md) | Groom ⟶ Bride | **Puri Jagannath Mahaprasad o Nirmalya (ପୁରୀ ଜଗନ୍ନାଥ ମହାପ୍ରସାଦ ଓ ନିର୍ମାଲ୍ୟ)**<br/>_Consecrated Nirmalya and Mahaprasad from Sri Jagannath Temple_ | `ceremonial_token` | 1 hamper Puri Jagannath Temple Mahaprasad & Nirmalya Packets | — | `Direct` | [ ] |
+| [**OBL-015**](./OBL-015.md) | Bride ⟶ Groom | **Nirbandha Bahara Nimantrita Dakshina (ବାହାର ନିମନ୍ତ୍ରିତ ଦକ୍ଷିଣା / ₹5,000)**<br/>_Customary cash honorarium per non-family guest attending the engagement_ | `honorarium_cash` | 1 envelopes Cash Shagun Envelopes (₹5,000 / recipient) | ₹5000 | `Direct` | [ ] |
 
 ### 🌿 EVT-002: Pua-Bhauni & Mangan (ପୁଅ-ଭଉଣୀ ଓ ମଙ୍ଗନ)
 
@@ -70,9 +70,9 @@
 | [**OBL-032**](./OBL-032.md) | Groom ⟶ Bride | **Kanya Alankara (କନ୍ୟା ଅଳଙ୍କାର - ସୁନା ଗହଣା)**<br/>_Precious gold jewellery gifted by Groom's family for the Mandap ornamentation_ | `gold_silver` | 1 set 22K Gold Temple Necklace / Sita Haar / Kadas | — | `TRS-JW-01` | [ ] |
 | [**OBL-033**](./OBL-033.md) | Groom ⟶ Bride | **TDK Customary Item (ଅସ୍ପଷ୍ଟ ହସ୍ତଲିଖିତ - TDK)**<br/>_Item with blurred handwritten abbreviation 'TDK' flagged for verbal confirmation_ | `attire` | 1 pcs Handwritten abbreviation 'TDK' (Pending Oral Confirmation) | — | `Direct` | [ ] |
 | [**OBL-034**](./OBL-034.md) | Bride ⟶ Groom | **Baranka Pancha Joda Poshaka (ବରଙ୍କ ପାଞ୍ଚ ଯୋଡ଼ା ପୋଷାକ)**<br/>_Wardrobe suite of 5 festive attire sets gifted by Bride's family to the Groom_ | `composite_bundle` | 5 sets 5 Sets Festive Kurtas, Shirts, and Trousers | — | `TRS-GR-07` | [ ] |
-| [**OBL-050**](./OBL-050.md) | Joint / In-Laws | **Batabarana Baranka Royal Sherwani (ବାଟବରଣ ବରଙ୍କ ଶେରୱାନୀ ପୋଷାକ)**<br/>_Groom's regal entrance wedding attire for Barat procession and Batabarana doorstep welcome: Royal Sherwani, Safa (Pagadi), Kalgi, Stole, Pearl Mala, and Mojaris_ | `attire` | 1 set Barat Royal Embroidered Sherwani with Churidar / Dhoti; 1 pcs Regal Safa (Turban) with Royal Feather Kalgi; 1 set Barat Dupatta / Stole & Multi-Layer Pearl Kantha Mala; 1 pair Traditional Embroidered Wedding Mojaris | — | `TRS-GR-03` | [ ] |
+| [**OBL-050**](./OBL-050.md) | Bride ⟶ Groom | **Batabarana Baranka Royal Sherwani (ବାଟବରଣ ବରଙ୍କ ଶେରୱାନୀ ପୋଷାକ)**<br/>_Groom's regal entrance wedding attire for Barat procession and Batabarana doorstep welcome: Royal Sherwani, Safa (Pagadi), Kalgi, Stole, Pearl Mala, and Mojaris_ | `attire` | 1 set Barat Royal Embroidered Sherwani with Churidar / Dhoti; 1 pcs Regal Safa (Turban) with Royal Feather Kalgi; 1 set Barat Dupatta / Stole & Multi-Layer Pearl Kantha Mala; 1 pair Traditional Embroidered Wedding Mojaris | — | `TRS-GR-03` | [ ] |
 | [**OBL-051**](./OBL-051.md) | Groom ⟶ Bride | **Sacred Vivaha Mandap Pata Saree (ବିବାହ ମଣ୍ଡପ ପାଟ ଶାଢ଼ୀ / ବାଉଳା ପାଟ)**<br/>_Bride's consecrated wedding silk saree for the sacred Vivaha Mandap, Hastaganthi knotting, and Saptapadi rites_ | `attire` | 1 pcs Auspicious Baula Patta / Nuapatna Khandua Silk Saree; 1 pcs Traditional Zari Embroidered Bridal Blouse; 1 pcs Bridal Odhani / Mandap Veil | — | `TRS-BR-01` | [ ] |
-| [**OBL-052**](./OBL-052.md) | Joint / In-Laws | **Mandap Vedic Pure Silk Dhoti & Kurta (ମଣ୍ଡପ ରେଶମୀ ଧୋତି-ଯୋଡ଼ / ପାଟ ଯୋଡ଼)**<br/>_Groom's consecrated unstitched silk dhoti, kurta, and ceremonial angavastra for the Vedic Havan, Kanyadan, and Hastaganthi rites_ | `attire` | 1 set Pure Tussar/Mulberry Silk Unstitched Dhoti & Kurta Ensemble; 1 pcs Ceremonial Silk Patta / Angavastra | — | `TRS-GR-01` | [ ] |
+| [**OBL-052**](./OBL-052.md) | Bride ⟶ Groom | **Mandap Vedic Pure Silk Dhoti & Kurta (ମଣ୍ଡପ ରେଶମୀ ଧୋତି-ଯୋଡ଼ / ପାଟ ଯୋଡ଼)**<br/>_Groom's consecrated unstitched silk dhoti, kurta, and ceremonial angavastra for the Vedic Havan, Kanyadan, and Hastaganthi rites_ | `attire` | 1 set Pure Tussar/Mulberry Silk Unstitched Dhoti & Kurta Ensemble; 1 pcs Ceremonial Silk Patta / Angavastra | — | `TRS-GR-01` | [ ] |
 | [**OBL-053**](./OBL-053.md) | Joint / In-Laws | **Ceremonial Mukuta & Hastaganthi Bandhana Vastra (ବିବାହ ମୁକୁଟ ଓ ହସ୍ତଗଣ୍ଠି ବନ୍ଧନ ବସ୍ତ୍ର)**<br/>_Sacred bridal & groom ceremonial Mukuta (Shola & silver filigree crowns) and nuptial knotting cloth for Hastaganthi binding_ | `ceremonial_token` | 1 pair Traditional Shola & Silver Filigree Mukuta Pair for Bride and Groom; 1 pcs Hastaganthi Bandhana Vastra (Sacred Silk Knotting Cloth) | — | `TRS-OD-05` | [ ] |
 
 ### 🏛️ EVT-005: Bandapana & Gruha Prabesha (ବନ୍ଦାପନା ଓ ଗୃହ ପ୍ରବେଶ)
