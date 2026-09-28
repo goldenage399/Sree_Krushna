@@ -233,3 +233,5 @@ This repository implements the following universal patterns:
 - `.agent/patterns/universal-repository-taxonomy-and-discovery-graph.md`
 - `.agent/patterns/table-domain-separation-and-mobile-scroll.md`
 - `.agent/patterns/dual-council-pre-planning-and-interaction-matrix.md`
+- `.agent/patterns/structural-dom-contract-gate.md`
+- `.agent/patterns/table-cell-display-model-isolation-and-slack-budgeting.md`

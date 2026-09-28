@@ -5478,10 +5478,13 @@
 }
 
 #tab-shopping #shoppingRegistryFrame .obl-td-specs {
-  width: 220px;
-  max-width: 260px;
   font-size: 11px;
   color: #e2e8f0;
+  vertical-align: top;
+}
+
+#tab-shopping #shoppingRegistryFrame .obl-specs-clamp {
+  width: 100%;
   line-height: 1.4;
   word-break: break-word;
   display: -webkit-box;
@@ -5734,9 +5737,16 @@
   #tab-shopping #shoppingRegistryFrame .obl-td-specs {
     color: #000000 !important;
     display: table-cell !important;
+    max-width: none !important;
+    overflow: visible !important;
+  }
+
+  #tab-shopping #shoppingRegistryFrame .obl-specs-clamp {
+    display: block !important;
     -webkit-line-clamp: unset !important;
     overflow: visible !important;
-    max-width: none !important;
+    height: auto !important;
+    max-height: none !important;
   }
 
   #tab-shopping #shoppingRegistryFrame .obl-verif-box {
@@ -13003,7 +13013,7 @@
                 <div class="obl-subdesc">${escapeHtml(o.english_descriptor)}</div>
               </td>
               <td class="obl-td-cat"><code>${escapeHtml(o.category)}</code></td>
-              <td class="obl-td-specs" title="${escapeHtml(itemsTooltip)}">• ${itemsText}</td>
+              <td class="obl-td-specs"><div class="obl-specs-clamp" title="${escapeHtml(itemsTooltip)}">• ${itemsText}</div></td>
               <td class="obl-td-cash">${cashText}</td>
               <td class="obl-td-trs">${trsHtml}</td>
               <td class="obl-td-verif"><span class="obl-verif-box"></span></td>

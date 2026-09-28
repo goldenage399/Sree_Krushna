@@ -111,6 +111,7 @@ The tier is a **graduation ladder**: a pattern may start at `reference` and grad
 | [in-context-balance-refresh-cache-busting.md](in-context-balance-refresh-cache-busting.md) | `reference` | VALIDATED | `GEMINI.md` (Pattern Activation), `CLAUDE.md` | universal |
 | [sheet-drive-media-relay.md](sheet-drive-media-relay.md) | `guarded` | VALIDATED | `GEMINI.md` (Prime Invariant 9), `CLAUDE.md`, `SK-015`, `test:sheet-drive-relay` | universal |
 | [universal-repository-taxonomy-and-discovery-graph.md](universal-repository-taxonomy-and-discovery-graph.md) | `guarded` | VALIDATED | `GEMINI.md` (Prime Invariant 10), `CLAUDE.md`, `SK-019`, `test:graph`, `verify:taxonomy` | universal |
+| [table-cell-display-model-isolation-and-slack-budgeting.md](table-cell-display-model-isolation-and-slack-budgeting.md) | `reference` | VALIDATED | `GEMINI.md`, `CLAUDE.md`, `SPEC-ARCH-MUTABLE-TABLE-001.md` (FKL-DI-027), `SK-029` | universal |
 > Update this index whenever a pattern is created or its tier changes via `/capture-pattern`.
 
 ---

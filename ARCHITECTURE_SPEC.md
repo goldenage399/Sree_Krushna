@@ -173,3 +173,19 @@ To eliminate post-implementation UI rework and bridge the gap between static pri
    - Interactive screen tables must support grouping accordions with tactile chevron feedback, bulk controls (`[▼ Expand All]`, `[▶ Collapse All]`), and `localStorage` state persistence.
    - Physical paper and PDF print media (`@media print` and `window.skPrintContainer`) must unconditionally force-unroll all collapsed blocks (`display: table !important; height: auto !important`), guaranteeing zero truncated data on paper.
 
+---
+
+## 10. Multi-Viewport Fluid Table Budgeting & Table-Cell Display Model Isolation (SK-029)
+
+**Ruling:** `AC-DEC-2026-071` / `UI-DEC-2026-053`  
+**SSOT Specification:** [`docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md`](docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md)  
+**Governing Standards:** `STD-TABLE-BUDGET-001` / `INV-TABLE-DOM-001` / `INV-COLLAPSIBLE-PRINT-001`  
+
+To resolve asymmetric table column expansion and eliminate premature text truncation on widescreen viewports:
+1. **Table-Cell Display Model Isolation (`INV-TABLE-DOM-001` / `FKL-DI-027`):**
+   - Table cells (`<td>`, `<th>`) must never have `display: -webkit-box`, `display: flex`, or `display: grid` applied directly. All text-clamping and multi-line overflow rules must be encapsulated inside an inner child container (`<div class="*-clamp">`), preserving native `display: table-cell` on the `<td>`.
+2. **Proportional Column Budgeting (`STD-TABLE-BUDGET-001`):**
+   - High-density data tables must declare `table-layout: fixed; width: 100%;` with explicit percentage budgeting (e.g. 30% Title / 25% Specs) so primary descriptive columns expand harmoniously on wide monitors without single-column slack absorption.
+3. **Zero-Truncation Print Preservation:**
+   - Inner clamp containers must unconditionally unclamp in print media (`-webkit-line-clamp: unset !important; overflow: visible !important; height: auto !important;`), ensuring uncut liturgical specifications on physical paper run sheets.
+

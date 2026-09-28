@@ -139,10 +139,13 @@
 }
 
 .obl-td-specs {
-  width: 220px;
-  max-width: 260px;
   font-size: 11px;
   color: #e2e8f0;
+  vertical-align: top;
+}
+
+.obl-specs-clamp {
+  width: 100%;
   line-height: 1.4;
   word-break: break-word;
   display: -webkit-box;
@@ -394,9 +397,16 @@
   .obl-td-specs {
     color: #000000 !important;
     display: table-cell !important;
+    max-width: none !important;
+    overflow: visible !important;
+  }
+
+  .obl-specs-clamp {
+    display: block !important;
     -webkit-line-clamp: unset !important;
     overflow: visible !important;
-    max-width: none !important;
+    height: auto !important;
+    max-height: none !important;
   }
 
   .obl-verif-box {

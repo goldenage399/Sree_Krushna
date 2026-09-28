@@ -142,6 +142,84 @@ workflow_activation:
   - WT-02
   - WT-06
 promotion_status: Active
+ superseded_by: ""
+content_ref: docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md
+---
+```
+</details>
+
+<details>
+<summary>🔑 FKL Item Header (FKL-DI-027)</summary>
+
+```yaml
+---
+fkl_id: FKL-DI-027
+fkl_type: DesignInvariant
+source:
+  - docs/incidents/INC-102-table-cell-display-model-override-and-asymmetric-slack-absorption.md
+  - SK-029
+  - AC-DEC-2026-071
+promoted_from: ""
+applies_to:
+  - MutableTable
+  - ObligationsTable
+  - DataTableLayout
+workflow_activation:
+  - WT-02
+  - WT-06
+promotion_status: Active
+superseded_by: ""
+content_ref: docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md
+---
+```
+</details>
+
+<details>
+<summary>🔑 FKL Item Header (FKL-AL-011)</summary>
+
+```yaml
+---
+fkl_id: FKL-AL-011
+fkl_type: ArchitecturalLearning
+source:
+  - docs/incidents/INC-102-table-cell-display-model-override-and-asymmetric-slack-absorption.md
+  - SK-029
+  - AC-DEC-2026-071
+promoted_from: ""
+applies_to:
+  - MutableTable
+  - TableLayoutAlgorithm
+  - SlackDistribution
+workflow_activation:
+  - WT-02
+  - WT-06
+promotion_status: Active
+superseded_by: ""
+content_ref: docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md
+---
+```
+</details>
+
+<details>
+<summary>🔑 FKL Item Header (FKL-WI-008)</summary>
+
+```yaml
+---
+fkl_id: FKL-WI-008
+fkl_type: WorkflowImprovement
+source:
+  - docs/incidents/INC-102-table-cell-display-model-override-and-asymmetric-slack-absorption.md
+  - SK-029
+  - AC-DEC-2026-071
+promoted_from: ""
+applies_to:
+  - MutableTable
+  - PrintRunSheet
+  - DensityGate
+workflow_activation:
+  - WT-02
+  - WT-06
+promotion_status: Active
 superseded_by: ""
 content_ref: docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md
 ---
@@ -149,15 +227,22 @@ content_ref: docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md
 </details>
 
 **Specification Reference:** `SPEC-ARCH-MUTABLE-TABLE-001`  
-**Governing Decisions:** `AC-DEC-2026-034` / `UI-DEC-2026-030` (`P-MULTI-VIEWPORT-RESPONSIVE-001`), `Directive 2.2 / SK-021` (`P-TABLE-DOMAIN-SEPARATION-001`)  
+**Governing Decisions:** `AC-DEC-2026-034` / `UI-DEC-2026-030` (`P-MULTI-VIEWPORT-RESPONSIVE-001`), `Directive 2.2 / SK-021` (`P-TABLE-DOMAIN-SEPARATION-001`), `AC-DEC-2026-071` / `UI-DEC-2026-053` (`STD-TABLE-BUDGET-001` / `INV-TABLE-DOM-001` / `SK-029`)  
 **Standard References:**  
 - `STD-MOD-COMP-001` (Modular Component Architecture & SDCA Structure)  
+- `STD-TABLE-BUDGET-001` (Proportional Fixed Column Budgeting)  
+- `INV-TABLE-DOM-001` (Table-Cell Display Model Isolation)  
+- `INV-COLLAPSIBLE-PRINT-001` (Zero-Truncation Print Unrolling)  
 - `INV-SDCA-004` (SDCA At-Rule Compiler Scoping Invariant)  
 - `INV-LIFECYCLE-03` (3-Trigger Modal/Drawer Dismissibility)  
 - `FKL-DI-025` (Clean Domain Separation & Pure Tabular Responsive Architecture)  
+- `FKL-DI-027` (Table-Cell Display Model Isolation & Proportional Budgeting)  
 - `FKL-AL-009` (Anti-Pattern of Pseudo-Element Table Column Collapses)  
+- `FKL-AL-011` (Table Layout Algorithm Slack Absorption & Display Model Conflation)  
 - `FKL-WI-006` (Cross-Surface Bi-Directional Quick-Handoff Protocol)  
+- `FKL-WI-008` (Inner Clamp Container Decoupling & Print Unrolling Contract)  
 - Pattern Contract: [.agent/patterns/table-domain-separation-and-mobile-scroll.md](../../.agent/patterns/table-domain-separation-and-mobile-scroll.md)  
+- Pattern Contract: [.agent/patterns/table-cell-display-model-isolation-and-slack-budgeting.md](../../.agent/patterns/table-cell-display-model-isolation-and-slack-budgeting.md)  
 **Version:** `2.0.0` (Production Ratified — Path A Clean Separation)  
 
 ---
@@ -262,6 +347,15 @@ Any at-rule matched by this pattern MUST preserve the signature at the root of t
 
 ### 2.5 Invariant FKL-WI-004: Header Saturation Gate & Popover Fallback
 At viewports $\le 360\text{px}$, sticky headers (`#stickyHeaderShell`) must not exceed a single horizontal row ($48\text{px}$–$56\text{px}$). Secondary and tertiary actions must collapse into a single touch-compliant popover with 3-trigger dismissibility (`INV-LIFECYCLE-03`).
+
+### 2.6 Invariant FKL-DI-027: Table-Cell Display Model Isolation & Proportional Budgeting (`INV-TABLE-DOM-001` / `STD-TABLE-BUDGET-001`)
+In all HTML data tables, table cells (`<td>`, `<th>`) must maintain their native `display: table-cell` display model. Under no circumstances may `display: -webkit-box`, `display: flex`, or `display: grid` be applied directly to a `<td>` or `<th>`. Text clamping, flex alignments, or badge grouping must always be encapsulated inside a dedicated child container (`<div class="*-clamp">` or `<div class="*-inner">`). Tables with multiple descriptive columns must declare `table-layout: fixed; width: 100%;` with explicit percentage budgeting (e.g. 30% Title / 25% Specs) to prevent single-column slack absorption.
+
+### 2.7 Invariant FKL-AL-011: Table Layout Algorithm Slack Absorption & Display Model Conflation
+Under default W3C `table-layout: auto`, browsers distribute all excess table container width ("slack") exclusively to columns with unconstrained `<td>` cells, while cells with explicit pixel widths or overridden display models remain starved. When `display: -webkit-box` is placed directly on a `<td>`, Blink/Chromium treats the cell as a rigid box locked to its declared width, starving it from slack expansion and causing premature 3-line truncation with ellipses even when hundreds of pixels of blank whitespace sit unused across widescreen viewports.
+
+### 2.8 Invariant FKL-WI-008: Inner Clamp Container Decoupling & Print Unrolling Contract (`INV-COLLAPSIBLE-PRINT-001`)
+All inner clamp containers (`.obl-specs-clamp`) must unconditionally unclamp in print media (`-webkit-line-clamp: unset !important; overflow: visible !important; height: auto !important; max-height: none !important;`) per `INV-COLLAPSIBLE-PRINT-001`. This guarantees that high-density paper run sheets printed for elders and coordinators display 100% of customary and liturgical specifications without ellipsis cutoffs.
 
 ---
 

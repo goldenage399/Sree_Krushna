@@ -25,6 +25,7 @@ Per the Universal Session Acceleration Protocol (`AC-DEC-2026-059`), all newly o
 | [`SK-026`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-026/00_ENHANCEMENT_INDEX.md) | Universal Dual-Council Governance Protocol & 7-Domain UI/UX Pre-Flight Engine | `COMPLETED` | `v2.9.4` | `STD-COUNCIL-DUAL-GATE-001` / `PKG-009` |
 | [`SK-027`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-027/00_ENHANCEMENT_INDEX.md) | Empirical Multi-Repo Adoption Gate, Zero-Config Discovery & Anti-Process-Theater Governance | `IN_PLANNING (Phase 1 Verified)` | `v2.9.5` | `STD-EMPIRICAL-ADOPTION-001` / `STD-ZERO-CONFIG-DISCOVERY-001` |
 | [`SK-028`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-028/00_ENHANCEMENT_INDEX.md) | SDCA Structural DOM Contract & Cross-Repo Portable Validation Framework | `COMPLETED` | `v2.9.6` | `STD-STRUCTURAL-CONTRACT-001` / `STD-MOD-COMP-001` |
+| [`SK-029`](file:///d:/GitHub_Repo/Sree_Krushna/enhancement-notes/SK-029/00_ENHANCEMENT_INDEX.md) | Multi-Viewport Fluid Table Budgeting, Inner Container Clamping & Print Run-Sheet Preservation | `IN_PROGRESS (Phase 1 Verified)` | `v2.9.7` | `STD-TABLE-BUDGET-001` / `INV-TABLE-DOM-001` |
 
 ---
 
@@ -39,6 +40,7 @@ Per the Universal Session Acceleration Protocol (`AC-DEC-2026-059`), all newly o
 - **`AC-DEC-2026-068` (`UI-DEC-2026-052`)**: Certified Universal Dual-Council Governance Protocol & 7-Domain UI/UX Interaction Pre-Flight Engine (`STD-COUNCIL-DUAL-GATE-001` / `STD-UI-INTERACTION-SPEC-001` / `SK-026` / `PKG-009`).
 - **`AC-DEC-2026-069` (`GOV-DEC-2026-004`)**: Certified Empirical Multi-Repo Adoption Gate (`INV-PROVE-BEFORE-CLAIM-001`), Zero-Config Discovery (`STD-ZERO-CONFIG-DISCOVERY-001`), and Anti-Process-Theater Governance (`SK-027`). Live pilots empirically verified on `OperatusOS` (39 entities indexed) and `Task-Dashboard` (88 entities indexed, 0 noise nodes).
 - **`AC-DEC-2026-070`**: Certified SDCA Structural DOM Contract & Cross-Repo Portable Validation Framework (`STD-STRUCTURAL-CONTRACT-001` / `SK-028`). Closes 5-layer failure model: source tag balance (16/16 pass), compile-time hierarchy contracts (17/17 pass), Playwright runtime DOM assertions (8/8 pass), and cross-repo zero-config portability (verified on `Task-Dashboard` and `OperatusOS`).
+- **`AC-DEC-2026-071` (`UI-DEC-2026-053`)**: Certified Multi-Viewport Fluid Table Budgeting, Inner Container Clamping & Print Run-Sheet Preservation (`STD-TABLE-BUDGET-001` / `INV-TABLE-DOM-001` / `SK-029`). Closes table-cell display model override and asymmetric slack absorption. Phase 1 structural decoupling and density gates verified.
 
 See [`User_Created/Discussion Threads/Council/Council_Ledger.md`](file:///d:/GitHub_Repo/Sree_Krushna/User_Created/Discussion%20Threads/Council/Council_Ledger.md) for complete historical rulings.
 

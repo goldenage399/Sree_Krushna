@@ -4320,7 +4320,7 @@
                 <div class="obl-subdesc">${escapeHtml(o.english_descriptor)}</div>
               </td>
               <td class="obl-td-cat"><code>${escapeHtml(o.category)}</code></td>
-              <td class="obl-td-specs" title="${escapeHtml(itemsTooltip)}">• ${itemsText}</td>
+              <td class="obl-td-specs"><div class="obl-specs-clamp" title="${escapeHtml(itemsTooltip)}">• ${itemsText}</div></td>
               <td class="obl-td-cash">${cashText}</td>
               <td class="obl-td-trs">${trsHtml}</td>
               <td class="obl-td-verif"><span class="obl-verif-box"></span></td>

@@ -32,5 +32,7 @@ Welcome to the **Sree Krushna Marriage OS** documentation catalog.
 - [INC-093-sdca-compiler-regex-container-query-mangling.md](./incidents/INC-093-sdca-compiler-regex-container-query-mangling.md) — SDCA Build Compiler Regex At-Rule Container Query Mangling (STD-MOD-COMP-001 / INV-SDCA-004 / sdca-container-query-scoping)
 - [INC-094-duplicate-urlparam-scope-shadowing-and-pre-emit-syntax-gate.md](./incidents/INC-094-duplicate-urlparam-scope-shadowing-and-pre-emit-syntax-gate.md) — Duplicate URL Parameter Variable Re-declaration & Validation via SDCA Pre-Emit Syntax Gate (STD-MOD-COMP-001 / INV-SDCA-003 / P-COLLAB-VISUAL-INTAKE-001)
 - [INC-100-mutable-table-cards-mode-degradation-and-cross-domain-conflation.md](./incidents/INC-100-mutable-table-cards-mode-degradation-and-cross-domain-conflation.md) — Mutable Table Pseudo-Card Degradation & Cross-Domain Conflation (P-TABLE-DOMAIN-SEPARATION-001 / AC-DEC-2026-034 / SK-021)
+- [INC-101-print-first-conflation-and-planning-ui-interaction-blind-spot.md](./incidents/INC-101-print-first-conflation-and-planning-ui-interaction-blind-spot.md) — Print-First Bias & Planning Engine UI Interaction Ergonomics Blind Spot (STD-UI-ERGONOMICS-GATE-001 / AC-DEC-2026-067 / SK-025)
+- [INC-102-table-cell-display-model-override-and-asymmetric-slack-absorption.md](./incidents/INC-102-table-cell-display-model-override-and-asymmetric-slack-absorption.md) — Table-Cell Display Model Override & Asymmetric Slack Absorption (STD-TABLE-BUDGET-001 / INV-TABLE-DOM-001 / AC-DEC-2026-071 / SK-029)
 
 

@@ -366,6 +366,26 @@
         "ui_primitives/scripts/collapsible_engine.js",
         "User_Created/Discussion Threads/Council/260927_arch_council_ui_ergonomics_gate_and_collapsible_table_primitive.md"
       ]
+    },
+    {
+      "id": "STD-TABLE-BUDGET-001",
+      "category": "ui-quality",
+      "name": "Universal Proportional Table Budgeting & Table-Cell Display Isolation",
+      "description": "High-density data tables must declare table-layout: fixed; width: 100%; with balanced percentage column allocation on primary descriptive columns, inner clamp container isolation, and forced unrolling in print.",
+      "severity": "HIGH",
+      "enforcement": {
+        "checkpoints": [
+          "pre-commit",
+          "CI"
+        ],
+        "manualOnly": false,
+        "automatedGate": "node scripts/test-obligations-table-density.cjs"
+      },
+      "references": [
+        "docs/references/SPEC-ARCH-MUTABLE-TABLE-001.md",
+        ".agent/patterns/table-cell-display-model-isolation-and-slack-budgeting.md",
+        "User_Created/Discussion Threads/Council/260928_arch_council_multi_viewport_fluid_table_budgeting_and_print_run_sheet.md"
+      ]
     }
   ]
 }
